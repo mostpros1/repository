@@ -1,33 +1,107 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import inlogIcon from "./assets/icon _profile circle_.png"
+import searchIcon from "./assets/icon _arrow circle right_.png"
+import manWithHammerIcon from "./assets/manmethammer.png"
+import girlWithDrill from "./assets/vrouwmetboor.png"
+import peopleWithTools from "./assets/2personenmettools.png"
+import hovenier from "./assets/hovenier.png"
+import handyman from "./assets/handyman.png"
+import painter from "./assets/stefano-manzini-B81670AyocM-unsplash.jpg"
+import floors from "./assets/ddp-kS1UuxzkuJE-unsplash.jpg"
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {/* Navbar */}
+      <nav className="nav_container">
+        <div className="nav">
+          <h1>logo</h1>
+          <p>Hoe werkt het?</p>
+          <p><a href="#">Inschrijven als vakspecialist</a></p>
+          <button><img src={inlogIcon} alt="inlogfoto" />Inloggen</button>
+        </div>
+      </nav>
+      {/* Header */}
+      <h1>Vind lokale vakspecialisten voor klussen in je huis en tuin</h1>
+      <h3>wat is je klus?</h3>
+      <input type="text" name="searchbar" id="" />
+      <div className="search">
+        <h4>Inschrijven als vakspecialist</h4>
+        <img src={searchIcon} alt="search icon" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      {/* Content */}
+      <h2>Hoe werkt Mostpros</h2>
+      <div className="description_container">
+        <div className="description">
+          <h4>1 Beschrijf je klus</h4>
+          <p>Denk aan klussen voor je uitbouw, renovatie, tegels, dak, keuken, ramen, deuren, badkamer, sanitair, stuken, verwarming, loodgieterswerk, elektriciteit, stofferen, slopen, afvoeren, isolatie, timmerwerken, algemene klussen, schoonmaak, enz.</p>
+          <img src={manWithHammerIcon} alt="" />
+        </div>
+        <div className="description">
+          <h4>2 Krijg een vakspecialist</h4>
+          <p>Krijg een aannemer, gevelspecialist, metselaar, ontwerper, tegelzetter, dakdekker, keukenmonteur, glaszetter, kozijnspecialist, badkamerspecialist, stukadoor, installateur, loodgieter, elektricien enz.</p>
+          <img src={girlWithDrill} alt="" />
+        </div>
+        <div className="description">
+          <h4>3 Ontvang ondersteuning</h4>
+          <p>Naast de standaard ondersteuning van de vakspecialist zijn we bij Mostpros.com ook constant opzoek naar slimmere manieren om iedereen in het netwerk te ondersteunen met groeien.</p>
+          <img src={peopleWithTools} alt="" />
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h2>Populaire klussen</h2>
+      <div className="popularCard_container">
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
+      </div>
+      <h2>Vind vakmensen voor elke klus</h2>
+      <div className="jobs_container">
+        <div className="jobCard"><img src={handyman} alt="" /><h4>Loodgieterswerk</h4><a href="$">Alle informatie over Loodgieters</a></div>
+        <div className="jobCard"><img src={painter} alt="" /><h4>Schilderen</h4><a href="$">Alle informatie over Schilders</a></div>
+        <div className="jobCard"><img src={floors} alt="" /><h4>Vloeren en tegels</h4><a href="$">Alle informatie over Tegelzetters</a></div>
+      </div>
+      <button>Meer bekijken</button>
+      <h3>Waarom Mostpros</h3>
+      <h3>Groeiend vakspecialisten.</h3>
+      <h3>Toegang tot talentenpools met studenten en beginnende vakspecialisten</h3>
+      <h3>Advies en ondersteuning. Samen met de community zijn we voortdurend op zoek naar slimmere manieren om te klussen in en om je huis</h3>
+      <h2>Reviews</h2>
+      <div className="review_container">
+        <div className="review">
+          <img src="" alt="" />
+          <div><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /></div>
+          <p>Soort klus</p>
+          <p>Naam van vakspecialist</p>
+          <p>comment</p>
+        </div>
+        <div className="review">
+          <img src="" alt="" />
+          <div><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /></div>
+          <p>Soort klus</p>
+          <p>Naam van vakspecialist</p>
+          <p>comment</p>
+        </div>
+        <div className="review">
+          <img src="" alt="" />
+          <div><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /></div>
+          <p>Soort klus</p>
+          <p>Naam van vakspecialist</p>
+          <p>comment</p>
+        </div>
+      </div>
+      <button>Nieuwe klus plaatsen</button>
+
+      {/* Footer */}
+      <div className="footer_container">
+        <div className="footerSection"><h4>Navigatie</h4><a href="">Hoe werkt het</a><a href="">Waarom mostpros</a><a href="">Over</a><a href="">Contact</a></div>
+        <div className="footerSection"><h4>Netwerk</h4><p>Vakspecialist</p><p>Huiseigenaren</p><p>Developers</p><p>Partners</p><p>Studenten</p><p>Startups</p></div>
+        <div className="footerSection"><h4>Office</h4><p>2013 AS, Haarlem</p><p>Kinderhuissingel 6-K</p></div>
+        <div className="footerSection"><h4>Social</h4> <img src="#" alt="" /></div>
+      </div>
     </>
   )
 }
