@@ -1,20 +1,21 @@
-import inlogIcon from "./assets/icon _profile circle_.png"
-import searchIcon from "./assets/icon _arrow circle right_.png"
-import manWithHammerIcon from "./assets/manmethammer.png"
-import girlWithDrill from "./assets/vrouwmetboor.png"
-import peopleWithTools from "./assets/2personenmettools.png"
-import hovenier from "./assets/hovenier.png"
-import handyman from "./assets/handyman.png"
-import painter from "./assets/stefano-manzini-B81670AyocM-unsplash.jpg"
-import floors from "./assets/ddp-kS1UuxzkuJE-unsplash.jpg"
-import linkedIn from "./assets/linkedin.png"
-import star from "./assets/icon _star 1_.png"
-import emptyStar from "./assets/icon _star 1_empty.png"
-import one from "./assets/1.png"
-import two from "./assets/2.png"
-import three from "./assets/3.png"
-import schilder from "./assets/schilder.png"
-import banner from "./assets/soroush-karimi-Mx5kwvzeGC0-unsplash.jpg"
+import Navbar from "../../components/ui/Navbar"
+import Hero from "../../components/hero/Hero"
+
+import manWithHammerIcon from "../../assets/manmethammer.png"
+import girlWithDrill from "../../assets/vrouwmetboor.png"
+import peopleWithTools from "../../assets/2personenmettools.png"
+import hovenier from "../../assets/hovenier.png"
+import handyman from "../../assets/handyman.png"
+import painter from "../../assets/stefano-manzini-B81670AyocM-unsplash.jpg"
+import floors from "../../assets/ddp-kS1UuxzkuJE-unsplash.jpg"
+import linkedIn from "../../assets/linkedin.png"
+import star from "../../assets/icon _star 1_.png"
+import emptyStar from "../../assets/icon _star 1_empty.png"
+import one from "../../assets/1.png"
+import two from "../../assets/2.png"
+import three from "../../assets/3.png"
+import schilder from "../../assets/schilder.png"
+import banner from "../../assets/soroush-karimi-Mx5kwvzeGC0-unsplash.jpg"
 
 import './App.css'
 
@@ -24,34 +25,8 @@ function App() {
     <>
       {/* --Header-- */}
       {/* Navbar */}
-      <div className="header">
-        <img src={banner} alt="" className="banner" />
-        <nav className="nav_container">
-          <div className="nav">
-            <div className="nav_leftside">
-               <h1>logo</h1>
-            </div>
-           
-            <div className="nav-rightside">
-              <p><a href="#">Klussen</a></p>
-              <p><a href="#">Hoe werkt het?</a></p>
-              <p><a href="#">Inschrijven als vakspecialist</a></p>
-              <button className="loginButton"><img src={inlogIcon} alt="inlogfoto" />Inloggen</button>
-            </div>
-
-          </div>
-        </nav>
-
-
-
-        <h1>Vind lokale vakspecialisten voor klussen in je huis en tuin</h1>
-        <h3>wat is je klus?</h3>
-        <input type="text" name="searchbar" id="" />
-        <div className="search">
-          <h4>Inschrijven als vakspecialist</h4>
-          <img src={searchIcon} alt="search icon" />
-        </div>
-      </div>
+      <Navbar />
+      <Hero />
       {/* --Content-- */}
       {/* How does Mostpros work? */}
       <div className="title_container">

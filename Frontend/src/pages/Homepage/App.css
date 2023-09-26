@@ -2,57 +2,8 @@
    - We use camelCase, meaning if you use multiple words together, the second word will be capitalized.
    - One exception: whenever you use an adjective like a color or say something is a container, use a _ and then type the adjective without capitalisation. For example titleCard_container_blue*/
 
-/*header*/
 
-/*navbar*/
-.nav {
-    display: flex;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    padding-top: 3rem;
-    justify-content: center;
-}
 
-.nav a{
-    color: white;
-}
-
-.nav_leftside{
-    min-width: 60%;
-}
-
-.nav-rightside{
-    display: flex;
-    gap: 4rem;
-}
-
-.loginButton{
-    background: none;
-    border-radius: 1.5rem;
-    padding: 0.5rem;
-    color: white;
-
-}
-
-.search {
-    display: flex;
-    align-items: center;
-}
-
-.header{
-    position: relative;
-    margin-bottom: 55rem;
-}
-
-.banner{
-    position: absolute;
-    width: 100vw;
-    max-height: 85vh;
-    object-fit: cover;
-    z-index: -1;
-    filter: blur(1px);
-}
 
 /* content */
 
