@@ -1,0 +1,32 @@
+.popularCard-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.popularCard-container{
+    padding: 0px 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.popularcard{
+    background-color: white;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    flex-direction: column;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 55px 40px;
+    width: 165px;
+    gap: 15px;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}

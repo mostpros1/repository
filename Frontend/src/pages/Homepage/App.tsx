@@ -1,4 +1,5 @@
 import Navbar from "../../components/ui/Navbar"
+import PopularCardsSection from "../../components/PopularCards/PopularCardsSection"
 import Hero from "../../components/hero/Hero"
 
 import manWithHammerIcon from "../../assets/manmethammer.png"
@@ -27,6 +28,7 @@ function App() {
       {/* Navbar */}
       <Navbar />
       <Hero />
+      
       {/* --Content-- */}
       {/* How does Mostpros work? */}
       <div className="title_container">
@@ -49,18 +51,8 @@ function App() {
           <img src={peopleWithTools} alt="" />
         </div>
       </div>
-      {/* Popular Jobs */}
-      <div className="title_container" id="title_container_blue">
-        <h2>Populaire klussen</h2>
-      </div>
-      <div className="popularCard_container">
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-        <div className="popularCard"><img src={hovenier} alt="" /><p>Hovenier</p></div>
-      </div>
+      {/* Popular Jobs */}    
+      <PopularCardsSection />
       {/* Find specialist for every job */}
       <div className="title_container">
         <h2>Vind vakmensen voor elke klus</h2>

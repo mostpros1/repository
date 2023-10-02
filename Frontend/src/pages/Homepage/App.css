@@ -30,29 +30,6 @@
     bottom: 0;
 }
 
-/* popular jobs */
-.popularCard_container {
-    display: flex;
-    width: 100vw;
-    justify-content: center;
-    grid-gap: 1rem;
-    background-color: #E9F4FF;
-    padding-top: 8rem;
-    padding-bottom: 2rem;
-}
-
-.popularCard {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    padding: 4rem;
-    margin-bottom: 4rem;
-    min-height: 20rem;
-    border-radius: 1.5rem;
-}
-
-.popularCard p {
-    margin-top: 3rem;
-}
 
 /* find people for every job */
 .jobs_container {
