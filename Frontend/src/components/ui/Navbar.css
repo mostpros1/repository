@@ -1,12 +1,11 @@
 .nav{
-    background-color: white;
     width: 100%;
-    padding: 30px 30px;
+    padding: 50px 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    background: linear-gradient(rgba(0, 0, 0, 0.384), rgba(0, 0, 0, 0));
 }
 
 .nav-container{
@@ -28,7 +27,7 @@
 }
 
 .nav-leftside > h1{
-    color: #308AE4;
+    color: white;
 }
 
 .nav-rightside{
@@ -49,7 +48,7 @@ li:last-of-type > a{
 }
 
 li > a{
-    color: black;
+    color: white;
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
@@ -60,4 +59,5 @@ li > a{
     font-weight: 600;
     background: none;
     border: none;
+    color: white;
 }
