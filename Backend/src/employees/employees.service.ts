@@ -16,6 +16,7 @@ import {
     UpdateItemCommandOutput,
     waitUntilTableExists,
 } from '@aws-sdk/client-dynamodb';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class EmployeesService {
@@ -48,6 +49,9 @@ export class EmployeesService {
             const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Employees' });
             if (result.state !== "SUCCESS") return createTableResult;
         }
+
+        // Hash password before putting it in the database
+        const hashedPassword = await bcrypt.hash(employee.password, 10);
         
         const params: PutItemCommandInput = {
             TableName: 'Employees',
@@ -56,7 +60,7 @@ export class EmployeesService {
                 firstName: { S: employee.firstName },
                 lastName:  { S: employee.lastName },
                 email:     { S: employee.email },
-                password:  { S: employee.password }
+                password:  { S: hashedPassword }
             }
         }
     
