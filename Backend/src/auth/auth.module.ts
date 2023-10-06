@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { EmployeesModule } from 'src/employees/employees.module';
+import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
 
 @Module({
   imports: [
-    EmployeesModule,
+    UsersModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NoAuth } from './auth.decorator';
+import { User } from 'src/users/users.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +19,14 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     logIn(@Body() logInDto: { email: string, password: string }): Promise<{access_token: string}> {
-        return this.authService.logIn(logInDto.email, logInDto.password)
+        return this.authService.logIn(logInDto.email, logInDto.password);
+    }
+
+    @NoAuth()
+    @HttpCode(HttpStatus.OK)
+    @Post('signup')
+    signUp(@Body() user: User) {
+        return this.authService.signUp(user);
     }
 
     @Get('profile')

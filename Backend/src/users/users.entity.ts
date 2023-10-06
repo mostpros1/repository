@@ -1,4 +1,4 @@
-export class Employee {
+export class User {
 
     userId: string // userId must always be a uuid
     firstName: string

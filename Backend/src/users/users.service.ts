@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Employee } from './entities/employees.entity';
+import { User } from './users.entity';
 import ddbConnection from 'src/db/client';
 import {
     CreateTableCommandInput,
@@ -19,13 +19,13 @@ import {
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class EmployeesService {
+export class UsersService {
 
     // Create
-    async addEmployee(employee: Employee): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
-        if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('Employees'))) {
+    async addUser(user: User): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
+        if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('Users'))) {
             const createTableCommand: CreateTableCommandInput = {
-                TableName: 'Employees',
+                TableName: 'Users',
                 KeySchema: [
                     { AttributeName: 'userId', KeyType: 'HASH' }
                 ],
@@ -35,7 +35,7 @@ export class EmployeesService {
                     { AttributeName: 'email',     AttributeType: 'S' }
                 ],
                 GlobalSecondaryIndexes: [{
-                    IndexName: 'EmployeesEmail',
+                    IndexName: 'UsersEmail',
                     KeySchema: [
                         { AttributeName: 'email', KeyType: 'HASH' }
                     ],
@@ -46,20 +46,20 @@ export class EmployeesService {
 
             let createTableResult: CreateTableCommandOutput;
             await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
-            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Employees' });
+            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Users' });
             if (result.state !== "SUCCESS") return createTableResult;
         }
 
         // Hash password before putting it in the database
-        const hashedPassword = await bcrypt.hash(employee.password, 10);
+        const hashedPassword = await bcrypt.hash(user.password, 10);
         
         const params: PutItemCommandInput = {
-            TableName: 'Employees',
+            TableName: 'Users',
             Item: {
-                userId:    { S: employee.userId },
-                firstName: { S: employee.firstName },
-                lastName:  { S: employee.lastName },
-                email:     { S: employee.email },
+                userId:    { S: user.userId },
+                firstName: { S: user.firstName },
+                lastName:  { S: user.lastName },
+                email:     { S: user.email },
                 password:  { S: hashedPassword }
             }
         }
@@ -72,9 +72,9 @@ export class EmployeesService {
     }
 
     // Read
-    async getEmployeeByUserId(userId: string): Promise<GetItemCommandOutput> {
+    async getUserByUserId(userId: string): Promise<GetItemCommandOutput> {
         const params: GetItemCommandInput = {
-            TableName: 'Employees',
+            TableName: 'Users',
             Key: {
                 userId: { S: userId }
             }
@@ -87,12 +87,12 @@ export class EmployeesService {
         return getResult;
     }
 
-    async getEmployeeByEmail(email: string): Promise<QueryCommandOutput> {
+    async getUserByEmail(email: string): Promise<QueryCommandOutput> {
         const params: QueryCommandInput = {
-            TableName: 'Employees',
-            IndexName: 'EmployeesEmail',
-            KeyConditionExpression: "email = :employeeEmail",
-            ExpressionAttributeValues: { ":employeeEmail": { S: email } }
+            TableName: 'Users',
+            IndexName: 'UsersEmail',
+            KeyConditionExpression: "email = :userEmail",
+            ExpressionAttributeValues: { ":userEmail": { S: email } }
         }
 
         let getResult: QueryCommandOutput;
@@ -104,24 +104,24 @@ export class EmployeesService {
 
 
     // Update
-    async updateEmployee(employee: Employee): Promise<UpdateItemCommandOutput> {
+    async updateUser(user: User): Promise<UpdateItemCommandOutput> {
         let UpdateExpression = "SET";
         let ExpressionAttributeNames = {};
         let ExpressionAttributeValues = {};
 
-        let userId = employee.userId;
-        delete employee.userId;
+        let userId = user.userId;
+        delete user.userId;
 
-        for (const property in employee) {
+        for (const property in user) {
             UpdateExpression += ` #${property} = :${property},`;
             ExpressionAttributeNames[`#${property}`] = property;
-            ExpressionAttributeValues[`:${property}`] = { S: employee[property] };
+            ExpressionAttributeValues[`:${property}`] = { S: user[property] };
         }
 
         UpdateExpression = UpdateExpression.slice(0, -1);
 
         const params: UpdateItemCommandInput = {
-            TableName: 'Employees',
+            TableName: 'Users',
             Key: {
                 userId: { S: userId }
             },
@@ -139,9 +139,9 @@ export class EmployeesService {
     }
 
     // Delete
-    async removeEmployeeByUserId(userId: string): Promise<DeleteItemCommandOutput> {
+    async removeUserByUserId(userId: string): Promise<DeleteItemCommandOutput> {
         const params: DeleteItemCommandInput = {
-            TableName: 'Employees',
+            TableName: 'Users',
             Key: {
                 userId: { S: userId }
             }
