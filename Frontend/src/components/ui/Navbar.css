@@ -8,11 +8,24 @@
     background: linear-gradient(rgba(0, 0, 0, 0.384), rgba(0, 0, 0, 0));
 }
 
+.other-nav{
+    width: 100%;
+    padding: 50px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
 .nav-container{
     width: 100%;
     max-width: 1500px;
     display: flex;
     justify-content: space-between;
+}
+
+.nav-container a {
+    text-decoration: none;
 }
 
 .nav-leftside{
@@ -26,8 +39,12 @@
     aspect-ratio: 1/1;
 }
 
-.nav-leftside > h1{
+.nav-leftside > .white-h1{
     color: white;
+}
+
+.nav-leftside > .black-h1{
+    color: black;
 }
 
 .nav-rightside{
@@ -47,8 +64,15 @@ li:last-of-type > a{
     text-underline-offset: 2px;
 }
 
-li > a{
+li > .white-items{
     color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+li > .black-items{
+    color: black;
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
