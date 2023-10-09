@@ -1,0 +1,57 @@
+.content-con{
+    width: 100%;
+}
+
+.content-con img{
+    height: 400px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.form-con{
+    padding: 40px 0px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.form-inputs{
+    width: 100%;
+}
+
+.form-input{
+    border: none;
+    width: 50%;
+    padding: 20px 20px;
+    font-size: 24px;
+    outline: none;
+}
+
+.first-input{
+    border: 3px solid #C0C0C8;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.second-input{
+    border: 3px solid #C0C0C8;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.next{
+    padding: 15px 40px;
+    background-color: #308AE4;
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+
+.next:hover{
+    cursor: pointer;
+    background-color: #2879ca;
+}
