@@ -31,14 +31,12 @@ export class UsersService {
                 ],
                 ProvisionedThroughput: { ReadCapacityUnits: 4, WriteCapacityUnits: 4 },
                 AttributeDefinitions: [
-                    { AttributeName: 'userId',    AttributeType: 'S' },
-                    { AttributeName: 'email',     AttributeType: 'S' }
+                    { AttributeName: 'userId', AttributeType: 'S' },
+                    { AttributeName: 'email',  AttributeType: 'S' }
                 ],
                 GlobalSecondaryIndexes: [{
                     IndexName: 'UsersEmail',
-                    KeySchema: [
-                        { AttributeName: 'email', KeyType: 'HASH' }
-                    ],
+                    KeySchema: [{ AttributeName: 'email', KeyType: 'HASH' }],
                     Projection: { ProjectionType: "ALL" },
                     ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
                 }]
@@ -56,11 +54,12 @@ export class UsersService {
         const params: PutItemCommandInput = {
             TableName: 'Users',
             Item: {
-                userId:    { S: user.userId },
-                firstName: { S: user.firstName },
-                lastName:  { S: user.lastName },
-                email:     { S: user.email },
-                password:  { S: hashedPassword }
+                userId:         { S: user.userId },
+                firstName:      { S: user.firstName },
+                lastName:       { S: user.lastName },
+                email:          { S: user.email },
+                password:       { S: hashedPassword },
+                emailVerified:  { BOOL: false }
             }
         }
     
@@ -146,7 +145,6 @@ export class UsersService {
                 userId: { S: userId }
             }
         }
-
 
         let deleteResult: DeleteItemCommandOutput;
         await ddbConnection.deleteItem(params)

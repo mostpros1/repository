@@ -10,8 +10,8 @@ import 'dotenv/config';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '600s' },
+      secret: process.env.JWT_SESSION_SECRET,
+      signOptions: { expiresIn: process.env.JWT_SESSION_EXPIRATION_TIME },
     })
   ],
   controllers: [AuthController],
