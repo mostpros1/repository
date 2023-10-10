@@ -1,19 +1,26 @@
 import './Multistepform.css'
 
-import TwoWorkers from '../../assets/2personenmettools.png' 
+import { AddressForm } from './AddressFrom'
+import { CategoryForm } from './CategoryForm'
+import { InfoForm } from './infoForm'
+import { EmailForm } from './EmailForm'
+
+import { useMultistepForm } from '../../hooks/useMultistepForm'
 
 function MultistepForm() {
+
+  const { step, steps, currentStepIndex, isFirstStep, isLastStep, back, next} = useMultistepForm([<AddressForm />, <CategoryForm />, <InfoForm />, <EmailForm />
+  ])
+
   return (
     <div className='form-con'>
-        <div className='content-con'>
-            <img src={TwoWorkers} alt="" />
-            <h2>Voer je postcode in om vakspecialisten in jouw omgeving te vinden</h2>
-        </div>
-        <div className='form-inputs'>
-            <input type="text" className='form-input first-input' placeholder='Postcode'/>
-            <input type="text" className='form-input second-input' placeholder='Stad'/> 
-        </div>     
-        <button className='next'>Verder</button> 
+        <div>{currentStepIndex + 1} / {steps.length}</div>
+        {step}
+        <div className='btn-wrapper'>
+          {!isFirstStep && <button onClick={back} className='form-btn back'>Vorige</button>}  
+          <button onClick={next} className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
+        </div>    
+        
     </div>
   )
 }
