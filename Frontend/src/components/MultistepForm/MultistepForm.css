@@ -1,3 +1,9 @@
+input{
+    border: 2px solid #C0C0C8;
+    border-radius: 5px;
+    padding: 15px;
+}
+
 .content-con{
     width: 100%;  
 }
@@ -26,20 +32,20 @@
 .form-input{
     border: none;
     width: 50%;
-    padding: 20px 20px;
-    font-size: 20px;
+    padding: 20px;
+    font-size: 18px;
     outline: none;
 }
 
 .first-input{
-    border: 3px solid #C0C0C8;
+    border: 2px solid #C0C0C8;
     border-radius: 5px 0px 0px 5px;
 }
 
 .second-input{
-    border-right: 3px solid #C0C0C8;
-    border-top: 3px solid #C0C0C8;
-    border-bottom: 3px solid #C0C0C8;
+    border-right: 2px solid #C0C0C8;
+    border-top: 2px solid #C0C0C8;
+    border-bottom: 2px solid #C0C0C8;
     border-radius: 0px 5px 5px 0px;
 }
 
@@ -100,4 +106,65 @@
 .icon{
     height: 50%;
     width: 100%;
+}
+
+.info-con{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+.text-field-con{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.text-field-con h4{
+    font-weight: 400;
+    font-size: 16px;
+    color: #8B8D96;
+}
+
+.text-field{
+    width: 100%;
+    min-height: 250px;
+    font-family: inherit;
+    padding: 20px 15px;
+    border: 2px solid #C0C0C8;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+}
+
+::placeholder{
+    color: #C0C0C8; 
+}
+
+.email-con{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 100px;
+}
+
+.email-field-con{
+    margin-bottom: 75px;
+    display: flex;
+    flex-direction: column; 
+    align-self: center;
+    max-width: 60%;
+    width: 100%;
+    gap: 5px;
+}
+
+.email-field-con label{
+    font-size: 18px;
+}
+.email-input{
+    width: 100%;
+    outline: none;
+    font-size: 18px;
 }

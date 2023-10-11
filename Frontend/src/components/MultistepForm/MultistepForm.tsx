@@ -2,7 +2,7 @@ import './Multistepform.css'
 
 import { AddressForm } from './AddressFrom'
 import { CategoryForm } from './CategoryForm'
-import { InfoForm } from './infoForm'
+import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 
 import { useMultistepForm } from '../../hooks/useMultistepForm'
@@ -14,7 +14,7 @@ function MultistepForm() {
 
   return (
     <div className='form-con'>
-        <div>{currentStepIndex + 1} / {steps.length}</div>
+        <div>Stap {currentStepIndex + 1} van {steps.length}</div>
         {step}
         <div className='btn-wrapper'>
           {!isFirstStep && <button onClick={back} className='form-btn back'>Vorige</button>}  
