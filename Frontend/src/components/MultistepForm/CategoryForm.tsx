@@ -50,11 +50,8 @@ export function CategoryForm() {
     const [isCheckedList, setIsCheckedList] = useState(repairCategories.map(() => false));
 
     const handleDivClicked = (index: number) => {
-    // Maak een kopie van de huidige isCheckedList-array
     const updatedIsCheckedList = [...isCheckedList];
-    // Toggle de status van de checkbox die is geklikt
     updatedIsCheckedList[index] = !updatedIsCheckedList[index];
-    // Update de staat met de bijgewerkte array
     setIsCheckedList(updatedIsCheckedList);
   };
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import './Hero.css'
 import searchIcon from "../../assets/icon _arrow circle right_.png"
 
