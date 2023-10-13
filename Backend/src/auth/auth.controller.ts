@@ -1,11 +1,12 @@
 import {
+    BadRequestException,
     Body,
     Controller,
     Get,
     HttpCode,
     HttpStatus,
     Post,
-    Request
+    Query
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NoAuth } from './auth.decorator';
@@ -29,8 +30,10 @@ export class AuthController {
         return this.authService.signUp(user);
     }
 
-    @Get('profile')
-    getProfile(@Request() request) {
-        return request.user;
+    @NoAuth()
+    @Get('verify-email')
+    verifyEmail(@Query('code') code: string) {
+        if (!code) throw new BadRequestException();
+        return this.authService.verifyEmail(code);
     }
 }
