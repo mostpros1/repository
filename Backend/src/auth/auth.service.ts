@@ -60,6 +60,36 @@ export class AuthService {
         return putResult;
     }
 
+    async createPasswordResetCode(email: string) {
+        if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('PasswordResetCodes'))) {
+            const createTableCommand: CreateTableCommandInput = {
+                TableName: 'PasswordResetCodes',
+                KeySchema: [{ AttributeName: 'resetCode', KeyType: 'HASH' }],
+                ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 },
+                AttributeDefinitions: [{ AttributeName: 'resetCode', AttributeType: 'S' }]
+            };        
+
+            let createTableResult: CreateTableCommandOutput;
+            await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
+            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'PasswordResetCodes' });
+            if (result.state !== "SUCCESS") return createTableResult;
+        }
+
+        const params: PutItemCommandInput = {
+            TableName: 'PasswordResetCodes',
+            Item: {
+                resetCode: { S: crypto.randomUUID() },
+                email:     { S: email }
+            }
+        }
+    
+        let putResult: PutItemCommandOutput;
+        await ddbConnection.putItem(params)
+            .catch(err => putResult = err)
+            .then(result => putResult = result)
+        return putResult;
+    }
+
     async logIn(email: string, password: string): Promise<{access_token: string}> {
         const user = (await this.usersService.getUserByEmail(email)).Items[0];
         if (!await bcrypt.compare(password, user.password.S)) throw new UnauthorizedException();
@@ -104,5 +134,9 @@ export class AuthService {
         await ddbConnection.deleteItem(deleteParams);
         
         return `Verified user ${userToVerify.firstName} ${userToVerify.lastName} (User ID: ${userToVerify.userId})`;
+    }
+
+    async resetPassword(resetCode: string) {
+        
     }
 }
