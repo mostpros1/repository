@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/ui/Navbar'
 import MultistepForm from '../../components/MultistepForm/MultistepForm'
+import Testform from '../../components/MultistepForm/Testform'
 
 import './Klussenpage.css'
 
@@ -10,6 +11,7 @@ function Klussenpage() {
         <Navbar />
         <div className='viewport'>
           <MultistepForm />
+          <Testform />
         </div>
     </>
   )
