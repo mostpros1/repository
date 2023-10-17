@@ -198,5 +198,92 @@ input{
     font-size: 18px;
 }
 
+.login-con{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px;
+}
+
+.login-form-con{   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 100px 0px 100px;   
+    gap: 25px;
+}
+
+.login-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-link{
+    font-size: 14px;
+}
+
+.login-link a{
+    color: #308AE4;
+}
+
+.login-btn{
+    width: 100%;
+}
+
+.social-con{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-top: 1px solid #A6ACB2;
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    padding-top: 25px;
+    gap: 10px;
+}
+
+.social-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding: 10px;
+    position: relative;
+}
+
+.social-btn img{
+    position: absolute;
+    left: 0;
+}
+
+.register-con{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    padding: 0px 100px 0px 100px;
+}
+
+.reg-form-con{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.reg-link{
+    font-size: 14px;
+}
+
+.reg-link a{
+    color: #308AE4;
+}
+
+.register-btn{
+    width: 100%;
+}
   
   
