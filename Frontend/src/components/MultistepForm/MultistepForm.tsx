@@ -1,21 +1,52 @@
 import './Multistepform.css'
 import { useState } from 'react'
-
-import { AddressForm } from './AddressFrom'
+import { FormEvent } from "react"
+import { LocationForm } from './LocationForm'
 import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
-
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 
-function MultistepForm() {
+type FormData = {
+  postCode: string
+  stad: string
+  aanvullendeInformatie: string
+  info: string
+  email: string
+}
 
-  const [isLoggingIn, setIsLoggingIn] = useState(true);
+  // const [isLoggingIn, setIsLoggingIn] = useState(true);
   
-  const { step, steps, currentStepIndex, isFirstStep, isLastStep, back, next} = useMultistepForm([<AddressForm />, <CategoryForm />, <InfoForm />, <EmailForm />, <LoginForm />, <RegisterForm/>
+const INITIAL_DATA: FormData = {
+  postCode: "",
+  stad: "",
+  aanvullendeInformatie: "",
+  info: "",
+  email: "",
+}
+
+function MultistepForm() {
+  const [data, setData] = useState(INITIAL_DATA)
+  function updateFields(fields: Partial<FormData>) {
+    setData(prev => {
+      return { ...prev, ...fields }
+    })
+  }
+  const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([
+    <LocationForm {...data} updateFields={updateFields} />,
+    <CategoryForm />,
+    <InfoForm {...data} updateFields={updateFields}/>,
+    <EmailForm {...data} updateFields={updateFields}/>,
+    <LoginForm />,
+    <RegisterForm />
   ])
+  function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    if (!isLastStep) return next()
+    alert("success")
+  }
 
   const stepWidth = 100 / steps.length;
 
@@ -37,8 +68,7 @@ function MultistepForm() {
       <div className='btn-wrapper'>
         {!isFirstStep && <button onClick={back} className='form-btn back'>Vorige</button>}  
         <button onClick={next} className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
-      </div>    
-        
+      </div>         
     </div>
   )
 }

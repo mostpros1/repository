@@ -5,7 +5,6 @@ import Hero from "../../components/hero/Hero"
 import manWithHammerIcon from "../../assets/manmethammer.png"
 import girlWithDrill from "../../assets/vrouwmetboor.png"
 import peopleWithTools from "../../assets/2personenmettools.png"
-import hovenier from "../../assets/hovenier.png"
 import handyman from "../../assets/handyman.png"
 import painter from "../../assets/stefano-manzini-B81670AyocM-unsplash.jpg"
 import floors from "../../assets/ddp-kS1UuxzkuJE-unsplash.jpg"
@@ -16,7 +15,6 @@ import one from "../../assets/1.png"
 import two from "../../assets/2.png"
 import three from "../../assets/3.png"
 import schilder from "../../assets/schilder.png"
-import banner from "../../assets/soroush-karimi-Mx5kwvzeGC0-unsplash.jpg"
 
 function Homepage() {
   return (
