@@ -51,7 +51,7 @@ function MultistepForm() {
   const stepWidth = 100 / steps.length;
 
   return (
-    <div className='form-con'>
+    <form onSubmit={onSubmit} className='form-con'>
         <div className='progress-con'>
           <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
           <div className="progress-bar">
@@ -64,12 +64,14 @@ function MultistepForm() {
             ))}
           </div>
         </div>     
+       
         {step}
+       
       <div className='btn-wrapper'>
-        {!isFirstStep && <button onClick={back} className='form-btn back'>Vorige</button>}  
-        <button onClick={next} className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
+        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}  
+        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
       </div>         
-    </div>
+    </form>
   )
 }
 
