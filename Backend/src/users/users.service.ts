@@ -31,7 +31,7 @@ export class UsersService {
                 KeySchema: [
                     { AttributeName: 'userId', KeyType: 'HASH' }
                 ],
-                ProvisionedThroughput: { ReadCapacityUnits: 4, WriteCapacityUnits: 4 },
+                ProvisionedThroughput: { ReadCapacityUnits: 2, WriteCapacityUnits: 2 },
                 AttributeDefinitions: [
                     { AttributeName: 'userId', AttributeType: 'S' },
                     { AttributeName: 'email',  AttributeType: 'S' }
@@ -46,8 +46,8 @@ export class UsersService {
             
             let createTableResult: CreateTableCommandOutput;
             await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
-            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Users' });
-            if (result.state !== "SUCCESS") return createTableResult;
+            const waitResult = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Users' });
+            if (waitResult.state !== "SUCCESS") return createTableResult;
         }
 
         // Hash password before putting it in the database
@@ -73,7 +73,7 @@ export class UsersService {
     }
 
     // Read
-    async getUserByUserId(userId: string): Promise<GetItemCommandOutput> {
+    async getUserById(userId: string): Promise<GetItemCommandOutput> {
         const params: GetItemCommandInput = {
             TableName: 'Users',
             Key: {

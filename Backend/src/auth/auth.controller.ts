@@ -5,6 +5,7 @@ import {
     Get,
     HttpCode,
     HttpStatus,
+    Param,
     Post,
     Query
 } from '@nestjs/common';
@@ -37,17 +38,17 @@ export class AuthController {
         return this.authService.verifyEmail(code);
     }
 
-    // There should be a page with a form so the user can POST to /auth/forgot-password with their email in the body
+    // There should be a page with a form so the user can POST to /auth/reset-password with their email in the body
 
     @NoAuth()
-    @Post('forgot-password')
+    @Post('reset-password')
     createPasswordReset(@Body() createPassResetDto: { email: string }) {
         return this.authService.createPasswordResetCode(createPassResetDto.email);
     }
     
     @NoAuth()
-    @Get('reset-password')
-    resetPassword(@Query('code') code: string) {
-        
+    @Get('reset-password/:resetcode')
+    resetPassword(@Param('resetcode') resetCode: string, @Body() resetPassDto: { password: string }) {
+        return this.authService.resetPassword(resetCode, resetPassDto.password);
     }
 }

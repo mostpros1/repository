@@ -2,11 +2,12 @@ import {
     CreateTableCommandInput,
     CreateTableCommandOutput,
     DeleteItemCommandInput,
-    DeleteItemCommandOutput,
     GetItemCommandInput,
     GetItemCommandOutput, 
     PutItemCommandInput,
     PutItemCommandOutput,
+    QueryCommandInput,
+    QueryCommandOutput,
     UpdateItemCommandOutput,
     waitUntilTableExists,
 } from '@aws-sdk/client-dynamodb';
@@ -30,7 +31,7 @@ export class AuthService {
         return { access_token: await this.jwtService.signAsync(payload) };
     }
 
-    async createEmailVerificationCode(userId: string): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
+    async createEmailVerificationCode(userId: string): Promise<CreateTableCommandOutput | PutItemCommandOutput | string> {
         if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('EmailVerificationCodes'))) {
             const createTableCommand: CreateTableCommandInput = {
                 TableName: 'EmailVerificationCodes',
@@ -41,11 +42,13 @@ export class AuthService {
 
             let createTableResult: CreateTableCommandOutput;
             await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
-            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'EmailVerificationCodes' });
-            if (result.state !== "SUCCESS") return createTableResult;
+            const waitResult = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'EmailVerificationCodes' });
+            if (waitResult.state !== "SUCCESS") return createTableResult;
         }
         
-        const params: PutItemCommandInput = {
+        // TODO: FIGURE OUT HOW TO PREVENT THE SPAMMING OF VERIFICATION CODES IN THE DATABASE
+
+        const putParams: PutItemCommandInput = {
             TableName: 'EmailVerificationCodes',
             Item: {
                 verificationCode: { S: crypto.randomUUID() },
@@ -54,9 +57,9 @@ export class AuthService {
         }
     
         let putResult: PutItemCommandOutput;
-        await ddbConnection.putItem(params)
-            .catch(err => putResult = err)
-            .then(result => putResult = result)
+        await ddbConnection.putItem(putParams)
+        .catch(err => putResult = err)
+        .then(result => putResult = result)
         return putResult;
     }
 
@@ -71,11 +74,26 @@ export class AuthService {
 
             let createTableResult: CreateTableCommandOutput;
             await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
-            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'PasswordResetCodes' });
-            if (result.state !== "SUCCESS") return createTableResult;
+            const waitResult = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'PasswordResetCodes' });
+            if (waitResult.state !== "SUCCESS") return createTableResult;
         }
 
-        const params: PutItemCommandInput = {
+        const getParams: QueryCommandInput = {
+            TableName: 'Users',
+            IndexName: 'UsersEmail',
+            KeyConditionExpression: "email = :userEmail",
+            ExpressionAttributeValues: { ":userEmail": { S: email } }
+        }
+
+        let getResult: QueryCommandOutput;
+        await ddbConnection.query(getParams)
+        .catch(err => getResult = err)
+        .then(result => getResult = result)
+        
+        if (typeof getResult === "string") return `Error: ${getResult}`;
+        else if (getResult.Items.length == 0) return "No matching user was found.";
+
+        const putParams: PutItemCommandInput = {
             TableName: 'PasswordResetCodes',
             Item: {
                 resetCode: { S: crypto.randomUUID() },
@@ -84,9 +102,9 @@ export class AuthService {
         }
     
         let putResult: PutItemCommandOutput;
-        await ddbConnection.putItem(params)
-            .catch(err => putResult = err)
-            .then(result => putResult = result)
+        await ddbConnection.putItem(putParams)
+        .catch(err => putResult = err)
+        .then(result => putResult = result)
         return putResult;
     }
 
@@ -97,9 +115,13 @@ export class AuthService {
     }
 
     async signUp(user: User) {
-        await this.usersService.addUser(user);
-        await this.createEmailVerificationCode(user.userId);
-        return this.createSessionToken(user.userId, user.firstName, user.lastName);
+        const potentiallyExistingUser = (await this.usersService.getUserByEmail(user.email)).Items[0];
+        if (potentiallyExistingUser) return "User with this email already exists.";
+        return {
+            addUserResult: await this.usersService.addUser(user),
+            createEmailCodeResult: await this.createEmailVerificationCode(user.userId),
+            createTokenResult: await this.createSessionToken(user.userId, user.firstName, user.lastName)
+        }
     }
 
     async verifyEmail(verificationCode: string) {
@@ -111,18 +133,18 @@ export class AuthService {
         }
         let getResult: GetItemCommandOutput;
         await ddbConnection.getItem(getParams)
-            .catch(err => getResult = err)
-            .then(result => getResult = result)
+        .catch(err => getResult = err)
+        .then(result => getResult = result)
 
         if (!getResult.Item) return "No matching user was found.";
         
-        const userToVerify = unmarshall((await this.usersService.getUserByUserId(getResult.Item.userId.S)).Item) as User;
+        const userToVerify = unmarshall((await this.usersService.getUserById(getResult.Item.userId.S)).Item) as User;
         userToVerify.emailVerified = true;
 
         let updateResult: UpdateItemCommandOutput;
         await this.usersService.updateUser(userToVerify)
-            .catch(err => updateResult = err)
-            .then(result => updateResult = result)
+        .catch(err => updateResult = err)
+        .then(result => updateResult = result)
         if (!updateResult.Attributes) return updateResult;
 
         const deleteParams: DeleteItemCommandInput = {
@@ -136,7 +158,38 @@ export class AuthService {
         return `Verified user ${userToVerify.firstName} ${userToVerify.lastName} (User ID: ${userToVerify.userId})`;
     }
 
-    async resetPassword(resetCode: string) {
-        
+    async resetPassword(resetCode: string, newPassword: string) {
+        const getParams: GetItemCommandInput = {
+            TableName: 'PasswordResetCodes',
+            Key: {
+                resetCode: { S: resetCode }
+            }
+        }
+        let getResult: GetItemCommandOutput;
+        await ddbConnection.getItem(getParams)
+        .catch(err => getResult = err)
+        .then(result => getResult = result)
+
+        if (!getResult.Item) return "No matching user was found.";
+
+        const getLinkedUser = (await this.usersService.getUserByEmail(getResult.Item.email.S)).Items[0];
+        const userToUpdate = unmarshall(getLinkedUser) as User;
+        userToUpdate.password = await bcrypt.hash(newPassword, 10);
+
+        let updateResult: UpdateItemCommandOutput;
+        await this.usersService.updateUser(userToUpdate)
+        .catch(err => updateResult = err)
+        .then(result => updateResult = result)
+        if (!updateResult.Attributes) return updateResult;
+
+        const deleteParams: DeleteItemCommandInput = {
+            TableName: 'PasswordResetCodes',
+            Key: {
+                resetCode: { S: resetCode }
+            }
+        }
+        await ddbConnection.deleteItem(deleteParams);
+
+        return "Password succesfully reset."
     }
 }
