@@ -6,8 +6,8 @@ import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useMultistepForm } from '../../hooks/useMultistepForm'
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
+import { LoginForm } from './LoginForm'
+import { RegisterForm } from './RegisterForm'
 
 type FormData = {
   postCode: string
@@ -15,6 +15,14 @@ type FormData = {
   aanvullendeInformatie: string
   info: string
   email: string
+  loginEmail: string
+  loginPassword: string
+  firstName: string
+  lastName: string
+  registerEmail: string
+  phoneNumber: string
+  registerPassword: string
+  repeatRegisterPassword: string
 }
 
   // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -25,6 +33,14 @@ const INITIAL_DATA: FormData = {
   aanvullendeInformatie: "",
   info: "",
   email: "",
+  loginEmail: "",
+  loginPassword: "",
+  firstName: "",
+  lastName: "",
+  registerEmail: "",
+  phoneNumber: "",
+  registerPassword: "",
+  repeatRegisterPassword: ""
 }
 
 function MultistepForm() {
@@ -39,8 +55,8 @@ function MultistepForm() {
     <CategoryForm />,
     <InfoForm {...data} updateFields={updateFields}/>,
     <EmailForm {...data} updateFields={updateFields}/>,
-    <LoginForm />,
-    <RegisterForm />
+    <LoginForm {...data} updateFields={updateFields}/>,
+    <RegisterForm {...data} updateFields={updateFields}/>
   ])
   function onSubmit(e: FormEvent) {
     e.preventDefault()
