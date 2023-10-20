@@ -13,7 +13,7 @@ type EmailData = {
                 <h2>Ontvang reacties van loodgieters in jouw omgeving.</h2>
                 <div className="email-field-con">
                     <label>Email</label>
-                    <input className="email-input" required type="text" placeholder="Bijv. joe@hotmail.com" value={email} onChange={e => updateFields({ email: e.target.value })}/> 
+                    <input className="email-input" required type="email" placeholder="Bijv. joe@hotmail.com" value={email} onChange={e => updateFields({ email: e.target.value })}/> 
                 </div>
             </div>
       </>

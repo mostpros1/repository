@@ -51,26 +51,26 @@ export function CategoryForm() {
     const [isCheckedList, setIsCheckedList] = useState(repairCategories.map(() => false));
 
     const handleDivClicked = (index: number) => {
-    const updatedIsCheckedList = [...isCheckedList];
-    updatedIsCheckedList[index] = !updatedIsCheckedList[index];
-    setIsCheckedList(updatedIsCheckedList);
-  };
+        const updatedIsCheckedList = [...isCheckedList];
+        updatedIsCheckedList[index] = !updatedIsCheckedList[index];
+        setIsCheckedList(updatedIsCheckedList);
+    };
 
-  let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
-    return (
-      <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-        <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
-        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-        <label>{Repaircard.title}</label>
-      </div>
-    );
-  });
+    let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
+        return (
+            <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
+                <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
+                <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                <label>{Repaircard.title}</label>
+            </div>
+        );
+    });
 
     return (
         <>
-            <form className='repaircards-con'>
+            <div className='repaircards-con'>
                 {repairCardsToBeRendered}
-            </form>
+            </div>
         </>
     )
 }

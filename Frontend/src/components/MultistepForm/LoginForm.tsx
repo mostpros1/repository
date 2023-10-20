@@ -21,7 +21,7 @@ export function LoginForm({loginEmail, loginPassword, updateFields }: LoginFormP
                 <label>Email</label>
                 <input 
                   required 
-                  type="text" 
+                  type="email" 
                   placeholder='Bijv. joe@hotmail.com'
                   value={loginEmail}
                   onChange={e => updateFields({ loginEmail: e.target.value })}
@@ -29,7 +29,7 @@ export function LoginForm({loginEmail, loginPassword, updateFields }: LoginFormP
                 <label>Wachtwoord</label>
                 <input 
                   required 
-                  type="text" 
+                  type="password" 
                   placeholder='Wachtwoord'
                   value={loginPassword}
                   onChange={e => updateFields({ loginPassword: e.target.value })}

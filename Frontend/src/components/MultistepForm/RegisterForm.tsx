@@ -36,7 +36,7 @@ export function RegisterForm({firstName, lastName, registerEmail, phoneNumber, r
             <label htmlFor="">Email:</label>
             <input 
                   required 
-                  type="text" 
+                  type="email" 
                   placeholder='Email'
                   value={registerEmail}
                   onChange={e => updateFields({ registerEmail: e.target.value })}
@@ -44,7 +44,7 @@ export function RegisterForm({firstName, lastName, registerEmail, phoneNumber, r
             <label htmlFor="">Telefoonnummer:</label>
             <input 
                   required 
-                  type="text" 
+                  type="tel" 
                   placeholder='Telefoon nummer'
                   value={phoneNumber}
                   onChange={e => updateFields({ phoneNumber: e.target.value })}
@@ -52,7 +52,7 @@ export function RegisterForm({firstName, lastName, registerEmail, phoneNumber, r
             <label htmlFor="">Wachtwoord:</label>
             <input 
                   required 
-                  type="text" 
+                  type="password" 
                   placeholder='Wachtwoord'
                   value={registerPassword}
                   onChange={e => updateFields({ registerPassword: e.target.value })}
@@ -60,7 +60,7 @@ export function RegisterForm({firstName, lastName, registerEmail, phoneNumber, r
             <label htmlFor="">Herhaal wachtwoord:</label>
             <input 
                   required 
-                  type="text" 
+                  type="password" 
                   placeholder='Herhaal wachtwoord'
                   value={repeatRegisterPassword}
                   onChange={e => updateFields({ repeatRegisterPassword: e.target.value })}
