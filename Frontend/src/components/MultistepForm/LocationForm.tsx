@@ -1,4 +1,5 @@
 import TwoWorkers from '../../assets/2personenmettools.png'
+import { useLocation } from 'react-router-dom';
 
 type LocationData = {
   postCode: string
@@ -10,12 +11,15 @@ type LocationFormProps = LocationData & {
 }
 
 export function LocationForm({ postCode, stad, updateFields }: LocationFormProps) {
+
+  const location = useLocation();
+
   return (
     <>
         <div className="content-con">
         <img src={TwoWorkers} alt="" />
         <h2>
-          Voer je postcode in om vakspecialisten in jouw omgeving te vinden
+          {location.pathname === "/klussen" ? "Voer je postcode in om vakspecialisten in jouw omgeving te vinden" : "Voer je postcode in om klussen in jouw omgeving te vinden"}  
         </h2>
       </div>
         <div className="form-inputs">
