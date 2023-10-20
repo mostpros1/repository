@@ -5,6 +5,7 @@ import lekkage from '../../assets/Lekkage.svg'
 import riolering from '../../assets/Onstoppen.svg'
 import anders from '../../assets/Group 234.svg'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export function CategoryForm() {
 

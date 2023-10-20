@@ -17,7 +17,7 @@ function Navbar() {
         },
         {
             name: 'Inschrijven als vakspecialist',
-            link: '/inschrijven-als-vakspecialist'
+            link: '/inschrijven-als-specialist'
         }
     ]
 

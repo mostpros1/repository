@@ -1,8 +1,7 @@
-.viewport{
-    height: 100vh;
+.multistep-viewport{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 30px;
+    padding: 30px;
 }

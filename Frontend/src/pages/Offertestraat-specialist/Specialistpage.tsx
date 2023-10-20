@@ -1,8 +1,16 @@
 import './Specialistpage.css'
+import Navbar from '../../components/ui/Navbar'
+import SpecialistMultistep from '../../components/MultistepForm/SpecialistMultistepForm'
 
 function Specialistpage() {
   return (
-    <div>Offertestraat-specialist</div>
+    <>
+      <Navbar />
+      <div className='multistep-viewport'>
+        <SpecialistMultistep />
+      </div>
+    </>
+    
   )
 }
 
