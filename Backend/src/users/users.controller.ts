@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, Delete, Patch, Param } from '@nestjs/common';
-import { UsersService } from './users.service'; 
-import { User } from './users.entity';
+import { UsersService } from './users.service';
 import { NoAuth } from 'src/auth/auth.decorator';
+import { AddUserDto } from './dtos/add-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -9,8 +10,8 @@ export class UsersController {
 
   @NoAuth()
   @Post()
-  async addUser(@Body() user: User) {
-  	return await this.usersService.addUser(user);
+  async addUser(@Body() dto: AddUserDto) {
+  	return await this.usersService.addUser(dto);
   }
 
   @Get(':userid')
@@ -19,8 +20,8 @@ export class UsersController {
   }
 
   @Patch()
-  async updateUser(@Body() user: User) {
-    return await this.usersService.updateUser(user);
+  async updateUser(@Body() dto: UpdateUserDto) {
+    return await this.usersService.updateUser(dto);
   }
 
   @Delete(':userid')

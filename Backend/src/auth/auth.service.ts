@@ -18,6 +18,7 @@ import { User } from 'src/users/users.entity';
 import ddbConnection from 'src/db/client';
 import * as bcrypt from 'bcrypt';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
+import { SignUpDto } from './dtos/signup.dto';
 
 @Injectable()
 export class AuthService {
@@ -114,9 +115,15 @@ export class AuthService {
         return this.createSessionToken(user.userId.S, user.firstName.S, user.lastName.S);
     }
 
-    async signUp(user: User) {
-        const potentiallyExistingUser = (await this.usersService.getUserByEmail(user.email)).Items[0];
-        if (potentiallyExistingUser) return "User with this email already exists.";
+    async signUp(signUpDto: SignUpDto) {
+        if ((await this.usersService.getUserByEmail(signUpDto.email)).Items[0]) return "User with this email already exists.";
+
+        let user: User = {
+            ...signUpDto,
+            userId: crypto.randomUUID(),
+            emailVerified: false
+        }
+        
         return {
             addUserResult: await this.usersService.addUser(user),
             createEmailCodeResult: await this.createEmailVerificationCode(user.userId),
