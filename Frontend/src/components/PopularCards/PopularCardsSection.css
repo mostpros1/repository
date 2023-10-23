@@ -1,6 +1,6 @@
 .popular-section{
     background-color: #E9F4FF;
-    padding: 150px 0px 100px 0px;
+    padding: 150px 30px 100px 30px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,5 +15,4 @@
     flex-direction: column;
     justify-content: center;
     gap: 50px;
-    padding: 0px 30px;
 }
