@@ -4,7 +4,7 @@ import { CategoryForm } from './CategoryForm'
 import { FormEvent } from "react"
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
-import { redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 // import axios from 'axios'
 
 type FormData = {
@@ -25,20 +25,20 @@ function SpecialistMultistepForm() {
       return { ...prev, ...fields }
     })
   }
+  const navigate = useNavigate();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
     <LocationForm {...data} updateFields={updateFields} />,
     <CategoryForm />
   ])
   async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    console.log(isLastStep)
+    e.preventDefault();
     if (!isLastStep) {
-       return next()
+      return next();
     } else {
-      console.log("hiya")
-      return redirect("/specialist-resultaat")
+      console.log("Hiya Js mastery");
+      navigate("/specialist-resultaat");
     }
-}
+  }
 
   const stepWidth = 100 / steps.length;
 

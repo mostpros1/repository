@@ -61,12 +61,12 @@ function MultistepForm() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()
-    try {
-      const response = await axios.get('http://localhost:3000/auth/users/2cfeeef2-8dc2-433a-9f0b-e83ccff8f3c6');
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const response = await axios.get('http://localhost:3000/auth/users/2cfeeef2-8dc2-433a-9f0b-e83ccff8f3c6');
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 
   const stepWidth = 100 / steps.length;
