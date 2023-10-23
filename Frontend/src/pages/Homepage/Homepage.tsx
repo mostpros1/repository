@@ -1,10 +1,8 @@
 import Navbar from "../../components/ui/Navbar"
 import PopularCardsSection from "../../components/PopularCards/PopularCardsSection"
 import Hero from "../../components/hero/Hero"
+import MostprosDesc from "../../components/MostprosDesc/MostprosDesc"
 
-import manWithHammerIcon from "../../assets/manmethammer.png"
-import girlWithDrill from "../../assets/vrouwmetboor.png"
-import peopleWithTools from "../../assets/2personenmettools.png"
 import handyman from "../../assets/handyman.png"
 import painter from "../../assets/stefano-manzini-B81670AyocM-unsplash.jpg"
 import floors from "../../assets/ddp-kS1UuxzkuJE-unsplash.jpg"
@@ -19,47 +17,14 @@ import schilder from "../../assets/schilder.png"
 function Homepage() {
   return (
     <>
-        {/* --Header-- */}
+        
         {/* Navbar */}
         <Navbar />
+        {/* --Hero-- */}
         <Hero />
-
         {/* --Content-- */}
         {/* How does Mostpros work? */}
-        <div className="title_container">
-          <h2>Hoe werkt Mostpros?</h2>
-        </div>
-        <div className="description_container">
-          <div className="description">
-            <h4>1 Beschrijf je klus</h4>
-            <p>
-              Denk aan klussen voor je uitbouw, renovatie, tegels, dak, keuken,
-              ramen, deuren, badkamer, sanitair, stuken, verwarming,
-              loodgieterswerk, elektriciteit, stofferen, slopen, afvoeren,
-              isolatie, timmerwerken, algemene klussen, schoonmaak, enz.
-            </p>
-            <img src={manWithHammerIcon} alt="" />
-          </div>
-          <div className="description">
-            <h4>2 Krijg een vakspecialist</h4>
-            <p>
-              Krijg een aannemer, gevelspecialist, metselaar, ontwerper,
-              tegelzetter, dakdekker, keukenmonteur, glaszetter,
-              kozijnspecialist, badkamerspecialist, stukadoor, installateur,
-              loodgieter, elektricien enz.
-            </p>
-            <img src={girlWithDrill} alt="" />
-          </div>
-          <div className="description">
-            <h4>3 Ontvang ondersteuning</h4>
-            <p>
-              Naast de standaard ondersteuning van de vakspecialist zijn we bij
-              Mostpros.com ook constant opzoek naar slimmere manieren om
-              iedereen in het netwerk te ondersteunen met groeien.
-            </p>
-            <img src={peopleWithTools} alt="" />
-          </div>
-        </div>
+        <MostprosDesc />
         {/* Popular Jobs */}
         <PopularCardsSection />
         {/* Find specialist for every job */}

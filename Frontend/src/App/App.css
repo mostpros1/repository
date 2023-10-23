@@ -7,27 +7,9 @@
 
 /* content */
 
-/* how does mostpros work */
-.description_container {
-    margin-top: 8rem;
-    display: flex;
-    justify-content: center;
-    font-size: 85%;
-    gap: 8rem;
-}
-
-.description {
-    max-width: 40rem;
-    min-height: 40rem;
-    position: relative;
-}
-.description h4{
-    padding-bottom: 2rem;
-}
-
-.description img {
-    position: absolute;
-    bottom: 0;
+.title_container{
+    width: 100%;
+    max-width: 1500px;
 }
 
 
@@ -164,10 +146,6 @@
     background-color: #E9F4FF;
 }
 
-.title_container h2 {
-    padding-left: 30rem;
-    padding-top: 10rem;
-}
 
 /* buttons */
 .button_container {
