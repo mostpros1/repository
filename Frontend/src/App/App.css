@@ -2,57 +2,8 @@
    - We use camelCase, meaning if you use multiple words together, the second word will be capitalized.
    - One exception: whenever you use an adjective like a color or say something is a container, use a _ and then type the adjective without capitalisation. For example titleCard_container_blue*/
 
-/*header*/
 
-/*navbar*/
-.nav {
-    display: flex;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    padding-top: 3rem;
-    justify-content: center;
-}
 
-.nav a{
-    color: white;
-}
-
-.nav_leftside{
-    min-width: 60%;
-}
-
-.nav-rightside{
-    display: flex;
-    gap: 4rem;
-}
-
-.loginButton{
-    background: none;
-    border-radius: 1.5rem;
-    padding: 0.5rem;
-    color: white;
-
-}
-
-.search {
-    display: flex;
-    align-items: center;
-}
-
-.header{
-    position: relative;
-    margin-bottom: 55rem;
-}
-
-.banner{
-    position: absolute;
-    width: 100vw;
-    max-height: 85vh;
-    object-fit: cover;
-    z-index: -1;
-    filter: blur(1px);
-}
 
 /* content */
 
@@ -79,29 +30,6 @@
     bottom: 0;
 }
 
-/* popular jobs */
-.popularCard_container {
-    display: flex;
-    width: 100vw;
-    justify-content: center;
-    grid-gap: 1rem;
-    background-color: #E9F4FF;
-    padding-top: 8rem;
-    padding-bottom: 2rem;
-}
-
-.popularCard {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    padding: 4rem;
-    margin-bottom: 4rem;
-    min-height: 20rem;
-    border-radius: 1.5rem;
-}
-
-.popularCard p {
-    margin-top: 3rem;
-}
 
 /* find people for every job */
 .jobs_container {
@@ -142,7 +70,7 @@
 /* why mostpros */
 .whyMostpros_container {
     display: flex;
-    width: 100vw;
+    width: 100%;
     margin-bottom: 8rem;
 }
 

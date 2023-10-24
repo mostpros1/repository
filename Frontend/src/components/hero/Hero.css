@@ -1,0 +1,66 @@
+/* whole hero */
+.hero{
+    height: 100vh;
+    width: 100%;
+    background-image: url(./assets/Background-layout.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+/* container for all the components */
+.hero-container{
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+.hero-container h2{
+    font-size: 55px;
+    text-align: justify;
+}
+
+.hero-container h2{
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
+
+.hero-container h2 span{
+    color: white;
+}
+
+/* search section */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-container h4{
+    font-size: 25px;
+}
+
+.search-container input{
+    border: none;
+    border-radius: 25px;
+    padding: 25px 40px; 
+    font-size: 18px; 
+    outline: none;
+}
+
+
+
+/* the link button */
+.link-btn > a{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: white;
+}

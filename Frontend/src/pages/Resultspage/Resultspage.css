@@ -1,0 +1,16 @@
+.resultpage{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.result-con{
+    display: flex;
+    width: 100%;
+    max-width: 1500px;
+    flex-direction: column;
+    gap: 100px;
+}
+
+
+

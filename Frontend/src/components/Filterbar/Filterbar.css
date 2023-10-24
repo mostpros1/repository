@@ -1,0 +1,13 @@
+.filterbar{
+    background-color: #E9F4FF;
+    padding: 0px 30px;
+    border-radius: 10px;
+}
+
+.filter-con{
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    transform: translateY(10px);
+    box-shadow: 0px 2px 0px 0px black;
+}
