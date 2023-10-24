@@ -13,6 +13,7 @@ import axios from 'axios'
 type FormData = {
   postCode: string
   stad: string
+  category: string
   aanvullendeInformatie: string
   info: string
   email: string
@@ -31,6 +32,7 @@ type FormData = {
 const INITIAL_DATA: FormData = {
   postCode: "",
   stad: "",
+  category: "",
   aanvullendeInformatie: "",
   info: "",
   email: "",
@@ -53,7 +55,7 @@ function MultistepForm() {
   }
   const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([
     <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm />,
+    <CategoryForm {...data} updateFields={updateFields}/>,
     <InfoForm {...data} updateFields={updateFields}/>,
     <EmailForm {...data} updateFields={updateFields}/>,
     <LoginForm {...data} updateFields={updateFields}/>,

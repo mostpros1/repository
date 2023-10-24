@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 type FormData = {
   postCode: string
   stad: string
+  category: string
 }
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -17,6 +18,7 @@ type FormData = {
 const INITIAL_DATA: FormData = {
   postCode: "",
   stad: "",
+  category: "",
 }
 function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA)
@@ -28,14 +30,14 @@ function SpecialistMultistepForm() {
   const navigate = useNavigate();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
     <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm />
+    <CategoryForm {...data} updateFields={updateFields}/>
   ])
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {
       return next();
     } else {
-      console.log("Hiya Js mastery");
+      console.log(data);
       navigate("/specialist-resultaat");
     }
   }
