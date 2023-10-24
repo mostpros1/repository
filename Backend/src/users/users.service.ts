@@ -18,12 +18,14 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { marshall } from '@aws-sdk/util-dynamodb';
 import * as bcrypt from 'bcrypt';
+import { AddUserDto } from './dtos/add-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UsersService {
 
     // Create
-    async addUser(user: User): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
+    async addUser(user: AddUserDto): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
         
         if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('Users'))) {
             const createTableCommand: CreateTableCommandInput = {
@@ -104,7 +106,7 @@ export class UsersService {
     }
 
     // Update
-    async updateUser(user: User): Promise<UpdateItemCommandOutput> {
+    async updateUser(user: UpdateUserDto): Promise<UpdateItemCommandOutput> {
         let UpdateExpression = "SET";
         let ExpressionAttributeNames = {};
         let ExpressionAttributeValues = {};

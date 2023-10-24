@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NoAuth } from './auth.decorator';
-import { User } from 'src/users/users.entity';
+import { LogInDto } from './dtos/login.dto';
+import { SignUpDto } from './dtos/signup.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,15 +21,15 @@ export class AuthController {
     @NoAuth()
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    logIn(@Body() logInDto: { email: string, password: string }): Promise<{access_token: string}> {
-        return this.authService.logIn(logInDto.email, logInDto.password);
+    logIn(@Body() dto: LogInDto): Promise<{access_token: string}> {
+        return this.authService.logIn(dto.email, dto.password);
     }
 
     @NoAuth()
     @HttpCode(HttpStatus.OK)
     @Post('signup')
-    signUp(@Body() signUpDto: User) {
-        return this.authService.signUp(signUpDto);
+    signUp(@Body() dto: SignUpDto) {
+        return this.authService.signUp(dto);
     }
 
     @NoAuth()
@@ -42,13 +43,13 @@ export class AuthController {
 
     @NoAuth()
     @Post('reset-password')
-    createPasswordReset(@Body() createPassResetDto: { email: string }) {
-        return this.authService.createPasswordResetCode(createPassResetDto.email);
+    createPasswordReset(@Body() email: string) {
+        return this.authService.createPasswordResetCode(email);
     }
     
     @NoAuth()
     @Get('reset-password/:resetcode')
-    resetPassword(@Param('resetcode') resetCode: string, @Body() resetPassDto: { password: string }) {
-        return this.authService.resetPassword(resetCode, resetPassDto.password);
+    resetPassword(@Param('resetcode') resetCode: string, @Body() password: string) {
+        return this.authService.resetPassword(resetCode, password);
     }
 }

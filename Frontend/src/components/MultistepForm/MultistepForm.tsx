@@ -9,6 +9,7 @@ import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
 import axios from 'axios'
+
 type FormData = {
   postCode: string
   stad: string
@@ -61,12 +62,14 @@ function MultistepForm() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()
-    // try {
-    //   const response = await axios.get('http://localhost:3000/auth/users/2cfeeef2-8dc2-433a-9f0b-e83ccff8f3c6');
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    const result = await axios.post('http://localhost:3000/v1/auth/signup', {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.registerEmail,
+      password: data.registerPassword
+    })
+    console.log(result.data);
+    if (result.data.createTokenResult?.access_token) console.log("TODO: Store access tokens in front end for requests")
   }
 
   const stepWidth = 100 / steps.length;
