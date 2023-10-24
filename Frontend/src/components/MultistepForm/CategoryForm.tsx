@@ -62,7 +62,7 @@ export function CategoryForm() {
     };
 
     let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
-        if (Repaircard.defaultChecked = false) {
+        if (Repaircard.defaultChecked === false) {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
                     <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
