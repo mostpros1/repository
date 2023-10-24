@@ -5,7 +5,6 @@ import lekkage from '../../assets/Lekkage.svg'
 import riolering from '../../assets/Onstoppen.svg'
 import anders from '../../assets/Group 234.svg'
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
 export function CategoryForm() {
 
@@ -15,36 +14,42 @@ export function CategoryForm() {
             icon: kraan,
             title: "Nieuwe leiding aanleggen",
             category: "pipe replacement",
+            defaultChecked: false,
         },
         {
             id: 2,
             icon: gereedschap,
             title: "Kapotte leiding maken",
             category: "damaged pipes",
+            defaultChecked: false,
         },
         {
             id: 3,
             icon: gasleiding,
             title: "Gasleiding repareren",
             category: "gas pipe repair",
+            defaultChecked: false,
         },
         {
             id: 4,
             icon: lekkage,
             title: "Lekkage verhelpen",
             category: "leakage",
+            defaultChecked: false,
         },
         {
             id: 5,
             icon: riolering,
             title: "Riolering en afvoer onstoppen of reinigen",
             category: "sewage system",
+            defaultChecked: false,
         },
         {
             id: 6,
             icon: anders,
             title: "Anders",
             category: "other",
+            defaultChecked: true,
         },
     ]
 
@@ -57,13 +62,24 @@ export function CategoryForm() {
     };
 
     let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
-        return (
-            <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
-                <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                <label>{Repaircard.title}</label>
-            </div>
-        );
+        if (Repaircard.defaultChecked = false) {
+            return (
+                <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
+                    <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
+                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                    <label>{Repaircard.title}</label>
+                </div>
+            )
+        } else {
+            return (
+                <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
+                    <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={true} />
+                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                    <label>{Repaircard.title}</label>
+                </div>
+            );
+
+        }
     });
 
     return (
