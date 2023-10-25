@@ -4,7 +4,6 @@ import gasleiding from '../../assets/Gasleiding.svg'
 import lekkage from '../../assets/Lekkage.svg'
 import riolering from '../../assets/Onstoppen.svg'
 import anders from '../../assets/Group 234.svg'
-import { useState } from 'react'
 type CategoryData = {
     category: string
 }
@@ -61,7 +60,6 @@ export function CategoryForm({ updateFields }: CategoryFormProps) {
         },
     ]
 
-
     const handleDivClicked = (index: number) => {
         updateFields({ category: repairCategories[index].title })
     };
@@ -70,17 +68,21 @@ export function CategoryForm({ updateFields }: CategoryFormProps) {
         if (Repaircard.defaultChecked === false) {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" name="button" value={Repaircard.category}  />
-                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                    <label>{Repaircard.title}</label>
+                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category}  />
+                    <label className='label' htmlFor={Repaircard.category}>
+                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                        {Repaircard.title}
+                    </label>
                 </div>
             )
         } else {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" name="button" value={Repaircard.category} defaultChecked={true}  />
-                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                    <label>{Repaircard.title}</label>
+                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category} defaultChecked={true}  />
+                    <label htmlFor={Repaircard.category}>
+                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                        {Repaircard.title}
+                    </label>
                 </div>
             );
 
