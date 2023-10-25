@@ -1,7 +1,5 @@
 import "./Filterbar.css"
 
-import React from 'react'
-
 function Filterbar() {
   return (
     <div className="filterbar">

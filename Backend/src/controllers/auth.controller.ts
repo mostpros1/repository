@@ -7,12 +7,14 @@ import {
     HttpStatus,
     Param,
     Post,
-    Query
+    Query,
+    Res
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { NoAuth } from './auth.decorator';
-import { LogInDto } from './dtos/login.dto';
-import { SignUpDto } from './dtos/signup.dto';
+import { AuthService } from '../services/auth.service';
+import { NoAuth } from '../decorators/auth.decorator';
+import { LogInDto } from '../dtos/auth/login.dto';
+import { SignUpDto } from '../dtos/auth/signup.dto';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -21,20 +23,22 @@ export class AuthController {
     @NoAuth()
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    logIn(@Body() dto: LogInDto): Promise<{access_token: string}> {
-        return this.authService.logIn(dto.email, dto.password);
+    async logIn(@Body() dto: LogInDto, @Res() response: Response) {
+        const token = await this.authService.logIn(dto.email, dto.password);
+        response.cookie('jwtToken', token, { httpOnly: true, maxAge: Number(process.env.JWT_SESSION_EXPIRATION_TIME) });
+        response.send({ message: 'Login succesful' });
     }
 
     @NoAuth()
     @HttpCode(HttpStatus.OK)
     @Post('signup')
-    signUp(@Body() dto: SignUpDto) {
+    async signUp(@Body() dto: SignUpDto) {
         return this.authService.signUp(dto);
     }
 
     @NoAuth()
     @Get('verify-email')
-    verifyEmail(@Query('code') code: string) {
+    async verifyEmail(@Query('code') code: string) {
         if (!code) throw new BadRequestException();
         return this.authService.verifyEmail(code);
     }
@@ -43,13 +47,13 @@ export class AuthController {
 
     @NoAuth()
     @Post('reset-password')
-    createPasswordReset(@Body() email: string) {
+    async createPasswordReset(@Body() email: string) {
         return this.authService.createPasswordResetCode(email);
     }
     
     @NoAuth()
     @Get('reset-password/:resetcode')
-    resetPassword(@Param('resetcode') resetCode: string, @Body() password: string) {
+    async resetPassword(@Param('resetcode') resetCode: string, @Body() password: string) {
         return this.authService.resetPassword(resetCode, password);
     }
 }

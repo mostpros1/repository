@@ -13,12 +13,12 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/users/users.service';
-import { User } from 'src/users/users.entity';
+import { UsersService } from 'src/services/users.service';
+import { User } from 'src/db/entities/users.entity';
 import ddbConnection from 'src/db/client';
 import * as bcrypt from 'bcrypt';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
-import { SignUpDto } from './dtos/signup.dto';
+import { SignUpDto } from '../dtos/auth/signup.dto';
 
 @Injectable()
 export class AuthService {

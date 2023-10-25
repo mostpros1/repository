@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './users.entity';
+import { User } from '../db/entities/users.entity';
 import ddbConnection from 'src/db/client';
 import {
     CreateTableCommandInput,
@@ -18,8 +18,8 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { marshall } from '@aws-sdk/util-dynamodb';
 import * as bcrypt from 'bcrypt';
-import { AddUserDto } from './dtos/add-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
+import { AddUserDto } from '../dtos/users/add-user.dto';
+import { UpdateUserDto } from '../dtos/users/update-user.dto';
 
 @Injectable()
 export class UsersService {

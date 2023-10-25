@@ -26,8 +26,6 @@ type FormData = {
   repeatRegisterPassword: string
 }
 
-  // const [isLoggingIn, setIsLoggingIn] = useState(true);
-  
 const INITIAL_DATA: FormData = {
   postCode: "",
   stad: "",
@@ -76,25 +74,25 @@ function MultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className='form-con'>
-        <div className='progress-con'>
-          <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
-          <div className="progress-bar">
-            {steps.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-                style={{ width: `${stepWidth}%` }}
-              ></div>
-            ))}
-          </div>
-        </div>     
-       
-        {step}
-       
+      <div className='progress-con'>
+        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
+        <div className="progress-bar">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
+              style={{ width: `${stepWidth}%` }}
+            ></div>
+          ))}
+        </div>
+      </div>
+
+      {step}
+
       <div className='btn-wrapper'>
-        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}  
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
-      </div>         
+        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
+        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
+      </div>
     </form>
   )
 }
