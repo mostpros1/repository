@@ -61,12 +61,8 @@ export function CategoryForm({ updateFields }: CategoryFormProps) {
         },
     ]
 
-    const [isCheckedList, setIsCheckedList] = useState(repairCategories.map((RepairCard) => RepairCard.defaultChecked));
-    const handleDivClicked = (index: number) => {
 
-        const updatedIsCheckedList = [...isCheckedList];
-        updatedIsCheckedList[index] = !updatedIsCheckedList[index];
-        setIsCheckedList(updatedIsCheckedList);
+    const handleDivClicked = (index: number) => {
         updateFields({ category: repairCategories[index].title })
     };
 
@@ -74,7 +70,7 @@ export function CategoryForm({ updateFields }: CategoryFormProps) {
         if (Repaircard.defaultChecked === false) {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" name="button" value={Repaircard.category} checked={isCheckedList[index]} />
+                    <input type="radio" name="button" value={Repaircard.category}  />
                     <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
                     <label>{Repaircard.title}</label>
                 </div>
@@ -82,7 +78,7 @@ export function CategoryForm({ updateFields }: CategoryFormProps) {
         } else {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" name="button" value={Repaircard.category} defaultChecked={true} checked={isCheckedList[index]} />
+                    <input type="radio" name="button" value={Repaircard.category} defaultChecked={true}  />
                     <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
                     <label>{Repaircard.title}</label>
                 </div>
