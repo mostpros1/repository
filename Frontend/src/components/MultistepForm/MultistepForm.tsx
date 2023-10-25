@@ -1,4 +1,4 @@
-import './Multistepform.css'
+import './MultistepForm.css'
 import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'

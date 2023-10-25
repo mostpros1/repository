@@ -1,4 +1,4 @@
-import Navbar from '../../components/ui/Navbar'
+import Navbar from '../../components/ui/NavBar'
 import MultistepForm from '../../components/MultistepForm/MultistepForm'
 import './Klussenpage.css'
 

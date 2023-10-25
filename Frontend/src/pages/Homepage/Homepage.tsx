@@ -1,6 +1,6 @@
-import Navbar from "../../components/ui/Navbar"
+import NavBar from "../../components/ui/NavBar"
 import PopularCardsSection from "../../components/PopularCards/PopularCardsSection"
-import Hero from "../../components/hero/Hero"
+import Hero from "../../components/Hero/Hero"
 
 import manWithHammerIcon from "../../assets/manmethammer.png"
 import girlWithDrill from "../../assets/vrouwmetboor.png"
@@ -16,12 +16,12 @@ import two from "../../assets/2.png"
 import three from "../../assets/3.png"
 import schilder from "../../assets/schilder.png"
 
-function Homepage() {
+function HomePage() {
   return (
     <>
         {/* --Header-- */}
         {/* Navbar */}
-        <Navbar />
+        <NavBar />
         <Hero />
 
         {/* --Content-- */}
@@ -202,4 +202,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default HomePage;

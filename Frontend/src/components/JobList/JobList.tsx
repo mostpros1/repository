@@ -1,4 +1,4 @@
-import "./Joblist.css"
+import "./JobList.css"
 import JobCards from "./JobCards"
 
 function JobList() {

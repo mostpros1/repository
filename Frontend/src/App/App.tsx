@@ -1,18 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Homepage from "../pages/Homepage/Homepage";
-import Klussenpage from "../pages/Klussenpage/Klussenpage";
-import Specialistpage from "../pages/Offertestraat-specialist/Specialistpage";
-import Resultspage from "../pages/Resultspage/Resultspage";
+import HomePage from "../pages/HomePage/HomePage";
+import KlussenPage from "../pages/KlussenPage/KlussenPage";
+import SpecialistPage from "../pages/Offertestraat-specialist/SpecialistPage";
+import ResultsPage from "../pages/ResultsPage/ResultsPage";
 import "./App.css";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/klussen" element={<Klussenpage />} />
-        <Route path="/inschrijven-als-specialist" element={<Specialistpage />} />
-        <Route path="/specialist-resultaat" element={<Resultspage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/klussen" element={<KlussenPage />} />
+        <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
+        <Route path="/specialist-resultaat" element={<ResultsPage />} />
       </Routes>
     </>
   );

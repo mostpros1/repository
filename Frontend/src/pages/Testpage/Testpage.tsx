@@ -1,7 +1,7 @@
-function Testpage() {
+function TestPage() {
   return (
     <div>Testpage</div>
   )
 }
 
-export default Testpage
+export default TestPage

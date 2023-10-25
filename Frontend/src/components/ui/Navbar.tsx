@@ -1,8 +1,8 @@
-import './Navbar.css';
+import './NavBar.css';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../assets/cropped-23107-9-tools-transparent-image 1.svg'
 
-function Navbar() {
+function NavBar() {
 
     let location = useLocation();
 
@@ -54,4 +54,4 @@ function Navbar() {
     ) 
 }
 
-export default Navbar
+export default NavBar
