@@ -43,3 +43,24 @@
     object-fit: contain;
 }
 
+@media (max-width: 768px){
+
+    .desc_step_con{
+        padding: 50px 25px;
+        gap: 50px;
+    }
+    .description_container{
+        width: 100%;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .description{
+        width: 100%;
+    }
+
+    .desc_img_con{
+        max-height: 250px;
+        transform: none;
+    }
+}

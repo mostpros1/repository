@@ -48,3 +48,19 @@
 .chore_desc a{
     color: black;
 }
+
+@media screen and (max-width: 768px){
+    .chores_con{
+        padding: 50px 25px;
+    }
+
+    .choresCard_con{
+        grid-template-columns: none;
+        grid-template-rows: repeat(3, 1fr);
+        justify-content: unset;
+    }
+
+    .choreCard{
+        width: 100%;
+    }
+}
