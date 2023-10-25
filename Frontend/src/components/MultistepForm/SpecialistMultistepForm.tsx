@@ -1,4 +1,4 @@
-import './Multistepform.css'
+import './MultistepForm.css'
 import { LocationForm } from './LocationForm'
 import { CategoryForm } from './CategoryForm'
 import { FormEvent } from "react"
