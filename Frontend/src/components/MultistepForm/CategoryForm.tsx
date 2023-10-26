@@ -4,9 +4,16 @@ import gasleiding from '../../assets/Gasleiding.svg'
 import lekkage from '../../assets/Lekkage.svg'
 import riolering from '../../assets/Onstoppen.svg'
 import anders from '../../assets/Group 234.svg'
-import { useState } from 'react'
+type CategoryData = {
+    category: string
+}
 
-export function CategoryForm() {
+type CategoryFormProps = CategoryData & {
+    updateFields: (fields: Partial<CategoryData>) => void
+}
+export function CategoryForm({ updateFields }: CategoryFormProps) {
+
+
 
     const repairCategories = [
         {
@@ -53,29 +60,29 @@ export function CategoryForm() {
         },
     ]
 
-    const [isCheckedList, setIsCheckedList] = useState(repairCategories.map(() => false));
-
     const handleDivClicked = (index: number) => {
-        const updatedIsCheckedList = [...isCheckedList];
-        updatedIsCheckedList[index] = !updatedIsCheckedList[index];
-        setIsCheckedList(updatedIsCheckedList);
+        updateFields({ category: repairCategories[index].title })
     };
 
     let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
-        if (Repaircard.defaultChecked = false) {
+        if (Repaircard.defaultChecked === false) {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={isCheckedList[index]} />
-                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                    <label>{Repaircard.title}</label>
+                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category}  />
+                    <label className='label' htmlFor={Repaircard.category}>
+                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                        {Repaircard.title}
+                    </label>
                 </div>
             )
         } else {
             return (
                 <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="checkbox" name={Repaircard.title} value={Repaircard.category} checked={true} />
-                    <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                    <label>{Repaircard.title}</label>
+                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category} defaultChecked={true}  />
+                    <label htmlFor={Repaircard.category}>
+                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
+                        {Repaircard.title}
+                    </label>
                 </div>
             );
 
