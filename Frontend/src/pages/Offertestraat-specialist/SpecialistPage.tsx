@@ -1,4 +1,3 @@
-import './Specialistpage.css'
 import NavBar from '../../components/ui/NavBar/NavBar'
 import './SpecialistPage.css'
 import SpecialistMultistep from '../../components/MultistepForm/SpecialistMultistepForm'

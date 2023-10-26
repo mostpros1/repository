@@ -1,4 +1,3 @@
-import './Resultspage.css'
 import NavBar from '../../components/ui/NavBar/NavBar'
 import './ResultsPage.css'
 import JobList from '../../components/JobList/JobList'
