@@ -1,6 +1,6 @@
-import "./Filterbar.css"
+import "./FilterBar.css"
 
-function Filterbar() {
+function FilterBar() {
   return (
     <div className="filterbar">
         <ul className="filter-con">
@@ -16,4 +16,4 @@ function Filterbar() {
   )
 }
 
-export default Filterbar
+export default FilterBar

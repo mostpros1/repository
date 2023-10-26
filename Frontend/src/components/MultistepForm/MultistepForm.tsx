@@ -1,4 +1,4 @@
-import './Multistepform.css'
+import './MultistepForm.css'
 import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
@@ -6,25 +6,42 @@ import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useMultistepForm } from '../../hooks/useMultistepForm'
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
+import { LoginForm } from './LoginForm'
+import { RegisterForm } from './RegisterForm'
+import axios from 'axios'
 
 type FormData = {
   postCode: string
   stad: string
+  category: string
   aanvullendeInformatie: string
   info: string
   email: string
+  loginEmail: string
+  loginPassword: string
+  firstName: string
+  lastName: string
+  registerEmail: string
+  phoneNumber: string
+  registerPassword: string
+  repeatRegisterPassword: string
 }
 
-  // const [isLoggingIn, setIsLoggingIn] = useState(true);
-  
 const INITIAL_DATA: FormData = {
   postCode: "",
   stad: "",
+  category: "",
   aanvullendeInformatie: "",
   info: "",
   email: "",
+  loginEmail: "",
+  loginPassword: "",
+  firstName: "",
+  lastName: "",
+  registerEmail: "",
+  phoneNumber: "",
+  registerPassword: "",
+  repeatRegisterPassword: ""
 }
 
 function MultistepForm() {
@@ -36,40 +53,49 @@ function MultistepForm() {
   }
   const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([
     <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm />,
+    <CategoryForm {...data} updateFields={updateFields}/>,
     <InfoForm {...data} updateFields={updateFields}/>,
     <EmailForm {...data} updateFields={updateFields}/>,
-    <LoginForm />,
-    <RegisterForm />
+    <LoginForm {...data} updateFields={updateFields}/>,
+    <RegisterForm {...data} updateFields={updateFields}/>
   ])
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()
-    alert("success")
+    const result = await axios.post('http://localhost:3000/v1/auth/signup', {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.registerEmail,
+      password: data.registerPassword
+    })
+    console.log(result.data);
+    if (result.data.createTokenResult?.access_token) console.log("TODO: Store access tokens in front end for requests")
   }
 
   const stepWidth = 100 / steps.length;
 
   return (
-    <div className='form-con'>
-        <div className='progress-con'>
-          <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
-          <div className="progress-bar">
-            {steps.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-                style={{ width: `${stepWidth}%` }}
-              ></div>
-            ))}
-          </div>
-        </div>     
-        {step}
+    <form onSubmit={onSubmit} className='form-con'>
+      <div className='progress-con'>
+        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
+        <div className="progress-bar">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
+              style={{ width: `${stepWidth}%` }}
+            ></div>
+          ))}
+        </div>
+      </div>
+
+      {step}
+
       <div className='btn-wrapper'>
-        {!isFirstStep && <button onClick={back} className='form-btn back'>Vorige</button>}  
-        <button onClick={next} className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>  
-      </div>         
-    </div>
+        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
+        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
+      </div>
+    </form>
   )
 }
 

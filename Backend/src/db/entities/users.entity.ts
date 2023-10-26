@@ -1,6 +1,5 @@
 export class User {
-
-    userId: string // userId must always be a uuid
+    userId: string // userId will always be a uuid
     firstName: string
     lastName: string
     email: string

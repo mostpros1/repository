@@ -2,17 +2,39 @@ import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
 
-function LoginForm() {
+type LoginData = {
+  loginEmail: string
+  loginPassword: string
+}
+
+type LoginFormProps = LoginData & {
+  updateFields: (fields: Partial<LoginData>) => void
+}
+
+export function LoginForm({loginEmail, loginPassword, updateFields }: LoginFormProps) {
   return (
-    <div className='login-con'>
+    <>
+       <div className='login-con'>
         <h2>Login om vakspecialist te vinden</h2>
         <div className='login-form-con'>
-            <form className='login-form'>
+            <div className='login-form'>
                 <label>Email</label>
-                <input type="text" placeholder='Bijv. joe@hotmail.com'/>
+                <input 
+                  required 
+                  type="email" 
+                  placeholder='Bijv. joe@hotmail.com'
+                  value={loginEmail}
+                  onChange={e => updateFields({ loginEmail: e.target.value })}
+                  />
                 <label>Wachtwoord</label>
-                <input type="text" placeholder='Wachtwoord'/>
-            </form>
+                <input 
+                  required 
+                  type="password" 
+                  placeholder='Wachtwoord'
+                  value={loginPassword}
+                  onChange={e => updateFields({ loginPassword: e.target.value })}
+                  />
+            </div>
             <div className='login-link'>Nog geen account? <a href="#">Account aanmaken inschrijven als professional</a></div>
             <button className='form-btn login-btn'>Inloggen</button>    
         </div> 
@@ -23,7 +45,6 @@ function LoginForm() {
             <div className='social-btn'><img src={instagram} alt="" />Instagram</div>
         </div>   
     </div>
+    </>
   )
 }
-
-export default LoginForm

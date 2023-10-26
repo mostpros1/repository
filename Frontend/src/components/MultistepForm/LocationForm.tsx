@@ -22,7 +22,7 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
           {location.pathname === "/klussen" ? "Voer je postcode in om vakspecialisten in jouw omgeving te vinden" : "Voer je postcode in om klussen in jouw omgeving te vinden"}  
         </h2>
       </div>
-        <form className="form-inputs">
+        <div className="form-inputs">
         <input
           type="text"
           required
@@ -39,7 +39,7 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
           value={stad}
           onChange={e => updateFields({ stad: e.target.value })}
         />
-      </form>
+      </div>
     </>
   )
 }

@@ -1,11 +1,11 @@
-import Navbar from '../../components/ui/NavBar/Navbar'
+import NavBar from '../../components/ui/NavBar/NavBar'
 import MultistepForm from '../../components/MultistepForm/MultistepForm'
-import './Klussenpage.css'
+import './KlussenPage.css'
 
-function Klussenpage() {
+function KlussenPage() {
   return (
     <>
-        <Navbar />
+        <NavBar />
         <div className='multistep-viewport'>
           <MultistepForm />
         </div>
@@ -13,4 +13,4 @@ function Klussenpage() {
   )
 }
 
-export default Klussenpage
+export default KlussenPage

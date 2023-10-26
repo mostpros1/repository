@@ -1,6 +1,6 @@
-import Navbar from "../../components/ui/NavBar/Navbar"
+import NavBar from "../../components/ui/NavBar/NavBar"
 import PopularCardsSection from "../../components/PopularCards/PopularCardsSection"
-import Hero from "../../components/hero/Hero"
+import Hero from "../../components/Hero/Hero"
 import MostprosDesc from "../../components/MostprosDesc/MostprosDesc"
 import ChoresDesc from "../../components/ChoresDesc/ChoresDesc"
 import Characteristics from "../../components/Characteristics/Characteristics"
@@ -8,13 +8,13 @@ import Reviews from "../../components/Reviews/Reviews"
 import Footer from "../../components/ui/Footer/Footer"
 import MobileNav from "../../components/ui/NavBar/MobileNav"
 
-function Homepage() {
+function HomePage() {
   return (
     <>
         {/* Navbar */}
-        <Navbar />
+        <NavBar />
         <MobileNav />
-        {/* --Hero-- */}
+        {/* --Hero-- */}    
         <Hero />
         {/* --Content-- */}
         {/* How does Mostpros work? */}
@@ -33,4 +33,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default HomePage;

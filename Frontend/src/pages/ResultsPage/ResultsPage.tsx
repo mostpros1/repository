@@ -1,15 +1,16 @@
 import './Resultspage.css'
-import Navbar from '../../components/ui/NavBar/Navbar'
+import NavBar from '../../components/ui/NavBar/NavBar'
+import './ResultsPage.css'
 import JobList from '../../components/JobList/JobList'
-import Filterbar from '../../components/Filterbar/Filterbar'
+import FilterBar from '../../components/FilterBar/FilterBar'
 
-function Resultspage() {
+function ResultsPage() {
   return (
     <>
-        <Navbar />
+        <NavBar />
         <div className='resultpage'>
             <div className='result-con'>
-                <Filterbar />
+                <FilterBar />
                 <JobList />
             </div>
         </div>      
@@ -17,4 +18,4 @@ function Resultspage() {
   )
 }
 
-export default Resultspage
+export default ResultsPage

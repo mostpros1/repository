@@ -1,11 +1,12 @@
 import './Specialistpage.css'
-import Navbar from '../../components/ui/NavBar/Navbar'
+import NavBar from '../../components/ui/NavBar/NavBar'
+import './SpecialistPage.css'
 import SpecialistMultistep from '../../components/MultistepForm/SpecialistMultistepForm'
 
-function Specialistpage() {
+function SpecialistPage() {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <div className='multistep-viewport'>
         <SpecialistMultistep />
       </div>
@@ -14,4 +15,4 @@ function Specialistpage() {
   )
 }
 
-export default Specialistpage
+export default SpecialistPage

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './users.entity';
+import { User } from '../db/entities/users.entity';
 import ddbConnection from 'src/db/client';
 import {
     CreateTableCommandInput,
@@ -16,20 +16,24 @@ import {
     UpdateItemCommandOutput,
     waitUntilTableExists,
 } from '@aws-sdk/client-dynamodb';
+import { marshall } from '@aws-sdk/util-dynamodb';
 import * as bcrypt from 'bcrypt';
+import { AddUserDto } from '../dtos/users/add-user.dto';
+import { UpdateUserDto } from '../dtos/users/update-user.dto';
 
 @Injectable()
 export class UsersService {
 
     // Create
-    async addUser(user: User): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
+    async addUser(user: AddUserDto): Promise<CreateTableCommandOutput | PutItemCommandOutput> {
+        
         if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('Users'))) {
             const createTableCommand: CreateTableCommandInput = {
                 TableName: 'Users',
                 KeySchema: [
                     { AttributeName: 'userId', KeyType: 'HASH' }
                 ],
-                ProvisionedThroughput: { ReadCapacityUnits: 4, WriteCapacityUnits: 4 },
+                ProvisionedThroughput: { ReadCapacityUnits: 2, WriteCapacityUnits: 2 },
                 AttributeDefinitions: [
                     { AttributeName: 'userId', AttributeType: 'S' },
                     { AttributeName: 'email',  AttributeType: 'S' }
@@ -41,11 +45,11 @@ export class UsersService {
                     ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
                 }]
             };
-
+            
             let createTableResult: CreateTableCommandOutput;
             await ddbConnection.createTable(createTableCommand).then(result => createTableResult = result);
-            const result = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Users' });
-            if (result.state !== "SUCCESS") return createTableResult;
+            const waitResult = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'Users' });
+            if (waitResult.state !== "SUCCESS") return createTableResult;
         }
 
         // Hash password before putting it in the database
@@ -71,7 +75,7 @@ export class UsersService {
     }
 
     // Read
-    async getUserByUserId(userId: string): Promise<GetItemCommandOutput> {
+    async getUserById(userId: string): Promise<GetItemCommandOutput> {
         const params: GetItemCommandInput = {
             TableName: 'Users',
             Key: {
@@ -101,28 +105,27 @@ export class UsersService {
         return getResult;
     }
 
-
     // Update
-    async updateUser(user: User): Promise<UpdateItemCommandOutput> {
+    async updateUser(user: UpdateUserDto): Promise<UpdateItemCommandOutput> {
         let UpdateExpression = "SET";
         let ExpressionAttributeNames = {};
         let ExpressionAttributeValues = {};
 
-        let userId = user.userId;
-        delete user.userId;
-
         for (const property in user) {
-            UpdateExpression += ` #${property} = :${property},`;
-            ExpressionAttributeNames[`#${property}`] = property;
-            ExpressionAttributeValues[`:${property}`] = { S: user[property] };
+            if (property != 'userId') {
+                UpdateExpression += ` #${property} = :${property},`;
+                ExpressionAttributeNames[`#${property}`] = property;
+                ExpressionAttributeValues[`:${property}`] = user[property];
+            }
         }
 
+        ExpressionAttributeValues = marshall(ExpressionAttributeValues);
         UpdateExpression = UpdateExpression.slice(0, -1);
 
         const params: UpdateItemCommandInput = {
             TableName: 'Users',
             Key: {
-                userId: { S: userId }
+                userId: { S: user.userId }
             },
             UpdateExpression,
             ExpressionAttributeNames,
