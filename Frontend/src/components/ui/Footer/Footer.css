@@ -1,9 +1,17 @@
-.footer_container {
+.footer{
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 5rem;
+    align-items: center;
     padding: 50px 30px;
+}
+
+.footer_container {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: center;
+    gap: 30px; 
 }
 
 .footerSection {
@@ -28,4 +36,10 @@
 
 .footerSection img {
     max-width: 4rem;
+}
+
+@media screen and (max-width: 768px){
+    .footer_container{
+        flex-direction: column;
+    }
 }

@@ -1,5 +1,5 @@
 import './Resultspage.css'
-import Navbar from '../../components/ui/Navbar'
+import Navbar from '../../components/ui/NavBar/Navbar'
 import JobList from '../../components/JobList/JobList'
 import Filterbar from '../../components/Filterbar/Filterbar'
 
