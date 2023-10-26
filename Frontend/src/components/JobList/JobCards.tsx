@@ -1,5 +1,7 @@
 import "./JobCards.css"
 import gasleiding from "../../assets/Gasleiding.svg"
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function JobCards() {
 
@@ -8,8 +10,9 @@ function JobCards() {
             id: 1,
             name: "Mark",
             distance: 1.1,
-            img: gasleiding,
             title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
             location: "Amsterdam",
             availability: "4 dagen"
         },
@@ -17,8 +20,9 @@ function JobCards() {
             id: 2,
             name: "Mark",
             distance: 1.1,
-            img: gasleiding,
             title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
             location: "Amsterdam",
             availability: "4 dagen"
         },
@@ -26,8 +30,9 @@ function JobCards() {
             id: 3,
             name: "Mark",
             distance: 1.1,
-            img: gasleiding,
             title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
             location: "Amsterdam",
             availability: "4 dagen"
         },
@@ -35,8 +40,9 @@ function JobCards() {
             id: 4,
             name: "Mark",
             distance: 1.1,
-            img: gasleiding,
             title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
             location: "Amsterdam",
             availability: "4 dagen"
         },
@@ -44,18 +50,24 @@ function JobCards() {
 
     let jobCardsRender = joblisting.map((job) => {
         return (
-            <div key={job.id}>
-                <div>
+            <div key={job.id} className="taskCard">
+                <div className="user-detail">
                     <h2>{job.name}</h2>
-                    <p>{job.distance}</p>
+                    <p><LocationOnIcon/>{job.distance}KM</p>
                 </div>
-                <div className="job-img-con">
-                    <img src={job.img} alt="" />
-                </div>
-                <h2 className="job-title">{job.title}</h2>
                 <div className="job-info">
-                    <p>Locatie: {job.location}</p>
-                    <p>Binnen {job.availability}</p>
+                    <h2 className="job-title">{job.title}</h2>
+                    <p className="job-desc">{job.description}</p>
+                </div>
+                <div className="jobInfo-extra-con">
+                    <div className="jobInfo-extra">
+                        <LocationOnIcon/>
+                        <p>Locatie: {job.location}</p>
+                    </div>
+                    <div className="jobInfo-extra">
+                        <CalendarMonthIcon/>
+                        <p>Binnen {job.availability}</p>
+                    </div>             
                 </div>
                 <button className="job-desc-btn">Meer info</button>
             </div>

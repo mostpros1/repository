@@ -1,12 +1,13 @@
+import './Resultspage.css'
+import NavBar from '../../components/ui/NavBar/NavBar'
 import './ResultsPage.css'
-import Navbar from '../../components/ui/NavBar'
 import JobList from '../../components/JobList/JobList'
 import FilterBar from '../../components/FilterBar/FilterBar'
 
 function ResultsPage() {
   return (
     <>
-        <Navbar />
+        <NavBar />
         <div className='resultpage'>
             <div className='result-con'>
                 <FilterBar />

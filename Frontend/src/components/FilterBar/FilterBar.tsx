@@ -3,7 +3,15 @@ import "./FilterBar.css"
 function FilterBar() {
   return (
     <div className="filterbar">
-        <div className="filter-con">Filterbar</div>
+        <ul className="filter-con">
+          <div className="filterItems">
+            
+          </div>
+          <div className="filterItems"></div>
+          <div className="filterItems"></div>
+          <div className="filterItems"></div>
+          <div className="filterItems"></div>
+        </ul>
     </div>
   )
 }

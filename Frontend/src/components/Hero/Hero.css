@@ -19,11 +19,11 @@
     display: flex;
     flex-direction: column;
     gap: 70px;
+    padding: 30px;
 }
 
 .hero-container h2{
-    font-size: 55px;
-    text-align: justify;
+    font-size: 50px;
 }
 
 .hero-container h2{
@@ -63,4 +63,18 @@
     align-items: center;
     gap: 20px;
     color: white;
+}
+
+@media screen and (max-width: 768px){
+    .hero-container{
+        padding: 25px;
+    }
+
+    .hero-container h2{
+        font-size: 36px;
+    }
+
+    .hero-container h4{
+        font-size: 20px;
+    }
 }

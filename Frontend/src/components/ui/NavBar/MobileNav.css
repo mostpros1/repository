@@ -1,0 +1,9 @@
+.mobileNav{
+    display: none;
+}
+
+@media screen and (max-width: 1024px){
+    .mobileNav{
+        display: block;
+    }
+}
