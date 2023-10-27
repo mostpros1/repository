@@ -2,6 +2,8 @@
     width: 100%;
     padding: 50px 30px;
     display: flex;
+    height: 80px;
+    z-index: 1;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -86,8 +88,53 @@ li > .black-items{
     color: white;
 }
 
+.mobile-nav{
+    display: none;
+}
+
 @media screen and (max-width: 1024px) {
     .nav{
+        padding: 20px 25px;
+        background: white;
+    }
+    .nav-container{
         display: none;
     }  
+
+    .mobile-nav{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .black-h1{
+        font-size: 26px;
+    }
+
+    .mobile-nav > svg{
+        font-size: 30px;
+    }
+
+    .nav-list{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        position: absolute;
+        transform: translateY(114px) ;
+        background-color: white;
+        width: 100%;
+        left: 0;
+        padding: 25px;
+    }
+
+    .nav-list > li > a{
+        font-size: 20px;
+    }
+
+    .white-items {
+        color: black !important;
+    }
+
+
 }

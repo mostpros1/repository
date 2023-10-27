@@ -1,5 +1,6 @@
 import "./Footer.css";
-import linkedIn from "../../../assets/linkedin.png";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 
 function Footer() {
   return (
@@ -27,7 +28,8 @@ function Footer() {
           <p>Kinderhuissingel 6-K</p>
         </div>
         <div className="footerSection">
-          <h4>Social</h4> <img src={linkedIn} alt="" />
+          <h4>Social</h4> 
+          <LinkedInIcon />
         </div>
       </div>
     </footer>
