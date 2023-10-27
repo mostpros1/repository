@@ -1,0 +1,15 @@
+# This file specifies what commands are used to build the backend. Only change if the building process for the NestJS app changes.
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing source NPM dependencies...
+      - cd Backend
+      - npm install
+  build:
+    commands:
+      - echo Building application...
+      - npm run build
+artifacts:
+  base-directory: 'Backend'
+  files: '**/*'

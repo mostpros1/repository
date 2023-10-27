@@ -26,7 +26,7 @@ export class AuthController {
     async logIn(@Body() dto: LogInDto, @Res() response: Response) {
         const token = await this.authService.logIn(dto.email, dto.password);
         response.cookie('jwtToken', token, { httpOnly: true, maxAge: Number(process.env.JWT_SESSION_EXPIRATION_TIME) });
-        response.send({ message: 'Login succesful' });
+        response.send({ message: 'Login successful' });
     }
 
     @NoAuth()
