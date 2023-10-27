@@ -27,7 +27,9 @@ function NavLinks() {
     })
   return (
     <>
-        {navItemsToBeRendered}
+        <ul className="nav-list">
+          {navItemsToBeRendered}
+        </ul> 
     </> 
   )
 }

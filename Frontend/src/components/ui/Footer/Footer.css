@@ -34,8 +34,9 @@
     color: grey;
 }
 
-.footerSection img {
-    max-width: 4rem;
+.footerSection > svg{
+    font-size: 30px;
+    color: #0a66c2;
 }
 
 @media screen and (max-width: 768px){
