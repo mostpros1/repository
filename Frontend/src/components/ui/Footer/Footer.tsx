@@ -12,7 +12,7 @@ function Footer() {
           <a href="">Hoe werkt het</a>
           <a href="">Waarom mostpros</a>
           <Link to="/over-ons">Over</Link>
-          <a href="">Contact</a>
+          <Link to="/contact">Contact</Link>
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>
