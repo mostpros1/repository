@@ -1,6 +1,6 @@
 .nav{
     width: 100%;
-    padding: 50px 30px;
+    padding: 40px 30px;
     display: flex;
     height: 80px;
     z-index: 1;
@@ -12,7 +12,7 @@
 
 .other-nav{
     width: 100%;
-    padding: 50px 30px;
+    padding: 40px 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,7 +85,7 @@ li > .black-items{
     font-weight: 600;
     background: none;
     border: none;
-    color: white;
+    color: black;
 }
 
 .mobile-nav{
@@ -94,8 +94,12 @@ li > .black-items{
 
 @media screen and (max-width: 1024px) {
     .nav{
-        padding: 20px 25px;
+        padding: 30px 20px;
         background: white;
+    }
+
+    .other-nav{
+        padding: 30px 20px;
     }
     .nav-container{
         display: none;
@@ -125,7 +129,7 @@ li > .black-items{
         background-color: white;
         width: 100%;
         left: 0;
-        padding: 25px;
+        padding: 20px;
     }
 
     .nav-list > li > a{

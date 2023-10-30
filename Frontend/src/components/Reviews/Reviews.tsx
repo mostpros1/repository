@@ -22,11 +22,11 @@ function Reviews() {
                 <img className="review_star" src={star} alt="" />
                 <img className="review_star" src={star} alt="" />
                 <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={emptyStar} alt="" />
+                <img className="review_star" src={star} alt="" />
               </div>
-              <p className="review_title">Soort klus</p>
-              <p className="review_name">Naam van vakspecialist</p>
-              <p className="review_comment">comment</p>
+              <p className="review_title">Lekkage badkamer</p>
+              <p className="review_name">Piet Beumers</p>
+              <p className="review_comment">Dankjewel voor de goede service.</p>
             </div>
           </div>
           <div className="reviewCard">
@@ -41,9 +41,9 @@ function Reviews() {
                 <img className="review_star" src={star} alt="" />
                 <img className="review_star" src={emptyStar} alt="" />
               </div>
-              <p className="review_title">Soort klus</p>
-              <p className="review_name">Naam van vakspecialist</p>
-              <p className="review_comment">comment</p>
+              <p className="review_title">Tuinontwerp en aanleg</p>
+              <p className="review_name">Robin Kikker</p>
+              <p className="review_comment">Luistert goed naar mensen en tevreden met de uitvoering.</p>
             </div>
           </div>
           <div className="reviewCard">
@@ -55,12 +55,12 @@ function Reviews() {
                 <img className="review_star" src={star} alt="" />
                 <img className="review_star" src={star} alt="" />
                 <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
+                <img className="review_star" src={emptyStar} alt="" />
                 <img className="review_star" src={emptyStar} alt="" />
               </div>
-              <p className="review_title">Soort klus</p>
-              <p className="review_name">Naam van vakspecialist</p>
-              <p className="review_comment">comment</p>
+              <p className="review_title">Nieuwe inloopdouche</p>
+              <p className="review_name">Richard Mol</p>
+              <p className="review_comment">Vakkundig aangepakt, duurde wel wat lang.</p>
             </div>
           </div>
         </div>

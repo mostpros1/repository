@@ -3,6 +3,8 @@ import HomePage from "../pages/HomePage/HomePage";
 import KlussenPage from "../pages/KlussenPage/KlussenPage";
 import SpecialistPage from "../pages/Offertestraat-specialist/SpecialistPage";
 import ResultsPage from "../pages/ResultsPage/ResultsPage";
+import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
+import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import "./App.css";
 
 function App() {
@@ -13,6 +15,9 @@ function App() {
         <Route path="/klussen" element={<KlussenPage />} />
         <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
         <Route path="/specialist-resultaat" element={<ResultsPage />} />
+        <Route path="/over-ons" element={<AboutUsPage />} />
+        <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
+
       </Routes>
     </>
   );
