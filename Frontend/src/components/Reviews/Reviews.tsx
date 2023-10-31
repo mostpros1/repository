@@ -3,6 +3,7 @@ import "./Reviews.css";
 import handyman from "../../assets/handyman.png";
 import star from "../../assets/icon _star 1_.png";
 import emptyStar from "../../assets/icon _star 1_empty.png";
+import { Link } from "react-router-dom";
 
 function Reviews() {
   return (
@@ -65,7 +66,10 @@ function Reviews() {
           </div>
         </div>
         <div className="button_container">
-          <button className="button">Nieuwe klus plaatsen</button>
+          <Link to="/klussen">
+            <button className="button">Nieuwe klus plaatsen</button>
+          </Link>
+          
         </div>
       </div>
     </>
