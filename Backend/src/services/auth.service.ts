@@ -64,22 +64,23 @@ export class AuthService {
         .catch(err => putResult = err)
         .then(result => putResult = result)
         
-        await this.emailService.sendEmail(
-            { ToAddresses: [email] },
-            "no-reply@mostpros.nl",
-            "Welcome to Mostpros - Email Verification Required",
-            {
-                Html: {
-                    Data: `<h1>Welcome to Mostpros!</h1>
-                    <br>
-                    <p>To get started, we need to verify your email address. This ensures the security of your account.</p>
-                    <br>
-                    <span>Click <a href="localhost:3000/auth/verify-email?code=${verificationCode}">this link</a> to verify that it's you.<span>
-                    <br>
-                    <p>If you didn't create an account with us, feel free to ignore this email.</p>`
-                }
-            }
-        )
+        // Emails not working yet; Sandbox mode still active
+        // await this.emailService.sendEmail(
+        //     { ToAddresses: [email] },
+        //     "no-reply@mostpros.nl",
+        //     "Welcome to Mostpros - Email Verification Required",
+        //     {
+        //         Html: {
+        //             Data: `<h1>Welcome to Mostpros!</h1>
+        //             <br>
+        //             <p>To get started, we need to verify your email address. This ensures the security of your account.</p>
+        //             <br>
+        //             <span>Click <a href="localhost:3000/auth/verify-email?code=${verificationCode}">this link</a> to verify that it's you.<span>
+        //             <br>
+        //             <p>If you didn't create an account with us, feel free to ignore this email.</p>`
+        //         }
+        //     }
+        // )
     }
 
     async createPasswordResetCode(email: string) {
