@@ -1,8 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function NavLinks() {
-    let location = useLocation();
-
     const navItems = [
         {
             name: 'Klussen',
@@ -21,7 +19,7 @@ function NavLinks() {
     let navItemsToBeRendered = navItems.map(Item => {
         return(
             <li key={Item.name}>
-                <Link to={Item.link} className={location.pathname === '/' ? 'white-items' : 'black-items'}>{Item.name}</Link>
+                <Link to={Item.link} className='black-items'>{Item.name}</Link>
             </li>
         )
     })

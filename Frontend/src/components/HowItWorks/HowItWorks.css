@@ -1,0 +1,35 @@
+.HowItsWorks{
+    width: 100%;
+    padding: 100px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.HowItsWorks_con{
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.back_to_home{
+    background-color: white;
+    padding: 20px 40px;
+    font-size: 20px;
+    border: 3px solid #308AE4;
+    border-radius: 10px;
+}
+
+.back_to_home:hover{
+    cursor: pointer;
+}
+
+.steps_img_con{
+    width: 100%;
+}
+
+.steps_img_con img{
+    width: 100%;
+}

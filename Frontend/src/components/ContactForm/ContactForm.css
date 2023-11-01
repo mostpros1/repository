@@ -1,0 +1,36 @@
+.contact{
+    width: 100%;
+    height: 110vh;
+    background: url(../../assets/Artcut.png) no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 30px;
+}
+
+.contact_con{
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact_address_info{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    transform: translateY(50px);
+}
+
+.contact_right{
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contact_right h2{
+    font-size: 25px;
+    font-weight: 400;
+}

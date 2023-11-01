@@ -9,7 +9,7 @@ function NavBar() {
 
     return(
         <>
-            <nav className={location.pathname === '/' ? 'nav' : 'other-nav'}>  
+            <nav className='nav'>  
                 <Navigation />
                 <MobileNav />
             </nav>

@@ -18,7 +18,6 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 150px;
     flex-direction: column;
     font-size: 20px;
     justify-content: center;
