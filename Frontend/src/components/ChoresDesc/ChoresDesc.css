@@ -18,6 +18,11 @@
     gap: 25px;
 }
 
+.choresCard_con a{
+    text-decoration: none;
+    color: black;
+}
+
 .choreCard{
     width: 100%;
     display: flex;
@@ -47,6 +52,9 @@
 
 .chore_desc a{
     color: black;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
 }
 
 @media screen and (max-width: 768px){

@@ -33,6 +33,12 @@ function Footer() {
           <LinkedInIcon />
         </div>
       </div>
+      <div className="cpad_wrapper">
+        <p>©2023</p>
+        <Link to="/privacybeleid">Privacybeleid.</Link>
+        <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
+        <Link to="/disclaimer">Disclaimer.</Link>
+      </div>
     </footer>
   );
 }

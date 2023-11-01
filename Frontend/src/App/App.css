@@ -42,3 +42,7 @@
     color: white;
     margin: auto;
 }
+
+.button:hover{
+    cursor: pointer;
+}
