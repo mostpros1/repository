@@ -19,12 +19,14 @@ import ddbConnection from 'src/db/client';
 import * as bcrypt from 'bcrypt';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { SignUpDto } from '../dtos/auth/signup.dto';
+import { EmailService } from './email.service';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private usersService: UsersService,
-        private jwtService: JwtService
+        private readonly usersService: UsersService,
+        private readonly jwtService: JwtService,
+        private readonly emailService: EmailService
     ) {}
 
     async createSessionToken(userId: string, firstName: string, lastName: string): Promise<{access_token: string}> {
@@ -32,7 +34,9 @@ export class AuthService {
         return { access_token: await this.jwtService.signAsync(payload) };
     }
 
-    async createEmailVerificationCode(userId: string): Promise<CreateTableCommandOutput | PutItemCommandOutput | string> {
+    async startEmailVerification(userId: string, email: string): Promise<CreateTableCommandOutput | PutItemCommandOutput | string> {
+        const verificationCode = crypto.randomUUID();
+
         if (!await ddbConnection.listTables({}).then((result) => result.TableNames.includes('EmailVerificationCodes'))) {
             const createTableCommand: CreateTableCommandInput = {
                 TableName: 'EmailVerificationCodes',
@@ -46,13 +50,11 @@ export class AuthService {
             const waitResult = await waitUntilTableExists({ client: ddbConnection, maxWaitTime: 100 }, { TableName: 'EmailVerificationCodes' });
             if (waitResult.state !== "SUCCESS") return createTableResult;
         }
-        
-        // TODO: FIGURE OUT HOW TO PREVENT THE SPAMMING OF VERIFICATION CODES IN THE DATABASE
 
         const putParams: PutItemCommandInput = {
             TableName: 'EmailVerificationCodes',
             Item: {
-                verificationCode: { S: crypto.randomUUID() },
+                verificationCode: { S: verificationCode },
                 userId:           { S: userId }
             }
         }
@@ -61,7 +63,24 @@ export class AuthService {
         await ddbConnection.putItem(putParams)
         .catch(err => putResult = err)
         .then(result => putResult = result)
-        return putResult;
+        
+        // Emails not working yet; Sandbox mode still active
+        // await this.emailService.sendEmail(
+        //     { ToAddresses: [email] },
+        //     "no-reply@mostpros.nl",
+        //     "Welcome to Mostpros - Email Verification Required",
+        //     {
+        //         Html: {
+        //             Data: `<h1>Welcome to Mostpros!</h1>
+        //             <br>
+        //             <p>To get started, we need to verify your email address. This ensures the security of your account.</p>
+        //             <br>
+        //             <span>Click <a href="localhost:3000/auth/verify-email?code=${verificationCode}">this link</a> to verify that it's you.<span>
+        //             <br>
+        //             <p>If you didn't create an account with us, feel free to ignore this email.</p>`
+        //         }
+        //     }
+        // )
     }
 
     async createPasswordResetCode(email: string) {
@@ -126,7 +145,7 @@ export class AuthService {
         
         return {
             addUserResult: await this.usersService.addUser(user),
-            createEmailCodeResult: await this.createEmailVerificationCode(user.userId),
+            createEmailCodeResult: await this.startEmailVerification(user.userId, user.email),
             createTokenResult: await this.createSessionToken(user.userId, user.firstName, user.lastName)
         }
     }
