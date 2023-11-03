@@ -1,9 +1,13 @@
-.mobileNav{
-    display: none;
+.mobile-nav{
+    display: none;  
+}
+
+.mobile-nav a{
+    text-decoration: none;
 }
 
 @media screen and (max-width: 1024px){
-    .mobileNav{
+    .mobile-nav{
         display: flex;
     }
 }

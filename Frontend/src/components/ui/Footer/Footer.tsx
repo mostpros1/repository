@@ -1,5 +1,6 @@
 import "./Footer.css";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from "react-router-dom";
 
 
 function Footer() {
@@ -10,8 +11,8 @@ function Footer() {
           <h4>Navigatie</h4>
           <a href="">Hoe werkt het</a>
           <a href="">Waarom mostpros</a>
-          <a href="">Over</a>
-          <a href="">Contact</a>
+          <Link to="/over-ons">Over</Link>
+          <Link to="/contact">Contact</Link>
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>
@@ -31,6 +32,12 @@ function Footer() {
           <h4>Social</h4> 
           <LinkedInIcon />
         </div>
+      </div>
+      <div className="cpad_wrapper">
+        <p>©2023</p>
+        <Link to="/privacybeleid">Privacybeleid.</Link>
+        <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
+        <Link to="/disclaimer">Disclaimer.</Link>
       </div>
     </footer>
   );

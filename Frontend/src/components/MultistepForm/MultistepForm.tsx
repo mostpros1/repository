@@ -62,8 +62,8 @@ function MultistepForm() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()
-    if (data.registerPassword != data.repeatRegisterPassword) return "Passwords do not match! (insert function that deals with it here)"
-    const result = await axios.post('http://localhost:3000/v1/auth/signup', {
+    if (data.registerPassword != data.repeatRegisterPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+    const result = await axios.post("/auth/signup", {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.registerEmail,
