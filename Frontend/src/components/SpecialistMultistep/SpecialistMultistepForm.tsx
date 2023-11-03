@@ -5,6 +5,7 @@ import { FormEvent } from "react"
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import HomeButton from '../ui/HomeButton/HomeButton'
 // import axios from 'axios'
 
 type FormData = {
@@ -60,6 +61,7 @@ function SpecialistMultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className='form-con'>
+      <HomeButton />
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">

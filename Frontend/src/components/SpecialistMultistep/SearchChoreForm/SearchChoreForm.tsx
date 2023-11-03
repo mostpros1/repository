@@ -1,6 +1,4 @@
 import "./SearchChoreForm.css"
-import { LoginForm } from "../../MultistepForm/LoginForm"
-import { Link } from "react-router-dom"
 
 type SpecialistData = {
     beroep: string

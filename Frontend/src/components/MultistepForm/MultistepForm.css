@@ -24,6 +24,10 @@ input{
     align-items: center;
 }
 
+.form-con a{
+    align-self: start;
+}
+
 .progress-con{
     width: 100%;
     display: flex;
