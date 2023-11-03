@@ -1,4 +1,6 @@
 import "./SearchChoreForm.css"
+import { LoginForm } from "../../MultistepForm/LoginForm"
+import { Link } from "react-router-dom"
 
 type SpecialistData = {
     beroep: string
@@ -18,7 +20,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 <h1>Zoek uw klus</h1>
                 <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</p>
             </div>
-            <form className="search_chore_form">
+            <div className="search_chore_form">
                 <label>Uw hoofdberoep</label>
                 <input
                     type="text"
@@ -48,7 +50,8 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                         onChange={e => updateFields({ stad: e.target.value })}
                     />
                 </div>
-            </form>
+                <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
+            </div>
         </>
 
     )
