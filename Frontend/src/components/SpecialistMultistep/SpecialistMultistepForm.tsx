@@ -1,6 +1,6 @@
-import './MultistepForm.css'
-import { LocationForm } from './LocationForm'
-import { CategoryForm } from './CategoryForm'
+import '../MultistepForm/MultistepForm.css'
+import SearchChoreForm from './SearchChoreForm/SearchChoreForm'
+import { RegisterForm } from '../MultistepForm/RegisterForm'
 import { FormEvent } from "react"
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
@@ -8,17 +8,31 @@ import { useNavigate } from 'react-router-dom';
 // import axios from 'axios'
 
 type FormData = {
+  beroep: string
+  email: string
   postCode: string
   stad: string
-  category: string
+  firstName: string
+  lastName: string
+  registerEmail: string
+  phoneNumber: string
+  registerPassword: string
+  repeatRegisterPassword: string
 }
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
+  email: "",
   postCode: "",
   stad: "",
-  category: "",
+  firstName: "",
+  lastName: "",
+  registerEmail: "",
+  phoneNumber: "",
+  registerPassword: "",
+  repeatRegisterPassword: ""
 }
 function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA)
@@ -29,8 +43,8 @@ function SpecialistMultistepForm() {
   }
   const navigate = useNavigate();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
-    <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm {...data} updateFields={updateFields}/>
+    <SearchChoreForm {...data} updateFields={updateFields}/>,
+    <RegisterForm {...data} updateFields={updateFields}/>
   ])
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
