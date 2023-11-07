@@ -21,6 +21,11 @@
     flex-direction: column;
 }
 
+.footerSection_icons{
+    display: flex;
+    flex-direction: row;
+}
+
 .footerSection h4 {
     margin-bottom: 2rem;
 }
@@ -35,10 +40,23 @@
     font-size: 80%;
     color: grey;
 }
+.link_socials {
+    width: fit-content;
+}
+.link_socials > svg, i{
+    font-size: 35px;
+}
 
-.footerSection > svg{
-    font-size: 30px;
-    color: #0a66c2;
+.li > svg{
+    color: #308AE4;
+}
+
+.insta svg{
+    color: purple;
+}
+
+.x i{
+    color: black;
 }
 
 .cpad_wrapper{
