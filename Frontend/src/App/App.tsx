@@ -7,6 +7,7 @@ import ResultsPage from "../pages/ResultsPage/ResultsPage";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
+import HomeOwnerResultPage from "../pages/HomeOwnerResultPage/HomeOwnerResultPage";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/klussen" element={<KlussenPage />} />
         <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
         <Route path="/specialist-resultaat" element={<ResultsPage />} />
+        <Route path="/huiseigenaar-resultaat" element={<HomeOwnerResultPage />}/>
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
         <Route path="/contact" element={<ContactPage />} />
