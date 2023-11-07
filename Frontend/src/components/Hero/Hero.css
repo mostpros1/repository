@@ -36,33 +36,19 @@
     color: white;
 }
 
-/* search section */
-.search-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.search-container h4{
-    font-size: 25px;
-}
-
-.search-container input{
-    border: none;
-    border-radius: 25px;
-    padding: 25px 40px; 
-    font-size: 18px; 
-    outline: none;
-}
-
-
 
 /* the link button */
-.link-btn > a{
+.link-btn{
     display: flex;
+    width: fit-content;
     align-items: center;
     gap: 20px;
     color: white;
+}
+
+.link-btn > p {
+    justify-self: center;
+    align-self: center;
 }
 
 @media screen and (max-width: 768px){
