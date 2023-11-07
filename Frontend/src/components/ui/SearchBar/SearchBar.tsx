@@ -1,4 +1,4 @@
-import './Searchbar.css';
+import './SearchBar.css';
 import specialists from '../../../data/specialists.js';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
