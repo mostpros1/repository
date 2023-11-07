@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Port Of Troy - Accommodaties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+  <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Port Of Troy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="accommodaties.html">Accommodaties <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="faciliteiten.html">Faciliteiten</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="faq.html">F.A.Q</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    <!-- Accommodaties -->
+    <div class="container my-5">
+      <h2>Populaire accommodaties</h2>
+      <div class="row mt-4">
+        <!-- Luxe villa -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/1131_1000x670.jpg" class="card-img-top" alt="Luxe villa">
+            <div class="card-body">
+              <h5 class="card-title">Luxe villa</h5>
+              <p class="card-text"> luxe en comfort die u nodig heeft voor een heerlijke vakantie.</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#villaModal">Bekijk villa</button>
+            </div>
+          </div>
+        </div>
+        <!-- Luxe chalet -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/preprocessed.jpg" class="card-img-top" alt="Luxe chalet">
+            <div class="card-body">
+              <h5 class="card-title">Luxe chalet</h5>
+              <p class="card-text">Een gezellig chalet met alle voorzieningen voor een heerlijk verblijf in de natuur.</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chaletModal">Bekijk chalet</button>
+            </div>
+          </div>
+        </div>
+        <!-- Luxe tent -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/village-montmarsis-safaritent.jpg" class="card-img-top" alt="Luxe tent">
+            <div class="card-body">
+              <h5 class="card-title">Luxe tent</h5>
+              <p class="card-text">Een bijzondere ervaring om te verblijven in een luxe tent voorzien van alle gemakken.</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tentModal">Bekijk tent</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+          <!-- Modaal venster voor de villa -->
+          <div class="modal fade" id="villaModal" tabindex="-1" role="dialog" aria-labelledby="villaModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="villaModalLabel">Luxe villa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <img src="fotos/1131_1000x670.jpg" class="img-fluid" alt="Luxe villa">
+                  <p>Een prachtige villa met alle luxe en comfort die u nodig heeft voor een heerlijke vakantie.</p>
+                  <ul>
+                    <li>Prijs: €500 per nacht</li>
+                    <li>Grootte: 250 m²</li>
+                    <li>Aantal slaapkamers: 4</li>
+                    <li>Aantal badkamers: 3</li>
+                    <li>Faciliteiten: privézwembad, terras, airconditioning, gratis wifi, barbecue</li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modaal venster voor het chalet -->
+          <div class="modal fade" id="chaletModal" tabindex="-1" role="dialog" aria-labelledby="chaletModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="chaletModalLabel">Luxe chalet</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <img src="fotos/preprocessed.jpg" class="img-fluid" alt="Luxe chalet">
+                  <p>Een gezellig chalet met alle voorzieningen voor een heerlijk verblijf in de natuur.</p>
+                  <ul>
+                    <li>Prijs: €250 per nacht</li>
+                    <li>Grootte: 100 m²</li>
+                    <li>Aantal slaapkamers: 2</li>
+                    <li>Aantal badkamers: 1</li>
+                    <li>Faciliteiten: open haard, sauna, jacuzzi, gratis wifi, balkon met uitzicht op de bergen</li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modaal venster voor de tent -->
+          <div class="modal fade" id="tentModal" tabindex="-1" role="dialog" aria-labelledby="tentModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="tentModalLabel">Luxe tent</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <img src="fotos/village-montmarsis-safaritent.jpg" class="img-fluid" alt="Luxe tent">
+                  <p>Een bijzondere ervaring om te verblijven in een luxe tent voorzien van alle gemakken.</p>
+                  <ul>
+                    <li>Prijs: €150 per nacht</li>
+                    <li>Grootte: 50 m²</li>
+                    <li>Aantal slaapkamers: 1</li>
+                    <li>Aantal badkamers: 1</li>
+                    <li>Faciliteiten: keuken, eigen terras, gratis wifi, gemeenschappelijk zwembad</li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2023 Port Of Troy. Alle rechten voorbehouden.</p>
+          </div>
+          <div class="col-md-6 text-right">
+            <ul class="list-inline">
+              <li class="list-inline-item"><a href="policy.html">Privacybeleid</a></li>
+              <li class="list-inline-item"><a href="beleid.html">Gebruiksvoorwaarden</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+</body>

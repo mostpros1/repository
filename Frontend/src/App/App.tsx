@@ -7,7 +7,10 @@ import ResultsPage from "../pages/ResultsPage/ResultsPage";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
+import DisclaimerPage from "../pages/DisclaimerPage/DisclaimerPage";
 import "./App.css";
+import AlgemeneVoorwaarden from "../pages/AlgemeneVoorwaarden/AlgemeneVoorwaarden";
+import PrivacyBeleid from "../pages/PrivacyBeleid/PrivacyBeleid";
 
 function App() {
   axios.defaults.baseURL = "http://api-env.eba-2mt8abmc.eu-north-1.elasticbeanstalk.com/v1"
@@ -21,6 +24,9 @@ function App() {
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/disclaimer" element={<DisclaimerPage/>} />
+        <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden/>} />
+        <Route path="/privacybeleid" element={<PrivacyBeleid/>} />
       </Routes>
     </>
   );

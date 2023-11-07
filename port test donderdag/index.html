@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Port Of Troy - Vakantiepark</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+  <!-- Cookie consent popup -->
+    <div class="cookieconsent">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-9">
+            <p>Deze website maakt gebruik van cookies om uw gebruikerservaring te verbeteren. <a href="#">Meer informatie</a></p>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary btn-sm acceptcookies">Cookies accepteren</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    // Verberg de cookie popup en stel een cookie in zodra de gebruiker op 'cookies accepteren' klikt
+    document.querySelector('.acceptcookies').addEventListener('click', function() {
+      document.querySelector('.cookieconsent').style.display = 'none';
+      document.cookie = 'cookies_accepted=true; max-age=86400; path=/'; // Verloopt na 1 dag
+    });
+    </script>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html">Port Of Troy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="accommodaties.html">Accommodaties</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="faciliteiten.html">Faciliteiten</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="faq.html">F.A.Q</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Welkom bij Port Of Troy</h1>
+        <p class="lead">Geniet van een heerlijke vakantie in ons luxe vakantiepark.</p>
+        <a class="btn btn-primary btn-lg" href="about.html" role="button">Ontdek ons park</a>
+      </div>
+    </div>
+
+    <!-- Dagdeal banner -->
+    <div class="container-fluid bg-primary py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="text-light mb-3">DAGDEAL</h2>
+            <h4 class="text-light mb-4">Vandaag slechts €50 korting op onze Luxe Villa!</h4>
+            <a href="#" class="btn btn-light">Bekijk aanbieding</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Accommodaties -->
+    <div class="container my-5">
+      <h2>Populaire accommodaties</h2>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/1131_1000x670.jpg" class="card-img-top" alt="Luxe villa">
+            <div class="card-body">
+              <h5 class="card-title">Luxe villa</h5>
+              <p class="card-text">Een prachtige villa met alle luxe en comfort die u nodig heeft voor een heerlijke vakantie.</p>
+              <a href="#" class="btn btn-primary">Bekijk villa</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/preprocessed.jpg" class="card-img-top" alt="Luxe chalet">
+            <div class="card-body">
+              <h5 class="card-title">Luxe chalet</h5>
+              <p class="card-text">Een gezellig chalet met alle voorzieningen voor een heerlijk verblijf in de natuur.</p>
+              <a href="#" class="btn btn-primary">Bekijk chalet</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="fotos/village-montmarsis-safaritent.jpg" class="card-img-top" alt="Luxe tent">
+            <div class="card-body">
+              <h5 class="card-title">Luxe tent</h5>
+              <p class="card-text">Een bijzondere ervaring om te verblijven in een luxe tent voorzien van alle gemakken.</p>
+              <a href="#" class="btn btn-primary">Bekijk tent</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Content -->
+    <div class="container">
+      <h2>Ga verder!</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Accommodaties</h5>
+              <p class="card-text">Ontdek onze luxe accommodaties die van alle gemakken zijn voorzien.</p>
+              <a href="accommodaties.html" class="btn btn-primary">Meer informatie</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Faciliteiten</h5>
+              <p class="card-text">Maak gebruik van onze uitgebreide faciliteiten voor jong en oud.</p>
+              <a href="faciliteiten.html" class="btn btn-primary">Meer informatie</a>
+            </div>
+          </div>
+        </div>
+
+      <!-- Recensies -->
+      <div class="container my-5">
+        <h2>Recensies van anderen</h2>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card mb-4" data-index="0">
+              <div class="card-body">
+                <p class="card-text">"Geweldig vakantiepark met prachtige accommodaties. We hebben hier een fantastische vakantie gehad en komen zeker terug!"</p>
+                <p class="card-footer text-muted">- Jan en Marieke</p>
+              </div>
+            </div>
+            <div class="card mb-4" data-index="1">
+              <div class="card-body">
+                <p class="card-text">"Dit vakantiepark is echt een aanrader! We hebben genoten van de rust en de mooie omgeving. De accommodaties zijn luxe en van alle gemakken voorzien."</p>
+                <p class="card-footer text-muted">- Familie Van Dijk</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-4" data-index="2">
+              <div class="card-body">
+                <p class="card-text">"Wat een heerlijk park is dit! We hebben genoten van de faciliteiten en de mooie omgeving. De accommodaties zijn top!"</p>
+                <p class="card-footer text-muted">- Familie De Jong</p>
+              </div>
+            </div>
+            <div class="card mb-4" data-index="3">
+              <div class="card-body">
+                <p class="card-text">"We hebben een geweldige tijd gehad in Port Of Troy. De accommodaties zijn ruim en schoon en het personeel is erg vriendelijk. We komen zeker terug!"</p>
+                <p class="card-footer text-muted">- Hans en Els</p>
+              </div>
+            </div>
+            <div class="card mb-4" data-index="4">
+              <div class="card-body">
+                <p class="card-text">"Als u op zoek bent naar een luxe vakantiepark met alle faciliteiten die u nodig heeft, dan is Port Of Troy de juiste keuze. We hebben hier een heerlijke vakantie gehad."</p>
+                <p class="card-footer text-muted">- Familie Jansen</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2023 Port Of Troy. Alle rechten voorbehouden.</p>
+          </div>
+          <div class="col-md-6 text-right">
+            <ul class="list-inline">
+              <li class="list-inline-item"><a href="policy.html">Privacybeleid</a></li>
+              <li class="list-inline-item"><a href="beleid.html">Gebruiksvoorwaarden</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>

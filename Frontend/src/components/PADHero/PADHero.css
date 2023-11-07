@@ -1,0 +1,25 @@
+.PADHero_container {
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+.PADHero_left{
+    width: 65%;
+    
+}
+.PADHero_left h2{
+    margin-top: 60px;
+}
+
+.PADHero_right{
+    width: 35%;
+}
+
+.PADHero_right img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+  
