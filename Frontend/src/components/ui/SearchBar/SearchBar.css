@@ -47,7 +47,6 @@
 
 .open{
     background-color: white;
-    position: absolute;
     top: 100%; /* Plaats het dropdown-menu onder de input */
     left: 0;
     width: 100%;
@@ -65,6 +64,8 @@
 
 .search_dropdown_item:last-child {
     border: none;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .search_dropdown_item:hover {

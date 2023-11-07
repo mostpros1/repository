@@ -1,30 +1,33 @@
-import React, { useState } from 'react';
 import './Searchbar.css';
 import specialists from '../../../data/specialists.js';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 function Searchbar() {
   const [value, setValue] = useState('');
-  const [showList, setShowList] = useState(false); // Nieuwe state voor het tonen/verbergen van de lijst
+  const [showList, setShowList] = useState(false);
+
+  const handleInputBlur = (e) => {
+    if (!e.relatedTarget || e.relatedTarget.className !== 'search_dropdown_item') {
+      setShowList(false);
+    }
+  };
 
   const handleInputFocus = () => {
-    setShowList(true); // Toon de lijst wanneer de input de focus krijgt
+    setShowList(true);
   };
 
-  const handleInputBlur = () => {
-    setShowList(false); // Verberg de lijst wanneer de input de focus verliest
-  };
-
-  const filteredSpecialists = specialists.filter((item: any) => {
+  // Voeg een voorwaarde toe om alle specialisten weer te geven als de input leeg is
+  const filteredSpecialists = value === '' ? specialists : specialists.filter((item: any) => {
     const searchTerm = value.toLowerCase();
     const fullName = item.name.toLowerCase();
     return fullName.startsWith(searchTerm);
   });
 
   const slicedSpecialists = filteredSpecialists.slice(0, 3);
-  
+
   const specialistsRender = slicedSpecialists.map((item: any) => (
-    <Link key={item.id} to="/klussen" className="search_dropdown_item">
+    <Link to="/klussen" key={item.id} className="search_dropdown_item">
       {item.name}
     </Link>
   ));
@@ -48,5 +51,6 @@ function Searchbar() {
     </>
   );
 }
+
 
 export default Searchbar;
