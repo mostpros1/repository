@@ -69,5 +69,14 @@
     cursor: pointer;
 }
 
+.mail_btn{
+    padding: 15px 25px;
+    text-decoration: none;
+    color: white;
+    background-color: #308AE4;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
 
 
