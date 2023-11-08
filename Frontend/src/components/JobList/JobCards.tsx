@@ -3,6 +3,7 @@ import gasleiding from "../../assets/Gasleiding.svg"
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
+
 function JobCards() {
 
     let joblisting = [

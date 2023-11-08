@@ -1,9 +1,15 @@
-import "./SpecialistCard.css"
+import "./SpecialistList.css";
+import SpecialistCard from "./SpecialistCard";
 
 function SpecialistList() {
   return (
-    <div>SpecialistList</div>
-  )
+    <>
+      <strong>Aanbevolen vakspecialisten</strong>
+      <div className="specialist_card_con">
+        <SpecialistCard />
+      </div>
+    </>
+  );
 }
 
-export default SpecialistList
+export default SpecialistList;
