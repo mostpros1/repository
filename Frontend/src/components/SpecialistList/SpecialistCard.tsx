@@ -47,8 +47,8 @@ function SpecialistCard() {
             <img src={specialist.img} alt={specialist.name} />
           </div>
           <div className="specialist_personal_detail">
-            <p>{specialist.name}</p>
-            <p>{specialist.job}</p>
+            <p className="specialist_card_name">{specialist.name}</p>
+            <p className="specialist_card_job">{specialist.job}</p>
           </div>
         </div>
         <div className="extra_specialist_details">
