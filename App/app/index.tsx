@@ -1,22 +1,25 @@
 import { Link } from "expo-router";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Pressable, Image, ImageBackground, } from "react-native";
+import { Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const StartPage = () => {
   return (
     <SafeAreaView style={styles.view}>
-      <ImageBackground
-        source={require("../assets/images/welkomBackground.png")}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.viewContainer1}>
-          <Image style={styles.img} source={require("../assets/images/logo.png")} />
-        </View>
-        <View style={styles.viewContainer1}>
-          <Text style={styles.welkom}> Welkom</Text>
-        </View>
-        <View style={styles.viewContainer1}>
-          <Link style={styles.button} href="/keuze">
-            <Text style={styles.text}>Start</Text>
-          </Link>
+      <ImageBackground source={require("../assets/images/welkomBackground.png")} style={styles.backgroundImage}>
+        <View style={styles.standardContainer}>
+          <View style={styles.sectionContainer}>
+            <Image style={styles.img} source={require("../assets/images/logo.png")} />
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.welkom}> Welkom</Text>
+          </View>
+          <View style={styles.sectionContainer}>
+              <Link style={styles.link} href="/keuze">
+                <Text style={styles.text}>Start</Text>
+              </Link>
+          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -24,30 +27,34 @@ const StartPage = () => {
 };
 
 const styles = StyleSheet.create({
-  welkom: {
-    fontSize: 40,
-  },
-  viewContainer1: {
-    paddingTop: 150,
+  view: {
+    flex: 1,
   },
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
     alignItems: "center",
   },
-  img: {
-    width: 400,
-  },
-  view: {
-    flex: 1,
-  },
-  button: {
+  standardContainer: {
+    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 4,
+    marginTop: "35%"
+  },
+  sectionContainer: {
+    height: "32%"
+  },
+  welkom: {
+    fontSize: 40,
+  },
+  img: {
+    width: 380,
+  },
+  link: {
+    borderRadius: 10,
     backgroundColor: "#308AE4",
     width: 300,
-    height: 60,
+    textAlign: "center",
+    padding: 20,
   },
   text: {
     fontSize: 16,

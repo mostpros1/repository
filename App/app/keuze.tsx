@@ -9,7 +9,7 @@ const StartPage = () => {
     <SafeAreaView style={styles.view}>
       <View style={styles.container}>
         <View style={styles.viewContainer1}>
-          <Image style={styles.img} source={require("../assets/images/logo.png")} />
+          <Image style={styles.img} source={require("../assets/images/logo2.png")} />
         </View>
         <View style={styles.viewContainer1}>
           <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>
@@ -46,21 +46,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 4,
+    borderRadius: 10,
     backgroundColor: "#308AE4",
     width: 300,
-    height: 60,
+    textAlign: "center",
+    padding: 20,
   },
   buttonTwo: {
     marginTop: 30,
     borderWidth: 2,
     borderColor:"#308AE4",
-    borderRadius: 4,
+    borderRadius: 10,
     backgroundColor: "white",
     width: 300,
-    height: 60,
+    textAlign: "center",
+    padding: 20,
   },
   text: {
     fontSize: 16,
