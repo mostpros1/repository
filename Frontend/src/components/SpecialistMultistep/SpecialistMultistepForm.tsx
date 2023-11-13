@@ -6,6 +6,10 @@ import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomeButton from '../ui/HomeButton/HomeButton'
+import FirstSpecialistQ from './SpecialistQ/FirstSpecialistQ/FirstSpecialistQ'
+import SecondSpecialistQ from './SpecialistQ/SecondSpecialistQ/SecondSpecialistQ'
+import ThirdSpecialistQ from './SpecialistQ/ThridSpecialistQ/ThirdSpecialistQ'
+import FourthSpecialistQ from './SpecialistQ/FourthSpecialistQ/FourthSpecialistQ'
 // import axios from 'axios'
 
 type FormData = {
@@ -45,7 +49,11 @@ function SpecialistMultistepForm() {
   const navigate = useNavigate();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
     <SearchChoreForm {...data} updateFields={updateFields}/>,
-    <RegisterForm {...data} updateFields={updateFields}/>
+    <RegisterForm {...data} updateFields={updateFields}/>,
+    <FirstSpecialistQ />,
+    <SecondSpecialistQ />,
+    <ThirdSpecialistQ />,
+    <FourthSpecialistQ />
   ])
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
