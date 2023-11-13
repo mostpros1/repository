@@ -6,10 +6,7 @@ import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomeButton from '../ui/HomeButton/HomeButton'
-import FirstSpecialistQ from './SpecialistQ/FirstSpecialistQ/FirstSpecialistQ'
-import SecondSpecialistQ from './SpecialistQ/SecondSpecialistQ/SecondSpecialistQ'
-import ThirdSpecialistQ from './SpecialistQ/ThridSpecialistQ/ThirdSpecialistQ'
-import FourthSpecialistQ from './SpecialistQ/FourthSpecialistQ/FourthSpecialistQ'
+import TestQ from './SpecialistQ/TestQ/TestQ'
 // import axios from 'axios'
 
 type FormData = {
@@ -23,6 +20,11 @@ type FormData = {
   phoneNumber: string
   registerPassword: string
   repeatRegisterPassword: string
+  questions: {
+    question1: string,
+    question2: string,
+    question3: string,
+  },
 }
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -37,23 +39,39 @@ const INITIAL_DATA: FormData = {
   registerEmail: "",
   phoneNumber: "",
   registerPassword: "",
-  repeatRegisterPassword: ""
+  repeatRegisterPassword: "",
+  questions: {
+    question1: "",
+    question2: "",
+    question3: "",
+  }
 }
+
 function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA)
   function updateFields(fields: Partial<FormData>) {
     setData(prev => {
-      return { ...prev, ...fields }
+      return { 
+        ...prev,
+        ...fields,
+        questions: { ...prev.questions, ...fields.questions }
+      }
     })
   }
+
+  function updateQuestionAnswers(answers: Partial<FormData['questions']>) {
+    setData((prev) => ({
+      ...prev,
+      questions: { ...prev.questions, ...answers },
+    }));
+  }
+
   const navigate = useNavigate();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
     <SearchChoreForm {...data} updateFields={updateFields}/>,
     <RegisterForm {...data} updateFields={updateFields}/>,
-    <FirstSpecialistQ />,
-    <SecondSpecialistQ />,
-    <ThirdSpecialistQ />,
-    <FourthSpecialistQ />
+    <TestQ questions={data.questions} updateQuestionAnswers={updateQuestionAnswers}/>,
+    <SearchChoreForm {...data} updateFields={updateFields}/>,
   ])
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
