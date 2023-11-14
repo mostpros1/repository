@@ -29,7 +29,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 <label>Email:</label>
                 <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="example@example.com"
                     value={email}
                     onChange={e => updateFields({ email: e.target.value })}
                 />
@@ -37,13 +37,13 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 <div className="search_chore_address">
                     <input
                         type="text"
-                        placeholder="Postcode"
+                        placeholder="1234AB"
                         value={postCode}
                         onChange={e => updateFields({ postCode: e.target.value })}
                     />
                     <input
                         type="text"
-                        placeholder="Stad"
+                        placeholder="Plaatsnaam"
                         value={stad}
                         onChange={e => updateFields({ stad: e.target.value })}
                     />
