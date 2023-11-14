@@ -6,6 +6,7 @@ import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomeButton from '../ui/HomeButton/HomeButton'
+import TestQ from './SpecialistQ/TestQ/TestQ'
 // import axios from 'axios'
 
 type FormData = {
@@ -19,6 +20,7 @@ type FormData = {
   phoneNumber: string
   registerPassword: string
   repeatRegisterPassword: string
+  questions: Record<string, string>;
 }
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -33,20 +35,104 @@ const INITIAL_DATA: FormData = {
   registerEmail: "",
   phoneNumber: "",
   registerPassword: "",
-  repeatRegisterPassword: ""
+  repeatRegisterPassword: "",
+  questions: {
+    question1: "",
+    question2: "",
+    question3: "",
+  }
 }
+
+type Question = {
+  key: string;
+  label: string;
+  options: string[];
+};
+
+const questionsData: Question[] = [
+  {
+    key: 'question1',
+    label: 'In welke omgeving wilt u werken',
+    options: ['Amsterdam', 'Den Haag', 'Rotterdam', 'Groningen', 'Utrecht', 'Eindhoven'],
+  },
+  {
+    key: 'question2',
+    label: 'Wat is uw specialisatie',
+    options: ['Web Development', 'Data Science', 'Design', 'Marketing', 'Anders'],
+  },
+  {
+    key: 'question3',
+    label: 'Wat is uw specialisaties',
+    options: ['Web Developmenta', 'Data Science', 'Design', 'Marketing', 'Anders'],
+  },
+  // ... voeg andere vragen toe zoals nodig
+];
+
 function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA)
   function updateFields(fields: Partial<FormData>) {
-    setData(prev => {
-      return { ...prev, ...fields }
-    })
+    setData((prev) => ({ ...prev, ...fields }));
   }
+
+  function updateQuestionAnswers(questionKey: string, answer: string) {
+    setData((prev) => {
+      if (typeof prev === 'function') {
+        return prev as FormData;
+      }
+  
+      const prevData = prev as FormData;
+  
+      return {
+        ...prevData,
+        questions: updateQuestions(prevData.questions, { [questionKey]: answer }),
+      };
+    });
+  }
+
+
+  function updateQuestions(prevQuestions: Record<string, string>, answers: Record<string, string>): Record<string, string> {
+    const filteredAnswers: Record<string, string> = {};
+
+    for (const key in answers) {
+      if (Object.prototype.hasOwnProperty.call(answers, key)) {
+        const value = answers[key];
+        if (value !== undefined) {
+          filteredAnswers[key] = value;
+        }
+      }
+    }
+
+    const updatedQuestions: Record<string, string> = { ...prevQuestions, ...filteredAnswers };
+
+    return updatedQuestions;
+  }
+
+
+
   const navigate = useNavigate();
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
-    <SearchChoreForm {...data} updateFields={updateFields}/>,
-    <RegisterForm {...data} updateFields={updateFields}/>
-  ])
+
+  const questionsSteps = questionsData.map((question) => (
+    <TestQ
+      key={question.key}
+      question={question} // Voeg de vraag als prop toe
+      questions={data.questions}
+      updateQuestionAnswers={(answers) => {
+        updateQuestionAnswers(question.key, answers[question.key] as string);
+      }}
+    />
+  ));
+  
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm({
+    steps: [
+      <SearchChoreForm {...data} updateFields={updateFields} />,
+      <RegisterForm {...data} updateFields={updateFields} />,
+      ...questionsSteps,
+    ],
+    onStepChange: () => {},
+  });
+
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {

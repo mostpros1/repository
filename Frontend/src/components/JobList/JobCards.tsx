@@ -69,7 +69,7 @@ function JobCards() {
                         <p>Binnen {job.availability}</p>
                     </div>             
                 </div>
-                <button className="job-desc-btn">Meer info</button>
+                <a className="mail_btn" href="mailto:teammostpros@gmail.com">Contact opnemen</a >
             </div>
         )
     })
