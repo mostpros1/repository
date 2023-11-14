@@ -14,7 +14,7 @@ type InfoData = {
                 <div className="text-field-con">
                     <h4>Deel hier a.u.b niet je contactgegevens.</h4>
                     <div>
-                        <textarea required className="text-field" name="" placeholder="Beschrijf je klus hier met aanvullende informatie denk aan eventuele schade, enz." value={aanvullendeInformatie} onChange={e => updateFields({ aanvullendeInformatie: e.target.value })}>
+                        <textarea className="text-field" name="" placeholder="Beschrijf je klus hier met aanvullende informatie denk aan eventuele schade, enz." value={aanvullendeInformatie} onChange={e => updateFields({ aanvullendeInformatie: e.target.value })}>
                         </textarea>
                     </div>
                 </div>           
