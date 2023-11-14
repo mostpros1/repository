@@ -5,7 +5,7 @@ import { LocationForm } from './LocationForm'
 import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
-import { useMultistepForm } from '../../hooks/useMultistepForm'
+import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
 import axios from 'axios'
@@ -51,7 +51,7 @@ function MultistepForm() {
       return { ...prev, ...fields }
     })
   }
-  const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([
+  const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useHomeOwnerMultistepForm([
     <LocationForm {...data} updateFields={updateFields} />,
     <CategoryForm {...data} updateFields={updateFields}/>,
     <InfoForm {...data} updateFields={updateFields}/>,
