@@ -15,20 +15,28 @@ const StartPage = () => {
                         </Link>
                     </View>
                 </View>
-                <View>
-                    <Image style={styles.image} source={require("../../assets/images/howItWorksThree.png")} />
+                <View style={styles.imageContainer}>
+                    <View>
+                        <Image style={styles.image} source={require("../../assets/images/howItWorksTwo.png")} />
+                    </View>
                 </View>
             </View>
+
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    <Image source={require("../../assets/images/three.png")} />
-                    <Text style={styles.title}>Klus wordt uitgevoerd</Text>
+                    <Image source={require("../../assets/images/two.png")} />
+                    <Text style={styles.title}>Selecteer een klus</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>
-                    <Text>De vakspecialist voert uw klus uit op de afgesproken dag.</Text>
+                    <Text>Ontvang reacties van huiseigenaren uit jouw omgeving of kies zelf uit onze database van klussen en neem contact met hem/haar op om je ideale klus te vinden.</Text>
                 </View>
             </View>
-            <Link style={styles.link} href="/home">
+            <View style={styles.progressionBarContainer}>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarEmpty}></View>
+            </View>
+            <Link style={styles.link} href="/howItWorksThreeSpecialist">
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Link>
         </SafeAreaView>
@@ -56,6 +64,11 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 400,
         borderBottomStartRadius: 400,
     },
+    imageContainer: {
+        display: "flex",
+        justifyContent: "flex-end",
+        height: 320,
+    },
     middleContainer: {
         display: "flex",
         alignItems: "flex-start",
@@ -65,12 +78,29 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
-        gap: 10,  
+        gap: 10,
     },
     middleContainerSecondSection: {
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
+    },    
+    progressionBarContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        height: 100,
+        alignItems: "flex-end"
+    },
+    progressionBarFull: {
+        width: 90,
+        height: 5,
+        backgroundColor: "#308AE4"
+    },
+    progressionBarEmpty: {
+        width: 90,
+        height: 4,
+        backgroundColor: "white"
     },
     image: {
         marginBottom: 20,
@@ -96,7 +126,7 @@ const styles = StyleSheet.create({
         width: 300,
         textAlign: "center",
         padding: 20,
-        bottom: -160,
+        bottom: -60,
     },
     text: {
         fontSize: 16,

@@ -15,10 +15,10 @@ const StartPage = () => {
           <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>
         </View>
         <View style={styles.viewContainer1}>
-          <Link style={styles.button} href="/howItWorksOne">
+          <Link style={styles.button} href="/howItWorksOneHomeowner">
             <Text style={styles.text}>Verder als huiseigenaar</Text>
           </Link>
-          <Link style={styles.buttonTwo} href="/home">
+          <Link style={styles.buttonTwo} href="/howItWorksOneSpecialist">
             <Text style={styles.textTwo}>Verder als vakspecialist</Text>
           </Link>
         </View>

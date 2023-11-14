@@ -16,21 +16,27 @@ const StartPage = () => {
                     </View>
                 </View>
                 <View>
-                    <Image style={styles.image} source={require("../../assets/images/howItWorksTwo.png")} />
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={require("../../assets/images/howItWorksThree.png")} />
+                    </View>
                 </View>
-            </View>
 
+            </View>
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    <Image source={require("../../assets/images/two.png")} />
-                    <Text style={styles.title}>Krijg een vakspecialist</Text>
+                    <Image source={require("../../assets/images/three.png")} />
+                    <Text style={styles.title}>Klus wordt uitgevoerd</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>
-                    <Text>Ontvang reacties van vakspecialisten uit jouw omgeving of kies zelf een specialist en neem contact met hem/haar op.</Text>
+                    <Text>De vakspecialist voert uw klus uit op de afgesproken dag.</Text>
                 </View>
             </View>
-
-            <Link style={styles.link} href="/howItWorksThree">
+            <View style={styles.progressionBarContainer}>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+            </View>
+            <Link style={styles.link} href="/home">
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Link>
         </SafeAreaView>
@@ -58,6 +64,11 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 400,
         borderBottomStartRadius: 400,
     },
+    imageContainer: {
+        display: "flex",
+        justifyContent: "flex-end",
+        height: 320,
+    },
     middleContainer: {
         display: "flex",
         alignItems: "flex-start",
@@ -67,15 +78,31 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
-        gap: 10,  
+        gap: 10,
     },
     middleContainerSecondSection: {
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
+    },    progressionBarContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        height: 100,
+        alignItems: "flex-end"
+    },
+    progressionBarFull: {
+        width: 90,
+        height: 5,
+        backgroundColor: "#308AE4"
+    },
+    progressionBarEmpty: {
+        width: 90,
+        height: 4,
+        backgroundColor: "white"
     },
     image: {
-        marginBottom: 20,
+        bottom: 0,
     },
     button: {
         borderRadius: 10,
@@ -98,7 +125,7 @@ const styles = StyleSheet.create({
         width: 300,
         textAlign: "center",
         padding: 20,
-        bottom: -160,
+        bottom: -60,
     },
     text: {
         fontSize: 16,

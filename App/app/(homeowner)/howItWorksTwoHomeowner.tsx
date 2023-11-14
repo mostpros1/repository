@@ -11,25 +11,32 @@ const StartPage = () => {
                 <View style={styles.standardContainer}>
                     <View style={[styles.button, styles.skipButton]} >
                         <Link href="/home">
-                            <Text style={[styles.text]}>Overslaan</Text>
+                            <Text style={[styles.text, styles.skipButtonText]}>Overslaan</Text>
                         </Link>
                     </View>
                 </View>
-                <View>
-                    <Image style={styles.image} source={require("../../assets/images/howItWorksOne.png")} />
+                <View style={styles.imageContainer}>
+                    <View>
+                        <Image style={styles.image} source={require("../../assets/images/howItWorksTwo.png")} />
+                    </View>
                 </View>
             </View>
-            
+
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    <Image source={require("../../assets/images/one.png")} />
-                    <Text style={styles.title}>Beschrijf je klus</Text>
+                    <Image source={require("../../assets/images/two.png")} />
+                    <Text style={styles.title}>Krijg een vakspecialist</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>
-                    <Text>Voer in de zoekbalk je klus in, noteer je postcode en geef een beschrijving van de gewenste werkzaamheden. Let op: U dient aan het einde in te loggen om aanbod te ontvangen.</Text>
+                    <Text>Ontvang reacties van vakspecialisten uit jouw omgeving of kies zelf een specialist en neem contact met hem/haar op.</Text>
                 </View>
             </View>
-            <Link style={styles.link} href="/howItWorksTwo">
+            <View style={styles.progressionBarContainer}>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarEmpty}></View>
+            </View>
+            <Link style={styles.link} href="/howItWorksThreeHomeowner">
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Link>
         </SafeAreaView>
@@ -57,6 +64,11 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 400,
         borderBottomStartRadius: 400,
     },
+    imageContainer: {
+        display: "flex",
+        justifyContent: "flex-end",
+        height: 320,
+    },
     middleContainer: {
         display: "flex",
         alignItems: "flex-start",
@@ -72,6 +84,23 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
+    },    
+    progressionBarContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        height: 100,
+        alignItems: "flex-end"
+    },
+    progressionBarFull: {
+        width: 90,
+        height: 5,
+        backgroundColor: "#308AE4"
+    },
+    progressionBarEmpty: {
+        width: 90,
+        height: 4,
+        backgroundColor: "white"
     },
     image: {
         marginBottom: 20,
@@ -97,7 +126,7 @@ const styles = StyleSheet.create({
         width: 300,
         textAlign: "center",
         padding: 20,
-        bottom: -160,
+        bottom: -60,
     },
     text: {
         fontSize: 16,
@@ -109,6 +138,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
+    },
+    skipButtonText: {
+
     },
     nextButtonText: {
         color: "white"
