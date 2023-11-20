@@ -115,14 +115,15 @@ input{
 
 .repaircards-con{
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px 200px;
     gap: 30px;
     text-align: center;
 }
 
 .repairCard{
     position: relative;
+    min-height: 200px;  
     display: flex;
     flex-direction: column;
     font-size: 16px;
