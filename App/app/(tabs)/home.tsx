@@ -10,7 +10,7 @@ const StartPage = () => {
       <ImageBackground source={require("../../assets/images/welkomBackground.png")} style={styles.backgroundImage}>
         <View style={styles.standardContainer}>
           <View style={styles.sectionContainer}>
-              <Link style={styles.link} href="/keuze">
+              <Link style={styles.link} href="/login/login">
                 <Text style={styles.text}>Start</Text>
               </Link>
           </View>
