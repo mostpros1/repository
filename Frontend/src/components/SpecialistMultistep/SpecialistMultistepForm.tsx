@@ -158,7 +158,7 @@ function SpecialistMultistepForm() {
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
-      onStepChange: () => {},
+      onStepChange: () => { },
     });
 
   async function onSubmit(e: FormEvent) {
@@ -184,9 +184,8 @@ function SpecialistMultistepForm() {
           {steps.map((_, index) => (
             <div
               key={index}
-              className={`progress-step ${
-                index <= currentStepIndex ? "active" : ""
-              }`}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""
+                }`}
               style={{ width: `${stepWidth}%` }}
             ></div>
           ))}
@@ -197,15 +196,18 @@ function SpecialistMultistepForm() {
         <div className="btn-wrapper">
           <button
             type="button"
-            onClick={() => {showNoKvK ? setShowNoKvK(false) : back()}}
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
             className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
           >
             Vorige
           </button>
-          { showNoKvK ? <></> : <button type="submit" className="form-btn">
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
             {isLastStep ? "Verstuur" : "Volgende"}
           </button>}
-          
+
         </div>
       </>
     </form>

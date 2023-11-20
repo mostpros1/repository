@@ -98,6 +98,10 @@ input{
     color: white;
 }
 
+.form-btn:hover{
+    cursor: pointer;
+}
+
 .back{
     background-color: white;
     border: 2px solid #308AE4;
