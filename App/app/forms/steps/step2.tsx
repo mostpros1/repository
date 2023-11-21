@@ -13,16 +13,9 @@ type InfoFormPropsTwo = InfoDataTwo & {
 
 export function InfoFormTwo({ inputTwo, updateFields }: InfoFormPropsTwo) {
     return (
-        <View style={styles.view}>
+        <View>
             <TextInput value={inputTwo} onChangeText={text => updateFields({ inputTwo: text })} />
             <Text>Stap 2</Text>
         </View>
     );
 }
-const styles = StyleSheet.create({
-    view: {
-        width: 400,
-        height: 400,
-        backgroundColor: "Black",
-    }
-})

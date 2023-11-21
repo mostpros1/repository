@@ -1,18 +1,34 @@
 import { Link } from "expo-router";
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Pressable, Image, ImageBackground, } from "react-native";
-import { Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+  Pressable,
+  Image,
+  ImageBackground,
+} from "react-native";
+import { Dimensions } from "react-native";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const StartPage = () => {
   return (
     <SafeAreaView style={styles.view}>
-      <ImageBackground source={require("../../assets/images/welkomBackground.png")} style={styles.backgroundImage}>
+      <ImageBackground
+        source={require("../../assets/images/welkomBackground.png")}
+        style={styles.backgroundImage}
+      >
         <View style={styles.standardContainer}>
           <View style={styles.sectionContainer}>
-              <Link style={styles.link} href="/login/login">
-                <Text style={styles.text}>Start</Text>
-              </Link>
+            <Link style={styles.link} href="/forms/login">
+              <Text style={styles.text}>login</Text>
+            </Link>
+            <Link style={styles.link} href="/forms/register">
+              <Text style={styles.text}>Register</Text>
+            </Link>
           </View>
         </View>
       </ImageBackground>
@@ -32,10 +48,10 @@ const styles = StyleSheet.create({
   standardContainer: {
     display: "flex",
     alignItems: "center",
-    marginTop: "35%"
+    marginTop: "35%",
   },
   sectionContainer: {
-    height: "32%"
+    height: "32%",
   },
   welkom: {
     fontSize: 40,
