@@ -113,6 +113,13 @@ input{
     background-color: #2879ca;
 }
 
+.repaircards-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+}
+
 .repaircards-con{
     display: grid;
     width: 100%;
@@ -134,10 +141,22 @@ input{
     cursor: pointer;
 }
 
-.repairCard input {
+.repairCard input{
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.repairCard label{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.repairCard label img{
+    height: 75px;
+    width: 100%;
+    object-fit: contain;
 }
 
 .icon{

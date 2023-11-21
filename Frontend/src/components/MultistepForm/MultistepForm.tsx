@@ -2,13 +2,16 @@ import './MultistepForm.css'
 import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
+import { useQuestionData } from '../../data/MSFquestions'
 import CategoryForm from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import kraan from '../../assets/kraan.svg'
 import axios from 'axios'
+
 
 type FormData = {
   postCode: string
@@ -48,54 +51,12 @@ const INITIAL_DATA: FormData = {
   repeatRegisterPassword: ""
 }
 
-type Question = {
-  key: string;
-  label: string;
-  options: string[];
-};
-
-const questionsData: Question[] = [
-  {
-    key: "question1",
-    label: "Wat moet er gedaan worden",
-    options: [
-      "Nieuwe leiding aanleggen",
-      "Kapotte leiding maken",
-      "Gas leiding repareren",
-      "Lekkage verhelpen",
-      "Rioleren en afvoer onstoppen of reinigen",
-      "Anders",
-    ],
-  },
-  {
-    key: "question2",
-    label: "In welke gedeelte van de woning",
-    options: [
-      "Badkamer of toilet",
-      "Keuken",
-      "Slaapkamers",
-      "Woonkamer",
-      "Zolder",
-      "Garage of schuur",
-      "Anders"
-    ],
-  },
-  {
-    key: "question3",
-    label: "Om welke onderdeel gaat het",
-    options: [
-      "Toilet",
-      "Douche of bad",
-      "Wasbak",
-      "Wasmachine",
-      "Anders",
-    ],
-  },
-  // ... voeg andere vragen toe zoals nodig
-];
+// ... voeg andere vragen toe zoals nodig
 
 function MultistepForm() {
-  const [data, setData] = useState(INITIAL_DATA)
+  const [data, setData] = useState(INITIAL_DATA);
+  
+  const questionsData = useQuestionData();
   
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
@@ -141,6 +102,13 @@ function MultistepForm() {
     return updatedQuestions;
   }
 
+  const optionImages = {
+    "Nieuwe leiding aanleggen": kraan,
+    "Kapotte leiding maken": kraan,
+    "Anders": kraan
+    // ... voeg andere opties en bijbehorende afbeeldingen toe
+  };
+
   const questionsSteps = questionsData.map((question) => (
     <CategoryForm
       key={question.key}
@@ -149,11 +117,12 @@ function MultistepForm() {
       updateQuestionAnswers={(answers) => {
         updateQuestionAnswers(question.key, answers[question.key] as string);
       }}
+      optionImages={optionImages}
     />
   ));
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-  useHomeOwnerMultistepForm({
+    useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
@@ -164,7 +133,7 @@ function MultistepForm() {
       ],
       onStepChange: () => { },
     });
- 
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()

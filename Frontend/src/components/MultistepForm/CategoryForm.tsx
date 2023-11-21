@@ -1,10 +1,3 @@
-import kraan from '../../assets/kraan.svg'
-import gereedschap from '../../assets/Tools.svg'
-import gasleiding from '../../assets/Gasleiding.svg'
-import lekkage from '../../assets/Lekkage.svg'
-import riolering from '../../assets/Onstoppen.svg'
-import anders from '../../assets/Group 234.svg'
-
 interface Question {
     key: string;
     label: string;
@@ -15,26 +8,36 @@ interface CategoryProps {
     question: Question;
     questions: Record<string, string>;
     updateQuestionAnswers: (answers: Partial<Record<string, string>>) => void;
+    optionImages: Record<string, string>; // Voeg een prop toe voor het bijhouden van de afbeeldings-URL's per optie
 }
-const CategoryForm: React.FC<CategoryProps> = ({ question, questions, updateQuestionAnswers }) => {
+
+const CategoryForm: React.FC<CategoryProps> = ({ question, questions, updateQuestionAnswers, optionImages }) => {
     const handleRadioChange = (selectedAnswer: string) => {
         updateQuestionAnswers({ [question.key]: selectedAnswer });
     };
 
     return (
-        <>
+        <div className='repaircards-wrapper'>
+            <h2>{question.label}</h2>
             <div className='repaircards-con'>
                 {question.options.map((option) => (
-                    <div key={question.key} className='repairCard' onClick={() => handleRadioChange(option)}>
-                        <input type="radio" value={option} checked={questions[question.key] === option} />
-                        <label className='label' key={option}>
+                    <div key={`${question.key}-${option}`} className='repairCard' onClick={() => handleRadioChange(option)}>
+                        <input
+                            type="radio"
+                            id={`${question.key}-${option}`}
+                            value={option}
+                            checked={questions[question.key] === option}
+                            onChange={() => handleRadioChange(option)}
+                        />
+                        <label htmlFor={`${question.key}-${option}`} className='label'>
+                            {optionImages[option] && <img src={optionImages[option]} alt={option} />} {/* Voeg de img-tag toe */}
                             {option}
                         </label>
                     </div>
                 ))}
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default CategoryForm
+export default CategoryForm;
