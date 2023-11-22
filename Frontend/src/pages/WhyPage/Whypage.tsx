@@ -1,8 +1,8 @@
 import "./Whypage.css"
 import NavBar from "../../components/ui/NavBar/NavBar"
 import Footer from "../../components/ui/Footer/Footer"
-import WhyPage from "../../components/Whypage/Whypage_con"
 import CheakHero from "../../components/CheakHero/CheakHero"
+import Whypage_con from "../../components/Whypage/Whypage_con"
 
 function Whypage() {
   return (
@@ -10,7 +10,7 @@ function Whypage() {
         <NavBar />
         <div className="Whypage_con">
           <CheakHero/>
-          <Whypage/>
+          <Whypage_con/>
         </div>
         <Footer />
     </>

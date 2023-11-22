@@ -5,7 +5,7 @@ function CheakHero() {
     <>
       <div className="CheakHero_container">
         <div className="CheakHero_midden">
-          <h2>midden</h2>
+          <h2>alo</h2>
         </div>
         <div className="CheakHero_right">
           <img src={Cheakman} alt="Cheakman" className="Cheakman" />

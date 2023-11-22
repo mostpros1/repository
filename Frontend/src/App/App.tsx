@@ -11,6 +11,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/DisclaimerPage";
 import "./App.css";
 import AlgemeneVoorwaarden from "../pages/AlgemeneVoorwaarden/AlgemeneVoorwaarden";
 import PrivacyBeleid from "../pages/PrivacyBeleid/PrivacyBeleid";
+import Whypage from "../pages/WhyPage/Whypage";
 
 function App() {
   axios.defaults.baseURL = "http://api-env.eba-2mt8abmc.eu-north-1.elasticbeanstalk.com/v1"
@@ -27,6 +28,7 @@ function App() {
         <Route path="/disclaimer" element={<DisclaimerPage/>} />
         <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden/>} />
         <Route path="/privacybeleid" element={<PrivacyBeleid/>} />
+        <Route path="/waarom-mostpros"element={<Whypage/>} />
       </Routes>
     </>
   );

@@ -10,7 +10,7 @@ function Footer() {
         <div className="footerSection">
           <h4>Navigatie</h4>
           <a href="">Hoe werkt het</a>
-          <a href="">Waarom mostpros</a>
+          <Link to="/waarom-mostpros">Waarom mostpros</Link> 
           <Link to="/over-ons">Over</Link>
           <Link to="/contact">Contact</Link>
         </div>

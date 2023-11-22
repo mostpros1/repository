@@ -1,0 +1,24 @@
+.CheakHero_container{
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+.CheakHero_midden{
+    width: 65%;
+    
+}
+.CheakHero_left h2{
+    margin-top: 60px;
+}
+
+.CheakHero_midden{
+    width: 35%;
+}
+
+.CheakHero_right img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
