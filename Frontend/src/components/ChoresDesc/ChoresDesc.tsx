@@ -19,7 +19,7 @@ function ChoresDesc() {
               </div>
               <div className="chore_desc">
                 <h4>Loodgieterswerk</h4>
-                <a href="$">Alle informatie over Loodgieters</a>
+                <p>Alle informatie over Loodgieters</p>
               </div>
             </div>
           </Link>
@@ -30,7 +30,7 @@ function ChoresDesc() {
               </div>
               <div className="chore_desc">
                 <h4>Schilderen</h4>
-                <a href="$">Alle informatie over Schilders</a>
+                <p>Alle informatie over Schilders</p>
               </div>
             </div>
           </Link>
@@ -41,7 +41,7 @@ function ChoresDesc() {
               </div>
               <div className="chore_desc">
                 <h4>Vloeren en tegels</h4>
-                <a href="$">Alle informatie over Tegelzetters</a>
+                <p>Alle informatie over Tegelzetters</p>
               </div>
             </div>
           </Link>

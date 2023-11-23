@@ -7,7 +7,7 @@ function NavLinks() {
             link: '/klussen'
         },
         {
-            name: 'Hoe werkt het?',
+            name: 'Hoe werkt het',
             link: '/hoe-werkt-het'
         },
         {

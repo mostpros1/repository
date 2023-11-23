@@ -1,6 +1,7 @@
 import NavBar from '../../components/ui/NavBar/NavBar'
 import './SpecialistPage.css'
-import SpecialistMultistep from '../../components/MultistepForm/SpecialistMultistepForm'
+import SpecialistMultistep from '../../components/SpecialistMultistep/SpecialistMultistepForm'
+import Footer from '../../components/ui/Footer/Footer'
 
 function SpecialistPage() {
   return (
@@ -9,6 +10,7 @@ function SpecialistPage() {
       <div className='multistep-viewport'>
         <SpecialistMultistep />
       </div>
+      <Footer />
     </>
     
   )
