@@ -43,14 +43,14 @@
     object-fit: cover;
 }
 
-.chore_desc{
+.chore_description{
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 25px;
 }
 
-.chore_desc a{
+.chore_description p{
     color: black;
     text-decoration: underline;
     text-underline-offset: 2px;
