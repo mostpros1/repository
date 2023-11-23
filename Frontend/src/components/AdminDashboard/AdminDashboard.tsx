@@ -4,14 +4,24 @@ import './AdminDashboard.css'
 function AdminDashboard() {
     return(
         <>
-            <div className="divContainer">
-                Home Owner's
+            <div className="divParent">
+                <div className="divContainer">
+                    Home Owner's
+                </div>
+                <div className="divContainer">
+                    Professionals
+                </div>
+                <div className="divContainer">
+                    Jobs
+                </div>
+                <div className="divContainer">
+                    Payments
+                </div>
             </div>
-
-            <div className="divContainer">
+            <div className="tabel">
 
             </div>
-            <div className="divContainer">
+            <div className="tabel">
 
             </div>
         </>
