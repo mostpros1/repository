@@ -8,6 +8,9 @@ import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import "./App.css";
+import AdminSideBar from "../components/AdminSideBar/AdminSideBar";
+import AdminNav from "../pages/AdminHomePage/AdminNav";
+import AdminMain from "../pages/AdminHomePage/AdminMain";
 
 function App() {
   axios.defaults.baseURL = "http://api-env.eba-2mt8abmc.eu-north-1.elasticbeanstalk.com/v1"
@@ -20,7 +23,12 @@ function App() {
         <Route path="/specialist-resultaat" element={<ResultsPage />} />
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact" element={<ContactPage />} /> 
+        {/* <Route path="/admin-paneel" element={<AdminHomePage />} />  */}
+        <Route path="/admin-paneel" element={<AdminSideBar />} >
+          <Route index element={<AdminMain />} />
+          <Route path="nav1" element={<AdminNav />} />
+        </Route> {/*being tested*/}
       </Routes>
     </>
   );

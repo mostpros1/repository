@@ -1,0 +1,22 @@
+.divContainer {
+    width: 227px;
+    height: 180px;
+    flex-shrink: 0;
+    border-radius: 7.567px;
+    background: #FFF;
+    box-shadow: 0px 0.75667px 3.78333px 0px rgba(0, 0, 0, 0.10);
+    margin-left: 325px;
+    margin-top: 80px;
+    color: #000;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    padding-left: 63px;
+    padding-top: 20px;
+}
+body {
+    background: #E9F4FF;
+}

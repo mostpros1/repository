@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-amplify/core": "^5.8.6",
     "@aws-sdk/client-dynamodb": "^3.414.0",
     "@aws-sdk/client-s3": "^3.414.0",
     "@aws-sdk/client-ses": "^3.436.0",
@@ -30,6 +31,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
+    "aws-amplify": "^5.3.12",
     "aws-sdk": "^2.1461.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
