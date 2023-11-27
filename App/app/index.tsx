@@ -1,9 +1,13 @@
 import { Link } from "expo-router";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Pressable, Image, ImageBackground, } from "react-native";
 import { Dimensions } from 'react-native';
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 const StartPage = () => {
   return (
     <SafeAreaView style={styles.view}>

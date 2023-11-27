@@ -7,7 +7,10 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 type registerData = {
+  voornaam: string;
+  achternaam: string;
   email: string;
+  telefoonNummer: string;
   password: string;
 };
 
@@ -16,50 +19,46 @@ type registerFormProps = registerData & {
 };
 
 export function RegisterForm({
+  voornaam,
+  achternaam,
   email,
+  telefoonNummer,
   password,
   updateFields,
 }: registerFormProps) {
   return (
     <View style={styles.formContainer}>
       <View>
-        <Text></Text>
+        <Text>Voornaam</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => updateFields({ voornaam: text })}
+          placeholder="Enter your email"
+          value={voornaam}
+          keyboardType="email-address"
+        />
+      </View>
+      <View>
+        <Text>Achternaam</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => updateFields({ achternaam: text })}
+          placeholder="Enter your email"
+          value={achternaam}
+        />
+        <Text>Email</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ email: text })}
           placeholder="Enter your email"
           value={email}
-          keyboardType="email-address"
         />
-      </View>
-      <View>
-        <Text>Password</Text>
+        <Text>Telefoon Nummer</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => updateFields({ password: text })}
+          onChangeText={(text) => updateFields({ telefoonNummer: text })}
           placeholder="Enter your email"
-          value={password}
-        />
-        <Text>Password</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => updateFields({ password: text })}
-          placeholder="Enter your email"
-          value={password}
-        />
-        <Text>Password</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => updateFields({ password: text })}
-          placeholder="Enter your email"
-          value={password}
-        />
-        <Text>Password</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => updateFields({ password: text })}
-          placeholder="Enter your email"
-          value={password}
+          value={telefoonNummer}
         />
         <Text>Password</Text>
         <TextInput
