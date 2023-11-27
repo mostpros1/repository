@@ -2,18 +2,21 @@ import './MultistepForm.css'
 import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
-import { CategoryForm } from './CategoryForm'
+import { useQuestionData } from '../../data/MSFquestions'
+import CategoryForm from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import kraan from '../../assets/kraan.svg'
 import axios from 'axios'
+
 
 type FormData = {
   postCode: string
   stad: string
-  category: string
+  questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
   email: string
@@ -30,7 +33,11 @@ type FormData = {
 const INITIAL_DATA: FormData = {
   postCode: "",
   stad: "",
-  category: "",
+  questions: {
+    question1: "",
+    question2: "",
+    question3: "",
+  },
   aanvullendeInformatie: "",
   info: "",
   email: "",
@@ -44,21 +51,89 @@ const INITIAL_DATA: FormData = {
   repeatRegisterPassword: ""
 }
 
+// ... voeg andere vragen toe zoals nodig
+
 function MultistepForm() {
-  const [data, setData] = useState(INITIAL_DATA)
+  const [data, setData] = useState(INITIAL_DATA);
+  
+  const questionsData = useQuestionData();
+  
   function updateFields(fields: Partial<FormData>) {
-    setData(prev => {
-      return { ...prev, ...fields }
-    })
+    setData((prev) => ({ ...prev, ...fields }));
   }
-  const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useHomeOwnerMultistepForm([
-    <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm {...data} updateFields={updateFields}/>,
-    <InfoForm {...data} updateFields={updateFields}/>,
-    <EmailForm {...data} updateFields={updateFields}/>,
-    <LoginForm {...data} updateFields={updateFields}/>,
-    <RegisterForm {...data} updateFields={updateFields}/>
-  ])
+
+  function updateQuestionAnswers(questionKey: string, answer: string) {
+    setData((prev) => {
+      if (typeof prev === "function") {
+        return prev as FormData;
+      }
+
+      const prevData = prev as FormData;
+
+      return {
+        ...prevData,
+        questions: updateQuestions(prevData.questions, {
+          [questionKey]: answer,
+        }),
+      };
+    });
+  }
+
+  function updateQuestions(
+    prevQuestions: Record<string, string>,
+    answers: Record<string, string>
+  ): Record<string, string> {
+    const filteredAnswers: Record<string, string> = {};
+
+    for (const key in answers) {
+      if (Object.prototype.hasOwnProperty.call(answers, key)) {
+        const value = answers[key];
+        if (value !== undefined) {
+          filteredAnswers[key] = value;
+        }
+      }
+    }
+
+    const updatedQuestions: Record<string, string> = {
+      ...prevQuestions,
+      ...filteredAnswers,
+    };
+
+    return updatedQuestions;
+  }
+
+  const optionImages = {
+    "Nieuwe leiding aanleggen": kraan,
+    "Kapotte leiding maken": kraan,
+    "Anders": kraan
+    // ... voeg andere opties en bijbehorende afbeeldingen toe
+  };
+
+  const questionsSteps = questionsData.map((question) => (
+    <CategoryForm
+      key={question.key}
+      question={question} // Voeg de vraag als prop toe
+      questions={data.questions}
+      updateQuestionAnswers={(answers) => {
+        updateQuestionAnswers(question.key, answers[question.key] as string);
+      }}
+      optionImages={optionImages}
+    />
+  ));
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
+    useHomeOwnerMultistepForm({
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        ...questionsSteps,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <EmailForm {...data} updateFields={updateFields} />,
+        <LoginForm {...data} updateFields={updateFields} />,
+        <RegisterForm {...data} updateFields={updateFields} />
+      ],
+      onStepChange: () => { },
+    });
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()

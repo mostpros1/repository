@@ -27,7 +27,7 @@ function Searchbar() {
   const slicedSpecialists = filteredSpecialists.slice(0, 3);
 
   const specialistsRender = slicedSpecialists.map((item: any) => (
-    <Link to="/klussen" key={item.id} className="search_dropdown_item">
+    <Link to={item.link} key={item.id} className="search_dropdown_item">
       {item.name}
     </Link>
   ));
