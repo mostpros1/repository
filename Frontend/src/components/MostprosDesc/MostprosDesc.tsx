@@ -1,7 +1,7 @@
 import './MostprosDesc.css'
-import manWithHammerIcon from "../../assets/Group 783.png"
-import girlWithDrill from "../../assets/Group 788.png"
-import peopleWithTools from "../../assets/Group 791.png"
+import manWithHammerIcon from "../../assets/Group 595.png"
+import girlWithDrill from "../../assets/Group 787.png"
+import peopleWithTools from "../../assets/Group 1098.png"
 
 function MostprosDesc() {
     return (
