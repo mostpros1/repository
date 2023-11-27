@@ -40,9 +40,10 @@
 }
 
 .desc_img_con img{
-    width: 60%;
-    height: 90%;
+    width: 75%;
+    height: 100%;
     object-fit: contain;
+    padding: 30px;
 }
 
 
