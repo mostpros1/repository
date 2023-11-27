@@ -4,11 +4,14 @@ import "./PopularCardsSection.css"
 function PopularCardsSection() {
   return (
     <div className="popular-section">
-        <div className="popular-container">
-            <h2>Populaire klussen</h2>
-            <PopularCards />
+      <div className="popular-container">
+        <div className="title_container">
+          <h2>Populaire klussen</h2>
         </div>
-        
+
+        <PopularCards />
+      </div>
+
     </div>
   )
 }
