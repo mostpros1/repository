@@ -13,7 +13,7 @@
     max-width: 1500px;
     display: flex;
     justify-content: space-between;
-    gap: 25px;
+    gap: 100px;
 }
 
 .description{
@@ -43,8 +43,14 @@
     object-fit: contain;
 }
 
-@media (max-width: 768px){
 
+@media screen and (max-width: 1024px){
+    .description_container{
+        gap: 75px;
+    }
+}
+
+@media (max-width: 768px){
     .desc_step_con{
         padding: 50px 25px;
         gap: 50px;
