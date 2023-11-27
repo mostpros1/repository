@@ -1,0 +1,17 @@
+.NoKvK_con{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.NoKvK_img_con{
+    width: 100%;
+    height: 300px;
+}
+
+.NoKvK_img_con img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

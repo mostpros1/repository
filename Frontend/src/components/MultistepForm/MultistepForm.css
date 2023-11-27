@@ -98,6 +98,10 @@ input{
     color: white;
 }
 
+.form-btn:hover{
+    cursor: pointer;
+}
+
 .back{
     background-color: white;
     border: 2px solid #308AE4;
@@ -109,16 +113,24 @@ input{
     background-color: #2879ca;
 }
 
+.repaircards-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+}
+
 .repaircards-con{
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px 200px;
     gap: 30px;
     text-align: center;
 }
 
 .repairCard{
     position: relative;
+    min-height: 200px;  
     display: flex;
     flex-direction: column;
     font-size: 16px;
@@ -129,10 +141,22 @@ input{
     cursor: pointer;
 }
 
-.repairCard input {
+.repairCard input{
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.repairCard label{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.repairCard label img{
+    height: 75px;
+    width: 100%;
+    object-fit: contain;
 }
 
 .icon{

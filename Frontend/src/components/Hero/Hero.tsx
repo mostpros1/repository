@@ -10,7 +10,7 @@ function Hero() {
             <div className="hero-container">
               <h2>Vind lokale vakspecialisten voor klussen in je huis en tuin</h2>
               <SearchBar />
-              <Link to="/klussen" className='link-btn'>
+              <Link to="/inschrijven-als-specialist" className='link-btn'>
                 <p>Inschrijven als vakspecialist</p><img src={searchIcon} alt="" />
               </Link>
             </div>
