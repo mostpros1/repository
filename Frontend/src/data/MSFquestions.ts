@@ -136,6 +136,75 @@ export function useQuestionData() {
                 },
             ]
             break;
+            case '/klussen/elektricien':
+            questionsData = [
+                {
+                    key: "question1",
+                    label: "Wat moet er gedaan worden",
+                    options: [
+                        "Bomen of struiken planten",
+                        "Tuinaanleg",
+                        "Tuinontwerp",
+                        "Tuinonderhoud",
+                        "Gras leggen of zaaien",
+                        "Anders"
+                    ],
+                },
+                {
+                    key: "question2",
+                    label: "In welke gedeelte van de tuin",
+                    options: [
+                        "Voortuin",
+                        "Achtertuin",
+                        "Zijde van de huis",
+                        "Zijtuin",
+                        "Anders"
+                    ],
+                },
+                {
+                    key: "question3",
+                    label: "Om wat voor soort planten gaat het?",
+                    options: [
+                        "Struiken",
+                        "Heggen",
+                        "Eik",
+                        "Beuk",
+                        "Berk",
+                        "Dennenboom",
+                    ],
+                },
+                {
+                    key: "question4",
+                    label: "Wanneer moet de klus worden uitgevoerd (niet verplicht)",
+                    options: [
+                        "Met spoed",
+                        "In overleg",
+                        "Binnen twee weken",
+                        "Binnen een maand",
+                        "Binnen een paar maanden",
+                        "Anders",
+                    ],
+                },
+                {
+                    key: "question5",
+                    label: "Wilt u foto's of tekeningen bijvoegen?",
+                    options: [
+                        "Nee",
+                        "Ja",
+                        "Ja, ik zal later foto's toevoegen"
+                    ],
+                },
+                {
+                    key: "question6",
+                    label: "Wilt u foto's of tekeningen bijvoegen?",
+                    options: [
+                        "Nee",
+                        "Ja",
+                        "Ja, ik zal later foto's toevoegen"
+                    ],
+                },
+            ]
+            break;
 
         default:
             questionsData = [
