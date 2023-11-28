@@ -1,0 +1,70 @@
+.bevestigemail_container {
+    height: 65%;
+    width: 60%;
+    background: #E9F4FF;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.bevestigemail_card {
+    height: 100%;
+    width: 100%;
+    padding-bottom: 10%;
+    background-color: #E9F4FF;
+    display: grid;
+    grid-template-rows: 7fr 4fr 4fr 4fr 4fr 2fr;
+    gap: 2rem;
+    justify-items: center;
+}
+
+.bevestigemail_header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.bevestigemail_header hr {
+    width: 80%;
+    position: absolute;
+    bottom: 0;
+}
+
+.bevestigemail_title {
+    text-align: center;
+    align-self: center;
+    width: 50%;
+    font-size: 3rem;
+}
+
+.bevestigemail_button {
+    width: 50%;
+    height: 80%;
+    border-radius: 10px;
+    border: none;
+    background: #308AE4;
+    color: #FFF;
+    font-size: 12px;
+}
+
+.bevestigemail_text {
+    width: 50%;
+    font-size: 1.5rem;
+    justify-self: center;
+    align-self: center;
+}
+
+.bevestigemail_newCode {
+    color: #308AE4;
+    width: 50%;
+    font-weight: 400;
+    font-size: 1.5rem;
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
+}
