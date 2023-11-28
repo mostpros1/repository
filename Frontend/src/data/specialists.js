@@ -12,7 +12,7 @@ const specialists = [
     {
         id: 3,
         name: "Elektriciën",
-        link: "/klussen/electricien"
+        link: "/klussen/elektricien"
     },
     {
         id: 4,

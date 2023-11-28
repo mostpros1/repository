@@ -13,70 +13,59 @@ import kraan from '../../assets/kraan.svg'
 import axios from 'axios'
 
 
-type FormData = {
-  postCode: string
-  stad: string
-  questions: Record<string, string>;
-  aanvullendeInformatie: string
-  info: string
-  email: string
-  loginEmail: string
-  loginPassword: string
-  firstName: string
-  lastName: string
-  registerEmail: string
-  phoneNumber: string
-  registerPassword: string
-  repeatRegisterPassword: string
-}
-
-const INITIAL_DATA: FormData = {
-  postCode: "",
-  stad: "",
-  questions: {
-    question1: "",
-    question2: "",
-    question3: "",
-  },
-  aanvullendeInformatie: "",
-  info: "",
-  email: "",
-  loginEmail: "",
-  loginPassword: "",
-  firstName: "",
-  lastName: "",
-  registerEmail: "",
-  phoneNumber: "",
-  registerPassword: "",
-  repeatRegisterPassword: ""
-}
-
-// ... voeg andere vragen toe zoals nodig
-
 function MultistepForm() {
-  const [data, setData] = useState(INITIAL_DATA);
-  
+   
   const questionsData = useQuestionData();
+
+  type FormData = {
+    postCode: string
+    stad: string
+    questions: Record<string, string>;
+    aanvullendeInformatie: string
+    info: string
+    email: string
+    loginEmail: string
+    loginPassword: string
+    firstName: string
+    lastName: string
+    registerEmail: string
+    phoneNumber: string
+    registerPassword: string
+    repeatRegisterPassword: string
+  }
+  
+  const INITIAL_DATA: FormData = {
+    postCode: "",
+    stad: "",
+    questions: Object.fromEntries(
+      questionsData.map((question) => [question.key, ""])
+    ),
+    aanvullendeInformatie: "",
+    info: "",
+    email: "",
+    loginEmail: "",
+    loginPassword: "",
+    firstName: "",
+    lastName: "",
+    registerEmail: "",
+    phoneNumber: "",
+    registerPassword: "",
+    repeatRegisterPassword: ""
+  }
+
+  const [data, setData] = useState(INITIAL_DATA);
   
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
-    setData((prev) => {
-      if (typeof prev === "function") {
-        return prev as FormData;
-      }
-
-      const prevData = prev as FormData;
-
-      return {
-        ...prevData,
-        questions: updateQuestions(prevData.questions, {
-          [questionKey]: answer,
-        }),
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      questions: updateQuestions(prev.questions, {
+        [questionKey]: answer,
+      }),
+    }));
   }
 
   function updateQuestions(
@@ -112,7 +101,7 @@ function MultistepForm() {
   const questionsSteps = questionsData.map((question) => (
     <CategoryForm
       key={question.key}
-      question={question} // Voeg de vraag als prop toe
+      question={question}
       questions={data.questions}
       updateQuestionAnswers={(answers) => {
         updateQuestionAnswers(question.key, answers[question.key] as string);
@@ -121,6 +110,7 @@ function MultistepForm() {
     />
   ));
 
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useHomeOwnerMultistepForm({
       steps: [
@@ -128,24 +118,32 @@ function MultistepForm() {
         ...questionsSteps,
         <InfoForm {...data} updateFields={updateFields} />,
         <EmailForm {...data} updateFields={updateFields} />,
-        <LoginForm {...data} updateFields={updateFields} />,
-        <RegisterForm {...data} updateFields={updateFields} />
+        
       ],
       onStepChange: () => { },
     });
 
+  // async function onSubmit(e: FormEvent) {
+  //   e.preventDefault()
+  //   if (!isLastStep) return next()
+  //   if (data.registerPassword != data.repeatRegisterPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+  //   const result = await axios.post("/auth/signup", {
+  //     firstName: data.firstName,
+  //     lastName: data.lastName,
+  //     email: data.registerEmail,
+  //     password: data.registerPassword
+  //   })
+  //   console.log(result.data);
+  //   if (result.data.createTokenResult?.access_token) console.log("TODO: Store access tokens in front end for requests")
+  // }
+
   async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (!isLastStep) return next()
-    if (data.registerPassword != data.repeatRegisterPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-    const result = await axios.post("/auth/signup", {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.registerEmail,
-      password: data.registerPassword
-    })
-    console.log(result.data);
-    if (result.data.createTokenResult?.access_token) console.log("TODO: Store access tokens in front end for requests")
+    e.preventDefault();
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+    }
   }
 
   const stepWidth = 100 / steps.length;
