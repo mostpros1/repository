@@ -9,7 +9,7 @@ const StartPage = () => {
     <SafeAreaView style={styles.view}>
       <View style={styles.container}>
         <View style={styles.viewContainer1}>
-          <Image style={styles.img} source={require("../assets/images/logo2.png")} />
+          <Image style={styles.img} source={require("../../assets/images/logo2.png")} />
         </View>
         <View style={styles.viewContainer1}>
           <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>

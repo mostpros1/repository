@@ -61,15 +61,15 @@ export function LoginForm({ email, password, updateFields }: loginFormProps) {
         <View style={styles.loginIcons}>
           <Image
             style={styles.icon}
-            source={require("../../../assets/images/icon_facebook.png")}
+            source={require("../../../../assets/images/icon_facebook.png")}
           ></Image>
           <Image
             style={styles.icon}
-            source={require("../../../assets/images/icon_google.png")}
+            source={require("../../../../assets/images/icon_google.png")}
           ></Image>
           <Image
             style={styles.icon}
-            source={require("../../../assets/images/icon_instagram.png")}
+            source={require("../../../../assets/images/icon_instagram.png")}
           ></Image>
         </View>
       </View>

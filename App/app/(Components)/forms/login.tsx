@@ -1,28 +1,22 @@
 import { FormEvent, useState } from "react";
-import { useAppForm } from "../hooks/useAppForm";
+import { useAppForm } from "../../hooks/useAppForm";
 import { PostcodeForm } from "./steps/postcode";
 import { InfoFormTwo } from "./steps/step2";
 import { InfoFormThree } from "./steps/aanvullendeInformatie";
-import { RegisterForm } from "./steps/registerForm";
-import { StyleSheet, View, Text, Pressable, Image, Button, Alert } from "react-native";
+import { LoginForm } from "./steps/loginForm";
+import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import { MailForm } from "./steps/mail";
 import { Dimensions } from "react-native";
-import { Amplify, Auth } from 'aws-amplify';
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 type AppFormData = {
-  voornaam: string;
-  achternaam: string;
   email: string;
-  telefoonNummer: string;
   password: string;
 };
 const INITIAL_DATA: AppFormData = {
-  voornaam: "",
-  achternaam: "",
   email: "",
-  telefoonNummer: "",
   password: "",
 };
 
@@ -35,36 +29,14 @@ function AppForm() {
   }
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-    useAppForm([<RegisterForm {...data} updateFields={updateFields} />]);
+    useAppForm([<LoginForm {...data} updateFields={updateFields} />]);
 
-  function onSubmit() {
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
     if (!isLastStep) {
       return next();
     } else {
-      Auth.signUp({
-        username: data.email,
-        password: data.password,
-        attributes: {
-          name: data.voornaam.trim() + " " + data.achternaam.trim(),
-          email: data.email,
-          phone_number: data.telefoonNummer
-        },
-        autoSignIn: { enabled: true }
-      })
-      .then(() => <Text>Verify email page komt hier</Text> )
-      .catch(error => {
-        console.error(error)
-        console.log(error.code)
-  
-        switch (error.code) {
-          case 'InvalidParameterException':
-            // logic for if wrong info was entered
-            break
-          case 'UsernameExistsException':
-            // logic for if user already exists
-            break
-        }
-      })
+      //doe late hier de navigatie naar waar je moet zijn
     }
   }
   return (
@@ -73,7 +45,7 @@ function AppForm() {
         <View style={styles.sectionContainer}>
           <Image
             style={styles.img}
-            source={require("../../assets/images/logo2.png")}
+            source={require("../../../assets/images/logo2.png")}
           />
         </View>
       </View>
@@ -81,12 +53,11 @@ function AppForm() {
       <View style={styles.bottomContainer}>
         <View style={styles.buttonContainer}>
           {isFirstStep && (
-               <Button title="Submit" onPress={onSubmit} />
-            // <Pressable style={[styles.press, styles.pressBig]} onPress={next}>
-            //   <Text style={styles.text}>
-            //     {isLastStep ? "Verstuur" : "Volgende"}
-            //   </Text>
-            // </Pressable>
+            <Pressable style={[styles.press, styles.pressBig]} onPress={next}>
+              <Text style={styles.text}>
+                {isLastStep ? "Verstuur" : "Volgende"}
+              </Text>
+            </Pressable>
           )}
           {!isFirstStep && (
             <View style={styles.buttonContainerTwo}>
@@ -97,9 +68,7 @@ function AppForm() {
                 <Text style={styles.text}>
                   {isLastStep ? "Verstuur" : "Volgende"}
                 </Text>
-               
               </Pressable>
-               <Button title="Submit" onPress={onSubmit} />
             </View>
           )}
         </View>
@@ -114,7 +83,7 @@ const styles = StyleSheet.create({
     height: windowHeight,
   },
   topContainer: {
-    height: windowHeight * 0.3,
+    height: windowHeight * 0.4,
     justifyContent: "center",
   },
   middleContainer: {

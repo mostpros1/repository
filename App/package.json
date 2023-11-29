@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./app/index.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,8 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.19.6",
+    "@react-native-async-storage/async-storage": "^1.19.8",
     "@react-native-community/netinfo": "^11.1.0",
+    "@react-navigation/stack": "^6.3.20",
     "@types/react": "~18.2.14",
     "amazon-cognito-identity-js": "^6.3.7",
     "aws-amplify": "^5.3.12",

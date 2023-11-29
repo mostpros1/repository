@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useAppForm } from "../hooks/useAppForm";
+import { useAppForm } from "../../hooks/useAppForm";
 import { PostcodeForm } from "./steps/postcode";
 import { InfoFormTwo } from "./steps/step2";
 import { InfoFormThree } from "./steps/aanvullendeInformatie";

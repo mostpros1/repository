@@ -15,28 +15,28 @@ const StartPage = () => {
                         </Link>
                     </View>
                 </View>
-                <View style={styles.imageContainer}>
-                    <View>
-                        <Image style={styles.image} source={require("../../assets/images/howItWorksTwo.png")} />
+                <View>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={require("../../../assets/images/howItWorksThree.png")} />
                     </View>
                 </View>
-            </View>
 
+            </View>
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    <Image source={require("../../assets/images/two.png")} />
-                    <Text style={styles.title}>Selecteer een klus</Text>
+                    <Image source={require("../../../assets/images/three.png")} />
+                    <Text style={styles.title}>Klus wordt uitgevoerd</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>
-                    <Text>Ontvang reacties van huiseigenaren uit jouw omgeving of kies zelf uit onze database van klussen en neem contact met hem/haar op om je ideale klus te vinden.</Text>
+                    <Text>De vakspecialist voert uw klus uit op de afgesproken dag.</Text>
                 </View>
             </View>
             <View style={styles.progressionBarContainer}>
                 <View style={styles.progressionBarFull}></View>
                 <View style={styles.progressionBarFull}></View>
-                <View style={styles.progressionBarEmpty}></View>
+                <View style={styles.progressionBarFull}></View>
             </View>
-            <Link style={styles.link} href="/howItWorksThreeSpecialist">
+            <Link style={styles.link} href="/home">
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Link>
         </SafeAreaView>
@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         marginTop: 30,
-    },    
-    progressionBarContainer: {
+    },    progressionBarContainer: {
         display: "flex",
         flexDirection: "row",
         gap: 4,
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     image: {
-        marginBottom: 20,
+        bottom: 0,
     },
     button: {
         borderRadius: 10,
