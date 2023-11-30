@@ -17,14 +17,12 @@ type FormData = {
   aanvullendeInformatie: string
   info: string
   email: string
-  loginEmail: string
   loginPassword: string
   firstName: string
   lastName: string
-  registerEmail: string
   phoneNumber: string
-  registerPassword: string
-  repeatRegisterPassword: string
+  password: string
+  repeatPassword: string
 }
 
 const INITIAL_DATA: FormData = {
@@ -34,14 +32,12 @@ const INITIAL_DATA: FormData = {
   aanvullendeInformatie: "",
   info: "",
   email: "",
-  loginEmail: "",
   loginPassword: "",
   firstName: "",
   lastName: "",
-  registerEmail: "",
   phoneNumber: "",
-  registerPassword: "",
-  repeatRegisterPassword: ""
+  password: "",
+  repeatPassword: ""
 }
 
 function MultistepForm() {
@@ -63,17 +59,28 @@ function MultistepForm() {
   ])
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
+    if (!isLastStep) return next()
+
     const userData = {
-      email: data.registerEmail,
-      password: data.registerPassword,
-      repeatPassword: data.repeatRegisterPassword,
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
       name: data.firstName.trim() + " " + data.lastName.trim(),
       phoneNumber: data.phoneNumber
     }
-    if (!isLastStep) return next()
-    if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
 
-    await Auth.signUp({
+    if (userData.name == " " && userData.phoneNumber == "") {
+      await Auth.signIn(userData.email, userData.password)
+      .then(() => {
+        navigate('/dashboard')
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    }
+    else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
       username: userData.email,
       password: userData.password,
       attributes: {
@@ -82,16 +89,17 @@ function MultistepForm() {
         phone_number: userData.phoneNumber
       },
       autoSignIn: { enabled: true }
-    })
-    .then(() => {
-      navigate('/bevestig-email', { state: { email: userData.email } })
-    })
-    .catch(async error => {
-      if (error.code == 'UsernameExistsException') {
-        await Auth.resendSignUp(userData.email)
+      })
+      .then(() => {
         navigate('/bevestig-email', { state: { email: userData.email } })
-      }
-    })
+      })
+      .catch(async error => {
+        if (error.code == 'UsernameExistsException') {
+          await Auth.resendSignUp(userData.email)
+          navigate('/bevestig-email', { state: { email: userData.email } })
+        }
+      })
+    }
   }
 
   const stepWidth = 100 / steps.length;

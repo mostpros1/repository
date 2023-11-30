@@ -3,15 +3,15 @@ import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
 
 type LoginData = {
-  loginEmail: string
-  loginPassword: string
+  email: string
+  password: string
 }
 
 type LoginFormProps = LoginData & {
   updateFields: (fields: Partial<LoginData>) => void
 }
 
-export function LoginForm({loginEmail, loginPassword, updateFields }: LoginFormProps) {
+export function LoginForm({email, password, updateFields }: LoginFormProps) {
   return (
     <>
        <div className='login-con'>
@@ -23,20 +23,19 @@ export function LoginForm({loginEmail, loginPassword, updateFields }: LoginFormP
                   required 
                   type="email" 
                   placeholder='Bijv. joe@hotmail.com'
-                  value={loginEmail}
-                  onChange={e => updateFields({ loginEmail: e.target.value })}
+                  value={email}
+                  onChange={e => updateFields({ email: e.target.value })}
                   />
                 <label>Wachtwoord</label>
                 <input 
                   required 
                   type="password" 
                   placeholder='Wachtwoord'
-                  value={loginPassword}
-                  onChange={e => updateFields({ loginPassword: e.target.value })}
+                  value={password}
+                  onChange={e => updateFields({ password: e.target.value })}
                   />
             </div>
             <div className='login-link'>Nog geen account? <a href="#">Account aanmaken inschrijven als professional</a></div>
-            <button className='form-btn login-btn'>Inloggen</button>    
         </div> 
          <div className='social-con'>
             <div>Of login met onderstaande opties</div>

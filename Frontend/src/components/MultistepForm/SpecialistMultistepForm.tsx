@@ -5,7 +5,6 @@ import { FormEvent } from "react"
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios'
 
 type FormData = {
   postCode: string

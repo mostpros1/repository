@@ -5,21 +5,18 @@ import { useEffect, useState } from "react"
 
 type AccountFormData = {
     email: string
-    loginEmail: string
-    loginPassword: string
     firstName: string
     lastName: string
-    registerEmail: string
     phoneNumber: string
-    registerPassword: string
-    repeatRegisterPassword: string
+    password: string
+    repeatPassword: string
 }
 
 type AccountFormProps = AccountFormData & {
     updateFields: (fields: Partial<AccountFormData>) => void
   }
 
-const AccountForm = ({ email, loginEmail, loginPassword, firstName, lastName, registerEmail, phoneNumber, registerPassword, repeatRegisterPassword, updateFields }: AccountFormProps) => {
+const AccountForm = ({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) => {
 
     const [fetched, setFetched] = useState<boolean>(false)
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false)
@@ -31,7 +28,7 @@ const AccountForm = ({ email, loginEmail, loginPassword, firstName, lastName, re
             setUserExists(true)
             setFetched(true)}
         )
-        .catch((err: string) => {
+        .catch(err => {
             console.error(err)
             const errorActionMap: Record<string, () => void> = {    
                 'UserNotFoundException':  () => { setFetched(true) },
@@ -42,12 +39,12 @@ const AccountForm = ({ email, loginEmail, loginPassword, firstName, lastName, re
                 'LimitExceededException': () => { setLimitExceeded(true) },
                 'default':                () => { setUserExists(false); setFetched(true) }
             };
-            (errorActionMap[err] || errorActionMap['default'])()
+            (errorActionMap[err.code] || errorActionMap['default'])()
         })
     }, [])
     
 
-    const data = { loginEmail, loginPassword, firstName, lastName, registerEmail, phoneNumber, registerPassword, repeatRegisterPassword }
+    const data = { email, firstName, lastName, phoneNumber, password, repeatPassword }
 
     return(
         <>
