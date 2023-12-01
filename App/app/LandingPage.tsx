@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import {
   StyleSheet,
   Button,
@@ -10,15 +9,9 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import { Dimensions } from "react-native";
-import { Amplify, Auth } from "aws-amplify";
-import awsconfig from "./aws-exports";
-Amplify.configure(awsconfig);
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-
-const Placeholder = () => {
+const LandingPage = ({navigation}) => {
+ 
   return (
     <SafeAreaView style={styles.view}>
       <ImageBackground
@@ -36,9 +29,9 @@ const Placeholder = () => {
             <Text style={styles.welkom}> Welkom</Text>
           </View>
           <View style={styles.sectionContainer}>
-            <Link style={styles.link} href="/keuze">
+            <Pressable style={styles.link} onPress={() => navigation.navigate('KeuzePage')}>
               <Text style={styles.text}>Start</Text>
-            </Link>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>
@@ -75,6 +68,9 @@ const styles = StyleSheet.create({
     width: 300,
     textAlign: "center",
     padding: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 16,
@@ -85,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Placeholder;
+export default LandingPage;

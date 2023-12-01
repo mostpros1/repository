@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppForm } from "../../hooks/useAppForm";
 import { RegisterForm } from "./steps/registerForm";
-import { StyleSheet, View, Text, Pressable, Image, Button, Alert } from "react-native";
+import { StyleSheet, View, Text, Pressable, Image, Button, Alert, KeyboardAvoidingView } from "react-native";
 import { Dimensions } from "react-native";
 import { Auth } from 'aws-amplify';
 const windowWidth = Dimensions.get("window").width;

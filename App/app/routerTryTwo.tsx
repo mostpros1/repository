@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const routerTryTwo = () => {
+const RouterTryTwo = () => {
   return (
     <View style={styles.container}>
       <Text>Welcome</Text>
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default routerTryTwo;
+export default RouterTryTwo;

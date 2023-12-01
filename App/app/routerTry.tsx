@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const routerTry = () => {
+const RouterTry = () => {
   const navigation = useNavigation();
 
   const navigateToPageTwo = () => {
-    navigation.navigate("routerTryTwo" as never);
+    navigation.navigate("RouterTryTwo");
   };
 
   return (
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default routerTry;
+export default RouterTry;

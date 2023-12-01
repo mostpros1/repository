@@ -1,6 +1,6 @@
 import { Redirect, Link } from "expo-router";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Pressable, Image, ImageBackground, } from "react-native";
-const StartPage = () => {
+const KeuzePage = ({ navigation }) => {
   const onPress = () => {
 
     return <Redirect href="/home" />;
@@ -15,12 +15,12 @@ const StartPage = () => {
           <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>
         </View>
         <View style={styles.viewContainer1}>
-          <Link style={styles.button} href="/howItWorksOneHomeowner">
-            <Text style={styles.text}>Verder als huiseigenaar</Text>
-          </Link>
-          <Link style={styles.buttonTwo} href="/howItWorksOneSpecialist">
+          <Pressable style={styles.button} onPress={() => navigation.navigate('howItWorksOneHomeowner')}>
+            <Text style={styles.text}>Verder als Huiseigenaar</Text>
+          </Pressable>
+          <Pressable style={styles.buttonTwo} onPress={() => navigation.navigate('howItWorksOneSpecialist')}>
             <Text style={styles.textTwo}>Verder als vakspecialist</Text>
-          </Link>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -51,16 +51,22 @@ const styles = StyleSheet.create({
     width: 300,
     textAlign: "center",
     padding: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonTwo: {
     marginTop: 30,
     borderWidth: 2,
-    borderColor:"#308AE4",
+    borderColor: "#308AE4",
     borderRadius: 10,
     backgroundColor: "white",
     width: 300,
     textAlign: "center",
     padding: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 16,
@@ -78,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StartPage;
+export default KeuzePage;

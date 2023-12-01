@@ -14,7 +14,7 @@ import { Dimensions } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const StartPage = () => {
+const StartPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topContainer}>
@@ -53,9 +53,9 @@ const StartPage = () => {
         <View style={styles.progressionBarEmpty}></View>
         <View style={styles.progressionBarEmpty}></View>
       </View>
-      <Link style={styles.link} href="/howItWorksTwoSpecialist">
+      <Pressable style={styles.link} onPress={() => navigation.navigate('howItWorksTwoSpecialist')}>
         <Text style={[styles.text, styles.textNext]}>Volgende</Text>
-      </Link>
+      </Pressable>
     </SafeAreaView>
   );
 };

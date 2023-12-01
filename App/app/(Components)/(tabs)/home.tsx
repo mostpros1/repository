@@ -5,8 +5,9 @@ import {
   SafeAreaView,
   Text,
   ImageBackground,
+  Pressable,
 } from "react-native";
-const StartPage = () => {
+const StartPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.view}>
       <ImageBackground
@@ -15,12 +16,12 @@ const StartPage = () => {
       >
         <View style={styles.standardContainer}>
           <View style={styles.sectionContainer}>
-            <Link style={styles.link} href="/forms/login">
-              <Text style={styles.text}>login</Text>
-            </Link>
-            <Link style={styles.link} href="/forms/register">
-              <Text style={styles.text}>Register</Text>
-            </Link>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
+                <Text style={[styles.text]}>Login </Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('Register')}>
+                <Text style={[styles.text]}>Register</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>
