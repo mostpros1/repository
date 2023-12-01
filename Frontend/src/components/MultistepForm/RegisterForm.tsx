@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 type RegisterData = {
   firstName: string
   lastName: string
@@ -9,9 +11,10 @@ type RegisterData = {
 
 type RegisterFormProps = RegisterData & {
   updateFields: (fields: Partial<RegisterData>) => void
+  setUserExists: Dispatch<SetStateAction<boolean>>
 }
 
-export function RegisterForm({email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: RegisterFormProps) {
+export function RegisterForm({email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
       
     return (
         <>
@@ -80,7 +83,7 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                         
                     </div>
                 </div>
-                <div className="register-link">Al een account? <a href="">Inloggen</a></div>
+                <div className="register-link">Al een account? <a href="#" onClick={() => setUserExists(true)}>Inloggen</a></div>
             </div>
       </>
   )

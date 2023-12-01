@@ -7,23 +7,22 @@ import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
+import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import "./App.css";
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/klussen" element={<KlussenPage />} />
-        <Route path="/bevestig-email" element={<BevestigEmailPage/>}/>
-        <Route path="/bevestig-email/success" element={<p>Account succesvol geverifieerd.</p>}/>
-        <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-        <Route path="/specialist-resultaat" element={<ResultsPage />} />
-        <Route path="/over-ons" element={<AboutUsPage />} />
-        <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/klussen" element={<KlussenPage />} />
+      <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
+      <Route path="/bevestig-email" element={<BevestigEmailPage/>}/>
+      <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
+      <Route path="/specialist-resultaat" element={<ResultsPage />} />
+      <Route path="/over-ons" element={<AboutUsPage />} />
+      <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+    </Routes>
   );
 }
 

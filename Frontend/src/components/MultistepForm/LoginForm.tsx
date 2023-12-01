@@ -1,6 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
 import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
+import { Link } from 'react-router-dom';
 
 type LoginData = {
   email: string
@@ -9,9 +11,10 @@ type LoginData = {
 
 type LoginFormProps = LoginData & {
   updateFields: (fields: Partial<LoginData>) => void
+  setUserExists: Dispatch<SetStateAction<boolean>>
 }
 
-export function LoginForm({email, password, updateFields }: LoginFormProps) {
+export function LoginForm({email, password, updateFields, setUserExists }: LoginFormProps) {
   return (
     <>
        <div className='login-con'>
@@ -35,12 +38,13 @@ export function LoginForm({email, password, updateFields }: LoginFormProps) {
                   onChange={e => updateFields({ password: e.target.value })}
                   />
             </div>
-            <div className='login-link'>Nog geen account? <a href="#">Account aanmaken inschrijven als professional</a></div>
+            <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
+            <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
         </div> 
          <div className='social-con'>
             <div>Of login met onderstaande opties</div>
-            <div className='social-btn'><img src={facebook} alt="" /> Facebook</div>
-            <div className='social-btn'><img src={google} alt="" />Gmail</div>
+            <div className='social-btn'><img src={facebook}  alt="" />Facebook</div>
+            <div className='social-btn'><img src={google}    alt="" />Gmail</div>
             <div className='social-btn'><img src={instagram} alt="" />Instagram</div>
         </div>   
     </div>

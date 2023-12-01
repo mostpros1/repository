@@ -1,27 +1,35 @@
-.confirmemail-container {
-    height: 60%;
+.resetpassword-container {
+    max-height: 60%;
     width: 60%;
     background: #E9F4FF;
+    display: flex;
     justify-self: center;
     align-self: center;
-    display: flex;
     justify-content: center;
     align-items: start;
 }
 
-.confirmemail-card {
+.resetpassword-container.codesent {
+    max-height: 80%;
+}
+
+.resetpassword-card {
     height: 100%;
     width: 100%;
     padding-top: 5%;
     padding-bottom: 5%;
     background-color: #E9F4FF;
     display: grid;
-    grid-template-rows: 2fr 2fr 2fr 2fr 2fr 1fr;
-    gap: 2rem;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
     justify-items: center;
 }
 
-.confirmemail-card_header {
+.resetpassword-card.codesent {
+    grid-template-rows: 2fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 1fr;
+}
+
+.resetpassword-card_header {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -30,20 +38,20 @@
     position: relative;
 }
 
-.confirmemail-card_header hr {
+.resetpassword-card_header hr {
     width: 80%;
     position: absolute;
     bottom: 0;
 }
 
-.confirmemail-card_title {
+.resetpassword-card_title {
     text-align: center;
     align-self: center;
     width: 50%;
     font-size: 3rem;
 }
 
-.confirmemail-card_button {
+.resetpassword-card_button {
     width: 50%;
     height: 80%;
     border-radius: 10px;
@@ -53,14 +61,14 @@
     font-size: 12px;
 }
 
-.confirmemail-card_text {
+.resetpassword-card_text {
     width: 50%;
     font-size: 1.5rem;
     justify-self: center;
     align-self: center;
 }
 
-.confirmemail-card_newCode {
+.resetpassword-card_newCode {
     color: #308AE4;
     width: 50%;
     font-weight: 400;
@@ -68,4 +76,14 @@
     justify-self: center;
     align-self: center;
     cursor: pointer;
+}
+
+.resetpassword-form_field {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.resetpassword-form_field input {
+    outline: none;
 }

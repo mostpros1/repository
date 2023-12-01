@@ -17,30 +17,30 @@ enum DigitAction {
 function DigitInputs ({ amount, inputRef }: DigitInputsProps) {
 
     const digitInputMap: Record<string, DigitAction> = {
-        '0': DigitAction.Next,
-        '1': DigitAction.Next,
-        '2': DigitAction.Next,
-        '3': DigitAction.Next,
-        '4': DigitAction.Next,
-        '5': DigitAction.Next,
-        '6': DigitAction.Next,
-        '7': DigitAction.Next,
-        '8': DigitAction.Next,
-        '9': DigitAction.Next,
-        'Backspace': DigitAction.Previous,
-        'Delete': DigitAction.Next,
-        'ArrowLeft': DigitAction.Previous,
+        '0':          DigitAction.Next,
+        '1':          DigitAction.Next,
+        '2':          DigitAction.Next,
+        '3':          DigitAction.Next,
+        '4':          DigitAction.Next,
+        '5':          DigitAction.Next,
+        '6':          DigitAction.Next,
+        '7':          DigitAction.Next,
+        '8':          DigitAction.Next,
+        '9':          DigitAction.Next,
+        'Backspace':  DigitAction.Previous,
+        'Delete':     DigitAction.Next,
+        'ArrowLeft':  DigitAction.Previous,
         'ArrowRight': DigitAction.Next,
-        'ArrowUp': DigitAction.Last,
-        'ArrowDown': DigitAction.First,
+        'ArrowUp':    DigitAction.Last,
+        'ArrowDown':  DigitAction.First,
     }
 
     const inputActionMap: Record<DigitAction, Function> = {
-        'FIRST': () => setTimeout(() => { inputRef.current[0].select() }, 10),
-        'LAST': () => setTimeout(() => { inputRef.current[inputRef.current.length - 1].select() }, 10),
+        'FIRST':    () =>                   setTimeout(() => { inputRef.current[0].select() }, 10),
+        'LAST':     () =>                   setTimeout(() => { inputRef.current[inputRef.current.length - 1].select() }, 10),
         'PREVIOUS': (digitIndex: number) => setTimeout(() => { inputRef.current[digitIndex === 0 ? 0 : digitIndex - 1].select() }, 10),
-        'NEXT': (digitIndex: number) => setTimeout(() => { inputRef.current[digitIndex === amount - 1 ? amount - 1 : digitIndex + 1].select() }, 10),
-        'NONE': () => {}
+        'NEXT':     (digitIndex: number) => setTimeout(() => { inputRef.current[digitIndex === amount - 1 ? amount - 1 : digitIndex + 1].select() }, 10),
+        'NONE':     () => {}
     }
 
     function onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -65,6 +65,7 @@ function DigitInputs ({ amount, inputRef }: DigitInputsProps) {
 
     return <div className="digitinputs">
         { Array(amount).fill(0).map((_, index) => <input
+            autoComplete="off"
             key={index}
             ref={element => inputRef.current[index] = element as HTMLInputElement}
             onKeyDown={e => onKeyDown(e, index)}

@@ -49,7 +49,7 @@ const AccountForm = ({ email, firstName, lastName, phoneNumber, password, repeat
     return(
         <>
             { limitExceeded ? <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p> : <></> }
-            { fetched ? userExists ? <LoginForm {...data} updateFields={updateFields}/> : <RegisterForm {...data} updateFields={updateFields}/> : <></> }
+            { fetched ? userExists ? <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists}/> : <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists}/> : <></> }
             
         </>
     )
