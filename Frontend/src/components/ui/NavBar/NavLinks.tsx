@@ -4,7 +4,7 @@ function NavLinks() {
     const navItems = [
         {
             name: 'Klussen',
-            link: '/klussen'
+            link: '/mijn-klussen'
         },
         {
             name: 'Hoe werkt het',

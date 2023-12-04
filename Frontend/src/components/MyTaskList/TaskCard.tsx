@@ -8,7 +8,7 @@ function TaskCard() {
                 <div className="myTaskCard_left_img_con">
                     <img src={placeholder} alt="placeholder" />
                 </div>
-                <div className="myTaskCard_text_con">
+                <div className="myTaskCard_left_text_con">
                     <p>Loodgieters werk: nieuwe leiding aanleggen</p>
                     <p>Opdrachtnummer: 234561</p>
                     <p>€45,-</p>
@@ -19,7 +19,7 @@ function TaskCard() {
                     <h3>Aanvullende informatie:</h3>
                     <p>De leiding in de keuken, badkamer en in de tuin moeten aangelegd worden. Er is geen schade in de keuken en badkamer. Er is wel schade in de tuin waar de leiding momenteel is.</p>
                 </div>
-                <div>Bekijk klus</div>
+                <a href="#" className="task_btn">Bekijk klus</a>
             </div>
         </div>
     )

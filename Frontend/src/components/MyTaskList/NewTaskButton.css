@@ -1,0 +1,12 @@
+.NTB_con{
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed black;
+    flex-direction: column;
+}
+
+.NTB_con:hover{
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import "./MyTaskList.css"
 import TaskCard from "./TaskCard"
+import NewTaskButton from "./NewTaskButton"
 
 function MyTaskList() {
     return (
@@ -8,13 +9,18 @@ function MyTaskList() {
                 <div className="mytask_con">
                     <div className="current_task_con">
                         <h2>Huidige klussen</h2>
-                        <div className="task-card-con">
+                        <div className="taskCard_con">
                             <TaskCard />
+                            <TaskCard />
+                            <TaskCard />
+                            <NewTaskButton />
                         </div>
                     </div>
                     <div className="finished_task_con">
                         <h2>Afgeronde klussen</h2>
-                        <div className="task-card-con">
+                        <div className="taskCard_con">
+                            <TaskCard />
+                            <TaskCard />
                             <TaskCard />
                         </div>
                     </div>
