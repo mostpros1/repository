@@ -38,7 +38,7 @@ npm start
 Navigate to the frontend directory and install the necessary packages:
 
 ```
-cd ../Frontend
+cd ../web
 npm install
 ```
 
