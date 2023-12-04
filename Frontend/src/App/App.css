@@ -10,6 +10,19 @@
 }
 
 
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 150px 30px;
+}
+
+.wrapper{
+    width: 100%;
+    max-width: 1000px;
+    background-color: aliceblue;
+}
+
 
 /* content */
 
