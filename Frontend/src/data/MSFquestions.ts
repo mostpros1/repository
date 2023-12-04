@@ -14,7 +14,7 @@ export function useQuestionData() {
     let questionsData: Question[];
 
     switch (pathname) {
-        case '/klussen/loodgieter':
+        case '/klussen/lekkages-repareren':
             questionsData = [
                 {
                     key: "question1",
@@ -76,7 +76,7 @@ export function useQuestionData() {
             ]
             break;
 
-        case '/klussen/hovenier':
+        case '/klussen/sanitair-installeren':
             questionsData = [
                 {
                     key: "question1",
@@ -136,7 +136,7 @@ export function useQuestionData() {
                 },
             ]
             break;
-            case '/klussen/elektricien':
+            case '/klussen/tuinontwerp-maken':
             questionsData = [
                 {
                     key: "question1",
