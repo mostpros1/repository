@@ -1,4 +1,9 @@
 module.exports = {
+  entry: './src/main.tsx', // Your entry file
+  output: {
+    filename: 'bundle.js', // Output file
+    path: path.resolve(__dirname, 'dist'), // Output directory
+  },
   root: true,
   env: { browser: true, es2020: true },
   extends: [
@@ -14,5 +19,11 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    test: /\.(js|jsx)$/,
+    loader: 'esbuild-loader',
+    options: {
+      loader: 'jsx', // Ensure JSX is set to "jsx"
+      target: 'es2015',
+    },
   },
 }

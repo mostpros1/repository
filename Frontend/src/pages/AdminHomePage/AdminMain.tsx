@@ -4,7 +4,7 @@ import AdminDashboard from '../../components/AdminDashboard/AdminDashboard';
 const AdminMain: React.FC = () => {
     return (
         <>
-            <AdminDashboard />
+            <AdminDashboard /> 
         </>
     );
 };

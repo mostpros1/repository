@@ -34,6 +34,8 @@
     &:hover {
         background: #632ce4;
         cursor: pointer;
+        height: 10px;
+        width: 10px;
     }
 }
 

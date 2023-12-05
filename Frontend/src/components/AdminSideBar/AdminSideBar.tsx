@@ -16,6 +16,7 @@ const AdminSideBar: React.FC = (): ReactElement => {
   return (
     <>
         <IconContext.Provider value={{ color: '#000000'}}>
+        
         <nav className='nav_admin'>
             <Link className='nav_icon' to="#">
               <FaIcons.FaBars onClick={showSidebar} />

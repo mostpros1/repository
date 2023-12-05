@@ -9,8 +9,8 @@ import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import "./App.css";
 import AdminSideBar from "../components/AdminSideBar/AdminSideBar";
-import AdminNav from "../pages/AdminHomePage/AdminNav";
 import AdminMain from "../pages/AdminHomePage/AdminMain";
+import ManageUser from "../pages/AdminHomePage/ManageUser";
 
 function App() {
   axios.defaults.baseURL = "http://api-env.eba-2mt8abmc.eu-north-1.elasticbeanstalk.com/v1"
@@ -27,7 +27,7 @@ function App() {
         {/* <Route path="/admin-paneel" element={<AdminHomePage />} />  */}
         <Route path="/admin-paneel" element={<AdminSideBar />} >
           <Route index element={<AdminMain />} />
-          <Route path="nav1" element={<AdminNav />} />
+          <Route path="manage-users" element={<ManageUser />} />
         </Route> {/*being tested*/}
       </Routes>
     </>

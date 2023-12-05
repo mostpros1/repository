@@ -82,3 +82,9 @@
 .nav-containerAdmin a {
     text-decoration: none;
 }
+
+.profielpng {
+    color: blue;
+    height: 10px;
+    width: 10px;
+}
