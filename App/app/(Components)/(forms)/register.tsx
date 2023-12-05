@@ -1,9 +1,20 @@
 import { useState } from "react";
 import { useAppForm } from "../../hooks/useAppForm";
 import { RegisterForm } from "./steps/registerForm";
-import { StyleSheet, View, Text, Pressable, Image, Button, Alert, KeyboardAvoidingView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  Button,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Dimensions } from "react-native";
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -23,6 +34,7 @@ const INITIAL_DATA: AppFormData = {
 };
 
 function AppForm() {
+  const navigation = useNavigation();
   const [data, setData] = useState(INITIAL_DATA);
   function updateFields(fields: Partial<AppFormData>) {
     setData((prev) => {
@@ -43,24 +55,24 @@ function AppForm() {
         attributes: {
           name: data.voornaam.trim() + " " + data.achternaam.trim(),
           email: data.email,
-          phone_number: data.telefoonNummer
+          phone_number: data.telefoonNummer,
         },
-        autoSignIn: { enabled: true }
+        autoSignIn: { enabled: true },
       })
-      .then(() => <Text>Verify email page komt hier</Text> )
-      .catch(error => {
-        console.error(error)
-        console.log(error.code)
-  
-        switch (error.code) {
-          case 'InvalidParameterException':
-            // logic for if wrong info was entered
-            break
-          case 'UsernameExistsException':
-            // logic for if user already exists
-            break
-        }
-      })
+        .then(() => navigation.navigate("Verify" as never))
+        .catch((error) => {
+          console.error(error);
+          console.log(error.code);
+
+          switch (error.code) {
+            case "InvalidParameterException":
+              // logic for if wrong info was entered
+              break;
+            case "UsernameExistsException":
+              // logic for if user already exists
+              break;
+          }
+        });
     }
   }
   return (
@@ -76,28 +88,7 @@ function AppForm() {
       <View style={styles.middleContainer}>{step}</View>
       <View style={styles.bottomContainer}>
         <View style={styles.buttonContainer}>
-          {isFirstStep && (
-               <Button title="Submit" onPress={onSubmit} />
-            // <Pressable style={[styles.press, styles.pressBig]} onPress={next}>
-            //   <Text style={styles.text}>
-            //     {isLastStep ? "Verstuur" : "Volgende"}
-            //   </Text>
-            // </Pressable>
-          )}
-          {!isFirstStep && (
-            <View style={styles.buttonContainerTwo}>
-              <Pressable style={styles.press} onPress={back}>
-                <Text style={styles.text}>Back</Text>
-              </Pressable>
-              <Pressable style={[styles.press]} onPress={next}>
-                <Text style={styles.text}>
-                  {isLastStep ? "Verstuur" : "Volgende"}
-                </Text>
-               
-              </Pressable>
-               <Button title="Submit" onPress={onSubmit} />
-            </View>
-          )}
+          <Button title="Submitt" onPress={onSubmit} />
         </View>
       </View>
     </View>
