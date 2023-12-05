@@ -1,0 +1,61 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify61e2a13204214-staging-150051-authRole",
+      "UnauthRoleArn": "arn:aws:iam::246293866149:role/amplify-amplify61e2a13204214-staging-150051-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::246293866149:role/amplify-amplify61e2a13204214-staging-150051-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-amplify61e2a13204214-staging-150051-deployment",
+      "UnauthRoleName": "amplify-amplify61e2a13204214-staging-150051-unauthRole",
+      "StackName": "amplify-amplify61e2a13204214-staging-150051",
+      "StackId": "arn:aws:cloudformation:eu-north-1:246293866149:stack/amplify-amplify61e2a13204214-staging-150051/6fbed900-8235-11ee-8cfd-0a3577dce15e",
+      "AmplifyAppId": "d2j290dx5bs7ht"
+    }
+  },
+  "auth": {
+    "Mostpros": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 6
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "NAME",
+          "PHONE_NUMBER"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::246293866149:role/snsbcd2e800150051-staging",
+        "UserPoolId": "eu-north-1_f8YZm13J6",
+        "AppClientIDWeb": "6vt7giud20o7866vnmc7uprh70",
+        "AppClientID": "4k2pi6d8g178ocuijk9tctsgo4",
+        "IdentityPoolId": "eu-north-1:a07b3277-225e-4d52-8497-3d38b9b9625f",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-north-1:246293866149:userpool/eu-north-1_f8YZm13J6",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "Mostpros"
+      },
+      "lastPushTimeStamp": "2023-11-27T08:59:15.375Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
+        "logicalId": "authMostpros"
+      },
+      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
+    }
+  }
+}
