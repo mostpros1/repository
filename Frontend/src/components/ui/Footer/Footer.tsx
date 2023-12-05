@@ -14,7 +14,6 @@ function Footer() {
           <a href="">Waarom mostpros</a>
           <Link to="/over-ons">Over</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/admin-paneel">Admin</Link>
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>

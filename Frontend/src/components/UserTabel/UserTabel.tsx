@@ -56,7 +56,7 @@ const UserTabel = () => {
         // Implement the AWS SDK delete user logic here
         // Example:
         const deleteUserParams = {
-          UserPoolId: 'eu-north-1_f8YZm13J6',
+          UserPoolId: import.meta.env.VITE_USER_POOL_ID,
           Username: username,
         };
         await cognitoIdentityServiceProvider.adminDeleteUser(deleteUserParams).promise();

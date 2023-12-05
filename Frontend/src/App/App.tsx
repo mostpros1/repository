@@ -24,7 +24,6 @@ function App() {
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
         <Route path="/contact" element={<ContactPage />} /> 
-        {/* <Route path="/admin-paneel" element={<AdminHomePage />} />  */}
         <Route path="/admin-paneel" element={<AdminSideBar />} >
           <Route index element={<AdminMain />} />
           <Route path="manage-users" element={<ManageUser />} />
