@@ -8,7 +8,7 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 
@@ -22,9 +22,8 @@
     font-size: 20px;
     justify-content: center;
     align-items: center;
-    padding: 55px 40px;
+    padding: 60px 50px;
     width: 165px;
-    gap: 15px;
     border-radius: 1.5rem;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }

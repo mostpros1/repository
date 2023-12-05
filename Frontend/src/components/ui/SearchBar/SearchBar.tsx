@@ -3,6 +3,15 @@ import specialists from '../../../data/specialists.js';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+// ...
+
+interface Specialist {
+  id: number;
+  name: string;
+  tasks: { task: string; link: string }[];
+  link?: string;
+}
+
 function Searchbar() {
   const [value, setValue] = useState('');
   const [showList, setShowList] = useState(false);
@@ -17,18 +26,44 @@ function Searchbar() {
     setShowList(true);
   };
 
-  // Voeg een voorwaarde toe om alle specialisten weer te geven als de input leeg is
-  const filteredSpecialists = value === '' ? specialists : specialists.filter((item: any) => {
-    const searchTerm = value.toLowerCase();
-    const fullName = item.name.toLowerCase();
-    return fullName.startsWith(searchTerm);
-  });
+  const searchResults = () => {
+    const searchTerm = value.toLowerCase().trim();
 
-  const slicedSpecialists = filteredSpecialists.slice(0, 3);
+    // Zoek overal naar overeenkomsten in de individuele taken en specialistnamen
+    const taskResults = specialists.flatMap((specialist) => {
+      const tasks = specialist.tasks
+        .filter((task) => task.task.toLowerCase().includes(searchTerm))
+        .map((task) => ({
+          specialistName: specialist.name.toLowerCase(),
+          task: task.task,
+          link: task.link,
+        }));
 
-  const specialistsRender = slicedSpecialists.map((item: any) => (
-    <Link to="/klussen" key={item.id} className="search_dropdown_item">
-      {item.name}
+      return tasks.length > 0 ? tasks : [];
+    });
+
+    const specialistResults = specialists
+      .filter((specialist) => specialist.name.toLowerCase().includes(searchTerm))
+      .flatMap((specialist: Specialist) => {
+        return specialist.tasks.map((task) => ({
+          specialistName: specialist.name.toLowerCase(),
+          task: task.task,
+          link: task.link,
+        }));
+      });
+
+    return [...taskResults, ...specialistResults];
+  };
+
+  const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
+
+  const resultsRender = slicedResults.map((result, index) => (
+    <Link
+      to={`/klussen${result.link}`}
+      key={index}
+      className="search_dropdown_item"
+    >
+      {`${result.specialistName ? `${result.specialistName} - ` : ''}${result.task}`}
     </Link>
   ));
 
@@ -44,13 +79,14 @@ function Searchbar() {
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
         />
-        <div className={showList ? "search_dropdown open" : "search_dropdown"} >
-          {specialistsRender}
+        <div className={showList ? "search_dropdown open" : "search_dropdown"}>
+          {resultsRender}
         </div>
       </div>
     </>
   );
 }
 
+// ...
 
 export default Searchbar;

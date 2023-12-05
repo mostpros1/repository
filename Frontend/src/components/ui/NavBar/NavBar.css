@@ -11,7 +11,7 @@
 
 .nav-container{
     width: 100%;
-    max-width: 1500px;
+    max-width: 1200px;
     display: flex;
     justify-content: space-between;
 }
@@ -59,19 +59,19 @@ li:last-of-type > a{
 li > .white-items{
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 li > .black-items{
     color: black;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 .loginButton{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     background: none;
     border: none;

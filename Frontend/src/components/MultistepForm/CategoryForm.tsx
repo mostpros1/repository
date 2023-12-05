@@ -1,99 +1,44 @@
-import kraan from '../../assets/kraan.svg'
-import gereedschap from '../../assets/Tools.svg'
-import gasleiding from '../../assets/Gasleiding.svg'
-import lekkage from '../../assets/Lekkage.svg'
-import riolering from '../../assets/Onstoppen.svg'
-import anders from '../../assets/Group 234.svg'
-type CategoryData = {
-    category: string
+interface Question {
+    key: string;
+    label: string;
+    options: string[];
 }
 
-type CategoryFormProps = CategoryData & {
-    updateFields: (fields: Partial<CategoryData>) => void
-}
-export function CategoryForm({ updateFields }: CategoryFormProps) {
-
-
-
-    const repairCategories = [
-        {
-            id: 1,
-            icon: kraan,
-            title: "Nieuwe leiding aanleggen",
-            category: "pipe replacement",
-            defaultChecked: false,
-        },
-        {
-            id: 2,
-            icon: gereedschap,
-            title: "Kapotte leiding maken",
-            category: "damaged pipes",
-            defaultChecked: false,
-        },
-        {
-            id: 3,
-            icon: gasleiding,
-            title: "Gasleiding repareren",
-            category: "gas pipe repair",
-            defaultChecked: false,
-        },
-        {
-            id: 4,
-            icon: lekkage,
-            title: "Lekkage verhelpen",
-            category: "leakage",
-            defaultChecked: false,
-        },
-        {
-            id: 5,
-            icon: riolering,
-            title: "Riolering en afvoer onstoppen of reinigen",
-            category: "sewage system",
-            defaultChecked: false,
-        },
-        {
-            id: 6,
-            icon: anders,
-            title: "Anders",
-            category: "other",
-            defaultChecked: true,
-        },
-    ]
-
-    const handleDivClicked = (index: number) => {
-        updateFields({ category: repairCategories[index].title })
+interface CategoryProps {
+    question: Question;
+    questions: Record<string, string>;
+    updateQuestionAnswers: (answers: Partial<Record<string, string>>) => void;
+    optionImages: Record<string, string>;
+  }
+  
+  const CategoryForm: React.FC<CategoryProps> = ({ question, questions, updateQuestionAnswers, optionImages }) => {
+    const handleRadioChange = (selectedAnswer: string) => {
+      updateQuestionAnswers({ [question.key]: selectedAnswer });
     };
-
-    let repairCardsToBeRendered = repairCategories.map((Repaircard, index) => {
-        if (Repaircard.defaultChecked === false) {
-            return (
-                <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category}  />
-                    <label className='label' htmlFor={Repaircard.category}>
-                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                        {Repaircard.title}
-                    </label>
-                </div>
-            )
-        } else {
-            return (
-                <div key={Repaircard.id} className='repairCard' onClick={() => handleDivClicked(index)}>
-                    <input type="radio" id={Repaircard.category} name="button" value={Repaircard.category} defaultChecked={true}  />
-                    <label htmlFor={Repaircard.category}>
-                        <img className='icon' src={Repaircard.icon} alt={Repaircard.category} />
-                        {Repaircard.title}
-                    </label>
-                </div>
-            );
-
-        }
-    });
-
+  
     return (
-        <>
-            <div className='repaircards-con'>
-                {repairCardsToBeRendered}
+      <div className='repaircards-wrapper'>
+        <h2>{question.label}</h2>
+        <div className='repaircards-con'>
+          {question.options.map((option) => (
+            <div key={`${question.key}-${option}`} className='repairCard' onClick={() => handleRadioChange(option)}>
+              <input
+                type="radio"
+                id={`${question.key}-${option}`}
+                value={option}
+                checked={questions[question.key] === option}
+                onChange={() => handleRadioChange(option)}
+              />
+              <label htmlFor={`${question.key}-${option}`} className='label'>
+                {optionImages[option] && <img src={optionImages[option]} alt={option} />}
+                {option}
+              </label>
             </div>
-        </>
-    )
-}
+          ))}
+        </div>
+      </div>
+    );
+  };
+  
+  export default CategoryForm;
+  

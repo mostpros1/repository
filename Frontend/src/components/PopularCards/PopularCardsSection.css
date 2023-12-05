@@ -6,11 +6,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 50px;
 }
 
 .popular-container{
     width: 100%;
-    max-width: 1500px; 
+    max-width: 1000px; 
     display: flex;
     flex-direction: column;
     justify-content: center;

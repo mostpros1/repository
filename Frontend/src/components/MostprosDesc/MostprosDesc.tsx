@@ -1,7 +1,7 @@
 import './MostprosDesc.css'
-import manWithHammerIcon from "../../assets/manmethammer.png"
-import girlWithDrill from "../../assets/vrouwmetboor.png"
-import peopleWithTools from "../../assets/2personenmettools.png"
+import manWithHammerIcon from "../../assets/Group 595.png"
+import girlWithDrill from "../../assets/Group 787.png"
+import peopleWithTools from "../../assets/Group 1098.png"
 
 function MostprosDesc() {
     return (
@@ -16,10 +16,7 @@ function MostprosDesc() {
                         <div className='desc_text'>
                             <h4>1 Beschrijf je klus</h4>
                             <p>
-                                Denk aan klussen voor je uitbouw, renovatie, tegels, dak, keuken,
-                                ramen, deuren, badkamer, sanitair, stuken, verwarming,
-                                loodgieterswerk, elektriciteit, stofferen, slopen, afvoeren,
-                                isolatie, timmerwerken, algemene klussen, schoonmaak, enz.
+                                Voer in de zoekbalk je klus in, noteer je postcode en geef een beschrijving van de gewenste werkzaamheden. <strong>Let op:</strong> U dient aan het einde in te loggen om aanbod te ontvangen.
                             </p>
                         </div>
                         <div className="desc_img_con">
@@ -30,10 +27,7 @@ function MostprosDesc() {
                         <div className='desc_text'>
                             <h4>2 Krijg een vakspecialist</h4>
                             <p>
-                                Krijg een aannemer, gevelspecialist, metselaar, ontwerper,
-                                tegelzetter, dakdekker, keukenmonteur, glaszetter,
-                                kozijnspecialist, badkamerspecialist, stukadoor, installateur,
-                                loodgieter, elektricien enz.
+                                Ontvang reacties van vakspecialisten uit jouw omgeving of kies zelf een specialist en neem contact met hem/haar op.
                             </p>
                         </div>
                         <div className="desc_img_con">
@@ -44,9 +38,7 @@ function MostprosDesc() {
                         <div className='desc_text'>
                             <h4>3 Ontvang ondersteuning</h4>
                             <p>
-                                Naast de standaard ondersteuning van de vakspecialist zijn we bij
-                                Mostpros.com ook constant opzoek naar slimmere manieren om
-                                iedereen in het netwerk te ondersteunen met groeien.
+                                De vakspecialist voert uw klus uit op de afgesproken dag.
                             </p>
                         </div>
                         <div className="desc_img_con">
