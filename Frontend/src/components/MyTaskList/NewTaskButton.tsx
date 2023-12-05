@@ -1,13 +1,14 @@
 import "./NewTaskButton.css"
 import AddBtn from "../../assets/Vector.png"
+import { Link } from "react-router-dom"
 
 function NewTaskButton() {
   return (
     <div className='NTB_con'>
-      <div>
+      <Link to="/specialist-resultaat">
         <img src={AddBtn} alt="" />
-      </div>
-      <p>Nieuwe klus zoeken</p>
+        <p>Nieuwe klus zoeken</p>
+      </Link>     
     </div>
   )
 }

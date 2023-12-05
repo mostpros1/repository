@@ -11,16 +11,12 @@ function MyTaskList() {
                         <h2>Huidige klussen</h2>
                         <div className="taskCard_con">
                             <TaskCard />
-                            <TaskCard />
-                            <TaskCard />
                             <NewTaskButton />
                         </div>
                     </div>
                     <div className="finished_task_con">
                         <h2>Afgeronde klussen</h2>
                         <div className="taskCard_con">
-                            <TaskCard />
-                            <TaskCard />
                             <TaskCard />
                         </div>
                     </div>
