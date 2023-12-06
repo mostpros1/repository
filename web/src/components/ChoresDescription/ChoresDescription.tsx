@@ -1,10 +1,10 @@
-import "./ChoresDesc.css";
+import "./ChoresDescription.css";
 import handyman from "../../assets/handyman.png";
 import painter from "../../assets/stefano-manzini-B81670AyocM-unsplash.jpg";
 import floors from "../../assets/ddp-kS1UuxzkuJE-unsplash.jpg";
 import { Link } from "react-router-dom";
 
-function ChoresDesc() {
+function ChoresDescription () {
   return (
     <>
       <div className="chores_con">
@@ -54,4 +54,4 @@ function ChoresDesc() {
   );
 }
 
-export default ChoresDesc;
+export default ChoresDescription;
