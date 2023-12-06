@@ -4,7 +4,7 @@ import painter from "../../assets/stefano-manzini-B81670AyocM-unsplash.jpg";
 import floors from "../../assets/ddp-kS1UuxzkuJE-unsplash.jpg";
 import { Link } from "react-router-dom";
 
-function ChoresDescription () {
+function ChoresDescription() {
   return (
     <>
       <div className="chores_con">
@@ -17,7 +17,7 @@ function ChoresDescription () {
               <div className="choreImg_con">
                 <img src={handyman} alt="" />
               </div>
-              <div className="chore_desc">
+              <div className="chore_description">
                 <h4>Loodgieterswerk</h4>
                 <p>Alle informatie over Loodgieters</p>
               </div>
@@ -28,7 +28,7 @@ function ChoresDescription () {
               <div className="choreImg_con">
                 <img src={painter} alt="" />
               </div>
-              <div className="chore_desc">
+              <div className="chore_description">
                 <h4>Schilderen</h4>
                 <p>Alle informatie over Schilders</p>
               </div>
@@ -39,7 +39,7 @@ function ChoresDescription () {
               <div className="choreImg_con">
                 <img src={floors} alt="" />
               </div>
-              <div className="chore_desc">
+              <div className="chore_description">
                 <h4>Vloeren en tegels</h4>
                 <p>Alle informatie over Tegelzetters</p>
               </div>
