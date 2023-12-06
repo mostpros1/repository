@@ -1,0 +1,37 @@
+.KvKForm_con{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.KvK_inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.KvK_input{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.KvK_input input{
+    outline: none;
+}
+
+.No_KvK{
+    display: flex;
+    justify-content: center;
+}
+
+.No_KvK a{
+    color: #308AE4;
+    font-size: 14px;
+}
+
+.KvKForm_con h2 {
+    align-self: center;
+}

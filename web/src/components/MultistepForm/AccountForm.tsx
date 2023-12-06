@@ -16,7 +16,7 @@ type AccountFormProps = AccountFormData & {
     updateFields: (fields: Partial<AccountFormData>) => void
   }
 
-const AccountForm = ({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) => {
+export function AccountForm ({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false)
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false)
@@ -54,5 +54,3 @@ const AccountForm = ({ email, firstName, lastName, phoneNumber, password, repeat
         </>
     )
 }
-
-export default AccountForm

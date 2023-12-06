@@ -2,22 +2,23 @@ import './MultistepForm.css'
 import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
-import { CategoryForm } from './CategoryForm'
+import { useQuestionData } from '../../data/MSFquestions'
+import CategoryForm from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
-import { useMultistepForm } from '../../hooks/useMultistepForm'
+import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
+import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
-import AccountForm from './AccountForm'
+import { AccountForm } from './AccountForm'
 
 type FormData = {
   postCode: string
   stad: string
-  category: string
+  questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
   email: string
-  loginPassword: string
   firstName: string
   lastName: string
   phoneNumber: string
@@ -25,82 +26,141 @@ type FormData = {
   repeatPassword: string
 }
 
-const INITIAL_DATA: FormData = {
-  postCode: "",
-  stad: "",
-  category: "",
-  aanvullendeInformatie: "",
-  info: "",
-  email: "",
-  loginPassword: "",
-  firstName: "",
-  lastName: "",
-  phoneNumber: "",
-  password: "",
-  repeatPassword: ""
-}
-
 function MultistepForm() {
-  const [data, setData] = useState(INITIAL_DATA)
+  
   const navigate = useNavigate()
+  const questionsData = useQuestionData();
+  
+  const INITIAL_DATA: FormData = {
+    postCode: "",
+    stad: "",
+    questions: Object.fromEntries(
+      questionsData.map((question) => [question.key, ""])
+    ),
+    aanvullendeInformatie: "",
+    info: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    password: "",
+    repeatPassword: ""
+  }
 
+  const [data, setData] = useState(INITIAL_DATA);
+  
   function updateFields(fields: Partial<FormData>) {
-    setData(prev => {
-      return { ...prev, ...fields }
-    })
+    setData((prev) => ({ ...prev, ...fields }));
   }
 
-  const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next, goTo} = useMultistepForm([
-    <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm {...data} updateFields={updateFields}/>,
-    <InfoForm     {...data} updateFields={updateFields}/>,
-    <EmailForm    {...data} updateFields={updateFields}/>,
-    <AccountForm  {...data} updateFields={updateFields}/>
-  ])
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (!isLastStep) return next()
+  function updateQuestionAnswers(questionKey: string, answer: string) {
+    setData((prev) => ({
+      ...prev,
+      questions: updateQuestions(prev.questions, {
+        [questionKey]: answer,
+      }),
+    }));
+  }
 
-    const userData = {
-      email: data.email,
-      password: data.password,
-      repeatPassword: data.repeatPassword,
-      name: data.firstName.trim() + " " + data.lastName.trim(),
-      phoneNumber: data.phoneNumber
-    }
+  function updateQuestions(
+    prevQuestions: Record<string, string>,
+    answers: Record<string, string>
+  ): Record<string, string> {
+    const filteredAnswers: Record<string, string> = {};
 
-    if (userData.name == " " && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-      .then(() => {
-        navigate('/dashboard')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-      username: userData.email,
-      password: userData.password,
-      attributes: {
-        name: userData.name,
-        email: userData.email,
-        phone_number: userData.phoneNumber
-      },
-      autoSignIn: { enabled: true }
-      })
-      .then(() => {
-        navigate('/bevestig-email', { state: { email: userData.email } })
-      })
-      .catch(async error => {
-        if (error.code == 'UsernameExistsException') {
-          await Auth.resendSignUp(userData.email)
-          navigate('/bevestig-email', { state: { email: userData.email } })
+    for (const key in answers) {
+      if (Object.prototype.hasOwnProperty.call(answers, key)) {
+        const value = answers[key];
+        if (value !== undefined) {
+          filteredAnswers[key] = value;
         }
-      })
+      }
     }
+
+    const updatedQuestions: Record<string, string> = {
+      ...prevQuestions,
+      ...filteredAnswers,
+    };
+
+    return updatedQuestions;
   }
+
+  const optionImages = {
+    "Nieuwe leiding aanleggen": kraan,
+    "Kapotte leiding maken": kraan,
+    "Anders": kraan
+    // ... voeg andere opties en bijbehorende afbeeldingen toe
+  };
+
+  const questionsSteps = questionsData.map((question) => (
+    <CategoryForm
+      key={question.key}
+      question={question}
+      questions={data.questions}
+      updateQuestionAnswers={(answers) => {
+        updateQuestionAnswers(question.key, answers[question.key] as string);
+      }}
+      optionImages={optionImages}
+    />
+  ));
+
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
+    useHomeOwnerMultistepForm({
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        ...questionsSteps,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <EmailForm {...data} updateFields={updateFields} />,
+        <AccountForm {...data} updateFields={updateFields} />
+      ],
+      onStepChange: () => { },
+    });
+
+    async function onSubmit(e: FormEvent) {
+      e.preventDefault()
+      if (!isLastStep) return next()
+  
+      const userData = {
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
+        name: data.firstName.trim() + " " + data.lastName.trim(),
+        phoneNumber: data.phoneNumber
+      }
+  
+      if (userData.name == " " && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
+        .then(() => {
+          navigate('/dashboard')
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.name,
+          email: userData.email,
+          phone_number: userData.phoneNumber
+        },
+        autoSignIn: { enabled: true }
+        })
+        .then(() => {
+          navigate('/bevestig-email', { state: { email: userData.email } })
+        })
+        .catch(async error => {
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email } })
+          }
+        })
+      }
+    }
 
   const stepWidth = 100 / steps.length;
 
@@ -125,7 +185,6 @@ function MultistepForm() {
         {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
         <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
       </div>
-      <button type="button" onClick={() => goTo(3)}>go to email form</button>
     </form>
   )
 }

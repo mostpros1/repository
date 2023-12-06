@@ -9,9 +9,9 @@
 
 .footer_container {
     width: 100%;
-    max-width: 700px;
+    max-width: 1000px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 30px; 
     padding: 50px 30px 0px;
 }
@@ -19,6 +19,11 @@
 .footerSection {
     display: flex;
     flex-direction: column;
+}
+
+.footerSection_icons{
+    display: flex;
+    flex-direction: row;
 }
 
 .footerSection h4 {
@@ -35,10 +40,23 @@
     font-size: 80%;
     color: grey;
 }
+.link_socials {
+    width: fit-content;
+}
+.link_socials > svg, i{
+    font-size: 35px;
+}
 
-.footerSection > svg{
-    font-size: 30px;
-    color: #0a66c2;
+.li > svg{
+    color: #308AE4;
+}
+
+.insta svg{
+    color: purple;
+}
+
+.x i{
+    color: black;
 }
 
 .cpad_wrapper{

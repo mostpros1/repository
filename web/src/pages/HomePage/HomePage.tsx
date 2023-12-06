@@ -1,4 +1,5 @@
 import NavBar from "../../components/ui/NavBar/NavBar"
+import HighlightBanner from "../../components/HighlightBanner/HighlightBanner"
 import PopularCardsSection from "../../components/PopularCards/PopularCardsSection"
 import Hero from "../../components/Hero/Hero"
 import MostprosDesc from "../../components/MostprosDesc/MostprosDesc"
@@ -15,6 +16,7 @@ function HomePage() {
         {/* --Hero-- */}    
         <Hero />
         {/* --Content-- */}
+        <HighlightBanner />
         {/* How does Mostpros work? */}
         <MostprosDesc />
         {/* Popular Jobs */}

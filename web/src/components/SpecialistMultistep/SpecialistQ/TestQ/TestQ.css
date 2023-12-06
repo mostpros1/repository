@@ -1,0 +1,38 @@
+.specialist_q_wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.specialist_q_box{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+}
+
+.specialist_q_con{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.specialist_q{
+    font-size: 14px;
+    padding: 15px 40px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #E9F4FF;
+}
+
+.specialist_q input{
+    justify-self: end;
+}
+.specialist_q label{
+    justify-self: center;
+}
