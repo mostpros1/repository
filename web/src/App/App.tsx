@@ -7,6 +7,7 @@ import MyTaskPage from "../pages/MyTasksPage/MyTaskPage";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
+import HomeOwnerResultPage from "../pages/HomeOwnerResultPage/HomeOwnerResultPage";
 import AdminSideBar from "../components/AdminSideBar/AdminSideBar";
 import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/bevestig-email" element={<BevestigEmailPage/>}/>
         <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
         <Route path="/specialist-resultaat" element={<ResultsPage />} />
+        <Route path="/huiseigenaar-resultaat" element={<HomeOwnerResultPage />}/>
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
         <Route path="/contact" element={<ContactPage />} />
