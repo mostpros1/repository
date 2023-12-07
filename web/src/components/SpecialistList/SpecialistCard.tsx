@@ -1,7 +1,7 @@
 import "./SpecialistCard.css";
 import star from "../../assets/icon _star 1_.png";
 import emptyStar from "../../assets/icon _star 1_empty.png";
-import person from '../../../../App/app/assets/JanSchilder.jpg'
+import person from '../../assets/JanSchilder.jpg'
 
 function SpecialistCard() {
   let specialistsData = [

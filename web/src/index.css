@@ -25,5 +25,10 @@ html {
 body {
   font-size: 2rem;
   font-family: 'Roboto', sans-serif;
-  
+}
+
+#root {
+  display: grid;
+  min-height: 100vh;
+  width: 100vw;
 }

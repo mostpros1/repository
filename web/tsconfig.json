@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "allowJs": true,
 
     /* Bundler mode */
     "moduleResolution": "node",
@@ -17,7 +18,7 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,

@@ -285,7 +285,7 @@ input{
     left: 0;
 }
 
-.register-con{
+.register-container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -294,18 +294,23 @@ input{
     padding: 0px 100px 0px 100px;
 }
 
-.reg-form-con{
+.register-form-container{
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 15px;
 }
 
-.reg-link{
+.register-form-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.register-link{
     font-size: 14px;
 }
 
-.reg-link a{
+.register-link a{
     color: #308AE4;
 }
 
