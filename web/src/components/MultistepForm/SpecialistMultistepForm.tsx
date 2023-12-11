@@ -1,6 +1,6 @@
 import './MultistepForm.css'
 import { LocationForm } from './LocationForm'
-import { CategoryForm } from './CategoryForm'
+// import { CategoryForm } from './CategoryForm'
 import { FormEvent } from "react"
 import { useMultistepForm } from '../../hooks/useMultistepForm'
 import { useState } from 'react'
@@ -27,10 +27,13 @@ function SpecialistMultistepForm() {
     })
   }
   const navigate = useNavigate();
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm([
-    <LocationForm {...data} updateFields={updateFields} />,
-    <CategoryForm {...data} updateFields={updateFields}/>
-  ])
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultistepForm({
+    steps: [
+      <LocationForm {...data} updateFields={updateFields} />,
+      // <CategoryForm {...data} updateFields={updateFields}/>
+    ],
+    onStepChange: () => {}
+  })
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {
