@@ -1,0 +1,59 @@
+.myTaskCard{
+    width: 100%;
+    display: flex;
+    min-height: 150px;
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.2);
+    gap: 75px;
+}
+
+.myTaskCard_left{
+    width: 50%;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.myTaskCard_right{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    align-items: center;
+    gap: 25px;
+    padding-right: 15px;
+}
+
+.myTaskCard_left_img_con{
+    height: 100%;
+    width: 40%;
+}
+
+.myTaskCard_left_img_con img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.myTaskCard_left_text_con{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 60%;
+}
+
+.myTaskCard_right_text_con{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task_btn{
+    width: 30%;
+    text-decoration: none;
+    font-size: 16px;
+    color: #17A1FA;
+    text-align: center;
+}
