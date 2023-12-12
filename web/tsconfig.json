@@ -1,4 +1,10 @@
 {
+  "typeAcquisition": {
+    "include": [
+      "jest"
+    ]
+  },
+
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
