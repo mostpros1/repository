@@ -1,5 +1,16 @@
-import React, { ChangeEvent, KeyboardEvent, MutableRefObject, useState } from "react";
-import { NativeSyntheticEvent, TextInput, TextInputChangeEventData } from "react-native";
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  MutableRefObject,
+  useState,
+} from "react";
+import {
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputChangeEventData,
+  TextInputKeyPressEventData,
+  View,
+} from "react-native";
 
 type DigitInputsProps = {
   className: string | undefined;
@@ -7,9 +18,8 @@ type DigitInputsProps = {
   inputRef: MutableRefObject<TextInput[]>;
 };
 
-
 function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const handleInputChange = (text) => {
     setInputValue(text);
   };
@@ -32,13 +42,16 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
     validDigitInputs.forEach((validInput) =>
       inputValue == validInput ? (isInputValid = true) : null
     );
-    if (!isInputValid) return (setInputValue(""));
+    if (!isInputValid) return setInputValue("");
   }
 
-  function onKeyUp(e: KeyboardEvent<TextInput>, digitIndex: number) {
+  function onKeyUp(
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
+    digitIndex: number
+  ) {
     let instruction: string;
     let targetElement;
-    switch (e.key) {
+    switch (e.nativeEvent.key) {
       case "Backspace":
         instruction = "PREVIOUS";
         targetElement =
@@ -52,7 +65,7 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
     }
     let isInputValid = false;
     validDigitInputs.forEach((validInput) =>
-      e.key === validInput ? (isInputValid = true) : null
+      e.nativeEvent.key === validInput ? (isInputValid = true) : null
     );
     if (isInputValid) {
       if (instruction == "NEXT" && targetElement !== inputRef.current[0])
@@ -75,28 +88,23 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
   // }
 
   return (
-    <div className={className}>
+    <View>
       {Array(6)
         .fill(0)
         .map((_, index) => (
           <TextInput
             key={index}
-            ref={(element) =>
-              (inputRef.current[index] = element as TextInput)
-            }
+            ref={(element) => (inputRef.current[index] = element as TextInput)}
             onKeyPress={(e) => onKeyUp(e, index)}
             value={inputValue}
             onChange={onChange}
             onChangeText={handleInputChange}
             // onPaste={onPaste}
-            className="bevestigemail_digit"
-            type="tel"
+            keyboardType={"phone-pad"}
             maxLength={1}
-            name={"digit" + index}
-            required
           />
         ))}
-    </div>
+    </View>
   );
 }
 

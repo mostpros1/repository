@@ -7,7 +7,7 @@ import HowItWorksThreeHomeowner from "./(Components)/(Homeowner)/HowItWorksThree
 import HowItWorksOneSpecialist from "./(Components)/(Specialist)/HowItWorksOneSpecialist";
 import HowItWorksTwoSpecialist from "./(Components)/(Specialist)/HowItWorksTwoSpecialist";
 import HowItWorksThreeSpecialist from "./(Components)/(Specialist)/HowItWorksThreeSpecialist";
-import Register from "./(Components)/(forms)/register";
+import Register from "./(Components)/(forms)/Register";
 import Login from "./(Components)/(forms)/login";
 import Home from "./(Components)/(tabs)/home";
 import Verify from "./(Components)/(forms)/Verification";
