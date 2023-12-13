@@ -16,4 +16,5 @@ describe('Testing searchbar functionality', () => {
 
         cy.get('.search_dropdown_item').eq(4).click()
     })
+    
 })
