@@ -18,4 +18,5 @@ declare global {
     Register: {email: string};
     Login: undefined;
     Verify: {email: string};
+    Profile: undefined;
   };

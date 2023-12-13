@@ -11,6 +11,7 @@ import Register from "./(Components)/(forms)/Register";
 import Login from "./(Components)/(forms)/login";
 import Home from "./(Components)/(tabs)/home";
 import Verify from "./(Components)/(forms)/Verification";
+import Profile from "./(Components)/(tabs)/Profile"
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -60,6 +61,7 @@ const App = () => {
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
+        <Stack.Screen name="Profile" component={Profile} />
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
