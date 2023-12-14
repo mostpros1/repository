@@ -19,8 +19,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          wait-on: http://localhost:5173
-          wait-on-timeout: 120
           build: npm run build
-          start: npx vite --host=localhost --port=5173
-          browser: chrome
+          start: npx vite --host
