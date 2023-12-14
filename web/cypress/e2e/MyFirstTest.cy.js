@@ -14,6 +14,8 @@ describe('Testing searchbar functionality', () => {
 
         cy.get('input').click()
 
+        cy.get('input').click()
+
     })
     
 })
