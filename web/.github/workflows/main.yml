@@ -15,5 +15,6 @@ jobs:
         with:
           wait-on: http://localhost:5173
           wait-on-timeout: 120
+          build: npm run build
           start: npx vite --host
           browser: chrome
