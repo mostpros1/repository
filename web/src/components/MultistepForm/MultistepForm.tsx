@@ -131,7 +131,7 @@ function MultistepForm() {
       if (userData.name == " " && userData.phoneNumber == "") {
         await Auth.signIn(userData.email, userData.password)
         .then(() => {
-          navigate('/dashboard')
+          navigate('/huiseigenaar-resultaat')
         })
         .catch((err) => {
           console.error(err)
