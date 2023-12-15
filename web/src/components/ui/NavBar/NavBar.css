@@ -1,4 +1,4 @@
-.nav{
+.nav {
     width: 100%;
     padding: 40px 30px;
     display: flex;
@@ -9,7 +9,7 @@
     position: absolute;
 }
 
-.nav-container{
+.nav-container {
     width: 100%;
     max-width: 1200px;
     display: flex;
@@ -20,109 +20,122 @@
     text-decoration: none;
 }
 
-.nav-leftside{
+.nav-leftside {
     display: flex;
+    height: 100%;
     align-items: center;
     gap: 10px;
 }
 
-.nav-leftside > img {
+.nav-leftside>img {
     height: 30px;
     aspect-ratio: 1/1;
 }
 
-.nav-leftside > .white-h1{
+.nav-leftside>.white-h1 {
     color: white;
 }
 
-.nav-leftside > .black-h1{
+.nav-leftside>.black-h1 {
     color: black;
 }
 
-.nav-rightside{
+.nav-rightside {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.nav-list{
+.nav-list {
     list-style: none;
     display: flex;
     gap: 15px;
 }
 
-li:last-of-type > a{
-    text-decoration: underline;
-    text-underline-offset: 2px;
+li:last-of-type>a {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: #308AE4;
+    color: white;
 }
 
-li > .white-items{
+li>.white-items {
     color: white;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
 }
 
-li > .black-items{
+li>.black-items {
     color: black;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
 }
 
-.loginButton{
-    font-size: 18px;
-    font-weight: 600;
+.loginButton {
     background: none;
-    border: none;
+    border: 2px solid black;
+    border-radius: 15px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
     color: black;
 }
 
-.mobile-nav{
+.loginButton svg {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.mobile-nav {
     display: none;
 }
 
 @media screen and (max-width: 1024px) {
-    .nav{
+    .nav {
         padding: 30px 20px;
         background: white;
     }
 
-    .other-nav{
+    .other-nav {
         padding: 30px 20px;
     }
-    .nav-container{
-        display: none;
-    }  
 
-    .mobile-nav{
+    .nav-container {
+        display: none;
+    }
+
+    .mobile-nav {
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .black-h1{
+    .black-h1 {
         font-size: 26px;
     }
 
-    .mobile-nav > svg{
+    .mobile-nav>svg {
         font-size: 30px;
     }
 
-    .nav-list{
+    .nav-list {
         display: flex;
         flex-direction: column;
         gap: 15px;
         position: absolute;
-        transform: translateY(114px) ;
+        transform: translateY(114px);
         background-color: white;
         width: 100%;
         left: 0;
         padding: 20px;
     }
 
-    .nav-list > li > a{
+    .nav-list>li>a {
         font-size: 20px;
     }
 

@@ -1,8 +1,8 @@
-import "./MyTaskList.css";
-import TaskCard from "./TaskCard";
+import "../MyTaskList/TaskCard.css";
+import TaskCard from "../MyTaskList/TaskCard";
 import DashboardTaskButton from "../ui/DashboardTaskButton/DashboardTaskButton";
 
-function MyTaskList() {
+function HoTaskList() {
     let taskCards = [
         {
             id: 1,
@@ -15,7 +15,7 @@ function MyTaskList() {
         {
             id: 2,
             title: "Tegels aanleggen",
-            status: "finished",
+            status: "ongoing",
             taskNR: 765561,
             price: 413,
             info: "De leiding in de keuken, badkamer en in de tuin moeten aangelegd worden.",
@@ -23,7 +23,7 @@ function MyTaskList() {
         {
             id: 3,
             title: "Plafond verven",
-            status: "finished",
+            status: "ongoing",
             taskNR: 923461,
             price: 26,
             info: "De leiding in de keuken. Er is wel schade in de tuin waar de leiding momenteel is.",
@@ -64,4 +64,4 @@ function MyTaskList() {
     );
 }
 
-export default MyTaskList;
+export default HoTaskList;

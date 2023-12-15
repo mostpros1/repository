@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
-import CategoryForm from './CategoryForm'
+import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
@@ -105,16 +105,15 @@ function MultistepForm() {
   ));
 
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-    useHomeOwnerMultistepForm({
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <InfoForm {...data} updateFields={updateFields} />,
         <EmailForm {...data} updateFields={updateFields} />,
-        <AccountForm {...data} updateFields={updateFields} />
+        <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} />
       ],
-      onStepChange: () => { },
+      onStepChange: () => {}
     });
 
     async function onSubmit(e: FormEvent) {

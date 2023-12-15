@@ -1,7 +1,9 @@
 import "./TaskCard.css";
 import placeholder from "../../assets/image 20.png";
 
+
 function TaskCard({ title, taskNR, price, info, status }) {
+
     return (
         <div className={`myTaskCard ${status === "finish" ? "finished" : ""}`}>
             <div className="myTaskCard_left">
@@ -9,7 +11,7 @@ function TaskCard({ title, taskNR, price, info, status }) {
                     <img src={placeholder} alt="placeholder" />
                 </div>
                 <div className="myTaskCard_left_text_con">
-                    <p>Loodgieters werk: {title}</p>
+                    <p>{title}</p>
                     <p>Opdrachtnummer: {taskNR}</p>
                     <p>€{price},-</p>
                 </div>
