@@ -11,11 +11,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install NPM dependencies, cache them correctly
+  # Install NPM dependencies, cache them correctly
       - name: Install dependencies
         run: |
-        cd web
-        npm ci
+          cd web
+          npm ci
+
       # and run all Cypress tests
       
       - name: Cypress run
