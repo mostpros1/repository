@@ -1,6 +1,4 @@
 import React, {
-  ChangeEvent,
-  KeyboardEvent,
   MutableRefObject,
   useState,
 } from "react";
@@ -96,7 +94,6 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
             key={index}
             ref={(element) => (inputRef.current[index] = element as TextInput)}
             onKeyPress={(e) => onKeyUp(e, index)}
-            value={inputValue}
             onChange={onChange}
             onChangeText={handleInputChange}
             // onPaste={onPaste}
