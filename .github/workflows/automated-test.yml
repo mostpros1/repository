@@ -23,6 +23,12 @@ jobs:
         with:
           working-directory: web
           runTests: false
+
+      - name: AWS install
+        run: |
+          cd web
+          npm install -g @aws-amplify/cli 
+
       # and run all Cypress tests
       
       - name: Cypress run
