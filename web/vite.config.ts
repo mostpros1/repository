@@ -6,11 +6,15 @@ export default defineConfig({
   plugins: [react()],
   build: {
     commonjsOptions: { include: [] },
+    rollupOptions: {
+      maxParallelFileOps: 100,
+      cache: false,
+  },   
   },
   optimizeDeps: {
     disabled: false,
   },
   define: {
     _global: ({})
-  }
+  },
 })
