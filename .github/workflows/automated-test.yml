@@ -18,6 +18,10 @@ jobs:
           cd web
           npm ci --verbose
 
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          runTests: false
       # and run all Cypress tests
       
       - name: Cypress run
