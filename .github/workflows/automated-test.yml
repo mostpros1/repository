@@ -16,9 +16,6 @@ jobs:
       - name: Install dependencies
         run: |
           cd web
-          git branch
-          npm -v
-          node -v
           npm ci --verbose
 
       - name: Cypress install
@@ -31,6 +28,8 @@ jobs:
         run: |
           cd web
           npm install -g @aws-amplify/cli 
+          amplify init
+          amplify push
 
       # and run all Cypress tests
       
