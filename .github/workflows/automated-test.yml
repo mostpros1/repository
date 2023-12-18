@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
   # Install NPM dependencies, cache them correctly
+
+      - name: Remove package-lock.json
+        run: |
+          cd web
+          rm -f package-lock.json
+          
       - name: Install dependencies
         run: |
           cd web
