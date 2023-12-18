@@ -170,7 +170,6 @@ function SpecialistMultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className="form-con">
-      <HomeButton />
       <div className="progress-con">
         <h3>
           Stap {currentStepIndex + 1} van {steps.length}
