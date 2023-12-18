@@ -16,6 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd web
+          git branch
           npm -v
           node -v
           npm ci --verbose
