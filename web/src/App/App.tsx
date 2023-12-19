@@ -16,6 +16,7 @@ import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVe
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 
+import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
 import "./App.css";
@@ -28,7 +29,8 @@ const App = () => {
             <Route path="/klussen/lekkages-repareren"   element={<KlussenPage />} />
             <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
             <Route path="/klussen/tuinontwerp-maken"    element={<KlussenPage />} />
-            <Route path="/registreer"                   element={<RegisterPage />}/>
+            <Route path="/login"                        element={<LoginPage />} />
+            <Route path="/registreer"                   element={<RegisterPage />} />
             <Route path="/wachtwoord-vergeten"          element={<WachtwoordVergetenPage />} />
             <Route path="/bevestig-email"               element={<BevestigEmailPage/>}/>
             <Route path="/huiseigenaar-resultaat"       element={<DashboardPage />} />
