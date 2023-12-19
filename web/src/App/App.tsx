@@ -14,7 +14,11 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
+import Chat from "../pages/ChatPage/ChatPage"
 import "./App.css";
+
+
+
 
 function App() {
   return (
@@ -39,6 +43,7 @@ function App() {
           <Route index element={<AdminMain />} />
           <Route path="manage-users" element={<ManageUser />} />
         </Route> {/*being tested*/}
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 type RegisterData = {
   firstName: string
@@ -15,7 +15,7 @@ type RegisterFormProps = RegisterData & {
 }
 
 export function RegisterForm({email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
-      
+     
     return (
         <>
             <div className="register-container">

@@ -1,0 +1,7 @@
+type Message @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  author: String!
+  body: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}

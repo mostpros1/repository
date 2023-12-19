@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-amplify/api": "^6.0.7",
+    "@aws-amplify/core": "^6.0.7",
+    "@aws-amplify/pubsub": "^6.0.7",
+    "@aws-amplify/ui-react": "^6.0.6",
+    "@aws-sdk/client-s3": "^3.472.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
-    "aws-amplify": "^5.3.12",
+    "aws-amplify": "^5.3.13",
     "aws-sdk": "2.1506.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

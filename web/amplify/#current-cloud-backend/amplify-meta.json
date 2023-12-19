@@ -12,50 +12,37 @@
       "AmplifyAppId": "d2j290dx5bs7ht"
     }
   },
-  "auth": {
+  "api": {
     "Mostpros": {
-      "customAuth": false,
       "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 6
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
         },
-        "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PHONE_NUMBER"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "GraphQLAPIIdOutput": "fdmygp53qfe4pbypevwl5y2axe",
+        "GraphQLAPIEndpointOutput": "https://72kcpl2yc5hspid5wv44zqorjm.appsync-api.eu-north-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-n7uunnfkm5ddzp236rxxhc4tam"
       },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito",
-      "output": {
-        "CreatedSNSRole": "arn:aws:iam::246293866149:role/snsbcd2e800150051-staging",
-        "UserPoolId": "eu-north-1_f8YZm13J6",
-        "AppClientIDWeb": "6vt7giud20o7866vnmc7uprh70",
-        "AppClientID": "4k2pi6d8g178ocuijk9tctsgo4",
-        "IdentityPoolId": "eu-north-1:a07b3277-225e-4d52-8497-3d38b9b9625f",
-        "UserPoolArn": "arn:aws:cognito-idp:eu-north-1:246293866149:userpool/eu-north-1_f8YZm13J6",
-        "IdentityPoolName": "testAuthIdentityPool__staging",
-        "UserPoolName": "Mostpros"
-      },
-      "lastPushTimeStamp": "2023-12-11T11:22:31.877Z",
+      "service": "AppSync",
+      "lastPushTimeStamp": "2023-12-18T09:26:38.930Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
-        "logicalId": "authMostpros"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiMostpros"
       },
-      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
+      "lastPushDirHash": "dKuGmCCIfVAkI6TixbXebB/OLAU="
     }
-  }
+  },
+  "auth": {}
 }
