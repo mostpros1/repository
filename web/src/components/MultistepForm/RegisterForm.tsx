@@ -1,21 +1,21 @@
 import { Dispatch, SetStateAction } from "react"
 
 type RegisterData = {
-  firstName: string
-  lastName: string
-  email: string
-  phoneNumber: string
-  password: string
-  repeatPassword: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber: string
+    password: string
+    repeatPassword: string
 }
 
 type RegisterFormProps = RegisterData & {
-  updateFields: (fields: Partial<RegisterData>) => void
-  setUserExists: Dispatch<SetStateAction<boolean>>
-}
+    updateFields: (fields: Partial<RegisterData>) => void;
+    setUserExists?: Dispatch<SetStateAction<boolean>>;
+};
 
-export function RegisterForm({email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
-      
+export function RegisterForm({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
+
     return (
         <>
             <div className="register-container">
@@ -23,9 +23,9 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                 <div className="register-form-container">
                     <div className="register-form-input">
                         <label htmlFor="">Voornaam:</label>
-                        <input 
-                            required 
-                            type="text" 
+                        <input
+                            required
+                            type="text"
                             placeholder='Voornaam'
                             value={firstName}
                             onChange={e => updateFields({ firstName: e.target.value })}
@@ -33,9 +33,9 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="" >Achternaam:</label>
-                        <input 
-                            required 
-                            type="text" 
+                        <input
+                            required
+                            type="text"
                             placeholder='Achternaam'
                             value={lastName}
                             onChange={e => updateFields({ lastName: e.target.value })}
@@ -43,9 +43,9 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Email:</label>
-                        <input 
-                            required 
-                            type="email" 
+                        <input
+                            required
+                            type="email"
                             placeholder='Email'
                             value={email}
                             onChange={e => updateFields({ email: e.target.value })}
@@ -53,9 +53,9 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Telefoonnummer:</label>
-                        <input 
-                            required 
-                            type="tel" 
+                        <input
+                            required
+                            type="tel"
                             placeholder='Telefoonnummer (bijv. +31612345678)'
                             value={phoneNumber}
                             onChange={e => updateFields({ phoneNumber: e.target.value })}
@@ -63,9 +63,9 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Wachtwoord:</label>
-                        <input 
-                            required 
-                            type="password" 
+                        <input
+                            required
+                            type="password"
                             placeholder='Wachtwoord (min. 6 tekens)'
                             value={password}
                             onChange={e => updateFields({ password: e.target.value })}
@@ -73,18 +73,20 @@ export function RegisterForm({email, firstName, lastName, phoneNumber, password,
                     </div>
                     <div className="register-form-input password">
                         <label htmlFor="">Herhaal wachtwoord:</label>
-                        <input 
-                            required 
+                        <input
+                            required
                             type="password"
                             placeholder='Herhaal wachtwoord'
                             value={repeatPassword}
                             onChange={e => updateFields({ repeatPassword: e.target.value })}
                         />
-                        
+
                     </div>
                 </div>
-                <div className="register-link">Al een account? <a href="#" onClick={() => setUserExists(true)}>Inloggen</a></div>
-            </div>
-      </>
-  )
+                <div className="register-link">Al een account? <a
+                    href="#"
+                    onClick={() => setUserExists && setUserExists(true)}>Inloggen</a></div>
+                </div>
+        </>
+    )
 }
