@@ -21,7 +21,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData}} />
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}}/>
         </div>
       </div>
       <Footer />
