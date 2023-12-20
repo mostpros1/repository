@@ -7,8 +7,12 @@ describe('Test website', () => {
          // Wacht op de suggestielijst om zichtbaar te worden
       cy.get('.search_dropdown').should('be.visible');
 
-        // Klik op de eerste suggestie in de lijst
+        // second page , 001-2
       cy.get('.search_dropdown a:first').click();
+      cy.get('.first-input').type("1505");
+      cy.get('.second-input').type('WL');
+      cy.get('.form-btn').click();
+ 
 
     })
       

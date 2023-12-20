@@ -1,23 +1,3 @@
-
-
-describe('Testing searchbar functionality', () => {
-    it('type in input', () => {
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-
-        cy.get('input').type('oo')
-
-        cy.get('input').type('{backspace}{backspace}')
-
-    })
-
-    it('click second result', () => {
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-
-        cy.get('input').click()
-
-        cy.get('.search_dropdown_item').eq(4).click()
-    })
-})
 // inlaad van het pagina , zoekt input faild , typt Loodgieter , kiest eerste optie wordt geladen en vologende pagina .
 describe('Test website', () => {
     it('should load the website , should  find input faild, should typt and clict first result', () => {
@@ -55,11 +35,6 @@ describe('Test website', () => {
       cy.get(':nth-child(5) > input').type('xcvxcxvxxv')
       cy.get('.password > input').type('wqwqwqwqwqw')
       
-
-
-
-
-
 
     })
       
