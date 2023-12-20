@@ -48,7 +48,7 @@ Navigate to the appropriate directory and install the necessary packages:
 
 If you're working on the web app:
 ```
-cd ./Frontend
+cd ./web
 npm install
 ```
 

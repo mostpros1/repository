@@ -12,50 +12,78 @@
       "AmplifyAppId": "d2j290dx5bs7ht"
     }
   },
-  "auth": {
+  "api": {
     "Mostpros": {
-      "customAuth": false,
       "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 6
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
         },
-        "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PHONE_NUMBER"
-        ],
+        "GraphQLAPIIdOutput": "fdmygp53qfe4pbypevwl5y2axe",
+        "GraphQLAPIEndpointOutput": "https://72kcpl2yc5hspid5wv44zqorjm.appsync-api.eu-north-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-n7uunnfkm5ddzp236rxxhc4tam"
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "lastPushTimeStamp": "2023-12-20T11:50:55.533Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiMostpros"
+      }
+    }
+  },
+  "auth": {
+    "mostpros0f31aec0": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [
           "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
         ],
         "verificationMechanisms": [
           "EMAIL"
         ]
       },
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito",
-      "output": {
-        "CreatedSNSRole": "arn:aws:iam::246293866149:role/snsbcd2e800150051-staging",
-        "UserPoolId": "eu-north-1_f8YZm13J6",
-        "AppClientIDWeb": "6vt7giud20o7866vnmc7uprh70",
-        "AppClientID": "4k2pi6d8g178ocuijk9tctsgo4",
-        "IdentityPoolId": "eu-north-1:a07b3277-225e-4d52-8497-3d38b9b9625f",
-        "UserPoolArn": "arn:aws:cognito-idp:eu-north-1:246293866149:userpool/eu-north-1_f8YZm13J6",
-        "IdentityPoolName": "testAuthIdentityPool__staging",
-        "UserPoolName": "Mostpros"
-      },
-      "lastPushTimeStamp": "2023-11-27T08:59:15.375Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
-        "logicalId": "authMostpros"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/mostpros0f31aec0-cloudformation-template.json",
+        "logicalId": "authmostpros0f31aec0"
       },
-      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
+      "lastPushTimeStamp": "2023-12-20T11:50:57.206Z",
+      "output": {
+        "UserPoolId": "eu-north-1_KS9smjVZ4",
+        "AppClientIDWeb": "5toimjcq0q0e2hifqjfcma0jod",
+        "AppClientID": "2mmn4o3d5p9qimp0o939g61lol",
+        "IdentityPoolId": "eu-north-1:e517ea82-53cf-4d5c-bc7c-4fa01bc51e4d",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-north-1:246293866149:userpool/eu-north-1_KS9smjVZ4",
+        "IdentityPoolName": "mostpros0f31aec0_identitypool_0f31aec0__staging",
+        "UserPoolName": "mostpros0f31aec0_userpool_0f31aec0"
+      },
+      "lastPushDirHash": "650f/YXVTUpuzf6yXRAhiO2+gYE="
     }
   }
 }

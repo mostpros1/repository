@@ -1,4 +1,3 @@
-// useMultistepForm.tsx
 import { ReactElement, useState } from 'react';
 
 type UseMultistepFormProps = {

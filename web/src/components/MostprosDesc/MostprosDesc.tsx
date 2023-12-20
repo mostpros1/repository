@@ -16,7 +16,7 @@ function MostprosDesc() {
                         <div className='desc_text'>
                             <h4>1 Beschrijf je klus</h4>
                             <p>
-                                Voer in de zoekbalk je klus in, noteer je postcode en geef een beschrijving van de gewenste werkzaamheden. <strong>Let op:</strong> U dient aan het einde in te loggen om aanbod te ontvangen.
+                                Voer in de zoekbalk je klus in, noteer je postcode en geef een beschrijving van de gewenste werkzaamheden. 
                             </p>
                         </div>
                         <div className="desc_img_con">
@@ -27,7 +27,7 @@ function MostprosDesc() {
                         <div className='desc_text'>
                             <h4>2 Krijg een vakspecialist</h4>
                             <p>
-                                Ontvang reacties van vakspecialisten uit jouw omgeving of kies zelf een specialist en neem contact met hem/haar op.
+                                Ontvang reacties van vakspecialisten uit jouw omgeving. Kies zelf een specialist en neem contact op.
                             </p>
                         </div>
                         <div className="desc_img_con">

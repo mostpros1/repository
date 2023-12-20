@@ -50,7 +50,6 @@ const UserTabel = () => {
     if (window.confirm(`Are you sure you want to delete the user ${username}?`)) {
       try {
         // Implement the AWS SDK delete user logic here
-        // Example:
         const deleteUserParams = {
           UserPoolId: import.meta.env.VITE_USER_POOL_ID,
           Username: username,
