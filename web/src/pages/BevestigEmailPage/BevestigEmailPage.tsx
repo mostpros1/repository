@@ -26,7 +26,7 @@ function BevestigEmailPage() {
         })
         .then(result => { if (result == 'SUCCESS') {
             setIsConfirmed(true)
-            setTimeout(() => navigate('/dashboard'), 3000)
+            setTimeout(() => navigate('huiseigenaar-resultaat'), 3000)
         }})
     }
 
