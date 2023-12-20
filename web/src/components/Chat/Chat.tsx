@@ -135,7 +135,7 @@ function Chat({ messages }) {
                 required
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                placeholder="💬 Send a message to the world 🌎"
+                placeholder="💬 Send a message "
                 className="textBox"
               />
               <button style={{ marginLeft: "8px" }}>Send</button>

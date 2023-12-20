@@ -14,11 +14,9 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
-import Chat from "../pages/ChatPage/ChatPage"
+import Chat from "../pages/ChatPage/ChatPage";
 import "./App.css";
-
-
-
+import Message from "../components/Chat/message";
 
 function App() {
   return (
@@ -31,19 +29,29 @@ function App() {
         <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
         <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
         <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
-        <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
-        <Route path="/bevestig-email" element={<BevestigEmailPage/>}/>
-        <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
+        <Route
+          path="/wachtwoord-vergeten"
+          element={<WachtwoordVergetenPage />}
+        />
+        <Route path="/bevestig-email" element={<BevestigEmailPage />} />
+        <Route
+          path="/inschrijven-als-specialist"
+          element={<SpecialistPage />}
+        />
         <Route path="/specialist-resultaat" element={<ResultsPage />} />
-        <Route path="/huiseigenaar-resultaat" element={<HomeOwnerResultPage />}/>
+        <Route
+          path="/huiseigenaar-resultaat"
+          element={<HomeOwnerResultPage />}
+        />
         <Route path="/over-ons" element={<AboutUsPage />} />
         <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin-paneel" element={<AdminSideBar />} >
+        <Route path="/admin-paneel" element={<AdminSideBar />}>
           <Route index element={<AdminMain />} />
           <Route path="manage-users" element={<ManageUser />} />
-        </Route> {/*being tested*/}
-        <Route path="/chat" element={<Chat />} />
+        </Route>{" "}
+        {/*being tested*/}
+        <Route path="/chat" element={<Chat messages={Message} />} />
       </Routes>
     </>
   );
