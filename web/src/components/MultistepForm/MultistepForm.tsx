@@ -10,6 +10,8 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser, logout } from '../../actions/userActions';
 import { AccountForm } from './AccountForm'
 
 type FormData = {
@@ -27,6 +29,11 @@ type FormData = {
 }
 
 function MultistepForm() {
+
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+
+  console.log('Huidige gebruikersgegevens:', user);
   
   const navigate = useNavigate()
   const questionsData = useQuestionData();
@@ -131,6 +138,7 @@ function MultistepForm() {
       if (userData.name == " " && userData.phoneNumber == "") {
         await Auth.signIn(userData.email, userData.password)
         .then(() => {
+          dispatch(setUser({ email: userData.email, name: userData.name, phoneNumber: userData.phoneNumber }));
           navigate('/huiseigenaar-resultaat')
         })
         .catch((err) => {

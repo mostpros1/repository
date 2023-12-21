@@ -1,8 +1,14 @@
-export const setUser = (user) => ({
-    type: 'SET_USER',
-    payload: user,
-  });
-  
-  export const logout = () => ({
-    type: 'LOGOUT',
-  });
+type UserData = {
+  email: string;
+  name: string;
+  phoneNumber: string;
+};
+
+export const setUser = (user: UserData) => ({
+  type: 'SET_USER' as const,
+  payload: user,
+});
+
+export const logout = () => ({
+  type: 'LOGOUT' as const,
+});

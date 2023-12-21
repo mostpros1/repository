@@ -1,9 +1,10 @@
 import './PopularCards.css'
 
-import hovenier from '../../assets/hovenier.png'
-import loodgieter from '../../assets/loodgieter.png'
-import elektricien from '../../assets/lamp.png'
-import dakdekker from '../../assets/dakdekker.png'
+import YardIcon from '@mui/icons-material/Yard';
+import PlumbingIcon from '@mui/icons-material/Plumbing';
+import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
+import RoofingIcon from '@mui/icons-material/Roofing';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 
 function PopularCards() {
 
@@ -11,39 +12,34 @@ const PopularCardsData = [
     {
         id: 1,
         name: 'Hovenier',
-        icon: hovenier,
+        icon: <YardIcon />,
     },
     {
         id: 2,
         name: 'Elektriciën',
-        icon: elektricien,
+        icon: <ElectricBoltIcon />,
     },
     {
         id: 3,
         name: 'Loodgieter',
-        icon: loodgieter,
+        icon: <PlumbingIcon />,
     },
     {
         id: 4,
         name: 'Dakdekker',
-        icon: dakdekker,
+        icon: <RoofingIcon />,
     },
     {
         id: 5,
         name: 'Schoonmaken',
-        icon: hovenier,
-    },
-    {
-        id: 6,
-        name: 'Aannemer',
-        icon: hovenier,
+        icon: <CleaningServicesIcon/>,
     },
 ];
 
 let popularCardsToBeRendered = PopularCardsData.map(Popularcard => {
    return(     
         <div key={Popularcard.id} className='popularcard'>
-            <img src={Popularcard.icon} alt={Popularcard.name} />
+            {Popularcard.icon}
             <div>{Popularcard.name}</div>
         </div>   
    )

@@ -12,42 +12,30 @@ function ChoresDescription() {
           <h2>Vind vakmensen voor elke klus</h2>
         </div>
         <div className="choresCard_con">
-          <Link to="/klussen">
             <div className="choreCard">
               <div className="choreImg_con">
                 <img src={handyman} alt="" />
               </div>
               <div className="chore_description">
                 <h4>Loodgieterswerk</h4>
-                <p>Alle informatie over Loodgieters</p>
               </div>
             </div>
-          </Link>
-          <Link to="/klussen">
             <div className="choreCard">
               <div className="choreImg_con">
                 <img src={painter} alt="" />
               </div>
               <div className="chore_description">
                 <h4>Schilderen</h4>
-                <p>Alle informatie over Schilders</p>
               </div>
-            </div>
-          </Link>
-          <Link to="/klussen">
+            </div>      
             <div className="choreCard">
               <div className="choreImg_con">
                 <img src={floors} alt="" />
               </div>
               <div className="chore_description">
                 <h4>Vloeren en tegels</h4>
-                <p>Alle informatie over Tegelzetters</p>
               </div>
             </div>
-          </Link>
-        </div>
-        <div className="button_container">
-          <button className="button">Meer bekijken</button>
         </div>
       </div>
     </>

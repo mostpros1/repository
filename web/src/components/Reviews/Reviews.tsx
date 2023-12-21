@@ -1,6 +1,8 @@
 import "./Reviews.css";
 
-import handyman from "../../assets/handyman.png";
+import GardenDesigner from "../../assets/garden_designer_planning.png";
+import BathroomSpecialistMale from "../../assets/experienced_bathroom_specialist_installing_fixtur_male.png";
+import BathroomSpecialistFemale from "../../assets/experienced_bathroom_specialist_installing_fixtur_female.png";
 import star from "../../assets/icon _star 1_.png";
 import emptyStar from "../../assets/icon _star 1_empty.png";
 import { Link } from "react-router-dom";
@@ -15,7 +17,7 @@ function Reviews() {
         <div className="reviewCard_con">
           <div className="reviewCard">
             <div className="reviewImg_con">
-              <img src={handyman} alt="" className="reviewImage" />
+              <img src={BathroomSpecialistFemale} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
               <div>
@@ -32,7 +34,7 @@ function Reviews() {
           </div>
           <div className="reviewCard">
             <div className="reviewImg_con">
-              <img src={handyman} alt="" className="reviewImage" />
+              <img src={GardenDesigner} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
               <div>
@@ -49,7 +51,7 @@ function Reviews() {
           </div>
           <div className="reviewCard">
             <div className="reviewImg_con">
-              <img src={handyman} alt="" className="reviewImage" />
+              <img src={BathroomSpecialistMale} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
               <div>
@@ -64,12 +66,6 @@ function Reviews() {
               <p className="review_comment">Vakkundig aangepakt, duurde wel wat lang.</p>
             </div>
           </div>
-        </div>
-        <div className="button_container">
-          <Link to="/klussen">
-            <button className="button">Nieuwe klus plaatsen</button>
-          </Link>
-          
         </div>
       </div>
     </>

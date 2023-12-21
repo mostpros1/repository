@@ -90,6 +90,42 @@ li>.black-items {
     font-weight: 500;
 }
 
+.dropdown-container {
+    position: relative;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    top: 150%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .dropdown-content a {
+    display: block;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 15px;
+    background-color: #308AE4;
+    cursor: pointer;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #308ae4e5;
+  }
+  
+
 .mobile-nav {
     display: none;
 }
