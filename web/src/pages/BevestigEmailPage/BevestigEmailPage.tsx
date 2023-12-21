@@ -8,6 +8,7 @@ import './BevestigEmailPage.css'
 function BevestigEmailPage() {
 
     const [isConfirmed, setIsConfirmed] = useState(false)
+    const [userExists, setUserExists] = useState(false)
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -23,13 +24,26 @@ function BevestigEmailPage() {
         Auth.confirmSignUp(userEmail, code)
         .catch(error => {
             console.error(error)
+            if (error.code == "NotAuthorizedException") {
+                setUserExists(true)
+                setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
+            }
         })
         .then(result => { if (result == 'SUCCESS') {
             setIsConfirmed(true)
-            setTimeout(() => navigate('huiseigenaar-resultaat'), 3000)
+            setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
         }})
     }
 
+    function onNewCode() {
+        Auth.resendSignUp(userEmail)
+        .catch(error => {
+            if (error.code == "InvalidParameterException") {
+                setUserExists(true)
+                setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
+            }
+        })
+    }
     const form =
     <div className="confirmemail-container">
         <form className="confirmemail-card" onSubmit={onSubmit}>
@@ -41,23 +55,27 @@ function BevestigEmailPage() {
             <p className="confirmemail-card_text">Zoek in uw inbox naar een code, en voer die hieronder in. Let op: de mail kan mogelijk in uw spamfolder beland zijn.</p>
             <DigitInputs amount={6} inputRef={inputRef} />
             <button className="confirmemail-card_button" type="submit">Bevestigen</button>
-            <a className="confirmemail-card_newCode" onClick={() => Auth.resendSignUp(userEmail)}>Nieuwe code versturen</a>
+            <a className="confirmemail-card_newCode" onClick={onNewCode}>Nieuwe code versturen</a>
         </form>
     </div>
 
     const confirmedPopup =
-    <div className="confirmemail-container">
-        <p className="confirmemail-card_title">Gelukt!</p>
-        <div className="confirmemail-screen">
+    <div className="confirmemail-container confirmed">
+        <p className="confirmemail-card_title confirmed">Gelukt!</p>
+        <div className="confirmemail-screen confirmed">
             <img src={ThumbsUp} alt="" />
         </div>
-        <p className="confirmemail-card_text">Uw email is bevestigd. U wordt nu doorgestuurd naar de volgende pagina.</p>
+        <p className="confirmemail-card_text confirmed">Uw email is bevestigd. U wordt nu doorgestuurd naar de volgende pagina.</p>
+    </div>
+
+    const userExistsPopup =
+    <div className="confirmemail-container confirmed">
+        <p className="confirmemail-card_title confirmed">U bent al geverifieerd.</p>
+        <p className="confirmemail-card_text confirmed">Uw account is al geverifieerd. U wordt nu doorgestuurd naar de volgende pagina.</p>
     </div>
 
     return (
-        isConfirmed ? 
-        confirmedPopup : form
-        
+        userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
     )
 }
 
