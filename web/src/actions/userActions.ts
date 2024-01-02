@@ -1,7 +1,5 @@
 type UserData = {
   email: string;
-  name: string;
-  phoneNumber: string;
 };
 
 export const setUser = (user: UserData) => ({
