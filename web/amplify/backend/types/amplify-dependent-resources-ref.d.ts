@@ -1,15 +1,16 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "Mostpros": {
+    "mostpros": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string",
       "GraphQLAPIKeyOutput": "string"
     }
   },
   "auth": {
-    "mostpros0f31aec0": {
+    "Mostpros": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "CreatedSNSRole": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
       "UserPoolArn": "string",

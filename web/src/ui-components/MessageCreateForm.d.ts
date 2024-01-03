@@ -22,12 +22,14 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MessageCreateFormInputValues = {
+    channelID?: string;
     author?: string;
     body?: string;
     createdAt?: string;
     updatedAt?: string;
 };
 export declare type MessageCreateFormValidationValues = {
+    channelID?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
     body?: ValidationFunction<string>;
     createdAt?: ValidationFunction<string>;
@@ -36,6 +38,7 @@ export declare type MessageCreateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type MessageCreateFormOverridesProps = {
     MessageCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    channelID?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
     body?: PrimitiveOverrideProps<TextFieldProps>;
     createdAt?: PrimitiveOverrideProps<TextFieldProps>;

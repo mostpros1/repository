@@ -13,7 +13,18 @@
     },
     "categories": {
       "auth": {
-        "mostpros0f31aec0": {}
+        "mostpros0f31aec0": {},
+        "Mostpros": {},
+        "mostpros88966fcb": {
+          "userPoolId": "eu-north-1_xjKczq7WM",
+          "userPoolName": "Mostpros-staging",
+          "webClientId": "205hq6m5duq8u95vjhisd3c60h",
+          "nativeClientId": "205hq6m5duq8u95vjhisd3c60h"
+        }
+      },
+      "api": {
+        "Mostpros": {},
+        "mostpros": {}
       }
     }
   }

@@ -4,6 +4,7 @@
 
 export type CreateMessageInput = {
   id?: string | null,
+  channelID: string,
   author: string,
   body: string,
   createdAt?: string | null,
@@ -63,6 +64,7 @@ export type ModelSizeInput = {
 export type Message = {
   __typename: "Message",
   id: string,
+  channelID: string,
   author: string,
   body: string,
   createdAt?: string | null,
@@ -70,7 +72,8 @@ export type Message = {
 };
 
 export type UpdateMessageInput = {
-  id: string,
+  id?: string | null,
+  channelID: string,
   author?: string | null,
   body?: string | null,
   createdAt?: string | null,
@@ -78,11 +81,12 @@ export type UpdateMessageInput = {
 };
 
 export type DeleteMessageInput = {
-  id: string,
+  channelID: string,
 };
 
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null,
+  channelID?: ModelIDInput | null,
   author?: ModelStringInput | null,
   body?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
@@ -108,14 +112,31 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection",
   items:  Array<Message | null >,
   nextToken?: string | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export type ModelSubscriptionMessageFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  channelID?: ModelSubscriptionIDInput | null,
   author?: ModelSubscriptionStringInput | null,
   body?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
@@ -163,6 +184,7 @@ export type CreateMessageMutation = {
   createMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -179,6 +201,7 @@ export type UpdateMessageMutation = {
   updateMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -195,6 +218,7 @@ export type DeleteMessageMutation = {
   deleteMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -203,13 +227,14 @@ export type DeleteMessageMutation = {
 };
 
 export type GetMessageQueryVariables = {
-  id: string,
+  channelID: string,
 };
 
 export type GetMessageQuery = {
   getMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -218,9 +243,11 @@ export type GetMessageQuery = {
 };
 
 export type ListMessagesQueryVariables = {
+  channelID?: string | null,
   filter?: ModelMessageFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListMessagesQuery = {
@@ -229,6 +256,32 @@ export type ListMessagesQuery = {
     items:  Array< {
       __typename: "Message",
       id: string,
+      channelID: string,
+      author: string,
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type MessagesByChannelIDQueryVariables = {
+  updatedAt: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MessagesByChannelIDQuery = {
+  messagesByChannelID?:  {
+    __typename: "ModelMessageConnection",
+    items:  Array< {
+      __typename: "Message",
+      id: string,
+      channelID: string,
       author: string,
       body: string,
       createdAt?: string | null,
@@ -246,6 +299,7 @@ export type OnCreateMessageSubscription = {
   onCreateMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -261,6 +315,7 @@ export type OnUpdateMessageSubscription = {
   onUpdateMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,
@@ -276,6 +331,7 @@ export type OnDeleteMessageSubscription = {
   onDeleteMessage?:  {
     __typename: "Message",
     id: string,
+    channelID: string,
     author: string,
     body: string,
     createdAt?: string | null,

@@ -1,11 +1,8 @@
-import Chat from "../../components/Chat/Chat.tsx";
+import React from "react";
+import Chat2 from "../../components/Chat/Chat2";
 
-function ChatPage({ messages }) {
-  return (
-    <div>
-      <Chat messages={messages} />
-    </div>
-  );
+function ChatPage() {
+  return <Chat2 />;
 }
 
 export default ChatPage;

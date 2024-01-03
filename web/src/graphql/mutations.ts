@@ -14,6 +14,7 @@ export const createMessage = /* GraphQL */ `mutation CreateMessage(
 ) {
   createMessage(input: $input, condition: $condition) {
     id
+    channelID
     author
     body
     createdAt
@@ -31,6 +32,7 @@ export const updateMessage = /* GraphQL */ `mutation UpdateMessage(
 ) {
   updateMessage(input: $input, condition: $condition) {
     id
+    channelID
     author
     body
     createdAt
@@ -48,6 +50,7 @@ export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
 ) {
   deleteMessage(input: $input, condition: $condition) {
     id
+    channelID
     author
     body
     createdAt

@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "Mostpros",
+  "AppSyncApiName": "mostpros",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }

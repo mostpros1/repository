@@ -23,12 +23,14 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MessageUpdateFormInputValues = {
+    channelID?: string;
     author?: string;
     body?: string;
     createdAt?: string;
     updatedAt?: string;
 };
 export declare type MessageUpdateFormValidationValues = {
+    channelID?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
     body?: ValidationFunction<string>;
     createdAt?: ValidationFunction<string>;
@@ -37,6 +39,7 @@ export declare type MessageUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type MessageUpdateFormOverridesProps = {
     MessageUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    channelID?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
     body?: PrimitiveOverrideProps<TextFieldProps>;
     createdAt?: PrimitiveOverrideProps<TextFieldProps>;
@@ -45,7 +48,7 @@ export declare type MessageUpdateFormOverridesProps = {
 export declare type MessageUpdateFormProps = React.PropsWithChildren<{
     overrides?: MessageUpdateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
+    channelID?: string;
     message?: Message;
     onSubmit?: (fields: MessageUpdateFormInputValues) => MessageUpdateFormInputValues;
     onSuccess?: (fields: MessageUpdateFormInputValues) => void;

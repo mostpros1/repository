@@ -1,18 +1,13 @@
 {
   "api": {
-    "Mostpros": {
+    "mostpros": {
       "dependsOn": [],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ],
+          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
+              "apiKeyExpirationDays": 7
             },
             "authenticationType": "API_KEY"
           }
@@ -23,7 +18,7 @@
     }
   },
   "auth": {
-    "mostpros0f31aec0": {
+    "Mostpros": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -33,10 +28,12 @@
         ],
         "passwordProtectionSettings": {
           "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
+          "passwordPolicyMinLength": 6
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "NAME",
+          "PHONE_NUMBER"
         ],
         "socialProviders": [],
         "usernameAttributes": [
@@ -48,6 +45,40 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_mostpros88966fcb_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
     }
   }
 }

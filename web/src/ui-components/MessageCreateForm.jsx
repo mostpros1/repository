@@ -22,17 +22,20 @@ export default function MessageCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    channelID: "",
     author: "",
     body: "",
     createdAt: "",
     updatedAt: "",
   };
+  const [channelID, setChannelID] = React.useState(initialValues.channelID);
   const [author, setAuthor] = React.useState(initialValues.author);
   const [body, setBody] = React.useState(initialValues.body);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setChannelID(initialValues.channelID);
     setAuthor(initialValues.author);
     setBody(initialValues.body);
     setCreatedAt(initialValues.createdAt);
@@ -40,6 +43,7 @@ export default function MessageCreateForm(props) {
     setErrors({});
   };
   const validations = {
+    channelID: [{ type: "Required" }],
     author: [{ type: "Required" }],
     body: [{ type: "Required" }],
     createdAt: [],
@@ -88,6 +92,7 @@ export default function MessageCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          channelID,
           author,
           body,
           createdAt,
@@ -146,6 +151,34 @@ export default function MessageCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Channel id"
+        isRequired={true}
+        isReadOnly={false}
+        value={channelID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              channelID: value,
+              author,
+              body,
+              createdAt,
+              updatedAt,
+            };
+            const result = onChange(modelFields);
+            value = result?.channelID ?? value;
+          }
+          if (errors.channelID?.hasError) {
+            runValidationTasks("channelID", value);
+          }
+          setChannelID(value);
+        }}
+        onBlur={() => runValidationTasks("channelID", channelID)}
+        errorMessage={errors.channelID?.errorMessage}
+        hasError={errors.channelID?.hasError}
+        {...getOverrideProps(overrides, "channelID")}
+      ></TextField>
+      <TextField
         label="Author"
         isRequired={true}
         isReadOnly={false}
@@ -154,6 +187,7 @@ export default function MessageCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              channelID,
               author: value,
               body,
               createdAt,
@@ -181,6 +215,7 @@ export default function MessageCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              channelID,
               author,
               body: value,
               createdAt,
@@ -210,6 +245,7 @@ export default function MessageCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
+              channelID,
               author,
               body,
               createdAt: value,
@@ -239,6 +275,7 @@ export default function MessageCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
+              channelID,
               author,
               body,
               createdAt,
