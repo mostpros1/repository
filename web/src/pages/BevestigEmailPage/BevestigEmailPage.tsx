@@ -1,5 +1,6 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
+import { cognitoClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
@@ -16,23 +17,38 @@ function BevestigEmailPage() {
 
     const userEmail = location.state === null ? "" : location.state.email
 
+    async function confirmSignUp(code: string) {
+        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
+            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+            Username: userEmail,
+            GroupName: "Homeowner",
+        }).promise()
+        .catch(error => console.error(error))
+        console.log(addToGroupResult)
+        if (!addToGroupResult) return
+
+        const confirmationResult = await Auth.confirmSignUp(userEmail, code)
+        .catch(error => {
+            console.error(error)
+            const errorActionMap: Record<string, () => void> = {
+                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000) },
+                "CodeMismatchException": () => { },
+                "default": () => {}
+            };
+            (errorActionMap[error.code] || errorActionMap['default'])()
+        })
+        if (confirmationResult == 'SUCCESS') {
+            setIsConfirmed(true)
+            setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
+        }
+    }
+
     function onSubmit(e: FormEvent) {
         e.preventDefault()
         let code: string = ""
         inputRef.current.forEach((input: HTMLInputElement) => { code += input.value })
 
-        Auth.confirmSignUp(userEmail, code)
-        .catch(error => {
-            console.error(error)
-            if (error.code == "NotAuthorizedException") {
-                setUserExists(true)
-                setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
-            }
-        })
-        .then(result => { if (result == 'SUCCESS') {
-            setIsConfirmed(true)
-            setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
-        }})
+        confirmSignUp(code)
     }
 
     function onNewCode() {

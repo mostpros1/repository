@@ -147,7 +147,8 @@ function MultistepForm() {
           name: userData.firstName,
           family_name: userData.lastName,
           email: userData.email,
-          phone_number: userData.phoneNumber
+          phone_number: userData.phoneNumber,
+          "custom:group": "Homeowner"
         },
         autoSignIn: { enabled: true }
         })

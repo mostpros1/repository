@@ -16,6 +16,7 @@ import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVe
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import "./App.css";
+import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 
 const App = () => {
     return (
@@ -33,7 +34,9 @@ const App = () => {
             <Route path="/over-ons"                     element={<AboutUsPage />} />
             <Route path="/hoe-werkt-het"                element={<HowItWorksPage />} />
             <Route path="/contact"                      element={<ContactPage />} />
-            <Route path="/admin-paneel"                 element={<AdminSideBar />} >
+
+            {/* Protected routes */}
+            <Route path="/admin-paneel"                 element={<ProtectedRoute allowedRoles={["Admin"]} page={<AdminSideBar/>} />}>
                 <Route index                            element={<AdminMain />} />
                 <Route path="manage-users"              element={<ManageUser />} />
             </Route>
