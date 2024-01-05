@@ -23,6 +23,7 @@
     padding: 25px 40px;
     font-size: 20px;
     outline: none;
+    max-width: 85%;
 }
 
 .search-container_open input{
