@@ -10,7 +10,7 @@ function Characteristics() {
         <>
             <div className="character_con">
                 <div className="title_container">
-                    <h2>Waarom Mostpros</h2>
+                    <h2>Waarom kiezen voor Mostpros?</h2>
                 </div>
                 <div className="whyMostpros_container">
                     <div className="whyMostpros_left">
