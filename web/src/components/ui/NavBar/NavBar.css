@@ -67,8 +67,13 @@
 .nav-blue-btn > a {
     padding: 10px 20px;
     border-radius: 15px;
-    background-color: #308AE4;
-    color: white;
+    border: 3px solid #308AE4;
+    transition: all 0.2s;
+}
+
+.nav-blue-btn > a:hover {
+    background-color: #308AE4;  
+    color: white !important;
 }
 
 li>.white-items {
@@ -87,7 +92,7 @@ li>.black-items {
 
 .loginButton {
     background: none;
-    border: 2px solid black;
+    border: 3px solid black;
     border-radius: 15px;
     display: flex;
     gap: 5px;
@@ -95,6 +100,10 @@ li>.black-items {
     align-items: center;
     padding: 5px 10px;
     color: black;
+}
+
+.loginButton:hover{
+    cursor: pointer;
 }
 
 .loginButton svg {
