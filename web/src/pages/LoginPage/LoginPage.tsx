@@ -13,8 +13,12 @@ import Footer from '../../components/ui/Footer/Footer';
 import './LoginPage.css';
 
 function LoginPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = useSelector((state: RootState) => state.user);
+
+  console.log('Huidige gebruikersgegevens:', user);
 
   const [loginData, setLoginData] = useState({
     email: '',
