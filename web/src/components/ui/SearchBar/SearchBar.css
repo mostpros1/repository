@@ -3,7 +3,7 @@
     position: relative; /* Zet de container op relatieve positie */
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 40px;
 }
 
 .search-container_open{

@@ -165,6 +165,8 @@ function MultistepForm() {
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
             navigate('/bevestig-email', { state: { email: userData.email } })
+          } else {
+            console.error("foutmelding:", error)
           }
         })
       }
