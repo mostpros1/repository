@@ -10,6 +10,9 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser, logout } from '../../actions/userActions';
+import store, { RootState } from '../../store';
 import { AccountForm } from './AccountForm'
 
 type FormData = {
@@ -27,6 +30,11 @@ type FormData = {
 }
 
 function MultistepForm() {
+
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+
+  console.log('Huidige gebruikersgegevens:', user);
   
   const navigate = useNavigate()
   const questionsData = useQuestionData();
@@ -131,7 +139,8 @@ function MultistepForm() {
       if (userData.name == " " && userData.phoneNumber == "") {
         await Auth.signIn(userData.email, userData.password)
         .then(() => {
-          navigate('/dashboard')
+          dispatch(setUser({ email: userData.email, }));
+          navigate('/huiseigenaar-resultaat')
         })
         .catch((err) => {
           console.error(err)
@@ -156,6 +165,8 @@ function MultistepForm() {
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
             navigate('/bevestig-email', { state: { email: userData.email } })
+          } else {
+            console.error("foutmelding:", error)
           }
         })
       }

@@ -14,34 +14,37 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
+import DashboardPage from "../pages/DashboardPage/DashboardPage";
+
+import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
+
 import "./App.css";
 
-function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/mijn-klussen" element={<MyTaskPage />} />
-        <Route path="/huiseigenaar-klussen" element={<HomeOwnerTasksPage />} />
-        <Route path="/klussen" element={<KlussenPage />} />
-        <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
-        <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
-        <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
-        <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
-        <Route path="/bevestig-email" element={<BevestigEmailPage/>}/>
-        <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-        <Route path="/specialist-resultaat" element={<ResultsPage />} />
-        <Route path="/huiseigenaar-resultaat" element={<HomeOwnerResultPage />}/>
-        <Route path="/over-ons" element={<AboutUsPage />} />
-        <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin-paneel" element={<AdminSideBar />} >
-          <Route index element={<AdminMain />} />
-          <Route path="manage-users" element={<ManageUser />} />
-        </Route> {/*being tested*/}
-      </Routes>
-    </>
-  );
+const App = () => {
+    return (
+        <Routes>
+            <Route path="/"                             element={<HomePage />} />
+            <Route path="/mijn-klussen"                 element={<MyTaskPage />} />
+            <Route path="/klussen/lekkages-repareren"   element={<KlussenPage />} />
+            <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
+            <Route path="/klussen/tuinontwerp-maken"    element={<KlussenPage />} />
+            <Route path="/login"                        element={<LoginPage />} />
+            <Route path="/registreer"                   element={<RegisterPage />} />
+            <Route path="/wachtwoord-vergeten"          element={<WachtwoordVergetenPage />} />
+            <Route path="/bevestig-email"               element={<BevestigEmailPage/>}/>
+            <Route path="/huiseigenaar-resultaat"       element={<DashboardPage />} />
+            <Route path="/inschrijven-als-specialist"   element={<SpecialistPage />} />
+            <Route path="/specialist-resultaat"         element={<ResultsPage />} />
+            <Route path="/over-ons"                     element={<AboutUsPage />} />
+            <Route path="/hoe-werkt-het"                element={<HowItWorksPage />} />
+            <Route path="/contact"                      element={<ContactPage />} />
+            <Route path="/admin-paneel"                 element={<AdminSideBar />} >
+                <Route index                            element={<AdminMain />} />
+                <Route path="manage-users"              element={<ManageUser />} />
+            </Route>
+        </Routes>
+    )
 }
 
 export default App;
