@@ -1,4 +1,27 @@
 {
+  "api": {
+    "mostpros": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "Mostpros": {
       "customAuth": false,
@@ -27,6 +50,40 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_mostpros88966fcb_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
+    },
+    "AMPLIFY_auth_mostpros88966fcb_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "mostpros88966fcb"
+        }
+      ]
     }
   }
 }
