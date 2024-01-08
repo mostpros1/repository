@@ -36,7 +36,7 @@ const App = () => {
             <Route path="/contact"                      element={<ContactPage />} />
 
             {/* Protected routes */}
-            <Route path="/admin-paneel"                 element={<ProtectedRoute allowedRoles={["Professional"]} page={<AdminSideBar/>} redirectTo="/" />}>
+            <Route path="/admin-paneel"                 element={<ProtectedRoute allowedRoles={["Admin"]} page={<AdminSideBar/>} redirectTo="/" />}>
                 <Route index                            element={<AdminMain />} />
                 <Route path="manage-users"              element={<ManageUser />} />
             </Route>

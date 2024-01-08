@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import { useAuthorization } from "../../hooks/useAuthorization";
 import { UserRoles } from "../../types";
+import { Auth } from "aws-amplify";
 
 type ProtectedRouteProps = {
     allowedRoles: UserRoles[]
@@ -10,21 +10,24 @@ type ProtectedRouteProps = {
 }
 
 export const ProtectedRoute = ({ allowedRoles, page, redirectTo }: ProtectedRouteProps) => {
-    const [isAuthChecked, setIsAuthChecked] = useState<boolean>(false)
-    const isAuthorized = useAuthorization(allowedRoles)
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
     const navigate = useNavigate()
 
-    const checkAuthorization = async () => {
-        if (!isAuthorized && isAuthChecked) { navigate(redirectTo) }
+    async function checkAuthorization() {
+        try {
+            const user = await Auth.currentAuthenticatedUser()
+            const userRoles = user?.signInUserSession?.accessToken?.payload['cognito:groups'] || []
+            if (allowedRoles.some(role => userRoles.includes(role))) setIsAuthorized(true)
+            else navigate(redirectTo)
+        }
+        catch (error) {
+            console.error("Something went wrong:", error)
+        }
     }
 
     useEffect(() => {
-        if (!isAuthChecked) setIsAuthChecked(true)
-    }, [isAuthorized])
-
-    useEffect(() => {
         checkAuthorization()
-    }, [isAuthChecked])
+    }, [])
 
     return isAuthorized ? page : <></>
 }
