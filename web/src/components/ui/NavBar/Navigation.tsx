@@ -35,7 +35,8 @@ function Navigation() {
   if (user.user) {
     authButtons = (
       <>
-        <a href="/">test</a>
+        <p>{user.user.email}</p>
+        <a href="/">test</a>   
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     )
