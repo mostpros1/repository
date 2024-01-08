@@ -18,8 +18,6 @@ function LoginPage() {
 
   const user = useSelector((state: RootState) => state.user);
 
-  console.log('Huidige gebruikersgegevens:', user);
-
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
