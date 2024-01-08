@@ -8,57 +8,54 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createMessage = /* GraphQL */ `mutation CreateMessage(
-  $input: CreateMessageInput!
-  $condition: ModelMessageConditionInput
+export const createChat = /* GraphQL */ `mutation CreateChat(
+  $input: CreateChatInput!
+  $condition: ModelChatConditionInput
 ) {
-  createMessage(input: $input, condition: $condition) {
+  createChat(input: $input, condition: $condition) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateMessageMutationVariables,
-  APITypes.CreateMessageMutation
+  APITypes.CreateChatMutationVariables,
+  APITypes.CreateChatMutation
 >;
-export const updateMessage = /* GraphQL */ `mutation UpdateMessage(
-  $input: UpdateMessageInput!
-  $condition: ModelMessageConditionInput
+export const updateChat = /* GraphQL */ `mutation UpdateChat(
+  $input: UpdateChatInput!
+  $condition: ModelChatConditionInput
 ) {
-  updateMessage(input: $input, condition: $condition) {
+  updateChat(input: $input, condition: $condition) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateMessageMutationVariables,
-  APITypes.UpdateMessageMutation
+  APITypes.UpdateChatMutationVariables,
+  APITypes.UpdateChatMutation
 >;
-export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
-  $input: DeleteMessageInput!
-  $condition: ModelMessageConditionInput
+export const deleteChat = /* GraphQL */ `mutation DeleteChat(
+  $input: DeleteChatInput!
+  $condition: ModelChatConditionInput
 ) {
-  deleteMessage(input: $input, condition: $condition) {
+  deleteChat(input: $input, condition: $condition) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteMessageMutationVariables,
-  APITypes.DeleteMessageMutation
+  APITypes.DeleteChatMutationVariables,
+  APITypes.DeleteChatMutation
 >;

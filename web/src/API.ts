@@ -2,23 +2,18 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateMessageInput = {
+export type CreateChatInput = {
   id?: string | null,
-  channelID: string,
-  author: string,
-  body: string,
-  createdAt?: string | null,
-  updatedAt?: string | null,
+  text: string,
+  email: string,
 };
 
-export type ModelMessageConditionInput = {
-  author?: ModelStringInput | null,
-  body?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelMessageConditionInput | null > | null,
-  or?: Array< ModelMessageConditionInput | null > | null,
-  not?: ModelMessageConditionInput | null,
+export type ModelChatConditionInput = {
+  text?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  and?: Array< ModelChatConditionInput | null > | null,
+  or?: Array< ModelChatConditionInput | null > | null,
+  not?: ModelChatConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -61,39 +56,32 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Message = {
-  __typename: "Message",
+export type Chat = {
+  __typename: "Chat",
   id: string,
-  channelID: string,
-  author: string,
-  body: string,
-  createdAt?: string | null,
-  updatedAt?: string | null,
+  text: string,
+  email: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
-export type UpdateMessageInput = {
-  id?: string | null,
-  channelID: string,
-  author?: string | null,
-  body?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
+export type UpdateChatInput = {
+  id: string,
+  text?: string | null,
+  email?: string | null,
 };
 
-export type DeleteMessageInput = {
-  channelID: string,
+export type DeleteChatInput = {
+  id: string,
 };
 
-export type ModelMessageFilterInput = {
+export type ModelChatFilterInput = {
   id?: ModelIDInput | null,
-  channelID?: ModelIDInput | null,
-  author?: ModelStringInput | null,
-  body?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelMessageFilterInput | null > | null,
-  or?: Array< ModelMessageFilterInput | null > | null,
-  not?: ModelMessageFilterInput | null,
+  text?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  and?: Array< ModelChatFilterInput | null > | null,
+  or?: Array< ModelChatFilterInput | null > | null,
+  not?: ModelChatFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -112,37 +100,18 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
-export type ModelMessageConnection = {
-  __typename: "ModelMessageConnection",
-  items:  Array<Message | null >,
+export type ModelChatConnection = {
+  __typename: "ModelChatConnection",
+  items:  Array<Chat | null >,
   nextToken?: string | null,
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-};
-
-export type ModelSubscriptionMessageFilterInput = {
+export type ModelSubscriptionChatFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  channelID?: ModelSubscriptionIDInput | null,
-  author?: ModelSubscriptionStringInput | null,
-  body?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionMessageFilterInput | null > | null,
-  or?: Array< ModelSubscriptionMessageFilterInput | null > | null,
+  text?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionChatFilterInput | null > | null,
+  or?: Array< ModelSubscriptionChatFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -175,166 +144,131 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type CreateMessageMutationVariables = {
-  input: CreateMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type CreateChatMutationVariables = {
+  input: CreateChatInput,
+  condition?: ModelChatConditionInput | null,
 };
 
-export type CreateMessageMutation = {
-  createMessage?:  {
-    __typename: "Message",
+export type CreateChatMutation = {
+  createChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type UpdateMessageMutationVariables = {
-  input: UpdateMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type UpdateChatMutationVariables = {
+  input: UpdateChatInput,
+  condition?: ModelChatConditionInput | null,
 };
 
-export type UpdateMessageMutation = {
-  updateMessage?:  {
-    __typename: "Message",
+export type UpdateChatMutation = {
+  updateChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type DeleteMessageMutationVariables = {
-  input: DeleteMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type DeleteChatMutationVariables = {
+  input: DeleteChatInput,
+  condition?: ModelChatConditionInput | null,
 };
 
-export type DeleteMessageMutation = {
-  deleteMessage?:  {
-    __typename: "Message",
+export type DeleteChatMutation = {
+  deleteChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type GetMessageQueryVariables = {
-  channelID: string,
+export type GetChatQueryVariables = {
+  id: string,
 };
 
-export type GetMessageQuery = {
-  getMessage?:  {
-    __typename: "Message",
+export type GetChatQuery = {
+  getChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type ListMessagesQueryVariables = {
-  channelID?: string | null,
-  filter?: ModelMessageFilterInput | null,
+export type ListChatsQueryVariables = {
+  filter?: ModelChatFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
-export type ListMessagesQuery = {
-  listMessages?:  {
-    __typename: "ModelMessageConnection",
+export type ListChatsQuery = {
+  listChats?:  {
+    __typename: "ModelChatConnection",
     items:  Array< {
-      __typename: "Message",
+      __typename: "Chat",
       id: string,
-      channelID: string,
-      author: string,
-      body: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
+      text: string,
+      email: string,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type MessagesByChannelIDQueryVariables = {
-  updatedAt: string,
-  createdAt?: ModelStringKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelMessageFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
+export type OnCreateChatSubscriptionVariables = {
+  filter?: ModelSubscriptionChatFilterInput | null,
 };
 
-export type MessagesByChannelIDQuery = {
-  messagesByChannelID?:  {
-    __typename: "ModelMessageConnection",
-    items:  Array< {
-      __typename: "Message",
-      id: string,
-      channelID: string,
-      author: string,
-      body: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-    } | null >,
-    nextToken?: string | null,
+export type OnCreateChatSubscription = {
+  onCreateChat?:  {
+    __typename: "Chat",
+    id: string,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type OnCreateMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionMessageFilterInput | null,
+export type OnUpdateChatSubscriptionVariables = {
+  filter?: ModelSubscriptionChatFilterInput | null,
 };
 
-export type OnCreateMessageSubscription = {
-  onCreateMessage?:  {
-    __typename: "Message",
+export type OnUpdateChatSubscription = {
+  onUpdateChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
-export type OnUpdateMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionMessageFilterInput | null,
+export type OnDeleteChatSubscriptionVariables = {
+  filter?: ModelSubscriptionChatFilterInput | null,
 };
 
-export type OnUpdateMessageSubscription = {
-  onUpdateMessage?:  {
-    __typename: "Message",
+export type OnDeleteChatSubscription = {
+  onDeleteChat?:  {
+    __typename: "Chat",
     id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
-  } | null,
-};
-
-export type OnDeleteMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionMessageFilterInput | null,
-};
-
-export type OnDeleteMessageSubscription = {
-  onDeleteMessage?:  {
-    __typename: "Message",
-    id: string,
-    channelID: string,
-    author: string,
-    body: string,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    text: string,
+    email: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };

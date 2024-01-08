@@ -1,12 +1,58 @@
+.button_containerc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonc {
+    height: 5rem;
+    width: 18rem;
+    background-color: #308AE4;
+    border-radius: 1.5rem;
+    border: none;
+    color: white;
+    margin: auto;
+
+    &:hover {
+    background-color: #367fc8;
+    cursor: pointer;
+    }
+}
+
+.username {
+    width:fit-content;
+    background-color: #308AE4;
+    border-left: 10px solid #308AE4;
+    border-right: 10px solid #308AE4;
+    border-radius: 1.5rem;
+    
+    color: white;
+}
+
+.time {
+  font-size: small;
+  
+}
+
+.text {
+  background-color: rgb(212, 210, 210);
+  border-radius: 1.5rem;
+  width:fit-content;
+  border-left: 10px solid rgb(212, 210, 210);
+  border-right: 10px solid rgb(212, 210, 210);
+  margin-bottom: 40px;
+}
 
 .container {
   display: flex;
   flex-direction: column;
-  width: 540px;
-  height: 680px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 16px;
+  overflow-y: scroll;
 }
 
 .messages {
@@ -56,11 +102,11 @@
   width: 100%;
   height: 32px;
   padding: 8px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #308AE4;
   border-radius: 16px;
   outline: none;
 }
 
 .chat-bar form input:focus {
-  border: 1px solid #f19e38;
+  border: 1px solid #308AE4;
 }

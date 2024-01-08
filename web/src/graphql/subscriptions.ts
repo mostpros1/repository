@@ -8,48 +8,45 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateMessage = /* GraphQL */ `subscription OnCreateMessage($filter: ModelSubscriptionMessageFilterInput) {
-  onCreateMessage(filter: $filter) {
+export const onCreateChat = /* GraphQL */ `subscription OnCreateChat($filter: ModelSubscriptionChatFilterInput) {
+  onCreateChat(filter: $filter) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateMessageSubscriptionVariables,
-  APITypes.OnCreateMessageSubscription
+  APITypes.OnCreateChatSubscriptionVariables,
+  APITypes.OnCreateChatSubscription
 >;
-export const onUpdateMessage = /* GraphQL */ `subscription OnUpdateMessage($filter: ModelSubscriptionMessageFilterInput) {
-  onUpdateMessage(filter: $filter) {
+export const onUpdateChat = /* GraphQL */ `subscription OnUpdateChat($filter: ModelSubscriptionChatFilterInput) {
+  onUpdateChat(filter: $filter) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateMessageSubscriptionVariables,
-  APITypes.OnUpdateMessageSubscription
+  APITypes.OnUpdateChatSubscriptionVariables,
+  APITypes.OnUpdateChatSubscription
 >;
-export const onDeleteMessage = /* GraphQL */ `subscription OnDeleteMessage($filter: ModelSubscriptionMessageFilterInput) {
-  onDeleteMessage(filter: $filter) {
+export const onDeleteChat = /* GraphQL */ `subscription OnDeleteChat($filter: ModelSubscriptionChatFilterInput) {
+  onDeleteChat(filter: $filter) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteMessageSubscriptionVariables,
-  APITypes.OnDeleteMessageSubscription
+  APITypes.OnDeleteChatSubscriptionVariables,
+  APITypes.OnDeleteChatSubscription
 >;

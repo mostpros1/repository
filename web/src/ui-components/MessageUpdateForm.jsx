@@ -13,7 +13,7 @@ import { getMessage } from "../graphql/queries";
 import { updateMessage } from "../graphql/mutations";
 export default function MessageUpdateForm(props) {
   const {
-    channelID: channelIDProp,
+    id: idProp,
     message: messageModelProp,
     onSuccess,
     onError,
@@ -24,13 +24,11 @@ export default function MessageUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    channelID: "",
     author: "",
     body: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [channelID, setChannelID] = React.useState(initialValues.channelID);
   const [author, setAuthor] = React.useState(initialValues.author);
   const [body, setBody] = React.useState(initialValues.body);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
@@ -40,7 +38,6 @@ export default function MessageUpdateForm(props) {
     const cleanValues = messageRecord
       ? { ...initialValues, ...messageRecord }
       : initialValues;
-    setChannelID(cleanValues.channelID);
     setAuthor(cleanValues.author);
     setBody(cleanValues.body);
     setCreatedAt(cleanValues.createdAt);
@@ -50,21 +47,20 @@ export default function MessageUpdateForm(props) {
   const [messageRecord, setMessageRecord] = React.useState(messageModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = channelIDProp
+      const record = idProp
         ? (
             await API.graphql({
               query: getMessage.replaceAll("__typename", ""),
-              variables: { channelID: channelIDProp },
+              variables: { id: idProp },
             })
           )?.data?.getMessage
         : messageModelProp;
       setMessageRecord(record);
     };
     queryData();
-  }, [channelIDProp, messageModelProp]);
+  }, [idProp, messageModelProp]);
   React.useEffect(resetStateValues, [messageRecord]);
   const validations = {
-    channelID: [{ type: "Required" }],
     author: [{ type: "Required" }],
     body: [{ type: "Required" }],
     createdAt: [],
@@ -113,7 +109,6 @@ export default function MessageUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          channelID,
           author,
           body,
           createdAt: createdAt ?? null,
@@ -151,7 +146,7 @@ export default function MessageUpdateForm(props) {
             query: updateMessage.replaceAll("__typename", ""),
             variables: {
               input: {
-                channelID: messageRecord.channelID,
+                id: messageRecord.id,
                 ...modelFields,
               },
             },
@@ -170,34 +165,6 @@ export default function MessageUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Channel id"
-        isRequired={true}
-        isReadOnly={true}
-        value={channelID}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              channelID: value,
-              author,
-              body,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.channelID ?? value;
-          }
-          if (errors.channelID?.hasError) {
-            runValidationTasks("channelID", value);
-          }
-          setChannelID(value);
-        }}
-        onBlur={() => runValidationTasks("channelID", channelID)}
-        errorMessage={errors.channelID?.errorMessage}
-        hasError={errors.channelID?.hasError}
-        {...getOverrideProps(overrides, "channelID")}
-      ></TextField>
-      <TextField
         label="Author"
         isRequired={true}
         isReadOnly={false}
@@ -206,7 +173,6 @@ export default function MessageUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              channelID,
               author: value,
               body,
               createdAt,
@@ -234,7 +200,6 @@ export default function MessageUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              channelID,
               author,
               body: value,
               createdAt,
@@ -264,7 +229,6 @@ export default function MessageUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              channelID,
               author,
               body,
               createdAt: value,
@@ -294,7 +258,6 @@ export default function MessageUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              channelID,
               author,
               body,
               createdAt,
@@ -324,7 +287,7 @@ export default function MessageUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(channelIDProp || messageModelProp)}
+          isDisabled={!(idProp || messageModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -336,7 +299,7 @@ export default function MessageUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(channelIDProp || messageModelProp) ||
+              !(idProp || messageModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

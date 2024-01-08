@@ -12,6 +12,38 @@
       "AmplifyAppId": "d2j290dx5bs7ht"
     }
   },
+  "api": {
+    "mostpros": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
+        },
+        "GraphQLAPIIdOutput": "txttimbjhzclji4gu5jgn4obvy",
+        "GraphQLAPIEndpointOutput": "https://m6ycxhlqg5bh5fpwqkoxsxlyei.appsync-api.eu-north-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-edwnonsiqbho3e7inafdp57x6u"
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apimostpros"
+      },
+      "lastPushTimeStamp": "2024-01-05T15:01:19.857Z",
+      "lastPushDirHash": "bqxyOd7n0cmNqLj8PMAP5rgZ1uk="
+    }
+  },
   "auth": {
     "Mostpros": {
       "customAuth": false,
@@ -22,8 +54,8 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 6,
-          "passwordPolicyCharacters": []
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 6
         },
         "signupAttributes": [
           "EMAIL",
@@ -50,39 +82,12 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-01-03T12:08:47.220Z",
+      "lastPushTimeStamp": "2024-01-05T15:01:19.857Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"
       },
       "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
-    }
-  },
-  "api": {
-    "mostpros": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            }
-          },
-          "additionalAuthenticationProviders": []
-        },
-        "GraphQLAPIIdOutput": "x5auh2ur75gctki6mommimpzaq",
-        "GraphQLAPIEndpointOutput": "https://dfxs43ejwza6hjdhlmniwpgeqe.appsync-api.eu-north-1.amazonaws.com/graphql",
-        "GraphQLAPIKeyOutput": "da2-ym2axr4tc5hgxl4r4kxotjdb7a"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "logicalId": "apimostpros"
-      },
-      "lastPushTimeStamp": "2024-01-03T12:13:35.090Z",
-      "lastPushDirHash": "QrTMnWEuGn19bHPI9JOVwW2Rwjo="
     }
   }
 }

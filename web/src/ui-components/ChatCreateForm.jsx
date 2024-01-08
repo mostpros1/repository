@@ -9,8 +9,8 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createMessage } from "../graphql/mutations";
-export default function MessageCreateForm(props) {
+import { createChat } from "../graphql/mutations";
+export default function ChatCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -22,28 +22,20 @@ export default function MessageCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    author: "",
-    body: "",
-    createdAt: "",
-    updatedAt: "",
+    text: "",
+    email: "",
   };
-  const [author, setAuthor] = React.useState(initialValues.author);
-  const [body, setBody] = React.useState(initialValues.body);
-  const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
-  const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
+  const [text, setText] = React.useState(initialValues.text);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setAuthor(initialValues.author);
-    setBody(initialValues.body);
-    setCreatedAt(initialValues.createdAt);
-    setUpdatedAt(initialValues.updatedAt);
+    setText(initialValues.text);
+    setEmail(initialValues.email);
     setErrors({});
   };
   const validations = {
-    author: [{ type: "Required" }],
-    body: [{ type: "Required" }],
-    createdAt: [],
-    updatedAt: [],
+    text: [{ type: "Required" }],
+    email: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -62,23 +54,6 @@ export default function MessageCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
-  const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      calendar: "iso8601",
-      numberingSystem: "latn",
-      hourCycle: "h23",
-    });
-    const parts = df.formatToParts(date).reduce((acc, part) => {
-      acc[part.type] = part.value;
-      return acc;
-    }, {});
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
-  };
   return (
     <Grid
       as="form"
@@ -88,10 +63,8 @@ export default function MessageCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          author,
-          body,
-          createdAt,
-          updatedAt,
+          text,
+          email,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -122,7 +95,7 @@ export default function MessageCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createMessage.replaceAll("__typename", ""),
+            query: createChat.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -142,120 +115,58 @@ export default function MessageCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "MessageCreateForm")}
+      {...getOverrideProps(overrides, "ChatCreateForm")}
       {...rest}
     >
       <TextField
-        label="Author"
+        label="Text"
         isRequired={true}
         isReadOnly={false}
-        value={author}
+        value={text}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              author: value,
-              body,
-              createdAt,
-              updatedAt,
+              text: value,
+              email,
             };
             const result = onChange(modelFields);
-            value = result?.author ?? value;
+            value = result?.text ?? value;
           }
-          if (errors.author?.hasError) {
-            runValidationTasks("author", value);
+          if (errors.text?.hasError) {
+            runValidationTasks("text", value);
           }
-          setAuthor(value);
+          setText(value);
         }}
-        onBlur={() => runValidationTasks("author", author)}
-        errorMessage={errors.author?.errorMessage}
-        hasError={errors.author?.hasError}
-        {...getOverrideProps(overrides, "author")}
+        onBlur={() => runValidationTasks("text", text)}
+        errorMessage={errors.text?.errorMessage}
+        hasError={errors.text?.hasError}
+        {...getOverrideProps(overrides, "text")}
       ></TextField>
       <TextField
-        label="Body"
+        label="Email"
         isRequired={true}
         isReadOnly={false}
-        value={body}
+        value={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              author,
-              body: value,
-              createdAt,
-              updatedAt,
+              text,
+              email: value,
             };
             const result = onChange(modelFields);
-            value = result?.body ?? value;
+            value = result?.email ?? value;
           }
-          if (errors.body?.hasError) {
-            runValidationTasks("body", value);
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
           }
-          setBody(value);
+          setEmail(value);
         }}
-        onBlur={() => runValidationTasks("body", body)}
-        errorMessage={errors.body?.errorMessage}
-        hasError={errors.body?.hasError}
-        {...getOverrideProps(overrides, "body")}
-      ></TextField>
-      <TextField
-        label="Created at"
-        isRequired={false}
-        isReadOnly={false}
-        type="datetime-local"
-        value={createdAt && convertToLocal(new Date(createdAt))}
-        onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
-          if (onChange) {
-            const modelFields = {
-              author,
-              body,
-              createdAt: value,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.createdAt ?? value;
-          }
-          if (errors.createdAt?.hasError) {
-            runValidationTasks("createdAt", value);
-          }
-          setCreatedAt(value);
-        }}
-        onBlur={() => runValidationTasks("createdAt", createdAt)}
-        errorMessage={errors.createdAt?.errorMessage}
-        hasError={errors.createdAt?.hasError}
-        {...getOverrideProps(overrides, "createdAt")}
-      ></TextField>
-      <TextField
-        label="Updated at"
-        isRequired={false}
-        isReadOnly={false}
-        type="datetime-local"
-        value={updatedAt && convertToLocal(new Date(updatedAt))}
-        onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
-          if (onChange) {
-            const modelFields = {
-              author,
-              body,
-              createdAt,
-              updatedAt: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.updatedAt ?? value;
-          }
-          if (errors.updatedAt?.hasError) {
-            runValidationTasks("updatedAt", value);
-          }
-          setUpdatedAt(value);
-        }}
-        onBlur={() => runValidationTasks("updatedAt", updatedAt)}
-        errorMessage={errors.updatedAt?.errorMessage}
-        hasError={errors.updatedAt?.hasError}
-        {...getOverrideProps(overrides, "updatedAt")}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
       ></TextField>
       <Flex
         justifyContent="space-between"

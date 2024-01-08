@@ -1,104 +1,133 @@
 // chat page is: http://localhost:5173/chat
 
-import React, { useEffect, useState } from "react";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { Observable } from "zen-observable-ts";
-
-import { GraphQLResult } from "@aws-amplify/api";
-import "@aws-amplify/pubsub";
-
-import { createMessage } from "../../graphql/mutations";
-import { onCreateMessage } from "../../graphql/subscriptions";
-import { messagesByChannelID } from "../../graphql/queries";
-
+import "@aws-amplify/ui-react/styles.css";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import React from "react";
+import * as mutations from "../../graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import * as queries from "../../graphql/queries";
+import intlFormatDistance from "date-fns/intlFormatDistance";
+import * as subscriptions from "../../graphql/subscriptions";
 import "./chatbox.css";
 
-function Chat2() {
-  const [messages, setMessages] = useState([]);
-  const [messageBody, setMessageBody] = useState("");
+function Chat2({ user, signOut }) {
+  const [chats, setChats] = React.useState([]);
 
-  useEffect(() => {
-    API.graphql(
-      graphqlOperation(messagesByChannelID, {
-        channelID: "1",
-        sortDirection: "ASC",
-      })
-    ).then((response) => {
-      const items = response?.data?.messagesByChannelID?.items;
-
-      if (items) {
-        setMessages(items);
-      }
-    });
+  React.useEffect(() => {
+    async function fetchChats() {
+      const allChats = await API.graphql({
+        query: queries.listChats,
+      });
+      // @ts-ignore
+      console.log(allChats.data.listChats.items);
+      // @ts-ignore
+      setChats(allChats.data.listChats.items);
+    }
+    fetchChats();
   }, []);
 
-  useEffect(() => {
-    const subscription = API.graphql(
-      graphqlOperation(onCreateMessage)
+  React.useEffect(() => {
+    const sub = API.graphql(
+      graphqlOperation(subscriptions.onCreateChat)
+      // @ts-ignore
     ).subscribe({
-      next: (event) => {
-        setMessages([...messages, event.value.data.onCreateMessage]);
-      },
+      next: ({ provider, value }) =>
+        // @ts-ignore
+        setChats((prev) => [...prev, value.data.onCreateChat]),
+      error: (err) => console.log(err),
     });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [messages]);
-
-  const handleChange = (event) => {
-    setMessageBody(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const input = {
-      channelID: "1",
-      author: "Dave",
-      body: messageBody.trim(),
-    };
-
-    try {
-      setMessageBody("");
-      await API.graphql(graphqlOperation(createMessage, { input }));
-    } catch (error) {
-      console.warn(error);
-    }
-  };
+    return () => sub.unsubscribe();
+  }, []);
 
   return (
-    <div className="container">
-      <div className="messages">
-        <div className="messages-scroller">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={message.author === "Dave" ? "message me" : "message"}
-            >
-              {message.body}
-            </div>
-          ))}
-        </div>
+    <div>
+      <div className="button_containerc">
+        <button type="button" className="buttonc" onClick={() => signOut()}>
+          Sign Out
+        </button>
       </div>
-      <div className="chat-bar">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="message"
-            placeholder="Type your message here..."
-            onChange={handleChange}
-            value={messageBody}
-          />
-        </form>
+      <div className="">
+        <div className="">
+          {chats
+            // @ts-ignore
+            .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+            .map((chat) => (
+              <div
+                // @ts-ignore
+                key={chat.id}
+                className={`flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200 w-3/4 my-2 ${
+                  // @ts-ignore
+                  chat.email === user.attributes.email && "self-end bg-gray-200"
+                }`}
+              >
+                <div>
+                  <div className="">
+                    <div className="username">
+                      <span className="username-name">
+                        {
+                          // @ts-ignore
+                          chat.email.split("@")[0]
+                        }
+                      </span>{" "}
+                    </div>
+                    <time dateTime="2023-01-23T15:56" className="time">
+                      {
+                        // @ts-ignore
+                        intlFormatDistance(new Date(chat.createdAt), new Date())
+                      }
+                    </time>
+                  </div>
+                  <p className="text">
+                    {
+                      // @ts-ignore
+                      chat.text
+                    }
+                  </p>
+                </div>
+              </div>
+            ))}
+
+          <div>
+            <div className="">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                onKeyUp={async (e) => {
+                  if (e.key === "Enter") {
+                    // Remove this line
+                    // setChats(e.target.value);
+
+                    // Add these
+                    await API.graphql({
+                      // @ts-ignore
+                      query: mutations.createChat,
+                      variables: {
+                        input: {
+                          // @ts-ignore
+                          text: e.target.value,
+                          email: user.attributes.email,
+                        },
+                      },
+                    });
+                    // @ts-ignore
+                    e.target.value = "";
+                  }
+                }}
+                className="inputchat"
+              />
+              <div className="chat-bar">
+                <kbd className="chat-bar">Enter</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Chat2;
-
+export default withAuthenticator(Chat2);
 // // Test code for GraphQL
 
 // import React, { useEffect, useState } from "react";

@@ -8,40 +8,27 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getMessage = /* GraphQL */ `query GetMessage($channelID: ID!) {
-  getMessage(channelID: $channelID) {
+export const getChat = /* GraphQL */ `query GetChat($id: ID!) {
+  getChat(id: $id) {
     id
-    channelID
-    author
-    body
+    text
+    email
     createdAt
     updatedAt
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.GetMessageQueryVariables,
-  APITypes.GetMessageQuery
->;
-export const listMessages = /* GraphQL */ `query ListMessages(
-  $channelID: ID
-  $filter: ModelMessageFilterInput
+` as GeneratedQuery<APITypes.GetChatQueryVariables, APITypes.GetChatQuery>;
+export const listChats = /* GraphQL */ `query ListChats(
+  $filter: ModelChatFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listMessages(
-    channelID: $channelID
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      channelID
-      author
-      body
+      text
+      email
       createdAt
       updatedAt
       __typename
@@ -50,40 +37,4 @@ export const listMessages = /* GraphQL */ `query ListMessages(
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.ListMessagesQueryVariables,
-  APITypes.ListMessagesQuery
->;
-export const messagesByChannelID = /* GraphQL */ `query MessagesByChannelID(
-  $updatedAt: AWSDateTime!
-  $createdAt: ModelStringKeyConditionInput
-  $sortDirection: ModelSortDirection
-  $filter: ModelMessageFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  messagesByChannelID(
-    updatedAt: $updatedAt
-    createdAt: $createdAt
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      channelID
-      author
-      body
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.MessagesByChannelIDQueryVariables,
-  APITypes.MessagesByChannelIDQuery
->;
+` as GeneratedQuery<APITypes.ListChatsQueryVariables, APITypes.ListChatsQuery>;
