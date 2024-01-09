@@ -16,6 +16,8 @@ export const createChat = /* GraphQL */ `mutation CreateChat(
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename
@@ -33,6 +35,8 @@ export const updateChat = /* GraphQL */ `mutation UpdateChat(
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename
@@ -50,6 +54,8 @@ export const deleteChat = /* GraphQL */ `mutation DeleteChat(
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename

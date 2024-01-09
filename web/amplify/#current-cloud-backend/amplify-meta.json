@@ -40,8 +40,8 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimostpros"
       },
-      "lastPushTimeStamp": "2024-01-05T15:01:19.857Z",
-      "lastPushDirHash": "bqxyOd7n0cmNqLj8PMAP5rgZ1uk="
+      "lastPushTimeStamp": "2024-01-08T14:29:05.886Z",
+      "lastPushDirHash": "/6re33eJmptDdAgWOMfHCvUwTP4="
     }
   },
   "auth": {
@@ -54,8 +54,8 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 6
+          "passwordPolicyMinLength": 6,
+          "passwordPolicyCharacters": []
         },
         "signupAttributes": [
           "EMAIL",
@@ -82,7 +82,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-01-05T15:01:19.857Z",
+      "lastPushTimeStamp": "2024-01-08T14:29:01.264Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"

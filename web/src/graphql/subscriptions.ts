@@ -13,6 +13,8 @@ export const onCreateChat = /* GraphQL */ `subscription OnCreateChat($filter: Mo
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename
@@ -27,6 +29,8 @@ export const onUpdateChat = /* GraphQL */ `subscription OnUpdateChat($filter: Mo
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename
@@ -41,6 +45,8 @@ export const onDeleteChat = /* GraphQL */ `subscription OnDeleteChat($filter: Mo
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename

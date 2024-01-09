@@ -13,6 +13,8 @@ export const getChat = /* GraphQL */ `query GetChat($id: ID!) {
     id
     text
     email
+    members
+    sortKey
     createdAt
     updatedAt
     __typename
@@ -29,6 +31,8 @@ export const listChats = /* GraphQL */ `query ListChats(
       id
       text
       email
+      members
+      sortKey
       createdAt
       updatedAt
       __typename

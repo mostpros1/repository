@@ -1,5 +1,6 @@
 {
   "files.exclude": {
+    "synthwave84.brightness": 0.45,
     "amplify/.config": true,
     "amplify/**/*-parameters.json": true,
     "amplify/**/amplify.state": true,

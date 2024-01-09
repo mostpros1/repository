@@ -6,10 +6,176 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { API } from "aws-amplify";
 import { createChat } from "../graphql/mutations";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  runValidationTasks,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    const { hasError } = runValidationTasks();
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button size="small" variation="link" onClick={addItem}>
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function ChatCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -24,18 +190,29 @@ export default function ChatCreateForm(props) {
   const initialValues = {
     text: "",
     email: "",
+    members: [],
+    sortKey: "",
   };
   const [text, setText] = React.useState(initialValues.text);
   const [email, setEmail] = React.useState(initialValues.email);
+  const [members, setMembers] = React.useState(initialValues.members);
+  const [sortKey, setSortKey] = React.useState(initialValues.sortKey);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setText(initialValues.text);
     setEmail(initialValues.email);
+    setMembers(initialValues.members);
+    setCurrentMembersValue("");
+    setSortKey(initialValues.sortKey);
     setErrors({});
   };
+  const [currentMembersValue, setCurrentMembersValue] = React.useState("");
+  const membersRef = React.createRef();
   const validations = {
     text: [{ type: "Required" }],
     email: [{ type: "Required" }],
+    members: [{ type: "Required" }],
+    sortKey: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -65,6 +242,8 @@ export default function ChatCreateForm(props) {
         let modelFields = {
           text,
           email,
+          members,
+          sortKey,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -129,6 +308,8 @@ export default function ChatCreateForm(props) {
             const modelFields = {
               text: value,
               email,
+              members,
+              sortKey,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -154,6 +335,8 @@ export default function ChatCreateForm(props) {
             const modelFields = {
               text,
               email: value,
+              members,
+              sortKey,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -167,6 +350,81 @@ export default function ChatCreateForm(props) {
         errorMessage={errors.email?.errorMessage}
         hasError={errors.email?.hasError}
         {...getOverrideProps(overrides, "email")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              text,
+              email,
+              members: values,
+              sortKey,
+            };
+            const result = onChange(modelFields);
+            values = result?.members ?? values;
+          }
+          setMembers(values);
+          setCurrentMembersValue("");
+        }}
+        currentFieldValue={currentMembersValue}
+        label={"Members"}
+        items={members}
+        hasError={errors?.members?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("members", currentMembersValue)
+        }
+        errorMessage={errors?.members?.errorMessage}
+        setFieldValue={setCurrentMembersValue}
+        inputFieldRef={membersRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Members"
+          isRequired={true}
+          isReadOnly={false}
+          value={currentMembersValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.members?.hasError) {
+              runValidationTasks("members", value);
+            }
+            setCurrentMembersValue(value);
+          }}
+          onBlur={() => runValidationTasks("members", currentMembersValue)}
+          errorMessage={errors.members?.errorMessage}
+          hasError={errors.members?.hasError}
+          ref={membersRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "members")}
+        ></TextField>
+      </ArrayField>
+      <TextField
+        label="Sort key"
+        isRequired={true}
+        isReadOnly={false}
+        value={sortKey}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              text,
+              email,
+              members,
+              sortKey: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.sortKey ?? value;
+          }
+          if (errors.sortKey?.hasError) {
+            runValidationTasks("sortKey", value);
+          }
+          setSortKey(value);
+        }}
+        onBlur={() => runValidationTasks("sortKey", sortKey)}
+        errorMessage={errors.sortKey?.errorMessage}
+        hasError={errors.sortKey?.hasError}
+        {...getOverrideProps(overrides, "sortKey")}
       ></TextField>
       <Flex
         justifyContent="space-between"
