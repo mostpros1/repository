@@ -3,9 +3,11 @@ const specialists = [
         id: 1,
         name: "Loodgieter",
         tasks: [
-            { task: "Lekkages repareren", link: "/lekkages-repareren" },
-            { task: "Sanitair installeren", link: "/sanitair-installeren" },
-            // Voeg meer taken toe indien nodig
+            { task: "Lekkende Kranen/Leidingen Reparatie", link: "/lekkages-repareren" },
+            { task: "Sanitair Installatie/Vervanging", link: "/sanitair-installeren" },
+            { task: "Afvoer Ontstopping", link: "/afvoer-ontstopping" },
+            { task: "Boiler/Geiser Onderhoud", link: "/boiler-geiser-nderhoud" },
+            { task: "Verwarmingssysteem Reparatie/Installatie", link: "/verwarmingssysteem-reparatie-installatie" },
         ]
     },
     {
@@ -14,7 +16,12 @@ const specialists = [
         tasks: [
             { task: "Tuinontwerp maken", link: "/tuinontwerp-maken" },
             { task: "Planten verzorgen", link: "/planten-verzorgen" },
-            // Voeg meer taken toe indien nodig
+
+            { task: "Tuinaanleg", link: "/tuinaanleg" },
+            { task: "Tuinonderhoud (Snoeien, Bemesten, Onkruid)", link: "/tuinonderhoud" },
+            { task: "Bomen/Struiken/Planten Planten", link: "/planten-planten" },
+            { task: "Gazons Aanleggen (Zaaien/Graszoden)", link: "/gazons-aanleggen" },
+            { task: "Bewateringssystemen Installeren", link: "/bewateringssystemen-installeren" },
         ]
     },
     {
@@ -23,7 +30,12 @@ const specialists = [
         tasks: [
             { task: "Elektrische bedrading repareren", link: "/elektrische-bedrading-repareren" },
             { task: "Stopcontacten installeren", link: "/stopcontacten-installeren" },
-            // Voeg meer taken toe indien nodig
+
+            { task: "Nieuwe Elektrische Bedrading Installatie", link: "/nieuwe-elektrische-bedrading-installatie" },
+            { task: "Elektrische Systeem Reparatie", link: "/elektrische-systeem-reparatie" },
+            { task: "Elektrische Onderhoud", link: "/elektrische-olnderhoud" },
+            { task: "Groepenkast Werkzaamheden", link: "/groepenkast-werkzaamheden" },
+            { task: "Verlichtingsarmaturen Werkzaamheden", link: "/verlichtingsarmaturen-werkzaamheden" },
         ]
     },
     {
@@ -32,7 +44,12 @@ const specialists = [
         tasks: [
             { task: "Dakreparaties uitvoeren", link: "/dakreparaties-uitvoeren" },
             { task: "Dakbedekking vervangen", link: "/dakbedekking-vervangen" },
-            // Voeg meer taken toe indien nodig
+
+            { task: "Nieuwe Daken Plaatsen", link: "/nieuwe-daken-plaatsen" },
+            { task: "Oude Daken Vervangen", link: "/oude-daken-vervangen" },
+            { task: "Beschadigde Daken Repareren", link: "/beschadigde-daken-repareren" },
+            { task: "Dakisolatie Installeren", link: "/dakisolatie-installeren" },
+            { task: "Dakbedekking Aanbrengen", link: "/dakbedekking-aanbrengen" },
         ]
     },
     {
@@ -41,7 +58,12 @@ const specialists = [
         tasks: [
             { task: "Schoonmaken van woningen", link: "/schoonmaken-van-woningen" },
             { task: "Ramen wassen", link: "/ramen-wassen" },
-            // Voeg meer taken toe indien nodig
+
+            { task: "Vloeren/Tapijten Stofzuigen", link: "/vloeren-tapijten-stofzuigen" },
+            { task: "Vloeren Dweilen", link: "/vloeren-dweilen" },
+            { task: "Meubels/Oppervlakken Afstoffen", link: "/meubels-oppervlakken-afstoffen" },
+            { task: "Ramen/Spiegels Reinigen", link: "/ramen-spiegels-reinigen" },
+            { task: "Prullenbakken Legen/Vervangen", link: "/prullenbakken-legen-vervangen" },
         ]
     },
     // Voeg hier meer specialisten toe met hun specifieke taken

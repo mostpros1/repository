@@ -1,8 +1,11 @@
 import "./Reviews.css";
 
+import * as React from 'react';
 import handyman from "../../assets/handyman.png";
 import star from "../../assets/icon _star 1_.png";
 import emptyStar from "../../assets/icon _star 1_empty.png";
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Link } from "react-router-dom";
 
 function Reviews() {
@@ -18,12 +21,12 @@ function Reviews() {
               <img src={handyman} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
-              <div>
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
+              <div className="review_star">
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
               </div>
               <p className="review_title">Lekkage badkamer</p>
               <p className="review_name">Piet Beumers</p>
@@ -35,12 +38,12 @@ function Reviews() {
               <img src={handyman} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
-              <div>
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={emptyStar} alt="" />
+              <div className="review_star">
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarBorderIcon />
               </div>
               <p className="review_title">Tuinontwerp en aanleg</p>
               <p className="review_name">Robin Kikker</p>
@@ -52,12 +55,12 @@ function Reviews() {
               <img src={handyman} alt="" className="reviewImage" />
             </div>
             <div className="reviewContent_container">
-              <div>
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={star} alt="" />
-                <img className="review_star" src={emptyStar} alt="" />
-                <img className="review_star" src={emptyStar} alt="" />
+              <div className="review_star">
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+                <StarBorderIcon />
+                <StarBorderIcon />
               </div>
               <p className="review_title">Nieuwe inloopdouche</p>
               <p className="review_name">Richard Mol</p>
@@ -69,7 +72,7 @@ function Reviews() {
           <Link to="/klussen">
             <button className="button">Nieuwe klus plaatsen</button>
           </Link>
-          
+
         </div>
       </div>
     </>
