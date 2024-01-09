@@ -12,7 +12,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { Dimensions } from "react-native";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
