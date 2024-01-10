@@ -23,7 +23,7 @@ function Navigation() {
 
   const handleLogout = () => {
     dispatch(logout())
-    window.location.assign("/")
+    location.assign("/")
   }
 
   let authButtons =
