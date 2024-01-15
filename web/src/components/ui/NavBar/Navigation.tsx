@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { Auth } from 'aws-amplify';
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from "../../../context/UserContext";
-import { logout } from "../../../actions/userActions";
 
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,8 +17,9 @@ function Navigation() {
 
   const handleLogout = async () => {
     try {
-      await logout(); // Assuming logout is an asynchronous action
+      await Auth.signOut();
       updateUser(null); // Update the user context after logout
+      console.log('Logout successful'); // Update the user context after logout
     } catch (error) {
       console.error('Logout failed:', error);
     }
