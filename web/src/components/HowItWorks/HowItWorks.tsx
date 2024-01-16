@@ -6,7 +6,6 @@ function HowItWorks() {
   return (
     <div className="HowItsWorks">
         <div className="HowItsWorks_con">
-            <HomeButton/>
             <MostprosDesc />
         </div>
     </div>

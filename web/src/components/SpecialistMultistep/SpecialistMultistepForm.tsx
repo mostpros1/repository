@@ -9,8 +9,6 @@ import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-// import axios from 'axios'
-
 type FormData = {
   beroep: string;
   email: string;
@@ -18,10 +16,9 @@ type FormData = {
   stad: string;
   firstName: string;
   lastName: string;
-  registerEmail: string;
   phoneNumber: string;
-  registerPassword: string;
-  repeatRegisterPassword: string;
+  password: string;
+  repeatPassword: string;
   questions: Record<string, string>;
 };
 
@@ -34,10 +31,9 @@ const INITIAL_DATA: FormData = {
   stad: "",
   firstName: "",
   lastName: "",
-  registerEmail: "",
   phoneNumber: "",
-  registerPassword: "",
-  repeatRegisterPassword: "",
+  password: "",
+  repeatPassword: "",
   questions: {
     question1: "",
     question2: "",
@@ -153,8 +149,7 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        <RegisterForm {...data} updateFields={updateFields} />,
+        <SearchChoreForm {...data} updateFields={updateFields}/>,
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
@@ -175,7 +170,6 @@ function SpecialistMultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className="form-con">
-      <HomeButton />
       <div className="progress-con">
         <h3>
           Stap {currentStepIndex + 1} van {steps.length}

@@ -3,36 +3,32 @@ import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
-import CategoryForm from './CategoryForm'
+import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
-import { LoginForm } from './LoginForm'
-import { RegisterForm } from './RegisterForm'
 import kraan from '../../assets/kraan.svg'
-import axios from 'axios'
+import { Auth } from 'aws-amplify'
+import { useNavigate } from 'react-router-dom'
+import { AccountForm } from './AccountForm'
 
+type FormData = {
+  postCode: string
+  stad: string
+  questions: Record<string, string>;
+  aanvullendeInformatie: string
+  info: string
+  email: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
+  password: string
+  repeatPassword: string
+}
 
 function MultistepForm() {
-   
+  const navigate = useNavigate()
   const questionsData = useQuestionData();
-
-  type FormData = {
-    postCode: string
-    stad: string
-    questions: Record<string, string>;
-    aanvullendeInformatie: string
-    info: string
-    email: string
-    loginEmail: string
-    loginPassword: string
-    firstName: string
-    lastName: string
-    registerEmail: string
-    phoneNumber: string
-    registerPassword: string
-    repeatRegisterPassword: string
-  }
   
   const INITIAL_DATA: FormData = {
     postCode: "",
@@ -43,14 +39,11 @@ function MultistepForm() {
     aanvullendeInformatie: "",
     info: "",
     email: "",
-    loginEmail: "",
-    loginPassword: "",
     firstName: "",
     lastName: "",
-    registerEmail: "",
     phoneNumber: "",
-    registerPassword: "",
-    repeatRegisterPassword: ""
+    password: "",
+    repeatPassword: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -111,40 +104,63 @@ function MultistepForm() {
   ));
 
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-    useHomeOwnerMultistepForm({
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <InfoForm {...data} updateFields={updateFields} />,
         <EmailForm {...data} updateFields={updateFields} />,
-        
+        <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} />
       ],
-      onStepChange: () => { },
+      onStepChange: () => {}
     });
 
-  // async function onSubmit(e: FormEvent) {
-  //   e.preventDefault()
-  //   if (!isLastStep) return next()
-  //   if (data.registerPassword != data.repeatRegisterPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-  //   const result = await axios.post("/auth/signup", {
-  //     firstName: data.firstName,
-  //     lastName: data.lastName,
-  //     email: data.registerEmail,
-  //     password: data.registerPassword
-  //   })
-  //   console.log(result.data);
-  //   if (result.data.createTokenResult?.access_token) console.log("TODO: Store access tokens in front end for requests")
-  // }
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!isLastStep) {
-      return next();
-    } else {
-      console.log(data);
+    async function onSubmit(e: FormEvent) {
+      e.preventDefault()
+      if (!isLastStep) return next()
+  
+      const userData = {
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
+        name: data.firstName.trim() + " " + data.lastName.trim(),
+        phoneNumber: data.phoneNumber
+      }
+  
+      if (userData.name == " " && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
+        .then(() => {
+          navigate('/huiseigenaar-resultaat')
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.name,
+          email: userData.email,
+          phone_number: userData.phoneNumber
+        },
+        autoSignIn: { enabled: true }
+        })
+        .then(() => {
+          navigate('/bevestig-email', { state: { email: userData.email } })
+        })
+        .catch(async error => {
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email } })
+          } else {
+            console.error("foutmelding:", error)
+          }
+        })
+      }
     }
-  }
 
   const stepWidth = 100 / steps.length;
 

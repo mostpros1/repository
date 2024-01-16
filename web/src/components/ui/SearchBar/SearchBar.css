@@ -3,7 +3,7 @@
     position: relative; /* Zet de container op relatieve positie */
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 40px;
 }
 
 .search-container_open{
@@ -23,6 +23,7 @@
     padding: 25px 40px;
     font-size: 20px;
     outline: none;
+    max-width: 85%;
 }
 
 .search-container_open input{

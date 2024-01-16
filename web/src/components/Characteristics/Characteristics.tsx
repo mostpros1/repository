@@ -10,27 +10,24 @@ function Characteristics() {
         <>
             <div className="character_con">
                 <div className="title_container">
-                    <h2>Waarom Mostpros</h2>
+                    <h2>Waarom kiezen voor Mostpros?</h2>
                 </div>
                 <div className="whyMostpros_container">
                     <div className="whyMostpros_left">
                         <div className="whyMostpros">
                             <img src={one} alt="" />
-                            <p>Groeiend vakspecialisten.</p>
+                            <p>Groeiend vakspecialisten netwerk in Benelux.</p>
                         </div>
                         <div className="whyMostpros">
                             <img src={two} alt="" />
                             <p>
-                                Toegang tot talentenpools met studenten en beginnende
-                                vakspecialisten
+                                Toegang tot talentenpools met studenten en beginnende vakspecialisten.
                             </p>
                         </div>
                         <div className="whyMostpros">
                             <img src={three} alt="" />
                             <p>
-                                Advies en ondersteuning. Samen met de community zijn we
-                                voortdurend op zoek naar slimmere manieren om te klussen in en
-                                om je huis
+                                Advies en ondersteuning. Samen met de community zijn we voortdurend op zoek naar slimmere manieren om te klussen in en om je huis.
                             </p>
                         </div>
                     </div>
