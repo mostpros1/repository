@@ -1,13 +1,10 @@
 import "./Reviews.css";
 
-<<<<<<< HEAD
 import * as React from 'react';
 import handyman from "../../assets/handyman.png";
-=======
 import GardenDesigner from "../../assets/garden_designer_planning.png";
 import BathroomSpecialistMale from "../../assets/experienced_bathroom_specialist_installing_fixtur_male.png";
 import BathroomSpecialistFemale from "../../assets/experienced_bathroom_specialist_installing_fixtur_female.png";
->>>>>>> acceptance
 import star from "../../assets/icon _star 1_.png";
 import emptyStar from "../../assets/icon _star 1_empty.png";
 import StarIcon from '@mui/icons-material/Star';
@@ -76,15 +73,12 @@ function Reviews() {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         <div className="button_container">
           <Link to="/klussen">
             <button className="button">Nieuwe klus plaatsen</button>
           </Link>
 
         </div>
-=======
->>>>>>> acceptance
       </div>
     </>
   );
