@@ -4,7 +4,7 @@ import { Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const howItWorksOneHomeowner = ({navigation}) => {
+const HowItWorksOneHomeowner = ({navigation}) => {
     return (
         <SafeAreaView style={styles.view}>
             <View style={styles.topContainer}>
@@ -17,7 +17,7 @@ const howItWorksOneHomeowner = ({navigation}) => {
                 </View>
                 <View style={styles.imageContainer}>
                     <View>
-                        <Image style={styles.image} source={require("../../../assets/images/howItWorksOne.png")} />
+                        <Image style={styles.image} source={require("../../../assets/images/HowItWorksOne.png")} />
                     </View>
                 </View>
             </View>
@@ -36,7 +36,7 @@ const howItWorksOneHomeowner = ({navigation}) => {
                 <View style={styles.progressionBarEmpty}></View>
                 <View style={styles.progressionBarEmpty}></View>
             </View>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('howItWorksTwoHomeowner')}>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('HowItWorksTwoHomeowner')}>
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Pressable>
         </SafeAreaView>
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default howItWorksOneHomeowner;
+export default HowItWorksOneHomeowner;
