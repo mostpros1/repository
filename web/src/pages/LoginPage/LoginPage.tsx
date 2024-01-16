@@ -1,10 +1,7 @@
-import  { useState } from 'react';
-// LoginPage.js
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../actions/userActions';
-import { RootState } from '../../store';
-import { Auth } from 'aws-amplify'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Auth } from 'aws-amplify';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 import NavBar from '../../components/ui/NavBar/NavBar';
 import { LoginForm } from '../../components/MultistepForm/LoginForm';
@@ -14,28 +11,39 @@ import './LoginPage.css';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const user = useSelector((state: RootState) => state.user);
+  const { updateUser } = useUser();
 
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
-  const updateLoginData = (fields) => {
-    setLoginData((prevData) => ({ ...prevData, ...fields }));
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      updateUser(authenticatedUser);
+    } catch (error) {
+      updateUser(null);
+    }
   };
 
   const handleLogin = async () => {
     try {
-      const { email, password } = loginData;
-      await Auth.signIn(email, password);
-      dispatch(setUser({ email }));
-      navigate('/huiseigenaar-resultaat');
+      const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
+      updateUser(authenticatedUser);
+      navigate('/');
+      console.log('Logged in user:', authenticatedUser);
     } catch (error) {
-      console.error('Fout bij inloggen:', error);
+      console.error('Login failed:', error);
     }
+  };
+
+  const updateLoginData = (fields) => {
+    setLoginData((prevData) => ({ ...prevData, ...fields }));
   };
 
   return (

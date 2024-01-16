@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store";
+import { Auth } from 'aws-amplify';
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { logout } from "../../../actions/userActions";
+import { useUser } from "../../../context/UserContext";
 
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const dispatch = useDispatch()
-
-  const user = useSelector((state: RootState) => state.user);
-
-  console.log(user)
+  const { user, updateUser } = useUser(); // Assuming you have a useUser hook
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleLogout = () => {
-    dispatch(logout())
-    location.assign("/")
-  }
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+      updateUser(null); // Update the user context after logout
+      console.log('Logout successful'); // Update the user context after logout
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   let authButtons =
     <>
@@ -32,14 +31,14 @@ function Navigation() {
       <Link to="/registreer" >Register</Link>
     </>;
 
-  if (user.user) {
+  if (user) {
     authButtons = (
       <>
-        <p>{user.user.email}</p>
-        <a href="/">test</a>   
+        <p>{user.attributes.email}</p>
+        <a href="/">test</a>
         <button onClick={handleLogout}>Uitloggen</button>
       </>
-    )
+    );
   }
 
   return (

@@ -57,6 +57,7 @@ export function RegisterForm({ email, firstName, lastName, phoneNumber, password
                         <label htmlFor="">Telefoonnummer:</label>
                         <PhoneInput
                             defaultCountry="NL"
+                            placeholder="+31658349021"
                             value={phoneNumber} // Gebruik direct de waarde uit RegisterData
                             onChange={(value) => {
                                 console.log("Telefoonnummer gewijzigd:", value);
