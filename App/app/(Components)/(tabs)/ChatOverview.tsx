@@ -13,80 +13,107 @@ import {
   ImageBackground,
 } from "react-native";
 import { Dimensions } from "react-native";
-
-
+import { Provider as PaperProvider } from "react-native-paper";
+import Icon from "@expo/vector-icons/MaterialIcons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const Profile = ({ navigation }) => {
-  return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.view}>
-          <View style={styles.topContainer}>
-            <View style={styles.topButtonsContainer}>
-              <Pressable style={[styles.linkTwo, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                <Text style={[styles.text, styles.textButtonWhite]}>&lt;</Text>
-              </Pressable>
-            </View>
-            <View style={styles.topContainerFirstSection}>
-              <Text style={[styles.name, styles.text]}>
-                Messaging
-              </Text>
-            </View>
-            <View style={styles.topContainerSecondSection}>
-              <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
-              </Pressable>
-              <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                <Text style={[styles.text, styles.textButtonBlack]}>Berichten</Text>
-              </Pressable>
-              <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                <Text style={[styles.text, styles.textButtonBlack]}>Community</Text>
-              </Pressable>
-            </View>
-          </View>
 
-          <View style={styles.middleContainer}>
-            <View style={styles.circleContainer}>
-              <View>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
+
+const Profile = ({ navigation }) => {
+  const CustomIcon = (props) => {
+    return (
+      <View>
+        <Icon
+          name={props.name}
+          size={props.size}
+          style={{
+            backgroundColor: `${props.bcolor}`,
+            color: `${props.color}`,
+            paddingLeft: props.pLeft,
+            borderRadius: props.rad,
+            padding: props.pad,
+          }}
+        />
+      </View>
+    );
+  };
+  return (
+    <PaperProvider>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={styles.view}>
+            <View style={styles.topContainer}>
+              <View style={styles.topButtonsContainer}>
+                <Pressable style={[styles.linkTwo, styles.returnButton]} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonWhite]}>&lt;</Text>
+                </Pressable>
+              </View>
+              <View style={styles.topContainerFirstSection}>
+                <Text style={[styles.title, styles.text]}>
+                  Messaging
+                </Text>
+              </View>
+              <View style={styles.topContainerSecondSection}>
+                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
+                </Pressable>
+                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Berichten</Text>
+                </Pressable>
+                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Community</Text>
+                </Pressable>
               </View>
             </View>
-            <View>
-              
-            </View>
-            <View style={styles.middleContainerSecondSection}>
+
+            <View style={styles.middleContainer}>
+              <View style={[styles.middleContainerFirstSection]}>
+                <View style={styles.personContainer}>
+                  <Text style={[styles.name, styles.text]}>
+                    Jan Schilder
+                  </Text>
+                  <Text style={[styles.message, styles.text]}>
+                    Ik ben volgende week woensdag beschikbaar.
+                  </Text>
+                </View>
+                <View style={styles.circleContainer}>
+                  <View>
+                    <Image
+                      style={styles.image}
+                      source={require("../../../assets/images/jan.png")}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.middleContainerSecondSection}>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-
+        </ScrollView>
+      </SafeAreaView>
+    </PaperProvider>
   );
 };
 const styles = StyleSheet.create({
   view: {
-    // height: windowHeight,
-    // width: windowWidth,
+    height: windowHeight,
+    width: windowWidth,
     display: "flex",
     alignItems: "center",
     backgroundColor: "white",
   },
   topContainer: {
     width: 700,
-    height: 140,
+    height: 110,
     display: "flex",
     backgroundColor: "#308AE4",
     alignItems: "center",
+    justifyContent: "center",
     flexDirection: "column",
   },
   topButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '60%',
     paddingHorizontal: 20,
     position: 'absolute',
@@ -101,31 +128,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
   },
-  favouriteButton: {
-    borderRadius: 10,
-    backgroundColor: "transparent",
-    width: 60,
-    textAlign: "center",
-    borderWidth: 1,
-    borderColor: "white",
-  },
-  circleContainer: {
-    marginTop: 110,
-    width: 85,
-    height: 85,
-    display: "flex",
-    backgroundColor: "transparent",
-    alignItems: "center",
-    borderRadius: 400,
-    borderWidth: 1,
-    borderColor: "white",
-    overflow: 'hidden',
-  },
   topContainerFirstSection: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: 30,
+    justifyContent: "center",
   },
   topContainerSecondSection: {
     padding: 20,
@@ -135,27 +142,56 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 5,
   },
+  title: {
+    top: 50,
+    color: 'white',
+  },
   name: {
-    color: 'white',
+    marginLeft: 10,
+    color: 'black',
+    fontWeight: "bold",
   },
-  profession: {
-    fontSize: 12,
-    lineHeight: 21,
-    color: 'white',
-  },
-  location: {
-    fontSize: 14,
-    lineHeight: 21,
-    color: 'white',
+  message: {
+    marginLeft: 10,
+    color: 'black',
+    fontStyle: "italic",
   },
   middleContainer: {
-    width: "75%",
+    top: 0,
+    padding: 140,
+  },
+  middleContainerFirstSection: {
+    width: 380,
+    height: 105,
+    display: "flex",
+    backgroundColor: "#E9F4FF",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 10,
+    paddingRight: 250,
   },
   middleContainerSecondSection: {
     display: "flex",
     alignItems: "flex-start",
     marginTop: 120,
     gap: 20,
+  },
+  personContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  circleContainer: {
+    width: 85,
+    height: 85,
+    display: "flex",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    borderRadius: 400,
+    borderWidth: 1,
+    borderColor: "white",
+    overflow: 'hidden',
   },
   image: {
     flex: 1,
@@ -233,10 +269,6 @@ const styles = StyleSheet.create({
   },
   textButtonBlack: {
     color: "black",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });
 
