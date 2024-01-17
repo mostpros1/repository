@@ -31,7 +31,7 @@ export function AccountForm ({ beroep, email, postCode, stad, firstName, lastNam
 
     const formConfigMap: Record<typeof formConfig, [JSX.Element, JSX.Element]> = {
         'HOMEOWNER': [
-            <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+            <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} handleLogin={() => {}} />,
             <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} />
         ],
         'SPECIALIST': [
