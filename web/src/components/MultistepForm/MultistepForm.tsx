@@ -16,6 +16,7 @@ import { AccountForm } from './AccountForm'
 type FormData = {
   postCode: string
   stad: string
+  date: Date;
   questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
@@ -34,6 +35,7 @@ function MultistepForm() {
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
+    date: new Date(),
     questions: Object.fromEntries(
       questionsData.map((question) => [question.key, ""])
     ),
@@ -52,6 +54,15 @@ function MultistepForm() {
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
+
+  const updateDate = (selectedDate: Date) => {
+    const dateWithoutTime = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate()
+    );
+    updateFields({ date: dateWithoutTime });
+  };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
     setData((prev) => ({
@@ -108,7 +119,7 @@ function MultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm />,
+        <DateForm updateDate={updateDate} />,
         <InfoForm {...data} updateFields={updateFields} />,
         <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} />
       ],
@@ -117,6 +128,7 @@ function MultistepForm() {
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
+      console.log('Form Data:', data);
       if (!isLastStep) return next()
   
       const userData = {
@@ -143,6 +155,7 @@ function MultistepForm() {
         password: userData.password,
         attributes: {
           name: userData.name,
+          family_name: userData.name,
           email: userData.email,
           phone_number: userData.phoneNumber
         },

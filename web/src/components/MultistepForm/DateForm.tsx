@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function DateForm() {
+function DateForm({ updateDate }) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dateOptions, setDateOptions] = useState<Array<Date>>([]);
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -26,8 +26,10 @@ function DateForm() {
 
     const handleCardClick = (index: number) => {
         setSelectedCard(index === selectedCard ? null : index);
-        console.log('Selected card:', dateOptions[index]);
-    };
+        const selectedDate = dateOptions[index];
+        updateDate(selectedDate);
+        console.log('Selected card:', selectedDate);
+      };    
 
     return (
         <div className="dateForm_wrapper">
