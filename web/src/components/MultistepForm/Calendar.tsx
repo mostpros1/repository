@@ -6,19 +6,19 @@ function Calendar() {
         <DateCalendar 
             showDaysOutsideCurrentMonth
             sx={{
-                // Calender icons
+                // Calendar icons
                 '& .MuiSvgIcon-root': {
                     fontSize: 20,
                 },
-                // Top Calender
+                // Top Calendar
                 '& .MuiPickersCalendarHeader-label': {
                     fontSize: 20,
                 },
-                // Calender days
+                // Calendar days
                 '& .MuiDayCalendar-weekDayLabel': {
                     fontSize: 25,
                 },
-                // Calender numbers
+                // Calendar numbers
                 '& .MuiPickersDay-root': {
                     fontSize: 20,
                 },
