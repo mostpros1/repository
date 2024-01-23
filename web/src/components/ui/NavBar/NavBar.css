@@ -86,7 +86,7 @@ li>.white-items {
 li>.black-items {
     color: black;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -179,18 +179,19 @@ li>.black-items {
     font-weight: 600;
 }
 
-.mega-row{
-    line-height: 45px;
-}
-
 .mega-links{
+    padding-top: 10px;
     border-top: 1px solid rgb(106, 107, 108);
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
 }
 
 .mega-links li a{
     display: block;
     color: black;
+    font-size: 15px;
 }
 
 .mobile-nav {

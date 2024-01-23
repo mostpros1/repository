@@ -54,7 +54,74 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className='black-items'>Klussen</Link>
+            <Link to="/mijn-klussen" className='black-items'>Klussen <ExpandMoreIcon /></Link>
+            <div className="mega-box">
+              <div className="mega-content">
+                <div className="mega-row">
+                  <header>Interieur</header>
+                  <ul className="mega-links">
+                    <li><Link to="/">Interieur adviseur</Link></li>
+                    <li><Link to="/">Loodgieter</Link></li>
+                    <li><Link to="/">Elektricien</Link></li>
+                    <li><Link to="/">Timmerman</Link></li>
+                    <li><Link to="/">Schoonmaker</Link></li>
+                    <li><Link to="/">Interieur schilder</Link></li>
+                    <li><Link to="/">Behanger</Link></li>
+                    <li><Link to="/">Keukenmonteur</Link></li>
+                    <li><Link to="/">Tegelzetter</Link></li>
+                    <li><Link to="/">Badkamerspecialist</Link></li>
+                    <li><Link to="/">Stukadoor</Link></li>
+                    <li><Link to="/">Verwarmingsinstallateur</Link></li>
+                    <li><Link to="/">Stoffeerder</Link></li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>Exterieur</header>
+                  <ul className="mega-links">
+                    <li><Link to="/">Aannemer</Link></li>
+                    <li><Link to="/">Exterieur schilder</Link></li>
+                    <li><Link to="/">Dakdekker</Link></li>
+                    <li><Link to="/">Gevelspecialist</Link></li>
+                    <li><Link to="/">Isolatiespecialist</Link></li>
+                    <li><Link to="/">Metselaar</Link></li>
+                    <li><Link to="/">Glaszetter</Link></li>
+                    <li><Link to="/">Kozijnspecialist</Link></li>
+                    <li><Link to="/">Schoorsteenveger</Link></li>
+                    <li><Link to="/">Laadpaalspecialist</Link></li>
+                    <li><Link to="/">Zonnepaneelspecialist</Link></li>
+                    <li><Link to="/">Beveiligingsspecialist</Link></li>
+                    <li><Link to="/">Toegangsspecialist</Link></li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>Tuin</header>
+                  <ul className="mega-links">
+                    <li><Link to="/">Tuinontwerper</Link></li>
+                    <li><Link to="/">Hovenier</Link></li>
+                    <li><Link to="/">Stratenmaker</Link></li>
+                    <li><Link to="/">Tuintechnicus</Link></li>
+                    <li><Link to="/">Zwembadinstallateur</Link></li>
+                    <li><Link to="/">Smart garden adviseur</Link></li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>Meer</header>
+                  <ul className="mega-links">
+                    <li><Link to="/">Moderne klusser</Link></li>
+                    <li><Link to="/">Verhuizer</Link></li>
+                    <li><Link to="/">Slotenmaker</Link></li>
+                    <li><Link to="/">Verduurzamingsadviseur</Link></li>
+                    <li><Link to="/">Ongediertebestrijder</Link></li>
+                    <li><Link to="/">Voertuig monteur</Link></li>
+                    <li><Link to="/">Domotica specialist</Link></li>
+                    <li><Link to="/">Smart home specialist</Link></li>
+                    <li><Link to="/">AI home specialist</Link></li>
+                    <li><Link to="/">Drone piloot</Link></li>
+                    <li><Link to="/">Robot adviseur</Link></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </li>
           <li>
             <Link to="/hoe-werkt-het" className='black-items'>Hoe werkt het</Link>

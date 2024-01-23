@@ -2,7 +2,7 @@ import "./Reviews.css";
 
 import * as React from 'react';
 import handyman from "../../assets/handyman.png";
-import GardenDesigner from "../../assets/garden_designer_planning.png";
+import GardenDesigner from "../../assets/WillemBraakman_small.png";
 import BathroomSpecialistMale from "../../assets/experienced_bathroom_specialist_installing_fixtur_male.png";
 import BathroomSpecialistFemale from "../../assets/experienced_bathroom_specialist_installing_fixtur_female.png";
 import star from "../../assets/icon _star 1_.png";

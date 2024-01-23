@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
+import DateForm from './DateForm'
 import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
+import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +17,7 @@ import { AccountForm } from './AccountForm'
 type FormData = {
   postCode: string
   stad: string
+  date: Date;
   questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
@@ -33,6 +36,7 @@ function MultistepForm() {
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
+    date: new Date(),
     questions: Object.fromEntries(
       questionsData.map((question) => [question.key, ""])
     ),
@@ -51,6 +55,15 @@ function MultistepForm() {
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
+
+  const updateDate = (selectedDate: Date) => {
+    const dateWithoutTime = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate()
+    );
+    updateFields({ date: dateWithoutTime });
+  };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
     setData((prev) => ({
@@ -107,9 +120,8 @@ function MultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
-        <EmailForm {...data} updateFields={updateFields} />,
         <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} />
       ],
       onStepChange: () => {}
@@ -117,17 +129,19 @@ function MultistepForm() {
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
+      console.log('Form Data:', data);
       if (!isLastStep) return next()
   
       const userData = {
         email: data.email,
         password: data.password,
         repeatPassword: data.repeatPassword,
-        name: data.firstName.trim() + " " + data.lastName.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
         phoneNumber: data.phoneNumber
       }
   
-      if (userData.name == " " && userData.phoneNumber == "") {
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
         await Auth.signIn(userData.email, userData.password)
         .then(() => {
           navigate('/huiseigenaar-resultaat')
@@ -142,7 +156,8 @@ function MultistepForm() {
         username: userData.email,
         password: userData.password,
         attributes: {
-          name: userData.name,
+          name: userData.firstName,
+          family_name: userData.lastName,
           email: userData.email,
           phone_number: userData.phoneNumber
         },
