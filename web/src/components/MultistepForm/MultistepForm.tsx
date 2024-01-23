@@ -137,11 +137,12 @@ function MultistepForm() {
         email: data.email,
         password: data.password,
         repeatPassword: data.repeatPassword,
-        name: data.firstName.trim() + " " + data.lastName.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
         phoneNumber: data.phoneNumber
       }
   
-      if (userData.name == " " && userData.phoneNumber == "") {
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
         await Auth.signIn(userData.email, userData.password)
         .then(() => {
           navigate('/huiseigenaar-resultaat')
@@ -156,8 +157,8 @@ function MultistepForm() {
         username: userData.email,
         password: userData.password,
         attributes: {
-          name: userData.name,
-          family_name: userData.name,
+          name: userData.firstName,
+          family_name: userData.lastName,
           email: userData.email,
           phone_number: userData.phoneNumber
         },
