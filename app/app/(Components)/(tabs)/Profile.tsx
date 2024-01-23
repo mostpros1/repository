@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     width: 700,
-    height: 420,
+    height: 400,
     display: "flex",
     backgroundColor: "#308AE4",
     alignItems: "center",
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 15,
     gap:2,
   },
   name: {

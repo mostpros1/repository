@@ -31,7 +31,7 @@ const HowItWorksTwoSpecialist = ({navigation}) => {
           <View>
             <Image
               style={styles.image}
-              source={require("../../../assets/images/HowItWorksTwo.png")}
+              source={require("../../../assets/images/howItWorksTwo.png")}
             />
           </View>
         </View>

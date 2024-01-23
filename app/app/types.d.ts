@@ -19,4 +19,6 @@ declare global {
     Login: undefined;
     Verify: {email: string};
     Profile: undefined;
+    ProfileSecurity: undefined;
+    ProfileSettings: undefined;
   };

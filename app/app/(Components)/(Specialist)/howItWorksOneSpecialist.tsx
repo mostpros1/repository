@@ -29,7 +29,7 @@ const HowItWorksOneSpecialist = ({navigation}) => {
           <View>
             <Image
               style={styles.image}
-              source={require("../../../assets/images/HowItWorksFour.png")}
+              source={require("../../../assets/images/howItWorksFour.png")}
             />
           </View>
         </View>

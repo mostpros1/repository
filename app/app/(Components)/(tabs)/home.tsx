@@ -25,6 +25,12 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.text]}>Profile</Text>
             </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileSecurity')}>
+                <Text style={[styles.text]}>ProfileSecurity</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileSettingsTwo')}>
+                <Text style={[styles.text]}>ProfileSettingsTwo</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>

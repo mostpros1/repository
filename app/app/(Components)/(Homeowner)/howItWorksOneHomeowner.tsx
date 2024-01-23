@@ -17,7 +17,7 @@ const HowItWorksOneHomeowner = ({navigation}) => {
                 </View>
                 <View style={styles.imageContainer}>
                     <View>
-                        <Image style={styles.image} source={require("../../../assets/images/HowItWorksOne.png")} />
+                        <Image style={styles.image} source={require("../../../assets/images/howItWorksOne.png")} />
                     </View>
                 </View>
             </View>
