@@ -243,7 +243,9 @@ input{
     font-size: 36px;
 }
 
-
+.hidden {
+    display: none;
+  }
 
 .email-con{
     display: flex;

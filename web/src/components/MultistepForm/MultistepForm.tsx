@@ -120,8 +120,7 @@ function MultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
-        <Calendar/>,
-        <DateForm updateDate={updateDate} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
         <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} />
       ],
