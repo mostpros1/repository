@@ -1,17 +1,17 @@
 import React from "react";
-import Home from "./(Components)/(tabs)/home";
+import Home from "./(Components)/Home/home";
 import LandingPage from "./LandingPage";
-import KeuzePage from "./(Components)/keuze";
-import HowItWorksOneHomeowner from "./(Components)/(Homeowner)/HowItWorksOneHomeowner";
-import HowItWorksTwoHomeowner from "./(Components)/(Homeowner)/HowItWorksTwoHomeowner";
-import HowItWorksThreeHomeowner from "./(Components)/(Homeowner)/HowItWorksThreeHomeowner";
-import HowItWorksOneSpecialist from "./(Components)/(Specialist)/HowItWorksOneSpecialist";
-import HowItWorksTwoSpecialist from "./(Components)/(Specialist)/HowItWorksTwoSpecialist";
-import HowItWorksThreeSpecialist from "./(Components)/(Specialist)/HowItWorksThreeSpecialist";
-import Register from "./(Components)/(forms)/Register";
-// import Login from "./(Components)/(forms)/login";
-import Verify from "./(Components)/(forms)/Verification";
-import Profile from "./(Components)/(tabs)/Profile"
+import KeuzePage from "./(Components)/Home/keuze";
+import HowItWorksOneHomeowner from "./(Components)/Homeowner/HowItWorksOneHomeowner";
+import HowItWorksTwoHomeowner from "./(Components)/Homeowner/HowItWorksTwoHomeowner";
+import HowItWorksThreeHomeowner from "./(Components)/Homeowner/HowItWorksThreeHomeowner";
+import HowItWorksOneSpecialist from "./(Components)/Specialist/HowItWorksOneSpecialist";
+import HowItWorksTwoSpecialist from "./(Components)/Specialist/HowItWorksTwoSpecialist";
+import HowItWorksThreeSpecialist from "./(Components)/Specialist/HowItWorksThreeSpecialist";
+import Register from "./(Components)/Registratie/Register";
+import Login from "./(Components)/Login/Login"
+import Verify from "./(Components)/Verificatie/Verification";
+import Profile from "./Misschien_Later_Nodig/Profile"
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Amplify,} from "aws-amplify";
@@ -57,7 +57,7 @@ const App = () => {
         />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Register" component={Register} />
-        {/* <Stack.Screen name="Login" component={Login} /> */}
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
         {/* <Stack.Screen name="" component={} /> */}

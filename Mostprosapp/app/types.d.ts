@@ -6,7 +6,7 @@ declare global {
   }
 
   type RootStackParamList = {
-    LandingPage: unfedined;
+    LandingPage: undefined;
     KeuzePage: undefined;
     HowItWorksOneHomeowner: undefined;
     HowItWorksTwoHomeowner: undefined;
@@ -16,7 +16,9 @@ declare global {
     HowItWorksThreeSpecialist: undefined;
     Home: undefined;
     Register: {email: string};
-    // Login: undefined;
+    Login: undefined;
     Verify: {email: string};
     Profile: undefined;
+    ProfileSecurity: undefined;
+    ProfileSettings: undefined;
   };

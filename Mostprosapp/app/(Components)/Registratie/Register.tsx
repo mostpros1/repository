@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppForm } from "../../hooks/useAppForm";
-import { RegisterForm } from "./steps/registerForm";
+import { RegisterForm } from "./registerForm";
 import { useNavigation } from "@react-navigation/native";
 import {
     StyleSheet,

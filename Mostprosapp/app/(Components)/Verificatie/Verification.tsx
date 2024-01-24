@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { FormEvent, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
-import DigitInputs from "../DigitInputs";
+import DigitInputs from "./DigitInputs";
 function Verify({ route,navigation }) {
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState<string[]>([]);
