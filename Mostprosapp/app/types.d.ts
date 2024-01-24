@@ -20,5 +20,6 @@ declare global {
     Verify: {email: string};
     Profile: undefined;
     ProfileSecurity: undefined;
-    ProfileSettings: undefined;
+    ProfileSettingsOne: undefined;
+    ProfileSettingsTwo: undefined;
   };

@@ -92,7 +92,7 @@ const Profile = ({ navigation }) => {
 
             <View style={styles.middleContainer}>
               <View style={styles.middleContainerFirstSection}>
-                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('ProfileSettingsTwo')}>
                   <Icon name="calendar-today" size={25} color="white" />
                   <Text style={[styles.text, styles.textButtonWhite]}>Beschikbaarheid</Text>
                 </Pressable>
