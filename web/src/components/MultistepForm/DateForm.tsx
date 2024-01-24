@@ -24,20 +24,17 @@ function DateForm({ updateDate, updateFields }) {
     }, [currentDate]);
 
     const handleCardClick = (index: number) => {
-        setSelectedCard(index === selectedCard ? null : index);
         const selectedDate = dateOptions[index];
+        const isoDateString = selectedDate.toISOString();
+        setSelectedCard(index === selectedCard ? null : index);
         updateDate(selectedDate);
-        console.log('Selected card:', selectedDate);
+        updateFields({ date: isoDateString });
     };
 
-    const handleCalendarDateSelect = (date: Date) => {
-        const dateWithoutTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-        );
-        setSelectedDate(dateWithoutTime);
-        updateFields({ date: dateWithoutTime }); 
+    const handleCalendarDateSelect = (isoDateString: string) => {
+        const selectedDate = new Date(isoDateString);
+        updateDate(selectedDate);
+        updateFields({ date: isoDateString });
     };
 
     const handleMoreDatesClick = () => {
@@ -48,7 +45,7 @@ function DateForm({ updateDate, updateFields }) {
         <div className="dateForm_wrapper">
             <h2>Wanneer moet de klus gedaan worden</h2>
             {showMoreDates ? (
-                <Calendar onDateSelect={handleCalendarDateSelect}/>
+                <Calendar onDateSelect={handleCalendarDateSelect} />
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (
