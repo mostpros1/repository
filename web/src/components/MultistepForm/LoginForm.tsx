@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
@@ -12,10 +12,39 @@ type LoginData = {
 type LoginFormProps = LoginData & {
   updateFields: (fields: Partial<LoginData>) => void
   setUserExists: Dispatch<SetStateAction<boolean>>
-  handleLogin: () => void;
+  handleLogin: (email: string, password: string) => void;
 }
 
 export function LoginForm({ email, password, updateFields, setUserExists, handleLogin }: LoginFormProps) {
+
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const validateInputs = () => {
+    let isValid = true;
+
+    if (!email.trim()) {
+      setEmailError('Email is required');
+      isValid = false;
+    } else {
+      setEmailError(null);
+    }
+
+    if (!password.trim()) {
+      setPasswordError('Password is required');
+      isValid = false;
+    } else {
+      setPasswordError(null);
+    }
+
+    return isValid;
+  };
+
+  const handleLoginClick = () => {
+    if (validateInputs()) {
+      handleLogin(email, password);
+    }
+  };
   return (
     <>
       <div className='login-con'>
@@ -30,6 +59,7 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               value={email}
               onChange={e => updateFields({ email: e.target.value })}
             />
+            {emailError && <p className='error-message'>{emailError}</p>}
             <label>Wachtwoord</label>
             <input
               required
@@ -38,10 +68,11 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               value={password}
               onChange={e => updateFields({ password: e.target.value })}
             />
+            {passwordError && <p className='error-message'>{passwordError}</p>}
           </div>
           <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
           <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
-          <button type="button" onClick={handleLogin}>
+          <button type="button" onClick={handleLoginClick}>
             Login
           </button>
         </div>
