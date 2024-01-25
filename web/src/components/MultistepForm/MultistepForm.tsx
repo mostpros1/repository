@@ -17,7 +17,7 @@ import { AccountForm } from './AccountForm'
 type FormData = {
   postCode: string
   stad: string
-  date: Date;
+  date: string;
   questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
@@ -36,7 +36,7 @@ function MultistepForm() {
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
-    date: new Date(),
+    date: "",
     questions: Object.fromEntries(
       questionsData.map((question) => [question.key, ""])
     ),
@@ -57,12 +57,11 @@ function MultistepForm() {
   }
 
   const updateDate = (selectedDate: Date) => {
-    const dateWithoutTime = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate()
-    );
-    updateFields({ date: dateWithoutTime });
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
+    updateFields({ date: formattedDate });
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {

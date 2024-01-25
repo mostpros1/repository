@@ -4,15 +4,14 @@ import { DateCalendar, DateCalendarProps } from '@mui/x-date-pickers'
 type CustomCalendarProps = DateCalendarProps<Date>;
 
 interface CalendarProps extends CustomCalendarProps {
-    onDateSelect: (date: Date) => void;
+    onDateSelect: (date: string) => void;
 }
 
 function Calendar({ onDateSelect, ...otherProps }: CalendarProps) {
 
     const handleCalendarDateSelect = (date: Date) => {
-        const extractedDate = date["$d"];
-        onDateSelect(extractedDate);
-        console.log('Geselecteerde datum:', extractedDate);
+        const isoDateString = date.toISOString();
+        onDateSelect(isoDateString);
     };
     return (   
         <DateCalendar 
