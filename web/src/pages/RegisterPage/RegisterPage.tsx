@@ -5,7 +5,7 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
-import "./RegisterPage.css"
+
 
 function RegisterPage() {
 
@@ -50,6 +50,7 @@ function RegisterPage() {
   const updateRegisterData = (fields) => {
     setRegisterData((prevData) => ({ ...prevData, ...fields }));
   };
+
   return (
     <>
       <NavBar />
@@ -61,7 +62,7 @@ function RegisterPage() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default RegisterPage
+export default RegisterPage;

@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react"
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 type RegisterData = {
     firstName: string
@@ -61,13 +63,16 @@ export function RegisterForm({ email, firstName, lastName, phoneNumber, password
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Telefoonnummer:</label>
-                        <input
-                            required
-                            type="tel"
-                            placeholder='Telefoonnummer (bijv. +31612345678)'
-                            value={phoneNumber}
-                            onChange={e => updateFields({ phoneNumber: e.target.value })}
+                        <PhoneInput
+                            defaultCountry="NL"
+                            placeholder="+31658349021"
+                            value={phoneNumber} // Gebruik direct de waarde uit RegisterData
+                            onChange={(value) => {
+                                console.log("Telefoonnummer gewijzigd:", value);
+                                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
+                            }}
                         />
+
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Wachtwoord:</label>
