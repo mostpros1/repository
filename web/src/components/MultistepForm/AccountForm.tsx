@@ -19,6 +19,8 @@ type AccountFormData = {
 type AccountFormProps = AccountFormData & {
     formConfig: 'HOMEOWNER' | 'SPECIALIST'
     updateFields: (fields: Partial<AccountFormData>) => void
+    setError: (error: string) => void;
+    error: string;
   }
 
 export function AccountForm ({ beroep, email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, formConfig, updateFields }: AccountFormProps) {
@@ -31,8 +33,8 @@ export function AccountForm ({ beroep, email, postCode, stad, firstName, lastNam
 
     const formConfigMap: Record<typeof formConfig, [JSX.Element, JSX.Element]> = {
         'HOMEOWNER': [
-            <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} handleLogin={() => {}} />,
-            <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} />
+            <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} handleLogin={() => {}} setError={() => {}} error=""/>,
+            <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} setError={() => {}} error=""/>
         ],
         'SPECIALIST': [
             <SearchChoreForm {...data} updateFields={updateFields} />,

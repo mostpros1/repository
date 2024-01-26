@@ -18,6 +18,8 @@ function LoginPage() {
     password: '',
   });
 
+  const [error, setError] = useState('');
+
   useEffect(() => {
     checkAuthStatus();
   }, []);
@@ -37,8 +39,9 @@ function LoginPage() {
       updateUser(authenticatedUser);
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login failed:', error);
+      setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
   };
 
@@ -51,7 +54,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} />
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
         </div>
       </div>
       <Footer />

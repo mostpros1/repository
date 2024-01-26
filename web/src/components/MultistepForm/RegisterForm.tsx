@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 type RegisterData = {
     firstName: string
@@ -12,13 +12,21 @@ type RegisterData = {
 type RegisterFormProps = RegisterData & {
     updateFields: (fields: Partial<RegisterData>) => void;
     setUserExists?: Dispatch<SetStateAction<boolean>>;
+    setError: (error: string) => void;
+    error: string;
 };
 
-export function RegisterForm({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
+export function RegisterForm({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists, error }: RegisterFormProps) {
+
 
     return (
         <>
             <div className="register-container">
+                {error && (
+                    <div className="error-con">
+                        <p className="error-message">{error}</p>
+                    </div>
+                )}
                 <h2>Maak een nieuw account aan</h2>
                 <div className="register-form-container">
                     <div className="register-form-input">
@@ -86,7 +94,7 @@ export function RegisterForm({ email, firstName, lastName, phoneNumber, password
                 <div className="register-link">Al een account? <a
                     href="#"
                     onClick={() => setUserExists && setUserExists(true)}>Inloggen</a></div>
-                </div>
+            </div>
         </>
     )
 }
