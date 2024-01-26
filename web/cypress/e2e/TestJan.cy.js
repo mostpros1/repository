@@ -31,7 +31,7 @@ describe('Testing "Register as specialist"', () => {
         cy.get('[placeholder="Plaatsnaam"]').type('Amsterdam')
         goForward()
 
-        goBack()
+        /* goBack()
 
         // check 2
         cy.get('input').first().type('dsamkdmsk')
@@ -91,13 +91,35 @@ describe('Testing "Register as specialist"', () => {
         // check 1
         goForward()
         goForward()
-        goForward() 
+        goForward() */
 
         // check 2
-        cy.get('.specialist_q').each(($label, index, $labels) => {
+        for (let i = 0; i < 5; i++) {
+            let paused = false
 
-            cy.wrap($label).click();
+            cy.get('.specialist_q').each(($radioButton, index, $radioButtons) => {
+                cy.wrap($radioButton).click();
 
-        });
+                if (!paused && index === i) {
+                    paused = true
+                    cy.pause()
+                }
+            });
+            goForward()
+            
+            paused = false
+
+            goBack()
+        }
+
+        // cy.get('.specialist_q').each(($radioButton, index, $radioButtons) => {
+
+        //     cy.wrap($radioButton).click();
+
+        // });
+
+        // goForward()
+
+
     })
 })
