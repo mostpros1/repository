@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
@@ -13,12 +13,21 @@ type LoginFormProps = LoginData & {
   updateFields: (fields: Partial<LoginData>) => void
   setUserExists: Dispatch<SetStateAction<boolean>>
   handleLogin: () => void;
+  setError: (error: string) => void;
+  error: string;
 }
 
-export function LoginForm({ email, password, updateFields, setUserExists, handleLogin }: LoginFormProps) {
+export function LoginForm({ email, password, updateFields, setUserExists, handleLogin, error }: LoginFormProps) {
+
+
   return (
     <>
       <div className='login-con'>
+        {error && (
+          <div className="error-con">
+            <p className="error-message">{error}</p>
+          </div>
+        )}
         <h2>Login om vakspecialist te vinden</h2>
         <div className='login-form-con'>
           <div className='login-form'>

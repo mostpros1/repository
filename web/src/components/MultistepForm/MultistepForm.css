@@ -368,4 +368,14 @@ input{
     width: 100%;
 }
   
-  
+.error-con{
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8d7da;
+    border: 2px solid #f1aeb5;
+}
+.error-message{
+    color: red;
+    font-size: 14px;
+}

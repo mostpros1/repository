@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 type RegisterData = {
     firstName: string
@@ -12,13 +14,21 @@ type RegisterData = {
 type RegisterFormProps = RegisterData & {
     updateFields: (fields: Partial<RegisterData>) => void;
     setUserExists?: Dispatch<SetStateAction<boolean>>;
+    setError: (error: string) => void;
+    error: string;
 };
 
-export function RegisterForm({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists }: RegisterFormProps) {
+export function RegisterForm({ email, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setUserExists, error }: RegisterFormProps) {
+
 
     return (
         <>
             <div className="register-container">
+                {error && (
+                    <div className="error-con">
+                        <p className="error-message">{error}</p>
+                    </div>
+                )}
                 <h2>Maak een nieuw account aan</h2>
                 <div className="register-form-container">
                     <div className="register-form-input">
@@ -53,13 +63,16 @@ export function RegisterForm({ email, firstName, lastName, phoneNumber, password
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Telefoonnummer:</label>
-                        <input
-                            required
-                            type="tel"
-                            placeholder='Telefoonnummer (bijv. +31612345678)'
-                            value={phoneNumber}
-                            onChange={e => updateFields({ phoneNumber: e.target.value })}
+                        <PhoneInput
+                            defaultCountry="NL"
+                            placeholder="+31658349021"
+                            value={phoneNumber} // Gebruik direct de waarde uit RegisterData
+                            onChange={(value) => {
+                                console.log("Telefoonnummer gewijzigd:", value);
+                                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
+                            }}
                         />
+
                     </div>
                     <div className="register-form-input">
                         <label htmlFor="">Wachtwoord:</label>
@@ -86,7 +99,7 @@ export function RegisterForm({ email, firstName, lastName, phoneNumber, password
                 <div className="register-link">Al een account? <a
                     href="#"
                     onClick={() => setUserExists && setUserExists(true)}>Inloggen</a></div>
-                </div>
+            </div>
         </>
     )
 }
