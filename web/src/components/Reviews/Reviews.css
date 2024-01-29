@@ -12,13 +12,14 @@
 .reviewCard_con{
     width: 100%;
     max-width: 1000px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
     justify-content: space-between;
     gap: 25px;
 }
 
 .reviewCard{
-    width: 33%;
+    width: 100%;
     padding: 25px;
     background-color: white;
     border-radius: 10px;
@@ -47,8 +48,9 @@
     gap: 10px;
 }
 
-.review_star{
-    height: 25px;
+.review_star svg{
+    font-size: 24px;
+    color: #f9c339;
 }
 
 .review_title{

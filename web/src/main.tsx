@@ -4,6 +4,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
 import aws from "aws-sdk";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/nl.js";
+import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 
@@ -19,7 +23,11 @@ aws.config.update({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <UserProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
+          <App />
+        </LocalizationProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

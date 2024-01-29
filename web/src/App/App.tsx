@@ -16,6 +16,7 @@ import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVe
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
+import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import "./App.css";
@@ -46,5 +47,5 @@ const App = () => {
     </Routes>
   );
 };
-
+  
 export default App;

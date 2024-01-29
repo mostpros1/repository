@@ -59,7 +59,9 @@ function AppForm() {
         },
         autoSignIn: { enabled: true },
       })
-        .then(() => navigation.navigate("Verify" as never))
+        .then(() => navigation.navigate("Verify", {
+          email: data.email as string,
+        }))
         .catch((error) => {
           console.error(error);
           console.log(error.code);
@@ -88,7 +90,7 @@ function AppForm() {
       <View style={styles.middleContainer}>{step}</View>
       <View style={styles.bottomContainer}>
         <View style={styles.buttonContainer}>
-          <Button title="Submitt" onPress={onSubmit} />
+          <Button title="Submit" onPress={onSubmit} />
         </View>
       </View>
     </View>
