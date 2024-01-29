@@ -5,4 +5,3 @@ type Chat @model @auth(rules: [{allow: public}]) {
   members: [String!]!
   sortKey: String!
 }
- 

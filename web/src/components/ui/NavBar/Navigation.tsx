@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import MenuIcon from '@mui/icons-material/Menu';
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import MenuIcon from "@mui/icons-material/Menu";
+import JoinChat from "../../Chat/JoinChat";
 
 function Navigation() {
   return (
@@ -10,16 +11,15 @@ function Navigation() {
       <Link to="/">
         <div className="nav-leftside">
           <img src={Logo} alt="" />
-          <h1 className="black-h1">
-            Mostpros
-          </h1>
+          <h1 className="black-h1">Mostpros</h1>
         </div>
       </Link>
       <div className="nav-rightside">
         <NavLinks />
+        <JoinChat />
         <button className="loginButton">
           <MenuIcon />
-          <PermIdentityIcon />          
+          <PermIdentityIcon />
         </button>
       </div>
     </div>

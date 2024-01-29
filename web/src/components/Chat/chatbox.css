@@ -55,58 +55,32 @@
   overflow-y: scroll;
 }
 
-.messages {
-  flex: 1;
-  position: relative;
-}
 
-.messages-scroller {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+
+.chat-enter{
   display: flex;
-  flex-direction: column;
-  padding: 16px;
-  overflow-y: scroll;
+  float: right;
+  margin-right: 7px;
+  margin-top: 17px;
 }
 
-.message {
-  align-self: flex-start;
-  margin-top: 4px;
-  padding: 8px 12px;
-  max-width: 240px;
-  background: #f1f0f0;
-  border-radius: 16px;
-  font-size: 14px;
+.chat_box {
+  width: 900px;
+  height: 500px;
+  background: rgb(224, 241, 255);
+  overflow: auto;
+  margin-left: 300px;
 }
 
-.message.me {
-  align-self: flex-end;
-  background: #f19e38;
-  color: white;
-}
-
-.chat-bar {
-  height: 64px;
-  border-top: 1px solid #ddd;
-}
-
-.chat-bar form {
-  height: 100%;
-  padding: 16px;
-}
-
-.chat-bar form input {
-  width: 100%;
-  height: 32px;
-  padding: 8px 16px;
-  border: 1px solid #308AE4;
-  border-radius: 16px;
+.input_form {
+  margin-left: 590px;
+  overflow: auto;
+  border: 2px solid #308AE4;
+  border-radius: 15px;
+  width: 360px;
   outline: none;
-}
-
-.chat-bar form input:focus {
-  border: 1px solid #308AE4;
+  &:hover {
+    border: 2.2px solid #2d73b9;
+    cursor: pointer;
+    }
 }
