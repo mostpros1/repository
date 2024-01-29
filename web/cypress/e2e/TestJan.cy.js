@@ -14,11 +14,12 @@ describe('Testing "Register as specialist"', () => {
         }
 
         function testAgain() {
-            cy.visit('https://main.d2j290dx5bs7ht.amplifyapp.com/inschrijven-als-specialist/');
-            cy.get('button').click();
+            cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
+            cy.get('.nav-blue-btn > .black-items').click() // Go to 'Inschrijven vak specialist'
+            goForward()
         }
 
-        function goBack() { // To go back to the previous step and to clear all input fields
+        function goBack() { // To go back to the previous step  and to clear all input fields
             cy.get('[class="form-btn back"]').click()
 
             cy.get('input').each(($input) => {
@@ -39,7 +40,7 @@ describe('Testing "Register as specialist"', () => {
         cy.get('[placeholder="Plaatsnaam"]').type('Amsterdam')
         goForward()
 
-        /* goBack()
+        goBack()
 
         // check 2
         cy.get('input').first().type('dsamkdmsk')
@@ -91,7 +92,7 @@ describe('Testing "Register as specialist"', () => {
         cy.get('[placeholder="example@example.com"]')
         cy.get('[placeholder="1234AB"]')
         cy.get('[placeholder="Plaatsnaam"]')
-        goForward() */
+        goForward() 
 
 
         // STEP 2-3-4
@@ -101,28 +102,26 @@ describe('Testing "Register as specialist"', () => {
         goForward()
         goForward()
 
-        // check 2
-        /* for (let i = 0; i < 5; i++) {
-            let paused = false
+        testAgain()
 
-            cy.get('.specialist_q').each(($radioButton, index, $radioButtons) => {
-                cy.wrap($radioButton).click();
-
-                if (!paused && index === i) {
-                    paused = true
-                    cy.pause()
-                }
-            });
+        // check 2-3
+        for (let i = 0; i < 6; i++) {
+            cy.get('input[type="radio"]').eq(i).click()
             goForward()
-            
-            paused = false
+            cy.get('[class="form-btn back"]').click()
+        }
 
-            goBack()
-        } */
+        goForward()
 
-        // check 3
-
-
+        for (let g = 0; g < 2; g++) {
+            for (let z = 0; z < 5; z++) {
+                cy.get('input[type="radio"]').eq(z).click()
+                goForward()
+                cy.get('[class="form-btn back"]').click()
+            }
+            goForward()
+        }
+        
 
         // STAP 5
 
@@ -166,7 +165,7 @@ describe('Testing "Register as specialist"', () => {
             goForward()
         }
 
-        // check 2waras
+        // check 5
         goForward()
     })
 })
