@@ -166,7 +166,7 @@ describe('Testing "Register as specialist"', () => {
             goForward()
         }
 
-        // check 5
+        // check 2waras
         goForward()
     })
 })
