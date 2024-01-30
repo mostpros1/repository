@@ -35,7 +35,7 @@ function Navigation() {
     authButtons = (
       <>
         <p>{user.attributes.email}</p>
-        <a href="/">test</a>
+        <Link to="/dashboard-huiseigenaar">Account</Link>
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     );

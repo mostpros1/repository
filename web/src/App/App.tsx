@@ -16,6 +16,7 @@ import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVe
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
+import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/hoe-werkt-het"                element={<HowItWorksPage />} />
             <Route path="/contact"                      element={<ContactPage />} />
             <Route path="/dashboard-huiseigenaar"       element={<HomeOwnerDashboard />} />
+            <Route path="/dashboard-professional"       element={<ProfessionalDashboard />} />
             <Route path="/admin-paneel"                 element={<AdminSideBar />} >
                 <Route index                            element={<AdminMain />} />
                 <Route path="manage-users"              element={<ManageUser />} />
