@@ -1,124 +1,127 @@
 // import './commands'
 
-describe('Testing searchbar functionality', () => {
+describe('Testing searchbar functionality', { scrollBehavior: false } , () => {
     it('type in input', () => {
-        
+
+        cy.viewport(1250, 695) // Change viewport to use desktop website instead of mobile website
+
+        // Functions: They are intended to better show repetitive code.
+
+        function goBack() {
+            cy.get('[class="form-btn back"]').click()
+
+            cy.get('input').each(($input) => {
+                cy.wrap($input).clear()
+            });
+        }
+
+        function goForward() { // To proceed to the next step
+            cy.get('[class="form-btn"]').click()
+        }
+
+
+        // STAP 0
+
+        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
+        cy.get('input').type('Loodgieter').click()
+        cy.get('.search_dropdown a:first').click()
+
+
         // STAP 1
 
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
-
         // Locatie check 1
-        cy.get('[class="form-input first-input"]').type('2020TE')
-        cy.get('[class="form-input second-input"]').type('Amsterdam')
-        cy.get('[class="form-btn"]').click()
+        cy.get('input[type="text"]').eq(0).type('2020TE')
+        cy.get('input[type="text"]').eq(1).type('Amsterdam')
+        goForward()
 
-
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
+        goBack()
 
         // Locatie check 2
-        cy.get('[class="form-input first-input"]').type('Amsterdam')
-        cy.get('[class="form-input second-input"]').type('202TE')
-        cy.get('[class="form-btn"]').click()
+        cy.get('input[type="text"]').eq(0).type('Amsterdam')
+        cy.get('input[type="text"]').eq(1).type('202TE')
+        goForward()
 
-
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
+        goBack()
 
         // Locatie check 3
-        cy.get('[class="form-input first-input"]').type('2131dasdsa23')
-        cy.get('[class="form-input second-input"]').type('123dsasdw')
-        cy.get('[class="form-btn"]').click()
+        cy.get('input[type="text"]').eq(0).type('2131dasdsa23')
+        cy.get('input[type="text"]').eq(1).type('123dsasdw')
+        goForward()
 
-
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
+        goBack()
 
         // Locatie check 4
-        cy.get('[class="form-input first-input"]').type('ÖÇŞİÜ%&(/)')
-        cy.get('[class="form-input second-input"]').type('ÇSIŞŞĞÜÜ=)/&')
-        cy.get('[class="form-btn"]').click()
+        cy.get('input[type="text"]').eq(0).type('ÖÇŞİÜ%&(/)')
+        cy.get('input[type="text"]').eq(1).type('ÇSIŞŞĞÜÜ=)/&')
+        goForward()
 
+        goBack()
 
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
+        // Locatie check 5.1
+        cy.get('input[type="text"]').eq(0)
+        goForward()
 
-        // Locatie check 5
-        // cy.get('[class="form-input first-input"]').type('')
-        // cy.get('[class="form-input second-input"]').type('')
-        // cy.get('[class="form-btn"]').click()
-
-
-        cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-        cy.get('input').type('Loodgieter').click()
-        cy.get('.search_dropdown a:first').click()
+        // Locatie check 5.2
+        cy.get('input[type="text"]').eq(1)
+        goForward()
 
         // Locatie check 6
-        cy.get('[class="form-input first-input"]').type('12345')
-        cy.get('[class="form-input second-input"]').type('Istanbul')
-        cy.get('[class="form-btn"]').click()
+        cy.get('input[type="text"]').eq(0).type('12345')
+        cy.get('input[type="text"]').eq(1).type('Istanbul')
+        goForward()
 
 
 
         // STAP 2-4
 
         // check 1
-        cy.get('[class="form-btn"]').click()
-        cy.get('[class="form-btn"]').click()
-        cy.get('[class="form-btn"]').click()
-        cy.get('[class="form-btn"]').click()
-        cy.get('[class="form-btn"]').click()
+        for (let i = 0; i < 5; i++) {
+        }
+        goForward()
 
 
-        
         // STAP 5
 
         // check 1
         // cy.get('[class="text-field"]').type('Ik heb een probleem.')
-        // cy.get('[class="form-btn"]').click()
+        // goForward()
 
 
         // check 2
         // cy.get('[class="text-field"]').type('ŞÖĞİÜ(%/+^^+İŞÖ')
-        // cy.get('[class="form-btn"]').click()
+        // goForward()
 
 
         // check 3
         // cy.get('[class="text-field"]').type('')
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
 
 
         // STAP 6
-        
+
         // check 1
         cy.get('[class="email-input"]').type('test@test.com')
-        cy.get('[class="form-btn"]').click()
+        goForward()
         cy.get('[class="form-btn back"]').click()
         cy.get('[class="email-input"]').clear()
 
         // check 2
         cy.get('[class="email-input"]').type('dsad#$:?Ş:ÇİÜğ')
-        cy.get('[class="form-btn"]').click()
+        goForward()
         cy.get('[class="email-input"]').clear()
 
         // check 3
         cy.get('[class="email-input"]').type('test123@*&**^&.TEST')
-        cy.get('[class="form-btn"]').click()
+        goForward()
         cy.get('[class="email-input"]').clear()
 
         // check 4
         // cy.get('[class="email-input"]').type('')
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
         cy.get('[class="email-input"]').type('test@test.com')
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
 
 
@@ -130,14 +133,14 @@ describe('Testing searchbar functionality', () => {
         cy.get('[type="tel"]').type('+3109876323')
         cy.get('[placeholder="Wachtwoord (min. 6 tekens)"]').type('qwerty')
         cy.get('[placeholder="Herhaal wachtwoord"]').type('qwerty')
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
         cy.get('input').each(($input) => {
             cy.wrap($input).clear();
         });
 
         // check 2
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
         // check 3-4-5-6-7-8-9
         cy.get('[placeholder="Voornaam"]').type('ÜŞŞÇÇÖÖŞ+^/%&/')
@@ -148,7 +151,7 @@ describe('Testing searchbar functionality', () => {
         cy.get('[type="tel"]').type('(&)%ÜĞÇÇ:')
         cy.get('[placeholder="Wachtwoord (min. 6 tekens)"]').type('ĞÜŞÇ!')
         cy.get('[placeholder="Herhaal wachtwoord"]').type('qwertyasg')
-        cy.get('[class="form-btn"]').click()
+        goForward()
 
     })
 })

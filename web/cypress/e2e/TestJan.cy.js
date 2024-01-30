@@ -1,12 +1,11 @@
-describe('Testing "Register as specialist"', () => {
+describe('Testing "Register as specialist"' , () => {
     it('type in input', () => {
 
         cy.viewport(1250, 695) // Change viewport to use desktop website instead of mobile website
-        testBegin()
 
-        // functions: They are intended to better show repetitive code.
+        // Functions: They are intended to better show repetitive code.
 
-        // note: There are some checks which only controls some actions. There are two Asterisk (*) after these actions
+        // Note: There are some checks which only controls some actions. There are two Asterisk (*) after these actions
 
         function testBegin() {
             cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/") // Go to website
@@ -15,8 +14,11 @@ describe('Testing "Register as specialist"', () => {
 
         function testAgain() {
             cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
-            cy.get('.nav-blue-btn > .black-items').click() // Go to 'Inschrijven vak specialist'
-            goForward()
+            cy.get('.nav-blue-btn > .black-items').click() // Go to 'Register as specialist'
+
+            for (let r = 0; r < 4; r++) {
+                goForward()
+            }
         }
 
         function goBack() { // To go back to the previous step  and to clear all input fields
@@ -31,78 +33,87 @@ describe('Testing "Register as specialist"', () => {
             cy.get('[class="form-btn"]').click()
         }
 
+
+
+        // STEP 0
+
+        testBegin()
+
         // STEP 1
 
         // check 1
-        cy.get('input[placeholder="Uw beroep"]').type('Loodgieter')
-        cy.get('[placeholder="example@example.com"]').type('test@test.com')
-        cy.get('[placeholder="1234AB"]').type('2020EB')
-        cy.get('[placeholder="Plaatsnaam"]').type('Amsterdam')
+        cy.get('input[type="text"]').eq(0).type('Loodgieter')
+        cy.get('input[type="text"]').eq(1).type('test@test.com')
+        cy.get('input[type="text"]').eq(2).type('2020EB')
+        cy.get('input[type="text"]').eq(3).type('Amsterdam')
         goForward()
 
         goBack()
 
         // check 2
-        cy.get('input').first().type('dsamkdmsk')
-        cy.get('[placeholder="example@example.com"]').type('dsadasmdk')
-        cy.get('[placeholder="1234AB"]').type('Amsterdam')
-        cy.get('[placeholder="Plaatsnaam"]').type('2020EB')
+        cy.get('input[type="text"]').eq(0).type('dsamkdmsk')
+        cy.get('input[type="text"]').eq(1).type('dsadasmdk')
+        cy.get('input[type="text"]').eq(2).type('Amsterdam')
+        cy.get('input[type="text"]').eq(3).type('2020EB')
         goForward()
 
         goBack()
 
         // check 3
-        cy.get('input').first().type('#&Y$ĞÜİŞÇ')
-        cy.get('[placeholder="example@example.com"]').type('/+/%%&ĞÜŞ2@(%&/.Ğğüş')
-        cy.get('[placeholder="1234AB"]').type('32423532532ğüşçşö')
-        cy.get('[placeholder="Plaatsnaam"]').type('asdwsadffğĞÜŞ')
+        cy.get('input[type="text"]').eq(0).type('#&Y$ĞÜİŞÇ')
+        cy.get('input[type="text"]').eq(1).type('/+/%%&ĞÜŞ2@(%&/.Ğğüş')
+        cy.get('input[type="text"]').eq(2).type('32423532532ğüşçşö')
+        cy.get('input[type="text"]').eq(3).type('asdwsadffğĞÜŞ')
         goForward()
 
         goBack()
 
         // check 4
-        cy.get('input').first().type('21353424') **
-            cy.get('[placeholder="example@example.com"]').type('test@test.com')
-        cy.get('[placeholder="1234AB"]').type('*^%%ĞÜŞÇÖiş') **
-            cy.get('[placeholder="Plaatsnaam"]').type('/&(&%ÜĞŞLçöi') **
-            goForward()
+        cy.get('input[type="text"]').eq(0).type('21353424') // **
+        cy.get('input[type="text"]').eq(1).type('test@test.com')
+        cy.get('input[type="text"]').eq(2).type('*^%%ĞÜŞÇÖiş') // **
+        cy.get('input[type="text"]').eq(3).type('/&(&%ÜĞŞLçöi') // **
+        goForward()
 
         goBack()
 
         // check 5 (location check)
-        cy.get('input').first().type('Loodgieter')
-        cy.get('[placeholder="example@example.com"]').type('test@test.com')
-        cy.get('[placeholder="1234AB"]') **
-            cy.get('[placeholder="Plaatsnaam"]') **
-            goForward()
+        cy.get('input[type="text"]').eq(0).type('Loodgieter')
+        cy.get('input[type="text"]').eq(1).type('test@test.com')
+        cy.get('input[type="text"]').eq(2) // **
+        cy.get('input[type="text"]').eq(3) // **
+        goForward()
 
         goBack()
 
         // check 6 (location check)
-        cy.get('input').first().type('Loodgieter')
-        cy.get('[placeholder="example@example.com"]').type('test@test.com')
-        cy.get('[placeholder="1234AB"]').type('20233AB') **
-        cy.get('[placeholder="Plaatsnaam"]').type('Istanbul') **
+        cy.get('input[type="text"]').eq(0).type('Loodgieter')
+        cy.get('input[type="text"]').eq(1).type('test@test.com')
+        cy.get('input[type="text"]').eq(2).type('20233AB') // **
+        cy.get('input[type="text"]').eq(3).type('Istanbul') // **
         goForward() 
 
-        goBack() 
+        goBack()
 
         // empty check
-        cy.get('input').first()
-        cy.get('[placeholder="example@example.com"]')
-        cy.get('[placeholder="1234AB"]')
-        cy.get('[placeholder="Plaatsnaam"]')
+        cy.get('input[type="text"]').eq(0)
+        cy.get('input[type="text"]').eq(1)
+        cy.get('input[type="text"]').eq(2)
+        cy.get('input[type="text"]').eq(3)
         goForward() 
 
 
         // STEP 2-3-4
 
         // check 1
-        goForward()
-        goForward()
-        goForward()
+        for (let k = 0; k < 3; k++) {
+            goForward()
+        }
 
-        testAgain()
+        for (let l = 0; l < 3; l++) {
+            cy.get('[class="form-btn back"]').click()
+        }
+        
 
         // check 2-3
         for (let i = 0; i < 6; i++) {
@@ -130,40 +141,28 @@ describe('Testing "Register as specialist"', () => {
         cy.get('input[type="text"]').eq(1).type('9305 6589')
         goForward()
 
-        testBegin()
-        for (let i = 0; i < 4; i++) {
-            goForward()
-        }
+        testAgain()
 
         // check 2
         cy.get('input[type="text"]').eq(0).type('dsnajdnuws^&%*')
         cy.get('input[type="text"]').eq(1).type('JDNASJD7^%&*')
         goForward()
 
-        testBegin()
-        for (let i = 0; i < 4; i++) {
-            goForward()
-        }
+        testAgain()
 
         // check 3
         cy.get('input[type="text"]').eq(0).type('KOÇTAŞ')
         cy.get('input[type="text"]').eq(1).type('sadvdsfadsss')
         goForward()
 
-        testBegin()
-        for (let i = 0; i < 4; i++) {
-            goForward()
-        }
+        testAgain()
 
         // check 4
         cy.get('input[type="text"]').eq(0).type('123543546')
         cy.get('input[type="text"]').eq(1).type('&/%/()(&%+')
         goForward()
 
-        testBegin()
-        for (let i = 0; i < 4; i++) {
-            goForward()
-        }
+        testAgain()
 
         // check 5
         goForward()
