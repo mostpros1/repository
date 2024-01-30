@@ -9,23 +9,22 @@ import HowItWorksOneSpecialist from "./(Components)/Specialist/HowItWorksOneSpec
 import HowItWorksTwoSpecialist from "./(Components)/Specialist/HowItWorksTwoSpecialist";
 import HowItWorksThreeSpecialist from "./(Components)/Specialist/HowItWorksThreeSpecialist";
 import Register from "./(Components)/Registratie/Register";
-import Login from "./(Components)/Login/Login"
+import Login from "./(Components)/Login/Login";
 import Verify from "./(Components)/Verificatie/Verification";
-import Profile from "./(Components)/Profile/Profile"
-import ProfileSettings from "./(Components)/Profile/ProfileSecurity"
+import Profile from "./(Components)/Profile/Profile";
+import ProfileSettings from "./(Components)/Profile/ProfileSecurity";
 // import ProfileSettingsOne from "./(Components)/Profile/ProfileSettingsOne"
-import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo"
+import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Amplify,} from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 Amplify.configure(awsconfig);
 import { RootStackParamList } from "./types";
 
 const App = () => {
-
   const Stack = createNativeStackNavigator<RootStackParamList>();
- 
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -65,7 +64,10 @@ const App = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ProfileSecurity" component={Profile} />
         {/* <Stack.Screen name="ProfileSettingsOne" component={ProfileSettingsOne} /> */}
-        <Stack.Screen name="ProfileSettingsTwo" component={ProfileSettingsTwo} />
+        <Stack.Screen
+          name="ProfileSettingsTwo"
+          component={ProfileSettingsTwo}
+        />
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

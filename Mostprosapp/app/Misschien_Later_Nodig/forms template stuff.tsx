@@ -11,22 +11,22 @@
 // const windowWidth = Dimensions.get("window").width;
 // const windowHeight = Dimensions.get("window").height;
 
-type AppFormData = {
-  input: string;
-  inputTwo: string;
-  extraInfo: string;
-  mail: string;
-  email: string;
-  password: string;
-};
-const INITIAL_DATA: AppFormData = {
-  input: "",
-  inputTwo: "",
-  extraInfo: "",
-  mail: "",
-  email: "",
-  password: "",
-};
+// type AppFormData = {
+//   input: string;
+//   inputTwo: string;
+//   extraInfo: string;
+//   mail: string;
+//   email: string;
+//   password: string;
+// };
+// const INITIAL_DATA: AppFormData = {
+//   input: "",
+//   inputTwo: "",
+//   extraInfo: "",
+//   mail: "",
+//   email: "",
+//   password: "",
+// };
 
 // function AppForm() {
 //   const [data, setData] = useState(INITIAL_DATA);
@@ -37,12 +37,12 @@ const INITIAL_DATA: AppFormData = {
 //   }
 
 //   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-    // useAppForm([
-    //   <LoginForm {...data} updateFields={updateFields} />,
-    //   <PostcodeForm {...data} updateFields={updateFields} />,
-    //   <LoginForm {...data} updateFields={updateFields} />,
-    //   <LoginForm {...data} updateFields={updateFields} />,
-    // ]);
+//     useAppForm([
+//       <LoginForm {...data} updateFields={updateFields} />,
+//       <PostcodeForm {...data} updateFields={updateFields} />,
+//       <LoginForm {...data} updateFields={updateFields} />,
+//       <LoginForm {...data} updateFields={updateFields} />,
+//     ]);
 
 //   async function onSubmit(e: FormEvent) {
 //     e.preventDefault();
