@@ -1,7 +1,9 @@
 import React, { useState, ReactElement } from "react";
 import { useChatBackend } from "./ChatBackend";
+import { useUser } from "../../context/UserContext";
 
-const JoinChat: React.FC = (user, signOut): ReactElement => {
+const JoinChat: React.FC = (signOut): ReactElement => {
+  const { user } = useUser();
   const {
     recipientEmail,
     setShowJoinButton,
@@ -10,7 +12,7 @@ const JoinChat: React.FC = (user, signOut): ReactElement => {
     handleAlertInputChange,
     handleAlertConfirm,
     handleAlertCancel,
-  } = useChatBackend(user, signOut);
+  } = useChatBackend(user, signOut); // Timo: sends the user from ../../context/UserContext into useChatBackend users
   return (
     <>
       <div>

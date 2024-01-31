@@ -13,17 +13,15 @@
     },
     "categories": {
       "auth": {
-        "mostpros0f31aec0": {},
-        "Mostpros": {},
         "mostpros88966fcb": {
+          "nativeClientId": "205hq6m5duq8u95vjhisd3c60h",
           "userPoolId": "eu-north-1_xjKczq7WM",
           "userPoolName": "Mostpros-staging",
-          "webClientId": "205hq6m5duq8u95vjhisd3c60h",
-          "nativeClientId": "205hq6m5duq8u95vjhisd3c60h"
-        }
+          "webClientId": "205hq6m5duq8u95vjhisd3c60h"
+        },
+        "Mostpros": {}
       },
       "api": {
-        "Mostpros": {},
         "mostpros": {}
       }
     }

@@ -7,7 +7,7 @@ import * as subscriptions from "../../graphql/subscriptions";
 
 
 
-export function useChatBackend(user, signOut) {
+export function useChatBackend(user: any, signOut) {
   const [chats, setChats] = React.useState([]);
   const [recipientEmail, setRecipientEmail] = React.useState("");
   const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
@@ -17,9 +17,12 @@ export function useChatBackend(user, signOut) {
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
 
+    
 
+// // sends messages ///
   const handleSendMessage = async (text) => {
-    const members = [user.attributes.email, recipientEmail]; // Include both users in the chat
+    const members = [user.attributes.email, recipientEmail];
+    console.log(members)// Include both users in the chat
     await API.graphql({
       query: mutations.createChat,
       variables: {
@@ -43,7 +46,7 @@ export function useChatBackend(user, signOut) {
       }
     }
   };
-
+// // Functions for make new Chat // //
   const handleStartNewChat = () => {
     setRecipientEmail(
       // @ts-ignore
@@ -61,7 +64,7 @@ export function useChatBackend(user, signOut) {
       handleSendMessage("Hello, let's chat!");
       setShowAlert(false);
       setShowJoinButton(false);
-      setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
+      setShowConfirmedConnection(true); 
       setNotificationMessage(`${recentMessageEmail} joined the chat`);
     }
   };
@@ -71,15 +74,18 @@ export function useChatBackend(user, signOut) {
     setRecipientEmail("");
   };
 
+// // for recipientEmail to make connection to chat // //
   const handleJoinChat = () => {
     console.log("Joining chat with email:", recentMessageEmail);
     const members = [user.attributes.email, recentMessageEmail];
     setRecipientEmail(recentMessageEmail);
     setRecentMessageEmail("");
-    setShowJoinButton(false); // Hide the "Join Chat" button after clicking it
-    setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
+    setShowJoinButton(false); 
+    setShowConfirmedConnection(true); 
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
   };
+
+   
 
 return {
     chats,
