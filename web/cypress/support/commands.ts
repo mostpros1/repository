@@ -36,9 +36,36 @@
 //   }
 // }
 
+// cypress/support/commands.ts
+
+declare namespace Cypress {
+    interface Chainable {
+        setDesktopViewport(): void;
+        testBegin(): void;
+        testAgain(): void;
+        goBack(): void;
+        goForward(): void;
+    }
+}
 
 Cypress.Commands.add('setDesktopViewport', () => {
     cy.viewport(1250, 695);
+});
+
+Cypress.Commands.add('testBegin', () => {
+    cy.setDesktopViewport();
+    cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/");
+    cy.get('.nav-blue-btn a.black-items').click();
+});
+
+Cypress.Commands.add('testAgain', () => {
+    cy.setDesktopViewport();
+    cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/");
+    cy.get('.nav-blue-btn > .black-items').click();
+
+    for (let r = 0; r < 4; r++) {
+        cy.goForward();
+    }
 });
 
 Cypress.Commands.add('goBack', () => {
