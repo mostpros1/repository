@@ -1,7 +1,6 @@
 import "./SearchChoreForm.css"
 
 type SpecialistData = {
-    beroep: string
     email: string
     postCode: string
     stad: string
@@ -11,21 +10,15 @@ type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
 
-export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
+export default function SearchChoreForm({ email, postCode, stad, updateFields }: SearchChoreFormProps) {
     return (
         <>
             <div className="search_chore_text_con">
                 <h1>Zoek uw klus</h1>
-                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</p>
+                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar u wilt werken, dan helpen wij u bij het vinden van passende klussen.<br/>
+                Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
-                <label>Uw hoofdberoep</label>
-                <input
-                    type="text"
-                    placeholder="Uw beroep"
-                    value={beroep}
-                    onChange={e => updateFields({ beroep: e.target.value })}
-                />
                 <label>Email:</label>
                 <input
                     type="text"

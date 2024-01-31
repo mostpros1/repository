@@ -6,6 +6,11 @@ import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 
+type PostConfig = {
+    successPage: string
+    roleName: string
+}
+
 function BevestigEmailPage() {
 
     const [isConfirmed, setIsConfirmed] = useState(false)
@@ -16,12 +21,25 @@ function BevestigEmailPage() {
     const inputRef = useRef([])
 
     const userEmail = location.state === null ? "" : location.state.email
+    const postConfigId = location.state === null ? "" : location.state.postConfig
+
+    const postConfigMap: Record<string, PostConfig> = {
+        'HOMEOWNER': {
+            successPage: '/huiseigenaar-resultaat',
+            roleName: "Homeowner",
+        },
+        'PROFESSIONAL': {
+            successPage: '/specialist-resultaat',
+            roleName: "Professional",
+        }
+    }
+    const postConfig = postConfigMap[postConfigId] || null
 
     async function confirmSignUp(code: string) {
         const addToGroupResult = await cognitoClient.adminAddUserToGroup({
             UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
             Username: userEmail,
-            GroupName: "Homeowner",
+            GroupName: postConfig.roleName,
         }).promise()
         .catch(error => console.error(error))
         console.log(addToGroupResult)
@@ -31,7 +49,7 @@ function BevestigEmailPage() {
         .catch(error => {
             console.error(error)
             const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000) },
+                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.successPage), 3000) },
                 "CodeMismatchException": () => { },
                 "default": () => {}
             };
@@ -39,7 +57,7 @@ function BevestigEmailPage() {
         })
         if (confirmationResult == 'SUCCESS') {
             setIsConfirmed(true)
-            setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
+            setTimeout(() => navigate(postConfig.successPage), 3000)
         }
     }
 

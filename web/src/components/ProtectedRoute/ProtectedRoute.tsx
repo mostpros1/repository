@@ -29,5 +29,5 @@ export const ProtectedRoute = ({ allowedRoles, page, redirectTo }: ProtectedRout
         checkAuthorization()
     }, [])
 
-    return isAuthorized ? page : <></>
+    return isAuthorized && page
 }

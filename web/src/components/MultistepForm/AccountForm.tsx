@@ -2,10 +2,8 @@ import { Auth } from "aws-amplify"
 import { LoginForm } from "./LoginForm"
 import { RegisterForm } from "./RegisterForm"
 import { useEffect, useState } from "react"
-import SearchChoreForm from "../SpecialistMultistep/SearchChoreForm/SearchChoreForm"
 
 type AccountFormData = {
-    beroep: string
     postCode: string
     stad: string
     email: string
@@ -17,27 +15,20 @@ type AccountFormData = {
 }
 
 type AccountFormProps = AccountFormData & {
-    formConfig: 'HOMEOWNER' | 'SPECIALIST'
     updateFields: (fields: Partial<AccountFormData>) => void
   }
 
-export function AccountForm ({ beroep, email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, formConfig, updateFields }: AccountFormProps) {
+export function AccountForm ({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false)
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false)
     const [userExists, setUserExists] = useState<boolean>(false)
 
-    const data = { beroep, email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword }
+    const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword }
 
-    const formConfigMap: Record<typeof formConfig, [JSX.Element, JSX.Element]> = {
-        'HOMEOWNER': [
-            <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} />,
-            <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} />
-        ],
-        'SPECIALIST': [
-            <SearchChoreForm {...data} updateFields={updateFields} />,
-            <SearchChoreForm {...data} updateFields={updateFields} />
-        ]
+    const formConfig = {
+        loginForm: <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        registerForm: <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
 
     useEffect(() => {
@@ -52,7 +43,7 @@ export function AccountForm ({ beroep, email, postCode, stad, firstName, lastNam
                 'UserNotFoundException':  () => { setFetched(true) },
                 'NotAuthorizedException': () => { setUserExists(true); setFetched(true) },
                 'AliasExistsException':   () => { setFetched(true) },
-                'CodeMismatchException':  () => { setFetched(true) },
+                'CodeMismatchException':  () => { setUserExists(true); setFetched(true) },
                 'ExpiredCodeException':   () => { setFetched(true) },
                 'LimitExceededException': () => { setLimitExceeded(true) },
                 'default':                () => { setUserExists(false); setFetched(true) }
@@ -63,8 +54,8 @@ export function AccountForm ({ beroep, email, postCode, stad, firstName, lastNam
 
     return(
         <>
-            { limitExceeded ? <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p> : <></> }
-            { fetched ? userExists ? formConfigMap[formConfig][0] : formConfigMap[formConfig][1] : <></> }
+            { limitExceeded && <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p> }
+            { fetched && userExists ? formConfig.loginForm : formConfig.registerForm }
         </>
     )
 }
