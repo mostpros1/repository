@@ -35,3 +35,20 @@
 //     }
 //   }
 // }
+
+
+Cypress.Commands.add('setDesktopViewport', () => {
+    cy.viewport(1250, 695);
+});
+
+Cypress.Commands.add('goBack', () => {
+    cy.get('[class="form-btn back"]').click();
+
+    cy.get('input').each(($input) => {
+        cy.wrap($input).clear();
+    });
+});
+
+Cypress.Commands.add('goForward', () => {
+    cy.get('[class="form-btn"]').click();
+});

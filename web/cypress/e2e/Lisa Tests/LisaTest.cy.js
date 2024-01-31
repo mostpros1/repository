@@ -1,6 +1,6 @@
 // import './commands'
 
-describe('Testing searchbar functionality', { scrollBehavior: false } , () => {
+describe('Testing searchbar functionality' , () => {
     it('type in input', () => {
 
         cy.viewport(1250, 695) // Change viewport to use desktop website instead of mobile website
@@ -11,7 +11,7 @@ describe('Testing searchbar functionality', { scrollBehavior: false } , () => {
             cy.get('[class="form-btn back"]').click()
 
             cy.get('input').each(($input) => {
-                cy.wrap($input).clear()
+               cy.wrap($input).clear()
             });
         }
 
