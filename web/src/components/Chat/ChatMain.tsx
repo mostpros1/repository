@@ -52,7 +52,7 @@ function ChatMain({ user, signOut }) {
       graphqlOperation(subscriptions.onCreateChat)
       // @ts-ignore
     ).subscribe({
-      next: ({ provider, value }) => {
+      next: ({ value }) => {
         console.log("Received a new message:", value.data.onCreateChat);
         handleReceivedMessage(value.data.onCreateChat);
       },
