@@ -10,7 +10,7 @@ function ProfessionalDashboardLeftside() {
 
     let userInfo =
       <>
-        <p>error</p>
+        <p>professional</p>
       </>;
   
     if (user) {
