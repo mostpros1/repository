@@ -1,3 +1,7 @@
+/* body {
+    background: rgb(224, 241, 255);
+} */
+
 .divParent {
     margin-left: 400px;
     
@@ -28,7 +32,7 @@
     margin-top: 80px;
     margin-left: 390px;
     width: 963px;
-    height: 311px;
+    height: 330px;
     flex-shrink: 0;
     border-radius: 10px;
     background: #FFF;

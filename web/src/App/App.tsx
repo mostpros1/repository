@@ -14,12 +14,12 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
+import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
-
 import "./App.css";
 
 const App = () => {
@@ -47,6 +47,7 @@ const App = () => {
                 <Route index                            element={<AdminMain />} />
                 <Route path="manage-users"              element={<ManageUser />} />
             </Route>
+            <Route path="/chat" element={<ChatPage />} />
         </Routes>
     )
 }
