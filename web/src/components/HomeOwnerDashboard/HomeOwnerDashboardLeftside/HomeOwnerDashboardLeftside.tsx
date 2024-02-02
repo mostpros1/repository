@@ -28,7 +28,7 @@ function HomeOwnerDashboardLeftside() {
       <div className="dashboard_HO_info_con">
         <div className="HO_profile_pic">
           <div className="profile_pic"><img src={Bas} alt="bas" /></div>
-          <p>{user.attributes.name} {user.attributes.family_name}</p>
+          {/* <p>{user.attributes.name} {user.attributes.family_name}</p> */}
         </div>
         <div className="HO_info">
           {userInfo}
