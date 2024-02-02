@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import MenuIcon from '@mui/icons-material/Menu';
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import MenuIcon from "@mui/icons-material/Menu";
+import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from "../../../context/UserContext";
 
@@ -35,7 +36,7 @@ function Navigation() {
     authButtons = (
       <>
         <p>{user.attributes.email}</p>
-        <a href="/">test</a>
+        <Link to="/dashboard-huiseigenaar">Account</Link>
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     );
@@ -46,12 +47,11 @@ function Navigation() {
       <Link to="/">
         <div className="nav-leftside">
           <img src={Logo} alt="" />
-          <h1 className="black-h1">
-            Mostpros
-          </h1>
+          <h1 className="black-h1">Mostpros</h1>
         </div>
       </Link>
       <div className="nav-rightside">
+        <JoinChat />
         <ul className="nav-list">
           <li>
             <Link to="/mijn-klussen" className='black-items'>Klussen <ExpandMoreIcon /></Link>
