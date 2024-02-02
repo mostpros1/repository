@@ -9,6 +9,8 @@ function HomeOwnerDashboardLeftside() {
 
   const { user } = useUser();
 
+  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+
   let userInfo =
     <>
       <p>error</p>
@@ -17,6 +19,7 @@ function HomeOwnerDashboardLeftside() {
   if (user) {
     userInfo = (
       <> 
+        <p>{groups}</p>
         <p className="HO_email"><EmailIcon/> {user.attributes.email}</p>
         <p className="HO_phone"><ContactPhoneIcon/> {user.attributes.phone_number}</p>
       </>
@@ -28,7 +31,7 @@ function HomeOwnerDashboardLeftside() {
       <div className="dashboard_HO_info_con">
         <div className="HO_profile_pic">
           <div className="profile_pic"><img src={Bas} alt="bas" /></div>
-          {/* <p>{user.attributes.name} {user.attributes.family_name}</p> */}
+          <p>{user.attributes.name} {user.attributes.family_name}</p>
         </div>
         <div className="HO_info">
           {userInfo}

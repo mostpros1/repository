@@ -33,10 +33,18 @@ function Navigation() {
     </>;
 
   if (user) {
+    const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+    let DashboardLink: JSX.Element | null = null;
+    if (groups && groups.includes('Homeowner')) {
+      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>
+    } else if (groups && groups.includes('Professional')) {
+      DashboardLink = <Link to="/dashboard-professional">Account</Link>
+    }
+    
     authButtons = (
       <>
         <p>{user.attributes.email}</p>
-        <Link to="/dashboard-huiseigenaar">Account</Link>
+        {DashboardLink}
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     );
