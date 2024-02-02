@@ -1,21 +1,33 @@
-import { Amplify } from 'aws-amplify';
-import { Provider } from 'react-redux';
-import store from './store';
-import awsExports from './aws-exports.js';
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App/App'
-import { BrowserRouter } from 'react-router-dom'
-import './index.css'
+import { Amplify, Auth } from "aws-amplify";
+import awsExports from "./aws-exports.js";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App/App";
+import aws from "aws-sdk";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/nl.js";
+import { UserProvider } from "./context/UserContext.js";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
 
 Amplify.configure(awsExports);
+Auth.configure(awsExports);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+aws.config.update({
+  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  region: import.meta.env.VITE_AWS_REGION,
+});
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <UserProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
+          <App />
+        </LocalizationProvider>
+      </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

@@ -136,6 +136,7 @@ export function useQuestionData() {
                 },
             ]
             break;
+            
             case '/klussen/tuinontwerp-maken':
             questionsData = [
                 {

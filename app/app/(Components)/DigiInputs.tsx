@@ -1,12 +1,28 @@
-import { ChangeEvent, KeyboardEvent, MutableRefObject } from "react";
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  MutableRefObject,
+  useState,
+} from "react";
+import {
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputChangeEventData,
+  TextInputKeyPressEventData,
+  View,
+} from "react-native";
 
 type DigitInputsProps = {
   className: string | undefined;
   amount: number;
-  inputRef: MutableRefObject<HTMLInputElement[]>;
+  inputRef: MutableRefObject<TextInput[]>;
 };
 
 function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
+  const [inputValue, setInputValue] = useState("");
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
   const validDigitInputs = [
     "0",
     "1",
@@ -21,18 +37,21 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
     "Backspace",
   ];
 
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
+  function onChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
     let isInputValid = false;
     validDigitInputs.forEach((validInput) =>
-      e.target.value == validInput ? (isInputValid = true) : null
+      inputValue == validInput ? (isInputValid = true) : null
     );
-    if (!isInputValid) return (e.target.value = "");
+    if (!isInputValid) return setInputValue("");
   }
 
-  function onKeyUp(e: KeyboardEvent<HTMLInputElement>, digitIndex: number) {
+  function onKeyUp(
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
+    digitIndex: number
+  ) {
     let instruction: string;
     let targetElement;
-    switch (e.key) {
+    switch (e.nativeEvent.key) {
       case "Backspace":
         instruction = "PREVIOUS";
         targetElement =
@@ -46,7 +65,7 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
     }
     let isInputValid = false;
     validDigitInputs.forEach((validInput) =>
-      e.key === validInput ? (isInputValid = true) : null
+      e.nativeEvent.key === validInput ? (isInputValid = true) : null
     );
     if (isInputValid) {
       if (instruction == "NEXT" && targetElement !== inputRef.current[0])
@@ -59,36 +78,33 @@ function DigitInputs({ className, amount, inputRef }: DigitInputsProps) {
     }
   }
 
-  function onPaste(e: React.ClipboardEvent<HTMLInputElement>) {
-    const pastedCode = e.clipboardData.getData("text").split("");
-    if (pastedCode.length === 6)
-      inputRef.current.forEach(
-        (input: HTMLInputElement, index: number) =>
-          (input.value = pastedCode[index])
-      );
-  }
+  // function onPaste(e: React.ClipboardEvent<TextInput>) {
+  //   const pastedCode = e.clipboardData.getData("text").split("");
+  //   if (pastedCode.length === 6)
+  //     inputRef.current.forEach(
+  //       (input: TextInput, index: number) =>
+  //         (input.value = pastedCode[index])
+  //     );
+  // }
 
   return (
-    <div className={className}>
+    <View>
       {Array(6)
         .fill(0)
         .map((_, index) => (
-          <input
+          <TextInput
             key={index}
-            ref={(element) =>
-              (inputRef.current[index] = element as HTMLInputElement)
-            }
-            onKeyUp={(e) => onKeyUp(e, index)}
+            ref={(element) => (inputRef.current[index] = element as TextInput)}
+            onKeyPress={(e) => onKeyUp(e, index)}
+            value={inputValue}
             onChange={onChange}
-            onPaste={onPaste}
-            className="bevestigemail_digit"
-            type="tel"
+            onChangeText={handleInputChange}
+            // onPaste={onPaste}
+            keyboardType={"phone-pad"}
             maxLength={1}
-            name={"digit" + index}
-            required
           />
         ))}
-    </div>
+    </View>
   );
 }
 

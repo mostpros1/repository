@@ -1,0 +1,7 @@
+.prof_dashboard_con_right{
+    width: 70%;
+}
+
+.prof_dashboard_con_right > div{
+    padding: 0;
+}
