@@ -52,7 +52,7 @@ function ChatMain({ user, signOut }) {
       graphqlOperation(subscriptions.onCreateChat)
       // @ts-ignore
     ).subscribe({
-      next: ({ provider, value }) => {
+      next: ({ value }) => {
         console.log("Received a new message:", value.data.onCreateChat);
         handleReceivedMessage(value.data.onCreateChat);
       },
@@ -184,30 +184,39 @@ function ChatMain({ user, signOut }) {
 
 export default withAuthenticator(ChatMain);
 
-// //  -Test code for GraphQL- // //
-
-// user.attributes.email !== recentMessageEmail &&
-
 // import "@aws-amplify/ui-react/styles.css";
 // import { withAuthenticator } from "@aws-amplify/ui-react";
-// import React, { useEffect } from "react";
+// import React, { useEffect, useState } from "react";
 // import * as mutations from "../../graphql/mutations";
 // import { API, graphqlOperation } from "aws-amplify";
 // import * as queries from "../../graphql/queries";
 // import intlFormatDistance from "date-fns/intlFormatDistance";
 // import * as subscriptions from "../../graphql/subscriptions";
+// import { useChatBackend } from "./ChatBackend";
 // import "./chatbox.css";
+// import { Navigate, Route, Routes } from "react-router-dom";
+// import { useUser } from "../../context/UserContext";
 
 // function ChatMain({ user, signOut }) {
-//   const [chats, setChats] = React.useState([]);
-//   const [recipientEmail, setRecipientEmail] = React.useState("");
-//   const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
-//   const [showJoinButton, setShowJoinButton] = React.useState(false);
-//   const [showConfirmedConnection, setShowConfirmedConnection] =
-//     React.useState(false);
-//   const [showAlert, setShowAlert] = React.useState(false);
-//   const [confirmedHost, setConfirmedHost] = React.useState("");
-//   const [notificationMessage, setNotificationMessage] = React.useState("");
+//   const {
+//     chats,
+//     setChats,
+//     currentChannelId,
+//     recipientEmail,
+//     recentMessageEmail,
+//     showJoinButton,
+//     setShowJoinButton,
+//     showConfirmedConnection,
+//     showAlert,
+//     notificationMessage,
+//     handleStartNewChat,
+//     handleSendMessage,
+//     handleAlertInputChange,
+//     handleAlertConfirm,
+//     handleAlertCancel,
+//     handleJoinChat,
+//     handleReceivedMessage,
+//   } = useChatBackend(user, signOut);
 
 //   useEffect(() => {
 //     async function fetchChats() {
@@ -216,6 +225,7 @@ export default withAuthenticator(ChatMain);
 //         variables: {
 //           filter: {
 //             members: { contains: user.attributes.email },
+//             channelId: { beginsWith: "yourPrefix" }, // Add your prefix for channel IDs
 //           },
 //         },
 //       });
@@ -231,7 +241,7 @@ export default withAuthenticator(ChatMain);
 //       graphqlOperation(subscriptions.onCreateChat)
 //       // @ts-ignore
 //     ).subscribe({
-//       next: ({ provider, value }) => {
+//       next: ({ value }) => {
 //         console.log("Received a new message:", value.data.onCreateChat);
 //         handleReceivedMessage(value.data.onCreateChat);
 //       },
@@ -239,70 +249,6 @@ export default withAuthenticator(ChatMain);
 //     });
 //     return () => sub.unsubscribe();
 //   }, [user.attributes.email]);
-
-//   const handleSendMessage = async (text) => {
-//     const members = [user.attributes.email, recipientEmail]; // Include both users in the chat
-//     await API.graphql({
-//       query: mutations.createChat,
-//       variables: {
-//         input: {
-//           text,
-//           email: user.attributes.email,
-//           members,
-//           sortKey: members.sort().join("#"), // Create a unique sortKey
-//         },
-//       },
-//     });
-//   };
-
-//   const handleReceivedMessage = (receivedChat) => {
-//     if (receivedChat.members.includes(user.attributes.email)) {
-//       // @ts-ignore
-//       setChats((prev) => [...prev, receivedChat]);
-//       setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail with the email of the sender
-//       if (receivedChat.email !== confirmedHost) {
-//         setShowJoinButton(true);
-//       }
-//     }
-//   };
-
-//   const handleStartNewChat = () => {
-//     setRecipientEmail(
-//       // @ts-ignore
-//       prompt("Enter the email of the person you want to chat with:")
-//     );
-//     setShowAlert(true);
-//   };
-
-//   const handleAlertInputChange = (e) => {
-//     setRecipientEmail(e.target.value);
-//   };
-
-//   const handleAlertConfirm = () => {
-//     if (recipientEmail) {
-//       handleSendMessage("Hello, let's chat!");
-//       setShowAlert(false);
-//       setShowJoinButton(false);
-//       setConfirmedHost(user.attributes.email);
-//       setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
-//       setNotificationMessage(`${recentMessageEmail} joined the chat`);
-//     }
-//   };
-
-//   const handleAlertCancel = () => {
-//     setShowAlert(false);
-//     setRecipientEmail("");
-//   };
-
-//   const handleJoinChat = () => {
-//     console.log("Joining chat with email:", recentMessageEmail);
-//     const members = [user.attributes.email, recentMessageEmail];
-//     setRecipientEmail(recentMessageEmail);
-//     setRecentMessageEmail("");
-//     setShowJoinButton(false); // Hide the "Join Chat" button after clicking it
-//     setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
-//     setNotificationMessage(`${recentMessageEmail} joined the chat`);
-//   };
 
 //   return (
 //     <div>
@@ -315,6 +261,8 @@ export default withAuthenticator(ChatMain);
 //       <div className="">
 //         <div className="chat_box">
 //           {chats
+//             // @ts-ignore
+//             .filter((chat) => chat.channelId === currentChannelId)
 //             // @ts-ignore
 //             .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
 //             .map((chat) => (

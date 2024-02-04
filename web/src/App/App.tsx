@@ -20,6 +20,7 @@ import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import "./App.css";
+import ChatContactList from "../components/Chat/ChatContactList";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
         <Route index element={<AdminMain />} />
         <Route path="manage-users" element={<ManageUser />} />
       </Route>
+      {/* <Route path="/chat" element={<ChatPage />} /> */}
       <Route path="/chat" element={<ChatPage />} />
     </Routes>
   );
