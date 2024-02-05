@@ -6,7 +6,9 @@ import MostprosDesc from "../../components/MostprosDesc/MostprosDesc"
 import ChoresDescription from "../../components/ChoresDescription/ChoresDescription"
 import Characteristics from "../../components/Characteristics/Characteristics"
 import Reviews from "../../components/Reviews/Reviews"
+import Professionals from "../../components/Professionals/Professionals"
 import Footer from "../../components/ui/Footer/Footer"
+
 
 function HomePage() {
   return (
@@ -27,6 +29,7 @@ function HomePage() {
         <Characteristics/>
         {/* Reviews */}
         <Reviews />
+        <Professionals />
         {/* --Footer-- */}
         <Footer />
     </>

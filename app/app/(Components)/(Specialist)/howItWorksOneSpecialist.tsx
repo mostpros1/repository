@@ -14,7 +14,7 @@ import { Dimensions } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const StartPage = ({navigation}) => {
+const HowItWorksOneSpecialist = ({navigation}) => {
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topContainer}>
@@ -29,7 +29,7 @@ const StartPage = ({navigation}) => {
           <View>
             <Image
               style={styles.image}
-              source={require("../../../assets/images/howItWorksFour.png")}
+              source={require("../../../assets/images/HowItWorksFour.png")}
             />
           </View>
         </View>
@@ -53,7 +53,7 @@ const StartPage = ({navigation}) => {
         <View style={styles.progressionBarEmpty}></View>
         <View style={styles.progressionBarEmpty}></View>
       </View>
-      <Pressable style={styles.link} onPress={() => navigation.navigate('howItWorksTwoSpecialist')}>
+      <Pressable style={styles.link} onPress={() => navigation.navigate('HowItWorksTwoSpecialist')}>
         <Text style={[styles.text, styles.textNext]}>Volgende</Text>
       </Pressable>
     </SafeAreaView>
@@ -161,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StartPage;
+export default HowItWorksOneSpecialist;

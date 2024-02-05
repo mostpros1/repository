@@ -16,6 +16,8 @@ type AccountFormData = {
 
 type AccountFormProps = AccountFormData & {
     updateFields: (fields: Partial<AccountFormData>) => void
+    setError: (error: string) => void;
+    error: string;
   }
 
 export function AccountForm ({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {

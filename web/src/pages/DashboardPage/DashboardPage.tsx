@@ -1,6 +1,11 @@
+import NavBar from "../../components/ui/NavBar/NavBar"
+
 const DashboardPage = () => {
-    return(
-        <p>placeholder page</p>
+    return (
+        <>
+            <NavBar></NavBar>
+            <p>placeholder page</p>
+        </>
     )
 }
 

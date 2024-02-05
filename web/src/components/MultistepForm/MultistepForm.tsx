@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
+import DateForm from './DateForm'
 import { CategoryForm } from './CategoryForm'
 import { InfoForm } from './InfoForm'
 import { EmailForm } from './EmailForm'
 import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform'
+import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +17,7 @@ import { AccountForm } from './AccountForm'
 type FormData = {
   postCode: string
   stad: string
+  date: string;
   questions: Record<string, string>;
   aanvullendeInformatie: string
   info: string
@@ -27,13 +30,13 @@ type FormData = {
 }
 
 function MultistepForm() {
-  
   const navigate = useNavigate()
   const questionsData = useQuestionData();
   
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
+    date: "",
     questions: Object.fromEntries(
       questionsData.map((question) => [question.key, ""])
     ),
@@ -52,6 +55,14 @@ function MultistepForm() {
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
+
+  const updateDate = (selectedDate: Date) => {
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
+    updateFields({ date: formattedDate });
+  };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
     setData((prev) => ({
@@ -108,7 +119,7 @@ function MultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
         <EmailForm {...data} updateFields={updateFields} />,
         <AccountForm {...data} updateFields={updateFields} />
@@ -118,6 +129,7 @@ function MultistepForm() {
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
+      console.log('Form Data:', data);
       if (!isLastStep) return next()
   
       const userData = {
