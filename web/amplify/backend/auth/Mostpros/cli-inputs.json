@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "mostprbcd2e800",
+    "resourceNameTruncated": "mostpr4a7de5b5",
     "userPoolName": "Mostpros",
     "autoVerifiedAttributes": [
       "email"
@@ -15,13 +15,14 @@
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Verification code: {####}",
-    "emailVerificationMessage": "Hello,\nThank you for joining us. To get started, use code **{####}** to verify your email address.",
+    "emailVerificationMessage": "Verification code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 6,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
       "email",
       "name",
+      "family_name",
       "phone_number"
     ],
     "aliasAttributes": [],
@@ -29,9 +30,9 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Mostprbcd2e800_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Mostpr4a7de5b5_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "bcd2e800",
+    "sharedId": "4a7de5b5",
     "resourceName": "Mostpros",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
