@@ -1,14 +1,15 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { cognitoClient } from '../../main'
+import { cognitoClient, stripeClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 
 type PostConfig = {
-    successPage: string
     roleName: string
+    nextPage: string
+    onSuccess?: Function
 }
 
 function BevestigEmailPage() {
@@ -25,12 +26,42 @@ function BevestigEmailPage() {
 
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
-            successPage: '/huiseigenaar-resultaat',
             roleName: "Homeowner",
+            nextPage: '/huiseigenaar-resultaat',
+            onSuccess: () => setTimeout(() => navigate(postConfig.nextPage), 3000)
         },
         'PROFESSIONAL': {
-            successPage: '/specialist-resultaat',
             roleName: "Professional",
+            nextPage: '/specialist-resultaat',
+            onSuccess: () => {
+                stripeClient.accounts.create({
+                    type: 'standard',
+                    email: userEmail,
+                    country: 'NL',
+                })
+                .then(stripeAccount => {
+                    cognitoClient.adminUpdateUserAttributes({
+                        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                        Username: userEmail,
+                        UserAttributes: [{
+                            Name: 'custom:stripeAccountId',
+                            Value: stripeAccount.id
+                        }]
+                    }).promise()
+                    .then(() => {
+                        stripeClient.accountLinks.create({
+                            account: stripeAccount.id,
+                            type: 'account_onboarding',
+                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
+                            return_url: `${window.location.origin}${postConfig.nextPage}`
+                        })
+                        .then(result => window.location.href = result.url)
+                        .catch(err => console.error(err))
+                    })
+                    .catch(err => console.error(err))
+                })
+                .catch(err => console.error(err))
+            },
         }
     }
     const postConfig = postConfigMap[postConfigId] || null
@@ -49,7 +80,7 @@ function BevestigEmailPage() {
         .catch(error => {
             console.error(error)
             const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.successPage), 3000) },
+                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.nextPage), 3000) },
                 "CodeMismatchException": () => { },
                 "default": () => {}
             };
@@ -57,7 +88,7 @@ function BevestigEmailPage() {
         })
         if (confirmationResult == 'SUCCESS') {
             setIsConfirmed(true)
-            setTimeout(() => navigate(postConfig.successPage), 3000)
+            postConfig.onSuccess && postConfig.onSuccess()
         }
     }
 
@@ -74,7 +105,7 @@ function BevestigEmailPage() {
         .catch(error => {
             if (error.code == "InvalidParameterException") {
                 setUserExists(true)
-                setTimeout(() => navigate('/huiseigenaar-resultaat'), 3000)
+                setTimeout(() => navigate(postConfig.nextPage), 3000)
             }
         })
     }
