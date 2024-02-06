@@ -16,7 +16,7 @@ const UserTabel = () => {
       const cognitoIdentityServiceProvider =
         new aws.CognitoIdentityServiceProvider();
       const listUsersParams = {
-        UserPoolId: import.meta.env.VITE_USER_POOL_ID,
+        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
       };
 
       const data = await cognitoIdentityServiceProvider
@@ -51,7 +51,7 @@ const UserTabel = () => {
       try {
         // Implement the AWS SDK delete user logic here
         const deleteUserParams = {
-          UserPoolId: import.meta.env.VITE_USER_POOL_ID,
+          UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
           Username: username,
         };
         await cognitoIdentityServiceProvider
