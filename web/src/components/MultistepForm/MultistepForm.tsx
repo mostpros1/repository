@@ -122,7 +122,7 @@ function MultistepForm() {
         <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
         <EmailForm {...data} updateFields={updateFields} />,
-        <AccountForm {...data} updateFields={updateFields} />
+        <AccountForm setError={() => {}} error={''} {...data} updateFields={updateFields} />
       ],
       onStepChange: () => {}
     });

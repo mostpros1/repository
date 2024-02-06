@@ -151,7 +151,7 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields}/>,
         ...questionsSteps,
-        <AccountForm {...data} updateFields={updateFields} />
+        <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },

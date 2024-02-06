@@ -29,8 +29,8 @@ export function AccountForm ({ email, postCode, stad, firstName, lastName, phone
     const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword }
 
     const formConfig = {
-        loginForm: <LoginForm {...data} updateFields={updateFields} setUserExists={setUserExists} />,
-        registerForm: <RegisterForm {...data} updateFields={updateFields} setUserExists={setUserExists} />
+        loginForm: <LoginForm handleLogin={() => {}} setError={() => {}} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        registerForm: <RegisterForm setError={() => {}} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
 
     useEffect(() => {
