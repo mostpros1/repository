@@ -162,7 +162,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
       }
     };
-  
+
     const handleDateTimeSpanChange = (index, field, value) => {
       const updatedDateTimeSpans = dateTimeSpans.map((span, i) => {
         if (i === index) {
@@ -179,44 +179,44 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: updatedDateTimeSpans });
       }
     };
-  
+
     return (
       <form action="" method="POST">
-      <div>
-        {dateTimeSpans.map((span, index) => (
-          <div key={index}>
-            <input
-              type="date"
-              className="inputDate"
-              name="date-form"
-              value={span.date.toISOString().substring(0, 10)}
-              onChange={(e) => handleDateTimeSpanChange(index, 'date', e.target.value)}
-            />
-            <input
-              type="time"
-              className="inputTime"
-              name="time-form-start"
-              value={span.startTime}
-              onChange={(e) => handleDateTimeSpanChange(index, 'startTime', e.target.value)}
-              placeholder="Vanaf hoelaat"
-            />
-            <input
-              type="time"
-              className="inputTime"
-              name="time-form-end"
-              value={span.endTime}
-              onChange={(e) => handleDateTimeSpanChange(index, 'endTime', e.target.value)}
-              placeholder="Tot hoelaat"
-            />
-            {dateTimeSpans.length > 1 && (
-              <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>X</button>
-            )}
-          </div>
-        ))}
-        {dateTimeSpans.length < 5 && (
-          <button className="addDateKnop" onClick={addDateTimeSpan}>Add Date</button>
-        )}
-      </div>
+        <div>
+          {dateTimeSpans.map((span, index) => (
+            <div key={index}>
+              <input
+                type="date"
+                className="inputDate"
+                name="date-form"
+                value={span.date.toISOString().substring(0, 10)}
+                onChange={(e) => handleDateTimeSpanChange(index, 'date', e.target.value)}
+              />
+              <input
+                type="time"
+                className="inputTime"
+                name="time-form-start"
+                value={span.startTime}
+                onChange={(e) => handleDateTimeSpanChange(index, 'startTime', e.target.value)}
+                placeholder="Vanaf hoelaat"
+              />
+              <input
+                type="time"
+                className="inputTime"
+                name="time-form-end"
+                value={span.endTime}
+                onChange={(e) => handleDateTimeSpanChange(index, 'endTime', e.target.value)}
+                placeholder="Tot hoelaat"
+              />
+              {dateTimeSpans.length > 1 && (
+                <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>X</button>
+              )}
+            </div>
+          ))}
+          {dateTimeSpans.length < 5 && (
+            <button className="addDateKnop" onClick={addDateTimeSpan}>Add Date</button>
+          )}
+        </div>
       </form>
     );
   }
@@ -224,11 +224,11 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-          />,
+        />,
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],

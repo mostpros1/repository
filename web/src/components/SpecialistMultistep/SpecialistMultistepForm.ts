@@ -1,6 +1,7 @@
 //const AWS = require('aws-sdk');
 
-const dynamoDB = new AWS.DynamoDB({ region: 'eu-east-1' });
+
+const dynamoDB = new AWS.DynamoDB();
 
 
 function createTableAvailibility() {
@@ -42,13 +43,13 @@ function createTableAvailibility() {
 
 
 function insertData(datum: string, timeTo: string, timeFrom: string, specialistId: number) {
-    const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'eu-east-1' });
-    dynamo.put({
+    
+    return dynamoDB.putItem({
         Item: {
-            date: datum,
-            'time-to': timeTo,
-            'time-from': timeFrom,
-            specialistId,
+            'date': { S: datum },
+            'time-to': { S: timeTo },
+            'time-from': { S: timeFrom },
+            'specialistId': { N: specialistId.toString() },
         },
         TableName: 'availability',
     })
