@@ -1,4 +1,3 @@
-import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 import { RegisterForm } from "../MultistepForm/RegisterForm";
 import { FormEvent } from "react";
@@ -9,6 +8,7 @@ import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
+import './/SpecialistMultistepForm.css';
 
 type DateTimeSpan = {
   date: Date;
@@ -208,12 +208,12 @@ function SpecialistMultistepForm() {
               placeholder="Tot hoelaat"
             />
             {dateTimeSpans.length > 1 && (
-              <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>Verwijder</button>
+              <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>X</button>
             )}
           </div>
         ))}
         {dateTimeSpans.length < 5 && (
-          <button className="addDateKnop" onClick={addDateTimeSpan}>Voeg Datum en Tijden toe</button>
+          <button className="addDateKnop" onClick={addDateTimeSpan}>Add Date</button>
         )}
       </div>
     );
