@@ -181,6 +181,7 @@ function SpecialistMultistepForm() {
     };
   
     return (
+      <form action="" method="POST">
       <div>
         {dateTimeSpans.map((span, index) => (
           <div key={index}>
@@ -216,6 +217,7 @@ function SpecialistMultistepForm() {
           <button className="addDateKnop" onClick={addDateTimeSpan}>Add Date</button>
         )}
       </div>
+      </form>
     );
   }
 
