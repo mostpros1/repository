@@ -59,7 +59,7 @@ function insertData(datum: string, timeTo: string, timeFrom: string, specialistI
 
 
 dynamoDB.scan({
-    TableName: 'my-table',
+    TableName: 'availability',
 }, (err) => {
     if (err) {
         console.error(err);
