@@ -8,28 +8,22 @@ function AvailabilitySelector() {
     const handleDayToggle = (day) => {
         setSelectedDays(prev => {
             if (prev.hasOwnProperty(day)) {
-                // Kopieer de huidige state, behalve de gedeselecteerde dag
                 const newState = { ...prev };
                 delete newState[day]; // Verwijder de gedeselecteerde dag
                 return newState;
             } else {
-                // Voeg de geselecteerde dag toe met een lege tijd
-                return { ...prev, [day]: '' };
+                // Initialiseer met start- en eindtijden
+                return { ...prev, [day]: { start: '', end: '' } };
             }
         });
     };
 
-    const handleTimeChange = (event, day) => {
-        const time = event.target.value;
+    const handleTimeChange = (day, type, event) => {
+        const newTime = event.target.value;
         setSelectedDays(prev => ({
             ...prev,
-            [day]: time
+            [day]: { ...prev[day], [type]: newTime }
         }));
-    };
-
-    const handleSubmit = () => {
-        console.log('Geselecteerde dagen en tijden:', selectedDays);
-        // Verwerk de geselecteerde dagen en tijden zoals nodig
     };
 
     return (
@@ -45,38 +39,49 @@ function AvailabilitySelector() {
                                 onChange={() => handleDayToggle(day)}
                                 sx={{
                                     height: '36px', 
-                                    fontSize: '16px', // Maak de tekst groter
-                                    fontWeight: 'bold', // Maak de tekst vetgedrukt
-                                    width: '100px', 
+                                    fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    width: '110px',
                                     marginBottom: '5px',
                                     marginTop: '20px',
+                                    transition: 'ease 0.5s',
                                     border: 'solid 3px rgb(18, 114, 232)',
-                                    backgroundColor: selectedDays.hasOwnProperty(day) ? 'rgb(18, 114, 232)' : 'rgb(18, 114, 232)', // Donkerblauwe achtergrond voor geselecteerde dagen
-                                    color: 'white', // Witte tekst
+                                    backgroundColor: selectedDays.hasOwnProperty(day) ? 'rgb(18, 114, 232)' : 'rgb(18, 114, 232)',
+                                    color: 'white',
                                     '&:hover': {
-                                    backgroundColor: 'lightgrey', // Donkerblauw ook bij hover
-                                    color: 'black',
-                                    
+                                        backgroundColor: 'white',
+                                        color: 'black',
                                     },
                                     '&.Mui-selected': {
-                                        backgroundColor: 'darkblue', // Zorg ervoor dat de geselecteerde toestand donkerblauw blijft
-                                        color: 'white',
+                                        backgroundColor: 'white',
+                                        color: 'black',
                                     },
                                     '&.Mui-selected:hover': {
-                                        backgroundColor: 'darkblue', // Consistent donkerblauw bij hover over geselecteerde
+                                        backgroundColor: 'rgb(18, 114, 232)',
                                         color: 'white',
+                                        border: '0',
                                     }
                                 }}
-                                >
-                                {day.substring(0, 2)}
+                            >
+                                {day}
                             </ToggleButton>
                             {selectedDays.hasOwnProperty(day) && (
-                                <input
-                                    type="time"
-                                    value={selectedDays[day]}
-                                    onChange={(e) => handleTimeChange(e, day)}
-                                    style={{ width: '100px', fontSize: '12px' }}
-                                />
+                                <>
+                                    <p>Vanaf:</p>
+                                    <input
+                                        type="time"
+                                        value={selectedDays[day].start}
+                                        onChange={(e) => handleTimeChange(day, 'start', e)}
+                                        style={{ width: '100px', fontSize: '14px', margin: '5px 0' }}
+                                    />
+                                    <p>Tot:</p>
+                                    <input
+                                        type="time"
+                                        value={selectedDays[day].end}
+                                        onChange={(e) => handleTimeChange(day, 'end', e)}
+                                        style={{ width: '100px', fontSize: '14px', margin: '5px 0' }}
+                                    />
+                                </>
                             )}
                         </Grid>
                     ))}
