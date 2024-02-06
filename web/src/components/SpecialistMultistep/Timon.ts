@@ -1,6 +1,5 @@
+
 //const AWS = require('aws-sdk');
-
-
 const dynamoDB = new AWS.DynamoDB();
 
 
@@ -43,7 +42,7 @@ function createTableAvailibility() {
 
 
 function insertData(datum: string, timeTo: string, timeFrom: string, specialistId: number) {
-    
+
     return dynamoDB.putItem({
         Item: {
             'date': { S: datum },

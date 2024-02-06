@@ -180,6 +180,12 @@ function SpecialistMultistepForm() {
       }
     };
 
+    const [formData, setFormData] = useState({
+    dateTimeSpans: [
+      { date: new Date(), startTime: '', endTime: '' }
+    ]
+  });
+    
     return (
       <form action="" method="POST">
         <div>
@@ -285,6 +291,7 @@ function SpecialistMultistepForm() {
       </>
     </form>
   );
+
 }
 
 export default SpecialistMultistepForm;
