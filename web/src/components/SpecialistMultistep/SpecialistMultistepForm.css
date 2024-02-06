@@ -3,7 +3,7 @@
 .deleteKnop {
     width: 35px;
     height: 35px;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bolder;
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
@@ -34,7 +34,7 @@
     color: white;
     border: solid 3px rgb(18, 114, 232);
     margin-left: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     margin-top: 20px;
     transition: ease 0.5s;
