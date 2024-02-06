@@ -1,76 +1,76 @@
 /* search section */
 .search-container {
-  position: relative; /* Zet de container op relatieve positie */
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+    position: relative; /* Zet de container op relatieve positie */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
-.search-container_open {
-  position: relative; /* Zet de container op relatieve positie */
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.search-container_open{
+    position: relative; /* Zet de container op relatieve positie */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .search-container h4 {
-  font-size: 25px;
+    font-size: 25px;
 }
 
 .search-container input {
-  border: none;
-  border-radius: 25px;
-  padding: 25px 40px;
-  font-size: 20px;
-  outline: none;
-  max-width: 85%;
+    border: none;
+    border-radius: 25px;
+    padding: 25px 40px;
+    font-size: 20px;
+    outline: none;
+    max-width: 85%;
 }
 
-.search-container_open input {
-  border: none;
-  border-radius: 25px 25px 0px 0px;
-  padding: 25px 40px;
-  font-size: 20px;
-  outline: none;
+.search-container_open input{
+    border: none;
+    border-radius: 25px 25px 0px 0px;
+    padding: 25px 40px;
+    font-size: 20px;
+    outline: none;
 }
 
 .search_dropdown {
-  background-color: white;
-  position: absolute;
-  top: 0%; /* Plaats het dropdown-menu onder de input */
-  left: 0;
-  width: 100%;
-  display: none; /* Verberg het dropdown-menu standaard */
-  flex-direction: column;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+    background-color: white;
+    position: absolute;
+    top: 0%; /* Plaats het dropdown-menu onder de input */
+    left: 0;
+    width: 100%;
+    display: none; /* Verberg het dropdown-menu standaard */
+    flex-direction: column;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
-.open {
-  background-color: white;
-  top: 100%; /* Plaats het dropdown-menu onder de input */
-  left: 0;
-  width: 100%;
-  display: flex; /* Verberg het dropdown-menu standaard */
-  flex-direction: column;
+.open{
+    background-color: white;
+    top: 100%; /* Plaats het dropdown-menu onder de input */
+    left: 0;
+    width: 100%;
+    display: flex; /* Verberg het dropdown-menu standaard */
+    flex-direction: column;
 }
 
 .search_dropdown_item {
-  padding: 25px 40px;
-  text-decoration: none;
-  color: black;
-  border-bottom: 1px solid #c0c0c8;
-  font-size: 18px;
+    padding: 25px 40px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #C0C0C8;
+    font-size: 18px;
 }
 
 .search_dropdown_item:last-child {
-  border: none;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+    border: none;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .search_dropdown_item:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 /* In SearchBar.css */

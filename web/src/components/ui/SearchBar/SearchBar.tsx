@@ -21,7 +21,7 @@ function Searchbar() {
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       !e.relatedTarget ||
-      e.relatedTarget.className !== "search_dropdown_item"
+      !e.relatedTarget.classList.contains("search_dropdown_item")
     ) {
       setShowList(false);
     }
@@ -33,8 +33,12 @@ function Searchbar() {
     setShowList(true);
   };
 
+  const handleResultClick = (link: string) => {
+    navigate(`/klussen${link}`);
+  };
+
   const handleInputKeyDown = (e) => {
-    console.log(e.key);
+    e.preventDefault();
     switch (e.key) {
       case "ArrowUp":
         setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -46,8 +50,8 @@ function Searchbar() {
         break;
       case "Enter":
         if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
-          // Navigate to the selected suggestion's page or perform another action
-          window.location.href = `/klussen${slicedResults[selectedIndex].link}`;
+          const selectedResult = slicedResults[selectedIndex];
+          handleResultClick(selectedResult.link);
         }
         break;
       default:
@@ -93,11 +97,11 @@ function Searchbar() {
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""
       }`}
+      onClick={() => handleResultClick(result.link)}
     >
-      <span onClick={() => navigateToResult(result.link)}>
-        {`${result.specialistName ? `${result.specialistName} - ` : ""}${
-          result.task
-        }`}
+      <span>
+        {result.specialistName ? `${result.specialistName} - ` : ""}
+        {result.task}
       </span>
     </Link>
   ));
