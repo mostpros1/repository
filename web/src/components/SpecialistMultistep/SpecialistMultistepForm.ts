@@ -1,41 +1,56 @@
 //const AWS = require('aws-sdk');
 
-const dynamodb = new AWS.DynamoDB({ region: 'eu-east-1' });
+const dynamoDB = new AWS.DynamoDB({ region: 'eu-east-1' });
 
-dynamodb.createTable({
-    AttributeDefinitions: [
-        {
-            AttributeName: "date",
-            AttributeType: "S"
+
+function createAvailibility() {
+    dynamoDB.createTable({
+        AttributeDefinitions: [
+            {
+                AttributeName: "date",
+                AttributeType: "S"
+            },
+            {
+                AttributeName: "time-to",
+                AttributeType: "S"
+            },
+            {
+                AttributeName: "time-from",
+                AttributeType: "S"
+            },
+            {
+                AttributeName: "specialistId",
+                AttributeType: "N"
+            }
+        ],
+        KeySchema: [
+            {
+                AttributeName: 'specialist',
+                KeyType: 'HASH'
+            }
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1
         },
-        {
-            AttributeName: "time-to",
-            AttributeType: "S"
-        },
-        {
-            AttributeName: "time-from",
-            AttributeType: "S"
-        },
-        {
-            AttributeName: "specialistId",
-            AttributeType: "N"
-        }
-    ],
-    KeySchema: [
-        {
-            AttributeName: 'specialist',
-            KeyType: 'HASH'
-        }
-    ],
-    ProvisionedThroughput: {
-        ReadCapacityUnits: 1,
-        WriteCapacityUnits: 1
-    },
-    TableName: 'availability'
-})
-.promise()
-.then(data => console.log('Table created', data))
-.catch(err => console.error('Error creating table', err));
+        TableName: 'availability'
+    })
+        .promise()
+        .then(data => console.log('Table created', data))
+        .catch(err => console.error('Error creating table', err));
+}
+
+dynamoDB.scan({
+    TableName: 'my-table',
+}, (err) => {
+    if (err) {
+        console.error(err);
+    } else {
+        createAvailibility();
+    }
+});
+
+
 
 const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'eu-east-1' });
 
@@ -63,9 +78,9 @@ function insertData(datum: string, timeTo: string, timeFrom: string, specialistI
         },
         TableName: 'availability',
     })
-    .promise()
-    .then(data => data.Attributes)
-    .catch(console.error);
+        .promise()
+        .then(data => data.Attributes)
+        .catch(console.error);
 }
 
 insertData('2021-01-01', '12:00', '13:00', 123);
