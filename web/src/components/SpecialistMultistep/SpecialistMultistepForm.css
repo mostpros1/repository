@@ -57,3 +57,17 @@
     margin-right: 10px;
     margin-bottom: 5px;
 }
+
+.tekstBovenDatum{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.verdeeldeTekst{
+    margin-right: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

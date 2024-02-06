@@ -9,6 +9,8 @@ import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
 
 type DateTimeSpan = {
   date: Date;
@@ -183,12 +185,22 @@ function SpecialistMultistepForm() {
     return (
       <form action="" method="POST">
       <div>
+        <h2>Voer hier uw beschikbaarheden in</h2><br></br>
         {dateTimeSpans.map((span, index) => (
           <div key={index}>
+            <div className="tekstBovenDatum">
+            <h4>Datum:</h4>
+            <div className="verdeeldeTekst">
+
+            <h4>Vanaf hoelaat:</h4>
+            <h4>Tot hoelaat:</h4>
+            </div>
+            </div>
             <input
               type="date"
               className="inputDate"
               name="date-form"
+              id="data-form"
               value={span.date.toISOString().substring(0, 10)}
               onChange={(e) => handleDateTimeSpanChange(index, 'date', e.target.value)}
             />
@@ -196,6 +208,7 @@ function SpecialistMultistepForm() {
               type="time"
               className="inputTime"
               name="time-form-start"
+              id="time-form-start"
               value={span.startTime}
               onChange={(e) => handleDateTimeSpanChange(index, 'startTime', e.target.value)}
               placeholder="Vanaf hoelaat"
@@ -204,10 +217,12 @@ function SpecialistMultistepForm() {
               type="time"
               className="inputTime"
               name="time-form-end"
+              id="time-form-end"
               value={span.endTime}
               onChange={(e) => handleDateTimeSpanChange(index, 'endTime', e.target.value)}
               placeholder="Tot hoelaat"
             />
+            
             {dateTimeSpans.length > 1 && (
               <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>X</button>
             )}
