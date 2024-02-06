@@ -16,7 +16,7 @@ function Searchbar() {
   const [value, setValue] = useState('');
   const [showList, setShowList] = useState(false);
 
-  const handleInputBlur = (e) => {
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (!e.relatedTarget || e.relatedTarget.className !== 'search_dropdown_item') {
       setShowList(false);
     }
@@ -28,8 +28,8 @@ function Searchbar() {
 
   const searchResults = () => {
     const searchTerm = value.toLowerCase().trim();
-
-    // Zoek overal naar overeenkomsten in de individuele taken en specialistnamen
+  
+    // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
       const tasks = specialist.tasks
         .filter((task) => task.task.toLowerCase().includes(searchTerm))
@@ -38,23 +38,20 @@ function Searchbar() {
           task: task.task,
           link: task.link,
         }));
-
-      return tasks.length > 0 ? tasks : [];
+  
+      return tasks.length >  0 ? tasks : [];
     });
-
+  
     const specialistResults = specialists
       .filter((specialist) => specialist.name.toLowerCase().includes(searchTerm))
-      .flatMap((specialist: Specialist) => {
-        return specialist.tasks.map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
-      });
-
+      .map((specialist: Specialist) => ({
+        specialistName: specialist.name.toLowerCase(),
+        task: '', // Assuming a task field is required, you might want to adjust this
+        link: specialist.link || '', // Assuming a link field is required, you might want to adjust this
+      }));
+  
     return [...taskResults, ...specialistResults];
   };
-
   const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
