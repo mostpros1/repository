@@ -2,6 +2,7 @@ import "./SearchBar.css";
 import specialists from "../../../data/specialists.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ...
 
@@ -25,6 +26,8 @@ function Searchbar() {
       setShowList(false);
     }
   };
+
+  const navigate = useNavigate();
 
   const handleInputFocus = () => {
     setShowList(true);
@@ -91,11 +94,18 @@ function Searchbar() {
         index === selectedIndex ? "selected" : ""
       }`}
     >
-      {`${result.specialistName ? `${result.specialistName} - ` : ""}${
-        result.task
-      }`}
+      <span onClick={() => navigateToResult(result.link)}>
+        {`${result.specialistName ? `${result.specialistName} - ` : ""}${
+          result.task
+        }`}
+      </span>
     </Link>
   ));
+
+  // Helper function to navigate to the selected result
+  const navigateToResult = (link: string) => {
+    history.replace(`/klussen${link}`);
+  };
 
   return (
     <>
@@ -103,7 +113,7 @@ function Searchbar() {
         <label>Wat is je klus?</label>
         <input
           type="text"
-          value={value} // holds vaulues in the "suggestion" state
+          value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Bijvoorbeeld: loodgieter"
           onFocus={handleInputFocus}
