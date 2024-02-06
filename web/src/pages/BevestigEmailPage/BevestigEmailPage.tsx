@@ -67,15 +67,7 @@ function BevestigEmailPage() {
     const postConfig = postConfigMap[postConfigId] || null
 
     async function confirmSignUp(code: string) {
-        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
-            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-            Username: userEmail,
-            GroupName: postConfig.roleName,
-        }).promise()
-        .catch(error => console.error(error))
-        console.log(addToGroupResult)
-        if (!addToGroupResult) return
-
+        
         const confirmationResult = await Auth.confirmSignUp(userEmail, code)
         .catch(error => {
             console.error(error)
@@ -86,6 +78,14 @@ function BevestigEmailPage() {
             };
             (errorActionMap[error.code] || errorActionMap['default'])()
         })
+        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
+            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+            Username: userEmail,
+            GroupName: postConfig.roleName,
+        }).promise()
+        .catch(error => console.error(error))
+        console.log(addToGroupResult)
+        if (!addToGroupResult) return
         if (confirmationResult == 'SUCCESS') {
             setIsConfirmed(true)
             postConfig.onSuccess && postConfig.onSuccess()
