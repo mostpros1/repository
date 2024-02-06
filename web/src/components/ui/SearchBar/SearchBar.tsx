@@ -87,9 +87,13 @@ function Searchbar() {
     <Link
       to={`/klussen${result.link}`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? 'selected' : ''}`}
+      className={`search_dropdown_item ${
+        index === selectedIndex ? "selected" : ""
+      }`}
     >
-      {`${result.specialistName ? `${result.specialistName} - ` : ""}${result.task}`}
+      {`${result.specialistName ? `${result.specialistName} - ` : ""}${
+        result.task
+      }`}
     </Link>
   ));
 
@@ -113,7 +117,6 @@ function Searchbar() {
     </>
   );
 }
-
 // ...
 
 export default Searchbar;
