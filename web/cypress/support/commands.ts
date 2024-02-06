@@ -46,6 +46,7 @@ declare namespace Cypress {
         goBack(): void;
         goForward(): void;
         janTestBegin(): void;
+        testBegin(): void
     }
 }
 
@@ -53,22 +54,27 @@ Cypress.Commands.add('setDesktopViewport', () => {
     cy.viewport(1250, 695);
 });
 
+Cypress.Commands.add('testBegin', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/")
+})
+
 Cypress.Commands.add('lisaTestBegin', () => {
     cy.setDesktopViewport();
-    cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/")
+    cy.visit("http://localhost:5173/")
     cy.get('input').type('Loodgieter').click()
     cy.get('.search_dropdown a:first').click()
 });
 
 Cypress.Commands.add('janTestBegin', () => {
     cy.setDesktopViewport();
-    cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/") // Go to website
+    cy.visit("http://localhost:5173/") // Go to website
     cy.get('.nav-blue-btn a.black-items').click() // Click on "Register as specialist" button
 });
 
 Cypress.Commands.add('testAgain', () => {
     cy.setDesktopViewport();
-    cy.visit("https://main.d2j290dx5bs7ht.amplifyapp.com/");
+    cy.visit("http://localhost:5173/");
     cy.get('.nav-blue-btn > .black-items').click();
 
     for (let r = 0; r < 4; r++) {
