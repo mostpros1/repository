@@ -39,7 +39,7 @@ dynamodb.createTable({
 
 const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'eu-east-1' });
 
-dynamo.put({
+/*dynamo.put({
     Item: {
        date: '2021-01-01',
        'time-to': '12:00',
@@ -51,3 +51,21 @@ dynamo.put({
 .promise()
 .then(data => console.log(data.Attributes))
 .catch(console.error);
+*/
+
+function insertData(datum: string, timeTo: string, timeFrom: string, specialistId: number) {
+    return dynamo.put({
+        Item: {
+            date: datum,
+            'time-to': timeTo,
+            'time-from': timeFrom,
+            specialistId,
+        },
+        TableName: 'availability',
+    })
+    .promise()
+    .then(data => data.Attributes)
+    .catch(console.error);
+}
+
+insertData('2021-01-01', '12:00', '13:00', 123);
