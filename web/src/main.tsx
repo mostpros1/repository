@@ -21,6 +21,7 @@ aws.config.update({
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
+console.log(aws.config)
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_TEST_KEY);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
