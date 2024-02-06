@@ -1,6 +1,6 @@
 //const AWS = require('aws-sdk');
 
-const dynamodb = new AWS.DynamoDB({ region: 'us-east-1' });
+const dynamodb = new AWS.DynamoDB({ region: 'eu-east-1' });
 
 dynamodb.createTable({
     AttributeDefinitions: [
@@ -37,7 +37,7 @@ dynamodb.createTable({
 .then(data => console.log('Table created', data))
 .catch(err => console.error('Error creating table', err));
 
-const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
+const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'eu-east-1' });
 
 dynamo.put({
     Item: {
