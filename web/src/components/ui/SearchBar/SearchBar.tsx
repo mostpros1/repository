@@ -104,7 +104,7 @@ function Searchbar() {
 
   // Helper function to navigate to the selected result
   const navigateToResult = (link: string) => {
-    history.replace(`/klussen${link}`);
+    navigate(`/klussen${link}`);
   };
 
   return (
