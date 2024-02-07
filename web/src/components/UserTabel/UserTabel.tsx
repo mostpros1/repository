@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import aws from "aws-sdk";
 import "./UserTabel.css";
+import { cognitoClient } from "../../main";
 
 const UserTabel = () => {
   const [userList, setUserList] = useState<any[]>([]);
@@ -28,10 +29,6 @@ const UserTabel = () => {
     }
   };
 
-  // Define cognitoIdentityServiceProvider within the component scope
-  const cognitoIdentityServiceProvider =
-    new aws.CognitoIdentityServiceProvider();
-
   // Calculate total number of pages based on usersPerPage
   const totalPages = Math.ceil(userList.length / usersPerPage);
 
@@ -54,7 +51,7 @@ const UserTabel = () => {
           UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
           Username: username,
         };
-        await cognitoIdentityServiceProvider
+        await cognitoClient
           .adminDeleteUser(deleteUserParams)
           .promise();
         alert(`User ${username} deleted successfully`);
