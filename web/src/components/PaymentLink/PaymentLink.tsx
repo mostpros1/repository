@@ -53,7 +53,7 @@ const PaymentLink = ({ subtotal }: PaymentLinkProps) => {
 
     return <>
         <button onClick={createSession}>create payment</button>
-        <a href={paymentLink as string}>payment link</a>
+        <a href={paymentLink}>payment link</a>
     </>
 }
 
