@@ -1,0 +1,110 @@
+.date-time-picker {
+    font-family: 'Arial', sans-serif;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 100%;
+    max-width: 450px;
+    margin-left: 40px;
+  }
+  
+  .date-time-picker span {
+    background-color: #3a72ffd4;
+    border-radius: 10px;
+    font-size: 17px;
+    width: 130px;
+    text-align: center;
+    margin-top: 60px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+  }
+  
+  .calendar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .month-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  .week-days, .weeks {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    
+  }
+  
+  .week-day, .day, .week-number {
+    padding: 5px;
+  }
+  
+  .prev-month, .next-month {
+    width: 50px;
+    border-radius: 50%;
+    background-color: #3a72ffd4;
+    color: rgb(255, 255, 255);
+    border: 0;
+    cursor: pointer;
+    font-size: 32px;
+    height: 50px;
+    margin: 0 20px 0 20px;
+  }
+  
+  .prev-month:hover, .next-month:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: solid 5px #3a72ffd4;
+  }
+  
+  .day {
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 50%;
+  }
+  
+  .day:hover, .day.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+  
+  .week-number {
+    margin-right: 5px;
+    background-color: #3a72ffd4;
+    color: white;
+    padding: 5px;
+    border-radius: 10%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    writing-mode: horizontal-tb; /* Verticale schrijfmodus van rechts naar links */
+    text-orientation: upright; /* Houd de tekst verticaal rechtop */
+  }
+  
+  .day.empty {
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  .past-day {
+    color: #999; /* Maak de tekstkleur voor dagen in het verleden lichter */
+  }
+  
+  .future-day {
+    font-weight: bold; /* Maak de tekst van toekomstige dagen vetgedrukt */
+  }
+  
