@@ -23,51 +23,79 @@ aws.config.update({
 export const dynamoDB = new aws.DynamoDB();
 
 function test() {
-dynamoDB.listTables({}, (err, data) => {
-  if (err) {
+  dynamoDB.listTables({}, (err, data) => {
+    if (err) {
       console.error(err);
-  } else {
+    } else {
       console.log(data);
-  }
-});
+    }
+  });
 }
 
 function createTableAvailibility() {
   dynamoDB.createTable({
-      AttributeDefinitions: [
+    AttributeDefinitions: [
+      {
+        AttributeName: "id",
+        AttributeType: "S"
+      },
+      {
+        AttributeName: "name",
+        AttributeType: "S"
+      },
+      {
+        AttributeName: "surname",
+        AttributeType: "S"
+      },
+    ],
+    KeySchema: [
+      {
+        AttributeName: 'id',
+        KeyType: 'HASH',
+      },
+      {
+        AttributeName: 'name',
+        KeyType: 'RANGE',
+      }
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 1,
+      WriteCapacityUnits: 1
+    },
+    TableName: "TimonTestTable",
+    GlobalSecondaryIndexes: [
+      {
+        IndexName: "surname-index",
+        KeySchema: [
           {
-              AttributeName: "date",
-              AttributeType: "S"
-          },
-          {
-              AttributeName: "time-to",
-              AttributeType: "S"
-          },
-          {
-              AttributeName: "time-from",
-              AttributeType: "S"
-          },
-          {
-              AttributeName: "specialistId",
-              AttributeType: "N"
+            AttributeName: "surname",
+            KeyType: "HASH"
           }
-      ],
-      KeySchema: [
-          {
-              AttributeName: 'specialist',
-              KeyType: 'HASH'
-          }
-      ],
-      ProvisionedThroughput: {
+        ],
+        Projection: {
+          ProjectionType: "ALL"
+        },
+        ProvisionedThroughput: {
           ReadCapacityUnits: 1,
           WriteCapacityUnits: 1
-      },
-      TableName: 'availability'
+        }
+      }
+    ]
   })
-      .promise()
-      .then(data => console.log('Table created', data))
-      .catch(err => console.error('Error creating table', err));
+    .promise()
+    .then(data => console.log('Table created', data))
+    .catch(err => console.error('Error creating table', err));
 }
+
+function deleteTable() {
+  dynamoDB.deleteTable({
+      TableName: "TimonTestTable",
+    })
+    .promise()
+    .then(() => console.log("Table has been deleted"))
+    .catch(console.error)
+}
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -75,8 +103,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
-          <button onClick={test}>Test</button>
-          <button onClick={createTableAvailibility}>write</button>
+          <button onClick={test}>read</button>
+          <button onClick={createTableAvailibility}>create</button>
+          <button onClick={deleteTable}>delete</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>

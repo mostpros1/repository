@@ -11,6 +11,7 @@ import { dynamoDB } from '../../main.tsx';
         }
     });
 
+
 /*function createTableAvailibility() {
     dynamoDB.createTable({
         AttributeDefinitions: [
@@ -19,15 +20,15 @@ import { dynamoDB } from '../../main.tsx';
                 AttributeType: "S"
             },
             {
-                AttributeName: "time-to",
+                AttributeName: "time_to",
                 AttributeType: "S"
             },
             {
-                AttributeName: "time-from",
+                AttributeName: "time_from",
                 AttributeType: "S"
             },
             {
-                AttributeName: "specialistId",
+                AttributeName: "professional_id",
                 AttributeType: "N"
             }
         ],
