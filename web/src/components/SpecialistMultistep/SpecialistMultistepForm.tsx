@@ -180,13 +180,18 @@ function SpecialistMultistepForm() {
       }
     };
 
-    const [formData, setFormData] = useState({
+    /*const [//formData, setFormData] = useState({
     dateTimeSpans: [
       { date: new Date(), startTime: '', endTime: '' }
     ]
-  });
+  });*/
+
+
     
     return (
+      //<button>{formData}</button>
+
+      <>
       <form action="" method="POST">
         <div>
           {dateTimeSpans.map((span, index) => (
@@ -224,6 +229,8 @@ function SpecialistMultistepForm() {
           )}
         </div>
       </form>
+    );
+    </>
     );
   }
 

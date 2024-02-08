@@ -1,9 +1,17 @@
 
-//const AWS = require('aws-sdk');
-const dynamoDB = new AWS.DynamoDB();
+//const dynamoDB = new AWS.DynamoDB();
+import { dynamoDB } from '../../main.tsx';
 
 
-function createTableAvailibility() {
+    dynamoDB.listTables({}, (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(data);
+        }
+    });
+
+/*function createTableAvailibility() {
     dynamoDB.createTable({
         AttributeDefinitions: [
             {
@@ -68,3 +76,4 @@ dynamoDB.scan({
         insertData('2021-01-01', '12:00', '13:00', 123);
     }
 });
+*/
