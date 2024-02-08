@@ -72,3 +72,34 @@
     justify-content: space-between;
     gap: 10px;
 }
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-days {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .day-abbreviations {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .day-abbreviations span {
+    width: calc(100% / 7);
+    text-align: center;
+  }
+  
+  .month-name {
+    margin: 0;
+  }
+  
+  .MuiFormControl-root {
+    width: 100%;
+  }

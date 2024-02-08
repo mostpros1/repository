@@ -12,7 +12,7 @@ const DateAndTimePicker: React.FC = () => {
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
   const handleDateSelect = (day: number, date: Date) => {
-    if (date < today) return; // Voorkom selectie van verleden dagen
+    if (date < today) return;
     setSelectedDates((prevDates) => {
       return prevDates.includes(day) ? prevDates.filter(d => d !== day) : [...prevDates, day];
     });
