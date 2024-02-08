@@ -43,7 +43,6 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
 
     setStadInput(newStad);
 
-    // Update the state and notify the parent component if the city is valid or empty
     if (isValidStad || newStad === "") {
       updateFields({ stad: newStad });
     }
@@ -78,7 +77,7 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
         />
       </div>
       {!isValidPostcode && (
-        <p className="error-message">Voer alstublieft een geldige postcode in (bijv. 1234 AB)</p>
+        <p className="error-message">Voer alstublieft een geldige postcode in (bijv. 1234AB)</p>
       )}
 
       {!isValidStad && (

@@ -7,7 +7,7 @@ function DateForm({ updateDate, updateFields }) {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
     const [showMoreDates, setShowMoreDates] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
+    
     useEffect(() => {
         const generateDateOptions = () => {
             const options: Array<Date> = [];
