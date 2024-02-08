@@ -10,6 +10,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { read } from "fs";
 
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
@@ -22,7 +23,7 @@ aws.config.update({
 
 export const dynamoDB = new aws.DynamoDB();
 
-function test() {
+function showTables() {
   dynamoDB.listTables({}, (err, data) => {
     if (err) {
       console.error(err);
@@ -32,7 +33,7 @@ function test() {
   });
 }
 
-function createTableAvailibility() {
+function createTable() {
   dynamoDB.createTable({
     AttributeDefinitions: [
       {
@@ -96,7 +97,7 @@ function deleteTable() {
     .catch(console.error)
 }
 
-function editTable() {
+function addToTable() {
 
 const dynamo = new aws.DynamoDB.DocumentClient();
 
@@ -122,10 +123,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
-          <button onClick={test}>read</button>
-          <button onClick={createTableAvailibility}>create</button>
+          <button onClick={showTables}>Show Tables</button>
+          <button onClick={createTable}>create</button>
           <button onClick={deleteTable}>delete</button>
-          <button onClick={editTable}>edit</button>
+          <button onClick={addToTable}>Add data</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
