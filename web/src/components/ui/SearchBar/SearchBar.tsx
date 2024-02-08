@@ -28,17 +28,15 @@ function Searchbar() {
   };
 
   const navigate = useNavigate();
-
   const handleInputFocus = () => {
     setShowList(true);
   };
-
   const handleResultClick = (link: string) => {
     navigate(`/klussen${link}`);
   };
 
+
   const handleInputKeyDown = (e) => {
-    e.preventDefault();
     switch (e.key) {
       case "ArrowUp":
         setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -54,11 +52,19 @@ function Searchbar() {
           handleResultClick(selectedResult.link);
         }
         break;
+      case "Tab": // Implementing autocomplete on Tab key
+        if (slicedResults.length > 0) {
+          const selectedResult = slicedResults[0];
+          setValue(selectedResult.task); // Autocomplete with the first suggestion
+          setSelectedIndex(0);
+        }
+        break;
       default:
         break;
     }
   };
 
+  
   const searchResults = () => {
     const searchTerm = value.toLowerCase().trim();
 
@@ -75,6 +81,7 @@ function Searchbar() {
       return tasks.length > 0 ? tasks : [];
     });
 
+  
     const specialistResults = specialists
       .filter((specialist) =>
         specialist.name.toLowerCase().includes(searchTerm)
@@ -98,6 +105,7 @@ function Searchbar() {
         index === selectedIndex ? "selected" : ""
       }`}
       onClick={() => handleResultClick(result.link)}
+      onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
         {result.specialistName ? `${result.specialistName} - ` : ""}
