@@ -89,11 +89,30 @@ function createTableAvailibility() {
 
 function deleteTable() {
   dynamoDB.deleteTable({
-      TableName: "TimonTestTable",
-    })
+    TableName: "TimonTestTable",
+  })
     .promise()
     .then(() => console.log("Table has been deleted"))
     .catch(console.error)
+}
+
+function editTable() {
+
+const dynamo = new aws.DynamoDB.DocumentClient();
+
+dynamo
+  .put({
+    Item: {
+      id: "12346",
+      name: "Timon",
+      surname: "Heidenreich",
+    },
+    TableName: "TimonTestTable",
+  })
+  .promise()
+  .then(data => console.log(data.Attributes))
+  .catch(console.error)
+
 }
 
 
@@ -106,6 +125,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <button onClick={test}>read</button>
           <button onClick={createTableAvailibility}>create</button>
           <button onClick={deleteTable}>delete</button>
+          <button onClick={editTable}>edit</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
