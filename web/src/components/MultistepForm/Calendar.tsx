@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DatePicker.css'; // Aanname dat je CSS hierin staat
+import './DatePicker.css'; // Assuming your CSS is here
 
 const DateAndTimePicker: React.FC = () => {
   const today = new Date();
@@ -12,7 +12,7 @@ const DateAndTimePicker: React.FC = () => {
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
   const handleDateSelect = (day: number, date: Date) => {
-    if (date < today) return; // Voorkom selectie van verleden dagen
+    if (date < today) return;
     setSelectedDates((prevDates) => {
       return prevDates.includes(day) ? prevDates.filter(d => d !== day) : [...prevDates, day];
     });
@@ -26,24 +26,24 @@ const DateAndTimePicker: React.FC = () => {
     setDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1));
   };
 
-  // Functie om het weeknummer te berekenen
+  // Function to calculate the week number
   const getWeekNumber = (d: Date) => {
     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
     return weekNo;
   };
 
-  // Genereer de dagen voor de gekozen maand
+  // Generate the days for the chosen month
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const renderCalendar = () => {
-    
+
     let weeks: JSX.Element[][] = [];
     let weekDays: JSX.Element[] = [];
-    let weekStartDates: Date[] = []; // Opslaan van de startdatum van elke week
+    let weekStartDates: Date[] = []; // Store the start date of each week
   
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
@@ -55,10 +55,16 @@ const DateAndTimePicker: React.FC = () => {
           weeks.push([...weekDays]);
           weekDays = [];
         }
-        weekStartDates.push(dayDate); // Sla de startdatum van de nieuwe week op
+        weekStartDates.push(dayDate); // Store the start date of the new week
       }
   
-      weekDays.push(<div key={day} className="day">{day}</div>);
+      const isSelected = selectedDates.includes(day);
+      const isPastDay = dayDate < today;
+      weekDays.push(
+        <div key={day} className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''}`} onClick={() => handleDateSelect(day, dayDate)}>
+          {day}
+        </div>
+      );
   
       if (day === daysInMonth && weekDays.length > 0) {
         weeks.push([...weekDays]);
@@ -72,7 +78,7 @@ const DateAndTimePicker: React.FC = () => {
       </div>
     ));
   };
-
+  
   return (
     <div className="date-time-picker">
       <div className="calendar">
@@ -93,6 +99,5 @@ const DateAndTimePicker: React.FC = () => {
     </div>
   );
 };
-
 
 export default DateAndTimePicker;

@@ -109,3 +109,10 @@
     font-weight: bold; /* Maak de tekst van toekomstige dagen vetgedrukt */
   }
   
+  .past {
+    opacity: 0.5; /* Reduce opacity for past days */
+  }
+  
+  .day:hover:not(.past) {
+    background-color: lightblue; /* Make non-past days brighter on hover */
+  }
