@@ -1,13 +1,12 @@
 .date-time-picker {
-    font-family: 'Arial', sans-serif;
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 16px;
     width: 100%;
-    max-width: 450px;
     margin-left: 40px;
     margin-top: 20px;
+    max-width: 550px;
   }
   
   .date-time-picker span {
@@ -21,12 +20,6 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    
-  }
-  
-  .calendar {
-    display: flex;
-    flex-direction: column;
   }
   
   .month-selector {
@@ -38,17 +31,6 @@
     color: white;
     font-weight: bold;
     border-radius: 10px;
-  }
-  
-  .week-days, .weeks {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    
-  }
-  
-  .week-day, .day, .week-number {
-    padding: 5px;
   }
   
   .prev-month, .next-month {
@@ -69,13 +51,43 @@
     border: solid 5px #3a72ffd4;
   }
   
+  .week-days{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
+  }
+
+  .week-day{
+    display: flex;
+  }
+
+  .week{
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .days-container{
+    display: flex;
+    position: absolute;
+    gap: 3px;
+    padding-left: 60px;
+    top: -20;
+  }
+
   .day {
     padding: 10px;
     margin: 2px;
     background-color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
-    border-radius: 50%;
+    border-radius: 10%;
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    margin-top: 10px;
   }
   
   .day:hover, .day.selected, .week-number {
@@ -92,8 +104,9 @@
     height: 35px;
     width: 35px;
     text-align: center;
-    writing-mode: horizontal-tb; /* Verticale schrijfmodus van rechts naar links */
-    text-orientation: upright; /* Houd de tekst verticaal rechtop */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .day.empty {
@@ -114,5 +127,5 @@
   }
   
   .day:hover:not(.past) {
-    background-color: lightblue; /* Make non-past days brighter on hover */
+    background-color: #3a72ffd4; /* Make non-past days brighter on hover */
   }

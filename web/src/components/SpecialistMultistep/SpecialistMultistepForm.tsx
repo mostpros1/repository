@@ -185,11 +185,10 @@ function SpecialistMultistepForm() {
   
     return (
       <form action="" method="POST">
-            <div>
-      <h1>Selecteer uw beschikbaarheid:</h1>
-      {/* Andere componenten/logica */}
-      <Calendar /> {/* Zo gebruik je de Calendar component */}
-    </div>
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar />
+        </div>
       </form>
     );
   }

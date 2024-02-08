@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DatePicker.css'; // Assuming your CSS is here
+import './DatePicker.css';
 
 const DateAndTimePicker: React.FC = () => {
   const today = new Date();
@@ -9,7 +9,6 @@ const DateAndTimePicker: React.FC = () => {
   const [selectedDates, setSelectedDates] = useState<number[]>([]);
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
   const handleDateSelect = (day: number, date: Date) => {
     if (date < today) return;
@@ -19,14 +18,21 @@ const DateAndTimePicker: React.FC = () => {
   };
 
   const handlePrevMonth = () => {
-    setDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1));
+    setDate(prevDate => {
+        const year = prevDate.getMonth() === 0 ? prevDate.getFullYear() - 1 : prevDate.getFullYear();
+        const month = prevDate.getMonth() === 0 ? 11 : prevDate.getMonth() - 1;
+        return new Date(year, month, 1);
+    });
   };
 
   const handleNextMonth = () => {
-    setDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1));
+    setDate(prevDate => {
+        const year = prevDate.getMonth() === 11 ? prevDate.getFullYear() + 1 : prevDate.getFullYear();
+        const month = prevDate.getMonth() === 11 ? 0 : prevDate.getMonth() + 1;
+        return new Date(year, month, 1);
+    });
   };
 
-  // Function to calculate the week number
   const getWeekNumber = (d: Date) => {
     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
@@ -35,15 +41,13 @@ const DateAndTimePicker: React.FC = () => {
     return weekNo;
   };
 
-  // Generate the days for the chosen month
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const renderCalendar = () => {
-
-    let weeks: JSX.Element[][] = [];
+    let weeks: JSX.Element[] = [];
     let weekDays: JSX.Element[] = [];
-    let weekStartDates: Date[] = []; // Store the start date of each week
+    let weekStartDates: Date[] = [];
   
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
@@ -52,14 +56,19 @@ const DateAndTimePicker: React.FC = () => {
   
       if (isMonday) {
         if (weekDays.length > 0) {
-          weeks.push([...weekDays]);
+          weeks.push(
+            <div key={weekStartDates.length} className="days-container">
+              {weekDays}
+            </div>
+          );
           weekDays = [];
         }
-        weekStartDates.push(dayDate); // Store the start date of the new week
+        weekStartDates.push(dayDate);
       }
   
       const isSelected = selectedDates.includes(day);
       const isPastDay = dayDate < today;
+  
       weekDays.push(
         <div key={day} className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''}`} onClick={() => handleDateSelect(day, dayDate)}>
           {day}
@@ -67,7 +76,11 @@ const DateAndTimePicker: React.FC = () => {
       );
   
       if (day === daysInMonth && weekDays.length > 0) {
-        weeks.push([...weekDays]);
+        weeks.push(
+          <div key={weekStartDates.length} className="days-container">
+            {weekDays}
+          </div>
+        );
       }
     }
   
@@ -89,10 +102,10 @@ const DateAndTimePicker: React.FC = () => {
         </div>
         <div className="week-days">
           {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
-            <div key={day} className="week-day">{day}</div>
+            <div key={day}>{day}</div>
           ))}
         </div>
-        <div className="weeks">
+        <div className="week">
           {renderCalendar()}
         </div>
       </div>
