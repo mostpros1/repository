@@ -14,7 +14,7 @@ function JobCards() {
             title: "gas lekkage",
             description: "Spreek je ananas uis als ananas of aanaanas?",
             img: gasleiding,
-            location: "Amsterdam",
+            location: "Rotterdam",
             availability: "4 dagen"
         },
         {
@@ -24,7 +24,47 @@ function JobCards() {
             title: "gas lekkage",
             description: "Spreek je ananas uis als ananas of aanaanas?",
             img: gasleiding,
+            location: "Utrecht",
+            availability: "4 dagen"
+        },
+        {
+            id: 3,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Utrecht",
+            availability: "4 dagen"
+        },
+        {
+            id: 4,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
             location: "Amsterdam",
+            availability: "4 dagen"
+        },
+        {
+            id: 1,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Haarlem",
+            availability: "4 dagen"
+        },
+        {
+            id: 2,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Haarlem",
             availability: "4 dagen"
         },
         {
@@ -45,6 +85,46 @@ function JobCards() {
             description: "Spreek je ananas uis als ananas of aanaanas?",
             img: gasleiding,
             location: "Amsterdam",
+            availability: "4 dagen"
+        },
+        {
+            id: 1,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Rotterdam",
+            availability: "4 dagen"
+        },
+        {
+            id: 2,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Haarlem",
+            availability: "4 dagen"
+        },
+        {
+            id: 3,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Amsterdam",
+            availability: "4 dagen"
+        },
+        {
+            id: 4,
+            name: "Mark",
+            distance: 1.1,
+            title: "gas lekkage",
+            description: "Spreek je ananas uis als ananas of aanaanas?",
+            img: gasleiding,
+            location: "Utrecht",
             availability: "4 dagen"
         },
     ]
