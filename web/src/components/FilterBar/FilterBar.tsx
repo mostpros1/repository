@@ -1,49 +1,25 @@
+import React from 'react';
+import FilterDropdown from './FilterDropdown';
 import "./FilterBar.css";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function FilterBar() {
-  return (
-    <div className="filterbar">
-      <div className="filter-con">
-        <div className="filter_menu_items">
-          <div className="filter_items_con">
-            <p>Locatie</p>
-            <div className="sort_text_con">
-              <p>Haarlem</p>
-              <ExpandMoreIcon />
-              <ul className="filter_items">
-                <li>Amsterdam</li>
-                <li>Rotterdam</li>
-              </ul>
+    // Sample data for filter options
+    const locationOptions = ['All Locations', 'Amsterdam', 'Rotterdam', 'Haarlem'];
+    const sortOptions = ['All Sorting', 'Van laag naar hoog', 'Van hoog naar laag'];
+    const priceOptions = ['All Prices', '€500', '€1000', '€1500'];
+
+    return (
+        <div className="filterbar">
+            <div className="filter-con">
+                <div className="filter_menu_items">
+                    <FilterDropdown label="Locatie" selectedValue="All Locations" options={locationOptions} onSelect={(value) => console.log(value)} />
+                    <FilterDropdown label="Sorteren" selectedValue="All Sorting" options={sortOptions} onSelect={(value) => console.log(value)} />
+                    <FilterDropdown label="Prijs vanaf" selectedValue="All Prices" options={priceOptions} onSelect={(value) => console.log(value)} />
+                </div>
+                <button className="filter_search_btn">Zoeken</button>
             </div>
-          </div>
-          <div className="filter_items_con">
-            <p>Sorteren</p>
-            <div className="sort_text_con">
-              <p>Van laag naar hoog</p>
-              <ExpandMoreIcon />
-              <ul className="filter_items">
-                <li>Amsterdam</li>
-                <li>Rotterdam</li>
-              </ul>
-            </div>
-          </div>
-          <div className="filter_items_con">
-            <p>Prijs vanaf</p>
-            <div className="sort_text_con">
-              <p>€500</p>
-              <ExpandMoreIcon />
-              <ul className="filter_items">
-                <li>Amsterdam</li>
-                <li>Rotterdam</li>
-              </ul>
-            </div>
-          </div>
         </div>
-        <button className="filter_search_btn">Zoeken</button>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default FilterBar;

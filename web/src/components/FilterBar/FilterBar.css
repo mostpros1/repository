@@ -1,3 +1,53 @@
+.filter-dropdown {
+    position: relative;
+    color: #308AE4;
+    font-weight: bolder;
+}
+
+.filter-selector {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: black;
+    gap: 50px;
+}
+
+.filter-selector:hover {
+    color: #308AE4;
+}
+
+.selected-value {
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.expand-icon {
+    color: #888;
+}
+
+.filter-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    background-color: #fff;
+    border-top: none;
+    z-index: 1;
+    font-size: 15px;
+    color: black;
+}
+
+.filter-options li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.filter-options li:hover {
+    background-color: #f0f0f0;
+}
+
 .filterbar{
     background-color: #E9F4FF;
     padding: 0px 30px;
@@ -20,37 +70,23 @@
     gap: 25px;
 }
 
-.filter_items_con{
+.sort_text_con {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-    padding: 0px 25px;
-    border-right: 1px solid #A6ACB2;
-    color: #0066C5;
+    align-items: center;
+    cursor: pointer; /* Add this to make it appear clickable */
 }
 
-.filter_items_con:last-of-type{
-    border: none;
-}
-
-.sort_text_con{
-    color: grey;
-    font-weight: normal;
-    font-size: 14px;
-}
-
-
-.filter_items{
-    display: none;
-    position: absolute;
-    top: 100%;
+.filter_items {
     list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
 }
 
-.sort_text_con{
-    display: flex;
-    gap: 15px;
+.filter_items_con:hover .filter_items {
+    display: block;
 }
 
 .filter_search_btn{
