@@ -2,8 +2,9 @@
 import "@aws-amplify/ui-react/styles.css";
 import NavBar from "../ui/NavBar/NavBar";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as mutations from "../../graphql/mutations";
+import PaymentLink from "../PaymentLink/PaymentLink";
 import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../../graphql/queries";
 import intlFormatDistance from "date-fns/intlFormatDistance";
@@ -30,6 +31,20 @@ function ChatMain({ user, signOut }) {
     handleJoinChat,
     handleReceivedMessage,
   } = useChatBackend(user, signOut);
+
+  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+
+  const [subtotalInput, setSubtotalInput] = useState(""); // Voeg de staat toe voor de handmatige subtotal
+
+  const handleSubtotalChange = (e) => {
+    const sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
+
+    const isValidValue = sanitizedValue.split('.').length <= 2;
+
+    if (isValidValue) {
+      setSubtotalInput(sanitizedValue);
+    }
+  };
 
   useEffect(() => {
     async function fetchChats() {
@@ -89,6 +104,22 @@ function ChatMain({ user, signOut }) {
     }
   };
 
+  let PaymentLinkComponent: JSX.Element | null = null;
+  if (groups && groups.includes('Professional')) {
+    PaymentLinkComponent = (
+      <>
+        <input
+          type="number"
+          step="0.01"
+          placeholder="Enter subtotal"
+          value={subtotalInput}
+          onChange={handleSubtotalChange}
+        />
+        <PaymentLink subtotal={parseFloat(subtotalInput) || 0} handleSendMessage={handleSendMessage} />
+      </>
+    );
+  }
+
   const handleSendMessageButtonClick = async () => {
     const inputElement = document.getElementById('search') as HTMLInputElement;
 
@@ -101,6 +132,7 @@ function ChatMain({ user, signOut }) {
       }
     }
   };
+
 
   return (
     <>
@@ -115,6 +147,7 @@ function ChatMain({ user, signOut }) {
               <button type="button" className="buttonc" onClick={handleStartNewChat}>
                 Start New Chat
               </button>
+              {PaymentLinkComponent}
               <button type="button" className="buttonc" onClick={() => signOut()}>
                 Sign Out
               </button>
