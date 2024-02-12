@@ -1,11 +1,11 @@
 .taskCard{
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 25px;
-    padding: 25px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 2px 10px  rgba(0, 0, 0, 0.25);
+    margin: 30px;
 }
 
 .taskCard svg{
@@ -13,7 +13,7 @@
     font-size: 25px;
 }
 
-.user-detail{
+.user-detail {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -29,7 +29,7 @@
     font-size: 16px;
 }
 
-.job-info{
+.job-info {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,5 +78,21 @@
     font-size: 14px;
 }
 
+select {
+    padding: 8px 12px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    top: 50px; 
+}
+
+/* Style for the dropdown options */
+select option {
+    background-color: #fff; /* Background color of the options */
+    color: #333; /* Text color of the options */
+}
 
 
