@@ -165,3 +165,8 @@
     background-color: #3a72ffd4;
     color: white;
   }
+
+  .day.weekend {
+    color: #94b2ff; /* Witte tekstkleur */
+  }
+  

@@ -93,7 +93,7 @@ const DateAndTimePicker: React.FC = () => {
       weekDays.push(
         <div
           key={day}
-          className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''}`}
+          className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''}`}
           onClick={() => handleDateSelect(day, dayDate)}
         >
           {day}

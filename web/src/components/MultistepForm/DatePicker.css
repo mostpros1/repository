@@ -295,3 +295,8 @@
   .day:hover:not(.past) {
     background-color: #3a72ffd4;
   }
+
+  .day.weekend {
+    color: #94b2ff; /* Witte tekstkleur */
+  }
+  
