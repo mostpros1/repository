@@ -171,7 +171,18 @@
     font-weight: lighter;
   }
   
-  .fotoinbutton{
+  .fotoinButtonL{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
+  
+  .fotoinButtonR{
     width: 50px;
     border-radius: 50%;
     cursor: pointer;

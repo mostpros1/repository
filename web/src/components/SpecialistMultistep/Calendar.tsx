@@ -142,9 +142,9 @@ import Prev from './arrowL.png';
     <div className="date-time-picker">
       <div className="calendar">
         <div className="month-selector">
-          <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinbutton'/></button>
+          <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL'/></button>
           <span>{months[currentMonth]} {currentYear}</span>
-          <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinbutton'/></button>
+          <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR'/></button>
         </div>
         <div className="week-days">
           {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
