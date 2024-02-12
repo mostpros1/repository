@@ -2,9 +2,7 @@
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 16px;
     width: 100%;
-    margin-left: 40px;
     margin-top: 20px;
     max-width: 550px;
   }
@@ -13,7 +11,7 @@
     background-color: #3a72ffd4;
     border-radius: 10px;
     font-size: 17px;
-    width: 130px;
+    width: 140px;
     text-align: center;
     margin-top: 60px;
     height: 40px;
@@ -34,14 +32,14 @@
   }
   
   .prev-month, .next-month {
-    width: 50px;
+    width: 60px;
     border-radius: 50%;
     background-color: #3a72ffd4;
     color: rgb(255, 255, 255);
     border: 0;
     cursor: pointer;
     font-size: 32px;
-    height: 50px;
+    height: 60px;
     margin: 0 20px 0 20px;
   }
   
@@ -65,15 +63,13 @@
   .week{
     display: block;
     padding-top: 20px;
-    padding-bottom: 40px;
+    padding-bottom: 35px;
   }
 
   .days-container{
     display: flex;
     position: absolute;
-    gap: 3px;
-    padding-left: 60px;
-    top: -20;
+    gap: 7px;
   }
 
   .day {
@@ -84,10 +80,10 @@
     transition: background-color 0.3s;
     border-radius: 10%;
     display: flex;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 50px;
     justify-content: center;
-    margin-top: 10px;
+    font-size: 22px;
   }
   
   .day:hover, .day.selected, .week-number {
@@ -101,12 +97,14 @@
     color: white;
     padding: 5px;
     border-radius: 10%;
-    height: 35px;
-    width: 35px;
+    height: 30px;
+    width: 30px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    margin-top: 15px;
   }
   
   .day.empty {
@@ -115,17 +113,55 @@
   }
   
   .past-day {
-    color: #999; /* Maak de tekstkleur voor dagen in het verleden lichter */
+    color: #999;
   }
   
   .future-day {
-    font-weight: bold; /* Maak de tekst van toekomstige dagen vetgedrukt */
+    font-weight: bold; 
   }
   
   .past {
-    opacity: 0.5; /* Reduce opacity for past days */
+    opacity: 0.5;
   }
   
   .day:hover:not(.past) {
-    background-color: #3a72ffd4; /* Make non-past days brighter on hover */
+    background-color: #3a72ffd4;
+  }
+
+  .days-past{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-past:hover, .days-past.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+
+  .days-next{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-next:hover, .days-next.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
   }

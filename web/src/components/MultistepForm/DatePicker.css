@@ -1,0 +1,297 @@
+.date-time-picker {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 100%;
+    margin-left: 40px;
+    margin-top: 20px;
+    max-width: 550px;
+  }
+  
+  .date-time-picker span {
+    background-color: #3a72ffd4;
+    border-radius: 10px;
+    font-size: 17px;
+    width: 130px;
+    text-align: center;
+    margin-top: 60px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .month-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  .prev-month, .next-month {
+    width: 50px;
+    border-radius: 50%;
+    background-color: #3a72ffd4;
+    color: rgb(255, 255, 255);
+    border: 0;
+    cursor: pointer;
+    font-size: 32px;
+    height: 50px;
+    margin: 0 20px 0 20px;
+  }
+  
+  .prev-month:hover, .next-month:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: solid 5px #3a72ffd4;
+  }
+  
+  .week-days{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
+  }
+
+  .week-day{
+    display: flex;
+  }
+
+  .week{
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 35px;
+  }
+
+  .days-container{
+    display: flex;
+    position: absolute;
+    gap: 3px;
+    padding-left: 60px;
+  }
+
+  .day {
+    padding: 15px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+  }
+  
+  .day:hover, .day.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+  
+  .week-number {
+    margin-right: 5px;
+    background-color: #3a72ffd4;
+    color: white;
+    padding: 5px;
+    border-radius: 10%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: 15px;
+  }
+  
+  .day.empty {.date-time-picker {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    max-width: 550px;
+  }
+  
+  .date-time-picker span {
+    background-color: #3a72ffd4;
+    border-radius: 10px;
+    font-size: 17px;
+    width: 140px;
+    text-align: center;
+    margin-top: 60px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .month-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  .prev-month, .next-month {
+    width: 60px;
+    border-radius: 50%;
+    background-color: #3a72ffd4;
+    color: rgb(255, 255, 255);
+    border: 0;
+    cursor: pointer;
+    font-size: 32px;
+    height: 60px;
+    margin: 0 20px 0 20px;
+  }
+  
+  .prev-month:hover, .next-month:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: solid 5px #3a72ffd4;
+  }
+  
+  .week-days{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
+  }
+
+  .week-day{
+    display: flex;
+  }
+
+  .week{
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 35px;
+  }
+
+  .days-container{
+    display: flex;
+    position: absolute;
+    gap: 7px;
+  }
+
+  .day {
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 50px;
+    justify-content: center;
+    font-size: 22px;
+  }
+  
+  .day:hover, .day.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+  
+  .week-number {
+    margin-right: 5px;
+    background-color: #3a72ffd4;
+    color: white;
+    padding: 5px;
+    border-radius: 10%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: 15px;
+  }
+  
+  .day.empty {
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  .past-day {
+    color: #999;
+  }
+  
+  .future-day {
+    font-weight: bold; 
+  }
+  
+  .past {
+    opacity: 0.5;
+  }
+  
+  .day:hover:not(.past) {
+    background-color: #3a72ffd4;
+  }
+
+  .days-past{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-past:hover, .days-past.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+
+  .days-next{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-next:hover, .days-next.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  .past-day {
+    color: #999;
+  }
+  
+  .future-day {
+    font-weight: bold; 
+  }
+  
+  .past {
+    opacity: 0.5;
+  }
+  
+  .day:hover:not(.past) {
+    background-color: #3a72ffd4;
+  }
