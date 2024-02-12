@@ -18,6 +18,7 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
+export const dynamoDB = new aws.DynamoDB();
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
