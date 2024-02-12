@@ -50,7 +50,7 @@ export function addUser_roles(user_id: number, role: string, created_at: string,
     });
 }
 
-export function addRoles(id: number, name: string, description: string, created_at: string, updated_at: string){
+export function addRoles(id: number, name: string, description: string, created_at: string, updated_at: string) {
     const params = {
         TableName: "roles",
         Item: {
@@ -160,7 +160,7 @@ export function addProject_members(project_id: number, user_id: number, role: st
     });
 }
 
-export function addInvoices(id: number, project_id: number, amount: number, issued_date: Date, due_date: Date, status: string){
+export function addInvoices(id: number, project_id: number, amount: number, issued_date: Date, due_date: Date, status: string) {
     const param = {
         TableName: "invoices",
         Item: {
@@ -179,10 +179,10 @@ export function addInvoices(id: number, project_id: number, amount: number, issu
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
         }
-    }); 
+    });
 }
 
-export function addInvoice_line_items(id:number, invoice_id: number, description: string, quantity: number, price: number){
+export function addInvoice_line_items(id: number, invoice_id: number, description: string, quantity: number, price: number) {
     const param = {
         TableName: "invoice_line_items",
         Item: {
@@ -200,10 +200,10 @@ export function addInvoice_line_items(id:number, invoice_id: number, description
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
         }
-    }); 
+    });
 }
 
-export function addPayments(id: number, invoice_id: number, amount: number, fee: number, net: number, status: string, transfer_destinstion: string, transfer: string, description: string){
+export function addPayments(id: number, invoice_id: number, amount: number, fee: number, net: number, status: string, transfer_destinstion: string, transfer: string, description: string) {
     const param = {
         TableName: "payments",
         Item: {
@@ -216,7 +216,7 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
             transfer_destinstion: { S: transfer_destinstion },
             transfer: { S: transfer },
             description: { S: description },
-            
+
         }
     };
 
@@ -226,6 +226,90 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
         }
-    }); 
+    });
 }
 
+export function addProfessionals(id: number, user_id: number, email: string, postcode: string, region: string, field_of_work: string, slug: string) {
+    const param = {
+        TableName: "professionals",
+        Item: {
+            id: { N: String(id) },
+            user_id: { N: String(user_id) },
+            email: { S: email },
+            postcode: { S: postcode },
+            region: { S: region },
+            field_of_work: { S: field_of_work },
+            slug: { S: slug },
+        }
+    }
+
+    dynamoDB.putItem(param, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+export function addAvailibility(id: number, professional_id: number, job_description: string, date: Date, time_from: string, time_to: string) {
+    const param = {
+        TableName: "availibility",
+        Item: {
+            id: { N: String(id) },
+            professional_id: { N: String(professional_id) },
+            job_description: { S: job_description },
+            date: { S: String(date) },
+            time_from: { S: time_from },
+            time_to: { S: time_to },
+        }
+    }
+    dynamoDB.putItem(param, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+export function addChats(id: number, sender_id: number, reciever_id: number, message: string, sent_at: string, recieved_at: string){
+    const param = {
+        TableName: "chats",
+        Item: {
+            id: { N: String(id) },
+            sender_id: { N: String(sender_id) },
+            reciever_id: { N: String(reciever_id) },
+            message: {S: message},
+            sent_at: {S: sent_at},
+            recieved_at: {S: recieved_at},
+        }
+    }
+    dynamoDB.putItem(param, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+export function addStripe_connected_accounts(id: number, user_id: number, account_id: number, created_at: string, updated_at: string){
+    const param = {
+        TableName: "stripe_connected_accounts",
+        Item: {
+            id: { N: String(id) },
+            user_id: { N: String(user_id) },
+            account_id: { N: String(account_id) },
+            created_at: {S: created_at},
+            updated_at: {S: updated_at},
+        }
+    }
+    dynamoDB.putItem(param, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
