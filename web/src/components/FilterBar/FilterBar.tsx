@@ -92,7 +92,7 @@ function FilterBar() {
 }
 
 export default FilterBar;
-function sortItems(option: any) {
+function sortItems(_option: any) {
   throw new Error("Function not implemented.");
 }
 
