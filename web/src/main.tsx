@@ -10,7 +10,6 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { read } from "fs";
 
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
@@ -33,64 +32,62 @@ function showTables() {
   });
 }
 
-function createTable() {
-  dynamoDB.createTable({
-    AttributeDefinitions: [
-      {
-        AttributeName: "id",
-        AttributeType: "S"
-      },
-      {
-        AttributeName: "name",
-        AttributeType: "S"
-      },
-      {
-        AttributeName: "surname",
-        AttributeType: "S"
-      },
-    ],
+/*function createRoles() {
+
+  // Define table parameters
+  const para = {
+    TableName: 'roles',
     KeySchema: [
-      {
-        AttributeName: 'id',
-        KeyType: 'HASH',
-      },
-      {
-        AttributeName: 'name',
-        KeyType: 'RANGE',
-      }
+      { AttributeName: 'id', KeyType: 'HASH' } // Primary key attribute
+    ],
+    AttributeDefinitions: [
+      { AttributeName: 'id', AttributeType: 'N' }, // Define primary key attribute
+      { AttributeName: 'name', AttributeType: 'S'}, // Define non-key attribute 'name'
+      { AttributeName: 'description', AttributeType: 'S'},
+      { AttributeName: 'created_at', AttributeType: 'S' },
+      { AttributeName: 'updated_at', AttributeType: 'S' },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
       WriteCapacityUnits: 1
-    },
-    TableName: "TimonTestTable",
-    GlobalSecondaryIndexes: [
-      {
-        IndexName: "surname-index",
-        KeySchema: [
-          {
-            AttributeName: "surname",
-            KeyType: "HASH"
-          }
-        ],
-        Projection: {
-          ProjectionType: "ALL"
-        },
-        ProvisionedThroughput: {
-          ReadCapacityUnits: 1,
-          WriteCapacityUnits: 1
-        }
-      }
-    ]
-  })
-    .promise()
-    .then(data => console.log('Table created', data))
-    .catch(err => console.error('Error creating table', err));
+    }
+  };
+
+  // Create DynamoDB table
+  dynamoDB.createTable(para, (err, data) => {
+    if (err) {
+      console.error('Unable to create table. Error JSON:', JSON.stringify(err, null, 2));
+    } else {
+      console.log('Created table. Table description JSON:', JSON.stringify(data, null, 2));
+    }
+  });
+
+}*/
+
+function addTestUser(){
+
+const params = {
+  TableName: "users",
+  Item: {
+    id: { N: "1" },
+    name: { S: "Timon" },
+    email: { S: "timon@timonheidenreich.eu" }
+  }
+};
+
+dynamoDB.putItem(params, function(err, data) {
+  if (err) {
+    console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+  } else {
+    console.log("Added item:", JSON.stringify(data, null, 2));
+  }
+});
 }
+
 
 function deleteTable() {
   dynamoDB.deleteTable({
-    TableName: "TimonTestTable",
+    TableName: "roles",
   })
     .promise()
     .then(() => console.log("Table has been deleted"))
@@ -99,20 +96,20 @@ function deleteTable() {
 
 function addToTable() {
 
-const dynamo = new aws.DynamoDB.DocumentClient();
+  const dynamo = new aws.DynamoDB.DocumentClient();
 
-dynamo
-  .put({
-    Item: {
-      id: "12346",
-      name: "Timon",
-      surname: "Heidenreich",
-    },
-    TableName: "TimonTestTable",
-  })
-  .promise()
-  .then(data => console.log(data.Attributes))
-  .catch(console.error)
+  dynamo
+    .put({
+      Item: {
+        id: "12346",
+        name: "Timon",
+        surname: "Heidenreich",
+      },
+      TableName: "TimonTestTable",
+    })
+    .promise()
+    .then(data => console.log(data.Attributes))
+    .catch(console.error)
 
 }
 
@@ -124,7 +121,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
           <button onClick={showTables}>Show Tables</button>
-          <button onClick={createTable}>create</button>
+          <button onClick={addTestUser}>create</button>
           <button onClick={deleteTable}>delete</button>
           <button onClick={addToTable}>Add data</button>
         </LocalizationProvider>
