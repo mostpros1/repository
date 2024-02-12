@@ -1,53 +1,3 @@
-.filter-dropdown {
-    position: relative;
-    color: #308AE4;
-    font-weight: bolder;
-}
-
-.filter-selector {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: black;
-    gap: 50px;
-}
-
-.filter-selector:hover {
-    color: #308AE4;
-}
-
-.selected-value {
-    margin-right: 8px;
-    font-size: 13px;
-}
-
-.expand-icon {
-    color: #888;
-}
-
-.filter-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-    background-color: #fff;
-    border-top: none;
-    z-index: 1;
-    font-size: 15px;
-    color: black;
-}
-
-.filter-options li {
-    padding: 8px;
-    cursor: pointer;
-}
-
-.filter-options li:hover {
-    background-color: #f0f0f0;
-}
-
 .filterbar{
     background-color: #E9F4FF;
     padding: 0px 30px;
@@ -68,25 +18,54 @@
 .filter_menu_items{
     display: flex;
     gap: 25px;
+    justify-content: space-between;
 }
 
-.sort_text_con {
+.filter_items_con{
     display: flex;
-    align-items: center;
-    cursor: pointer; /* Add this to make it appear clickable */
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+    padding: 0px 25px;
+    border-right: 1px solid #A6ACB2;
+    color: #0066C5;
 }
 
-.filter_items {
-    list-style: none;
-    padding: 0;
+.filter_items_con:last-of-type{
+    border: none;
+}
+
+.sort_text_con{
+    color: grey;
+    font-weight: normal;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter_items{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    padding: 5px 0;
+    width: 100%;
+    list-style-type: none;
     margin: 0;
-    border: 1px solid #ccc;
-    border-top: none;
-    display: none;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.filter_items_con:hover .filter_items {
-    display: block;
+.filter_items li {
+    padding: 8px 15px;
+  }
+
+  .filter_items li:hover {
+    background-color: #f0f0f0;
+  }
+
+.sort_text_con{
+    display: flex;
+    gap: 15px;
 }
 
 .filter_search_btn{
@@ -96,8 +75,12 @@
     padding: 15px 50px;
     border-radius: 10px;
     height: fit-content;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .filter_search_btn:hover{
     cursor: pointer;  
+    background-color: #367fc8;
 }
