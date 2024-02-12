@@ -7,7 +7,8 @@ function DateForm({ updateDate, updateFields }) {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
     const [showMoreDates, setShowMoreDates] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    
+    const [isValidDate, setIsValidDate] = useState(true);
+
     useEffect(() => {
         const generateDateOptions = () => {
             const options: Array<Date> = [];
@@ -23,18 +24,40 @@ function DateForm({ updateDate, updateFields }) {
 
     }, [currentDate]);
 
+    function isSameDay(date1: Date, date2: Date): boolean {
+        return (
+            date1.getDate() === date2.getDate() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getFullYear() === date2.getFullYear()
+        );
+    }
+
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
-        const isoDateString = selectedDate.toISOString();
-        setSelectedCard(index === selectedCard ? null : index);
-        updateDate(selectedDate);
-        updateFields({ date: isoDateString });
+
+        const isValid = selectedDate >= currentDate;
+        setIsValidDate(isValid);
+
+        // Only update date and fields if the selected date is valid
+        if (isValid) {
+            const isoDateString = selectedDate.toISOString();
+            setSelectedCard(index === selectedCard ? null : index);
+            updateDate(selectedDate);
+            updateFields({ date: isoDateString });
+        }
     };
 
     const handleCalendarDateSelect = (isoDateString: string) => {
         const selectedDate = new Date(isoDateString);
-        updateDate(selectedDate);
-        updateFields({ date: isoDateString });
+
+        const isValid = selectedDate >= currentDate;
+        setIsValidDate(isValid);
+
+        // Only update date and fields if the selected date is valid
+        if (isValid) {
+            updateDate(selectedDate);
+            updateFields({ date: isoDateString });
+        }
     };
 
     const handleMoreDatesClick = () => {
@@ -65,6 +88,10 @@ function DateForm({ updateDate, updateFields }) {
                         <p className="dateCards_info">Meer datums</p>
                     </div>
                 </div>
+            )}
+
+            {isValidDate ? null : (
+                <p className="error-message">Voer alstublieft een geldige datum in</p>
             )}
         </div>
     );
