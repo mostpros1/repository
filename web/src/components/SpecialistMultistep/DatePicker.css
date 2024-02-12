@@ -32,21 +32,18 @@
   }
   
   .prev-month, .next-month {
-    width: 60px;
     border-radius: 50%;
-    background-color: #3a72ffd4;
+    background-color: #000000;
     color: rgb(255, 255, 255);
-    border: 0;
     cursor: pointer;
     font-size: 32px;
-    height: 60px;
     margin: 0 20px 0 20px;
+    border: 0;
   }
-  
+
   .prev-month:hover, .next-month:hover {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
-    border: solid 5px #3a72ffd4;
   }
   
   .week-days{
@@ -83,7 +80,8 @@
     width: 55px;
     height: 50px;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: light;
   }
   
   .day:hover, .day.selected, .week-number {
@@ -95,16 +93,15 @@
     margin-right: 5px;
     background-color: #3a72ffd4;
     color: white;
-    padding: 5px;
     border-radius: 10%;
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    margin-top: 15px;
+    margin-top: 10px;
   }
   
   .day.empty {
@@ -114,6 +111,7 @@
   
   .past-day {
     color: #999;
+    font-weight: lighter;
   }
   
   .future-day {
@@ -145,6 +143,7 @@
   .days-past:hover, .days-past.selected, .week-number {
     background-color: #3a72ffd4;
     color: white;
+    font-weight: lighter;
   }
 
   .days-next{
@@ -164,9 +163,21 @@
   .days-next:hover, .days-next.selected, .week-number {
     background-color: #3a72ffd4;
     color: white;
+    font-weight: lighter;
   }
 
   .day.weekend {
     color: #94b2ff; /* Witte tekstkleur */
+    font-weight: lighter;
   }
   
+  .fotoinbutton{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
