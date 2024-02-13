@@ -1,7 +1,7 @@
 describe('Testing "Register as specialist"', () => {
     it('type in input', () => {
 
-        const testData = [
+        const testDataStap1 = [
             ['Loodgieter', 'test@test.com', '2020EB', 'Amsterdam'],
             ['dsamkdmsk', 'dsadasmdk', 'Amsterdam', '2020EB'],
             ['#&Y$ĞÜİŞÇ', '/+/%%&ĞÜŞ2@(%&/.Ğğüş', '32423532532ğüşçşö', 'asdwsadffğĞÜŞ'],
@@ -13,7 +13,7 @@ describe('Testing "Register as specialist"', () => {
 
         cy.janTestBegin()
 
-        const performChecks = (data) => {
+        const performChecksStap1 = (data) => {
             for (let i = 0; i < data.length; i++) {
                 const inputs = cy.get('input[type="text"]');
 
@@ -29,7 +29,7 @@ describe('Testing "Register as specialist"', () => {
         };
 
         // Perform the checks with testData
-        performChecks(testData);
+        performChecksStap1(testDataStap1);
 
         // Empty check
         cy.goForward();

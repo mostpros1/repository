@@ -1,50 +1,52 @@
-describe('Testing "Register as specialist"' , () => {
+describe('Testing "Register as specialist"', () => {
     it('type in input', () => {
 
-        cy.janTestBegin()
+        /* const testDataStap5 = [
+            ['Mostpros', '9305 6589'],
+            ['dsnajdnuws^&%*', 'JDNASJD7^%&*'],
+            ['KOÇTAŞ', 'sadvdsfadsss'],
+            ['123543546', '&/%/()(&%+']
+        ]
 
-        cy.get('input[type="text"]').eq(0).type('Loodgieter')
-        cy.get('input[type="text"]').eq(1).type('test@test.com')
-        cy.get('input[type="text"]').eq(2).type('2020EB')
-        cy.get('input[type="text"]').eq(3).type('Amsterdam')
-        
-        for (let i = 0; i < 3; i++) {
-            cy.goForward()
+        const performChecksStap5 = (data) => {
+            for (let i = 0; i < data.length; i++) {
+                const inputs = cy.get('input[type="text"]');
+
+                for (let j = 0; j < data[i].length; j++) {
+                    if (data[i][j] !== '') {
+                        cy.get('input[type="text"]').eq(j).should('exist').type(data[i][j]);
+                    }
+                }
+                cy.goForward()
+                cy.testAgain()
+            }
+        }; */
+
+        cy.testAgain();
+
+        // Helper function for input checks
+        function performInputCheck(value1, value2) {
+            cy.get('input[type="text"]').eq(0).type(value1);
+            cy.get('input[type="text"]').eq(1).type(value2);
+            cy.goForward();
+            cy.testAgain();
         }
-        
-        cy.goForward()
-        
 
-        // check 1
-        cy.get('input[type="text"]').eq(0).type('Mostpros')
-        cy.get('input[type="text"]').eq(1).type('9305 6589')
-        cy.goForward()
+        // Check 1
+        performInputCheck('Mostpros', '9305 6589');
 
-        cy.testAgain()
+        // Check 2
+        performInputCheck('dsnajdnuws^&%*', 'JDNASJD7^%&*');
 
-        // check 2
-        cy.get('input[type="text"]').eq(0).type('dsnajdnuws^&%*')
-        cy.get('input[type="text"]').eq(1).type('JDNASJD7^%&*')
-        cy.goForward()
+        // Check 3
+        performInputCheck('KOÇTAŞ', 'sadvdsfadsss');
 
-        cy.testAgain()
+        // Check 4
+        performInputCheck('123543546', '&/%/()(&%+');
 
-        // check 3
-        cy.get('input[type="text"]').eq(0).type('KOÇTAŞ')
-        cy.get('input[type="text"]').eq(1).type('sadvdsfadsss')
-        cy.goForward()
+        // Check 5
+        cy.goForward();
 
-        cy.testAgain()
 
-        // check 4
-        cy.get('input[type="text"]').eq(0).type('123543546')
-        cy.get('input[type="text"]').eq(1).type('&/%/()(&%+')
-        cy.goForward()
-
-        cy.testAgain()
-
-        // check 5
-        cy.goForward()
-        
     })
 })

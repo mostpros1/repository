@@ -1,6 +1,8 @@
 describe('Testing "Register as specialist"' , () => {
     it('type in input', () => {
 
+        // THIS TEST FILE IS A DEMO, IT DOESNT WORK PROPERLY. CHECK THE OTHER 'JAN TEST' FILES
+
         cy.viewport(1250, 695) // Change viewport to use desktop website instead of mobile website
 
         // Functions: They are intended to better show repetitive code.
