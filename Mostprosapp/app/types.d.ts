@@ -22,4 +22,6 @@ declare global {
     ProfileSecurity: undefined;
     ProfileSettingsOne: undefined;
     ProfileSettingsTwo: undefined;
+    ProfileNotifications: undefined;
+    ProfileGeneralSettings: undefined;
   };
