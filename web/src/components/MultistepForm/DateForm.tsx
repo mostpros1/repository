@@ -24,14 +24,6 @@ function DateForm({ updateDate, updateFields }) {
 
     }, [currentDate]);
 
-    function isSameDay(date1: Date, date2: Date): boolean {
-        return (
-            date1.getDate() === date2.getDate() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getFullYear() === date2.getFullYear()
-        );
-    }
-
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
 
@@ -62,6 +54,10 @@ function DateForm({ updateDate, updateFields }) {
 
     const handleMoreDatesClick = () => {
         setShowMoreDates(true); // Zet showMoreDates op true om de Calendar te laten zien
+    };
+
+    const handleLessDatesClick = () => {
+        setShowMoreDates(false); // Zet showMoreDates op true om de Calendar te laten zien
     };
 
     return (
