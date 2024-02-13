@@ -1,9 +1,9 @@
 import "./FilterBar.css";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import joblisting from '../JobList/JobCards'; // Importeer de array met items
 import gasleiding from "../../assets/Gasleiding.svg";
 import { useState, useEffect } from 'react';
 import JobCards from '../JobList/JobCards';
-
 interface JobListingItem {
   id: number;
   name: string;
@@ -14,12 +14,10 @@ interface JobListingItem {
   location: string;
   availability: string;
 }
-
 function FilterBar() {
   const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showPriceOptions, setShowPriceOptions] = useState(false);
-
   const [selectedLocation, setSelectedLocation] = useState("Select a location");
   const [selectedSort, setSelectedSort] = useState("Select a sorting option");
   const [selectedPrice, setSelectedPrice] = useState("Select a price option");
@@ -35,7 +33,6 @@ function FilterBar() {
       location: "Rotterdam",
       availability: "4 dagen",
     },
-
     {
       id: 2,
       name: "Mark",
@@ -46,7 +43,6 @@ function FilterBar() {
       location: "Utrecht",
       availability: "4 dagen",
     },
-
     {
       id: 3,
       name: "Mark",
@@ -57,7 +53,6 @@ function FilterBar() {
       location: "Utrecht",
       availability: "4 dagen",
     },
-
     {
       id: 4,
       name: "Mark",
@@ -68,7 +63,6 @@ function FilterBar() {
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 5,
       name: "Mark",
@@ -79,7 +73,6 @@ function FilterBar() {
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 6,
       name: "Mark",
@@ -90,7 +83,6 @@ function FilterBar() {
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 7,
       name: "Mark",
@@ -101,7 +93,6 @@ function FilterBar() {
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 8,
       name: "Mark",
@@ -112,7 +103,6 @@ function FilterBar() {
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 9,
       name: "Mark",
@@ -123,7 +113,6 @@ function FilterBar() {
       location: "Rotterdam",
       availability: "4 dagen",
     },
-
     {
       id: 10,
       name: "Mark",
@@ -134,7 +123,6 @@ function FilterBar() {
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 11,
       name: "Mark",
@@ -145,7 +133,6 @@ function FilterBar() {
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 12,
       name: "Mark",
@@ -157,48 +144,60 @@ function FilterBar() {
       availability: "4 dagen",
     },
   ];
-
   useEffect(() => {
+    console.log("Effect triggered");
     filterItems();
   }, [selectedLocation, selectedSort, selectedPrice]);
-
   const filterItems = () => {
-    let filtered = joblisting;
-
+    console.log("Filtering items");
+    let filtered = [...joblisting]; // Copy array to prevent mutating original
     // Filter by location
     if (selectedLocation !== "Select a location") {
       filtered = filtered.filter(item => item.location === selectedLocation);
     }
+    // Sort items
+    sortItems(selectedSort, filtered);
     setFilteredItems(filtered);
   };
-
+  const sortItems = (option: string, items: JobListingItem[]) => {
+    switch (option) {
+      case "Van laag naar hoog":
+        items.sort((a, b) => a.distance - b.distance);
+        break;
+      case "Van hoog naar laag":
+        items.sort((a, b) => b.distance - a.distance);
+        break;
+      case "Alfabetisch":
+        items.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      default:
+        break;
+    }
+  };
   const locationOptions = ["All", "Amsterdam", "Rotterdam", "Haarlem"];
   const sortOptions = ["Van laag naar hoog", "Van hoog naar laag", "Alfabetisch"];
   const priceOptions = ["€100", "€200", "€300"];
-
   const handleLocationSelect = (option: string) => {
     setSelectedLocation(option);
     setShowLocationOptions(false);
   };
-
   const handleSortSelect = (option: string) => {
     setSelectedSort(option);
     setShowSortOptions(false);
   };
-
   const handlePriceSelect = (option: string) => {
     setSelectedPrice(option);
     setShowPriceOptions(false);
   };
-
   const handleSearch = () => {
+    console.log("Search button clicked");
     filterItems();
   };
-
   return (
     <div className="filterbar">
       <div className="filter-con">
-      <div className="filter_menu_items">
+        <div className="filter_menu_items">
+          {/* Location filter section */}
           <div className="filter_items_con">
             <p>Locatie</p>
             <div className="sort_text_con">
@@ -215,6 +214,7 @@ function FilterBar() {
               )}
             </div>
           </div>
+          {/* Sort filter section */}
           <div className="filter_items_con">
             <p>Sorteren</p>
             <div className="sort_text_con">
@@ -231,6 +231,7 @@ function FilterBar() {
               )}
             </div>
           </div>
+          {/* Price filter section */}
           <div className="filter_items_con">
             <p>Prijs vanaf</p>
             <div className="sort_text_con">
@@ -248,11 +249,21 @@ function FilterBar() {
             </div>
           </div>
         </div>
+        {/* Button to apply filters */}
         <button className="filter_search_btn" onClick={handleSearch}>Zoeken</button>
       </div>
-      <JobCards jobs={filteredItems} />
+      {/* Banenlijst sectie */}
+      <div className="job-list">
+        {filteredItems.map(job => (
+          <div key={job.id} className="job-item">
+            <img src={job.img} alt={job.title} />
+            <h3>{job.title}</h3>
+            <p>{job.description}</p>
+            {/* Voeg andere details toe die je wilt weergeven */}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
-
+        }
 export default FilterBar;
