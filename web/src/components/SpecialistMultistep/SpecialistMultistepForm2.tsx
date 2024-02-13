@@ -6,7 +6,7 @@ interface DateTimeSpan {
   endTime: string;
 }
 
-const SpecialistMultistepForm2: React.FC = () => {
+export function MultistepForm2() {
   const [dateTimeSpans, setDateTimeSpans] = useState<DateTimeSpan[]>([
     { date: '', startTime: '', endTime: '' }
   ]);
@@ -77,4 +77,4 @@ const SpecialistMultistepForm2: React.FC = () => {
   );
 };
 
-export default SpecialistMultistepForm2;
+export default MultistepForm2;

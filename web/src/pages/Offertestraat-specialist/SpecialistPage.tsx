@@ -1,6 +1,6 @@
 import NavBar from '../../components/ui/NavBar/NavBar'
 import './SpecialistPage.css'
-import SpecialistMultistepForm2 from '../../components/SpecialistMultistep/SpecialistMultistepForm2.tsx'
+import SpecialistMultistepForm from '../../components/SpecialistMultistep/SpecialistMultistepForm.tsx'
 import Footer from '../../components/ui/Footer/Footer'
 
 function SpecialistPage() {
@@ -8,7 +8,7 @@ function SpecialistPage() {
     <>
       <NavBar />
       <div className='multistep-viewport'>
-        <SpecialistMultistepForm2 />
+        <SpecialistMultistepForm />
       </div>
       <Footer />
     </>

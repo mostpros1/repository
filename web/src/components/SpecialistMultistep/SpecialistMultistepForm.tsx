@@ -8,8 +8,19 @@ import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
+  beroep: string;
   email: string;
   postCode: string;
   stad: string;
@@ -25,6 +36,7 @@ type FormData = {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
   email: "",
   postCode: "",
   stad: "",
@@ -153,7 +165,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
       }
     };
-
+  
     const handleDateTimeSpanChange = (index, field, value) => {
       const updatedDateTimeSpans = dateTimeSpans.map((span, i) => {
         if (i === index) {
@@ -170,123 +182,38 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: updatedDateTimeSpans });
       }
     };
-
-    /*const [//formData, setFormData] = useState({
-    dateTimeSpans: [
-      { date: new Date(), startTime: '', endTime: '' }
-    ]
-  });*/
-
-
-    
+  
     return (
-      //<button>{formData}</button>
-
-      <>
       <form action="" method="POST">
         <div>
-          {dateTimeSpans.map((span, index) => (
-            <div key={index}>
-              <input
-                type="date"
-                className="inputDate"
-                name="date-form"
-                value={span.date.toISOString().substring(0, 10)}
-                onChange={(e) => handleDateTimeSpanChange(index, 'date', e.target.value)}
-              />
-              <input
-                type="time"
-                className="inputTime"
-                name="time-form-start"
-                value={span.startTime}
-                onChange={(e) => handleDateTimeSpanChange(index, 'startTime', e.target.value)}
-                placeholder="Vanaf hoelaat"
-              />
-              <input
-                type="time"
-                className="inputTime"
-                name="time-form-end"
-                value={span.endTime}
-                onChange={(e) => handleDateTimeSpanChange(index, 'endTime', e.target.value)}
-                placeholder="Tot hoelaat"
-              />
-              {dateTimeSpans.length > 1 && (
-                <button className="deleteKnop" onClick={() => removeDateTimeSpan(index)}>X</button>
-              )}
-            </div>
-          ))}
-          {dateTimeSpans.length < 5 && (
-            <button className="addDateKnop" onClick={addDateTimeSpan}>Add Date</button>
-          )}
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar />
         </div>
       </form>
-    );
-    </>
     );
   }
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields} />,
+        <SearchChoreForm {...data} updateFields={updateFields}/>,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-        />,
+          />,
         ...questionsSteps,
-        <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!isLastStep) return next()
-
-    const userData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-      .then(() => {
-        navigate('/specialist-resultaat')
-      })
-      .catch((err) => {
-        console.error(err)
-        if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-      username: userData.email,
-      password: userData.password,
-      attributes: {
-        name: userData.firstName,
-        family_name: userData.lastName,
-        email: userData.email,
-        phone_number: userData.phoneNumber,
-        "custom:group": "Professional"
-      },
-      autoSignIn: { enabled: true }
-      })
-      .then(() => {
-        navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-      .catch(async error => {
-        console.error(error)
-        if (error.code == 'UsernameExistsException') {
-          await Auth.resendSignUp(userData.email)
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        }
-      })
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+      navigate("/specialist-resultaat");
     }
   }
 
@@ -309,14 +236,27 @@ function SpecialistMultistepForm() {
           ))}
         </div>
       </div>
-      {showNoKvK ? <NoKvK /> : step}
-      <div className="btn-wrapper">
-        <button type="button" onClick={() => { showNoKvK ? setShowNoKvK(false) : back() }} className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`} style={{ display: isFirstStep ? 'none' : 'inline-block' }}>Vorige</button>
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-      </div>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
-
 }
 
 export default SpecialistMultistepForm;

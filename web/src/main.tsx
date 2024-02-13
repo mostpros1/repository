@@ -19,6 +19,13 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
+dynamoDB.listTables({}, (err, data) => {
+  if (err) {
+      console.error(err);
+  } else {
+      console.log(data);
+  }
+});
 
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();

@@ -1,0 +1,217 @@
+.date-time-picker {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    max-width: 550px;
+  }
+  
+  .date-time-picker span {
+    background-color: #3a72ffd4;
+    border-radius: 10px;
+    font-size: 17px;
+    width: 140px;
+    text-align: center;
+    margin-top: 60px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .month-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  .prev-month, .next-month {
+    border-radius: 50%;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 32px;
+    margin: 0 20px 0 20px;
+    border: 0;
+  }
+
+  .prev-month:hover, .next-month:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+  }
+  
+  .week-days{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
+  }
+
+  .week-day{
+    display: flex;
+  }
+
+  .week{
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 35px;
+  }
+
+  .days-container{
+    display: flex;
+    position: absolute;
+    gap: 7px;
+  }
+
+  .day {
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 50px;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: light;
+  }
+  
+  .day:hover, .day.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+  
+  .week-number {
+    margin-right: 5px;
+    background-color: #3a72ffd4;
+    color: white;
+    border-radius: 10%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: 10px;
+  }
+  
+  .day.empty {
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  .past-day {
+    color: #999;
+    font-weight: lighter;
+  }
+  
+  .future-day {
+    font-weight: bold; 
+  }
+  
+  .past {
+    opacity: 0.5;
+  }
+  
+  .day:hover:not(.past) {
+    background-color: #3a72ffd4;
+  }
+
+  .days-past{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-past:hover, .days-past.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+    font-weight: lighter;
+  }
+
+  .days-next{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+
+  .days-next:hover, .days-next.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+    font-weight: lighter;
+  }
+
+  .day.weekend {
+    color: #94b2ff; /* Witte tekstkleur */
+    font-weight: lighter;
+  }
+  
+  .fotoinButtonL{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
+
+  .fotoinButtonR{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
+
+.submitBeschikbaarheid{
+  border-radius: 10px;
+  background-color: #3a72ffd4;
+  color: white;
+  border: solid 2px #3a72ffd4;
+  width: 300px;
+  height: 40px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.submitBeschikbaarheid:hover{
+  transition: all 1s ease;
+  border-radius: 20px;
+  background-color: #3a72ff;
+}
