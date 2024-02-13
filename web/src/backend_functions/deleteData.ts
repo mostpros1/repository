@@ -5,7 +5,7 @@ export function deleteData(tableName: string, key: string, value: string) {
     .delete({
       TableName: tableName,
       Key: {
-        key: value,
+        [key]: value,
       },
     })
     .promise()
