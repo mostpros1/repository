@@ -21,6 +21,7 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 Amplify.configure(awsconfig);
 import { RootStackParamList } from "./types";
+import ProfileSecurity from "./(Components)/Profile/ProfileSecurity";
 
 const App = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -62,7 +63,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="ProfileSecurity" component={Profile} />
+        <Stack.Screen name="ProfileSecurity" component={ProfileSecurity} />
         {/* <Stack.Screen name="ProfileSettingsOne" component={ProfileSettingsOne} /> */}
         <Stack.Screen
           name="ProfileSettingsTwo"

@@ -58,9 +58,11 @@ const ProfileSecurity = ({ navigation }) => {
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Mobiele nummer</Text>
+                                    <Text style={[styles.lightTitle]}>+31 01234***89</Text>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>E-mailadres</Text>
+                                    <Text style={[styles.lightTitle]}>Lisa@gmail.com</Text>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Inloggegevens</Text>
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     agendaButton: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
         gap: 10,
     },
     image: {
@@ -232,6 +234,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
+    },
+    lightTitle: {
+        fontSize: 13,
+        color: "#B7BEC5",
     },
 });
 
