@@ -31,7 +31,9 @@ const ProfileSecurity = ({ navigation }) => {
                         <View style={styles.topContainer}>
                             <View style={styles.topButtonsContainer}>
                                 <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="arrow-back" size={35} color="white" />
+                                    <View style={styles.smallCircle}>
+                                    <Icon name="arrow-back" size={28} color="#308AE4" />
+                                    </View>
                                 </Pressable>
                             </View>
                             <View style={styles.topContainerSecondSectionTwo}>
@@ -49,7 +51,7 @@ const ProfileSecurity = ({ navigation }) => {
                             </View>
                             <View style={styles.topContainerSecondSection}>
                                 <Text style={[styles.name, styles.textBold]}>
-                                    Jan Schilder
+                                    Lisa Zoetlief
                                 </Text>
                             </View>
                         </View>
@@ -58,20 +60,45 @@ const ProfileSecurity = ({ navigation }) => {
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Mobiele nummer</Text>
-                                    <Text style={[styles.lightTitle]}>+31 01234***89</Text>
+                                    <View style={styles.textButtonWrapper}>
+                                        <Text style={[styles.lightTitle]}>+31 01234***89</Text>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={[styles.arrowButton]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>E-mailadres</Text>
-                                    <Text style={[styles.lightTitle]}>Lisa@gmail.com</Text>
+                                    <View style={styles.textButtonWrapper}>
+                                        <Text style={[styles.lightTitle]}>lisazoetlief@hotmail.com</Text>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={[styles.arrowButton]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Inloggegevens</Text>
+                                    <View style={styles.textButtonWrapper}>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={[styles.arrowButton]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Loginmethode</Text>
+                                    <View style={styles.textButtonWrapper}>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={[styles.arrowButton]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Account verwijderen</Text>
+                                    <View style={styles.textButtonWrapper}>
+                                        <TouchableOpacity style={[styles.button]}>
+                                            <Text style={[styles.arrowButton]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Pressable>
                             </View>
                         </View>
@@ -169,6 +196,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    arrowButton: {
+        fontSize: 22,
+    },
     linkOne: {
         borderRadius: 10,
         backgroundColor: "#308AE4",
@@ -221,8 +251,8 @@ const styles = StyleSheet.create({
         lineHeight: 21,
     },
     textBold: {
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: 17,
+        lineHeight: 25,
         fontWeight: "bold",
     },
     textButtonWhite: {
@@ -238,6 +268,23 @@ const styles = StyleSheet.create({
     lightTitle: {
         fontSize: 13,
         color: "#B7BEC5",
+        lineHeight: 24,
+    },
+    textButtonWrapper: {
+        display: "flex",
+        alignItems: "flex-end",
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: 20,
+    },
+    smallCircle: {
+        width: 40,
+        height: 40,
+        borderRadius: 25, 
+        backgroundColor: 'white',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
 
