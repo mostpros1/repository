@@ -243,8 +243,8 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     linkTwoBottom: {
-        borderBottomRightRadius: 3,
-        borderBottomLeftRadius: 3,
+        borderBottomRightRadius: 3.5,
+        borderBottomLeftRadius: 3.5,
         backgroundColor: "#E9F4FF",
         width: 350,
         textAlign: "left",

@@ -13,7 +13,7 @@ import Login from "./(Components)/Login/Login";
 import Verify from "./(Components)/Verificatie/Verification";
 import Profile from "./(Components)/Profile/Profile";
 import ProfileSettings from "./(Components)/Profile/ProfileSecurity";
-// import ProfileSettingsOne from "./(Components)/Profile/ProfileSettingsOne"
+import ProfileSettingsOne from "./(Components)/Profile/ProfileSettingsOne"
 import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -64,7 +64,7 @@ const App = () => {
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ProfileSecurity" component={ProfileSecurity} />
-        {/* <Stack.Screen name="ProfileSettingsOne" component={ProfileSettingsOne} /> */}
+        <Stack.Screen name="ProfileSettingsOne" component={ProfileSettingsOne} />
         <Stack.Screen
           name="ProfileSettingsTwo"
           component={ProfileSettingsTwo}
