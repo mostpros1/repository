@@ -1,4 +1,4 @@
-import { dynamoDB } from '../main.tsx';
+import { dynamoDB } from './declerations.ts';
 
 
 

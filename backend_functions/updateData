@@ -1,4 +1,4 @@
-import { dynamo } from "../main.tsx";
+import { dynamo } from './declerations.ts';
 import aws from "aws-sdk";
 
 

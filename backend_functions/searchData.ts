@@ -1,4 +1,4 @@
-import { dynamoDB } from "../main.tsx";
+import { dynamoDB } from './declerations.ts';
 import aws from "aws-sdk";
 
 export function scanItem(tableName: string, filterExpression: string) {

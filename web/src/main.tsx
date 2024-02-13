@@ -11,6 +11,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { dynamoDB } from "../../backend_functions/declerations.js";
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -24,10 +25,6 @@ export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_TEST_KEY);
-
-export const dynamoDB = new aws.DynamoDB();
-
-export const dynamo = new aws.DynamoDB.DocumentClient()
 
 export function test(){
 dynamoDB
