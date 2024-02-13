@@ -18,13 +18,24 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
-export const dynamoDB = new aws.DynamoDB();
+
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_TEST_KEY);
 
+export const dynamoDB = new aws.DynamoDB();
+
+export const dynamo = new aws.DynamoDB.DocumentClient()
+
+export function test(){
+dynamoDB
+  .listTables()
+  .promise()
+  .then(() => console.log("Tables found"))
+  .catch(console.error)
+}
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -32,6 +43,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
+          <button onClick={test}>Test</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
