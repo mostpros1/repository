@@ -31,49 +31,84 @@ const ProfileSettingsTwo = ({ navigation }) => {
                         <View style={styles.topContainer}>
                             <View style={styles.topButtonsContainer}>
                                 <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="arrow-back" size={35} color="white" />
+                                    <View style={styles.smallCircle}>
+                                    <Icon name="arrow-back" size={28} color="#308AE4" />
+                                    </View>
                                 </Pressable>
                             </View>
                             <View style={styles.topContainerSecondSectionTwo}>
                                 <Text style={[styles.name, styles.textBold]}>
-                                    Profiel en beveiliging
+                                    Settings
                                 </Text>
                             </View>
                         </View>
 
-                        <View style={styles.middleContainer}>
-                            <Text style={[styles.textButtonBlack, styles.textBold]}>
-                                Profieloverzicht
-                            </Text>
+                        <View style={styles.firstMiddleContainerWrapper}>
+                                <Text style={[styles.textButtonBlack, styles.smallTitle]}>
+                                    Profiel overzicht
+                                </Text>
 
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="settings" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Mijn klussen</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                     <Icon name="notifications" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="lock" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Privacy</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="settings" size={23} color="black"/>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>General</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                </Pressable>
+                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="payments" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Betalingen</Text>
-                                </Pressable>
-                            </View>
-
-                            <Text style={[styles.textButtonBlack, styles.textBold]}>
-                                App-instellingen
-                            </Text>
-
-                            <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Help en feedback</Text>
-                                </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Over</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
                                 </Pressable>
                             </View>
                         </View>
+
+                        <View style={styles.secondMiddleContainerWrapper}>
+                            <Text style={[styles.textButtonBlack, styles.smallTitle]}>
+                                    Applicatie settingen
+                                </Text>
+
+                                <View style={styles.middleContainerFirstSection}>
+                                <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="help" size={23} color="gray"/>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Help en feedback</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                </Pressable>
+                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="info" size={23} color="#308AE4"/>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Over</Text>
+                                    <TouchableOpacity style={[styles.button, styles.arrowButton]}>
+                                            <Text style={[styles.arrow]}>&gt;</Text>
+                                        </TouchableOpacity>
+                                </Pressable>
+                            </View>
+                        </View>                        
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -135,19 +170,31 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: 50,
+        marginTop: 54,
         gap: 2,
     },
     name: {
         color: 'white',
     },
-    middleContainer: {
-        width: "75%",
+    firstMiddleContainerWrapper: {
+        width: "100%",
+        height: "50%",
+        padding: 10,
+        paddingBottom: 0,
+        paddingTop: 32,
+        backgroundColor: "white",
+    },
+    secondMiddleContainerWrapper: {
+        width: "100%",
+        height: 100,
+        padding: 10,
+        backgroundColor: "white",
     },
     middleContainerFirstSection: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        paddingLeft: 0,
     },
     agendaButton: {
         flexDirection: "row",
@@ -179,7 +226,7 @@ const styles = StyleSheet.create({
     },
     linkTwo: {
         backgroundColor: "#E9F4FF",
-        width: 380,
+        width: 350,
         textAlign: "left",
         padding: 20,
         bottom: -20,
@@ -189,17 +236,17 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: "#E9F4FF",
-        width: 380,
+        width: 350,
         textAlign: "left",
         padding: 20,
         bottom: -20,
         alignItems: "flex-start",
     },
     linkTwoBottom: {
-        borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 3,
+        borderBottomLeftRadius: 3,
         backgroundColor: "#E9F4FF",
-        width: 380,
+        width: 350,
         textAlign: "left",
         padding: 20,
         bottom: -20,
@@ -209,7 +256,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: "#E9F4FF",
-        width: 380,
+        width: 350,
         textAlign: "left",
         padding: 20,
         bottom: -20,
@@ -221,9 +268,14 @@ const styles = StyleSheet.create({
         lineHeight: 21,
     },
     textBold: {
-        fontSize: 16,
+        fontSize: 17,
         lineHeight: 21,
         fontWeight: "bold",
+    },
+    smallTitle: {
+        fontSize: 13,
+        fontWeight: "bold",
+        paddingLeft: 10,
     },
     textButtonWhite: {
         color: "white",
@@ -231,9 +283,27 @@ const styles = StyleSheet.create({
     textButtonBlack: {
         color: "black",
     },
+    arrow: {
+        fontSize: 22,
+    },
+    arrowButton: {
+        flex: 1,
+        display: "flex",
+        alignItems: "flex-end",
+    },
+    
     title: {
         fontSize: 20,
         fontWeight: "bold",
+    },
+    smallCircle: {
+        width: 40,
+        height: 40,
+        borderRadius: 25, 
+        backgroundColor: 'white',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
 
