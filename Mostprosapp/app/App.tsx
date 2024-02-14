@@ -18,6 +18,7 @@ import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo";
 import ProfileNotifications from "./(Components)/Profile/ProfileNotifications";
 import ProfileGeneralSettings from "./(Components)/Profile/ProfileGeneralSettings";
 import ChatOverview from "./(Components)/Chat/ChatOverview";
+import HomePageSpecialist from "./(Components)/Specialist/HomePageSpecialist";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Amplify } from "aws-amplify";
@@ -72,6 +73,7 @@ const App = () => {
         <Stack.Screen name="ProfileSettingsTwo" component={ProfileSettingsTwo}/>
         <Stack.Screen name="ProfileGeneralSettings" component={ProfileGeneralSettings}/>
         <Stack.Screen name="ChatOverview" component={ChatOverview}/>
+        <Stack.Screen name="HomePageSpecialist" component={HomePageSpecialist}/>
 
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>

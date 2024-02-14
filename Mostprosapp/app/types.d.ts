@@ -25,4 +25,5 @@ declare global {
     ProfileNotifications: undefined;
     ProfileGeneralSettings: undefined;
     ChatOverview: undefined;
+    HomePageSpecialist: undefined;
   };
