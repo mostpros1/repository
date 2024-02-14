@@ -58,11 +58,11 @@ const ProfileNotifications = ({ navigation }) => {
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Nieuwe berichten</Text>
-                                    <Switch value={isSwitchOn1} onValueChange={onToggleSwitch1} color="#308AE4" />
+                                    <Switch value={isSwitchOn1} onValueChange={onToggleSwitch1} ios_backgroundColor="#606160" color="#308AE4" />
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
-                                    <Switch value={isSwitchOn2} onValueChange={onToggleSwitch2} color="#308AE4" />
+                                    <Switch value={isSwitchOn2} onValueChange={onToggleSwitch2} ios_backgroundColor="#606160" color="#308AE4" />
                                 </Pressable>
 
                             </View>
