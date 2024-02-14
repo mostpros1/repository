@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-  region: 'jouw-regio',
-  // credentials indien nodig, aanbevolen via Cognito voor frontend applicaties
+  region: 'us-east-2',
+  accessKeyId: 'JouwAccessKeyID',
+  secretAccessKey: 'JouwSecretAccessKey',
 });
 
 export const dynamoDb = new AWS.DynamoDB.DocumentClient();

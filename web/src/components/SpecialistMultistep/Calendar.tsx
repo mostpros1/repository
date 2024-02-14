@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import { dynamoDb } from './dynamoDBClient';
+import {dynamoDb}  from './dynamoDBClient';
 import AWS from 'aws-sdk';
 
   const DateAndTimePicker: React.FC = () => {
@@ -138,13 +138,12 @@ import AWS from 'aws-sdk';
     ));
   };
   
-
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
   const submitDates = async () => {
 
     const item = {
-      userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
+      userId: "", // Dit zou iets unieks moeten zijn, zoals een user-id
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
     };
     
@@ -152,8 +151,7 @@ import AWS from 'aws-sdk';
       TableName: "UserAvailability",
       Item: {
         userId: "userId",
-        dates: selectedDates, // De array met geselecteerde datums
-        // Voeg eventueel andere relevante gegevens toe
+        dates: selectedDates,
       },
     };
   
