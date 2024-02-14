@@ -39,6 +39,9 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
                 <Text style={[styles.text]}>ProfileGeneralSettings</Text>
             </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatOverview')}>
+                <Text style={[styles.text]}>ChatOverview</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>

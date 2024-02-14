@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from "expo-router";
+import React from "react";
 import {
   StyleSheet,
   Button,
@@ -11,16 +10,16 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  TextInput,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
+import { KeyboardAvoidingView } from 'react-native';
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-
-
-const Profile = ({ navigation }) => {
+const ChatOverview = ({ navigation }) => {
   const CustomIcon = (props) => {
     return (
       <View>
@@ -45,49 +44,163 @@ const Profile = ({ navigation }) => {
           <View style={styles.view}>
             <View style={styles.topContainer}>
               <View style={styles.topButtonsContainer}>
-                <Pressable style={[styles.linkTwo, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                  <Text style={[styles.text, styles.textButtonWhite]}>&lt;</Text>
+                <Pressable
+                  style={[styles.backWrapper, styles.returnButton]}
+                  onPress={() => navigation.navigate("")}>
+                  <View style={styles.smallCircle}>
+                    <Icon name="arrow-back" size={28} color="#308AE4" />
+                  </View>
                 </Pressable>
               </View>
-              <View style={styles.topContainerFirstSection}>
-                <Text style={[styles.title, styles.text]}>
-                  Messaging
+              <Text style={[styles.title, styles.text]}>Messaging</Text>
+            </View>
+            <View style={styles.topContainerSecondSection}>
+              <Pressable
+                style={styles.linkOne}
+                onPress={() => navigation.navigate("")}
+              >
+                <Text style={[styles.text, styles.textButtonBlack]}>
+                  Notificaties
                 </Text>
-              </View>
-              <View style={styles.topContainerSecondSection}>
-                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                  <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
-                </Pressable>
-                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                  <Text style={[styles.text, styles.textButtonBlack]}>Berichten</Text>
-                </Pressable>
-                <Pressable style={styles.linkOne} onPress={() => navigation.navigate('')}>
-                  <Text style={[styles.text, styles.textButtonBlack]}>Community</Text>
-                </Pressable>
-              </View>
+              </Pressable>
+              <Pressable
+                style={[styles.linkOne, styles.selected]}
+                onPress={() => navigation.navigate("")}
+              >
+                <Text style={[styles.text, styles.textButtonBlack]}>
+                  Berichten
+                </Text>
+              </Pressable>
+              <Pressable
+                style={styles.linkOne}
+                onPress={() => navigation.navigate("")}
+              >
+                <Text style={[styles.text, styles.textButtonBlack]}>
+                  Community
+                </Text>
+              </Pressable>
+            </View>
+            <View style={styles.container}>
+              <Icon name="search" size={28} color="gray" />
+              <TextInput
+                placeholder="Zoeken"
+                style={styles.input}
+                onChangeText={(text) => {
+                  // hier invullen wat er moet gebeuren met de input
+                }}
+              />
             </View>
 
             <View style={styles.middleContainer}>
               <View style={[styles.middleContainerFirstSection]}>
-                <View style={styles.personContainer}>
-                  <Text style={[styles.name, styles.text]}>
-                    Jan Schilder
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Jan Schilder</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
+                  <Text style={styles.lightTitle}>
+                    Ja, ik ben beschikbaar volgende week {'\n'}
+                    woensdag.
                   </Text>
-                  <Text style={[styles.message, styles.text]}>
-                    Ik ben volgende week woensdag beschikbaar.
-                  </Text>
-                </View>
-                <View style={styles.circleContainer}>
-                  <View>
-                    <Image
-                      style={styles.image}
-                      source={require("../../../assets/images/jan.png")}
-                    />
+                  <View style={styles.notification}>
+                    <Text style={styles.textButtonWhite}>1</Text>
+                  </View>
                   </View>
                 </View>
               </View>
-
-              <View style={styles.middleContainerSecondSection}>
+              
+              
+              <View style={[styles.middleContainerFirstSection]}>
+              <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Beste klussers B.V</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
+                  <Text style={styles.lightTitle}>
+                    Ja, ik ben beschikbaar volgende week {'\n'}
+                    woensdag.
+                  </Text>
+                  <View style={styles.notification}>
+                    <Text style={styles.textButtonWhite}>1</Text>
+                  </View>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                  <View style={styles.size}>
+                    <View style={styles.textWrapperTop}>
+                      <Text style={[styles.text, styles.textButtonBlack,]}>Lina</Text>
+                      <Text style={styles.lightTitle}>13:40pm</Text>
+                    </View>
+                    <View style={styles.textWrapperBottom}>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
+                    </View>
+                  </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                  <View style={styles.size}>
+                    <View style={styles.textWrapperTop}>
+                      <Text style={[styles.text, styles.textButtonBlack,]}>Tim Klus</Text>
+                      <Text style={styles.lightTitle}>13:40pm</Text>
+                    </View>
+                    <View style={styles.textWrapperBottom}>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
+                    </View>
+                  </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                  <View style={styles.size}>
+                    <View style={styles.textWrapperTop}>
+                      <Text style={[styles.text, styles.textButtonBlack,]}>Ricardo van Dorp</Text>
+                      <Text style={styles.lightTitle}>13:40pm</Text>
+                    </View>
+                    <View style={styles.textWrapperBottom}>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
+                    </View>
+                  </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+                  <View style={styles.size}>
+                    <View style={styles.textWrapperTop}>
+                      <Text style={[styles.text, styles.textButtonBlack,]}>Nora Kikker</Text>
+                      <Text style={styles.lightTitle}>13:40pm</Text>
+                    </View>
+                    <View style={styles.textWrapperBottom}>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
+                    </View>
+                  </View>
               </View>
             </View>
           </View>
@@ -98,35 +211,89 @@ const Profile = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   view: {
-    height: windowHeight,
+    height: "100%",
     width: windowWidth,
     display: "flex",
     alignItems: "center",
     backgroundColor: "white",
   },
+
+  notification:{
+    width: 25,
+    aspectRatio: 1/1,
+    borderRadius: 50,
+    backgroundColor: "#318ae5",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  image: {
+    width: 90,
+    borderRadius: 45,
+    height: undefined,
+    aspectRatio: 1,
+  },
+
+  size: {
+    flex: 1,
+  },
+
+  middleContainerFirstSection: {
+    width: 380,
+    height: 105,
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "#E9F4FF",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderRadius: 10,
+    padding: 13,
+  },
+
+  lightTitle: {
+    fontSize: 12,
+    color: "#B7BEC5",
+},
+
+  textWrapperTop: {
+    flex: 1, 
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    paddingLeft: 10,
+
+  },
+
+  textWrapperBottom: {
+    flex: 1, 
+    padding: 10, 
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+
   topContainer: {
     width: 700,
     height: 110,
     display: "flex",
     backgroundColor: "#308AE4",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     flexDirection: "column",
+    paddingBottom: 30,
   },
   topButtonsContainer: {
-    width: '60%',
+    width: "60%",
     paddingHorizontal: 20,
-    position: 'absolute',
+    position: "absolute",
     top: -25,
   },
 
   returnButton: {
-    borderRadius: 10,
     backgroundColor: "transparent",
     width: 60,
     textAlign: "center",
-    borderWidth: 1,
-    borderColor: "white",
   },
   topContainerFirstSection: {
     display: "flex",
@@ -135,7 +302,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   topContainerSecondSection: {
-    padding: 20,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -143,39 +309,34 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   title: {
-    top: 50,
-    color: 'white',
+    color: "white",
   },
   name: {
     marginLeft: 10,
-    color: 'black',
+    color: "black",
     fontWeight: "bold",
   },
   message: {
     marginLeft: 10,
-    color: 'black',
+    color: "black",
     fontStyle: "italic",
   },
   middleContainer: {
-    top: 0,
-    padding: 140,
-  },
-  middleContainerFirstSection: {
-    width: 380,
-    height: 105,
+    padding: 15,
     display: "flex",
-    backgroundColor: "#E9F4FF",
     alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: 10,
-    paddingRight: 250,
+    justifyContent: "center",
+    gap: 15,
   },
+
+
   middleContainerSecondSection: {
     display: "flex",
     alignItems: "flex-start",
     marginTop: 120,
     gap: 20,
   },
+
   personContainer: {
     display: "flex",
     flexDirection: "row",
@@ -191,14 +352,7 @@ const styles = StyleSheet.create({
     borderRadius: 400,
     borderWidth: 1,
     borderColor: "white",
-    overflow: 'hidden',
-  },
-  image: {
-    flex: 1,
-    width: '100%',
-    height: undefined,
-    aspectRatio: 1,
-    transform: [{ scale: 1.6 }]
+    overflow: "hidden",
   },
   button: {
     borderRadius: 10,
@@ -216,16 +370,19 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   linkOne: {
-    borderColor: "black",
-    borderWidth: 1,
     backgroundColor: "white",
-    width: 140,
+    width: 131,
+    height: 60,
     textAlign: "center",
     padding: 10,
-    bottom: -65,
     alignItems: "center",
+    justifyContent: "flex-end",
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   linkTwo: {
     borderColor: "black",
@@ -247,7 +404,7 @@ const styles = StyleSheet.create({
     padding: 20,
     bottom: -60,
     borderWidth: 2,
-    borderColor: '#308AE4',
+    borderColor: "#308AE4",
   },
   messageButton: {
     borderRadius: 10,
@@ -257,12 +414,10 @@ const styles = StyleSheet.create({
     padding: 20,
     bottom: -60,
     borderWidth: 2,
-    borderColor: '#308AE4',
+    borderColor: "#308AE4",
   },
   text: {
     fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
   },
   textButtonWhite: {
     color: "white",
@@ -270,6 +425,52 @@ const styles = StyleSheet.create({
   textButtonBlack: {
     color: "black",
   },
+  smallCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  backWrapper: {
+    borderRadius: 10,
+    backgroundColor: "#308AE4",
+    width: 250,
+    textAlign: "center",
+    padding: 10,
+    bottom: -60,
+    alignItems: "center",
+  },
+
+  selected: {
+    borderWidth: 2,
+    borderColor: "#308AE4",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#f5f5f9",
+    backgroundColor: "#fffefe",
+    height: 50,
+    padding: 10,
+    borderRadius: 5,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    marginTop: 15,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+  },
 });
 
-export default Profile;
+export default ChatOverview;

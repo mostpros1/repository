@@ -24,4 +24,5 @@ declare global {
     ProfileSettingsTwo: undefined;
     ProfileNotifications: undefined;
     ProfileGeneralSettings: undefined;
+    ChatOverview: undefined;
   };
