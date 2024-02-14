@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-
+import AWS from 'aws-sdk';
 
   const DateAndTimePicker: React.FC = () => {
   const today = new Date();
@@ -137,6 +137,31 @@ import Prev from './arrowL.png';
     ));
   };
   
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const submitDates = async () => {
+
+    const item = {
+      userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
+      dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    };
+    
+    const params = {
+      TableName: "UserAvailability",
+      Item: {
+        userId: "userId",
+        dates: selectedDates,
+      },
+    };
+  
+    try {
+      await dynamoDb.put(params).promise();
+      alert("Beschikbaarheid succesvol opgeslagen!");
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      alert("Fout bij het opslaan van beschikbaarheid.");
+    }
+  };
   
   return (
     <div className="date-time-picker">
@@ -154,6 +179,7 @@ import Prev from './arrowL.png';
         <div className="week">
           {renderCalendar()}
         </div>
+        <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Sla uw beschikbaarheid op</button>
       </div>
     </div>
   );

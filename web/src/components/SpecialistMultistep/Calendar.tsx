@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import {dynamoDb}  from './dynamoDBClient';
 import AWS from 'aws-sdk';
 
   const DateAndTimePicker: React.FC = () => {
@@ -143,7 +142,7 @@ import AWS from 'aws-sdk';
   const submitDates = async () => {
 
     const item = {
-      userId: "", // Dit zou iets unieks moeten zijn, zoals een user-id
+      userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
     };
     

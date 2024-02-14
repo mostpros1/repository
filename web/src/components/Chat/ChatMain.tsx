@@ -8,6 +8,7 @@ import * as queries from "../../graphql/queries";
 import intlFormatDistance from "date-fns/intlFormatDistance";
 import * as subscriptions from "../../graphql/subscriptions";
 import { useChatBackend } from "./ChatBackend";
+
 import "./chatbox.css";
 
 function ChatMain({ user, signOut }) {
