@@ -85,7 +85,7 @@ const questionsData: Question[] = [
       "Marketing",
       "Anders",
     ],
-  },
+  },/*
   {
     key: "question3",
     label: "Wat is uw specialisaties",
@@ -96,7 +96,7 @@ const questionsData: Question[] = [
       "Marketing",
       "Anders",
     ],
-  },
+  },*/
   // ... voeg andere vragen toe zoals nodig
 ];
 
@@ -212,7 +212,7 @@ function SpecialistMultistepForm() {
   //Timon
 
 
-  async function currentAuthenticatedUser(data: FormData) {
+  async function handelFormData(data: FormData) {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
@@ -225,7 +225,11 @@ function SpecialistMultistepForm() {
       const userData = getItem("users", userId);
       console.log(`The userData: ${JSON.stringify(userData)}`);
 
-      //addProfessionals(moetGenereren, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+      //met de gegevens met de datums verwerken voor availibility.
+      const id: number = Math.random();
+      //addProfessionals(id, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+
+      //addAvailibility(id: number, professional_id: number, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
     } catch (err) {
       console.log(err);
     }
@@ -237,11 +241,7 @@ function SpecialistMultistepForm() {
       return next();
     } else {
       console.log(data);
-      currentAuthenticatedUser(data)
-      //moet nog een dynamoDB call worden met de gebruikers gegevens op basis van de session gegevens.
-      /*
-      
-      */
+      handelFormData(data);
       navigate("/specialist-resultaat");
     }
   }
