@@ -87,6 +87,7 @@ const ProfilePrivacy = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    
     view: {
         height: windowHeight,
         width: windowWidth,

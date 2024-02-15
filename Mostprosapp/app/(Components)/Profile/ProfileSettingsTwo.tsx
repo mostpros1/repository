@@ -24,11 +24,10 @@ const windowHeight = Dimensions.get("window").height;
 const ProfileSettingsTwo = ({ navigation }) => {
     return (
         <PaperProvider>
-            <SafeAreaView>
-
+            <SafeAreaView style={styles.container}>
                 <ScrollView>
                     <View style={styles.view}>
-                        <View style={styles.topContainer}>
+                    <View style={styles.topContainer}>
                             <View style={styles.topButtonsContainer}>
                                 <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
                                     <View style={styles.smallCircle}>
@@ -44,71 +43,71 @@ const ProfileSettingsTwo = ({ navigation }) => {
                         </View>
 
                         <View style={styles.firstMiddleContainerWrapper}>
-                                <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                    Profiel overzicht
-                                </Text>
+                            <Text style={[styles.textButtonBlack, styles.smallTitle]}>
+                                Profiel overzicht
+                            </Text>
 
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="settings" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Mijn klussen</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Mijn klussen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                     <Icon name="notifications" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
+                                    <Icon name="notifications" size={23} color="black"/>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Notificaties</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="lock" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Privacy</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Privacy</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="settings" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>General</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>General</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="payments" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Betalingen</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Betalingen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                             </View>
                         </View>
 
                         <View style={styles.secondMiddleContainerWrapper}>
                             <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                    Applicatie settingen
-                                </Text>
+                                Applicatie settingen
+                            </Text>
 
-                                <View style={styles.middleContainerFirstSection}>
+                            <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="help" size={23} color="gray"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Help en feedback</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Help en feedback</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="info" size={23} color="#308AE4"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Over</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Over</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                             </View>
-                        </View>                        
+                        </View>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -117,10 +116,12 @@ const ProfileSettingsTwo = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "white",
+    },
     view: {
-        height: windowHeight,
-        width: windowWidth,
-        display: "flex",
+        flex: 1,
         alignItems: "center",
         backgroundColor: "white",
     },
@@ -148,13 +149,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     circleContainer: {
-        marginTop: 55,
-        width: 170,
-        height: 170,
+        marginTop: windowHeight * 0.07,
+        width: windowWidth * 0.4,
+        height: windowWidth * 0.4,
         display: "flex",
         backgroundColor: "transparent",
         alignItems: "center",
-        borderRadius: 400,
+        borderRadius: windowWidth * 0.5,
         borderWidth: 1,
         borderColor: "white",
         overflow: 'hidden',
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: 15,
+        marginTop: windowHeight * 0.02,
         gap: 2,
     },
     topContainerSecondSectionTwo: {
@@ -178,29 +179,31 @@ const styles = StyleSheet.create({
     },
     firstMiddleContainerWrapper: {
         width: "100%",
-        height: "50%",
-        padding: 10,
-        paddingBottom: 0,
-        paddingTop: 32,
         backgroundColor: "white",
+        paddingBottom: windowHeight * 0.02,
+        paddingTop: windowHeight * 0.05,
     },
     secondMiddleContainerWrapper: {
         width: "100%",
-        height: 100,
-        padding: 10,
         backgroundColor: "white",
+        paddingBottom: windowHeight * 0.01,
     },
     middleContainerFirstSection: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         paddingLeft: 0,
+        paddingTop: 10,
     },
     agendaButton: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
-        gap: 10,
+        paddingLeft: 16,
+        paddingRight: 16,
+    },
+    pressableText: {
+        paddingLeft: 10,
     },
     image: {
         flex: 1,
@@ -226,56 +229,52 @@ const styles = StyleSheet.create({
     },
     linkTwo: {
         backgroundColor: "#E9F4FF",
-        width: 350,
+        width: windowWidth * 0.9,
         textAlign: "left",
-        padding: 20,
-        bottom: -20,
+        paddingVertical: 10,
         alignItems: "flex-start",
     },
     linkTwoTop: {
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: "#E9F4FF",
-        width: 350,
+        width: windowWidth * 0.9,
         textAlign: "left",
-        padding: 20,
-        bottom: -20,
+        paddingVertical: 10,
         alignItems: "flex-start",
     },
     linkTwoBottom: {
         borderBottomRightRadius: 3.5,
         borderBottomLeftRadius: 3.5,
         backgroundColor: "#E9F4FF",
-        width: 350,
+        width: windowWidth * 0.9,
         textAlign: "left",
-        padding: 20,
-        bottom: -20,
+        paddingVertical: 10,
         alignItems: "flex-start",
     },
     linkTwoDelete: {
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: "#E9F4FF",
-        width: 350,
+        width: windowWidth * 0.9,
         textAlign: "left",
-        padding: 20,
-        bottom: -20,
+        paddingVertical: 10,
         alignItems: "flex-start",
-        marginTop: 10,
+        marginTop: windowHeight * 0.01,
     },
     text: {
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: windowWidth * 0.04,
+        lineHeight: windowHeight * 0.053,
     },
     textBold: {
-        fontSize: 17,
-        lineHeight: 21,
+        fontSize: windowWidth * 0.042,
+        lineHeight: windowHeight * 0.053,
         fontWeight: "bold",
     },
     smallTitle: {
-        fontSize: 13,
+        fontSize: windowWidth * 0.034,
         fontWeight: "bold",
-        paddingLeft: 10,
+        paddingLeft: windowWidth * 0.02,
     },
     textButtonWhite: {
         color: "white",
@@ -284,16 +283,15 @@ const styles = StyleSheet.create({
         color: "black",
     },
     arrow: {
-        fontSize: 22,
+        fontSize: windowWidth * 0.05,
     },
     arrowButton: {
         flex: 1,
         display: "flex",
         alignItems: "flex-end",
     },
-    
     title: {
-        fontSize: 20,
+        fontSize: windowWidth * 0.05,
         fontWeight: "bold",
     },
     smallCircle: {

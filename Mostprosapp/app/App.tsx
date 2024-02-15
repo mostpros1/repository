@@ -13,6 +13,7 @@ import Login from "./(Components)/Login/Login";
 import Verify from "./(Components)/Verificatie/Verification";
 import Profile from "./(Components)/Profile/Profile";
 import ProfileSettings from "./(Components)/Profile/ProfileSecurity";
+import ProfileSecurity from "./(Components)/Profile/ProfileSecurity";
 import ProfileSettingsOne from "./(Components)/Profile/ProfileSettingsOne"
 import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo";
 import ProfileNotifications from "./(Components)/Profile/ProfileNotifications";
@@ -27,16 +28,15 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 Amplify.configure(awsconfig);
 import { RootStackParamList } from "./types";
-import ProfileSecurity from "./(Components)/Profile/ProfileSecurity";
 
 const App = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Stack.Navigator 
         initialRouteName="LandingPage"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: false }} 
       >
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="KeuzePage" component={KeuzePage} />
