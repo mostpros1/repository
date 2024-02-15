@@ -4,7 +4,11 @@ import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import AWS from 'aws-sdk';
 
-  const DateAndTimePicker: React.FC = () => {
+interface DateAndTimePickerProps {
+  onDateChange?: (selectedDates: string[]) => void;
+}
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ onDateChange }) => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
@@ -14,17 +18,15 @@ import AWS from 'aws-sdk';
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
-    const dateString = date.toISOString().split('T')[0]; // Formatteer de datum als 'YYYY-MM-DD'
-    if (date < today) return;
-    setSelectedDates((prevDates) => {
-      if (prevDates.includes(dateString)) {
-        // Verwijder de datum als deze al geselecteerd was
-        return prevDates.filter(d => d !== dateString);
-      } else {
-        // Voeg de nieuwe datum toe aan de geselecteerde datums
-        return [...prevDates, dateString];
-      }
-    });
+      const dateString = date.toISOString().split('T')[0]; // Formatteer de datum als 'YYYY-MM-DD'
+      if (date < today) return;
+      setSelectedDates((prevDates) => {
+          const newDates = prevDates.includes(dateString) ? prevDates.filter(d => d !== dateString) : [...prevDates, dateString];
+          if (onDateChange) {
+              onDateChange(newDates);
+          }
+          return newDates;
+      });
   };
 
   const handlePrevMonth = () => {
@@ -137,10 +139,10 @@ import AWS from 'aws-sdk';
     ));
   };
   
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
+  
   const submitDates = async () => {
-
+    
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const item = {
       userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
       dates: selectedDates, // Dit is de lijst van geselecteerde datums

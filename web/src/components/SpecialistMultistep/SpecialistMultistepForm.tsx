@@ -48,7 +48,6 @@ const INITIAL_DATA: FormData = {
   questions: {
     question1: "",
     question2: "",
-    question3: "",
   },
   dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
 };
@@ -152,23 +151,6 @@ function SpecialistMultistepForm() {
       if (dateTimeSpans.length < 5) {
         const newDateTimeSpan = { date: new Date(), startTime: "", endTime: "" };
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
-      }
-    };
-  
-    const handleDateTimeSpanChange = (index, field, value) => {
-      const updatedDateTimeSpans = dateTimeSpans.map((span, i) => {
-        if (i === index) {
-          return { ...span, [field]: field === 'date' ? new Date(value) : value };
-        }
-        return span;
-      });
-      updateFields({ dateTimeSpans: updatedDateTimeSpans });
-    };
-
-    const removeDateTimeSpan = (indexToRemove) => {
-      if (dateTimeSpans.length > 1) {
-        const updatedDateTimeSpans = dateTimeSpans.filter((_, index) => index !== indexToRemove);
-        updateFields({ dateTimeSpans: updatedDateTimeSpans });
       }
     };
   
