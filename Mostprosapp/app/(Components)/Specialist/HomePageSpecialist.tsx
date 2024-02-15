@@ -43,16 +43,155 @@ const HomePageSpecialist = ({ navigation }) => {
               <View style={[styles.textSearchWrapper]}>
                 <Text style={[styles.whiteBoldText]}>Stad \/</Text>
                 <View style={styles.container}>
-                <TextInput
+                  <TextInput
                     placeholder="Zoeken"
                     style={styles.input}
                     onChangeText={(text) => {
-                     // hier invullen wat er moet gebeuren met de input
-                }}
-                
-              />
-                <Icon name="forward" size={25} color="#318ae5" />
+                      // hier invullen wat er moet gebeuren met de input
+                    }}
+                  />
+                  <Icon name="forward" size={25} color="#318ae5" />
+                </View>
+              </View>
+              <View style={[styles.iconsText]}>
+                <Pressable style={[styles.iconsTextWrapper]}>
+                  <Icon name="scanner" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Scannen</Text>
+                </Pressable>
+                <Pressable style={[styles.iconsTextWrapper]}>
+                  <Icon name="payment" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Betaleningen</Text>
+                </Pressable>
+                <Pressable style={[styles.iconsTextWrapper]}>
+                  <Icon name="local-parking" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Parkeren</Text>
+                </Pressable>
+                <Pressable style={[styles.iconsTextWrapper]}>
+                  <Icon name="work" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Zak</Text>
+                </Pressable>
+              </View>
+              <Pressable style={[styles.searchBar]}>
+                <View style={styles.smallCircle}>
+                  <Icon name="add" size={28} color="#308AE4" />
+                </View>
+                <Text style={[styles.whiteIconText]}>Klussen vinden</Text>
+              </Pressable>
             </View>
+            <View style={[styles.titleWrap]}>
+              <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
+            </View>
+            <View style={[styles.iconsText]}>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="grass" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Hovenier</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="lightbulb" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Elektricien</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="house" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Dekker</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="sanitizer" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Schoonmaker</Text>
+              </Pressable>
+            </View>
+            <View style={[styles.cardWrapper]}>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../../assets/images/howToStart.png")}
+                  />
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                    <Text style={[styles.cardBigTitle]}>Keuken</Text>
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                    <Text style={[styles.cardBigTitle]}>Huis</Text>
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                    <Text style={[styles.cardBigTitle]}>Badkamer</Text>
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                    <Text style={[styles.cardBigTitle]}>Tuin</Text>
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                    <Text style={[styles.cardBigTitle]}>Schuur</Text>
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </View>
@@ -63,109 +202,235 @@ const HomePageSpecialist = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    view: {
-        height: windowHeight,
-        width: windowWidth,
-        display: "flex",
-        alignItems: "center",
+  view: {
+    height: "100%",
+    width: windowWidth,
+    display: "flex",
+    alignItems: "center",
+  },
+
+  cardFirstHalf: {
+    width: 170,
+    height: 110,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  cardSecondHalf: {
+    width: 170,
+    height: 90,
+    backgroundColor: "#fcfdfc",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+  },
+
+  card: {
+    width: 170,
+    height: 200,
+    backgroundColor: "white",
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 
-    smallCircle: {
-        width: 25,
-        height: 25,
-        borderRadius: 25,
-        backgroundColor: "#308AE4",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      },
+  cardWrapper: {
+    width: windowWidth,
+    height: "100%",
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 25,
+  },
 
-    backWrapper: {
-        borderRadius: 10,
-        width: 250,
-        textAlign: "center",
-        padding: 10,
-        bottom: -60,
-        alignItems: "center",
-      },
+  titleWrap: {
+    width: windowWidth,
+    height: 65,
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    paddingLeft: 20,
+  },
 
-      returnButton: {
-        backgroundColor: "transparent",
-        width: 60,
-        textAlign: "center",
-      },
+  searchBar: {
+    width: "70%",
+    height: "20%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    backgroundColor: "#308be5",
+    borderRadius: 28,
+    paddingLeft: 20,
+    gap: 30,
+  },
 
-    whiteBoldText:{
-        fontSize: 20,
-        color: "#fffefe",
-        fontFamily: "bold",
-    },
+  iconsText: {
+    marginTop: 15,
+    width: windowWidth,
+    height: 120,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+  },
 
-    container: {
-        flexDirection: "row",
-        alignItems: "center",
-        borderColor: "#f5f5f9",
-        backgroundColor: "#fffefe",
-        height: 40,
-        borderRadius: 10,
-        padding: 10,
-        width: "75%",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        marginTop: 15,
-      },
-      input: {
-        flex: 1,
-        fontSize: 16,
-      },
+  iconsTextWrapper: {
+    width: 90,
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
 
-    textSearchWrapper:{
-        width: windowWidth,
-        height: 30,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "row",
-        paddingLeft: 30,
-        paddingRight: 30,
-        gap: 20,
-    },
+  whiteIconText: {
+    fontSize: 14,
+    color: "#f7fbff",
+  },
 
-    headerSquare:{
-        height: 350,
-        width: windowWidth,
-        backgroundColor: "#74bcfd",
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
-    },
+  cardTitle: {
+    textAlign: "center",
+    color: "#303030",
+    fontSize: 13,
+  },
 
-    logoNotificationWrapper:{
-        width: windowWidth,
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        paddingBottom: 25,
-    },
+  cardBigTitle: {
+    textAlign: "center",
+    color: "#303030",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 
-    imageContainer: {
-        height: 100,
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
+  blueText: {
+    textAlign: "center",
+    color: "#308be5",
+    fontSize: 13,
+    fontWeight: "bold",
+  },
 
-    image: {
-        width: 170, 
-        height: 100,
-        resizeMode: "contain", 
-    },
+  blackTitle: {
+    fontSize: 16,
+    color: "#414140",
+    fontWeight: "bold",
+  },
 
-    iconContainer: {
-        position: "absolute",
-        right: 25, 
-        bottom: 56, 
-    },
+  blackIconText: {
+    fontSize: 14,
+    color: "#303030",
+  },
+
+  smallCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  backWrapper: {
+    borderRadius: 10,
+    width: 250,
+    textAlign: "center",
+    padding: 10,
+    bottom: -60,
+    alignItems: "center",
+  },
+
+  returnButton: {
+    backgroundColor: "transparent",
+    width: 60,
+    textAlign: "center",
+  },
+
+  whiteBoldText: {
+    fontSize: 20,
+    color: "#fffefe",
+    fontWeight: "bold",
+  },
+
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#f5f5f9",
+    backgroundColor: "#fffefe",
+    height: 40,
+    borderRadius: 10,
+    padding: 10,
+    width: "75%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    marginTop: 15,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+  },
+
+  textSearchWrapper: {
+    width: windowWidth,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    paddingLeft: 30,
+    paddingRight: 30,
+    gap: 20,
+  },
+
+  headerSquare: {
+    height: 350,
+    width: windowWidth,
+    backgroundColor: "#74bcfd",
+    display: "flex",
+    alignItems: "center",
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    gap: 4,
+  },
+
+  logoNotificationWrapper: {
+    width: windowWidth,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingBottom: 25,
+  },
+
+  imageContainer: {
+    height: 100,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
+  image: {
+    height: "90%",
+    resizeMode: "contain",
+  },
+
+  iconContainer: {
+    position: "absolute",
+    right: 25,
+    bottom: 56,
+  },
 });
 
 export default HomePageSpecialist;
