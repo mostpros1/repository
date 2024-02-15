@@ -11,6 +11,9 @@ import NoKvK from "./NoKvK/NoKvK";
 import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
+import { getItem } from '../../../backend_functions/searchData.ts';
+import { Auth } from 'aws-amplify';
+
 import Calendar from './Calendar';
 
 type DateTimeSpan = {
@@ -165,7 +168,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
       }
     };
-  
+
     const handleDateTimeSpanChange = (index, field, value) => {
       const updatedDateTimeSpans = dateTimeSpans.map((span, i) => {
         if (i === index) {
@@ -182,7 +185,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: updatedDateTimeSpans });
       }
     };
-  
+
     return (
       <form action="" method="POST">
         <div>
@@ -196,16 +199,37 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-          />,
+        />,
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
+  //Timon
+
+
+  async function currentAuthenticatedUser(data: FormData) {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const { username, attributes } = currentUser;
+      const { sub: userId } = attributes;
+      const signInDetails = currentUser.signInUserSession;
+
+      console.log(`The username: ${username}`);
+      console.log(`The userId: ${userId}`);
+      console.log(`The signInDetails: ${JSON.stringify(signInDetails)}`);
+      const userData = getItem("users", userId);
+      console.log(`The userData: ${JSON.stringify(userData)}`);
+
+      //addProfessionals(moetGenereren, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -213,6 +237,11 @@ function SpecialistMultistepForm() {
       return next();
     } else {
       console.log(data);
+      currentAuthenticatedUser(data)
+      //moet nog een dynamoDB call worden met de gebruikers gegevens op basis van de session gegevens.
+      /*
+      
+      */
       navigate("/specialist-resultaat");
     }
   }

@@ -9,12 +9,12 @@ export default defineConfig({
     rollupOptions: {
       maxParallelFileOps: 100,
       cache: false,
-  },   
+    },
   },
   optimizeDeps: {
     disabled: false,
   },
   define: {
-    _global: ({})
+    _global: ({}),
   },
 })
