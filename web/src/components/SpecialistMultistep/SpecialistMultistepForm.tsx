@@ -226,8 +226,8 @@ function SpecialistMultistepForm() {
       console.log(`The userData: ${JSON.stringify(userData)}`);
 
       //met de gegevens met de datums verwerken voor availibility.
-      const id: number = Math.random();
-      //addProfessionals(id, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+      const professionalId: number = Math.random();
+      //addProfessionals(professionalId, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
 
       //addAvailibility(id: number, professional_id: number, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
     } catch (err) {
