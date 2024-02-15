@@ -26,4 +26,5 @@ declare global {
     ProfileGeneralSettings: undefined;
     ChatOverview: undefined;
     HomePageSpecialist: undefined;
+    ProfilePrivacy: undefined;
   };

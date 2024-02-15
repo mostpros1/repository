@@ -45,6 +45,9 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('HomePageSpecialist')}>
                 <Text style={[styles.text]}>HomePageSpecialist</Text>
             </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfilePrivacy')}>
+                <Text style={[styles.text]}>ProfilePrivacy</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>
