@@ -11,13 +11,19 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { dynamoDB } from "../backend_functions/declerations.js";
+import { dynamoDB } from "../backend_functions/declerations.ts";
 
+//pakt niet
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
   secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  region: import.meta.env.VITE_AWS_REGION,
+  region: 'eu-north-1', //import.meta.env.AWS_REGION,
 });
+
+
+//pakt wel
+console.log(import.meta.env.VITE_AWS_ACCESS_KEY_ID);
+console.log(import.meta.env.VITE_AWS_SECRET_ACCESS_KEY);
 
 dynamoDB.listTables({}, (err, data) => {
   if (err) {
