@@ -215,3 +215,34 @@
   border-radius: 20px;
   background-color: #3a72ff;
 }
+
+.time-selector {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Maak twee kolommen */
+  gap: 10px; /* Voeg wat ruimte tussen de kolommen en rijen */
+}
+
+.time-slot {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  margin: 5px 0; /* Ruimte tussen tijdslots */
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  width: 225px;
+}
+
+.time-slot:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.time-slot.selected {
+  background-color: #007bff; /* Blauwe achtergrond voor geselecteerde tijden */
+  color: white; /* Witte tekst voor betere leesbaarheid */
+}
