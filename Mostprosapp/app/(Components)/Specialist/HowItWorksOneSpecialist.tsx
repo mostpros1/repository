@@ -19,7 +19,7 @@ const HowItWorksOneSpecialist = ({ navigation }) => {
       <View style={styles.topContainer}>
         <View style={styles.standardContainer}>
           <View style={[styles.button, styles.skipButton]}>
-            <Pressable onPress={() => navigation.navigate('Home')}>
+            <Pressable onPress={() => navigation.navigate('TestHome')}>
               <Text style={[styles.text]}>
                 Overslaan
               </Text>

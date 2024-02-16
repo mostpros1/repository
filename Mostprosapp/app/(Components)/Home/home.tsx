@@ -15,12 +15,12 @@ const StartPage = ({navigation}) => {
       >
         <View style={styles.standardContainer}>
           <View style={styles.sectionContainer}>
-            {/* <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
                 <Text style={[styles.text]}>Login </Text>
             </Pressable>
             <Pressable style={styles.link} onPress={() => navigation.navigate('Register')}>
                 <Text style={[styles.text]}>Register</Text>
-            </Pressable> */}
+            </Pressable>
             <Pressable style={styles.link} onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.text]}>Profile</Text>
             </Pressable>

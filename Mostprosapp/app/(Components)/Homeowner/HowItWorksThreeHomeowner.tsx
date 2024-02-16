@@ -9,7 +9,7 @@ const HowItWorksThreeHomeowner = ({ navigation }) => {
             <View style={styles.topContainer}>
                 <View style={styles.standardContainer}>
                     <View style={[styles.button, styles.skipButton]} >
-                    <Pressable onPress={() => navigation.navigate('Home')}>
+                    <Pressable onPress={() => navigation.navigate('TestHome')}>
                             <Text style={[styles.text]}>
                                 Overslaan
                             </Text>
@@ -37,7 +37,7 @@ const HowItWorksThreeHomeowner = ({ navigation }) => {
                 <View style={styles.progressionBarFull}></View>
                 <View style={styles.progressionBarFull}></View>
             </View>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('Home')}>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('TestHome')}>
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Pressable>
         </SafeAreaView>

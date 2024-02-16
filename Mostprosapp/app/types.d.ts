@@ -15,6 +15,10 @@ declare global {
     HowItWorksTwoSpecialist: undefined;
     HowItWorksThreeSpecialist: undefined;
     Home: undefined;
+    testHome: undefined;
+    ProfileNavigation: undefined;
+    SpecialistNavigation: undefined;
+    ChatNavigation: undefined;
     Register: {email: string};
     Login: undefined;
     Verify: {email: string};

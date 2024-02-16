@@ -1,5 +1,9 @@
 import React from "react";
 import Home from "./(Components)/Home/home";
+import TestHome from "./(Components)/Home/TestHome";
+import ProfileNavigation from "./(Components)/Profile/ProfileNavigation";
+import ChatNavigation from "./(Components)/Chat/ChatNavigation";
+import SpecialistNavigation from "./(Components)/Specialist/SpecialistNavigation";
 import LandingPage from "./LandingPage";
 import KeuzePage from "./(Components)/Home/keuze";
 import HowItWorksOneHomeowner from "./(Components)/Homeowner/HowItWorksOneHomeowner";
@@ -65,6 +69,7 @@ const App = () => {
           component={HowItWorksThreeSpecialist}
         />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="TestHome" component={TestHome}/>
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
@@ -78,6 +83,9 @@ const App = () => {
         <Stack.Screen name="HomePageSpecialist" component={HomePageSpecialist}/>
         <Stack.Screen name="ProfilePrivacy" component={ProfilePrivacy}/>
         <Stack.Screen name="ProfileAbout" component={ProfileAbout}/>
+        <Stack.Screen name="ProfileNavigation" component={ProfileNavigation}/>
+        <Stack.Screen name="SpecialistNavigation" component={SpecialistNavigation}/>
+        <Stack.Screen name="ChatNavigation" component={ChatNavigation}/>
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
