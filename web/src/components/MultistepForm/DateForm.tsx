@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar';
+import { useNavigate } from 'react-router-dom';
 
-function DateForm({ updateDate, updateFields }) {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [dateOptions, setDateOptions] = useState<Array<Date>>([]);
+interface DateFormProps {
+  updateDate: (date: Date) => void;
+  updateFields: (fields: { date: string }) => void;
+}
+
+const DateForm: React.FC<DateFormProps> = ({ updateDate, updateFields }) => {
+    const [currentDate, setCurrentDate] = useState<Date>(new Date());
+    const [dateOptions, setDateOptions] = useState<Date[]>([]);
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
-    const [showMoreDates, setShowMoreDates] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [showMoreDates, setShowMoreDates] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const generateDateOptions = () => {
-            const options: Array<Date> = [];
+            const options: Date[] = [];
             for (let i = 0; i < 5; i++) {
                 const date = new Date(currentDate);
                 date.setDate(currentDate.getDate() + i);
@@ -20,7 +26,6 @@ function DateForm({ updateDate, updateFields }) {
         };
 
         generateDateOptions();
-
     }, [currentDate]);
 
     const handleCardClick = (index: number) => {
@@ -37,15 +42,27 @@ function DateForm({ updateDate, updateFields }) {
         updateFields({ date: isoDateString });
     };
 
+    const handleBackStep = () => {
+        // Hier zou je logica moeten toevoegen die bepaalt naar welke URL je terug navigeert.
+        navigate(-1);
+    };
+
     const handleMoreDatesClick = () => {
-        setShowMoreDates(true); // Zet showMoreDates op true om de Calendar te laten zien
+        setShowMoreDates(true);
+    };
+
+    const handleCloseCalendar = () => {
+        setShowMoreDates(false);
     };
 
     return (
         <div className="dateForm_wrapper">
             <h2>Wanneer moet de klus gedaan worden</h2>
             {showMoreDates ? (
-                <Calendar onDateSelect={handleCalendarDateSelect} />
+                <div>
+                    <button onClick={handleCloseCalendar} className="close-calendar-button">X</button>
+                    <Calendar onDateSelect={handleCalendarDateSelect} />
+                </div>
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (
@@ -68,6 +85,6 @@ function DateForm({ updateDate, updateFields }) {
             )}
         </div>
     );
-}
+};
 
 export default DateForm;

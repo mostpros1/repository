@@ -70,6 +70,7 @@
   background: rgb(224, 241, 255);
   overflow: auto;
   margin-left: 300px;
+  
 }
 
 .input_form {
@@ -84,3 +85,4 @@
     cursor: pointer;
     }
 }
+

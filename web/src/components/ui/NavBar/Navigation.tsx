@@ -154,7 +154,7 @@ function Navigation() {
                     <li><Link to="/">Startup / Bedrijf</Link></li>
                     <li><Link to="/">Developer</Link></li>
                     <li><Link to="/">Marketeer / Verkoper</Link></li>
-                  </ul>
+                  </ul> 
                 </div>
               </div>
             </div>
