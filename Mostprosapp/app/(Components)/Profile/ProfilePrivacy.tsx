@@ -70,7 +70,7 @@ const ProfilePrivacy = ({ navigation }) => {
                         <View style={styles.secondMiddleContainerWrapper}>
                                 <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoBottom, styles.bottomRadius, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Chat berichten wissen</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Privacy Beleid</Text>
                                     <View style={styles.textButtonWrapper}>
                                         <TouchableOpacity style={styles.button}>
                                             <Text style={[styles.arrow]}>&gt;</Text>
@@ -148,24 +148,17 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     firstMiddleContainerWrapper: {
-        width: "100%",
-        height: "22%",
+        height: windowWidth * 0.45,
         padding: 10,
         paddingBottom: 0,
-        paddingTop: 32,
         backgroundColor: "white",
     },
     secondMiddleContainerWrapper: {
-        width: "100%",
-        height: 100,
-        padding: 10,
+        flex: 1,
         backgroundColor: "white",
     },
     middleContainerFirstSection: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingLeft: 0,
+        flex: 1,
     },
     agendaButton: {
         flexDirection: "row",

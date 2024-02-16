@@ -60,7 +60,7 @@ const HomePageSpecialist = ({ navigation }) => {
                 </Pressable>
                 <Pressable style={[styles.iconsTextWrapper]}>
                   <Icon name="payment" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Betaleningen</Text>
+                  <Text style={[styles.whiteIconText]}>Betalingen</Text>
                 </Pressable>
                 <Pressable style={[styles.iconsTextWrapper]}>
                   <Icon name="local-parking" size={50} color="#f7fbff" />
@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     flexDirection: "row",
+    flexWrap: "wrap",
   },
 
   iconsTextWrapper: {
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
   },
 
   blackIconText: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#303030",
   },
 
