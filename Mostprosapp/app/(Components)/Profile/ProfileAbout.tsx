@@ -118,7 +118,7 @@ const ProfileAbout = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     view: {
-        height: windowHeight,
+        height: windowHeight * 1.1,
         width: windowWidth,
         display: "flex",
         alignItems: "center",
@@ -178,11 +178,9 @@ const styles = StyleSheet.create({
     },
     firstMiddleContainerWrapper: {
         width: "100%",
-        height: "50%",
-        padding: 10,
-        paddingBottom: 0,
-        paddingTop: 32,
         backgroundColor: "white",
+        paddingBottom: windowHeight * 0.02,
+        paddingTop: windowHeight * 0.05,
     },
     secondMiddleContainerWrapper: {
         marginTop: 30,
