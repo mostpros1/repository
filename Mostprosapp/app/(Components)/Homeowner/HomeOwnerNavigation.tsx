@@ -6,7 +6,7 @@ import {
     ImageBackground,
     Pressable,
   } from "react-native";
-  const TestHome = ({navigation}) => {
+  const HomeOwnerNavigation = ({navigation}) => {
     return (
       <SafeAreaView style={styles.view}>
         <ImageBackground
@@ -15,23 +15,8 @@ import {
         >
           <View style={styles.standardContainer}>
             <View style={styles.sectionContainer}>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileNavigation')}>
-                  <Text style={[styles.text]}>Profile </Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('ChatNavigation')}>
-                  <Text style={[styles.text]}>Chat </Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
-                  <Text style={[styles.text]}>Login </Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('Register')}>
-                  <Text style={[styles.text]}>Register</Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('SpecialistNavigation')}>
-                  <Text style={[styles.text]}>Specialist</Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
-                  <Text style={[styles.text]}>HomeOwner</Text>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('HomeOwnerResults')}>
+                  <Text style={[styles.text]}>Results</Text>
               </Pressable>
             </View>
           </View>
@@ -56,8 +41,7 @@ import {
     },
     sectionContainer: {
       height: "32%",
-      display: "flex",
-      gap: 13,
+      gap: 8,
     },
     welkom: {
       fontSize: 40,
@@ -81,5 +65,5 @@ import {
     },
   });
   
-  export default TestHome;
+  export default HomeOwnerNavigation;
   

@@ -18,6 +18,7 @@ declare global {
     testHome: undefined;
     ProfileNavigation: undefined;
     SpecialistNavigation: undefined;
+    HomeOwnerNavigation: undefined;
     ChatNavigation: undefined;
     Register: {email: string};
     Login: undefined;
@@ -32,4 +33,5 @@ declare global {
     HomePageSpecialist: undefined;
     ProfilePrivacy: undefined;
     ProfileAbout: undefined;
+    HomeOwnerResults: undefined;
   };

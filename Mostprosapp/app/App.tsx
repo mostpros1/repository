@@ -4,6 +4,7 @@ import TestHome from "./(Components)/Home/TestHome";
 import ProfileNavigation from "./(Components)/Profile/ProfileNavigation";
 import ChatNavigation from "./(Components)/Chat/ChatNavigation";
 import SpecialistNavigation from "./(Components)/Specialist/SpecialistNavigation";
+import HomeOwnerNavigation from "./(Components)/Homeowner/HomeOwnerNavigation";
 import LandingPage from "./LandingPage";
 import KeuzePage from "./(Components)/Home/keuze";
 import HowItWorksOneHomeowner from "./(Components)/Homeowner/HowItWorksOneHomeowner";
@@ -18,6 +19,7 @@ import Verify from "./(Components)/Verificatie/Verification";
 import Profile from "./(Components)/Profile/Profile";
 import ProfileSettings from "./(Components)/Profile/ProfileSecurity";
 import ProfileSecurity from "./(Components)/Profile/ProfileSecurity";
+import HomeOwnerResults from "./(Components)/Homeowner/HomeOwnerResults";
 import ProfileSettingsOne from "./(Components)/Profile/ProfileSettingsOne"
 import ProfileSettingsTwo from "./(Components)/Profile/ProfileSettingsTwo";
 import ProfileNotifications from "./(Components)/Profile/ProfileNotifications";
@@ -86,6 +88,9 @@ const App = () => {
         <Stack.Screen name="ProfileNavigation" component={ProfileNavigation}/>
         <Stack.Screen name="SpecialistNavigation" component={SpecialistNavigation}/>
         <Stack.Screen name="ChatNavigation" component={ChatNavigation}/>
+        <Stack.Screen name="HomeOwnerNavigation" component={HomeOwnerNavigation}/>
+        <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults}/>
+
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
 
   topContainer: {
-    width: 700,
+    width: windowWidth,
     height: 110,
     display: "flex",
     backgroundColor: "#308AE4",
