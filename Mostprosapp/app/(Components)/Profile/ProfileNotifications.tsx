@@ -1,23 +1,8 @@
 import React, { useState } from "react";
-import {
-    StyleSheet,
-    Button,
-    View,
-    SafeAreaView,
-    Text,
-    Alert,
-    Pressable,
-    Image,
-    ScrollView,
-    ImageBackground,
-    Linking,
-    Modal,
-    TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider, Switch } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -29,278 +14,237 @@ const ProfileNotifications = ({ navigation }) => {
   const onToggleSwitch1 = () => setIsSwitchOn1(!isSwitchOn1);
   const onToggleSwitch2 = () => setIsSwitchOn2(!isSwitchOn2);
 
-    return (
-        <PaperProvider>
-            <SafeAreaView>
-
-                <ScrollView>
-                    <View style={styles.view}>
-                        <View style={styles.topContainer}>
-                            <View style={styles.topButtonsContainer}>
-                                <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                                    <View style={styles.smallCircle}>
-                                    <Icon name="arrow-back" size={28} color="#308AE4" />
-                                    </View>
-                                </Pressable>
-                            </View>
+  return (
+    <PaperProvider>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={styles.view}>
+          <View style={styles.topContainer}>
+          <View style={styles.topButtonsContainer}>
+            <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
+                     <View style={styles.smallCircle}>
+                        <Icon name="arrow-back" size={28} color="#308AE4" />
+                    </View>
+                </Pressable>
+            </View>
                             <View style={styles.topContainerSecondSectionTwo}>
                                 <Text style={[styles.name, styles.textBold]}>
-                                    Notificaties
+                                    Settings
                                 </Text>
                             </View>
                         </View>
 
-                        <View style={styles.firstMiddleContainerWrapper}>
-                                <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                    Push Notificaties
-                                </Text>
+            <View style={styles.firstMiddleContainerWrapper}>
+              <Text style={[styles.textButtonBlack, styles.smallTitle]}>
+                Push Notificaties
+              </Text>
 
-                            <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Nieuwe berichten</Text>
-                                    <Switch value={isSwitchOn1} onValueChange={onToggleSwitch1} ios_backgroundColor="#606160" color="#308AE4" />
-                                </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
-                                    <Switch value={isSwitchOn2} onValueChange={onToggleSwitch2} ios_backgroundColor="#606160" color="#308AE4" />
-                                </Pressable>
+              <View style={styles.middleContainerFirstSection}>
+                <Pressable style={[styles.agendaButton, styles.blockColorTop,]} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Nieuwe berichten</Text>
+                  <Switch value={isSwitchOn1} onValueChange={onToggleSwitch1} ios_backgroundColor="#606160" color="#308AE4" />
+                </Pressable>
+                <Pressable style={[styles.agendaButton, styles.blockColorBottom,]} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Notificaties</Text>
+                  <Switch value={isSwitchOn2} onValueChange={onToggleSwitch2} ios_backgroundColor="#606160" color="#308AE4" />
+                </Pressable>
+              </View>
+            </View>
 
-                            </View>
-                        </View>
+            <View style={styles.secondMiddleContainerWrapper}>
+              <Text style={[styles.textButtonBlack, styles.smallTitle]}>
+                Geluid
+              </Text>
 
-                        <View style={styles.secondMiddleContainerWrapper}>
-                            <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                    Geluid
-                                </Text>
-
-                                <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Geluiden</Text>
-                                    <View style={styles.textButtonWrapper}>
-                                        <Text style={[styles.lightTitle]}>Set</Text>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Vibratie</Text>
-                                    <View style={styles.textButtonWrapper}>
-                                        <Text style={[styles.lightTitle]}>Set</Text>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </Pressable>
-                            </View>
-                        </View>                        
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-        </PaperProvider>
-    );
+              <View style={styles.middleContainerFirstSection}>
+              <Pressable style={[styles.agendaButton, styles.blockColorTop,]} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Vibratie</Text>
+                  <View style={styles.textButtonWrapper}>
+                    <Text style={[styles.lightTitle]}>Set</Text>
+                    <Pressable style={styles.button}>
+                      <Text style={[styles.arrow]}>&gt;</Text>
+                    </Pressable>
+                  </View>
+                </Pressable>
+                <Pressable style={[styles.agendaButton, styles.blockColorBottom,]} onPress={() => navigation.navigate('')}>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Vibratie</Text>
+                  <View style={styles.textButtonWrapper}>
+                    <Text style={[styles.lightTitle]}>Set</Text>
+                    <Pressable style={styles.button}>
+                      <Text style={[styles.arrow]}>&gt;</Text>
+                    </Pressable>
+                  </View>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </PaperProvider>
+  );
 };
 
 const styles = StyleSheet.create({
-    view: {
-        height: windowHeight,
-        width: windowWidth,
-        display: "flex",
-        alignItems: "center",
-        backgroundColor: "white",
-    },
-    topContainer: {
-        width: 700,
-        height: 100,
-        display: "flex",
-        backgroundColor: "#308AE4",
-        alignItems: "center",
-        flexDirection: "column",
-        borderBottomEndRadius: 250,
-        borderBottomStartRadius: 250,
-    },
-    topButtonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '60%',
-        paddingHorizontal: 20,
-        position: 'absolute',
-        top: -25,
-    },
-    returnButton: {
-        backgroundColor: "transparent",
-        width: 60,
-        textAlign: "center",
-    },
-    circleContainer: {
-        marginTop: 55,
-        width: 170,
-        height: 170,
-        display: "flex",
-        backgroundColor: "transparent",
-        alignItems: "center",
-        borderRadius: 400,
-        borderWidth: 1,
-        borderColor: "white",
-        overflow: 'hidden',
-    },
-    topContainerSecondSection: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: 15,
-        gap: 2,
-    },
-    topContainerSecondSectionTwo: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: 54,
-        gap: 2,
-    },
-    name: {
-        color: 'white',
-    },
-    firstMiddleContainerWrapper: {
-        width: "100%",
-        height: "28%",
-        padding: 10,
-        paddingBottom: 0,
-        paddingTop: 32,
-        backgroundColor: "white",
-    },
-    secondMiddleContainerWrapper: {
-        width: "100%",
-        height: 100,
-        padding: 10,
-        backgroundColor: "white",
-    },
-    middleContainerFirstSection: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingLeft: 0,
-    },
-    agendaButton: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 10,
-    },
-    image: {
-        flex: 1,
-        width: '100%',
-        height: undefined,
-        aspectRatio: 1,
-        transform: [{ scale: 1.6 }]
-    },
-    button: {
-        borderRadius: 10,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    linkOne: {
-        borderRadius: 10,
-        backgroundColor: "#308AE4",
-        width: 250,
-        textAlign: "center",
-        padding: 10,
-        bottom: -60,
-        alignItems: "center",
-    },
-    linkTwo: {
-        backgroundColor: "#E9F4FF",
-        width: 350,
-        textAlign: "left",
-        padding: 20,
-        bottom: -20,
-        alignItems: "flex-start",
-    },
-    linkTwoTop: {
+  view: {
+    height: windowHeight,
+    width: windowWidth,
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+
+  textButtonBlack: {
+    color: "black",
+},
+
+topButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    paddingHorizontal: 20,
+    position: 'absolute',
+    top: -25,
+},
+
+linkOne: {
+    borderRadius: 10,
+    backgroundColor: "#308AE4",
+    width: 250,
+    textAlign: "center",
+    padding: 10,
+    bottom: -60,
+    alignItems: "center",
+},
+
+blockColorTop:{
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         backgroundColor: "#E9F4FF",
-        width: 350,
-        textAlign: "left",
-        padding: 20,
-        bottom: -20,
-        alignItems: "flex-start",
-    },
-    linkTwoBottom: {
-        borderBottomRightRadius: 3.5,
-        borderBottomLeftRadius: 3.5,
-        backgroundColor: "#E9F4FF",
-        width: 350,
-        textAlign: "left",
-        padding: 20,
-        bottom: -20,
-        alignItems: "flex-start",
-    },
-    linkTwoDelete: {
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
-        backgroundColor: "#E9F4FF",
-        width: 350,
-        textAlign: "left",
-        padding: 20,
-        bottom: -20,
-        alignItems: "flex-start",
-        marginTop: 10,
-    },
-    text: {
-        fontSize: 16,
-        lineHeight: 21,
-    },
-    textBold: {
-        fontSize: 17,
-        lineHeight: 21,
-        fontWeight: "bold",
-    },
-    smallTitle: {
-        fontSize: 13,
-        fontWeight: "bold",
-        paddingLeft: 10,
-    },
-    textButtonWhite: {
-        color: "white",
-    },
-    textButtonBlack: {
-        color: "black",
-    },
-    arrow: {
-        fontSize: 22,
-    },
-    arrowButton: {
-        flex: 1,
-        display: "flex",
-        alignItems: "flex-end",
-    },
-    
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    smallCircle: {
-        width: 40,
-        height: 40,
-        borderRadius: 25, 
-        backgroundColor: 'white',
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    lightTitle: {
-      fontSize: 13,
-      color: "#B7BEC5",
-      lineHeight: 24,
+},
+
+blockColorBottom:{
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: "#E9F4FF",
+},
+topContainer: {
+    width: 700,
+    height: 100,
+    display: "flex",
+    backgroundColor: "#308AE4",
+    alignItems: "center",
+    flexDirection: "column",
+    borderBottomEndRadius: 250,
+    borderBottomStartRadius: 250,
+},
+
+  returnButton: {
+    backgroundColor: "transparent",
+    width: 60,
+    textAlign: "center",
+},
+  
+  circleContainer: {
+    marginTop: windowHeight * 0.07,
+    width: windowWidth * 0.4,
+    height: windowWidth * 0.4,
+    display: "flex",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    borderRadius: windowWidth * 0.5,
+    borderWidth: 1,
+    borderColor: "white",
+    overflow: 'hidden',
+  },
+  topContainerSecondSection: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: windowHeight * 0.02,
+    gap: 2,
+  },
+  topContainerSecondSectionTwo: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 54,
+    gap: 2,
+},
+name: {
+    color: 'white',
+},
+  firstMiddleContainerWrapper: {
+    width: "100%",
+    backgroundColor: "white",
+    paddingBottom: windowHeight * 0.02,
+    paddingTop: windowHeight * 0.05,
+    paddingHorizontal: windowWidth * 0.05,
+  },
+  secondMiddleContainerWrapper: {
+    width: "100%",
+    backgroundColor: "white",
+    paddingBottom: windowHeight * 0.01,
+    paddingHorizontal: windowWidth * 0.05,
+  },
+  middleContainerFirstSection: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: windowHeight * 0.01,
+  },
+  agendaButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingVertical: windowHeight * 0.02,
+    paddingHorizontal: windowWidth * 0.05,
+  },
+  text: {
+    fontSize: windowWidth * 0.04,
+    lineHeight: windowHeight * 0.053,
+  },
+
+  textBold: {
+    fontSize: windowWidth * 0.042,
+    lineHeight: windowHeight * 0.053,
+    fontWeight: "bold",
+},
+  smallTitle: {
+    fontSize: windowWidth * 0.034,
+    fontWeight: "bold",
+    paddingLeft: windowWidth * 0.02,
+  },
+  lightTitle: {
+    fontSize: windowWidth * 0.032,
+    color: "#B7BEC5",
+    lineHeight: 24,
   },
   textButtonWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  button: {
+    borderRadius: 10,
+    paddingVertical: windowHeight * 0.012,
+    paddingHorizontal: windowWidth * 0.04,
+  },
+    arrow: {
+        fontSize: windowWidth * 0.06,
+    },
+  arrowButton: {
+    flex: 1,
     display: "flex",
     alignItems: "flex-end",
-    flexDirection: "row",
+},
+smallCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 25, 
+    backgroundColor: 'white',
+    display: "flex",
+    alignItems: "center",
     justifyContent: "center",
-    gap: 20,
 },
 });
 
