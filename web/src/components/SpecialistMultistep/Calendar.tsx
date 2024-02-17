@@ -5,10 +5,10 @@ import Prev from './arrowL.png';
 import AWS from 'aws-sdk';
 
 interface DateAndTimePickerProps {
-  onDateChange?: (selectedDates: string[]) => void;
+  // onDateChange?: (selectedDates: string[]) => void;
 }
 
-const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ onDateChange }) => {
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();

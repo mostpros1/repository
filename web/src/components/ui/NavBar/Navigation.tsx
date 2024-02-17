@@ -60,6 +60,7 @@ function Navigation() {
       </Link>
       <div className="nav-rightside">
         <ul className="nav-list">
+        <JoinChat />
           <li>
             <Link to="/mijn-klussen" className='black-items'>Klussen <ExpandMoreIcon /></Link>
             <div className="mega-box">
