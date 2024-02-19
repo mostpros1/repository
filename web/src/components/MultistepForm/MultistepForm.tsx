@@ -138,6 +138,29 @@ function MultistepForm() {
         // Display an error or handle the case where the second step is not filled
         setValidDatum(false);
         return;
+=======
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <EmailForm {...data} updateFields={updateFields} />,
+        <AccountForm setError={() => {}} error={''} {...data} updateFields={updateFields} />
+      ],
+      onStepChange: () => {}
+    });
+
+    async function onSubmit(e: FormEvent) {
+      e.preventDefault()
+      console.log('Form Data:', data);
+      if (!isLastStep) return next()
+  
+      const userData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim()
       }
       setValidDatum(true);
       return next();
@@ -159,6 +182,7 @@ function MultistepForm() {
         })
         .catch((err) => {
           console.error(err)
+          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
     }
     else {
@@ -170,19 +194,19 @@ function MultistepForm() {
           name: userData.firstName,
           family_name: userData.lastName,
           email: userData.email,
-          phone_number: userData.phoneNumber
+          phone_number: userData.phoneNumber,
+          "custom:group": "Homeowner"
         },
         autoSignIn: { enabled: true }
       })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email } })
+          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
+          console.error(error)
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email } })
-          } else {
-            console.error("foutmelding:", error)
+            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           }
         })
     }
