@@ -168,15 +168,13 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-<<<<<<< HEAD
+
         <SearchChoreForm {...data} updateFields={updateFields}/>,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
           />,
-=======
         <SearchChoreForm {...data} updateFields={updateFields} />,
->>>>>>> 69083012753cd6a1ec5c8cbe8bd917b2fe68458e
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],

@@ -32,7 +32,7 @@ type FormData = {
 function MultistepForm() {
   const navigate = useNavigate()
   const questionsData = useQuestionData();
-
+  
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -51,8 +51,7 @@ function MultistepForm() {
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  const [isValidDatum, setValidDatum] = useState(true);
-
+  
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -120,27 +119,6 @@ function MultistepForm() {
 
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
-    steps: [
-      <LocationForm {...data} updateFields={updateFields} />,
-      <DateForm updateDate={updateDate} updateFields={updateFields} />,
-      <InfoForm {...data} updateFields={updateFields} />,
-      <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
-    ],
-    onStepChange: () => { }
-  });
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    console.log('Form Data:', data);
-
-
-    if (!isLastStep) {
-      // Check if the data for the second step is filled
-      if (currentStepIndex === 1 && data.date.trim() === "") {
-        // Display an error or handle the case where the second step is not filled
-        setValidDatum(false);
-        return;
-=======
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         //<DateForm updateDate={updateDate} updateFields={updateFields}/>,
@@ -155,7 +133,7 @@ function MultistepForm() {
       e.preventDefault()
       console.log('Form Data:', data);
       if (!isLastStep) return next()
-  
+
       const userData = {
         email: data.email,
         password: data.password,
@@ -164,31 +142,19 @@ function MultistepForm() {
         lastName: data.lastName.trim(),
         phoneNumber: data.phoneNumber
       }
-      setValidDatum(true);
-      return next();
-    }
-
-    const userData = {
-      email: data.email,
-      password: data.password,
-      repeatPassword: data.repeatPassword,
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
+  
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
         .then(() => {
           navigate('/huiseigenaar-resultaat')
         })
         .catch((err) => {
           console.error(err)
         })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
         username: userData.email,
         password: userData.password,
         attributes: {
@@ -198,7 +164,7 @@ function MultistepForm() {
           phone_number: userData.phoneNumber
         },
         autoSignIn: { enabled: true }
-      })
+        })
         .then(() => {
           navigate('/bevestig-email', { state: { email: userData.email } })
         })
@@ -210,8 +176,8 @@ function MultistepForm() {
             console.error("foutmelding:", error)
           }
         })
+      }
     }
-  }
 
   const stepWidth = 100 / steps.length;
 

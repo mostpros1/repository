@@ -1,5 +1,5 @@
 import { Amplify, Auth } from "aws-amplify";
-import awsExports from "./aws-exports.js";
+import awsExports from "./aws-exports";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
@@ -10,6 +10,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+
 
 Amplify.configure(awsExports);
 Auth.configure(awsExports);

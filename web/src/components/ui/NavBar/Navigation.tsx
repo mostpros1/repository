@@ -32,23 +32,26 @@ function Navigation() {
       <Link to="/registreer" >Register</Link>
     </>;
 
-  if (user) {
-    const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
-    let DashboardLink: JSX.Element | null = null;
-    if (groups && groups.includes('Homeowner')) {
-      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>
-    } else if (groups && groups.includes('Professional')) {
-      DashboardLink = <Link to="/dashboard-professional">Account</Link>
-    }
-    
-    authButtons = (
-      <>
-        <p>{user.attributes.email}</p>
-        {DashboardLink}
-        <button onClick={handleLogout}>Uitloggen</button>
-      </>
-    );
+if (user && user.signInUserSession && user.signInUserSession.accessToken) {
+  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+  let DashboardLink: JSX.Element | null = null;
+  if (groups && groups.includes('Homeowner')) {
+      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
+  } else if (groups && groups.includes('Professional')) {
+      DashboardLink = <Link to="/dashboard-professional">Account</Link>;
   }
+  
+  authButtons = (
+      <>
+          <p>{user.attributes.email}</p>
+          {DashboardLink}
+          <button onClick={handleLogout}>Uitloggen</button>
+      </>
+  );
+} else {
+
+}
+
 
   return (
     <div className="nav-container">
