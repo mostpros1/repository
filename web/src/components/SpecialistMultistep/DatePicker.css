@@ -131,7 +131,7 @@
     margin: 2px;
     background-color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.5s;
     border-radius: 10%;
     display: flex;
     width: 55px;
@@ -212,7 +212,7 @@
 
 .submitBeschikbaarheid:hover{
   transition: all 1s ease;
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: #3a72ff;
 }
 

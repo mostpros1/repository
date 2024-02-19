@@ -20,21 +20,38 @@ export function useChatBackend(user: any, signOut) {
     
 
 // // sends messages ///
-  const handleSendMessage = async (text) => {
-    const members = [user.attributes.email, recipientEmail];
-    console.log(members)// Include both users in the chat
-    await API.graphql({
-      query: mutations.createChat,
-      variables: {
-        input: {
-          text,
-          email: user.attributes.email,
-          members,
-          sortKey: members.sort().join("#"), // Create a unique sortKey
-        },
+const handleSendMessage = async (text) => {
+  const members = [user.attributes.email, recipientEmail];
+  console.log("Sending message to: ", members); // Debugging log
+  try {
+    await API.graphql(graphqlOperation(mutations.createChat, {
+      input: {
+        text,
+        email: user.attributes.email,
+        members,
+        sortKey: members.sort().join("#"), // Create a unique sortKey
       },
-    });
-  };
+    }));
+  } catch (error) {
+    if (typeof error === 'object' && error !== null) { // Checks if it's a non-null object
+      // Assuming error is of GraphQL structure
+      const graphQLError = error as { errors: Array<{ message: string }> };
+      if (graphQLError.errors && graphQLError.errors.length > 0) {
+        console.error("GraphQL errors:", graphQLError.errors.map(e => e.message).join(', '));
+      } else {
+        console.error("GraphQL Error without message", graphQLError);
+      }
+    } else if (error instanceof Error) {
+      console.error("Error sending message:", error.message);
+    } else {
+      console.error("An unknown error occurred:", error);
+    }
+  }
+  
+  
+   
+};
+
 
   const handleReceivedMessage = (receivedChat) => {
     if (receivedChat.members.includes(user.attributes.email)) {

@@ -4,28 +4,52 @@ import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import AWS from 'aws-sdk';
 
-  const DateAndTimePicker: React.FC = () => {
+interface DateAndTimePickerProps {
+  // onDateChange?: (selectedDates: string[]) => void;
+}
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
   const currentYear = date.getFullYear();
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
-    const dateString = date.toISOString().split('T')[0]; // Formatteer de datum als 'YYYY-MM-DD'
-    if (date < today) return;
+    const dateString = date.toISOString().split('T')[0];
+    if (date < today) return; // Voorkomt selectie van vorige dagen
+    
     setSelectedDates((prevDates) => {
-      if (prevDates.includes(dateString)) {
-        // Verwijder de datum als deze al geselecteerd was
-        return prevDates.filter(d => d !== dateString);
+      if (prevDates.includes(dateString)) { // Als de dag al geselecteerd was, deselecteer het
+        setSelectedDay(null); // Verwijder de selectie van de dag
+        return prevDates.filter(d => d !== dateString); // Verwijder deze datum uit de geselecteerde datums
+      } else { // Als de dag niet al geselecteerd was, selecteer het
+        setSelectedDay(date); // Stel de nieuwe geselecteerde dag in
+        return [...prevDates, dateString]; // Voeg deze datum toe aan de geselecteerde datums
+      }
+    });
+    
+    if (selectedDates.length === 1 && selectedDates[0] === dateString) {
+      // Als de enige geselecteerde datum de datum is die net gedeselecteerd werd
+      setSelectedDay(null); // Zet selectedDay op null
+    }
+  };
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const handleTimeSelect = (time: string) => {
+    setSelectedTimes(prevTimes => {
+      if (prevTimes.includes(time)) {
+        // Verwijder de tijd als deze al geselecteerd was
+        return prevTimes.filter(t => t !== time);
       } else {
-        // Voeg de nieuwe datum toe aan de geselecteerde datums
-        return [...prevDates, dateString];
+        // Voeg de tijd toe als deze nog niet geselecteerd was
+        return [...prevTimes, time];
       }
     });
   };
+
 
   const handlePrevMonth = () => {
     setDate(prevDate => {
@@ -137,10 +161,10 @@ import AWS from 'aws-sdk';
     ));
   };
   
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
+  
   const submitDates = async () => {
-
+    
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const item = {
       userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
@@ -179,9 +203,22 @@ import AWS from 'aws-sdk';
         <div className="week">
           {renderCalendar()}
         </div>
+      </div>
+        {selectedDay && (
+        <div className="time-selector">
+        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00','11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
+          <div
+            key={time}
+            className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
+            onClick={() => handleTimeSelect(time)}
+          >
+            {time}
+          </div>
+        ))}
+      </div>
+      )}
         <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Sla uw beschikbaarheid op</button>
       </div>
-    </div>
   );
 };
 
