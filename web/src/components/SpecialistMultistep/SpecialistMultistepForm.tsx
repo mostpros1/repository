@@ -143,13 +143,14 @@ function SpecialistMultistepForm() {
       updateQuestionAnswers={(answers) => {
         updateQuestionAnswers(question.key, answers[question.key] as string);
       }}
+
     />
   ));
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
