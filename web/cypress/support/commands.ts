@@ -35,3 +35,61 @@
 //     }
 //   }
 // }
+
+// cypress/support/commands.ts
+
+declare namespace Cypress {
+    interface Chainable {
+        setDesktopViewport(): void;
+        lisaTestBegin(): void;
+        testAgain(): void;
+        goBack(): void;
+        goForward(): void;
+        janTestBegin(): void;
+        testBegin(): void
+    }
+}
+
+Cypress.Commands.add('setDesktopViewport', () => {
+    cy.viewport(1250, 695);
+});
+
+Cypress.Commands.add('testBegin', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/")
+})
+
+Cypress.Commands.add('lisaTestBegin', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/")
+    cy.get('input').type('Loodgieter').click()
+    cy.get('.search_dropdown a:first').click()
+});
+
+Cypress.Commands.add('janTestBegin', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/") // Go to website
+    cy.get('.nav-blue-btn a.black-items').click() // Click on "Register as specialist" button
+});
+
+Cypress.Commands.add('testAgain', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/");
+    cy.get('.nav-blue-btn > .black-items').click();
+
+    for (let r = 0; r < 4; r++) {
+        cy.goForward();
+    }
+});
+
+Cypress.Commands.add('goBack', () => {
+    cy.get('[class="form-btn back"]').click();
+
+    cy.get('input').each(($input) => {
+        cy.wrap($input).clear();
+    });
+});
+
+Cypress.Commands.add('goForward', () => {
+    cy.get('[class="form-btn"]').click();
+});
