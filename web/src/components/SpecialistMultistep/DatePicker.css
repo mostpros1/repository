@@ -5,6 +5,7 @@
     width: 100%;
     margin-top: 20px;
     max-width: 550px;
+    margin-left: 20px;
   }
   
   .date-time-picker span {
@@ -13,11 +14,12 @@
     font-size: 17px;
     width: 140px;
     text-align: center;
-    margin-top: 60px;
+    margin-top: 100px;
     height: 40px;
     align-items: center;
     justify-content: center;
     display: flex;
+    margin-bottom: 10px;
   }
   
   .month-selector {
@@ -33,17 +35,13 @@
   
   .prev-month, .next-month {
     border-radius: 50%;
-    background-color: #000000;
+    background-color: #ffffff;
     color: rgb(255, 255, 255);
     cursor: pointer;
     font-size: 32px;
-    margin: 0 20px 0 20px;
+    margin: 0 40px 40px 40px;
     border: 0;
-  }
-
-  .prev-month:hover, .next-month:hover {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    transition: all 1s ease;
   }
   
   .week-days{
@@ -198,14 +196,14 @@
   background-color: #3a72ffd4;
   color: white;
   border: solid 2px #3a72ffd4;
-  width: 300px;
-  height: 40px;
+  width: 250px;
+  height: 60px;
   text-align: center;
   justify-content: center;
   align-items: center;
   display: flex;
   cursor: pointer;
-  margin-left: 100px;
+  margin-left: 140px;
   margin-top: 20px;
   margin-bottom: 10px;
 }
@@ -245,4 +243,34 @@
 .time-slot.selected {
   background-color: #007bff; /* Blauwe achtergrond voor geselecteerde tijden */
   color: white; /* Witte tekst voor betere leesbaarheid */
+}
+
+.day.today {
+  border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
+  border-radius: 20%; /* Maakt de rand rond */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+}
+
+.buttonToday{
+  border-radius: 10px;
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  font-size: 15px;
+  margin-bottom: 60px;
+  margin-left: 215px;
+  background-color: #3a72ffd4;
+  color: white;
+  cursor: pointer;
+  border: 0;
+  transition: all 1s ease;
+  margin-top: 20px;
+}
+
+.buttonToday:hover{
+  background-color: #007bff;
+  border-radius: 15px;
 }

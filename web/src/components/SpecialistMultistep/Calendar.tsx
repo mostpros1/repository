@@ -104,29 +104,32 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         </div>
       );
     }
-  
+
+    
+    
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
       const weekDay = dayDate.getDay();
-  
+      
       // Controleer of dit de start van een nieuwe week is
       if (weekDay === 1 || (day === 1 && weekDays.length === 0)) {
         weekStartDates.push(dayDate);
       }
-  
+      
       const isSelected = selectedDates.includes(dayDate.toISOString().split('T')[0]);
       const isPastDay = dayDate < today;
-  
+      const isToday = dayDate.getDate() === today.getDate() && dayDate.getMonth() === today.getMonth() && dayDate.getFullYear() === today.getFullYear();
+      
       weekDays.push(
         <div
-          key={day}
-          className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''}`}
-          onClick={() => handleDateSelect(day, dayDate)}
+        key={day}
+        className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
+        onClick={() => handleDateSelect(day, dayDate)}
         >
           {day}
         </div>
       );
-  
+      
       if (weekDay === 0 || day === daysInMonth) {
         while (weekDays.length < 7) { // Vul de laatste week aan met dagen van de volgende maand
           let nextDay = weekDays.length - weekDay + 1;
@@ -135,15 +138,15 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
           }
           weekDays.push(
             <div
-              key={`next-${nextDay}`}
-              className="days-next"
+            key={`next-${nextDay}`}
+            className="days-next"
               onClick={() => handleDateSelect(nextDay, new Date(currentYear, currentMonth + 1, nextDay))}
-            >
+              >
               {nextDay}
             </div>
           );
         }
-  
+        
         weeks.push(
           <div key={weekStartDates.length} className="days-container">
             {weekDays}
@@ -152,7 +155,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         weekDays = [];
       }
     }
-  
+    
     return weeks.map((week, index) => (
       <div key={index} className="week">
         <div className="week-number">{weekStartDates[index] ? getWeekNumber(weekStartDates[index]) : 'N/A'}</div>
@@ -162,6 +165,10 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   };
   
   
+  const handleCurrentMonth = () => {
+    setDate(new Date()); // Zet de datum terug naar vandaag
+  };
+
   const submitDates = async () => {
     
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -172,10 +179,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     
     const params = {
       TableName: "UserAvailability",
-      Item: {
-        userId: "userId",
-        dates: selectedDates,
-      },
+      Item: item, // Use the 'item' object instead of creating a new one
     };
   
     try {
@@ -192,11 +196,12 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       <div className="calendar">
         <div className="month-selector">
           <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL'/></button>
+          <button type="button" onClick={handleCurrentMonth} className='buttonToday'>Today</button> {/* Voeg deze regel toe */}
           <span>{months[currentMonth]} {currentYear}</span>
           <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR'/></button>
         </div>
         <div className="week-days">
-          {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
+          {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
             <div key={day}>{day}</div>
           ))}
         </div>
@@ -217,7 +222,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         ))}
       </div>
       )}
-        <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Sla uw beschikbaarheid op</button>
+        <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
       </div>
   );
 };
