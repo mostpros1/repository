@@ -1,5 +1,5 @@
-import "./SearchChoreForm.css"
-import { useState } from 'react';
+import "./SearchChoreForm.css";
+import { useState } from "react";
 
 type SpecialistData = {
     email: string
