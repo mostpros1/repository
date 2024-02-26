@@ -8,6 +8,17 @@
       "expo-router"
     ],
     "name": "App",
-    "slug": "App"
+    "slug": "App",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c6da4670-abab-42a7-8e81-a192a79872c2"
+      }
+    },
+    "android": {
+      "package": "com.timhei.App"
+    }
   }
 }

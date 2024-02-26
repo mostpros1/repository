@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 7.2.0"
+    "version": ">=  7.2.0"
   },
   "build": {
     "development": {
@@ -10,9 +10,19 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "env": {
+        "ANDROID_HOME": "/home/timon/androidSDK/",
+        "ANDROID_NDK_HOME": "/home/timon/androidSDK/ndk/26.2.11394342/"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      
+    }
   }
 }

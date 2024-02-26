@@ -11,7 +11,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { dynamoDB } from "../backend_functions/declerations.ts";
+//import { dynamoDB } from "../backend_functions/declerations.ts";
 
 
 
@@ -27,7 +27,7 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
-
+const dynamoDB = new aws.DynamoDB();
 
 dynamoDB.listTables({}, (err, data) => {
   if (err) {
@@ -44,12 +44,10 @@ Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_TEST_KEY);
 
-export function test() {
-  dynamoDB
-    .listTables()
-    .promise()
-    .then(() => console.log("Tables found"))
-    .catch(console.error)
+
+function math(){
+  
+  console.log(Math.random())
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -58,6 +56,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
+          <button onClick={math}>math</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>

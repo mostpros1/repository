@@ -29,6 +29,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
   },
-  "include": ["src"],
+  "include": ["src", "backend_functions/callendar/calHuiseigenaar.ts", "backend_functions/callendar/calSpecialist.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
