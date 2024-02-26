@@ -146,7 +146,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 10,
+      id: 13,
       name: "Mark",
       distance: 5.6,
       title: "gas lekkage",
@@ -156,7 +156,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 11,
+      id: 14,
       name: "Mark",
       distance: 2.3,
       title: "gas lekkage",
@@ -166,7 +166,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 12,
+      id: 15,
       name: "Mark",
       distance: 1.9,
       title: "gas lekkage",
@@ -176,7 +176,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 13,
+      id: 16,
       name: "Mark",
       distance: 2.3,
       title: "gas lekkage",
@@ -186,7 +186,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 14,
+      id: 17,
       name: "Mark",
       distance: 2.3,
       title: "gas lekkage",
@@ -196,7 +196,7 @@ function FilterBar() {
       availability: "4 dagen",
     },
     {
-      id: 15,
+      id: 18,
       name: "Mark",
       distance: 2.3,
       title: "gas lekkage",
