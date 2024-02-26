@@ -1,4 +1,4 @@
-type Chat @aws_iam @aws_api_key {
+type Chat {
   id: ID!
   text: String!
   email: String!
@@ -158,7 +158,7 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelChatConnection @aws_api_key @aws_iam {
+type ModelChatConnection {
   items: [Chat]!
   nextToken: String
 }
@@ -175,8 +175,8 @@ input ModelChatFilterInput {
 }
 
 type Query {
-  getChat(id: ID!): Chat @aws_api_key @aws_iam
-  listChats(filter: ModelChatFilterInput, limit: Int, nextToken: String): ModelChatConnection @aws_api_key @aws_iam
+  getChat(id: ID!): Chat
+  listChats(filter: ModelChatFilterInput, limit: Int, nextToken: String): ModelChatConnection
 }
 
 input ModelChatConditionInput {
@@ -210,9 +210,9 @@ input DeleteChatInput {
 }
 
 type Mutation {
-  createChat(input: CreateChatInput!, condition: ModelChatConditionInput): Chat @aws_api_key @aws_iam
-  updateChat(input: UpdateChatInput!, condition: ModelChatConditionInput): Chat @aws_api_key @aws_iam
-  deleteChat(input: DeleteChatInput!, condition: ModelChatConditionInput): Chat @aws_api_key @aws_iam
+  createChat(input: CreateChatInput!, condition: ModelChatConditionInput): Chat
+  updateChat(input: UpdateChatInput!, condition: ModelChatConditionInput): Chat
+  deleteChat(input: DeleteChatInput!, condition: ModelChatConditionInput): Chat
 }
 
 input ModelSubscriptionChatFilterInput {
@@ -226,7 +226,7 @@ input ModelSubscriptionChatFilterInput {
 }
 
 type Subscription {
-  onCreateChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["createChat"]) @aws_api_key @aws_iam
-  onUpdateChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["updateChat"]) @aws_api_key @aws_iam
-  onDeleteChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["deleteChat"]) @aws_api_key @aws_iam
+  onCreateChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["createChat"])
+  onUpdateChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["updateChat"])
+  onDeleteChat(filter: ModelSubscriptionChatFilterInput): Chat @aws_subscribe(mutations: ["deleteChat"])
 }

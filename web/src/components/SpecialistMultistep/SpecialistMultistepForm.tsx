@@ -235,7 +235,7 @@ function SpecialistMultistepForm() {
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
         />,
         ...questionsSteps,
-        <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
+        <AccountForm setError={() => { }} error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
@@ -256,38 +256,38 @@ function SpecialistMultistepForm() {
 
     if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
       await Auth.signIn(userData.email, userData.password)
-      .then(() => {
-        navigate('/specialist-resultaat')
-      })
-      .catch((err) => {
-        console.error(err)
-        if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
+        .then(() => {
+          navigate('/specialist-resultaat')
+        })
+        .catch((err) => {
+          console.error(err)
+          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+        })
     }
     else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
-      username: userData.email,
-      password: userData.password,
-      attributes: {
-        name: userData.firstName,
-        family_name: userData.lastName,
-        email: userData.email,
-        phone_number: userData.phoneNumber,
-        "custom:group": "Professional"
-      },
-      autoSignIn: { enabled: true }
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.firstName,
+          family_name: userData.lastName,
+          email: userData.email,
+          phone_number: userData.phoneNumber,
+          "custom:group": "Professional"
+        },
+        autoSignIn: { enabled: true }
       })
-      .then(() => {
-        navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-      .catch(async error => {
-        console.error(error)
-        if (error.code == 'UsernameExistsException') {
-          await Auth.resendSignUp(userData.email)
+        .then(() => {
           navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        }
-      })
+        })
+        .catch(async error => {
+          console.error(error)
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+          }
+        })
     }
   }
 

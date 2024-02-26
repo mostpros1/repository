@@ -5,6 +5,7 @@ type SpecialistData = {
     email: string
     postCode: string
     stad: string
+    beroep?: string
 }
 
 type SearchChoreFormProps = SpecialistData & {
@@ -74,14 +75,12 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
         }
     };
 
-=======
-export default function SearchChoreForm({ email, postCode, stad, updateFields }: SearchChoreFormProps) {
     return (
         <>
             <div className="search_chore_text_con">
                 <h1>Zoek uw klus</h1>
-                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar u wilt werken, dan helpen wij u bij het vinden van passende klussen.<br/>
-                Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
+                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar u wilt werken, dan helpen wij u bij het vinden van passende klussen.<br />
+                    Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
 
@@ -98,8 +97,6 @@ export default function SearchChoreForm({ email, postCode, stad, updateFields }:
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
                 )}
-
-=======
 
                 <label>Email:</label>
                 <input
@@ -145,6 +142,5 @@ export default function SearchChoreForm({ email, postCode, stad, updateFields }:
                 <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
             </div>
         </>
-
     )
 }
