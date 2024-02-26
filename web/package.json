@@ -26,6 +26,7 @@
     "aws-sdk": "2.1506.0",
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
+    "nodemailer": "^6.9.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
