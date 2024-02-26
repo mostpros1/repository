@@ -39,6 +39,10 @@ function RegisterPage() {
       });
 
       // Handle successful registration, e.g., redirect to another page
+      
+      //addUser(email, email, password, firstName, lastName, date_of_birth: string, created_at: string, updated_at: string, status: string) {
+    
+
       navigate('/bevestig-email', { state: { email: email } });
     } catch (error: any) {
       // Handle registration error, e.g., show an error message

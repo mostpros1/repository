@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.15.9",
     "@mui/material": "^5.15.5",
     "@mui/x-date-pickers": "^6.19.0",
+    "@react-email/render": "^0.0.12",
     "aws-amplify": "^5.3.13",
     "aws-sdk": "2.1506.0",
     "date-fns": "^3.1.0",
