@@ -5,6 +5,7 @@ type SpecialistData = {
     email: string
     postCode: string
     stad: string
+    beroep: string
 }
 
 type SearchChoreFormProps = SpecialistData & {
@@ -74,8 +75,6 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
         }
     };
 
-=======
-export default function SearchChoreForm({ email, postCode, stad, updateFields }: SearchChoreFormProps) {
     return (
         <>
             <div className="search_chore_text_con">
