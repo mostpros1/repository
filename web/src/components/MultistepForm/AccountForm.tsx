@@ -12,8 +12,8 @@ type AccountFormData = {
     phoneNumber: string
     password: string
     repeatPassword: string
-    beroep: string
-    formConfig: "HOMEOWNER"
+    beroep?: string
+    formConfig?: "HOMEOWNER"
 }
 
 type AccountFormProps = AccountFormData & {
