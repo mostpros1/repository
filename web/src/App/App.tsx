@@ -24,6 +24,7 @@ import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDa
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import "./App.css";
+import ChatContactList from "../components/Chat/ChatContactList";
 
 const App = () => {
 

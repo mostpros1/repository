@@ -143,6 +143,7 @@ function SpecialistMultistepForm() {
       updateQuestionAnswers={(answers) => {
         updateQuestionAnswers(question.key, answers[question.key] as string);
       }}
+
     />
   ));
 
