@@ -27,6 +27,8 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  formConfig: string
+  beroep: string
 }
 
 function MultistepForm() {
@@ -47,7 +49,9 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    beroep: "",
+    formConfig: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -138,22 +142,18 @@ function MultistepForm() {
         // Display an error or handle the case where the second step is not filled
         setValidDatum(false);
         return;
-=======
-      steps: [
-        <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
-        <InfoForm {...data} updateFields={updateFields} />,
-        <EmailForm {...data} updateFields={updateFields} />,
-        <AccountForm setError={() => {}} error={''} {...data} updateFields={updateFields} />
-      ],
-      onStepChange: () => {}
-    });
+      }
+
+      setValidDatum(true);
+      return next();
+    }
+
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
       console.log('Form Data:', data);
       if (!isLastStep) return next()
-  
+
       const userData = {
         email: data.email.trim(),
         password: data.password.trim(),
@@ -238,5 +238,4 @@ function MultistepForm() {
     </form>
   )
 }
-
 export default MultistepForm

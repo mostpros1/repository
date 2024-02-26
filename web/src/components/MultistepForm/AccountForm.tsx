@@ -12,15 +12,17 @@ type AccountFormData = {
     phoneNumber: string
     password: string
     repeatPassword: string
+    beroep: string
+    formConfig: "HOMEOWNER"
 }
 
 type AccountFormProps = AccountFormData & {
     updateFields: (fields: Partial<AccountFormData>) => void
     setError: (error: string) => void;
     error: string;
-  }
+}
 
-export function AccountForm ({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
+export function AccountForm({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false)
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false)
@@ -29,35 +31,36 @@ export function AccountForm ({ email, postCode, stad, firstName, lastName, phone
     const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword }
 
     const formConfig = {
-        loginForm: <LoginForm handleLogin={() => {}} setError={() => {}} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
-        registerForm: <RegisterForm setError={() => {}} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
+        loginForm: <LoginForm handleLogin={() => { }} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        registerForm: <RegisterForm setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
 
     useEffect(() => {
         Auth.confirmSignUp(email, '000000', { forceAliasCreation: false })
-        .then(() => {
-            setUserExists(true)
-            setFetched(true)}
-        )
-        .catch(err => {
-            console.error(err)
-            const errorActionMap: Record<string, () => void> = {    
-                'UserNotFoundException':  () => { setFetched(true) },
-                'NotAuthorizedException': () => { setUserExists(true); setFetched(true) },
-                'AliasExistsException':   () => { setFetched(true) },
-                'CodeMismatchException':  () => { setUserExists(true); setFetched(true) },
-                'ExpiredCodeException':   () => { setFetched(true) },
-                'LimitExceededException': () => { setLimitExceeded(true) },
-                'default':                () => { setUserExists(false); setFetched(true) }
-            };
-            (errorActionMap[err.code] || errorActionMap['default'])()
-        })
+            .then(() => {
+                setUserExists(true)
+                setFetched(true)
+            }
+            )
+            .catch(err => {
+                console.error(err)
+                const errorActionMap: Record<string, () => void> = {
+                    'UserNotFoundException': () => { setFetched(true) },
+                    'NotAuthorizedException': () => { setUserExists(true); setFetched(true) },
+                    'AliasExistsException': () => { setFetched(true) },
+                    'CodeMismatchException': () => { setUserExists(true); setFetched(true) },
+                    'ExpiredCodeException': () => { setFetched(true) },
+                    'LimitExceededException': () => { setLimitExceeded(true) },
+                    'default': () => { setUserExists(false); setFetched(true) }
+                };
+                (errorActionMap[err.code] || errorActionMap['default'])()
+            })
     }, [])
 
-    return(
+    return (
         <>
-            { limitExceeded && <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p> }
-            { fetched && userExists ? formConfig.loginForm : formConfig.registerForm }
+            {limitExceeded && <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p>}
+            {fetched && userExists ? formConfig.loginForm : formConfig.registerForm}
         </>
     )
 }
