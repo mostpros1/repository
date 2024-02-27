@@ -143,7 +143,7 @@ function MultistepForm() {
         setValidDatum(false);
         return;
       }
-      
+
       setValidDatum(true);
       return next();
     }
