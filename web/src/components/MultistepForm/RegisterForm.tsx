@@ -6,6 +6,7 @@ type RegisterData = {
   firstName: string;
   lastName: string;
   email: string;
+  dob: string;
   phoneNumber: string;
   password: string;
   repeatPassword: string;
@@ -22,6 +23,7 @@ export function RegisterForm({
   email,
   firstName,
   lastName,
+  dob,
   phoneNumber,
   password,
   repeatPassword,
@@ -67,6 +69,16 @@ export function RegisterForm({
               placeholder="Email"
               value={email}
               onChange={(e) => updateFields({ email: e.target.value })}
+            />
+          </div>
+          <div className="register-form-input">
+            <label htmlFor="">Geboortedatum:</label>
+            <input
+              required
+              type="date"
+              placeholder="dob"
+              value={dob}
+              onChange={(e) => updateFields({ dob: e.target.value })}
             />
           </div>
           <div className="register-form-input">

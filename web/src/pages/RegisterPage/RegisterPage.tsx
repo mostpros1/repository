@@ -40,7 +40,12 @@ function RegisterPage() {
 
       // Handle successful registration, e.g., redirect to another page
       
-      //addUser(email, email, password, firstName, lastName, date_of_birth: string, created_at: string, updated_at: string, status: string) {
+      /*
+      let  today = new Date();
+      const status: string = "active";
+
+      addUser(email, email, password, firstName, lastName, date_of_birth: string, today, today, status);
+      */
     
 
       navigate('/bevestig-email', { state: { email: email } });
@@ -60,7 +65,7 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
+          <RegisterForm dob={''} {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
           <button onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
