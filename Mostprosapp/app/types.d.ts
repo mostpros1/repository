@@ -36,4 +36,5 @@ declare global {
     HomeOwnerResults: undefined;
     HomeOwnerCreate: undefined;
     HomeOwnerPostalCode: undefined;
+    HomeOwnerApp: undefined;
   };

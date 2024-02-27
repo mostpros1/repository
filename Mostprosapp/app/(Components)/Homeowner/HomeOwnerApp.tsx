@@ -6,26 +6,12 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HomeOwnerPostalCode = ({ navigation }) => {
-    const [progress, setProgress] = useState(1); // Progress state
-    const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
+const HomeOwnerApp = ({ navigation }) => {
+    const [progress, setProgress] = useState(2);
 
-    const handlePostalCodeChange = (text, part) => {
-        if (part === 'part1' && text.length <= 4) {
-            setPostalCode({ ...postalCode, part1: text });
-        } else if (part === 'part2' && text.length <= 2) {
-            setPostalCode({ ...postalCode, part2: text });
-        }
-    };
-
-    const dismissKeyboard = () => {
-        Keyboard.dismiss();
-    };
 
     return (
-        <KeyboardAvoidingView style={styles.contentContainer} behavior={Platform.OS === "ios" ? "padding" : null} keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                <TouchableWithoutFeedback onPress={dismissKeyboard}>
                     <SafeAreaView style={styles.container}>
                         <View style={styles.header}>
                             <View style={{ flex: 1 }}></View>
@@ -42,37 +28,23 @@ const HomeOwnerPostalCode = ({ navigation }) => {
                         </View>
 
                         <View style={styles.titleBox}>
-                            <Text style={styles.title}>Voer je postcode in om vakspecialisten in{'\n'} jouw omgeving te vinden.</Text>
+                            <Text style={styles.title}>Wat moet er gedaan worden?</Text>
                         </View>
 
-                        <View style={styles.imageContainer}>
-                            <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.image} resizeMode="contain" />
+                        <View style={styles.cardsContainer}>
+                            <View style={styles.card}></View>
+                            <View style={styles.card}></View>
+                            <View style={styles.card}></View>
+                            <View style={styles.card}></View>
+                            <View style={styles.card}></View>
+                            <View style={styles.card}></View>
                         </View>
 
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="1234"
-                                onChangeText={(text) => handlePostalCodeChange(text, 'part1')}
-                                value={postalCode.part1}
-                                maxLength={4}
-                                keyboardType="numeric"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="AB"
-                                onChangeText={(text) => handlePostalCodeChange(text.toUpperCase(), 'part2')}
-                                value={postalCode.part2}
-                                maxLength={2}
-                            />
-                        </View>
-                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate('HomeOwnerApp')}>
+                        <Pressable style={styles.nextButton} onPress={() => console.log("Next button pressed")}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>
-                </TouchableWithoutFeedback>
             </ScrollView>
-        </KeyboardAvoidingView>
     );
 };
 
@@ -87,6 +59,35 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
     },
+
+    cardsContainer:{
+        width: windowWidth,
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: 20,
+    },
+
+    card: {
+        width: 150,
+        height: 150,
+        backgroundColor: "white",
+        borderRadius: 10,
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#010100",
         textAlign: 'center',
+        fontSize: 16,
     },
     progressContainer: {
         alignItems: "center",
@@ -134,28 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#318ae5',
         borderRadius: 5,
     },
-    imageContainer: {
-        alignItems: 'center',
-        paddingTop: 40,
-    },
-    image: {
-        width: '80%',
-        height: 250,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginHorizontal: 5,
-        width: 70,
-        textAlign: 'center',
-    },
+
     nextButton: {
         backgroundColor: "#318ae5",
         borderRadius: 10,
@@ -177,4 +158,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeOwnerPostalCode;
+export default HomeOwnerApp;
