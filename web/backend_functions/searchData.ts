@@ -13,6 +13,23 @@ export function scanItem(tableName: string, filterExpression: string) {
     .catch(console.error)
 }
 
+export function queryGSI(
+  tableName: string,
+  indexName: string,
+  keyConditionExpression: string,
+  expressionAttributeValues: aws.DynamoDB.DocumentClient.ExpressionAttributeValueMap
+): Promise<aws.DynamoDB.DocumentClient.QueryOutput> {
+  return dynamoDB.query({
+    TableName: tableName,
+    IndexName: indexName,
+    KeyConditionExpression: keyConditionExpression,
+    ExpressionAttributeValues: expressionAttributeValues,
+  })
+  .promise()
+  .then(data => console.log(data.Items))
+  .catch(error => { throw error; });
+}
+
 export function queryItem(
   tableName: string,
   keyConditionExpression: string,
@@ -27,6 +44,8 @@ export function queryItem(
   .then(data => console.log(data.Items))
   .catch(console.error);
 }
+
+
 export function getItem(tableName: string, ID: string) {
 
 dynamo

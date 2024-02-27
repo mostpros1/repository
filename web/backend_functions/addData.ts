@@ -4,11 +4,11 @@ import { dynamoDB } from './declerations.ts';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
-
+        const id: number = Math.floor(Math.random() * 1000000);
     const params = {
         TableName: "users",
         Item: {
-            id: { N: "1" },
+            id: { N: id },
             username: { S: username },
             email: { S: email },
             password: { S: password },

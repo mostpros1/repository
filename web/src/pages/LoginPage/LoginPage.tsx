@@ -9,6 +9,8 @@ import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
 
+import { queryGSI } from '../../../backend_functions/searchData.ts';
+
 function LoginPage() {
   const navigate = useNavigate();
   const { updateUser } = useUser();
@@ -36,7 +38,15 @@ function LoginPage() {
   const handleLogin = async () => {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
-      updateUser(authenticatedUser);
+      
+      queryGSI("users",
+        "username",
+        "username = :user_name  and password = :password",
+        {
+          ':user_name': loginData.email,
+          ':password': loginData.password
+        }).then(updateUser(authenticatedUser))
+        .catch(console.error);
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
@@ -54,7 +64,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => { }} handleLogin={handleLogin} setError={setError} error={error} />
         </div>
       </div>
       <Footer />

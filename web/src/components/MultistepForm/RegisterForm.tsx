@@ -81,18 +81,7 @@ export function RegisterForm({
               onChange={(e) => updateFields({ dob: e.target.value })}
             />
           </div>
-          <div className="register-form-input">
-            <label htmlFor="">Telefoonnummer:</label>
-            <PhoneInput
-              defaultCountry="NL"
-              placeholder="+31658349021"
-              value={phoneNumber} // Gebruik direct de waarde uit RegisterData
-              onChange={(value) => {
-                console.log("Telefoonnummer gewijzigd:", value);
-                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
-              }}
-            />
-          </div>
+
           <div className="register-form-input">
             <label htmlFor="">Wachtwoord:</label>
             <input
@@ -124,3 +113,17 @@ export function RegisterForm({
     </>
   );
 }
+/*
+<div className="register-form-input">
+            <label htmlFor="">Telefoonnummer:</label>
+            <PhoneInput
+              defaultCountry="NL"
+              placeholder="+31658349021"
+              value={phoneNumber} // Gebruik direct de waarde uit RegisterData
+              onChange={(value) => {
+                console.log("Telefoonnummer gewijzigd:", value);
+                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
+              }}
+            />
+          </div>
+*/
