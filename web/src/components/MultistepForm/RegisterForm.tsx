@@ -24,7 +24,7 @@ export function RegisterForm({
   firstName,
   lastName,
   dob,
-  phoneNumber,
+  //phoneNumber,
   password,
   repeatPassword,
   updateFields,
