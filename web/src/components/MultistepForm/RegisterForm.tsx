@@ -7,7 +7,7 @@ type RegisterData = {
   lastName: string;
   email: string;
   dob: string;
-  phoneNumber: string;
+  //phoneNumber: string;
   password: string;
   repeatPassword: string;
 };
