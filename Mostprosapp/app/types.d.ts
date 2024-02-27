@@ -34,4 +34,5 @@ declare global {
     ProfilePrivacy: undefined;
     ProfileAbout: undefined;
     HomeOwnerResults: undefined;
+    DateAndTimePicker: undefined;
   };

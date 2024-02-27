@@ -105,8 +105,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       );
     }
 
-    
-    
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
       const weekDay = dayDate.getDay();
@@ -122,9 +120,13 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       
       weekDays.push(
         <div
-        key={day}
-        className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
-        onClick={() => handleDateSelect(day, dayDate)}
+          key={day}
+          className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
+          onClick={() => handleDateSelect(day, dayDate)}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleDateSelect(day, dayDate)}
+          tabIndex={0}
+          role="button"
+          aria-label={`Kies ${dayDate.toLocaleDateString()}`}
         >
           {day}
         </div>
@@ -163,8 +165,11 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       </div>
     ));
   };
-  
-  
+
+  <div aria-live="polite" aria-atomic="true" className="visually-hidden">
+    {months[currentMonth]} {currentYear} is nu zichtbaar
+  </div>
+
   const handleCurrentMonth = () => {
     setDate(new Date()); // Zet de datum terug naar vandaag
   };
@@ -190,15 +195,57 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       alert("Fout bij het opslaan van beschikbaarheid.");
     }
   };
+
+  const [selectedTimezone, setSelectedTimezone] = useState('UTC'); // Default timezone
+
+// List of timezones (you can expand this list as needed)
+  const timezones = [
+    'UTC',
+    'America/New_York',
+    'America/Los_Angeles',
+    'Europe/London',
+    'Asia/Tokyo',
+    // Add more timezones as needed
+  ];
+
+// Function to handle timezone selection
+  const handleTimezoneSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTimezone(event.target.value);
+  };
   
   return (
     <div className="date-time-picker">
       <div className="calendar">
         <div className="month-selector">
-          <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL'/></button>
-          <button type="button" onClick={handleCurrentMonth} className='buttonToday'>Today</button> {/* Voeg deze regel toe */}
-          <span>{months[currentMonth]} {currentYear}</span>
-          <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR'/></button>
+          <button
+            type="button"
+            className='prev-month'
+            onClick={handlePrevMonth}
+            aria-label="Vorige maand"
+            tabIndex={0}
+            >
+            <img src={Prev} className='fotoinButtonL' alt="Vorige" />
+          </button>
+          <button
+            type="button"
+            onClick={handleCurrentMonth}
+            className='buttonToday'
+            aria-label="Ga naar huidige maand"
+             tabIndex={0}
+          >
+          Today
+          </button>
+          <span aria-live="polite">{months[currentMonth]} {currentYear}</span>
+          <button
+            type="button"
+            className='next-month'
+            onClick={handleNextMonth}
+            aria-label="Volgende maand"
+            tabIndex={0}
+          >
+          <img src={Next} className='fotoinButtonR' alt="Volgende" />
+          </button>
+
         </div>
         <div className="week-days">
           {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
@@ -211,16 +258,21 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       </div>
         {selectedDay && (
         <div className="time-selector">
-        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00','11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
+        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
           <div
             key={time}
             className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
             onClick={() => handleTimeSelect(time)}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleTimeSelect(time)}
+            tabIndex={0}
+            role="button"
+            aria-label={`Kies tijdslot ${time}`}
           >
             {time}
           </div>
         ))}
       </div>
+      
       )}
         <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
       </div>
