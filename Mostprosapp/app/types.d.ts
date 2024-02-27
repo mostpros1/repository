@@ -34,4 +34,6 @@ declare global {
     ProfilePrivacy: undefined;
     ProfileAbout: undefined;
     HomeOwnerResults: undefined;
+    HomeOwnerCreate: undefined;
+    HomeOwnerPostalCode: undefined;
   };

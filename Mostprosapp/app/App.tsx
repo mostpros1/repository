@@ -26,6 +26,8 @@ import ProfileNotifications from "./(Components)/Profile/ProfileNotifications";
 import ProfileGeneralSettings from "./(Components)/Profile/ProfileGeneralSettings";
 import ChatOverview from "./(Components)/Chat/ChatOverview";
 import HomePageSpecialist from "./(Components)/Specialist/HomePageSpecialist";
+import HomeOwnerCreate from "./(Components)/Homeowner/HomeOwnerCreate";
+import HomeOwnerPostalCode from "./(Components)/Homeowner/HomeOwnerPostalCode";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
@@ -90,6 +92,8 @@ const App = () => {
         <Stack.Screen name="ChatNavigation" component={ChatNavigation}/>
         <Stack.Screen name="HomeOwnerNavigation" component={HomeOwnerNavigation}/>
         <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults}/>
+        <Stack.Screen name="HomeOwnerCreate" component={HomeOwnerCreate}/>
+        <Stack.Screen name="HomeOwnerPostalCode" component={HomeOwnerPostalCode}/>
 
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
