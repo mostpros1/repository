@@ -16,6 +16,7 @@ function RegisterPage() {
     phoneNumber: '',
     password: '',
     repeatPassword: '',
+    dob: '',
   });
 
   const [error, setError] = useState('');
@@ -23,7 +24,7 @@ function RegisterPage() {
   const navigate = useNavigate()
 
   const handleSignUp = async () => {
-    const { email, password, firstName, lastName, phoneNumber } = registerData;
+    const { email, password, firstName, lastName, dob, phoneNumber } = registerData;
 
     try {
       await Auth.signUp({
@@ -44,7 +45,7 @@ function RegisterPage() {
       let  today = new Date();
       const status: string = "active";
 
-      addUser(email, email, password, firstName, lastName, date_of_birth: string, today, today, status);
+      addUser(email, email, password, firstName, lastName, dob, today, today, status);
       */
     
 
@@ -65,7 +66,7 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm dob={''} {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
+          <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
           <button onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
