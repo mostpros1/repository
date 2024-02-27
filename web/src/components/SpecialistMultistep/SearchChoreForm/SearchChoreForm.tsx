@@ -40,7 +40,6 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
         updateFields({ email: inputValueEmail });
     };
 
-
     const [postcodeInput, setPostcodeInput] = useState(postCode);
     const [isValidPostcode, setValidPostcode] = useState(true);
 
@@ -97,7 +96,6 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
                 )}
-
                 <label>Email:</label>
                 <input
                     type="email"
