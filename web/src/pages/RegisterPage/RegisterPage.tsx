@@ -5,6 +5,7 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
+import { addUser } from '../../../backend_functions/addData.ts';
 
 
 function RegisterPage() {
@@ -39,16 +40,16 @@ function RegisterPage() {
         autoSignIn: { enabled: true }
       });
 
-      // Handle successful registration, e.g., redirect to another page
       
-      /*
-      let  today = new Date();
+      
+      // Add user to database
+      const  today = new Date();
       const status: string = "active";
 
-      addUser(email, email, password, firstName, lastName, dob, today, today, status);
-      */
+      addUser(email, email, password, firstName, lastName, dob, String(today), String(today), status);
+      
     
-
+      // Handle successful registration, e.g., redirect to another page
       navigate('/bevestig-email', { state: { email: email } });
     } catch (error: any) {
       // Handle registration error, e.g., show an error message
