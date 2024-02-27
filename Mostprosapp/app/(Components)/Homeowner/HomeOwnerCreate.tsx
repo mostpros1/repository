@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'; // Import Platform from 'react-native'
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialIcons";
 
@@ -20,7 +20,6 @@ const HomeOwnerCreate = ({ navigation }) => {
 
     const handleInputChange = (text) => {
         setInputText(text);
-        // Perform any necessary logic based on the input text
     };
 
     const handleInputFocus = () => {
@@ -28,8 +27,6 @@ const HomeOwnerCreate = ({ navigation }) => {
     };
 
     const handleOptionPress = (option) => {
-        // Handle what happens when an option is pressed
-        console.log('Option pressed:', option.title);
     };
 
     const handleOutsidePress = () => {
