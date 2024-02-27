@@ -18,8 +18,8 @@ export function queryGSI(
   indexName: string,
   keyConditionExpression: string,
   expressionAttributeValues: aws.DynamoDB.DocumentClient.ExpressionAttributeValueMap
-): Promise<aws.DynamoDB.DocumentClient.QueryOutput> {
-  return dynamoDB.query({
+){
+   dynamoDB.query({
     TableName: tableName,
     IndexName: indexName,
     KeyConditionExpression: keyConditionExpression,
