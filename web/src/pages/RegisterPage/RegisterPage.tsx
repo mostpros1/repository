@@ -8,6 +8,7 @@ import './RegisterPage.css';
 import { addUser } from '../../../backend_functions/addData.ts';
 
 
+
 function RegisterPage() {
 
   const [registerData, setRegisterData] = useState({
@@ -28,7 +29,7 @@ function RegisterPage() {
     const { email, password, firstName, lastName, dob } = registerData;
 
     try {
-      await Auth.signUp({
+      /*await Auth.signUp({
         username: email,
         password,
         attributes: {
@@ -38,7 +39,7 @@ function RegisterPage() {
           date_of_birth: dob,
         },
         autoSignIn: { enabled: true }
-      });
+      });*/
 
       
       
@@ -71,9 +72,10 @@ function RegisterPage() {
           <button onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 }
 
 export default RegisterPage;
+/*<Footer />*/

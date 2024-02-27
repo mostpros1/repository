@@ -4,7 +4,7 @@ import { dynamoDB } from './declerations.ts';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
-        const id: number = Math.floor(Math.random() * 1000000);
+    const id: number = Math.floor(Math.random() * 1000000);
     const params = {
         TableName: "users",
         Item: {
@@ -20,7 +20,6 @@ export function addUser(username: string, email: string, password: string, first
             status: { S: status },
         }
     };
-
     dynamoDB.putItem(params, function (err, data) {
         if (err) {
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
@@ -275,16 +274,16 @@ export function addAvailibility(id: number, professional_id: number, job_descrip
     });
 }
 
-export function addChats(id: number, sender_id: number, reciever_id: number, message: string, sent_at: string, recieved_at: string){
+export function addChats(id: number, sender_id: number, reciever_id: number, message: string, sent_at: string, recieved_at: string) {
     const param = {
         TableName: "chats",
         Item: {
             id: { N: String(id) },
             sender_id: { N: String(sender_id) },
             reciever_id: { N: String(reciever_id) },
-            message: {S: message},
-            sent_at: {S: sent_at},
-            recieved_at: {S: recieved_at},
+            message: { S: message },
+            sent_at: { S: sent_at },
+            recieved_at: { S: recieved_at },
         }
     }
     dynamoDB.putItem(param, function (err, data) {
@@ -296,15 +295,15 @@ export function addChats(id: number, sender_id: number, reciever_id: number, mes
     });
 }
 
-export function addStripe_connected_accounts(id: number, user_id: number, account_id: number, created_at: string, updated_at: string){
+export function addStripe_connected_accounts(id: number, user_id: number, account_id: number, created_at: string, updated_at: string) {
     const param = {
         TableName: "stripe_connected_accounts",
         Item: {
             id: { N: String(id) },
             user_id: { N: String(user_id) },
             account_id: { N: String(account_id) },
-            created_at: {S: created_at},
-            updated_at: {S: updated_at},
+            created_at: { S: created_at },
+            updated_at: { S: updated_at },
         }
     }
     dynamoDB.putItem(param, function (err, data) {

@@ -37,8 +37,16 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
+      //const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       
+      queryGSI(
+        "users",
+        "username",
+        "username = :user_name",
+        {
+          ':user_name': { S: loginData.email }
+        }
+      );/*
       queryGSI("users",
         "username",
         "username = :user_name  and password = :password",
@@ -46,8 +54,8 @@ function LoginPage() {
           ':user_name': loginData.email,
           ':password': loginData.password
         }).then(updateUser(authenticatedUser))
-        .catch(console.error);
-      navigate('/');
+        .catch(console.error);*/
+      //navigate('/');
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);
