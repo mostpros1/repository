@@ -9,7 +9,7 @@ import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
 
-import { queryGSI } from '../../../backend_functions/searchData.ts';
+import { authenticateUser } from '../../../backend_functions/authentecateUser.ts';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -39,14 +39,13 @@ function LoginPage() {
     try {
       //const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       
-      queryGSI(
+      authenticateUser(loginData.email, loginData.password)
+      /*queryGSI(
         "users",
         "username",
         "username = :user_name",
-        {
-          ':user_name': { S: loginData.email }
-        }
-      );/*
+          {':user_name': { S: loginData.email }}
+      );
       queryGSI("users",
         "username",
         "username = :user_name  and password = :password",
