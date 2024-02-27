@@ -8,7 +8,7 @@ export function addUser(username: string, email: string, password: string, first
     const params = {
         TableName: "users",
         Item: {
-            id: { N: id },
+            id: { N: String(id) },
             username: { S: username },
             email: { S: email },
             password: { S: password },
@@ -229,13 +229,15 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
     });
 }
 
-export function addProfessionals(id: number, user_id: number, email: string, postcode: string, region: string, field_of_work: string, slug: string) {
+export function addProfessionals(user_id: number, email: string, phonenumber: number, postcode: string, region: string, field_of_work: string, slug: string) {
+    const id: number = Math.floor(Math.random() * 1000000);
     const param = {
         TableName: "professionals",
         Item: {
             id: { N: String(id) },
             user_id: { N: String(user_id) },
             email: { S: email },
+            phone_number: { S: String(phonenumber) },
             postcode: { S: postcode },
             region: { S: region },
             field_of_work: { S: field_of_work },
