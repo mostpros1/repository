@@ -42,7 +42,6 @@ const HomeOwnerCreate = ({ navigation }) => {
         navigation.navigate('HomeOwnerPostalCode', { selectedOption });
     };
 
-    // Filtered options based on the user input
     const filteredOptions = options.filter(option =>
       option.title.toLowerCase().includes(inputText.toLowerCase())
     );

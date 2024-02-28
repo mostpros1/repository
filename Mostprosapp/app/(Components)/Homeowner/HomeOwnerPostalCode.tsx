@@ -7,8 +7,8 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const HomeOwnerPostalCode = ({ navigation, route }) => {
-    const { selectedOption } = route.params; // Get the selected option from navigation params
-    const [progress, setProgress] = useState(1); // Progress state
+    const { selectedOption } = route.params; 
+    const [progress, setProgress] = useState(1); 
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
 
     const handlePostalCodeChange = (text, part) => {

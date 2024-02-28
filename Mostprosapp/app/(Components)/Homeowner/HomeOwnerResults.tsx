@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     orange:{
         flex: 1,
         height: "100%",
-        // backgroundColor: "orange",
         display: "flex",
         flexDirection: "row",
         flexWrap:"wrap",
@@ -174,13 +173,11 @@ const styles = StyleSheet.create({
         width: "70%",
         display: "flex",
         justifyContent: "center",
-        // backgroundColor: "green",
     },
 
     yellow:{
         height: "60%",
         width: "30%",
-        // backgroundColor: "yellow",
         display: "flex",
         alignItems: "center",
         padding: 10,
