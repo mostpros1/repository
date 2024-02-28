@@ -5,7 +5,7 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
-import { addUser } from '../../../backend_functions/addData.ts';
+import { addUser } from '../../../../backend_functions/addData.ts';
 
 
 

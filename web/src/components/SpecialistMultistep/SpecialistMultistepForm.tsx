@@ -14,7 +14,7 @@ import React from 'react';
 import { getItem } from '../../../backend_functions/searchData.ts';
 import { Auth } from 'aws-amplify';
 import { addProfessionals } from '../../../backend_functions/addData.ts';
-import { dynamo } from '../../../backend_functions/declerations.ts';
+import { dynamo } from '../../../../backend_functions/declerations.ts';
 
 import Calendar from './Calendar';
 

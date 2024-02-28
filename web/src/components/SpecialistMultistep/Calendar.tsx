@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import { dynamo } from '../../../backend_functions/declerations.ts';
+import { dynamo } from '../../../../backend_functions/declerations.ts';
 
   const DateAndTimePicker: React.FC = () => {
   const today = new Date();

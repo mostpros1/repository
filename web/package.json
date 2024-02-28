@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start:frontend": "vite",
-    "start:backend": "node backend_functions/emailSturenWeb.js",
+    "start:backend": "node ../backend_functions/emailSturenWeb.js",
     "dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
