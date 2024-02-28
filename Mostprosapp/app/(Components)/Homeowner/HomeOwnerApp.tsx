@@ -1,50 +1,110 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform, Image, KeyboardAvoidingView } from 'react-native';
-import { Dimensions } from 'react-native';
-import Icon from "@expo/vector-icons/MaterialIcons";
+import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableOpacity, Image, Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const HomeOwnerApp = ({ navigation }) => {
     const [progress, setProgress] = useState(2);
+    const [selectedItems, setSelectedItems] = useState([]);
 
+    const toggleItemSelection = (index) => {
+        const updatedItems = [...selectedItems];
+        if (updatedItems.includes(index)) {
+            updatedItems.splice(updatedItems.indexOf(index), 1);
+        } else {
+            updatedItems.push(index);
+        }
+        setSelectedItems(updatedItems);
+    };
 
     return (
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                    <SafeAreaView style={styles.container}>
-                        <View style={styles.header}>
-                            <View style={{ flex: 1 }}></View>
-                            <Pressable style={styles.crossCircle} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
-                                <Text style={styles.crossTitle}>X</Text>
-                            </Pressable>
-                        </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.header}>
+                    <View style={{ flex: 1 }}></View>
+                    <Pressable style={styles.crossCircle} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
+                        <Text style={styles.crossTitle}>X</Text>
+                    </Pressable>
+                </View>
 
-                        <View style={styles.progressContainer}>
-                            <Text style={styles.progressText}>Stap {progress} van de 4</Text>
-                            <View style={styles.progressBar}>
-                                <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
-                            </View>
-                        </View>
+                <View style={styles.progressContainer}>
+                    <Text style={styles.progressText}>Stap {progress} van de 4</Text>
+                    <View style={styles.progressBar}>
+                        <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
+                    </View>
+                </View>
 
-                        <View style={styles.titleBox}>
-                            <Text style={styles.title}>Wat moet er gedaan worden?</Text>
-                        </View>
+                <View style={styles.titleBox}>
+                    <Text style={styles.title}>Wat moet er gedaan worden?</Text>
+                </View>
 
-                        <View style={styles.cardsContainer}>
-                            <View style={styles.card}></View>
-                            <View style={styles.card}></View>
-                            <View style={styles.card}></View>
-                            <View style={styles.card}></View>
-                            <View style={styles.card}></View>
-                            <View style={styles.card}></View>
-                        </View>
+                <View style={styles.cardsContainer}>
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(0) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(0)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Nieuwe Leiding aanleggen</Text>
+                    </View>
 
-                        <Pressable style={styles.nextButton} onPress={() => console.log("Next button pressed")}>
-                            <Text style={styles.nextButtonText}>Volgende</Text>
-                        </Pressable>
-                    </SafeAreaView>
-            </ScrollView>
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(1)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Kapotte leiding maken</Text>
+                    </View>
+
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(2)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Gas leiding repareren</Text>
+                    </View>
+
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(3)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Lekkage verhelpen</Text>
+                    </View>
+
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(4)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Riolering en afvoer onstoppen of reinigen</Text>
+                    </View>
+
+                    <View style={styles.card}>
+                        <TouchableOpacity
+                            style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(5)}
+                        />
+                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Text style={styles.cardTitle}>Anders</Text>
+                    </View>
+                </View>
+
+                <View style={styles.buttonsContainer}>
+                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => console.log("vorige is gedrukt")}>
+                        <Text style={styles.nextButtonText}>Vorige</Text>
+                    </Pressable>
+                    <Pressable style={[styles.nextButton]} onPress={() => console.log("volgende is gedrukt")}>
+                        <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
+                    </Pressable>
+                </View>
+            </SafeAreaView>
+        </ScrollView>
     );
 };
 
@@ -55,21 +115,16 @@ const styles = StyleSheet.create({
     },
     scrollViewContainer: {
         flexGrow: 1,
+        height: windowHeight * 1.1,
     },
-    contentContainer: {
-        flex: 1,
-    },
-
-    cardsContainer:{
+    cardsContainer: {
         width: windowWidth,
-        height: "100%",
         display: "flex",
-        justifyContent: "center",
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: 20,
+        justifyContent: "center",
+        paddingVertical: 20,
     },
-
     card: {
         width: 150,
         height: 150,
@@ -87,7 +142,29 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-
+    checkbox: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        width: 20,
+        height: 20,
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 5,
+    },
+    checkboxSelected: {
+        backgroundColor: '#308be5',
+    },
+    cardImage: {
+        width: 70,
+        height: 70,
+        marginBottom: 10,
+    },
+    cardTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -110,7 +187,6 @@ const styles = StyleSheet.create({
     titleBox: {
         alignItems: "center",
         paddingTop: 40,
-        height: 100
     },
     title: {
         fontWeight: "bold",
@@ -137,24 +213,42 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
+    buttonsContainer:{
+        paddingTop: 12,
+        marginBottom: 12,
+        display: "flex",
+        flexDirection: "row",
+        gap: 15,
+        justifyContent: "center",
+    },
+
     nextButton: {
         backgroundColor: "#318ae5",
         borderRadius: 10,
         paddingVertical: 12,
         paddingHorizontal: 32,
         alignSelf: 'center',
-        marginTop: 65,
-        width: 200,
-        height: 50,
+        width: 170,
+        height: 60,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
     },
+
+    nextButtonColorOne:{
+        backgroundColor: "#fffefe",
+        borderWidth: 3,
+        borderColor: "#7db7ec",
+    },
+
     nextButtonText: {
-        color: "#fff",
         fontSize: 13,
         fontWeight: "bold",
         textAlign: 'center',
+    },
+
+    whiteButtonText:{
+        color: "#fff",
     },
 });
 
