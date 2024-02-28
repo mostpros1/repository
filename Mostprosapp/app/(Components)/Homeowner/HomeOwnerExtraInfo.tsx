@@ -44,7 +44,6 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                 </View>
             </SafeAreaView>
             
-            {/* Buttons container wrapped in a view at the bottom */}
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.buttonsContainer}>
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
