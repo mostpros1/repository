@@ -37,4 +37,5 @@ declare global {
     HomeOwnerCreate: undefined;
     HomeOwnerPostalCode: undefined;
     HomeOwnerApp: undefined;
+    HomeOwnerExtraInfo: undefined;
   };

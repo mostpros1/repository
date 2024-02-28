@@ -96,13 +96,14 @@ const HomeOwnerApp = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => console.log("vorige is gedrukt")}>
+                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => console.log("volgende is gedrukt")}>
+                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('HomeOwnerExtraInfo')}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
+
             </SafeAreaView>
         </ScrollView>
     );
