@@ -3,10 +3,10 @@ describe('Testing "Register as specialist"' , () => {
 
         cy.janTestBegin()
 
-        cy.get('input[type="text"]').eq(0).type('Loodgieter')
-        cy.get('input[type="text"]').eq(1).type('test@test.com')
-        cy.get('input[type="text"]').eq(2).type('2020EB')
-        cy.get('input[type="text"]').eq(3).type('Amsterdam')
+        cy.get('input').eq(0).type('Loodgieter')
+        cy.get('input').eq(1).type('test@test.com')
+        cy.get('input').eq(2).type('2020EB')
+        cy.get('input').eq(3).type('Amsterdam')
         cy.goForward()
 
         // STAP 2-3-4

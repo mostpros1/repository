@@ -5,7 +5,7 @@ type SpecialistData = {
   email: string;
   postCode: string;
   stad: string;
-  beroep: string;
+  beroep?: string;
 };
 
 type SearchChoreFormProps = SpecialistData & {
