@@ -43,4 +43,5 @@ declare global {
     HomeOwnerAppAannemer: undefined;
     HomeOwnerAppElektricien: undefined;
     HomeOwnerExtraInfo: undefined;
+    HomeOwnerEmail: undefined;
   };

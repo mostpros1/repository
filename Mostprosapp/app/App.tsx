@@ -28,6 +28,7 @@ import ChatOverview from "./(Components)/Chat/ChatOverview";
 import HomePageSpecialist from "./(Components)/Specialist/HomePageSpecialist";
 import HomeOwnerCreate from "./(Components)/Homeowner/HomeOwnerCreate";
 import HomeOwnerPostalCode from "./(Components)/Homeowner/HomeOwnerPostalCode";
+import HomeOwnerEmail from "./(Components)/Homeowner/HomeOwnerEmail";
 import HomeOwnerAppLoodgieter from "./(Components)/Homeowner/HomeOwnerAppLoodgieter";
 import HomeOwnerAppHovenier from "./(Components)/Homeowner/HomeOwnerAppHovenier";
 import HomeOwnerAppDakdekker from "./(Components)/Homeowner/HomeOwnerAppDakdekker";
@@ -107,6 +108,7 @@ const App = () => {
         <Stack.Screen name="HomeOwnerAppSchoonmaker" component={HomeOwnerAppSchoonmaker}/>
         <Stack.Screen name="HomeOwnerAppAannemer" component={HomeOwnerAppAannemer}/>
         <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien}/>
+        <Stack.Screen name="HomeOwnerEmail" component={HomeOwnerEmail}/>
         <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo}/>
 
         {/* <Stack.Screen name="" component={} /> */}

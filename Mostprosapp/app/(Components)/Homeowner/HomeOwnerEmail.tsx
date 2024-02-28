@@ -4,9 +4,10 @@ import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TextInput,
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HomeOwnerExtraInfo = ({ navigation }) => {
-    const [progress, setProgress] = useState(3);
+const HomeOwnerEmail = ({ navigation }) => {
+    const [progress, setProgress] = useState(4);
     const [additionalInfo, setAdditionalInfo] = useState('');
+    const [email, setEmail] = useState('');
 
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -26,20 +27,18 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Aanvullende Informatie (niet verplicht)</Text>
-                </View>
-                <View style={styles.titleBox}>
-                    <Text style={styles.titleLight}>Deel hier a.u.b niet je contactgegevens.</Text>
+                    <Text style={styles.title}>Ontvang reacties van de specialist in jouw omgeving.</Text>
                 </View>
 
-                <View style={styles.textAreaContainer}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.titleLight}>Email</Text>
                     <TextInput
-                        style={styles.textArea}
-                        onChangeText={setAdditionalInfo}
-                        value={additionalInfo}
-                        placeholder="Beschrijf je klus hier met aanvullende informatie denk aan eventuele schade, enz."
-                        placeholderTextColor="#b6b8bd"
-                        multiline
+                        style={styles.input}
+                        placeholder="E-mailadres"
+                        onChangeText={setEmail}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
                     />
                 </View>
             </SafeAreaView>
@@ -49,7 +48,7 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('HomeOwnerEmail')}>
+                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('TestHome')}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
@@ -98,8 +97,8 @@ const styles = StyleSheet.create({
     },
     titleLight:{
         fontWeight: "bold",
-        color: "#b6b8bd",
-        textAlign: 'center',
+        color: "black",
+        textAlign: 'left',
         fontSize: 15,
     },
     progressContainer: {
@@ -120,24 +119,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#318ae5',
         borderRadius: 5,
     },
-    textAreaContainer: {
-        padding: 10,
-        marginBottom: 20,
-        marginTop: 10,
+    inputContainer: {
+        alignItems: 'center',
+        marginTop: 20,
         display: "flex",
-        alignItems: "center",
+        height: "50%",
+        justifyContent: "center",
     },
-    textArea: {
-        height: 150,
-        width: "90%",
-        justifyContent: "flex-start",
-        backgroundColor: "#fff",
+    input: {
         borderWidth: 1,
+        borderColor: '#ccc',
         borderRadius: 10,
-        borderColor: "#ccc",
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        textAlignVertical: "top",
+        padding: 10,
+        width: '80%',
+        marginTop: 10,
     },
     bottomButtonsContainer: {
         position: 'absolute',
@@ -180,4 +175,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeOwnerExtraInfo;
+export default HomeOwnerEmail;
