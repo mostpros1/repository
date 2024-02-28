@@ -13,6 +13,8 @@ import { Margin } from "@mui/icons-material";
 import React from 'react';
 import { getItem } from '../../../backend_functions/searchData.ts';
 import { Auth } from 'aws-amplify';
+import { addProfessionals } from '../../../backend_functions/addData.ts';
+import { dynamo } from '../../../backend_functions/declerations.ts';
 
 import Calendar from './Calendar';
 
@@ -209,7 +211,29 @@ function SpecialistMultistepForm() {
       ],
       onStepChange: () => { },
     });
-  //Timon
+
+  function queryUsers(username: string){
+    const params = {
+      TableName: "users",
+      IndexName: 'username', 
+      KeyConditionExpression: 'email = :username',
+      ExpressionAttributeValues: {
+          ':username': username
+      }
+  };
+
+  dynamo.query(params, function(err, data) {
+      if (err) {
+          console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
+      } else {
+          if (data.Items && data.Items.length === 0) {
+              console.log('User not found.');
+          } else {
+              return data.Items && data.Items[0].id;
+          }
+      }
+  });
+  }
 
 
   async function handelFormData(data: FormData) {
@@ -227,7 +251,9 @@ function SpecialistMultistepForm() {
 
       //met de gegevens met de datums verwerken voor availibility.
       const professionalId: number = Math.random();
-      //addProfessionals(professionalId, userId, data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+
+
+      //addProfessionals(professionalId, queryUsers(data.email), data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
 
       //addAvailibility(id: number, professional_id: number, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
     } catch (err) {
@@ -241,6 +267,7 @@ function SpecialistMultistepForm() {
       return next();
     } else {
       console.log(data);
+      queryUsers(data.email);
       handelFormData(data);
       navigate("/specialist-resultaat");
     }
