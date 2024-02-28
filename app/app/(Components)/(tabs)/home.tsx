@@ -25,6 +25,9 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.text]}>Profile</Text>
             </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
+                <Text style={[styles.text]}>DateAndTimePicker</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>

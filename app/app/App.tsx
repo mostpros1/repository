@@ -19,6 +19,7 @@ import { Amplify, Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { RootStackParamList } from "./types";
 Amplify.configure(awsconfig);
+import DateAndTimePicker from "./(Components)/Booking/Calender";
 
 
 const App = () => {
@@ -62,6 +63,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

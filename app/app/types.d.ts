@@ -19,4 +19,5 @@ declare global {
     Login: undefined;
     Verify: {email: string};
     Profile: undefined;
+    DateAndTimePicker: undefined;
   };

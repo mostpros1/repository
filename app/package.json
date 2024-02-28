@@ -16,7 +16,8 @@
     "@types/react": "~18.2.14",
     "amazon-cognito-identity-js": "^6.3.7",
     "aws-amplify": "^5.3.12",
-    "expo": "^49.0.3",
+    "expo": "^49.0.23",
+    "expo-barcode-scanner": "~12.5.3",
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
     "expo-router": "2.0.0",
@@ -33,8 +34,7 @@
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
     "react-router-dom": "^6.18.0",
-    "typescript": "^5.1.3",
-    "expo-barcode-scanner": "~12.5.3"
+    "typescript": "^5.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
