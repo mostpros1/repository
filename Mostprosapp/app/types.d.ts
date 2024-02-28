@@ -36,6 +36,11 @@ declare global {
     HomeOwnerResults: undefined;
     HomeOwnerCreate: undefined;
     HomeOwnerPostalCode: undefined;
-    HomeOwnerApp: undefined;
+    HomeOwnerAppLoodgieter: undefined;
+    HomeOwnerAppHovenier: undefined;
+    HomeOwnerAppDakdekker: undefined;
+    HomeOwnerAppSchoonmaker: undefined;
+    HomeOwnerAppAannemer: undefined;
+    HomeOwnerAppElektricien: undefined;
     HomeOwnerExtraInfo: undefined;
   };

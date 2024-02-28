@@ -28,7 +28,12 @@ import ChatOverview from "./(Components)/Chat/ChatOverview";
 import HomePageSpecialist from "./(Components)/Specialist/HomePageSpecialist";
 import HomeOwnerCreate from "./(Components)/Homeowner/HomeOwnerCreate";
 import HomeOwnerPostalCode from "./(Components)/Homeowner/HomeOwnerPostalCode";
-import HomeOwnerApp from "./(Components)/Homeowner/HomeOwnerApp";
+import HomeOwnerAppLoodgieter from "./(Components)/Homeowner/HomeOwnerAppLoodgieter";
+import HomeOwnerAppHovenier from "./(Components)/Homeowner/HomeOwnerAppHovenier";
+import HomeOwnerAppDakdekker from "./(Components)/Homeowner/HomeOwnerAppDakdekker";
+import HomeOwnerAppSchoonmaker from "./(Components)/Homeowner/HomeOwnerAppSchoonmaker";
+import HomeOwnerAppAannemer from "./(Components)/Homeowner/HomeOwnerAppAannemer";
+import HomeOwnerAppElektricien from "./(Components)/Homeowner/HomeOwnerAppElektricien";
 import HomeOwnerExtraInfo from "./(Components)/Homeowner/HomeOwnerExtraInfo";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -96,7 +101,12 @@ const App = () => {
         <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults}/>
         <Stack.Screen name="HomeOwnerCreate" component={HomeOwnerCreate}/>
         <Stack.Screen name="HomeOwnerPostalCode" component={HomeOwnerPostalCode}/>
-        <Stack.Screen name="HomeOwnerApp" component={HomeOwnerApp}/>
+        <Stack.Screen name="HomeOwnerAppLoodgieter" component={HomeOwnerAppLoodgieter}/>
+        <Stack.Screen name="HomeOwnerAppHovenier" component={HomeOwnerAppHovenier}/>
+        <Stack.Screen name="HomeOwnerAppDakdekker" component={HomeOwnerAppDakdekker}/>
+        <Stack.Screen name="HomeOwnerAppSchoonmaker" component={HomeOwnerAppSchoonmaker}/>
+        <Stack.Screen name="HomeOwnerAppAannemer" component={HomeOwnerAppAannemer}/>
+        <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien}/>
         <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo}/>
 
         {/* <Stack.Screen name="" component={} /> */}

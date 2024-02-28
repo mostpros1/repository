@@ -6,7 +6,8 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HomeOwnerPostalCode = ({ navigation }) => {
+const HomeOwnerPostalCode = ({ navigation, route }) => {
+    const { selectedOption } = route.params; // Get the selected option from navigation params
     const [progress, setProgress] = useState(1); // Progress state
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
 
@@ -66,7 +67,7 @@ const HomeOwnerPostalCode = ({ navigation }) => {
                                 maxLength={2}
                             />
                         </View>
-                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate('HomeOwnerApp')}>
+                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate(`HomeOwnerApp${selectedOption.title}`)}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>
@@ -177,4 +178,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeOwnerPostalCode;
+export default HomeOwnerPostalCode

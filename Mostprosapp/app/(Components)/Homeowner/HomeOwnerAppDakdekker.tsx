@@ -4,7 +4,7 @@ import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableO
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HomeOwnerApp = ({ navigation }) => {
+const HomeOwnerAppDakdekker = ({ navigation }) => {
     const [progress, setProgress] = useState(2);
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -46,7 +46,7 @@ const HomeOwnerApp = ({ navigation }) => {
                             onPress={() => toggleItemSelection(0)}
                         />
                         <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
-                        <Text style={styles.cardTitle}>Nieuwe Leiding aanleggen</Text>
+                        <Text style={styles.cardTitle}>Dakterras aanleggen</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -55,7 +55,7 @@ const HomeOwnerApp = ({ navigation }) => {
                             onPress={() => toggleItemSelection(1)}
                         />
                         <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
-                        <Text style={styles.cardTitle}>Kapotte leiding maken</Text>
+                        <Text style={styles.cardTitle}>Dakrenovatie of vervangen</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -64,7 +64,7 @@ const HomeOwnerApp = ({ navigation }) => {
                             onPress={() => toggleItemSelection(2)}
                         />
                         <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
-                        <Text style={styles.cardTitle}>Gas leiding repareren</Text>
+                        <Text style={styles.cardTitle}>Dakconstructie plaatsen of vervangen</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -82,7 +82,7 @@ const HomeOwnerApp = ({ navigation }) => {
                             onPress={() => toggleItemSelection(4)}
                         />
                         <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
-                        <Text style={styles.cardTitle}>Riolering en afvoer onstoppen of reinigen</Text>
+                        <Text style={styles.cardTitle}>Dakdoorvoer maken, verplaatsen of vervangen</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -253,4 +253,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeOwnerApp;
+export default HomeOwnerAppDakdekker;

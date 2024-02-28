@@ -8,14 +8,15 @@ const windowHeight = Dimensions.get('window').height;
 
 const HomeOwnerCreate = ({ navigation }) => {
     const [inputText, setInputText] = useState('');
+    const [selectedOption, setSelectedOption] = useState(null);
     const [showOptions, setShowOptions] = useState(false);
     const [options, setOptions] = useState([
         { id: 1, title: 'Loodgieter' },
         { id: 2, title: 'Hovenier' },
         { id: 3, title: 'Dakdekker' },
-        { id: 4, title: 'Schoonmaken' },
+        { id: 4, title: 'Schoonmaker' },
         { id: 5, title: 'Aannemer' },
-        { id: 6, title: 'Electricien' },
+        { id: 6, title: 'Elektricien' },
     ]);
 
     const handleInputChange = (text) => {
@@ -27,12 +28,24 @@ const HomeOwnerCreate = ({ navigation }) => {
     };
 
     const handleOptionPress = (option) => {
+        setInputText(option.title);
+        setSelectedOption(option);
+        setShowOptions(false);
     };
 
     const handleOutsidePress = () => {
         Keyboard.dismiss();
         setShowOptions(false);
     };
+
+    const handleForwardButtonPress = () => {
+        navigation.navigate('HomeOwnerPostalCode', { selectedOption });
+    };
+
+    // Filtered options based on the user input
+    const filteredOptions = options.filter(option =>
+      option.title.toLowerCase().includes(inputText.toLowerCase())
+    );
 
     return (
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
@@ -55,14 +68,14 @@ const HomeOwnerCreate = ({ navigation }) => {
                         onFocus={handleInputFocus}
                         value={inputText}
                     />
-                    <Pressable style={styles.forwardButton} onPress={() => navigation.navigate('HomeOwnerPostalCode')}>
+                    <Pressable style={styles.forwardButton} onPress={handleForwardButtonPress}>
                         <Icon name="forward" size={25} color="white" />
                     </Pressable>
                 </View>
 
                 {showOptions && (
                     <ScrollView style={styles.optionsContainer}>
-                        {options.map(option => (
+                        {filteredOptions.map(option => (
                             <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
                                 <Text>{option.title}</Text>
                             </Pressable>
