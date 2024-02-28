@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
-import { Dimensions } from 'react-native';
+import { Dimensions } from 'react-native'; 
 import Icon from "@expo/vector-icons/MaterialIcons";
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,6 +19,8 @@ const HomeOwnerCreate = ({ navigation }) => {
         { id: 5, title: 'Aannemer' },
         { id: 6, title: 'Elektricien' },
     ]);
+
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (text) => {
         setInputText(text);
@@ -39,6 +42,13 @@ const HomeOwnerCreate = ({ navigation }) => {
     };
 
     const handleForwardButtonPress = () => {
+        if (!selectedOption) {
+            setErrorMessage("Kies eerst een Specialist");
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000);
+            return;
+        }
         navigation.navigate('HomeOwnerPostalCode', { selectedOption });
     };
 
@@ -81,6 +91,11 @@ const HomeOwnerCreate = ({ navigation }) => {
                         ))}
                     </ScrollView>
                 )}
+                {errorMessage ? (
+                    <View style={styles.errorMessageContainer}>
+                        <Text style={styles.errorMessage}>{errorMessage}</Text>
+                    </View>
+                ) : null}
             </SafeAreaView>
         </TouchableWithoutFeedback>
     );
@@ -168,10 +183,17 @@ const styles = StyleSheet.create({
             },
         }),
     },
-    
     option: {
         paddingVertical: 10,
         paddingLeft: 20,
+    },
+    errorMessageContainer: {
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    errorMessage: {
+        color: 'red',
+        fontSize: 16,
     },
 });
 
