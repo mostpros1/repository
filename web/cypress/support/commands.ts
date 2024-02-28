@@ -46,7 +46,7 @@ declare namespace Cypress {
         goBack(): void;
         goForward(): void;
         janTestBegin(): void;
-        testBegin(): void
+        testBegin(): void;
     }
 }
 
@@ -76,6 +76,11 @@ Cypress.Commands.add('testAgain', () => {
     cy.setDesktopViewport();
     cy.visit("http://localhost:5173/");
     cy.get('.nav-blue-btn > .black-items').click();
+
+    cy.get('input').eq(0).type('Loodgieter')
+    cy.get('input').eq(1).type('test@test.com')
+    cy.get('input').eq(2).type('2020EB')
+    cy.get('input').eq(3).type('Amsterdam')
 
     for (let r = 0; r < 4; r++) {
         cy.goForward();
