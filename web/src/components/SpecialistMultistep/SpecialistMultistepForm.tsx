@@ -255,7 +255,7 @@ function SpecialistMultistepForm() {
 
       //addProfessionals(professionalId, queryUsers(data.email), data.email, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
 
-      //addAvailibility(id: number, professional_id: number, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
+      //addAvailibility(id: number, professionalID, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
     } catch (err) {
       console.log(err);
     }
