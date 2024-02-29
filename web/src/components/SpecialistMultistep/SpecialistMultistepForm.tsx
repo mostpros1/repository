@@ -240,7 +240,7 @@ function SpecialistMultistepForm() {
 
   async function handelFormData(data: FormData) {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser();
+      /*const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
       const { sub: userId } = attributes;
       const signInDetails = currentUser.signInUserSession;
@@ -249,7 +249,7 @@ function SpecialistMultistepForm() {
       console.log(`The userId: ${userId}`);
       console.log(`The signInDetails: ${JSON.stringify(signInDetails)}`);
       const userData = getItem("users", userId);
-      console.log(`The userData: ${JSON.stringify(userData)}`);
+      console.log(`The userData: ${JSON.stringify(userData)}`);*/
 
       //met de gegevens met de datums verwerken voor availibility.
       const professionalId: number = Math.floor(Math.random() * 1000000);
