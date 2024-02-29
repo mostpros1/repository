@@ -11,9 +11,11 @@ import NoKvK from "./NoKvK/NoKvK";
 import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
-import { getItem } from '../../../backend_functions/searchData.ts';
+import { getItem } from '../../../../backend_functions/searchData.ts';
 import { Auth } from 'aws-amplify';
-import { addProfessionals } from '../../../backend_functions/addData.ts';
+
+import { addAvailibility } from '../../../../backend_functions/addData.ts';
+import { addProfessionals } from '../../../../backend_functions/addData.ts';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
 
 import Calendar from './Calendar';
@@ -252,10 +254,12 @@ function SpecialistMultistepForm() {
       //met de gegevens met de datums verwerken voor availibility.
       const professionalId: number = Math.floor(Math.random() * 1000000);
 
+      const availibilityId: number = Math.floor(Math.random() * 1000000);
+
 
       addProfessionals(professionalId, queryUsers(data.email), data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
 
-      //addAvailibility(id: number, professionalID, job_description: string, data.dateTimeSpans, time_from: string, time_to: string);
+      addAvailibility(availibilityId, professionalId, "nothing", data.dateTimeSpans, time_from: string, time_to: string);
     } catch (err) {
       console.log(err);
     }
