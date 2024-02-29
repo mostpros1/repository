@@ -259,7 +259,7 @@ function SpecialistMultistepForm() {
 
       addProfessionals(professionalId, queryUsers(data.email), data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
 
-      addAvailibility(availibilityId, professionalId, "nothing", data.dateTimeSpans, time_from: string, time_to: string);
+      addAvailibility(availibilityId, professionalId, "Test", data.dateTimeSpans[0].date, "00:00", "00:00");
     } catch (err) {
       console.log(err);
     }
