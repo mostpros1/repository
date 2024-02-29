@@ -25,7 +25,7 @@ export function calHuiseigenaar(professionalsEmail: string) {
     dynamo
         .query({
             TableName: 'professionals',
-            IndexName: 'emailIndex',
+            IndexName: 'prof_emailIndex',
             KeyConditionExpression: 'email = :email',
             ExpressionAttributeValues: {
                 ':email': professionalsEmail,
