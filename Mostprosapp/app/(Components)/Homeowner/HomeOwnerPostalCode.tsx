@@ -47,7 +47,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                         </View>
 
                         <View style={styles.imageContainer}>
-                            <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.image} resizeMode="contain" />
+                            <Image source={require("../../../assets/images/postalcode.png")} style={styles.image} resizeMode="contain" />
                         </View>
 
                         <View style={styles.inputContainer}>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         alignItems: 'center',
-        paddingTop: 40,
+        paddingTop: 10,
     },
     image: {
         width: '80%',

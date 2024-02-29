@@ -45,7 +45,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(0) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(0)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/elekone.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Stopcontacten installeren</Text>
                     </View>
 
@@ -54,7 +54,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/elektwo.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Groepenkast installeren of uitbreiden</Text>
                     </View>
 
@@ -63,7 +63,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/elekthree.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Deurbel of intercom installeren</Text>
                     </View>
 
@@ -72,7 +72,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/elekfour.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Zonnepaneel installeren of onderhouden</Text>
                     </View>
 
@@ -81,7 +81,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/elekfive.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Tuin of buitenverlichting installeren</Text>
                     </View>
 
@@ -90,7 +90,7 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(5)}
                         />
-                        <Image source={require("../../../assets/images/HowItWorksSix.png")} style={styles.cardImage} />
+                        <Image source={require("../../../assets/images/dots.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Anders</Text>
                     </View>
                 </View>
@@ -157,8 +157,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#308be5',
     },
     cardImage: {
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
+        resizeMode: 'contain', 
         marginBottom: 10,
     },
     cardTitle: {

@@ -214,7 +214,8 @@ const styles = StyleSheet.create({
     height: 110,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#b5dcff",
   },
 
   cardSecondHalf: {
