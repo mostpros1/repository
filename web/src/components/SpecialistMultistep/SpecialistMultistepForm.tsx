@@ -267,7 +267,7 @@ function SpecialistMultistepForm() {
       try {
         const email = await queryUsers(data.email);
         if (email) {
-          addProfessionals(professionalId, email, "00316306548", data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+          addProfessionals(professionalId, email, data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
         } else {
           console.log('Email not found for the given username.');
         }
