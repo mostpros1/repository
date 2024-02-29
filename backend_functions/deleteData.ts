@@ -12,3 +12,5 @@ export function deleteData(tableName: string, key: string, value: string) {
     .then(data => console.log(data.Attributes))
     .catch(console.error)
 }
+
+

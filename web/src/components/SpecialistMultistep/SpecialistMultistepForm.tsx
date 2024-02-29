@@ -20,6 +20,9 @@ import { dynamo } from '../../../../backend_functions/declerations.ts';
 
 import Calendar from './Calendar';
 
+export const professionalId: number = Math.floor(Math.random() * 1000000);
+
+
 type DateTimeSpan = {
   date: Date;
   startTime: string;
@@ -252,7 +255,7 @@ function SpecialistMultistepForm() {
       console.log(`The userData: ${JSON.stringify(userData)}`);*/
 
       //met de gegevens met de datums verwerken voor availibility.
-      const professionalId: number = Math.floor(Math.random() * 1000000);
+      //const professionalId: number = Math.floor(Math.random() * 1000000);
 
       const availibilityId: number = Math.floor(Math.random() * 1000000);
 
