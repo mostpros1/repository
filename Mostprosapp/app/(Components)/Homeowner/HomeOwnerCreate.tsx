@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { Dimensions } from 'react-native'; 
 import Icon from "@expo/vector-icons/MaterialIcons";
+import {specialists} from '../../specialists.js';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -11,15 +12,6 @@ const HomeOwnerCreate = ({ navigation }) => {
     const [inputText, setInputText] = useState('');
     const [selectedOption, setSelectedOption] = useState(null);
     const [showOptions, setShowOptions] = useState(false);
-    const [options, setOptions] = useState([
-        { id: 1, title: 'Loodgieter' },
-        { id: 2, title: 'Hovenier' },
-        { id: 3, title: 'Dakdekker' },
-        { id: 4, title: 'Schoonmaker' },
-        { id: 5, title: 'Aannemer' },
-        { id: 6, title: 'Elektricien' },
-    ]);
-
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (text) => {
@@ -30,9 +22,9 @@ const HomeOwnerCreate = ({ navigation }) => {
         setShowOptions(true);
     };
 
-    const handleOptionPress = (option) => {
-        setInputText(option.title);
-        setSelectedOption(option);
+    const handleOptionPress = (specialists) => {
+        setInputText(specialists.title);
+        setSelectedOption(specialists);
         setShowOptions(false);
     };
 
@@ -52,7 +44,7 @@ const HomeOwnerCreate = ({ navigation }) => {
         navigation.navigate('HomeOwnerPostalCode', { selectedOption });
     };
 
-    const filteredOptions = options.filter(option =>
+    const filteredOptions = specialists.filter(option =>
       option.title.toLowerCase().includes(inputText.toLowerCase())
     );
 

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform, Image, KeyboardAvoidingView } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialIcons";
+import { useRoute } from '@react-navigation/native';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const HomeOwnerPostalCode = ({ navigation, route }) => {
-    const { selectedOption } = route.params; 
+    const { selectedOption, parameterName } = route.params;
     const [progress, setProgress] = useState(1); 
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
 
@@ -67,7 +69,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                                 maxLength={2}
                             />
                         </View>
-                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate(`HomeOwnerApp${selectedOption.title}`)}>
+                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate(`HomeOwnerApp${parameterName || selectedOption.title }`)}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>
