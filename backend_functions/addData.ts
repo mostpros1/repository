@@ -235,7 +235,7 @@ export function addProfessionals(user_id: number, email: void | string, phonenum
         Item: {
             id: { N: String(id) },
             user_id: { N: String(user_id) },
-            email: { S: email || undefined},
+            email: { S: email || "email@email.com"},
             phone_number: { S: phonenumber },
             postcode: { S: postcode },
             region: { S: region },

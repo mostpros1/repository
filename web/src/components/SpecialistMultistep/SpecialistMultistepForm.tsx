@@ -217,32 +217,36 @@ function SpecialistMultistepForm() {
       onStepChange: () => { },
     });
 
-  function queryUsers(username: string){
-    const params = {
-      TableName: "users",
-      IndexName: 'username', 
-      KeyConditionExpression: 'email = :username',
-      ExpressionAttributeValues: {
+  function queryUsers(username: string): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: "users",
+        IndexName: 'username',
+        KeyConditionExpression: 'email = :username',
+        ExpressionAttributeValues: {
           ':username': username
-      }
-  };
+        }
+      };
 
-  dynamo.query(params, function(err, data) {
-      if (err) {
+      dynamo.query(params, function (err, data) {
+        if (err) {
           console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
-      } else {
+          reject(err);
+        } else {
           if (data.Items && data.Items.length === 0) {
-              console.log('User not found.');
+            console.log('User not found.');
+            resolve(null);
           } else {
-              return data.Items && data.Items[0].id;
+            console.log(data.Items && data.Items[0].email);
+            resolve(data.Items && data.Items[0].email);
           }
-      }
-  });
+        }
+      });
+    });
   }
 
 
   async function handelFormData(data: FormData) {
-    try {
       /*const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
       const { sub: userId } = attributes;
@@ -257,69 +261,73 @@ function SpecialistMultistepForm() {
       //met de gegevens met de datums verwerken voor availibility.
       //const professionalId: number = Math.floor(Math.random() * 1000000);
 
-      const availibilityId: number = Math.floor(Math.random() * 1000000);
+      //const availibilityId: number = Math.floor(Math.random() * 1000000);
 
 
-      addProfessionals(professionalId, queryUsers(data.email), data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
-
-      addAvailibility(availibilityId, professionalId, "Test", data.dateTimeSpans[0].date, "00:00", "00:00");
-    } catch (err) {
-      console.log(err);
+      try {
+        const email = await queryUsers(data.email);
+        if (email) {
+          addProfessionals(professionalId, email, "00316306548", data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
+        } else {
+          console.log('Email not found for the given username.');
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }
 
   async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!isLastStep) {
-      return next();
-    } else {
-      console.log(data);
-      queryUsers(data.email);
-      handelFormData(data);
-      navigate("/specialist-resultaat");
+      e.preventDefault();
+      if (!isLastStep) {
+        return next();
+      } else {
+        console.log(data);
+        queryUsers(data.email);
+        handelFormData(data);
+        navigate("/specialist-resultaat");
+      }
     }
+
+    const stepWidth = 100 / steps.length;
+
+    return (
+      <form onSubmit={onSubmit} className="form-con">
+        <div className="progress-con">
+          <h3>
+            Stap {currentStepIndex + 1} van {steps.length}
+          </h3>
+          <div className="progress-bar">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`progress-step ${index <= currentStepIndex ? "active" : ""
+                  }`}
+                style={{ width: `${stepWidth}%` }}
+              ></div>
+            ))}
+          </div>
+        </div>
+        {showNoKvK ? <NoKvK /> : <>{step}</>}
+        <>
+          <div className="btn-wrapper">
+            <button
+              type="button"
+              onClick={() => {
+                showNoKvK ? setShowNoKvK(false) : back();
+              }}
+              className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+              style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+            >
+              Vorige
+            </button>
+            {showNoKvK ? <></> : <button type="submit" className="form-btn">
+              {isLastStep ? "Verstuur" : "Volgende"}
+            </button>}
+
+          </div>
+        </>
+      </form>
+    );
   }
 
-  const stepWidth = 100 / steps.length;
-
-  return (
-    <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
-        <div className="progress-bar">
-          {steps.map((_, index) => (
-            <div
-              key={index}
-              className={`progress-step ${index <= currentStepIndex ? "active" : ""
-                }`}
-              style={{ width: `${stepWidth}%` }}
-            ></div>
-          ))}
-        </div>
-      </div>
-      {showNoKvK ? <NoKvK /> : <>{step}</>}
-      <>
-        <div className="btn-wrapper">
-          <button
-            type="button"
-            onClick={() => {
-              showNoKvK ? setShowNoKvK(false) : back();
-            }}
-            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-          >
-            Vorige
-          </button>
-          {showNoKvK ? <></> : <button type="submit" className="form-btn">
-            {isLastStep ? "Verstuur" : "Volgende"}
-          </button>}
-
-        </div>
-      </>
-    </form>
-  );
-}
-
-export default SpecialistMultistepForm;
+  export default SpecialistMultistepForm;

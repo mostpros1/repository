@@ -164,93 +164,93 @@ const DateAndTimePicker: React.FC = () => {
       alert("Fout bij het opslaan van beschikbaarheid.");
     }*/
 
-  
-  
-  for (let i = 0; i < selectedDates.length; i++) {
+
+
+    for (let i = 0; i < selectedDates.length; i++) {
+      const params = {
+        TableName: "UserAvailability",
+        Item: {
+          id: Math.floor(Math.random() * 1000000),
+          professional_id: professionalId,
+          date: selectedDates[i],
+
+        },
+      };
+      try {
+        await dynamo.put(params).promise();
+        alert("Beschikbaarheid succesvol opgeslagen!");
+      } catch (error) {
+        console.error("Er is een fout opgetreden bij het opslaan: ", error);
+        alert("Fout bij het opslaan van beschikbaarheid.");
+      }
+    }
+  };
+
+  function getId(datum: string) {
     const params = {
       TableName: "UserAvailability",
-      Item: {
-        id: Math.floor(Math.random() * 1000000),
-        professional_id: professionalId,
-        date: selectedDates[i],
+      IndexName: "dateIndex",
+      KeyConditionExpression: '#d = :dateValue',
+      ExpressionAttributeNames: {
+        '#d': 'date',
+      },
+      ExpressionAttributeValues: {
+        ':dateValue': datum,
+      }
+    };
 
+    dynamo.query(params)
+      .promise()
+      .then(data => Verwijder(data.Items[0].id))
+      .catch(console.error);
+
+
+  }
+
+  function Verwijder(id: number) {
+    const params = {
+      TableName: "UserAvailability",
+      Key: {
+        id: id,
       },
     };
-    try {
-      await dynamo.put(params).promise();
-      alert("Beschikbaarheid succesvol opgeslagen!");
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      alert("Fout bij het opslaan van beschikbaarheid.");
-    }
+    dynamo
+      .delete(params)
+      .promise()
+      .then(data => console.log(data.Attributes))
+      .catch(console.error)
+
   }
-};
 
-function getId(datum: string) {
-  const params = {
-     TableName: "UserAvailability",
-     IndexName: "dateIndex",
-     KeyConditionExpression: '#d = :dateValue', 
-     ExpressionAttributeNames: {
-       '#d': 'date',
-     },
-     ExpressionAttributeValues: {
-       ':dateValue': datum,
-     }
-  };
- 
-  dynamo.query(params)
-     .promise()
-     .then(data => Verwijder(data.Items[0].id))
-     .catch(console.error);
+  function deleteDates() {
 
-    
- }
- 
-function Verwijder(id: number){
-const params = {
-    TableName: "UserAvailability",
-    Key: {
-      id: id,
-      },
-  };
-  dynamo
-    .delete(params)
-    .promise()
-    .then(data => console.log(data.Attributes))
-    .catch(console.error)
-
-}
-
-function deleteDates() {
-  
     for (let i = 0; i < selectedDates.length; i++) {
       getId(selectedDates[i]);
     }
-}
+  }
 
 
-return (
-  <div className="date-time-picker">
-    <div className="calendar">
-      <div className="month-selector">
-        <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL' /></button>
-        <span>{months[currentMonth]} {currentYear}</span>
-        <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR' /></button>
+  return (
+    <div className="date-time-picker">
+      <div className="calendar">
+        <div className="month-selector">
+          <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL' /></button>
+          <span>{months[currentMonth]} {currentYear}</span>
+          <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR' /></button>
+        </div>
+        <div className="week-days">
+          {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
+            <div key={day}>{day}</div>
+          ))}
+        </div>
+        <div className="week">
+          {renderCalendar()}
+        </div>
+        <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Sla uw beschikbaarheid op</button>
+        <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
       </div>
-      <div className="week-days">
-        {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
-          <div key={day}>{day}</div>
-        ))}
-      </div>
-      <div className="week">
-        {renderCalendar()}
-      </div>
-      <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Sla uw beschikbaarheid op</button>
-      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
     </div>
-  </div>
-);
+  );
 };
 
 export default DateAndTimePicker;
