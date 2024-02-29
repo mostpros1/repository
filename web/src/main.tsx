@@ -45,10 +45,7 @@ Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_TEST_KEY);
 
 
-function math(){
-  
-  console.log(Math.random())
-}
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -56,7 +53,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
-          <button onClick={math}>math</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
