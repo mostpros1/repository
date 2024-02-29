@@ -9,8 +9,9 @@ export function calHuiseigenaar(professionalsEmail: string) {
     function checkAvailibility(professional_id: number) {
         dynamo
             .query({
-                TableName: 'availibility',
-                KeyConditionExpression: 'professional_Id = :professional_id',
+                TableName: 'UserAvailability',
+                IndexName: "professional_idIndex",
+                KeyConditionExpression: 'professional_id = :professional_id',
                 ExpressionAttributeValues: {
                     ':professional_id': professional_id,
                 }
@@ -24,13 +25,14 @@ export function calHuiseigenaar(professionalsEmail: string) {
     dynamo
         .query({
             TableName: 'professionals',
+            IndexName: 'emailIndex',
             KeyConditionExpression: 'email = :email',
             ExpressionAttributeValues: {
                 ':email': professionalsEmail,
             }
         })
         .promise()
-        .then(data => checkAvailibility(data[0].items))
+        .then(data => checkAvailibility(data.Items[0].id))
         .catch(console.error);
 
 

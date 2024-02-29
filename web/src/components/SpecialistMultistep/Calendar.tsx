@@ -3,7 +3,7 @@ import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
-import professionalId from './SpecialistMultistepForm.tsx';
+import { professionalId } from './SpecialistMultistepForm.tsx';
 
 const DateAndTimePicker: React.FC = () => {
   const today = new Date();
