@@ -3,6 +3,7 @@ import { dynamo } from './declerations.ts';
 
 import { sanatiseInput } from './stopXSS.ts';
 import { sendMail } from './sendMail.ts';
+import { emailHtml } from './profemail.ts';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
@@ -236,13 +237,12 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
 }
 
 export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
-    //const id: number = Math.floor(Math.random() * 1000000);
     const param = {
         TableName: "professionals",
         Item: {
             id: { N: sanatiseInput(String(id)) },
             user_id: { N: sanatiseInput(String(user_id)) },
-            email: { S: email || "email@email.com" },
+            email: { S: email || "email@example.com" },
             phone_number: { S: sanatiseInput(phonenumber) },
             postcode: { S: sanatiseInput(postcode) },
             region: { S: sanatiseInput(region) },
@@ -259,9 +259,9 @@ export function addProfessionals(id: number, user_id: number, email: void | stri
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
             const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
-            const html: string = "<html><i>" + "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling." + "</i></html>";
+            const html: string = emailHtml;
             const subject: string = "Inschijving als Specialist";
-            sendMail(subject, email, text, html);
+            sendMail(subject, String(email), text, html);
         }
     });
 }

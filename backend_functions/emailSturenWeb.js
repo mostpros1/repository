@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
+const express = require('express');
+const cors = require('cors');
 
-import express from 'express';
-import cors from 'cors';
 const app = express();
 
 const corsOptions = {
@@ -13,23 +13,21 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/send-email', async (req, res) => {
-  const { subject, to, text, html } = req.body;
-  try {
+ const { subject, to, text, html } = req.body;
+ try {
     await sendEmail(subject, to, text, html);
     res.send({ message: 'Email sent successfully' });
-  } catch (error) {
+ } catch (error) {
     res.status(500).send({ message: 'Failed to send email', error: error.message });
-  }
+ }
 });
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+ console.log(`Server running on port ${PORT}`);
 });
 
-
-
-const mostprosEmail = "timon.heidenreich@gmail.com";//"teammostpros@gmail.com";
+const mostprosEmail = "timon.heidenreich@gmail.com";
 
 async function sendEmail(subject, to, text, html) {
     const transporter = nodemailer.createTransport({
@@ -50,6 +48,5 @@ async function sendEmail(subject, to, text, html) {
         html: html,
     })
 
-  console.log("Message sent: %s", info.messageId);
+ console.log("Message sent: %s", info.messageId);
 }
-
