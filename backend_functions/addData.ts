@@ -1,10 +1,11 @@
 import { dynamoDB } from './declerations.ts';
+import { dynamo } from './declerations.ts';
 
-const id: number = Math.floor(Math.random() * 1000000);
+
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
-    
+    const id: number = Math.floor(Math.random() * 1000000);
     const params = {
         TableName: "users",
         Item: {
@@ -13,7 +14,7 @@ export function addUser(username: string, email: string, password: string, first
             email: { S: email },
             password: { S: password },
             first_name: { S: first_name },
-            last_name: { S: last_name },
+            last_name: { S: first_name },
             date_of_birth: { S: date_of_birth },
             created_at: { S: created_at },
             updated_at: { S: updated_at },
@@ -25,6 +26,9 @@ export function addUser(username: string, email: string, password: string, first
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
+            const text: string = "Beste " + first_name + " " + last_name + ", " + "Uw account is met success aangemaakt";
+            const html: string = "<html><i>" + "Beste " + first_name + " " + last_name + ", " + "Uw account is met success aangemaakt" + "</i></html>";
+            sendMail(email, text, html);
         }
     });
 }
@@ -228,14 +232,14 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
     });
 }
 
-export function addProfessionals(user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
-    const id: number = Math.floor(Math.random() * 1000000);
+export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
+    //const id: number = Math.floor(Math.random() * 1000000);
     const param = {
         TableName: "professionals",
         Item: {
             id: { N: String(id) },
             user_id: { N: String(user_id) },
-            email: { S: email || "email@email.com"},
+            email: { S: email || "email@email.com" },
             phone_number: { S: phonenumber },
             postcode: { S: postcode },
             region: { S: region },
@@ -248,12 +252,15 @@ export function addProfessionals(user_id: number, email: void | string, phonenum
         if (err) {
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
             //verwijder alle datums.
+            getId(id);
         } else {
             console.log("Added item:", JSON.stringify(data, null, 2));
+            const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
+            const html: string = "<html><i>" + "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling." + "</i></html>";
+            sendMail(String(email), text, html);
         }
     });
 }
-
 export function addAvailibility(id: number, professional_id: number, job_description: string, date: Date, time_from: string, time_to: string) {
     const param = {
         TableName: "availibility",
@@ -314,4 +321,61 @@ export function addStripe_connected_accounts(id: number, user_id: number, accoun
             console.log("Added item:", JSON.stringify(data, null, 2));
         }
     });
+}
+
+
+
+
+function getId(professional_id: number) {
+    const params = {
+        TableName: "UserAvailability",
+        IndexName: "professional_idIndex",
+        KeyConditionExpression: 'professional_id = :professionalId',
+        ExpressionAttributeValues: {
+            ':professionalId': professional_id,
+        }
+    };
+
+    dynamo.query(params)
+        .promise()
+        .then(data => {
+            for (let i = 0; i < data.Items.length; i++) {
+                Verwijder(data.Items[i].id);
+            }/*Verwijder(data.Items[0].id)*/
+        })
+        .catch(console.error);
+
+
+}
+
+async function Verwijder(id: number) {
+    const params = {
+        TableName: "UserAvailability",
+        Key: {
+            id: id,
+        },
+    };
+    dynamo
+        .delete(params)
+        .promise()
+        .then(data => console.log(data.Attributes))
+        .catch(console.error)
+}
+
+
+async function sendMail(email: string, text: string, html: string) {
+    const response = await fetch('http://localhost:3000/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            subject: 'Account aangemaakt',
+            to: email,
+            text: text,
+            html:html,
+        }),
+    });
+    const data = await response.json();
+    console.log(data);
 }

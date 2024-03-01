@@ -14,7 +14,7 @@ import React from 'react';
 import { getItem } from '../../../../backend_functions/searchData.ts';
 import { Auth } from 'aws-amplify';
 
-import { addAvailibility } from '../../../../backend_functions/addData.ts';
+//import { queryUserId } from '../../../../backend_functions/searchData.ts';
 import { addProfessionals } from '../../../../backend_functions/addData.ts';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
 
@@ -108,6 +108,7 @@ const questionsData: Question[] = [
 ];
 
 function SpecialistMultistepForm() {
+
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
@@ -217,7 +218,7 @@ function SpecialistMultistepForm() {
       onStepChange: () => { },
     });
 
-  function queryUsers(username: string): Promise<string | null> {
+  function queryUsers(username: string,  output: string): Promise<string | null> {
     return new Promise((resolve, reject) => {
       const params = {
         TableName: "users",
@@ -237,8 +238,8 @@ function SpecialistMultistepForm() {
             console.log('User not found.');
             resolve(null);
           } else {
-            console.log(data.Items && data.Items[0].email);
-            resolve(data.Items && data.Items[0].email);
+            console.log(data.Items && data.Items[0][output]);
+            resolve(data.Items && data.Items[0][output]);
           }
         }
       });
@@ -247,87 +248,89 @@ function SpecialistMultistepForm() {
 
 
   async function handelFormData(data: FormData) {
-      /*const currentUser = await Auth.currentAuthenticatedUser();
-      const { username, attributes } = currentUser;
-      const { sub: userId } = attributes;
-      const signInDetails = currentUser.signInUserSession;
+    /*const currentUser = await Auth.currentAuthenticatedUser();
+    const { username, attributes } = currentUser;
+    const { sub: userId } = attributes;
+    const signInDetails = currentUser.signInUserSession;
 
-      console.log(`The username: ${username}`);
-      console.log(`The userId: ${userId}`);
-      console.log(`The signInDetails: ${JSON.stringify(signInDetails)}`);
-      const userData = getItem("users", userId);
-      console.log(`The userData: ${JSON.stringify(userData)}`);*/
+    console.log(`The username: ${username}`);
+    console.log(`The userId: ${userId}`);
+    console.log(`The signInDetails: ${JSON.stringify(signInDetails)}`);
+    const userData = getItem("users", userId);
+    console.log(`The userData: ${JSON.stringify(userData)}`);*/
 
-      //met de gegevens met de datums verwerken voor availibility.
-      //const professionalId: number = Math.floor(Math.random() * 1000000);
+    //met de gegevens met de datums verwerken voor availibility.
+    //const professionalId: number = Math.floor(Math.random() * 1000000);
 
-      //const availibilityId: number = Math.floor(Math.random() * 1000000);
+    //const availibilityId: number = Math.floor(Math.random() * 1000000);
 
 
-      try {
-        const email = await queryUsers(data.email);
-        if (email) {
-          addProfessionals(professionalId, email, data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
-        } else {
-          console.log('Email not found for the given username.');
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-  async function onSubmit(e: FormEvent) {
-      e.preventDefault();
-      if (!isLastStep) {
-        return next();
+    try {
+      const email = await queryUsers(data.email, "email");
+      const userID = await queryUsers(data.email, "id");
+      if (email) {
+        addProfessionals(professionalId, Number(userID), email, data.phoneNumber, data.postCode, data.questions.question1, data.questions.question2, "slug(moetnog)");
       } else {
-        console.log(data);
-        queryUsers(data.email);
-        handelFormData(data);
-        navigate("/specialist-resultaat");
+        console.log('Email not found for the given username.');
       }
+    } catch (err) {
+      console.log(err);
     }
-
-    const stepWidth = 100 / steps.length;
-
-    return (
-      <form onSubmit={onSubmit} className="form-con">
-        <div className="progress-con">
-          <h3>
-            Stap {currentStepIndex + 1} van {steps.length}
-          </h3>
-          <div className="progress-bar">
-            {steps.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-step ${index <= currentStepIndex ? "active" : ""
-                  }`}
-                style={{ width: `${stepWidth}%` }}
-              ></div>
-            ))}
-          </div>
-        </div>
-        {showNoKvK ? <NoKvK /> : <>{step}</>}
-        <>
-          <div className="btn-wrapper">
-            <button
-              type="button"
-              onClick={() => {
-                showNoKvK ? setShowNoKvK(false) : back();
-              }}
-              className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-              style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-            >
-              Vorige
-            </button>
-            {showNoKvK ? <></> : <button type="submit" className="form-btn">
-              {isLastStep ? "Verstuur" : "Volgende"}
-            </button>}
-
-          </div>
-        </>
-      </form>
-    );
   }
 
-  export default SpecialistMultistepForm;
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+      queryUsers(data.email, "email");
+      queryUsers(data.email, "id");
+      handelFormData(data);
+      navigate("/specialist-resultaat");
+    }
+  }
+
+  const stepWidth = 100 / steps.length;
+
+  return (
+    <form onSubmit={onSubmit} className="form-con">
+      <div className="progress-con">
+        <h3>
+          Stap {currentStepIndex + 1} van {steps.length}
+        </h3>
+        <div className="progress-bar">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""
+                }`}
+              style={{ width: `${stepWidth}%` }}
+            ></div>
+          ))}
+        </div>
+      </div>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
+    </form>
+  );
+}
+
+export default SpecialistMultistepForm;
