@@ -4,13 +4,14 @@ type SpecialistData = {
     email: string
     postCode: string
     stad: string
+    phoneNumber: string 
 }
 
 type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
 
-export default function SearchChoreForm({ email, postCode, stad, updateFields }: SearchChoreFormProps) {
+export default function SearchChoreForm({ email, phoneNumber, postCode, stad, updateFields }: SearchChoreFormProps) {
     return (
         <>
             <div className="search_chore_text_con">
@@ -19,12 +20,19 @@ export default function SearchChoreForm({ email, postCode, stad, updateFields }:
                 Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
-                <label>Email:</label>
+            <label>Email:</label>
                 <input
                     type="text"
                     placeholder="example@example.com"
                     value={email}
                     onChange={e => updateFields({ email: e.target.value })}
+                />
+                <label>Telefoon:</label>
+                <input
+                    type="text"
+                    placeholder="0031612345678"
+                    value={phoneNumber}
+                    onChange={e => updateFields({ phoneNumber: e.target.value })}
                 />
                 <label>Postcode</label>
                 <div className="search_chore_address">
