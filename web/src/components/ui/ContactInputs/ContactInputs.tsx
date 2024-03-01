@@ -7,14 +7,11 @@ function ContactInputs() {
   async function triggerEmailSending(name, lastName, email, question) {
     
         const subject: string = 'Contact Formulier Mostpros';
-        const email: string = 'timon.heidenreich@gmail.com';
+        const toEmail: string = 'timon.heidenreich@gmail.com';
         const text: string = "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question;
         const html: string = "<i>" + "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question + "</i>";
     
-    sendMail(subject, email, text, html);
-
-    const data = await response.json();
-    console.log(data);
+    sendMail(subject, toEmail, text, html);
   }
 
   const handleSubmit = async (event) => {

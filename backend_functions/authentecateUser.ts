@@ -1,4 +1,6 @@
 import { dynamo } from "./declerations.ts";
+import { hashPassword } from "./hashPassword.ts";
+
 
 const tableName = 'users';
 
@@ -21,7 +23,7 @@ export function authenticateUser(username: string, password: string): void {
             } else {
 
                 const user = data.Items && data.Items[0];
-                if (user && user.password === hash(password)) { 
+                if (user && user.password === hashPassword(password)) { 
                     console.log('User authenticated!');
                    
                 } else {
@@ -30,10 +32,4 @@ export function authenticateUser(username: string, password: string): void {
             }
         }
     });
-}
-
-
-function hash(password: string): string {
-    // Your password hashing logic
-    return password; 
 }
