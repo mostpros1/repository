@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Button,
@@ -20,28 +20,50 @@ import {
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
-import {specialists} from '../../specialists.js';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'; // Import RouteProp
+import { specialists } from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
+
+// Define the type of route.params
+type RootStackParamList = {
+  HomeOwnerCreate: { selectedOption: any }; // Change 'any' to the type of selectedOption
+};
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const PostalCodeSpecialist = ({ navigation }) => {
+const GegevensSpecialist = ({ navigation }) => {
     const [progress, setProgress] = useState(3);
-    const [additionalInfo, setAdditionalInfo] = useState('');
     const [selectedOption, setSelectedOption] = useState(null);
+    const [additionalInfo, setAdditionalInfo] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [inputText, setInputText] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
+
+    const route = useRoute<RouteProp<RootStackParamList, 'HomeOwnerCreate'>>(); // Specify the route type
+
+    useEffect(() => {
+        // Set selectedOption from the route parameters
+        if (route.params && route.params.selectedOption) {
+            setSelectedOption(route.params.selectedOption);
+        }
+    }, [route.params]);
 
     const handlePostalCodeChange = (text, part) => {
         if (part === 'part1' && text.length <= 4) {
             setPostalCode({ ...postalCode, part1: text });
         } else if (part === 'part2' && text.length <= 2) {
             setPostalCode({ ...postalCode, part2: text });
+        }
+    };
+
+    const handlePhoneNumberChange = (text) => {
+        const formattedPhoneNumber = text.replace(/[^\d]/g, '');
+        if (formattedPhoneNumber.length <= 9) {
+            setPhoneNumber(formattedPhoneNumber);
         }
     };
   
@@ -53,11 +75,6 @@ const PostalCodeSpecialist = ({ navigation }) => {
         setShowOptions(true);
     };
   
-    const handleOptionPress = (option) => {
-        setInputText(option.title);
-        setSelectedOption(option);
-        setShowOptions(false);
-    };
   
     const handleOutsidePress = () => {
         Keyboard.dismiss();
@@ -72,7 +89,7 @@ const PostalCodeSpecialist = ({ navigation }) => {
             }, 3000);
             return;
         }
-        navigation.navigate('GegevensSpecialist', { selectedOption: selectedOption });
+        navigation.navigate('HomeOwnerCreate', { selectedOption: selectedOption });
     };
   
     const filteredOptions = specialists.filter(option =>
@@ -80,8 +97,8 @@ const PostalCodeSpecialist = ({ navigation }) => {
     );
     
     const handlePress = (text) => {
-      navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
-    };
+        navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
+      };
 
     return (
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
@@ -94,83 +111,66 @@ const PostalCodeSpecialist = ({ navigation }) => {
                         <Text style={styles.crossTitle}>X</Text>
                     </Pressable>
                 </View>
-
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Zoek uw klus</Text>
+                    <Text style={styles.title}>Vul uw gegevens in</Text>
                 </View>
-                <View style={styles.titleBox}>
-                    <Text style={styles.titleLight}>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</Text>
-                </View>
-
                 <View style={styles.beroepContainer}>
-                        <Text style={styles.beroepTitle}>Uw hoofdberoep</Text>
-                        <Pressable style={styles.containerInput} onPress={handleForwardButtonPress}>
+                        <Text style={styles.beroepTitle}>Voornaam:</Text>
+                        <Pressable style={styles.containerInput}>
                     <TextInput
-                            placeholder="Zoeken:"
+                            placeholder="Voornaam:"
                             style={styles.input}
-                            onChangeText={handleInputChange}
-                            onFocus={handleInputFocus}
-                            value={inputText}
                         />
                     </Pressable>
-                    <Text style={styles.beroepTitle}>Email</Text>
-                        <Pressable style={styles.containerInput} onPress={handleForwardButtonPress}>
+                    <Text style={styles.beroepTitle}>Achternaam:</Text>
+                        <Pressable style={styles.containerInput}>
                     <TextInput
+                            placeholder="Achternaam:"
                             style={styles.input}
-                            placeholder="Email"
-                            onChangeText={setEmail}
-                            value={email}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
                         />
                     </Pressable>
-                    <Text style={styles.beroepTitle}>Postcode</Text>
-                    <View style={styles.inputContainer}>
-                                <TextInput
-                                    style={styles.inputPostal}
-                                    placeholder="1234"
-                                    onChangeText={(text) => handlePostalCodeChange(text, 'part1')}
-                                    value={postalCode.part1}
-                                    maxLength={4}
-                                    keyboardType="numeric"
-                                />
-                                <TextInput
-                                    style={styles.inputPostal}
-                                    placeholder="AB"
-                                    onChangeText={(text) => handlePostalCodeChange(text.toUpperCase(), 'part2')}
-                                    value={postalCode.part2}
-                                    maxLength={2}
-                                />
+                    <Text style={styles.beroepTitle}>Telefoonnummer:</Text>
+                        <Pressable style={styles.containerInput}>
+                            <View style={styles.phoneContainer}>
+                                <Text>+31</Text>
+                                <Image source={require('../../../assets/images/nlflag.png')}/>
                             </View>
-                            <View style={styles.containerLogin}>
-                                <Text style={{ color: '#000', fontSize: 16, }}>Al een account? <Text style={{ color: '#308BE5', fontSize: 16, }}>Inloggen</Text></Text>
-
-                            </View>
+                            <TextInput
+                                    placeholder="Telefoonnummer:"
+                                    style={styles.input}
+                                    keyboardType="phone-pad"
+                                    onChangeText={handlePhoneNumberChange}
+                                    value={phoneNumber}
+                                />
+                    </Pressable>
+                    <Text style={styles.beroepTitle}>Wachtwoord:</Text>
+                        <Pressable style={styles.containerInput}>
+                    <TextInput
+                            placeholder="Wachtwoord:"
+                            style={styles.input}
+                            secureTextEntry={true}
+                        />
+                    </Pressable>
+                    <Text style={styles.beroepTitle}>Herhaal Wachtwoord:</Text>
+                        <Pressable style={styles.containerInput}>
+                        <TextInput
+                            placeholder="Herhaal Wachtwoord:"
+                            style={styles.input}
+                            secureTextEntry={true}
+                        />
+                    </Pressable>
                 </View>
-                <View style={styles.bottomButtonsContainer}>
                 <View style={styles.buttonsContainer}>
+                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                        <Text style={styles.nextButtonText}>Vorige</Text>
+                    </Pressable>
                     <Pressable style={[styles.nextButton]} onPress={handleForwardButtonPress}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
                 
-            </View>
             </SafeAreaView>
         </ScrollView>
-                {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
-                        {filteredOptions.map(option => (
-                            <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
-                                <Text>{option.title}</Text>
-                            </Pressable>
-                        ))}
-                    </ScrollView>
-                )}
-                {errorMessage ? (
-                    <View style={styles.errorMessageContainer}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                    </View>
-                ) : null}
       </SafeAreaView>
     </TouchableWithoutFeedback>
     );
@@ -187,6 +187,17 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+    },
+
+    phoneContainer:{
+        width: 70,
+        gap: 5,
+        height: "150%",
+        backgroundColor: "#fefeff",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
     },
 
     beroepTitle:{
@@ -225,8 +236,9 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: windowHeight - 400,
-        paddingTop: 60,
+        height: windowHeight - 200,
+        paddingTop: 50,
+        paddingBottom: 30,
       },
 
       optionsContainer: {
@@ -270,8 +282,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderColor: "#f5f5f9",
-        backgroundColor: "#fffefe",
-        height: 40,
+        backgroundColor: "#f9f9f8",
+        height: 60,
         borderRadius: 10,
         padding: 10,
         width: "75%",
@@ -341,37 +353,43 @@ const styles = StyleSheet.create({
         right: 0,
     },
     buttonsContainer:{
+        paddingTop: 12,
+        marginBottom: 12,
         display: "flex",
         flexDirection: "row",
         gap: 15,
         justifyContent: "center",
     },
+
     nextButton: {
         backgroundColor: "#318ae5",
         borderRadius: 10,
         paddingVertical: 12,
         paddingHorizontal: 32,
         alignSelf: 'center',
-        width: 270,
-        height: 65,
+        width: 170,
+        height: 60,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
     },
+
     nextButtonColorOne:{
         backgroundColor: "#fffefe",
         borderWidth: 3,
         borderColor: "#7db7ec",
     },
+
     nextButtonText: {
         fontSize: 13,
         fontWeight: "bold",
         textAlign: 'center',
     },
+
     whiteButtonText:{
         color: "#fff",
     },
 });
 
 
-export default PostalCodeSpecialist;
+export default GegevensSpecialist;

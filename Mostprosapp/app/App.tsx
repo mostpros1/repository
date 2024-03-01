@@ -38,7 +38,7 @@ import HomeOwnerAppElektricien from "./(Components)/Homeowner/HomeOwnerAppElektr
 import HomeOwnerAppAI_home_adviseur from "./(Components)/Homeowner/HomeOwnerAppAI-home-adviseur";
 import HomeOwnerAppBadkamerspecialist from "./(Components)/Homeowner/HomeOwnerAppBadkamerspecialist";
 import PostalCodeSpecialist from "./(Components)/Specialist/PostalCodeSpecialist";
-
+import GegevensSpecialist from "./(Components)/Specialist/GegevensSpecialist";
 import HomeOwnerExtraInfo from "./(Components)/Homeowner/HomeOwnerExtraInfo";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -117,6 +117,7 @@ const App = () => {
         <Stack.Screen name="HomeOwnerAppAI_home_adviseur" component={HomeOwnerAppAI_home_adviseur}/>
         <Stack.Screen name="HomeOwnerAppBadkamerspecialist" component={HomeOwnerAppBadkamerspecialist}/>
         <Stack.Screen name="PostalCodeSpecialist" component={PostalCodeSpecialist}/>
+        <Stack.Screen name="GegevensSpecialist" component={GegevensSpecialist}/>
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
