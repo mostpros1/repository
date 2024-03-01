@@ -35,6 +35,10 @@ import HomeOwnerAppDakdekker from "./(Components)/Homeowner/HomeOwnerAppDakdekke
 import HomeOwnerAppSchoonmaker from "./(Components)/Homeowner/HomeOwnerAppSchoonmaker";
 import HomeOwnerAppAannemer from "./(Components)/Homeowner/HomeOwnerAppAannemer";
 import HomeOwnerAppElektricien from "./(Components)/Homeowner/HomeOwnerAppElektricien";
+import HomeOwnerAppAI_home_adviseur from "./(Components)/Homeowner/HomeOwnerAppAI-home-adviseur";
+import HomeOwnerAppBadkamerspecialist from "./(Components)/Homeowner/HomeOwnerAppBadkamerspecialist";
+
+
 import HomeOwnerExtraInfo from "./(Components)/Homeowner/HomeOwnerExtraInfo";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -110,7 +114,8 @@ const App = () => {
         <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien}/>
         <Stack.Screen name="HomeOwnerEmail" component={HomeOwnerEmail}/>
         <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo}/>
-
+        <Stack.Screen name="HomeOwnerAppAI_home_adviseur" component={HomeOwnerAppAI_home_adviseur}/>
+        <Stack.Screen name="HomeOwnerAppBadkamerspecialist" component={HomeOwnerAppBadkamerspecialist}/>
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

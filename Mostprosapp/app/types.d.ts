@@ -42,6 +42,12 @@ declare global {
     HomeOwnerAppSchoonmaker: undefined;
     HomeOwnerAppAannemer: undefined;
     HomeOwnerAppElektricien: undefined;
+    HomeOwnerAppAI_home_adviseur: undefined;
+    HomeOwnerAppBadkamerspecialist: undefined;
+
+
+
+
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
   };
