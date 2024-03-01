@@ -1,7 +1,7 @@
 import { dynamoDB } from './declerations.ts';
 import { dynamo } from './declerations.ts';
 
-
+import { sendMail } from './sendMail.ts';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
@@ -28,7 +28,8 @@ export function addUser(username: string, email: string, password: string, first
             console.log("Added item:", JSON.stringify(data, null, 2));
             const text: string = "Beste " + first_name + " " + last_name + ", " + "Uw account is met success aangemaakt";
             const html: string = "<html><i>" + "Beste " + first_name + " " + last_name + ", " + "Uw account is met success aangemaakt" + "</i></html>";
-            sendMail(email, text, html);
+            const subject: string = "Account aangemaakt";
+            sendMail(subject, email, text, html);
         }
     });
 }
@@ -257,7 +258,8 @@ export function addProfessionals(id: number, user_id: number, email: void | stri
             console.log("Added item:", JSON.stringify(data, null, 2));
             const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
             const html: string = "<html><i>" + "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling." + "</i></html>";
-            sendMail(String(email), text, html);
+            const subject: string = "Inschijving als Specialist";
+            sendMail(subject, email, text, html);
         }
     });
 }
@@ -360,22 +362,4 @@ async function Verwijder(id: number) {
         .promise()
         .then(data => console.log(data.Attributes))
         .catch(console.error)
-}
-
-
-async function sendMail(email: string, text: string, html: string) {
-    const response = await fetch('http://localhost:3000/send-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            subject: 'Account aangemaakt',
-            to: email,
-            text: text,
-            html:html,
-        }),
-    });
-    const data = await response.json();
-    console.log(data);
 }

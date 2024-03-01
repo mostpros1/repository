@@ -1,21 +1,17 @@
 import "./ContactInputs.css";
-//import { sendEmail } from "./../../../../backend_functions/emailSturen.ts"; // Import the sendEmail function from your email module
+import { sendMail } from "./../../../../../backend_functions/sendMail.ts"; // Import the sendEmail function from your email module
+
 
 function ContactInputs() {
 
   async function triggerEmailSending(name, lastName, email, question) {
-    const response = await fetch('http://localhost:3000/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        subject: 'Contact Formulier Mostpros',
-        to: 'timon.heidenreich@gmail.com',
-        text: "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question,
-        html: "<i>" + "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question + "</i>",
-      }),
-    });
+    
+        const subject: string = 'Contact Formulier Mostpros';
+        const email: string = 'timon.heidenreich@gmail.com';
+        const text: string = "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question;
+        const html: string = "<i>" + "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question + "</i>";
+    
+    sendMail(subject, email, text, html);
 
     const data = await response.json();
     console.log(data);
