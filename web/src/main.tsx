@@ -13,8 +13,6 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 
 
-
-
 //pakt wel
 console.log(import.meta.env.VITE_AWS_ACCESS_KEY_ID);
 console.log(import.meta.env.VITE_AWS_SECRET_ACCESS_KEY);

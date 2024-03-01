@@ -1,6 +1,7 @@
 import { dynamoDB } from './declerations.ts';
 import { dynamo } from './declerations.ts';
 
+import { sanatiseInput } from './stopXSS.ts';
 import { sendMail } from './sendMail.ts';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
@@ -11,12 +12,12 @@ export function addUser(username: string, email: string, password: string, first
         TableName: "users",
         Item: {
             id: { N: String(id) },
-            username: { S: username },
-            email: { S: email },
+            username: { S: sanatiseInput(username) },
+            email: { S: sanatiseInput(email) },
             password: { S: password },
-            first_name: { S: first_name },
-            last_name: { S: first_name },
-            date_of_birth: { S: date_of_birth },
+            first_name: { S: sanatiseInput(first_name) },
+            last_name: { S: sanatiseInput(last_name) },
+            date_of_birth: { S: sanatiseInput(date_of_birth) },
             created_at: { S: created_at },
             updated_at: { S: updated_at },
             status: { S: status },
@@ -83,11 +84,11 @@ export function addClient(phone: number, contact_email: string, adress: string, 
         TableName: "clients",
         Item: {
             id: { N: "1" },
-            phone: { S: String(phone) },
-            contact_email: { S: contact_email },
-            adress: { S: adress },
-            industry: { S: industry },
-            name: { S: name },
+            phone: { S: sanatiseInput(String(phone)) },
+            contact_email: { S: sanatiseInput(contact_email) },
+            adress: { S: sanatiseInput(adress) },
+            industry: { S: sanatiseInput(industry) },
+            name: { S: sanatiseInput(name) },
         }
     };
 
@@ -239,13 +240,13 @@ export function addProfessionals(id: number, user_id: number, email: void | stri
     const param = {
         TableName: "professionals",
         Item: {
-            id: { N: String(id) },
-            user_id: { N: String(user_id) },
+            id: { N: sanatiseInput(String(id)) },
+            user_id: { N: sanatiseInput(String(user_id)) },
             email: { S: email || "email@email.com" },
-            phone_number: { S: phonenumber },
-            postcode: { S: postcode },
-            region: { S: region },
-            field_of_work: { S: field_of_work },
+            phone_number: { S: sanatiseInput(phonenumber) },
+            postcode: { S: sanatiseInput(postcode) },
+            region: { S: sanatiseInput(region) },
+            field_of_work: { S: sanatiseInput(field_of_work) },
             slug: { S: slug },
         }
     }
@@ -270,10 +271,10 @@ export function addAvailibility(id: number, professional_id: number, job_descrip
         Item: {
             id: { N: String(id) },
             professional_id: { N: String(professional_id) },
-            job_description: { S: job_description },
-            date: { S: String(date) },
-            time_from: { S: time_from },
-            time_to: { S: time_to },
+            job_description: { S: sanatiseInput(job_description) },
+            date: { S: sanatiseInput(String(date)) },
+            time_from: { S: sanatiseInput(time_from) },
+            time_to: { S: sanatiseInput(time_to) },
         }
     }
     dynamoDB.putItem(param, function (err, data) {
@@ -292,9 +293,9 @@ export function addChats(id: number, sender_id: number, reciever_id: number, mes
             id: { N: String(id) },
             sender_id: { N: String(sender_id) },
             reciever_id: { N: String(reciever_id) },
-            message: { S: message },
-            sent_at: { S: sent_at },
-            recieved_at: { S: recieved_at },
+            message: { S: sanatiseInput(message) },
+            sent_at: { S: sanatiseInput(sent_at) },
+            recieved_at: { S: sanatiseInput(recieved_at) },
         }
     }
     dynamoDB.putItem(param, function (err, data) {
