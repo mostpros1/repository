@@ -20,9 +20,10 @@ import {
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import Icon from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
 import {specialists} from '../../specialists.js';
+import Icon from "@expo/vector-icons/MaterialIcons";
+
 
 
 const windowWidth = Dimensions.get("window").width;

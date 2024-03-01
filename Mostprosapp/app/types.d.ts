@@ -44,7 +44,7 @@ declare global {
     HomeOwnerAppElektricien: undefined;
     HomeOwnerAppAI_home_adviseur: undefined;
     HomeOwnerAppBadkamerspecialist: undefined;
-
+    PostalCodeSpecialist: undefined;
 
 
 

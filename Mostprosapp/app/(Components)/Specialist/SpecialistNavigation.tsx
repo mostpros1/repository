@@ -18,6 +18,9 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('HomePageSpecialist')}>
                   <Text style={[styles.text]}>Home Pagina</Text>
               </Pressable>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
+                  <Text style={[styles.text]}>Gegevens Straat</Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>
