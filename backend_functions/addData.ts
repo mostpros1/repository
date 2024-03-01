@@ -6,6 +6,7 @@ import { sendMail } from './sendMail.ts';
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
     const id: number = Math.floor(Math.random() * 1000000);
+    console.log(typeof password);
     const params = {
         TableName: "users",
         Item: {

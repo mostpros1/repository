@@ -6,6 +6,7 @@ import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { addUser } from '../../../../backend_functions/addData.ts';
+import { hashPassword } from '../../../../backend_functions/hashPassword.ts';
 
 
 
@@ -46,8 +47,9 @@ function RegisterPage() {
       // Add user to database
       const  today = new Date();
       const status: string = "active";
+      const hashedPassword = hashPassword(password);
 
-      addUser(email, email, password, firstName, lastName, dob, String(today), String(today), status);
+      addUser(email, email, await hashedPassword, firstName, lastName, dob, String(today), String(today), status);
       
     
       // Handle successful registration, e.g., redirect to another page
