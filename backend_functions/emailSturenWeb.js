@@ -30,23 +30,28 @@ app.listen(PORT, () => {
 const mostprosEmail = "timon.heidenreich@gmail.com";
 
 async function sendEmail(subject, to, text, html) {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: "timon.heidenreich@gmail.com",
-            pass: "fpfv iywx durr yiwt ",
-        },
-    });
+    try {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: "",
+                pass: "", // Make sure this is your actual password
+            },
+        });
 
-    const info = await transporter.sendMail({
-        from: `"info" <${mostprosEmail}>`,
-        to: to,
-        subject: subject,
-        text: text,
-        html: html,
-    })
+        const info = await transporter.sendMail({
+            from: `"info" <${mostprosEmail}>`,
+            to: to,
+            subject: subject,
+            text: text,
+            html: html,
+        });
 
- console.log("Message sent: %s", info.messageId);
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error; // Rethrow the error to be caught by the caller
+    }
 }
