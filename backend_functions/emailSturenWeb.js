@@ -36,8 +36,8 @@ async function sendEmail(subject, to, text, html) {
             port: 465,
             secure: true,
             auth: {
-                user: "",
-                pass: "", // Make sure this is your actual password
+                user: "timon.heidenreich@gmail.com",
+                pass: "fpfv iywx durr yiwt ",// Make sure this is your actual password
             },
         });
 
