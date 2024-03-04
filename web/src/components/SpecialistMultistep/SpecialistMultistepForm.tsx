@@ -71,17 +71,6 @@ const questionsData: Question[] = [
       "Anders",
     ],
   },
-  {
-    key: "question3",
-    label: "Wat is uw specialisaties",
-    options: [
-      "Web Developmenta",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
-    ],
-  },
   // ... voeg andere vragen toe zoals nodig
 ];
 
