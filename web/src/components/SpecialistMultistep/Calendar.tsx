@@ -15,7 +15,27 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   const currentYear = date.getFullYear();
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedTimezone, setSelectedTimezone] = useState('UTC'); // Default timezone
 
+  // List of timezones (you can expand this list as needed)
+  const timezones = [
+    'GMT-08:00 America/Los_Angeles', // Los Angeles
+    'GMT-06:00 America/Mexico_City', // Mexico City
+    'GMT-05:00 America/New_York', // New York
+    'GMT-03:00 America/Sao_Paulo', // Sao Paulo
+    'GMT+00:00 Europe/London', // London
+    'GMT+01:00 Europe/Amsterdam', // Amsterdam
+    'GMT+02:00 Africa/Cairo', // Cairo
+    'GMT+03:00 Europe/Istanbul', // Istanbul
+    'GMT+04:00 Asia/Dubai', // Dubai
+    'GMT+05:30 Asia/Kolkata', // Kolkata
+    'GMT+07:00 Asia/Bangkok', // Bangkok
+    'GMT+08:00 Asia/Shanghai', // Shanghai
+    'GMT+09:00 Asia/Tokyo', // Tokyo
+    'GMT+11:00 Australia/Sydney' // Sydney
+  ];
+  
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
@@ -37,7 +57,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       setSelectedDay(null); // Zet selectedDay op null
     }
   };
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
   const handleTimeSelect = (time: string) => {
     setSelectedTimes(prevTimes => {
       if (prevTimes.includes(time)) {
@@ -196,23 +215,23 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     }
   };
 
-  const [selectedTimezone, setSelectedTimezone] = useState('UTC'); // Default timezone
-
-// List of timezones (you can expand this list as needed)
-  const timezones = [
-    'UTC',
-    'America/New_York',
-    'America/Los_Angeles',
-    'Europe/London',
-    'Asia/Tokyo',
-    // Add more timezones as needed
-  ];
-
 // Function to handle timezone selection
-  const handleTimezoneSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTimezone(event.target.value);
-  };
-  
+const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedTime = event.target.value;
+  setSelectedTimes((currentTimes) => {
+     if (currentTimes.includes(selectedTime)) {
+       return currentTimes.filter(time => time !== selectedTime); // Deselect the time if it was already selected
+     } else {
+       return [...currentTimes, selectedTime]; // Add the selected time
+     }
+  });
+ };
+
+ const handleTimezoneChange = (event) => {
+  setSelectedTimezone(event.target.value);
+};
+
+
   return (
     <div className="date-time-picker">
       <div className="calendar">
@@ -245,7 +264,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
           >
           <img src={Next} className='fotoinButtonR' alt="Volgende" />
           </button>
-
         </div>
         <div className="week-days">
           {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
@@ -254,6 +272,19 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         </div>
         <div className="week">
           {renderCalendar()}
+        </div>
+        <div className="timezone-selector">
+          <label htmlFor="timezone-select">Timezone:</label>
+          <select
+            id="timezone-select"
+            value={selectedTimezone}
+            onChange={handleTimezoneChange}
+            className="timezone-select"
+          >
+            {timezones.map(tz => (
+              <option className='timezones' key={tz} value={tz}>{tz}</option>
+            ))}
+          </select>
         </div>
       </div>
         {selectedDay && (

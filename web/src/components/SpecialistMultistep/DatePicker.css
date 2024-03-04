@@ -274,3 +274,18 @@
   background-color: #007bff;
   border-radius: 15px;
 }
+
+.timezone-selector{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.timezone-select{
+  margin-left: 10px;
+  border-radius: 10px; 
+}
