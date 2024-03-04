@@ -39,51 +39,46 @@ const CompanySituation1 = ({ navigation }) => {
                         </Pressable>
                     </View>
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>In welke omgeving wilt u werken</Text>
+                        <Text style={styles.title}>Bedrijf-situatie</Text>
+                    </View>
+                    <View style={styles.titleBox}>
+                        <Text style={styles.title}>Wat is u huidige professionele situatie?</Text>
                     </View>
 
-
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Amsterdam</Text>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
+                        <Text>Ik heb mijn bedrijf ingeschreven en wacht op mijn KVK-nummer</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
                         />
                     </Pressable>
 
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Rotterdam</Text>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
+                        <Text>Mijn bedrijf bestaat minder dan 3 maanden</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Groningen</Text>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
+                        <Text>Mijn bedrijf bestaat 3 maanden tot 1 jaar</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Den Haag</Text>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
+                        <Text>Mijn bedrijf bestaat al langer dan 1 jaar</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Utrecht</Text>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
+                        <Text>Ik heb geen bedrijf</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(5)}
-                        />
-                    </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
-                        <Text>Eindhoven</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(6) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(6)}
                         />
                     </Pressable>
 
@@ -113,6 +108,7 @@ const styles = StyleSheet.create({
     pressableContainer: {
         width: windowWidth - 20,
         height: 60,
+        paddingRight: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

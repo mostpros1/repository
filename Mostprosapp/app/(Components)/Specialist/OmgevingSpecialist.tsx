@@ -42,7 +42,7 @@ const OmgevingSpecialist = ({ navigation }) => {
                     </View>
 
 
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
                         <Text>Amsterdam</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
@@ -50,35 +50,35 @@ const OmgevingSpecialist = ({ navigation }) => {
                         />
                     </Pressable>
 
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
                         <Text>Rotterdam</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
                         <Text>Groningen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
                         <Text>Den Haag</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
                         <Text>Utrecht</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(5)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(6)}>
                         <Text>Eindhoven</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(6) && styles.checkboxSelected]}
