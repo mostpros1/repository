@@ -259,7 +259,7 @@
 }
 
 .time-slot {
-  background-color: #f8f9fa;
+  background-color: #a80505;
   padding: 10px 20px;
   margin: 5px 0; /* Ruimte tussen tijdslots */
   cursor: pointer;
@@ -267,6 +267,31 @@
   border-radius: 20px;
   transition: background-color 0.3s, color 0.3s;
   width: 225px;
+  color: white;
+}
+
+.time-slot-niet-beschikbaar {
+  background-color: #a80505;
+  padding: 10px 20px;
+  margin: 5px 0; /* Ruimte tussen tijdslots */
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  width: 225px;
+  color: white;
+}
+
+.time-slot-beschikbaar {
+  background-color: #20ce11;
+  padding: 10px 20px;
+  margin: 5px 0; /* Ruimte tussen tijdslots */
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  width: 225px;
+  color: white;
 }
 
 .time-slot:hover {
