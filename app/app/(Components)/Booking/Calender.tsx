@@ -71,76 +71,73 @@ const DateAndTimePicker = ({ /* onDateChange */ }) => {
     return weekNumber;
 };
 
-
-
 const renderCalendarDays = () => {
-  let days = [];
   const weeks = [];
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   let week = [];
-  const firstDayOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // Adjust if your week starts on Monday
-
-  // Calculate the number of days in the previous month
+  const firstDayOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
   const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+  let weekCount = 0;
 
-  // Add trailing days from the previous month
-  for (let i = 0; i < firstDayOffset; i++) {
+  // Dagen van de vorige maand toevoegen om de eerste week te vullen
+  for (let i = firstDayOffset; i > 0; i--) {
+    week.push(
+      <View key={`prev-month-day-${i}`} style={styles.day}>
+        <Text style={styles.dayText}>{prevMonthDays - i + 1}</Text>
+      </View>
+    );
+  }
+
+  const daysInWeek = 7; // Total days in a week for most calendars
+  let extraDaysNeeded = daysInWeek - ((daysInMonth + firstDayOffset) % daysInWeek);
+  if (extraDaysNeeded === daysInWeek) {
+      extraDaysNeeded = 0; // No extra days needed if the last week is complete
+  }
+  
+  for (let i = 1; i <= extraDaysNeeded; i++) {
       week.push(
-          <View key={`prev-month-day-${i}`} style={styles.day}>
-              <Text style={styles.dayText}>{prevMonthDays - firstDayOffset + i + 1}</Text>
-          </View>
+        <View key={`next-month-day-${i}`} style={styles.day}>
+          <Text style={styles.dayText}>{i}</Text>
+        </View>
       );
   }
 
-  // Add the actual days of the current month
+  // Voeg de weeknummer aan het begin van elke week toe
+  const addWeekNumber = (date) => {
+    const weekNumber = getWeekNumber(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+    return (
+      <View style={styles.weekNumber}>
+        <Text style={styles.weekNumber}>{weekNumber}</Text>
+      </View>
+    );
+  };
+
+  // Dagen van de huidige maand toevoegen
   for (let day = 1; day <= daysInMonth; day++) {
-      week.push(
-          <TouchableOpacity
-              key={`current-month-day-${day}`}
-              style={[styles.day, selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`) && styles.selectedDay]}
-              onPress={() => handleDateSelect(day, new Date(currentYear, currentMonth, day))}
-          >
-              <Text style={styles.dayText}>{day}</Text>
-          </TouchableOpacity>
-      );
+    const currentDay = new Date(currentYear, currentMonth, day);
+    if (currentDay.getDay() === 1 || day === 1) {
+      week.unshift(addWeekNumber(currentDay)); // Voeg weeknummer toe aan het begin van de week
+    }
+    week.push(
+      <TouchableOpacity
+        key={`current-month-day-${day}`}
+        style={[styles.day, selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`) && styles.selectedDay]}
+        onPress={() => handleDateSelect(day, currentDay)}
+      >
+        <Text style={styles.dayText}>{day}</Text>
+      </TouchableOpacity>
+    );
 
-      // When a week is complete or the month ends, add the week to the weeks array
-      if ((firstDayOffset + day) % 7 === 0 || day === daysInMonth) {
-          const weekStartDate = new Date(currentYear, currentMonth, day - week.length + 1);
-          const weekNumber = getWeekNumber(weekStartDate);
-          weeks.push(
-              <View key={`week-${weekNumber}`} style={styles.week}>
-                  <Text style={styles.weekNumber}>{weekNumber}</Text>
-                  <View style={styles.daysRow}>{[...week]}</View>
-              </View>
-          );
-          week = []; // Reset for the next week
-      }
-  }
-
-  // Calculate and add leading days for the next month to complete the final week
-  const totalDays = firstDayOffset + daysInMonth; // Total days that have been rendered
-  const endBlanks = (7 - totalDays % 7) % 7; // Calculate remaining days to fill the last week
-
-  for (let i = 1; i <= endBlanks; i++) {
-      days.push(
-          <View key={`next-month-day-${i}`} style={styles.day}>
-              <Text style={styles.dayText}>{i}</Text>
-          </View>
-      );
-  }
-
-  // Add the last week if there were any days (including the next month's leading days)
-  if (days.length > 0) {
+    if (currentDay.getDay() === 0 || day === daysInMonth) {
       weeks.push(
-          <View key={`week-${weeks.length + 1}`} style={styles.week}>
-              {days}
-          </View>
+        <View key={`week-${currentYear}-${currentMonth}-${weekCount++}`} style={styles.week}>
+          <View style={styles.daysRow}>{[...week]}</View>
+        </View>
       );
+      week = [];
+    }
   }
-
-  // If there were days added for the next month, add the final week
 
   return weeks;
 };
@@ -153,7 +150,7 @@ const renderCalendarDays = () => {
 
   return (
   <View style={styles.container}>
-    <TouchableOpacity onPress={handlePrevMonth}>
+    <TouchableOpacity>
       <Image source={require('./arrowL.png')} style={styles.arrowBack} />
     </TouchableOpacity>
   <Text style={styles.headerTitle}>Selecteer een beschikbare datum</Text>
@@ -169,16 +166,15 @@ const renderCalendarDays = () => {
     <Text style={styles.monthText}>{months[currentMonth]} {currentYear}</Text>
   </View>
   <View style={styles.weekDays}>
-        {renderWeekDays()}
-      </View>
-      <View style={styles.daysContainer}>
-        {renderCalendarDays()}
-      </View>
-      
+    {renderWeekDays()}
+  </View>
+  <View style={styles.daysContainer}>
+    {renderCalendarDays()}
+  </View>
   <TouchableOpacity style={styles.confirmButton}>
     <Text style={styles.confirmButtonText}>Bevestig keuze</Text>
   </TouchableOpacity>
-</View>
+  </View>
   );
 };
 
@@ -187,7 +183,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF', // Assuming a white background
+    backgroundColor: '#FFFFFF',
     
   },
   arrowBack:{
@@ -203,12 +199,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     padding: 20,
-    backgroundColor: '#ffffff', // Light grey background for the header
+    backgroundColor: '#ffffff',
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333', // Dark text for better readability
+    color: '#333333', 
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -217,36 +213,42 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
-    backgroundColor: '#FFFFFF', // White background for month selector
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 10,
   },
   daysRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around', // Adjust based on your layout
-    alignItems: 'center', // Ensures all items in the row are aligned vertically
-    // Add any additional styling you need for the container of a week's days
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   arrow: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     marginRight: 40,
     marginLeft: 40,
   },
   monthText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: '#ffffff',
+    backgroundColor: '#308ae4',
+    width: 160,
+    borderRadius: 10,
+    lineHeight: 30,
+    overflow: 'hidden',
+    textAlign: 'center',
   },
   week: {
     flexDirection: 'row',
     alignItems: 'center',
     textAlign: 'center',
+    width: '100%',
   },
   weekNumber: {
-    width: 30, // Adjust size accordingly
-    textAlign: 'center', // Center the week number text
-    marginRight: 2.5, // Add some space between the week number and the days
+    width: 30, 
+    textAlign: 'center',
+    marginRight: 3,
     backgroundColor: '#308ae4',
     height: 30,
     alignItems: 'center',
@@ -259,9 +261,9 @@ const styles = StyleSheet.create({
   weekDays: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '88%',
+    width: '82%',
     marginBottom: 5,
-    marginLeft: 38,
+    marginLeft: 32,
   },
   weekDay: {
     fontSize: 16,
@@ -272,22 +274,23 @@ const styles = StyleSheet.create({
   daysContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around', // or 'start' if you want them aligned to the left
-    width: '100%', // Adjust this as necessary
-    padding: 16, // Add some padding around the grid
+    justifyContent: 'space-around', 
+    width: '100%', 
+    padding: 16, 
 },
   day: {
-    width: '12.28%', // 100% divided by 7 days
+    width: '11.28%',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 6,
-    height: 48,
-    borderRadius: 10, // Circular days
-    backgroundColor: '#f0f0f0', // Light grey background for day
-    margin: 2,
+    height: 40,
+    borderRadius: 10, 
+    backgroundColor: '#f0f0f0', 
+    margin: 3,
   },
   selectedDay: {
-    backgroundColor: '#3a72ffd4', // Blue background for selected day
+    backgroundColor: '#3a72ffd4',
+    width: '11.28%',
   },
   dayText: {
     fontSize: 16,
@@ -298,12 +301,12 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007bff', // Blue background for confirm button
+    backgroundColor: '#007bff', 
     borderRadius: 20,
   },
   confirmButtonText: {
     fontSize: 18,
-    color: '#FFFFFF', // White text for confirm button
+    color: '#FFFFFF', 
     fontWeight: 'bold',
   },
 });
