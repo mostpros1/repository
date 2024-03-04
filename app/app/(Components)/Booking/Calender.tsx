@@ -10,24 +10,25 @@ const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTimes, setSelectedTimes] = useState([]);
-
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
+  
   const handleDateSelect = (_day, date) => {
-    const dateString = date.toISOString().split('T')[0];
+    const timezoneOffset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - timezoneOffset);
+    const dateString = localDate.toISOString().split('T')[0];
+    
     if (date < today) return;
     
     setSelectedDates((prevDates) => {
-      if (prevDates.includes(dateString)) {
-        setSelectedDay(null);
-        return prevDates.filter(d => d !== dateString);
-      } else {
-        setSelectedDay(date);
-        return [...prevDates, dateString];
-      }
+        if (prevDates.includes(dateString)) {
+            setSelectedDay(null);
+            return prevDates.filter(d => d !== dateString);
+        } else {
+            setSelectedDay(date);
+            return [...prevDates, dateString];
+        }
     });
   };
-
   const handleTimeSelect = (time) => {
     setSelectedTimes(prevTimes => {
       if (prevTimes.includes(time)) {
@@ -57,17 +58,12 @@ const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const getWeekNumber = (date: Date): number => {
     const currentDate = new Date(date).getTime();
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1).getTime();
-
     const pastDaysOfYear = (currentDate - firstDayOfYear) / (86400000);
-
     const current = new Date(date);
     current.setUTCDate(current.getUTCDate() - current.getUTCDay() + 1);
-
     const startOfYear = new Date(date.getFullYear(), 0, 1);
     startOfYear.setUTCDate(startOfYear.getUTCDate() - startOfYear.getUTCDay() + 1);
-
     const weekNumber = Math.ceil(((current.getTime() - startOfYear.getTime()) / 86400000 + 1) / 7);
-
     return weekNumber;
 };
 
@@ -79,30 +75,17 @@ const renderCalendarDays = () => {
   const firstDayOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
   const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
   let weekCount = 0;
-
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   // Dagen van de vorige maand toevoegen om de eerste week te vullen
   for (let i = firstDayOffset; i > 0; i--) {
+    const prevMonthDay = new Date(currentYear, currentMonth - 1, prevMonthDays - i + 1);
     week.push(
-      <View key={`prev-month-day-${i}`} style={styles.day}>
-        <Text style={styles.dayText}>{prevMonthDays - i + 1}</Text>
-      </View>
-    );
-  }
-
-  const daysInWeek = 7; // Total days in a week for most calendars
-  let extraDaysNeeded = daysInWeek - ((daysInMonth + firstDayOffset) % daysInWeek);
-  if (extraDaysNeeded === daysInWeek) {
-      extraDaysNeeded = 0; // No extra days needed if the last week is complete
-  }
-  
-  for (let i = 1; i <= extraDaysNeeded; i++) {
-      week.push(
-        <View key={`next-month-day-${i}`} style={styles.day}>
-          <Text style={styles.dayText}>{i}</Text>
+        <View key={`prev-month-day-${i}`} style={[styles.day, styles.pastDay]}>
+            <Text style={[styles.dayText, styles.pastDayText]}>{prevMonthDays - i + 1}</Text>
         </View>
-      );
-  }
-
+    );
+}
   // Voeg de weeknummer aan het begin van elke week toe
   const addWeekNumber = (date) => {
     const weekNumber = getWeekNumber(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -112,20 +95,26 @@ const renderCalendarDays = () => {
       </View>
     );
   };
-
-  // Dagen van de huidige maand toevoegen
   for (let day = 1; day <= daysInMonth; day++) {
     const currentDay = new Date(currentYear, currentMonth, day);
+    const isPast = currentDay < today;
+
     if (currentDay.getDay() === 1 || day === 1) {
-      week.unshift(addWeekNumber(currentDay)); // Voeg weeknummer toe aan het begin van de week
+      week.unshift(addWeekNumber(currentDay)); // Add week number at the beginning of the week
     }
+
     week.push(
       <TouchableOpacity
         key={`current-month-day-${day}`}
-        style={[styles.day, selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`) && styles.selectedDay]}
-        onPress={() => handleDateSelect(day, currentDay)}
+        style={[
+          styles.day, 
+          selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`) && styles.selectedDay,
+          isPast && styles.pastDay // Apply pastDay style if the day is in the past
+        ]}
+        onPress={() => !isPast && handleDateSelect(day, currentDay)} // Disable onPress for past days
+        disabled={isPast} // Disable the button for past days
       >
-        <Text style={styles.dayText}>{day}</Text>
+        <Text style={[styles.dayText, isPast && styles.pastDayText]}>{day}</Text>
       </TouchableOpacity>
     );
 
@@ -138,7 +127,6 @@ const renderCalendarDays = () => {
       week = [];
     }
   }
-
   return weeks;
 };
 
@@ -184,9 +172,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    
   },
-  arrowBack:{
+  arrowBack: {
     width: 40,
     height: 40,
     marginBottom: 40,
@@ -204,7 +191,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333', 
+    color: '#333333',
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -246,7 +233,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   weekNumber: {
-    width: 30, 
+    width: 30,
     textAlign: 'center',
     marginRight: 3,
     backgroundColor: '#308ae4',
@@ -274,23 +261,25 @@ const styles = StyleSheet.create({
   daysContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around', 
-    width: '100%', 
-    padding: 16, 
-},
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 16,
+  },
   day: {
-    width: '11.28%',
+    width: 40, 
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 6,
-    height: 40,
-    borderRadius: 10, 
-    backgroundColor: '#f0f0f0', 
+    borderRadius: 10,
+    backgroundColor: '#f0f0f0',
     margin: 3,
   },
   selectedDay: {
-    backgroundColor: '#3a72ffd4',
-    width: '11.28%',
+    backgroundColor: '#308ae4',
+    width: 40,
+    height: 40,
+    color: 'white',
   },
   dayText: {
     fontSize: 16,
@@ -301,15 +290,28 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007bff', 
+    backgroundColor: '#007bff',
     borderRadius: 20,
   },
   confirmButtonText: {
     fontSize: 18,
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
+  pastDay: {
+    backgroundColor: '#f0f0f0', // Light grey background for past days
+    borderColor: '#dcdcdc', // Slightly darker border for distinction
+    borderWidth: 1,
+    borderRadius: 5, // Assuming your days are shaped like this; adjust as needed
+    margin: 3, // Adjust based on your layout
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  pastDayText: {
+    color: '#a1a1a1', // Light grey text for past days, making it appear "disabled"
+    fontSize: 16, // Adjust to match your design
+  },
 });
-
 
 export default DateAndTimePicker;
