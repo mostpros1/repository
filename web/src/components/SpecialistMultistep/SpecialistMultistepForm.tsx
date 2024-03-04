@@ -11,6 +11,7 @@ import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
+
 type FormData = {
   email: string;
   postCode: string;
@@ -65,17 +66,6 @@ const questionsData: Question[] = [
     label: "Wat is uw specialisatie",
     options: [
       "Web Development",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
-    ],
-  },
-  {
-    key: "question3",
-    label: "Wat is uw specialisaties",
-    options: [
-      "Web Developmenta",
       "Data Science",
       "Design",
       "Marketing",
@@ -143,15 +133,16 @@ function SpecialistMultistepForm() {
       updateQuestionAnswers={(answers) => {
         updateQuestionAnswers(question.key, answers[question.key] as string);
       }}
+
     />
   ));
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
@@ -172,38 +163,38 @@ function SpecialistMultistepForm() {
 
     if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
       await Auth.signIn(userData.email, userData.password)
-      .then(() => {
-        navigate('/specialist-resultaat')
-      })
-      .catch((err) => {
-        console.error(err)
-        if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
+        .then(() => {
+          navigate('/specialist-resultaat')
+        })
+        .catch((err) => {
+          console.error(err)
+          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+        })
     }
     else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
-      username: userData.email,
-      password: userData.password,
-      attributes: {
-        name: userData.firstName,
-        family_name: userData.lastName,
-        email: userData.email,
-        phone_number: userData.phoneNumber,
-        "custom:group": "Professional"
-      },
-      autoSignIn: { enabled: true }
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.firstName,
+          family_name: userData.lastName,
+          email: userData.email,
+          phone_number: userData.phoneNumber,
+          "custom:group": "Professional"
+        },
+        autoSignIn: { enabled: true }
       })
-      .then(() => {
-        navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-      .catch(async error => {
-        console.error(error)
-        if (error.code == 'UsernameExistsException') {
-          await Auth.resendSignUp(userData.email)
+        .then(() => {
           navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        }
-      })
+        })
+        .catch(async error => {
+          console.error(error)
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+          }
+        })
     }
   }
 

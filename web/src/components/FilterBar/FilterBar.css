@@ -1,67 +1,210 @@
-.filterbar{
-    background-color: #E9F4FF;
-    padding: 0px 30px;
-    border-radius: 10px;
+.filterbar {
+  background-color: #e9f4ff;
+  padding: 0px 30px;
+  border-radius: 10px;
+  height: 100px;
 }
 
-.filter-con{
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-    transform: translateY(10px);
-    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.filter-con {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  transform: translateY(10px);
+  box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.filter_menu_items{
-    display: flex;
-    gap: 25px;
+.filter_menu_items {
+  display: flex;
+  gap: 25px;
+  justify-content: space-between;
 }
 
-.filter_items_con{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-    padding: 0px 25px;
-    border-right: 1px solid #A6ACB2;
-    color: #0066C5;
+.filter_items_con {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  padding: 0px 25px;
+  border-right: 1px solid #a6acb2;
+  color: #0066c5;
 }
 
-.filter_items_con:last-of-type{
-    border: none;
+.filter_items_con:last-of-type {
+  border: none;
 }
 
-.sort_text_con{
-    color: grey;
-    font-weight: normal;
-    font-size: 14px;
+.sort_text_con {
+  color: grey;
+  font-weight: normal;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter_items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 5px 0;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  z-index: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter_items li {
+  padding: 8px 15px;
+}
+
+.filter_items li:hover {
+  background-color: #f0f0f0;
+}
+
+.sort_text_con {
+  display: flex;
+  gap: 15px;
+}
+
+.filter_search_btn {
+  border: none;
+  background-color: #308ae4;
+  color: white;
+  padding: 15px 50px;
+  border-radius: 10px;
+  height: fit-content;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.job-desc-btn:hover {
+  cursor: pointer;
+}
+
+/* makes the filter bar look like in a grid */
+
+.job-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  padding-top: 60px;
+  padding-left: 60px;
+}
+
+.job-item {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px; /* Updated padding value */
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  height: 350px;
+  width: 350px;
+  text-align: center;
+  margin: 0px;
+}
+
+.job-item img {
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.job-header {
+  display: flex;
+  justify-content: space-between; /* Align items to the start and end of the container */
+  align-items: center;
+}
+
+.job-header p {
+  padding-top: 30px;
+  padding-left: 15px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.job-header h2,
+.job-header p {
+  align-self: center; /* Ensure both elements are vertically aligned */
+}
+
+.job-header h2 {
+  font-size: 20px;
+  font-weight: 550;
+  right: auto;
+  left: 200px;
+  padding-left: 15px;
+  padding-top: 10px;
+  margin: 0px;
+  text-align: left;
+}
+
+.job-item h3 {
+  font-weight: bolder;
+  margin: 0px;
+}
+.job-item p {
+  font-size: 16px;
+  margin: 0;
+  padding: 10px;
+}
+
+.jobInfo-extra-con{
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.job-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.job-info h2{
+  font-size: 26px;
+}
+
+.job-info p {
+  font-size: 16px;
+  text-align: center;
+}
+
+.jobInfo-extra{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.svg-Location {
+  color: #308ae4;
 }
 
 
-.filter_items{
-    display: none;
-    position: absolute;
-    top: 100%;
-    list-style: none;
+.svg-Calender {
+  color: #308ae4;
+  margin-right: 10px;
 }
 
-.sort_text_con{
-    display: flex;
-    gap: 15px;
+.job-item button {
+  padding: 10px 10px;
+  border: 2px solid #308ae4;
+  border-radius: 15px;
+  align-self: center;
+  margin-top: 0 px, 20px;
+  transition: background-color 0.3s ease;
+  background-color: #308ae4;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-.filter_search_btn{
-    border: none;
-    background-color: #308AE4;
-    color: white;
-    padding: 15px 50px;
-    border-radius: 10px;
-    height: fit-content;
-}
-
-.filter_search_btn:hover{
-    cursor: pointer;  
+.job-item button:hover {
+  background-color: #0066c5;
 }
