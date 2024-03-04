@@ -46,7 +46,7 @@ function RegisterPage() {
       
       // Add user to database
       const  today = new Date();
-      const status: string = "active";
+      const status: string = "unverified";
       const hashedPassword = hashPassword(password);
 
       addUser(email, email, await hashedPassword, firstName, lastName, dob, String(today), String(today), status);

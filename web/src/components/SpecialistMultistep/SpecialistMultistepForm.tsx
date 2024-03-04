@@ -16,7 +16,7 @@ import { Auth } from 'aws-amplify';
 
 //import { queryUserId } from '../../../../backend_functions/searchData.ts';
 import { addProfessionals } from '../../../../backend_functions/addData.ts';
-import { dynamo } from '../../../../backend_functions/declerations.ts';
+import { queryUsers } from '../../../../backend_functions/queryUsers.ts';
 
 import Calendar from './Calendar';
 
@@ -217,34 +217,6 @@ function SpecialistMultistepForm() {
       ],
       onStepChange: () => { },
     });
-
-  function queryUsers(username: string,  output: string): Promise<string | null> {
-    return new Promise((resolve, reject) => {
-      const params = {
-        TableName: "users",
-        IndexName: 'username',
-        KeyConditionExpression: 'email = :username',
-        ExpressionAttributeValues: {
-          ':username': username
-        }
-      };
-
-      dynamo.query(params, function (err, data) {
-        if (err) {
-          console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
-          reject(err);
-        } else {
-          if (data.Items && data.Items.length === 0) {
-            console.log('User not found.');
-            resolve(null);
-          } else {
-            console.log(data.Items && data.Items[0][output]);
-            resolve(data.Items && data.Items[0][output]);
-          }
-        }
-      });
-    });
-  }
 
 
   async function handelFormData(data: FormData) {
