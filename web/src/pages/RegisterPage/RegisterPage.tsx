@@ -49,7 +49,7 @@ function RegisterPage() {
       const status: string = "unverified";
       const hashedPassword = hashPassword(password);
 
-      addUser(email, email, await hashedPassword, firstName, lastName, dob, String(today), String(today), status);
+      addUser(email, 0, await hashedPassword, firstName, lastName, dob, String(today), String(today), "huis_eigenar", status);
       
     
       // Handle successful registration, e.g., redirect to another page

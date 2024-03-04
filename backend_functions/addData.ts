@@ -5,22 +5,23 @@ import { sanatiseInput } from './stopXSS.ts';
 import { sendMail } from './sendMail.ts';
 import { emailHtml } from './profemail.ts';
 
-export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
-    date_of_birth: string, created_at: string, updated_at: string, status: string) {
+export function addUser(email: string, phone_number: number, password: string, first_name: string, last_name: string,
+    date_of_birth: string, created_at: string, updated_at: string, user_role: string, status: string) {
     const id: number = Math.floor(Math.random() * 1000000);
     console.log(typeof password);
     const params = {
         TableName: "users",
         Item: {
             id: { N: String(id) },
-            username: { S: sanatiseInput(username) },
             email: { S: sanatiseInput(email) },
+            phone_number: { S: String(phone_number)},
             password: { S: password },
             first_name: { S: sanatiseInput(first_name) },
             last_name: { S: sanatiseInput(last_name) },
             date_of_birth: { S: sanatiseInput(date_of_birth) },
             created_at: { S: created_at },
             updated_at: { S: updated_at },
+            user_role: { S: user_role },
             status: { S: status },
         }
     };
@@ -37,46 +38,7 @@ export function addUser(username: string, email: string, password: string, first
     });
 }
 
-export function addUser_roles(user_id: number, role: string, created_at: string, updated_at: string) {
-    const params = {
-        TableName: "user_roles",
-        Item: {
-            user_id: { N: String(user_id) },
-            role: { S: role },
-            created_at: { S: created_at },
-            updated_at: { S: updated_at },
-        }
-    };
 
-    dynamoDB.putItem(params, function (err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Added item:", JSON.stringify(data, null, 2));
-        }
-    });
-}
-
-export function addRoles(id: number, name: string, description: string, created_at: string, updated_at: string) {
-    const params = {
-        TableName: "roles",
-        Item: {
-            id: { N: String(id) },
-            name: { S: name },
-            description: { S: description },
-            created_at: { S: created_at },
-            updated_at: { S: updated_at },
-        }
-    };
-
-    dynamoDB.putItem(params, function (err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Added item:", JSON.stringify(data, null, 2));
-        }
-    });
-}
 
 
 export function addClient(phone: number, contact_email: string, adress: string, industry: string, name: string) {
@@ -236,35 +198,6 @@ export function addPayments(id: number, invoice_id: number, amount: number, fee:
     });
 }
 
-export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
-    const param = {
-        TableName: "professionals",
-        Item: {
-            id: { N: sanatiseInput(String(id)) },
-            user_id: { N: sanatiseInput(String(user_id)) },
-            email: { S: email || "email@example.com" },
-            phone_number: { S: sanatiseInput(phonenumber) },
-            postcode: { S: sanatiseInput(postcode) },
-            region: { S: sanatiseInput(region) },
-            field_of_work: { S: sanatiseInput(field_of_work) },
-            slug: { S: slug },
-        }
-    }
-
-    dynamoDB.putItem(param, function (err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-            //verwijder alle datums.
-            getId(id);
-        } else {
-            console.log("Added item:", JSON.stringify(data, null, 2));
-            const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
-            const html: string = emailHtml;
-            const subject: string = "Inschijving als Specialist";
-            sendMail(subject, String(email), text, html);
-        }
-    });
-}
 export function addAvailibility(id: number, professional_id: number, job_description: string, date: Date, time_from: string, time_to: string) {
     const param = {
         TableName: "availibility",
@@ -365,3 +298,81 @@ async function Verwijder(id: number) {
         .then(data => console.log(data.Attributes))
         .catch(console.error)
 }
+
+
+
+
+
+/* 
+export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
+    const param = {
+        TableName: "professionals",
+        Item: {
+            id: { N: sanatiseInput(String(id)) },
+            user_id: { N: sanatiseInput(String(user_id)) },
+            email: { S: email || "email@example.com" },
+            phone_number: { S: sanatiseInput(phonenumber) },
+            postcode: { S: sanatiseInput(postcode) },
+            region: { S: sanatiseInput(region) },
+            field_of_work: { S: sanatiseInput(field_of_work) },
+            slug: { S: slug },
+        }
+    }
+
+    dynamoDB.putItem(param, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+            //verwijder alle datums.
+            getId(id);
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+            const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
+            const html: string = emailHtml;
+            const subject: string = "Inschijving als Specialist";
+            sendMail(subject, String(email), text, html);
+        }
+    });
+}
+
+
+export function addUser_roles(user_id: number, role: string, created_at: string, updated_at: string) {
+    const params = {
+        TableName: "user_roles",
+        Item: {
+            user_id: { N: String(user_id) },
+            role: { S: role },
+            created_at: { S: created_at },
+            updated_at: { S: updated_at },
+        }
+    };
+
+    dynamoDB.putItem(params, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+export function addRoles(id: number, name: string, description: string, created_at: string, updated_at: string) {
+    const params = {
+        TableName: "roles",
+        Item: {
+            id: { N: String(id) },
+            name: { S: name },
+            description: { S: description },
+            created_at: { S: created_at },
+            updated_at: { S: updated_at },
+        }
+    };
+
+    dynamoDB.putItem(params, function (err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+ */
