@@ -23,38 +23,24 @@ function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error) {
+        updateUser(null);
+      }
+    };
+
     checkAuthStatus();
   }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const authenticatedUser = await Auth.currentAuthenticatedUser();
-      updateUser(authenticatedUser);
-    } catch (error) {
-      updateUser(null);
-    }
-  };
 
   const handleLogin = async () => {
     try {
-      //const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
+      const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       
-      authenticateUser(loginData.email, loginData.password)
-      /*queryGSI(
-        "users",
-        "username",
-        "username = :user_name",
-          {':user_name': { S: loginData.email }}
-      );
-      queryGSI("users",
-        "username",
-        "username = :user_name  and password = :password",
-        {
-          ':user_name': loginData.email,
-          ':password': loginData.password
-        }).then(updateUser(authenticatedUser))
-        .catch(console.error);*/
-      //navigate('/');
+      navigate('/');
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);

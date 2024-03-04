@@ -30,7 +30,7 @@ function RegisterPage() {
     const { email, password, firstName, lastName, dob } = registerData;
 
     try {
-      /*await Auth.signUp({
+      await Auth.signUp({
         username: email,
         password,
         attributes: {
@@ -40,7 +40,7 @@ function RegisterPage() {
           date_of_birth: dob,
         },
         autoSignIn: { enabled: true }
-      });*/
+      });
 
       
       
