@@ -20,12 +20,12 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
   // List of timezones (you can expand this list as needed)
   const timezones = [
+    'GMT+01:00 Europe/Amsterdam', // Amsterdam
     'GMT-08:00 America/Los_Angeles', // Los Angeles
     'GMT-06:00 America/Mexico_City', // Mexico City
     'GMT-05:00 America/New_York', // New York
     'GMT-03:00 America/Sao_Paulo', // Sao Paulo
     'GMT+00:00 Europe/London', // London
-    'GMT+01:00 Europe/Amsterdam', // Amsterdam
     'GMT+02:00 Africa/Cairo', // Cairo
     'GMT+03:00 Europe/Istanbul', // Istanbul
     'GMT+04:00 Asia/Dubai', // Dubai
