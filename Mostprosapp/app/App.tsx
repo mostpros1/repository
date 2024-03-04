@@ -47,6 +47,7 @@ import CompanySituation3 from "./(Components)/Specialist/CompanySituation3";
 import CompanySituation4 from "./(Components)/Specialist/CompanySituation4";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
+import Footer from "./(Components)/Footer";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -133,7 +134,9 @@ const App = () => {
         <Stack.Screen name="CompanySituation4" component={CompanySituation4} />
         <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
         <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
-        <Stack.Screen name="NoKvKInfo" component={NoKvKInfo}/>
+        <Stack.Screen name="NoKvKInfo" component={NoKvKInfo} />
+        <Stack.Screen name="Footer" component={Footer}/>
+        
         
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>

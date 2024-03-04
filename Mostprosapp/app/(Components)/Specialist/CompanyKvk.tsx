@@ -6,7 +6,7 @@ import {
     Text,
     Pressable,
     ScrollView,
-    TouchableOpacity,
+    Alert,
     TextInput,
 
 } from "react-native";
@@ -19,16 +19,14 @@ const windowHeight = Dimensions.get('window').height;
 
 const CompanyKvk = ({ navigation }) => {
 
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [kvkNumber, setKvkNumber] = useState('');
 
-    const toggleItemSelection = (index) => {
-        const updatedItems = [...selectedItems];
-        if (updatedItems.includes(index)) {
-            updatedItems.splice(updatedItems.indexOf(index), 1);
+    const handleRegister = () => {
+        if (kvkNumber.length === 8) {
+            navigation.navigate('TestHome');
         } else {
-            updatedItems.push(index);
+            Alert.alert('Ongeldig KVK Nummer', 'Zorg ervoor dat je het 8 cijferig KvK nummer invoerd.');
         }
-        setSelectedItems(updatedItems);
     };
 
     return (
@@ -58,12 +56,14 @@ const CompanyKvk = ({ navigation }) => {
                         </Pressable>
                         <Text style={styles.beroepTitle}>KvK nummer: </Text>
                         <Pressable style={styles.containerInput}>
-                            <TextInput
-                                placeholder="Uw Kvk nummer:"
-                                style={styles.input}
-                                keyboardType="numeric"
-                                maxLength={8}
-                            />
+                        <TextInput
+                        placeholder="Uw Kvk nummer:"
+                        style={styles.input}
+                        keyboardType="numeric"
+                        maxLength={8}
+                        value={kvkNumber}
+                        onChangeText={setKvkNumber}
+                    />
                             <Icon name="info" size={23} color="#308AE4" />
 
                         </Pressable>
@@ -77,9 +77,9 @@ const CompanyKvk = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation4')}>
-                            <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
-                        </Pressable>
+                        <Pressable style={[styles.nextButton]} onPress={handleRegister}>
+                        <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Inschrijven</Text>
+                    </Pressable>
                     </View>
 
                 </SafeAreaView>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
 
     scrollViewContainer: {
         flexGrow: 1,
-        height: windowHeight,
+        height: "100%",
     },
     header: {
         flexDirection: 'row',

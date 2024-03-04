@@ -89,7 +89,8 @@ const GegevensSpecialist = ({ navigation }) => {
             }, 3000);
             return;
         }
-        navigation.navigate('HomeOwnerCreate', { selectedOption: selectedOption });
+        // navigation.navigate('HomeOwnerCreate', { selectedOption: selectedOption });
+        navigation.navigate('OmgevingSpecialist')
     };
   
     const filteredOptions = specialists.filter(option =>

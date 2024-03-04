@@ -54,6 +54,7 @@ declare global {
     DateAndTimePicker: undefined;
     CompanyKvk: undefined;
     NoKvKInfo: undefined;
+    Footer: undefined;
 
 
     HomeOwnerExtraInfo: undefined;
