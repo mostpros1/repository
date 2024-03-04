@@ -17,6 +17,9 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
   const [postcodeInput, setPostcodeInput] = useState(postCode);
   const [isValidPostcode, setValidPostcode] = useState(true);
 
+  const [stadInput, setStadInput] = useState(stad);
+  const [isValidStad, setValidStad] = useState(true);
+
   const handlePostcodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPostcode = e.target.value;
     const postcodeRegex = /^\d{4}\s?[A-Za-z]{2}$/;
@@ -31,6 +34,20 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
     }
   };
 
+  const handleStadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newStad = e.target.value;
+    const stadRegex = /^[A-Za-z\s]+$/;
+    const isValidStad = stadRegex.test(newStad);
+
+    setValidStad(isValidStad);
+
+    setStadInput(newStad);
+
+    if (isValidStad || newStad === "") {
+      updateFields({ stad: newStad });
+    }
+  };
+
   return (
     <>
       <div className="content-con">
@@ -40,25 +57,31 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
         </h2>
       </div>
       <div className="form-inputs">
-      <input
+        <input
           type="text"
           required
           className={`form-input first-input ${isValidPostcode ? '' : 'invalid'}`}
           placeholder='Postcode'
           value={postcodeInput}
           onChange={handlePostcodeChange}
+          pattern="\d{4}\s?[A-Za-z]{2}"
         />
         <input
           type="text"
           required
-          className="form-input second-input"
+          className={`form-input second-input ${isValidStad ? '' : 'invalid'}`}
           placeholder='Stad'
-          value={stad}
-          onChange={e => updateFields({ stad: e.target.value })}
+          value={stadInput}
+          onChange={handleStadChange}
+          pattern="[A-Za-z\s]+"
         />
       </div>
       {!isValidPostcode && (
-        <p className="error-message">Please enter a valid postcode (e.g., 1234 AB)</p>
+        <p className="error-message">Voer alstublieft een geldige postcode in (bijv. 1234AB)</p>
+      )}
+
+      {!isValidStad && (
+        <p className="error-message">Voer alstublieft een geldige stad in (bijv. Amsterdam)</p>
       )}
     </>
   )
