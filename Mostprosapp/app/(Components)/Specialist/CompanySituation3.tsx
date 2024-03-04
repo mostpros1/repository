@@ -14,7 +14,7 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CompanySituation1 = ({ navigation }) => {
+const CompanySituation3 = ({ navigation }) => {
 
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -74,11 +74,11 @@ const CompanySituation1 = ({ navigation }) => {
                             onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
                         <Text>Ik heb geen bedrijf</Text>
                         <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(5)}
+                            style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
 
@@ -86,7 +86,7 @@ const CompanySituation1 = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation2')}>
+                        <Pressable style={[styles.nextButton]}>
                             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                         </Pressable>
                     </View>
@@ -220,4 +220,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CompanySituation1;
+export default CompanySituation3;

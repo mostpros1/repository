@@ -48,6 +48,8 @@ declare global {
     GegevensSpecialist: undefined;
     OmgevingSpecialist: undefined;
     CompanySituation1: undefined;
+    CompanySituation2: undefined;
+    CompanySituation3: undefined;
 
 
     HomeOwnerExtraInfo: undefined;

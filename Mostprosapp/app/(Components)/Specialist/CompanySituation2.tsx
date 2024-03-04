@@ -14,7 +14,7 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CompanySituation1 = ({ navigation }) => {
+const CompanySituation2 = ({ navigation }) => {
 
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -42,11 +42,11 @@ const CompanySituation1 = ({ navigation }) => {
                         <Text style={styles.title}>Bedrijf-situatie</Text>
                     </View>
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>Wat is u huidige professionele situatie?</Text>
+                        <Text style={styles.title}>Waarom ben je als startend bedrijf op zoek naar klussen op Mostpros?</Text>
                     </View>
 
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
-                        <Text>Ik heb mijn bedrijf ingeschreven en wacht op mijn KVK-nummer</Text>
+                        <Text>Gaten in mijn agenda opvullen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
@@ -54,31 +54,24 @@ const CompanySituation1 = ({ navigation }) => {
                     </Pressable>
 
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
-                        <Text>Mijn bedrijf bestaat minder dan 3 maanden</Text>
+                        <Text>Mijn klantenbestand opbouwen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
-                        <Text>Mijn bedrijf bestaat 3 maanden tot 1 jaar</Text>
+                        <Text>Mijn bedrijf laten groeien en opschalen om meer mensen in dienst te nemen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
-                        <Text>Mijn bedrijf bestaat al langer dan 1 jaar</Text>
+                        <Text>Ik wil een nieuwe manier om klanten te vinden uitproberen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
-                        />
-                    </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
-                        <Text>Ik heb geen bedrijf</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(5)}
                         />
                     </Pressable>
 
@@ -86,7 +79,7 @@ const CompanySituation1 = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation2')}>
+                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation3')}>
                             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                         </Pressable>
                     </View>
@@ -220,4 +213,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CompanySituation1;
+export default CompanySituation2;
