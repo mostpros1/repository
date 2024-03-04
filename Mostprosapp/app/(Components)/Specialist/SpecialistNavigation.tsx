@@ -21,6 +21,9 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
                   <Text style={[styles.text]}>Gegevens Straat</Text>
               </Pressable>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('OmgevingSpecialist')}>
+                <Text style={[styles.text]}>OmgevingSpecialist</Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>
