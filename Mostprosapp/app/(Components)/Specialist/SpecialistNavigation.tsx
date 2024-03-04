@@ -24,6 +24,9 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('OmgevingSpecialist')}>
                 <Text style={[styles.text]}>OmgevingSpecialist</Text>
               </Pressable>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
+                <Text style={[styles.text]}>DateAndTimePicker</Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>

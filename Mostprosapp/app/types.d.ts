@@ -50,6 +50,7 @@ declare global {
     CompanySituation1: undefined;
     CompanySituation2: undefined;
     CompanySituation3: undefined;
+    DateAndTimePicker: undefined;
 
 
     HomeOwnerExtraInfo: undefined;
