@@ -7,14 +7,17 @@ import {
     Pressable,
     ScrollView,
     TouchableOpacity,
+    TextInput,
+
 } from "react-native";
 import { Dimensions } from "react-native";
+import Icon from "@expo/vector-icons/MaterialIcons";
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CompanySituation2 = ({ navigation }) => {
+const CompanyKvk = ({ navigation }) => {
 
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -42,44 +45,39 @@ const CompanySituation2 = ({ navigation }) => {
                         <Text style={styles.title}>Bedrijf-situatie</Text>
                     </View>
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>Waarom ben je als startend bedrijf op zoek naar klussen op Mostpros?</Text>
+                        <Text style={styles.title}>Hoeveel personen zijn er werkzaam in jouw bedrijf?</Text>
                     </View>
 
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
-                        <Text>Gaten in mijn agenda opvullen</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(1)}
-                        />
-                    </Pressable>
+                    <View style={styles.beroepContainer}>
+                        <Text style={styles.beroepTitle}>Bedrijf naam:</Text>
+                        <Pressable style={styles.containerInput}>
+                            <TextInput
+                                placeholder="Bedrijf naam:"
+                                style={styles.input}
+                            />
+                        </Pressable>
+                        <Text style={styles.beroepTitle}>KvK nummer: </Text>
+                        <Pressable style={styles.containerInput}>
+                            <TextInput
+                                placeholder="Uw Kvk nummer:"
+                                style={styles.input}
+                                keyboardType="numeric"
+                                maxLength={8}
+                            />
+                            <Icon name="info" size={23} color="#308AE4" />
 
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
-                        <Text>Mijn klantenbestand opbouwen</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(2)}
-                        />
-                    </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
-                        <Text>Mijn bedrijf laten groeien en opschalen{'\n'}om meer mensen in dienst te nemen</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(3)}
-                        />
-                    </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
-                        <Text>Ik wil een nieuwe manier om klanten te vinden uitproberen</Text>
-                        <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(4)}
-                        />
-                    </Pressable>
+                        </Pressable>
+
+                        <Pressable style={styles.blueTitleContainer} onPress={() => navigation.navigate('NoKvKInfo')}>
+                            <Text style={styles.blueTitle}>Ik heb geen KVK-nummer</Text>
+                        </Pressable>
+                    </View>
 
                     <View style={styles.buttonsContainer}>
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation3')}>
+                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation4')}>
                             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                         </Pressable>
                     </View>
@@ -98,9 +96,63 @@ const styles = StyleSheet.create({
         gap: 10,
     },
 
+    containerInput: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderColor: "black",
+        borderWidth: 0.3,
+        backgroundColor: "lightgray",
+        height: 60,
+        borderRadius: 10,
+        padding: 10,
+        width: "75%",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        marginTop: 15,
+        marginBottom: 15,
+    },
+
+    beroepContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 200,
+        paddingTop: 50,
+        paddingBottom: 30,
+    },
+
+    beroepTitle: {
+        textAlign: "left",
+    },
+
+    inputContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+        display: "flex",
+
+    },
+
+    blueTitleContainer: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#63A7EB",
+    },
+    blueTitle: {
+        color: "#63A7EB",
+    },
+
+
+    input: {
+        flex: 1,
+        fontSize: 16,
+    },
+
     pressableContainer: {
         width: windowWidth - 20,
         height: 60,
+        paddingRight: 10,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -212,4 +264,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CompanySituation2;
+export default CompanyKvk;

@@ -46,7 +46,7 @@ const CompanySituation3 = ({ navigation }) => {
                     </View>
 
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
-                        <Text>Ik heb mijn bedrijf ingeschreven en wacht op mijn KVK-nummer</Text>
+                        <Text>Ik heb mijn bedrijf ingeschreven{'\n'}en wacht op mijn KVK-nummer</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
@@ -74,11 +74,11 @@ const CompanySituation3 = ({ navigation }) => {
                             onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
+                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
                         <Text>Ik heb geen bedrijf</Text>
                         <TouchableOpacity
-                            style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
-                            onPress={() => toggleItemSelection(4)}
+                            style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
+                            onPress={() => toggleItemSelection(5)}
                         />
                     </Pressable>
 
@@ -86,7 +86,7 @@ const CompanySituation3 = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]}>
+                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation4')}>
                             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                         </Pressable>
                     </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     pressableContainer: {
         width: windowWidth - 20,
         height: 60,
-        paddingRight: 20,
+        // paddingRight: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         height: 20,
         borderWidth: 1,
         borderColor: '#000',
-        borderRadius: 5,
+        borderRadius: 10,
     },
     checkboxSelected: {
         backgroundColor: '#308be5',

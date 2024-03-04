@@ -14,7 +14,7 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CompanySituation2 = ({ navigation }) => {
+const CompanySituation4 = ({ navigation }) => {
 
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -42,11 +42,11 @@ const CompanySituation2 = ({ navigation }) => {
                         <Text style={styles.title}>Bedrijf-situatie</Text>
                     </View>
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>Waarom ben je als startend bedrijf op zoek naar klussen op Mostpros?</Text>
+                        <Text style={styles.title}>Hoeveel personen zijn er werkzaam in jouw bedrijf?</Text>
                     </View>
 
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
-                        <Text>Gaten in mijn agenda opvullen</Text>
+                        <Text>Ik ben zelfstandig ondernemer,{'\n'}zonder medewerkers</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
@@ -54,21 +54,21 @@ const CompanySituation2 = ({ navigation }) => {
                     </Pressable>
 
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
-                        <Text>Mijn klantenbestand opbouwen</Text>
+                        <Text>1 medewerker</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
-                        <Text>Mijn bedrijf laten groeien en opschalen{'\n'}om meer mensen in dienst te nemen</Text>
+                        <Text>2 tot 10 medewerkers</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
-                        <Text>Ik wil een nieuwe manier om klanten te vinden uitproberen</Text>
+                        <Text>Meer dan 10 medewerkers</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
@@ -79,7 +79,7 @@ const CompanySituation2 = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation3')}>
+                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanyKvk')}>
                             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                         </Pressable>
                     </View>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     pressableContainer: {
         width: windowWidth - 20,
         height: 60,
+        paddingRight: 10,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -212,4 +213,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CompanySituation2;
+export default CompanySituation4;

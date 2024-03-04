@@ -44,6 +44,9 @@ import OmgevingSpecialist from "./(Components)/Specialist/OmgevingSpecialist";
 import CompanySituation1 from "./(Components)/Specialist/CompanySituation1";
 import CompanySituation2 from "./(Components)/Specialist/CompanySituation2";
 import CompanySituation3 from "./(Components)/Specialist/CompanySituation3";
+import CompanySituation4 from "./(Components)/Specialist/CompanySituation4";
+import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
+import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -127,7 +130,10 @@ const App = () => {
         <Stack.Screen name="CompanySituation1" component={CompanySituation1} />
         <Stack.Screen name="CompanySituation2" component={CompanySituation2}/>
         <Stack.Screen name="CompanySituation3" component={CompanySituation3} />
-        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker}/>
+        <Stack.Screen name="CompanySituation4" component={CompanySituation4} />
+        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
+        <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
+        <Stack.Screen name="NoKvKInfo" component={NoKvKInfo}/>
         
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
