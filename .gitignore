@@ -1,2 +1,3 @@
 node_modules
 backend_functions/emailSturenWeb.js
+backend_functions/emails/config.js

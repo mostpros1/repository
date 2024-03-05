@@ -8,10 +8,11 @@ function ContactInputs() {
     
         const subject: string = 'Contact Formulier Mostpros';
         const toEmail: string = 'timon.heidenreich@gmail.com';
-        const text: string = "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question;
+        //const text: string = "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question;
         const html: string = "<i>" + "naam: " + name + ", " + "achternaam: " + lastName + ", " + "email: " + email + ", " + "vraag: " + question + "</i>";
+        const fromEmail: string = "timon.heidenreich@gmail.com"
     
-    sendMail(subject, toEmail, text, html);
+    sendMail(subject, toEmail, html, fromEmail);
   }
 
   const handleSubmit = async (event) => {
