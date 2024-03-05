@@ -1,16 +1,26 @@
 import { StyleSheet } from 'react-native';
-import { StripeProvider } from '@stripe/stripe-react-native';
 import React, { useState, useEffect } from 'react';
 import { Button, Text, View, Linking } from 'react-native';
 import { Auth } from 'aws-amplify';
+import { initStripe } from '@stripe/stripe-react-native';
+
+let stripeClient;
+
+const initializeStripe = async () => {
+ stripeClient = await initStripe({
+    publishableKey: 'pk_live_51Np5loGSS5FaNGjdWL8VPW3RJws0ndlFg3WIPcgtxEzdKHxiwo9AsSH803slhEOJkUeuGvQGGOZmjxMaLiYbPKR000sTekr8bf',
+ });
+};
 
 const PaymentLink = ({ subtotal, handleSendMessage }) => {
     const [paymentLink, setPaymentLink] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
     const [userStripeAccountId, setUserStripeAccountId] = useState('');
     const companyFee = subtotal * 0.02; // Mostpros takes 2% of the transaction.
+    
 
     useEffect(() => {
+        initializeStripe();
         async function checkStripeAccountId() {
             const user = await Auth.currentAuthenticatedUser();
             setCurrentUser(user);
@@ -22,8 +32,8 @@ const PaymentLink = ({ subtotal, handleSendMessage }) => {
 
     const createSession = async () => {
         if (userStripeAccountId === '') return;
+        
 
-        // Assuming stripeClient is available globally or imported
         const result = await stripeClient.checkout.sessions.create({
             currency: 'eur',
             mode: 'payment',
@@ -59,7 +69,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }) => {
             <Button title="create payment" onPress={createSession} />
             {paymentLink ? (
                 <Text onPress={() => Linking.openURL(paymentLink)} style={{ color: 'blue' }}>
-                    Payment link
+                    ayment link
                 </Text>
             ) : null}
         </View>
