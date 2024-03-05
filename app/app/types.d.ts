@@ -20,4 +20,5 @@ declare global {
     Verify: {email: string};
     Profile: undefined;
     DateAndTimePicker: undefined;
+    PaymentLink: undefined;
   };

@@ -20,7 +20,7 @@ import awsconfig from "./aws-exports";
 import { RootStackParamList } from "./types";
 Amplify.configure(awsconfig);
 import DateAndTimePicker from "./(Components)/Booking/Calender";
-
+import PaymentLink from "./(Components)/Payment/Payments";
 
 const App = () => {
 
@@ -64,6 +64,7 @@ const App = () => {
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
+        <Stack.Screen name="PaymentLink" component={PaymentLink} />
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

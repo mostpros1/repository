@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     width: 30,
     textAlign: 'center',
     marginRight: 3,
+    marginLeft: 2,
     backgroundColor: '#308ae4',
     height: 30,
     alignItems: 'center',
@@ -266,13 +267,33 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   day: {
-    width: 40, 
+    width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 6,
     borderRadius: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#a80505',
+    margin: 3,
+  },
+  dayNietBeschikbaar: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 6,
+    borderRadius: 10,
+    backgroundColor: '#a80505',
+    margin: 3,
+  },
+  dayBeschikbaar: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 6,
+    borderRadius: 10,
+    backgroundColor: '#20ce11',
     margin: 3,
   },
   selectedDay: {
@@ -283,7 +304,8 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 16,
-    color: '#333333',
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
   confirmButton: {
     width: '90%',
@@ -299,7 +321,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   pastDay: {
-    backgroundColor: '#f0f0f0', // Light grey background for past days
+    backgroundColor: '#a80505', // Light grey background for past days
     borderColor: '#dcdcdc', // Slightly darker border for distinction
     borderWidth: 1,
     borderRadius: 5, // Assuming your days are shaped like this; adjust as needed
