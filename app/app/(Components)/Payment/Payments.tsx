@@ -69,7 +69,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }) => {
             <Button title="create payment" onPress={createSession} />
             {paymentLink ? (
                 <Text onPress={() => Linking.openURL(paymentLink)} style={{ color: 'blue' }}>
-                    ayment link
+                    Payment link
                 </Text>
             ) : null}
         </View>
