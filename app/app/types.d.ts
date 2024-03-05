@@ -21,4 +21,5 @@ declare global {
     Profile: undefined;
     DateAndTimePicker: undefined;
     PaymentLink: undefined;
+    JoinChat: undefined;
   };

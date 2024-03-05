@@ -147,7 +147,7 @@ function ChatMain({ user, signOut }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, // Assuming you want the main container to fill the screen
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -158,17 +158,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    chatContainer: { // Assuming chatContainer styles here
+    chatContainer: {
         maxWidth: 1200,
         width: '100%',
         flexDirection: 'row',
     },
-    chatListContainer: { // Assuming styles for chatListContainer
+    chatListContainer: { 
         width: '20%',
         borderColor: '#308AE4',
         borderWidth: 2,
     },
-    chatButtonContainer: { // Assuming styles for chatButtonContainer
+    chatButtonContainer: { 
         height: '30%',
         padding: 15,
     },
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     input: { // If this is for the alert input
         // Your input style here
     },
-    chatBoxContainer: { // Assuming this is the correct name for the chat box's container
+    chatBoxContainer: {
         width: '80%',
     },
     chatBox: {
@@ -193,10 +193,10 @@ const styles = StyleSheet.create({
     username: {
         fontSize: 18,
     },
-    time: { // Add your time text styles here
+    time: {
         fontSize: 14,
     },
-    text: { // Style for the text inside chat bubbles
+    text: {
         fontSize: 16,
     },
     selfEnd: {

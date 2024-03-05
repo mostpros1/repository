@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
+    "@aws-amplify/api-graphql": "^4.0.18",
+    "@aws-amplify/core": "^6.0.18",
     "@react-native-async-storage/async-storage": "^1.19.8",
     "@react-native-community/netinfo": "^11.1.0",
     "@react-navigation/native-stack": "^6.9.17",
