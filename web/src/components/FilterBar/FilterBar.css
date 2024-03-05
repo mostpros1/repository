@@ -96,10 +96,12 @@
 
 .job-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 30px;
-  padding-top: 60px;
-  padding-left: 60px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 34px;
+  padding-top: 69px;
+  padding-left: 0px;
+  justify-content: center;
+  align-content: space-evenly;
 }
 
 .job-item {
