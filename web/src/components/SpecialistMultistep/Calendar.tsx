@@ -16,24 +16,24 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
-  const [selectedTimezone, setSelectedTimezone] = useState('UTC'); // Default timezone
+  const [selectedTimezone, setSelectedTimezone] = useState('GMT+01:00 Europe/Amsterdam'); // Default timezone
 
   // List of timezones (you can expand this list as needed)
   const timezones = [
-    'GMT-08:00 America/Los_Angeles', // Los Angeles
-    'GMT-06:00 America/Mexico_City', // Mexico City
-    'GMT-05:00 America/New_York', // New York
-    'GMT-03:00 America/Sao_Paulo', // Sao Paulo
-    'GMT+00:00 Europe/London', // London
-    'GMT+01:00 Europe/Amsterdam', // Amsterdam
-    'GMT+02:00 Africa/Cairo', // Cairo
-    'GMT+03:00 Europe/Istanbul', // Istanbul
-    'GMT+04:00 Asia/Dubai', // Dubai
-    'GMT+05:30 Asia/Kolkata', // Kolkata
-    'GMT+07:00 Asia/Bangkok', // Bangkok
-    'GMT+08:00 Asia/Shanghai', // Shanghai
-    'GMT+09:00 Asia/Tokyo', // Tokyo
-    'GMT+11:00 Australia/Sydney' // Sydney
+    'GMT-08:00 America/Los_Angeles',
+    'GMT-06:00 America/Mexico_City',
+    'GMT-05:00 America/New_York',
+    'GMT-03:00 America/Sao_Paulo',
+    'GMT+00:00 Europe/London',
+    'GMT+01:00 Europe/Amsterdam',
+    'GMT+02:00 Africa/Cairo',
+    'GMT+03:00 Europe/Istanbul',
+    'GMT+04:00 Asia/Dubai',
+    'GMT+05:30 Asia/Kolkata',
+    'GMT+07:00 Asia/Bangkok',
+    'GMT+08:00 Asia/Shanghai',
+    'GMT+09:00 Asia/Tokyo',
+    'GMT+11:00 Australia/Sydney'
   ];
   
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
