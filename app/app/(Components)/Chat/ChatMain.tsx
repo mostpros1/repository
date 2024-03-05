@@ -40,7 +40,7 @@ function ChatMain({ user, signOut }) {
 
   useEffect(() => {
     async function fetchChats() {
-      const allChats = await API.graphql(graphqlOperation(queries.listChats, {
+        const allChats = await API.graphql(graphqlOperation(queries.listChats, {
         filter: {
           members: { contains: user.attributes.email },
         },
@@ -60,6 +60,7 @@ function ChatMain({ user, signOut }) {
     return () => sub.unsubscribe();
   }, [user.attributes.email]);
 
+  const [messageText, setMessageText] = useState("");
   let PaymentLinkComponent = null;
   const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
   if (groups && groups.includes('Professional')) {
@@ -75,6 +76,7 @@ function ChatMain({ user, signOut }) {
         {/* PaymentLink component adaptation needed */}
       </View>
     );
+    
   }
 
   return (
@@ -123,14 +125,17 @@ function ChatMain({ user, signOut }) {
             ))}
           </ScrollView>
           <View style={styles.inputForm}>
-            <TextInput
-              style={styles.inputChat}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key === 'Enter') {
-                  handleSendMessage(nativeEvent.text);
-                }
-              }}
-              placeholder="Type a message..."
+            
+          <TextInput
+            style={styles.inputChat}
+            onChangeText={setMessageText} // Update this line
+            onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Enter') {
+                handleSendMessage(messageText); // Use the state variable here
+                setMessageText(""); // Clear the message text after sending
+            }
+            }}
+                placeholder="Type a message..."
             />
             {/* Button to send a message or use TouchableOpacity with custom styling */}
           </View>
@@ -141,103 +146,85 @@ function ChatMain({ user, signOut }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1, // Assuming you want the main container to fill the screen
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     chatWrapper: {
-      flex: 1,
-      paddingVertical: 150,
-      paddingHorizontal: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        paddingVertical: 150,
+        paddingHorizontal: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    chatCon: {
-      maxWidth: 1200,
-      width: '100%',
-      flexDirection: 'row',
+    chatContainer: { // Assuming chatContainer styles here
+        maxWidth: 1200,
+        width: '100%',
+        flexDirection: 'row',
     },
-    chatLeftSide: {
-      borderColor: '#308AE4',
-      borderWidth: 2,
-      width: '20%',
+    chatListContainer: { // Assuming styles for chatListContainer
+        width: '20%',
+        borderColor: '#308AE4',
+        borderWidth: 2,
     },
-    chatBtnCon: {
-      height: '30%',
-      flexDirection: 'column',
-      padding: 15,
-      gap: 10,
+    chatButtonContainer: { // Assuming styles for chatButtonContainer
+        height: '30%',
+        padding: 15,
     },
-    buttonc: {
-      backgroundColor: '#308AE4',
-      borderRadius: 10,
-      padding: 15,
-      width: '100%',
-      borderColor: 'transparent',
-      color: 'white',
-      fontSize: 15,
-      alignSelf: 'center',
+    alert: { // Add styles for alert if needed
+        // Your alert style here
     },
-    username: {
-      fontSize: 18,
+    input: { // If this is for the alert input
+        // Your input style here
     },
-    contactList: {
-      height: '70%',
-      borderBottomColor: '#308AE4',
-      borderBottomWidth: 2,
-    },
-    chatBoxCon: {
-      width: '80%',
+    chatBoxContainer: { // Assuming this is the correct name for the chat box's container
+        width: '80%',
     },
     chatBox: {
-      flexDirection: 'column',
-      width: '100%',
-      height: 500,
-      gap: 40,
-      overflow: 'scroll',
-      padding: 15,
+        height: 500,
+        padding: 15,
     },
     chatBoxUserInfo: {
-      flexDirection: 'column',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5,
     },
-    otherEnd: {
-      backgroundColor: '#308AE4',
-      alignSelf: 'flex-start',
-      padding: 5,
-      paddingHorizontal: 15,
-      borderRadius: 10,
-      maxWidth: '70%',
+    username: {
+        fontSize: 18,
     },
-    otherEndText: {
-      color: 'white',
-      wordWrap: 'break-word',
-      fontSize: 18,
+    time: { // Add your time text styles here
+        fontSize: 14,
+    },
+    text: { // Style for the text inside chat bubbles
+        fontSize: 16,
     },
     selfEnd: {
-      alignSelf: 'flex-end',
-      backgroundColor: 'rgb(236, 236, 236)',
-      padding: 5,
-      paddingHorizontal: 15,
-      borderRadius: 10,
-      maxWidth: '70%',
+        backgroundColor: 'rgb(236, 236, 236)',
+        alignSelf: 'flex-end',
+        padding: 5,
+        paddingHorizontal: 15,
+        borderRadius: 10,
+        maxWidth: '70%',
     },
-    selfEndText: {
-      wordWrap: 'break-word',
-      fontSize: 18,
+    otherEnd: {
+        backgroundColor: '#308AE4',
+        alignSelf: 'flex-start',
+        padding: 5,
+        paddingHorizontal: 15,
+        borderRadius: 10,
+        maxWidth: '70%',
     },
     inputForm: {
-      flexDirection: 'row',
-      borderColor: '#C0C0C8',
-      borderWidth: 2,
-      width: '100%',
+        flexDirection: 'row',
+        borderColor: '#C0C0C8',
+        borderWidth: 2,
     },
     inputChat: {
-      flex: 1,
-      borderWidth: 0,
+        flex: 1,
+        padding: 10,
     },
-    chatEnter: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderLeftColor: '#C0C0C8',
-      borderLeftWidth: 2,
-      padding: 15,
-    },
-  });
+});
+
 
 export default withAuthenticator(ChatMain);
