@@ -13,7 +13,7 @@ function Footer() {
           <Link to="/over-ons">Over</Link>
           <Link to="/over-ons">Jobs</Link>
           <Link to="/over-ons">Product updates</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">Contact</Link> 
         </div>
         <div className="footerSection">
           <h4>Huiseigenaar</h4>
