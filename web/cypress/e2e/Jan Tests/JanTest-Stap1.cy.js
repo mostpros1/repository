@@ -15,10 +15,11 @@ describe('Testing "Register as specialist"', () => {
 
         const performChecksStap1 = (data) => {
             for (let i = 0; i < data.length; i++) {
+                const inputs = cy.get('input[type="text"]');
 
                 for (let j = 0; j < data[i].length; j++) {
                     if (data[i][j] !== '') {
-                        cy.get('input').eq(j).should('exist').type(data[i][j]);
+                        cy.get('input[type="text"]').eq(j).should('exist').type(data[i][j]);
                     }
                 }
 

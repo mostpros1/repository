@@ -1,26 +1,25 @@
-describe('Testing "Register as specialist"', () => {
+describe('Testing "Register as specialist"' , () => {
     it('type in input', () => {
 
         cy.janTestBegin()
 
-        cy.get('input').eq(0).type('Loodgieter')
-        cy.get('input').eq(1).type('test@test.com')
-        cy.get('input').eq(2).type('2020EB')
-        cy.get('input').eq(3).type('Amsterdam')
+        cy.get('input[type="text"]').eq(0).type('Loodgieter')
+        cy.get('input[type="text"]').eq(1).type('test@test.com')
+        cy.get('input[type="text"]').eq(2).type('2020EB')
+        cy.get('input[type="text"]').eq(3).type('Amsterdam')
         cy.goForward()
 
         // STAP 2-3-4
-
+        
         // check 1
         for (let k = 0; k < 3; k++) {
             cy.goForward()
         }
 
-        // go back
         for (let l = 0; l < 3; l++) {
             cy.get('[class="form-btn back"]').click()
         }
-
+        
 
         // check 2-3
         for (let i = 0; i < 6; i++) {
