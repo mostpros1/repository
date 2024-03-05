@@ -56,9 +56,9 @@ async function sendEmail(subject, to, text, html) {
         throw error; // Rethrow the error to be caught by the caller
     }*/
     try {
-        const to = 'timon.heidenreich@icloud.com';
-        const subject = 'test';
-        const message = '<p>Your HTML Message Here</p>';
+        const naar = to;
+        const onderwerp = subject;
+        const message = html;
         const from = 'timon.heidenreich@icloud.com';
     
         sendMail(to, subject, message, from);
@@ -67,4 +67,3 @@ async function sendEmail(subject, to, text, html) {
         // Handle the error here
     }
 }
-
