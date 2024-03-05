@@ -1,46 +1,59 @@
 import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableOpacity, Image, } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, } from "react-native";
 import { Dimensions } from "react-native";
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-
-const Footer = ({ navigation }) => {
-  const [isSwitchOn1, setIsSwitchOn1] = useState(false);
-  const [isSwitchOn2, setIsSwitchOn2] = useState(false);
-
-  const onToggleSwitch1 = () => setIsSwitchOn1(!isSwitchOn1);
-  const onToggleSwitch2 = () => setIsSwitchOn2(!isSwitchOn2);
+const Footer = ({ navigation, activePage }) => {
 
   return (
     
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.footerImage}
-            onPress={() => navigation.navigate('Page1')}
+            onPress={() => navigation.navigate('ProfileNavigation')}
           >
-            <Image
-              source={require("../../assets/images/footerhouse.png")}
-              style={styles.image}
-            />
+            {activePage === 'HomePageSpecialist' ? (
+              <Image
+                source={require("../../assets/images/footerhouseblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footerhouse.png")}
+                style={styles.image}
+              />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.footerImage}
             onPress={() => navigation.navigate('ChatNavigation')}
           >
-            <Image
-              source={require("../../assets/images/footerchat.png")}
-              style={styles.image}
-            />
+            {activePage === 'ChatNavigation' ? (
+              <Image
+                source={require("../../assets/images/footerchatblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footerchat.png")}
+                style={styles.image}
+              />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.footerImage}
-            onPress={() => navigation.navigate("../../assets/images/footerchat.png")}
+            onPress={() => navigation.navigate('ProfileNavigation')}
           >
-            <Image
-              source={require("../../assets/images/footericonblue.png")}
-              style={styles.image}
-            />
+            {activePage === 'Profile' ? (
+              <Image
+                source={require("../../assets/images/footericonblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footericon.png")}
+                style={styles.image}
+              />
+            )}
           </TouchableOpacity>
       </View>
   );
@@ -50,7 +63,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
-        alignItems: "flex-start",
+    alignItems: "flex-start",
     paddingTop: 12,
     height: 81,
     position: "absolute",
@@ -75,18 +88,11 @@ const styles = StyleSheet.create({
   image: {
     objectFit: "contain", 
     height: 30, 
-    },
-  
-    footerImage2: {
-        objectFit: "contain",
-        height: 50,
-      },
-
+  },
   footerText: {
     fontSize: 16,
     color: "black",
   },
-
 });
 
 export default Footer;

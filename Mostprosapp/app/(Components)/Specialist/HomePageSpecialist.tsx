@@ -23,6 +23,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import {specialists} from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
+import Footer from '../Footer'; 
 
 
 
@@ -243,6 +244,7 @@ const HomePageSpecialist = ({ navigation }) => {
                   </Pressable>
                 </View>
               </View>
+              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
@@ -260,6 +262,9 @@ const HomePageSpecialist = ({ navigation }) => {
                         <Text style={styles.errorMessage}>{errorMessage}</Text>
                     </View>
                 ) : null}
+
+        <Footer navigation={navigation} activePage="HomePageSpecialist" />
+
       </SafeAreaView>
     </TouchableWithoutFeedback>
     </PaperProvider>
@@ -296,6 +301,11 @@ const styles = StyleSheet.create({
             elevation: 5,
         },
     }),
+},
+
+footerfix: {
+  height: 60,
+  width: windowWidth,
 },
 option: {
     paddingVertical: 10,

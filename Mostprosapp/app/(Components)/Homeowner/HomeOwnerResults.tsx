@@ -17,6 +17,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAvoidingView } from "react-native";
+import Footer from '../Footer';
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -149,11 +150,12 @@ const HomeOwnerResults = ({ navigation }) => {
                     </View>
                     <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
                 </View>
-              </View>
-              
+              </View> 
+              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
+        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
@@ -166,6 +168,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap:"wrap",
         paddingLeft: 10,
+    },
+
+    footerfix: {
+      height: 35,
+      width: windowWidth,
     },
 
     green:{

@@ -159,7 +159,8 @@ const Profile = ({ navigation }) => {
             />
           </View>
         </Modal>
-        <Footer navigation={navigation} /> 
+        <Footer navigation={navigation} activePage="Profile" />
+
       </SafeAreaView>
     </PaperProvider>
   );
