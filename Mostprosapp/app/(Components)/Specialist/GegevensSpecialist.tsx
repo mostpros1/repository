@@ -5,7 +5,7 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert,
+  Alert, // Import Alert for displaying error messages
   Pressable,
   Image,
   ScrollView,
@@ -39,14 +39,17 @@ const GegevensSpecialist = ({ navigation }) => {
     const [showOptions, setShowOptions] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [inputText, setInputText] = useState('');
-    const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
+    const [firstNameError, setFirstNameError] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
-    const route = useRoute<RouteProp<RootStackParamList, 'HomeOwnerCreate'>>(); // Specify the route type
+    const route = useRoute<RouteProp<RootStackParamList, 'HomeOwnerCreate'>>();
 
     useEffect(() => {
-        // Set selectedOption from the route parameters
         if (route.params && route.params.selectedOption) {
             setSelectedOption(route.params.selectedOption);
         }
@@ -88,9 +91,35 @@ const GegevensSpecialist = ({ navigation }) => {
                 setErrorMessage('');
             }, 3000);
             return;
+        } else if (!phoneNumber || !inputText) {
+            Alert.alert("Error", "Vul alstublieft alle velden in.");
+            return;
+        } else if (!password || !confirmPassword) {
+            Alert.alert("Error", "Vul alstublieft beide wachtwoordvelden in.");
+            return;
+        } else if (!validatePasswords()) {
+            return;
+        } else {
+            navigation.navigate('OmgevingSpecialist');
         }
-        // navigation.navigate('HomeOwnerCreate', { selectedOption: selectedOption });
-        navigation.navigate('OmgevingSpecialist')
+    };
+
+    const handlePasswordChange = (text) => {
+        setPassword(text);
+    };
+    
+    const handleConfirmPasswordChange = (text) => {
+        setConfirmPassword(text);
+    };
+    
+    const validatePasswords = () => {
+        if (password !== confirmPassword) {
+            setPasswordError('Wachtwoorden komen niet overeen');
+            return false;
+        } else {
+            setPasswordError('');
+            return true;
+        }
     };
   
     const filteredOptions = specialists.filter(option =>
@@ -117,17 +146,21 @@ const GegevensSpecialist = ({ navigation }) => {
                 </View>
                 <View style={styles.beroepContainer}>
                         <Text style={styles.beroepTitle}>Voornaam:</Text>
+                        {firstNameError ? <Text style={styles.errorMessage}>{firstNameError}</Text> : null}
                         <Pressable style={styles.containerInput}>
                     <TextInput
                             placeholder="Voornaam:"
                             style={styles.input}
+                            onChangeText={(text) => setInputText(text)}
                         />
                     </Pressable>
                     <Text style={styles.beroepTitle}>Achternaam:</Text>
+                        {firstNameError ? <Text style={styles.errorMessage}>{firstNameError}</Text> : null}
                         <Pressable style={styles.containerInput}>
                     <TextInput
                             placeholder="Achternaam:"
                             style={styles.input}
+                            onChangeText={(text) => setInputText(text)}
                         />
                     </Pressable>
                     <Text style={styles.beroepTitle}>Telefoonnummer:</Text>
@@ -145,21 +178,26 @@ const GegevensSpecialist = ({ navigation }) => {
                                 />
                     </Pressable>
                     <Text style={styles.beroepTitle}>Wachtwoord:</Text>
-                        <Pressable style={styles.containerInput}>
-                    <TextInput
-                            placeholder="Wachtwoord:"
-                            style={styles.input}
-                            secureTextEntry={true}
-                        />
-                    </Pressable>
-                    <Text style={styles.beroepTitle}>Herhaal Wachtwoord:</Text>
-                        <Pressable style={styles.containerInput}>
-                        <TextInput
-                            placeholder="Herhaal Wachtwoord:"
-                            style={styles.input}
-                            secureTextEntry={true}
-                        />
-                    </Pressable>
+<Pressable style={styles.containerInput}>
+    <TextInput
+        placeholder="Wachtwoord:"
+        style={styles.input}
+        secureTextEntry={true}
+        onChangeText={handlePasswordChange}
+        value={password}
+    />
+</Pressable>
+<Text style={styles.beroepTitle}>Bevestig Wachtwoord:</Text>
+<Pressable style={styles.containerInput}>
+    <TextInput
+        placeholder="Herhaal Wachtwoord:"
+        style={styles.input}
+        secureTextEntry={true}
+        onChangeText={handleConfirmPasswordChange}
+        value={confirmPassword}
+    />
+</Pressable>
+{passwordError ? <Text style={styles.errorMessage}>{passwordError}</Text> : null}
                 </View>
                 <View style={styles.buttonsContainer}>
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>

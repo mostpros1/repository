@@ -19,7 +19,7 @@ import {
                   <Text style={[styles.text]}>Home Pagina</Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('OmgevingSpecialist')}>
-                <Text style={[styles.text]}>OmgevingSpecialist</Text>
+                <Text style={[styles.text]}>OmgevingProfessional</Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
                 <Text style={[styles.text]}>DateAndTimePicker</Text>

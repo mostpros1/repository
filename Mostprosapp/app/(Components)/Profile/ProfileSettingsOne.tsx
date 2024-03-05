@@ -110,12 +110,13 @@ const ProfileSettingsOne = ({ navigation }) => {
               </Pressable>
               <Pressable
                 style={[styles.linkTwoBottom, styles.agendaButton]}
-                onPress={() => navigation.navigate("")}
+                onPress={() => navigation.navigate("ProfileSettingsTwo")}
               >
                 <Icon name="settings" size={23} color="black" />
-                <Text style={[styles.text, styles.textButtonBlack]}>
-                  Settingen
-                </Text>
+                
+                  <Text style={[styles.text, styles.textButtonBlack]}>
+                    Settings
+                  </Text>
                 <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                   <Text style={[styles.arrow]}>&gt;</Text>
                 </TouchableOpacity>

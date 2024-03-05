@@ -25,9 +25,9 @@ const Footer = ({ navigation, activePage }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.footerImage}
-            onPress={() => navigation.navigate('ChatNavigation')}
+            onPress={() => navigation.navigate('ChatOverview')}
           >
-            {activePage === 'ChatNavigation' ? (
+            {activePage === 'ChatOverview' ? (
               <Image
                 source={require("../../assets/images/footerchatblue.png")}
                 style={styles.image}
@@ -41,7 +41,7 @@ const Footer = ({ navigation, activePage }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.footerImage}
-            onPress={() => navigation.navigate('ProfileNavigation')}
+            onPress={() => navigation.navigate('ProfileSettingsOne')}
           >
             {activePage === 'Profile' ? (
               <Image

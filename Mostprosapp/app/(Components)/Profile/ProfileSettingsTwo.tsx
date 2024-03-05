@@ -63,14 +63,14 @@ const ProfileSettingsTwo = ({ navigation }) => {
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('ProfilePrivacy')}>
                                     <Icon name="lock" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Privacy</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
                                     <Icon name="settings" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>General</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>

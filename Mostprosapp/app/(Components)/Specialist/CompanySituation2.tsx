@@ -7,6 +7,7 @@ import {
     Pressable,
     ScrollView,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 import { Dimensions } from "react-native";
 
@@ -19,13 +20,23 @@ const CompanySituation2 = ({ navigation }) => {
     const [selectedItems, setSelectedItems] = useState([]);
 
     const toggleItemSelection = (index) => {
-        const updatedItems = [...selectedItems];
-        if (updatedItems.includes(index)) {
-            updatedItems.splice(updatedItems.indexOf(index), 1);
-        } else {
-            updatedItems.push(index);
-        }
-        setSelectedItems(updatedItems);
+      const updatedItems = [...selectedItems];
+      if (updatedItems.includes(index)) {
+        updatedItems.splice(updatedItems.indexOf(index), 1);
+      } else {
+        updatedItems.push(index);
+      }
+      setSelectedItems(updatedItems);
+    };
+  
+    const handleNext = () => {
+      if (selectedItems.length === 0) {
+        Alert.alert("Fout Melding", "Kies minimaal 1 reden.", [
+          { text: "Begrepen" },
+        ]);
+      } else {
+        navigation.navigate("CompanySituation3");
+      }
     };
 
     return (
@@ -79,9 +90,11 @@ const CompanySituation2 = ({ navigation }) => {
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('CompanySituation3')}>
-                            <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
-                        </Pressable>
+                        <Pressable style={[styles.nextButton]} onPress={handleNext}>
+              <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
+                Volgende
+              </Text>
+            </Pressable>
                     </View>
 
                 </SafeAreaView>

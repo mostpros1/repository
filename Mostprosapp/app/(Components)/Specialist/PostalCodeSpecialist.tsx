@@ -32,7 +32,6 @@ const PostalCodeSpecialist = ({ navigation }) => {
     const [additionalInfo, setAdditionalInfo] = useState('');
     const [selectedOption, setSelectedOption] = useState(null);
     const [showOptions, setShowOptions] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [inputText, setInputText] = useState('');
     const [email, setEmail] = useState('');
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
@@ -65,15 +64,17 @@ const PostalCodeSpecialist = ({ navigation }) => {
     };
   
     const handleForwardButtonPress = () => {
-        if (!selectedOption) {
-            setErrorMessage("Kies eerst een Specialist");
-            setTimeout(() => {
-                setErrorMessage('');
-            }, 3000);
-            return;
+        if (!email) {
+            Alert.alert('Fout Melding', 'Vul je email in.');
+        } else if (!postalCode.part1 || !postalCode.part2) {
+            Alert.alert('Fout Melding', 'Voer een Postcode in.');
+        } else if (!selectedOption) {
+            Alert.alert('Fout Melding', 'Kies een proffesional.');
+        } else {
+            navigation.navigate('GegevensSpecialist', { selectedOption });
         }
-        navigation.navigate('GegevensSpecialist', { selectedOption: selectedOption });
     };
+    
   
     const filteredOptions = specialists.filter(option =>
       option.title.toLowerCase().includes(inputText.toLowerCase())
@@ -104,7 +105,7 @@ const PostalCodeSpecialist = ({ navigation }) => {
 
                 <View style={styles.beroepContainer}>
                         <Text style={styles.beroepTitle}>Uw hoofdberoep</Text>
-                        <Pressable style={styles.containerInput} onPress={handleForwardButtonPress}>
+                        <Pressable style={styles.containerInput}>
                     <TextInput
                             placeholder="Zoeken:"
                             style={styles.input}
@@ -114,7 +115,7 @@ const PostalCodeSpecialist = ({ navigation }) => {
                         />
                     </Pressable>
                     <Text style={styles.beroepTitle}>Email</Text>
-                        <Pressable style={styles.containerInput} onPress={handleForwardButtonPress}>
+                        <Pressable style={styles.containerInput}>
                     <TextInput
                             style={styles.input}
                             placeholder="Email"
@@ -142,10 +143,10 @@ const PostalCodeSpecialist = ({ navigation }) => {
                                     maxLength={2}
                                 />
                             </View>
-                            <View style={styles.containerLogin}>
+                            <Pressable style={styles.containerLogin} onPress={() => navigation.navigate('Login')}>
                                 <Text style={{ color: '#000', fontSize: 16, }}>Al een account? <Text style={{ color: '#308BE5', fontSize: 16, }}>Inloggen</Text></Text>
 
-                            </View>
+                            </Pressable> 
                 </View>
                 <View style={styles.bottomButtonsContainer}>
                 <View style={styles.buttonsContainer}>
@@ -166,11 +167,6 @@ const PostalCodeSpecialist = ({ navigation }) => {
                         ))}
                     </ScrollView>
                 )}
-                {errorMessage ? (
-                    <View style={styles.errorMessageContainer}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                    </View>
-                ) : null}
       </SafeAreaView>
     </TouchableWithoutFeedback>
     );
@@ -259,7 +255,7 @@ const styles = StyleSheet.create({
     },
     errorMessageContainer: {
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: -20,
     },
     errorMessage: {
         color: 'red',

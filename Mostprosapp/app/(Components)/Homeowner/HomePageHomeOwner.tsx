@@ -30,7 +30,7 @@ import Footer from '../Footer';
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const HomePageSpecialist = ({ navigation }) => {
+const HomePageHomeOwner = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -57,7 +57,7 @@ const HomePageSpecialist = ({ navigation }) => {
 
   const handleForwardButtonPress = () => {
       if (!selectedOption) {
-          setErrorMessage("Kies eerst een Specialist");
+          setErrorMessage("Kies eerst een Professional");
           setTimeout(() => {
               setErrorMessage('');
           }, 3000);
@@ -122,11 +122,11 @@ const HomePageSpecialist = ({ navigation }) => {
                   <Text style={[styles.whiteIconText]}>Zak</Text>
                 </Pressable>
               </View>
-              <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
+              <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('HomeOwnerCreate')}>
                 <View style={styles.smallCircle}>
                   <Icon name="add" size={28} color="#308AE4" />
                 </View>
-                <Text style={[styles.whiteIconText]}>Nieuwe klus plaatsen</Text>
+                <Text style={[styles.whiteIconText]}>Klussen Vinden</Text>
               </Pressable>
             </View>
             <View style={[styles.titleWrap]}>
@@ -545,4 +545,4 @@ errorMessage: {
   },
 });
 
-export default HomePageSpecialist;
+export default HomePageHomeOwner;

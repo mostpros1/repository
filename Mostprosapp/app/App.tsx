@@ -45,6 +45,7 @@ import CompanySituation1 from "./(Components)/Specialist/CompanySituation1";
 import CompanySituation2 from "./(Components)/Specialist/CompanySituation2";
 import CompanySituation3 from "./(Components)/Specialist/CompanySituation3";
 import CompanySituation4 from "./(Components)/Specialist/CompanySituation4";
+import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
@@ -136,6 +137,7 @@ const App = () => {
         <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
         <Stack.Screen name="NoKvKInfo" component={NoKvKInfo} />
         <Stack.Screen name="Footer" component={Footer}/>
+        <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
         
         
         {/* <Stack.Screen name="" component={} /> */}
