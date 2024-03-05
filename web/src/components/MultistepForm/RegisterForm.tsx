@@ -24,16 +24,16 @@ export function RegisterForm({
   firstName,
   lastName,
   dob,
-  //phoneNumber,
+  phoneNumber,
   password,
   repeatPassword,
   updateFields,
   setUserExists,
   error,
-}: RegisterFormProps) {
+}: RegisterFormProps & { phoneNumber: string }) {
   return (
     <>
-      <div className="register-container">
+      <div className="register-container" style={{ maxHeight: "500px" }}>
         {error && (
           <div className="error-con">
             <p className="error-message">{error}</p>
@@ -79,6 +79,16 @@ export function RegisterForm({
               placeholder="dob"
               value={dob}
               onChange={(e) => updateFields({ dob: e.target.value })}
+            />
+          </div>
+          <div className="register-form-input">
+            <label htmlFor="">Telefoon:</label>
+            <input
+              required
+              type="number"
+              placeholder="Mobiel"
+              value={phoneNumber}
+              onChange={(e) => updateFields({ phoneNumber: e.target.value })}
             />
           </div>
 

@@ -11,20 +11,12 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { dynamoDB } from "../../backend_functions/declerations.ts";
 
-import { sendMail } from '../../backend_functions/sendMail.ts';
-import { emailHtml } from '../../backend_functions/profemail.ts';
-
-const text: string = "Beste Specialist, " + "Uw Informatie is met success doorgestuurd naar ons voor beoordeling.";
-const html: string = emailHtml;
-const subject: string = "Inschijving als Specialist";
-
-
-//pakt wel
-console.log(import.meta.env.VITE_AWS_ACCESS_KEY_ID);
+/*console.log(import.meta.env.VITE_AWS_ACCESS_KEY_ID);
 console.log(import.meta.env.VITE_AWS_SECRET_ACCESS_KEY);
 console.log(import.meta.env.VITE_AWS_REGION);
-
+*/
 //pakt niet
 /*aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -32,7 +24,6 @@ console.log(import.meta.env.VITE_AWS_REGION);
   region: import.meta.env.VITE_AWS_REGION,
 });*/
 
-const dynamoDB = new aws.DynamoDB();
 
 dynamoDB.listTables({}, (err, data) => {
   if (err) {
@@ -58,7 +49,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
-          <button onClick={() => sendMail(subject, "timon@timonheidenreich.eu", text, html)}>email</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>

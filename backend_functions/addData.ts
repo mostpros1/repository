@@ -303,7 +303,7 @@ async function Verwijder(id: number) {
 
 
 
-/* 
+
 export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
     const param = {
         TableName: "professionals",
@@ -333,7 +333,7 @@ export function addProfessionals(id: number, user_id: number, email: void | stri
         }
     });
 }
-
+/*
 
 export function addUser_roles(user_id: number, role: string, created_at: string, updated_at: string) {
     const params = {

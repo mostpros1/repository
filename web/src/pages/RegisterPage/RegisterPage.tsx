@@ -16,7 +16,7 @@ function RegisterPage() {
     firstName: '',
     lastName: '',
     email: '',
-    //phoneNumber: '',
+    phoneNumber: '',
     password: '',
     repeatPassword: '',
     dob: '',
@@ -27,7 +27,7 @@ function RegisterPage() {
   const navigate = useNavigate()
 
   const handleSignUp = async () => {
-    const { email, password, firstName, lastName, dob } = registerData;
+    const { email, phoneNumber,  password, firstName, lastName, dob } = registerData;
 
     try {
       await Auth.signUp({
@@ -35,6 +35,7 @@ function RegisterPage() {
         password,
         attributes: {
           email,
+          phone_number: phoneNumber,
           name: firstName, // "given_name" is often used for the first name
           family_name: lastName, // "family_name" for the last name
           date_of_birth: dob,
