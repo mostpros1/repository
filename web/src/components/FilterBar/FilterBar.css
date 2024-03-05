@@ -98,6 +98,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 34px;
+  row-gap: 90px;
   padding-top: 69px;
   padding-left: 0px;
   justify-content: center;
