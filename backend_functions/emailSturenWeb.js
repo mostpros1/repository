@@ -57,7 +57,6 @@ async function sendEmail(subject, to, text, html) {
     }*/
     try {
         const naar = to;
-        const onderwerp = subject;
         const message = html;
         const from = 'timon.heidenreich@icloud.com';
     
