@@ -1,3 +1,26 @@
+@media screen and (max-width: 1280px) {
+    /* Adjust styles for smaller screens */
+    .prof_dashboard_con {
+        flex-direction: column;
+    }  
+}
+
+@media screen and (max-width: 768px) {
+    /* Adjust styles for even smaller screens */
+    .prof_dashboard_con {
+        flex-direction: column;
+        gap: 10px;
+    }  
+}
+
+@media screen and (max-width: 480px) {
+    /* Adjust styles for mobile screens */
+    .prof_dashboard_con {
+        flex-direction: column;
+        gap: 5px;
+    }  
+}
+
 .prof_dashboard_wrapper{
     width: 100%;
     min-height: 100vh;
