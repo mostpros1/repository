@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableOpacity, Image, Dimensions, Alert } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -16,6 +16,14 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
             updatedItems.push(index);
         }
         setSelectedItems(updatedItems);
+    };
+
+    const handleNext = () => {
+        if (selectedItems.length === 0) {
+            Alert.alert('Geen klus gekozen', 'Selecteer minimaal 1 of meer klussen.');
+        } else {
+            navigation.navigate('HomeOwnerExtraInfo');
+        }
     };
 
     return (
@@ -40,66 +48,66 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.cardsContainer}>
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(0)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(0) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(0)}
                         />
                         <Image source={require("../../../assets/images/aannemerone.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Huis renoveren</Text>
-                    </View>
+                    </Pressable>
 
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(1)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
                         />
                         <Image source={require("../../../assets/images/loodgietertwo.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Garage (ver)bouwen</Text>
-                    </View>
+                    </Pressable>
 
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(2)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                         <Image source={require("../../../assets/images/aannemertwo.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Geluidsisolatie</Text>
-                    </View>
+                    </Pressable>
 
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(3)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                         <Image source={require("../../../assets/images/aannemerthree.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Bint plaatsen of vervangen</Text>
-                    </View>
+                    </Pressable>
 
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(4)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
                         <Image source={require("../../../assets/images/aannemerfour.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Aanbouw of opbouw plaatsen</Text>
-                    </View>
+                    </Pressable>
 
-                    <View style={styles.card}>
+                    <Pressable style={styles.card} onPress={() => toggleItemSelection(5)}>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(5)}
                         />
                         <Image source={require("../../../assets/images/dots.png")} style={styles.cardImage} />
                         <Text style={styles.cardTitle}>Anders</Text>
-                    </View>
+                    </Pressable>
                 </View>
 
                 <View style={styles.buttonsContainer}>
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('HomeOwnerExtraInfo')}>
+                    <Pressable style={[styles.nextButton]} onPress={handleNext}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>

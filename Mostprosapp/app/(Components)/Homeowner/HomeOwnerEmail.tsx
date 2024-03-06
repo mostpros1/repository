@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TextInput, TouchableOpacity, Image, Dimensions, Alert } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -8,6 +8,22 @@ const HomeOwnerEmail = ({ navigation }) => {
     const [progress, setProgress] = useState(4);
     const [additionalInfo, setAdditionalInfo] = useState('');
     const [email, setEmail] = useState('');
+
+    
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const handleNext = () => {
+        if (!email.trim()) {
+            Alert.alert('Email Ontbreekt', 'Vul uw email in voor u doorgaat.');
+        } else if (!validateEmail(email)) {
+            Alert.alert('Ongeldige Email', 'Vul een geldig emailadres in.');
+        } else {
+            navigation.navigate('TestHome');
+        }
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -48,7 +64,7 @@ const HomeOwnerEmail = ({ navigation }) => {
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('TestHome')}>
+                    <Pressable style={[styles.nextButton]} onPress={handleNext}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>

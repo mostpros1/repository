@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform, Image, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, Platform, Image, KeyboardAvoidingView, Alert } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { useRoute } from '@react-navigation/native';
-
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,15 +13,35 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
 
     const handlePostalCodeChange = (text, part) => {
-        if (part === 'part1' && text.length <= 4) {
-            setPostalCode({ ...postalCode, part1: text });
-        } else if (part === 'part2' && text.length <= 2) {
-            setPostalCode({ ...postalCode, part2: text });
+        if (part === 'part1') {
+            if (text.length <= 4) {
+                setPostalCode({ ...postalCode, part1: text });
+            }
+        } else if (part === 'part2') {
+            if (text.length <= 2) {
+                setPostalCode({ ...postalCode, part2: text });
+            }
         }
     };
 
     const dismissKeyboard = () => {
         Keyboard.dismiss();
+    };
+
+    const handleNextPress = () => {
+        const { part1, part2 } = postalCode;
+        if (part1.length === 4 && part2.length === 2) {
+            navigation.navigate(`HomeOwnerApp${parameterName || selectedOption.title}`);
+        } else {
+            let message = '';
+            if (part1.length !== 4) {
+                message += 'De Postcode moet precies 4 cijfers hebben\n';
+            }
+            if (part2.length !== 2) {
+                message += 'De postcode moet precies 2 letters hebben.';
+            }
+            Alert.alert('Postcode niet correct', message);
+        }
     };
 
     return (
@@ -69,7 +88,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                                 maxLength={2}
                             />
                         </View>
-                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate(`HomeOwnerApp${parameterName || selectedOption.title }`)}>
+                        <Pressable style={styles.nextButton} onPress={handleNextPress}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>
@@ -180,4 +199,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeOwnerPostalCode
+export default HomeOwnerPostalCode;
