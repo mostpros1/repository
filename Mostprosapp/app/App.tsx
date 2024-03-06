@@ -50,6 +50,7 @@ import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
 import Contact from "./(Components)/Contact/Contact";
+import AboutUs from "./(Components)/AboutUs/AboutUs";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -140,6 +141,7 @@ const App = () => {
         <Stack.Screen name="Footer" component={Footer}/>
         <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
         <Stack.Screen name="Contact" component={Contact}/>
+        <Stack.Screen name="AboutUs" component={AboutUs}/>
         
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>

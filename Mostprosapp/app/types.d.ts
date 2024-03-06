@@ -59,4 +59,5 @@ declare global {
     HomePageHomeOwner: undefined;
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
+    AboutUs: undefined;
   };
