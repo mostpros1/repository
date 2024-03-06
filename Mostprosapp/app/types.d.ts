@@ -55,9 +55,8 @@ declare global {
     CompanyKvk: undefined;
     NoKvKInfo: undefined;
     Footer: undefined;
+    Contact: undefined;
     HomePageHomeOwner: undefined;
-
-
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
   };

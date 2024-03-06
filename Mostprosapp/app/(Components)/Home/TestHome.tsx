@@ -33,6 +33,9 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
                   <Text style={[styles.text]}>HomeOwner</Text>
               </Pressable>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('Contact')}>
+                  <Text style={[styles.text]}>Contact</Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>
