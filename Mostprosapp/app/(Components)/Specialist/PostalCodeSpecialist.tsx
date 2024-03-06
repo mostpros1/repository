@@ -66,13 +66,20 @@ const PostalCodeSpecialist = ({ navigation }) => {
     const handleForwardButtonPress = () => {
         if (!email) {
             Alert.alert('Fout Melding', 'Vul je email in.');
+        } else if (!validateEmail(email)) {
+            Alert.alert('Fout Melding', 'Voer een geldig emailadres in.');
         } else if (!postalCode.part1 || !postalCode.part2) {
             Alert.alert('Fout Melding', 'Voer een Postcode in.');
         } else if (!selectedOption) {
-            Alert.alert('Fout Melding', 'Kies een proffesional.');
+            Alert.alert('Fout Melding', 'Kies een professional.');
         } else {
             navigation.navigate('GegevensSpecialist', { selectedOption });
         }
+    };
+    
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
     };
     
   
