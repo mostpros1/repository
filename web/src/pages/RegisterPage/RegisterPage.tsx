@@ -50,8 +50,7 @@ function RegisterPage() {
             given_name: firstName,
             family_name: lastName,
             birthdate: dob,
-            'custom:user_type': user_type, 
-            "custom:stripe_account": "0"// Include the custom attribute directly
+            'custom:user_type': user_type,// Include the custom attribute directly
           },
           autoSignIn: { enabled: true }
         });
@@ -67,7 +66,7 @@ function RegisterPage() {
   }
 
   const handleSignUp = async () => {
-    signUp(registerData, 'hoem_owner');
+    signUp(registerData, 'Homeowner');
     console.log(registerData);
   };
 
