@@ -28,6 +28,9 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
                 <Text style={[styles.text]}>DateAndTimePicker</Text>
             </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatMain')}>
+                <Text style={[styles.text]}>TestChat</Text>
+            </Pressable>
           </View>
         </View>
       </ImageBackground>

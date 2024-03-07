@@ -1,8 +1,13 @@
-import React, { useState, ReactElement } from "react";
-import { useChatBackend } from "./ChatBackend";
-import { useUser } from "../../context/UserContext";
+import React, { ReactElement } from 'react'; // Import ReactElement for proper typing
+import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { useChatBackend } from './ChatBackend';
+import { useUser } from '../../context/UserContext';
 
-const JoinChat: React.FC = (signOut): ReactElement => {
+interface JoinChatProps {
+  signOut: () => void; // Define the signOut function as a prop
+}
+
+const JoinChat: React.FC<JoinChatProps> = ({ signOut }): ReactElement => {
   const { user } = useUser();
   const {
     recipientEmail,
@@ -12,44 +17,39 @@ const JoinChat: React.FC = (signOut): ReactElement => {
     handleAlertInputChange,
     handleAlertConfirm,
     handleAlertCancel,
-  } = useChatBackend(user, signOut); // Timo: sends the user from ../../context/UserContext into useChatBackend users
-  return (
-    <>
-      <div>
-        <div className="button_containerc">
-          <button
-            type="button"
-            className="buttonc"
-            onClick={handleStartNewChat}
-          >
-            Start New Chat
-          </button>
-        </div>
+  } = useChatBackend(user, signOut); // Ensure useChatBackend is correctly receiving user and signOut
 
-        {
-          // @ts-ignore
-          showAlert && (
-            <div className="alert">
-              <input
-                type="text"
-                placeholder="Enter recipient's email"
-                value={recipientEmail}
-                onChange={handleAlertInputChange}
-              />
-              <button
-                onClick={() => {
-                  handleAlertConfirm();
-                  setShowJoinButton(true);
-                }}
-              >
-                Confirm
-              </button>
-              <button onClick={handleAlertCancel}>Cancel</button>
-            </div>
-          )
-        }
-      </div>
-    </>
+  return (
+    <View>
+      <View style={{ margin: 10 }}>
+        <Button
+          onPress={handleStartNewChat}
+          title="Start New Chat"
+        />
+      </View>
+
+      {showAlert && (
+        <View style={{ margin: 10 }}>
+          <TextInput
+            style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
+            onChangeText={handleAlertInputChange}
+            value={recipientEmail}
+            placeholder="Enter recipient's email"
+          />
+          <Button
+            onPress={() => {
+              handleAlertConfirm();
+              setShowJoinButton(true);
+            }}
+            title="Confirm"
+          />
+          <Button
+            onPress={handleAlertCancel}
+            title="Cancel"
+          />
+        </View>
+      )}
+    </View>
   );
 };
 

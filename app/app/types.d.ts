@@ -3,7 +3,7 @@ declare global {
     namespace ReactNavigation {
       interface RootParamList extends RootStackParamList {}
     }
-  }
+}
 
   type RootStackParamList = {
     LandingPage: unfedined;
@@ -21,5 +21,5 @@ declare global {
     Profile: undefined;
     DateAndTimePicker: undefined;
     PaymentLink: undefined;
-    JoinChat: undefined;
+    ChatMain: undefined;
   };

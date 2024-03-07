@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { StyleSheet } from 'react-native';
+import JoinChat from '../Chat/JoinChat';
 
 const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const today = new Date();

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import API, { graphqlOperation } from 'aws-amplify';
 import * as mutations from '../../graphql/mutations';
+import { useNavigation } from '@react-navigation/native';
 import { useChatBackend } from './ChatBackend'; // This should be adapted for React Native as in the previous example
 
 function ChatMain({ user, signOut }) {
+  const navigation = useNavigation();
+  const scrollViewRef = useRef(null);
+
   const {
     chats,
     handleStartNewChat,
@@ -24,122 +28,104 @@ function ChatMain({ user, signOut }) {
     setMessageText(""); // Clear the input field after sending the message
   };
 
+  
+
   return (
+  <KeyboardAvoidingView 
+    style={{ flex: 1 }} 
+    behavior={Platform.OS === "ios" ? "padding" : "height"} 
+    keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
     <View style={styles.container}>
-      <View style={styles.chatWrapper}>
-        <ScrollView style={styles.chatListContainer}>
-          {/* Chat list should be rendered here */}
-          {chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((chat) => (
-            <View key={chat.id} style={chat.email === user.attributes.email ? styles.selfEnd : styles.otherEnd}>
-              <Text style={styles.username}>{chat.email}</Text>
-              <Text style={styles.text}>{chat.text}</Text>
-            </View>
-          ))}
-        </ScrollView>
-        <View style={styles.inputForm}>
-          <TextInput
-            style={styles.inputChat}
-            value={messageText}
-            onChangeText={setMessageText}
-            placeholder="Type a message..."
-            multiline={true}
-          />
-          <Button title="Send" onPress={sendMessage} />
-        </View>
-        <Button title="Start New Chat" onPress={handleStartNewChat} />
-        {showJoinButton && <Button title="Join Chat" onPress={handleJoinChat} />}
-        <Button title="Sign Out" onPress={signOut} />
-        {recipientEmail && (
-          <View style={styles.alert}>
-            <Text>Chatting with: {recipientEmail}</Text>
-            <Button title="Cancel Chat" onPress={handleAlertCancel} />
+      <View style={styles.alert}>
+        <Text>Chatting with: {recipientEmail}</Text>
+      </View>
+      <ScrollView style={styles.chatListContainer} ref={scrollViewRef}
+        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
+        {chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((chat) => (
+          <View key={chat.id} style={chat.email === user.attributes.email ? styles.selfMessage : styles.otherMessage}>
+            <Text style={styles.username}>{chat.email}</Text>
+            <Text style={styles.text}>{chat.text}</Text>
           </View>
-        )}
+        ))}
+      </ScrollView>
+      <View style={styles.inputForm}>
+        <TextInput
+          style={styles.inputChat}
+          value={messageText}
+          onChangeText={setMessageText}
+          placeholder="Type a message..."
+          multiline={true}
+          />
+        <Button title="Send" onPress={sendMessage} />
       </View>
     </View>
-  );
+  </KeyboardAvoidingView>
+);
 }
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    chatWrapper: {
-        flex: 1,
-        paddingVertical: 150,
-        paddingHorizontal: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    chatContainer: {
-        maxWidth: 1200,
-        width: '100%',
-        flexDirection: 'row',
-    },
-    chatListContainer: { 
-        width: '20%',
-        borderColor: '#308AE4',
-        borderWidth: 2,
-    },
-    chatButtonContainer: { 
-        height: '30%',
-        padding: 15,
-    },
-    alert: { // Add styles for alert if needed
-        // Your alert style here
-    },
-    input: { // If this is for the alert input
-        // Your input style here
-    },
-    chatBoxContainer: {
-        width: '80%',
-    },
-    chatBox: {
-        height: 500,
-        padding: 15,
-    },
-    chatBoxUserInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 5,
-    },
-    username: {
-        fontSize: 18,
-    },
-    time: {
-        fontSize: 14,
-    },
-    text: {
-        fontSize: 16,
-    },
-    selfEnd: {
-        backgroundColor: 'rgb(236, 236, 236)',
-        alignSelf: 'flex-end',
-        padding: 5,
-        paddingHorizontal: 15,
-        borderRadius: 10,
-        maxWidth: '70%',
-    },
-    otherEnd: {
-        backgroundColor: '#308AE4',
-        alignSelf: 'flex-start',
-        padding: 5,
-        paddingHorizontal: 15,
-        borderRadius: 10,
-        maxWidth: '70%',
-    },
-    inputForm: {
-        flexDirection: 'row',
-        borderColor: '#C0C0C8',
-        borderWidth: 2,
-    },
-    inputChat: {
-        flex: 1,
-        padding: 10,
-    },
+  container: {
+      flex: 1,
+      justifyContent: 'flex-end', // Ensure the chat input is always visible
+      backgroundColor: '#f5f5f5', // Light grey background for contrast
+  },
+  chatListContainer: {
+      flex: 1, // Take up all available space
+      paddingHorizontal: 10, // Spacing from sides
+      marginVertical: 10, // Spacing from top & bottom
+  },
+  alert: {
+      marginBottom: 10,
+      backgroundColor: '#f8d7da', // Light red for alerts
+      borderRadius: 18, // Smoothed corners
+      padding: 10, // Inner spacing
+      borderWidth: 1, // Border thickness
+      borderColor: '#f5c6cb', // Border color slightly darker than the background
+      alignItems: 'center', // Center the text and button
+      marginTop: 50,
+  },
+  inputForm: {
+      flexDirection: 'row', // Align items in a row
+      backgroundColor: '#fff', // White background for input area
+      borderTopColor: '#E0E0E0', // Light border color
+      borderTopWidth: 1, // Border thickness
+      padding: 8, // Padding around the input area
+      marginBottom: 20,
+  },
+  inputChat: {
+      flex: 1, // Take up as much space as possible
+      marginRight: 10, // Space from the send button
+      padding: 10, // Inner text padding
+      backgroundColor: '#e9e9eb', // Slightly off-white background
+      borderRadius: 20, // Fully rounded corners
+  },
+  username: {
+      fontWeight: 'bold', // Bold font for usernames
+      color: '#4a5568', // Dark gray for text
+      marginBottom: 2, // Space below the username
+  },
+  text: {
+      fontSize: 16, // Slightly larger font for messages
+      color: '#2d3748', // Even darker gray for better readability
+  },
+  selfMessage: {
+      backgroundColor: '#dcf8c6', // Light green for self messages
+      alignSelf: 'flex-end', // Align to the right
+      borderRadius: 20, // Fully rounded corners
+      marginBottom: 8, // Space below the message
+      maxWidth: '80%', // Limit the max width
+      padding: 12, // Inner padding
+  },
+  otherMessage: {
+      backgroundColor: '#ffffff', // White for others' messages
+      alignSelf: 'flex-start', // Align to the left
+      borderRadius: 20, // Fully rounded corners
+      marginBottom: 8, // Space below the message
+      maxWidth: '80%', // Limit the max width
+      padding: 12, // Inner padding
+      borderWidth: 1, // Border thickness
+      borderColor: '#E0E0E0', // Light border for distinction
+  },
 });
 
 
-export default withAuthenticator(ChatMain);
+export default ChatMain;

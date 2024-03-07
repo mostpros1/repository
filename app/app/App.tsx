@@ -11,7 +11,7 @@ import Register from "./(Components)/(forms)/register";
 import Login from "./(Components)/(forms)/login";
 import Home from "./(Components)/(tabs)/home";
 import Verify from "./(Components)/(forms)/Verification";
-import Profile from "./(Components)/(tabs)/Profile"
+import Profile from "./(Components)/(tabs)/Profile";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -21,7 +21,7 @@ import { RootStackParamList } from "./types";
 Amplify.configure(awsconfig);
 import DateAndTimePicker from "./(Components)/Booking/Calender";
 import PaymentLink from "./(Components)/Payment/Payments";
-import JoinChat from "./(Components)/Chat/JoinChat";
+import ChatMain from "./(Components)/Chat/ChatMain";
 
 const App = () => {
 
@@ -66,7 +66,7 @@ const App = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
         <Stack.Screen name="PaymentLink" component={PaymentLink} />
-        <Stack.Screen name="JoinChat" component={JoinChat} />
+        <Stack.Screen name="ChatMain" component={ChatMain} />
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
