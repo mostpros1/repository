@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { addUser } from '../../../../backend_functions/addData.ts';
 import { hashPassword } from '../../../../backend_functions/hashPassword.ts';
+import { SignUp } from '@aws-amplify/ui-react/dist/types/components/Authenticator/SignUp/SignUp';
 
 
 
@@ -26,40 +27,47 @@ function RegisterPage() {
 
   const navigate = useNavigate()
 
-  const handleSignUp = async () => {
-    const { email, phoneNumber,  password, firstName, lastName, dob } = registerData;
+  interface RegisterData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    repeatPassword: string;
+    dob: string;
+  }
+
+  function signUp(registerData: RegisterData, user_type: string): void {
+    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
 
     try {
-      await Auth.signUp({
-        username: email,
-        password,
-        attributes: {
-          email,
-          phone_number: phoneNumber,
-          name: firstName, // "given_name" is often used for the first name
-          family_name: lastName, // "family_name" for the last name
-          date_of_birth: dob,
-        },
-        autoSignIn: { enabled: true }
-      });
+      const signUpUser = async (): Promise<void> => {
+        await Auth.signUp({
+          username: email,
+          password,
+          attributes: {
+            email,
+            phone_number: phoneNumber,
+            name: firstName,
+            family_name: lastName,
+            date_of_birth: dob,
+            custom: { user_type: user_type },
+          },
+          autoSignIn: { enabled: true }
+        });
 
-      
-      
-      // Add user to database
-      const  today = new Date();
-      const status: string = "unverified";
-      const hashedPassword = hashPassword(password);
+        navigate('/bevestig-email', { state: { email: email } });
+      };
 
-      addUser(email, 0, await hashedPassword, firstName, lastName, dob, String(today), String(today), "huis_eigenar", status);
-      
-    
-      // Handle successful registration, e.g., redirect to another page
-      navigate('/bevestig-email', { state: { email: email } });
+      signUpUser();
     } catch (error: any) {
-      // Handle registration error, e.g., show an error message
       console.error('Error signing up:', error);
       setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
+  }
+
+  const handleSignUp = async () => {
+    signUp(registerData, 'hoem_owner')
   };
 
   const updateRegisterData = (fields) => {
@@ -71,11 +79,11 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
+          <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error} />
           <button onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
-      
+
     </>
   );
 }
