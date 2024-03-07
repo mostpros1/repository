@@ -44,13 +44,12 @@ function RegisterPage() {
       const signUpUser = async (): Promise<void> => {
         await Auth.signUp({
           username: email,
-          password,
+          password: password,
           attributes: {
-            email,
             phone_number: phoneNumber,
-            name: firstName,
+            given_name: firstName,
             family_name: lastName,
-            date_of_birth: dob,
+            birthdate: dob,
             'custom:user_type': user_type, 
             "custom:stripe_account": "1"// Include the custom attribute directly
           },
@@ -68,7 +67,8 @@ function RegisterPage() {
   }
 
   const handleSignUp = async () => {
-    signUp(registerData, 'hoem_owner')
+    signUp(registerData, 'hoem_owner');
+    console.log(registerData);
   };
 
   const updateRegisterData = (fields) => {
