@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import {
   StyleSheet,
   View,
@@ -7,8 +6,6 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
-import React from 'react';
-import Footer from '../Footer';
 const StartPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.view}>
@@ -27,17 +24,32 @@ const StartPage = ({navigation}) => {
             <Pressable style={styles.link} onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.text]}>Profile</Text>
             </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
-                <Text style={[styles.text]}>DateAndTimePicker</Text>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileSettingsOne')}>
+                <Text style={[styles.text]}>ProfileSettingsOne</Text>
             </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatMain')}>
-                <Text style={[styles.text]}>TestChat</Text>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileSettingsTwo')}>
+                <Text style={[styles.text]}>ProfileSettingsTwo</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileSecurity')}>
+                <Text style={[styles.text]}>ProfileSecurity</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileNotifications')}>
+                <Text style={[styles.text]}>ProfileNotifications</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
+                <Text style={[styles.text]}>ProfileGeneralSettings</Text>
             </Pressable>
             <Pressable style={styles.link} onPress={() => navigation.navigate('ChatOverview')}>
                 <Text style={[styles.text]}>ChatOverview</Text>
             </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatNavigation')}>
-                <Text style={[styles.text]}>ChatNavigation</Text>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('HomePageSpecialist')}>
+                <Text style={[styles.text]}>HomePageSpecialist</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfilePrivacy')}>
+                <Text style={[styles.text]}>ProfilePrivacy</Text>
+            </Pressable>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileAbout')}>
+                <Text style={[styles.text]}>ProfileAbout</Text>
             </Pressable>
           </View>
         </View>
