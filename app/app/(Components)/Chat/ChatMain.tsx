@@ -1,145 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import API, { graphqlOperation } from 'aws-amplify';
 import * as mutations from '../../graphql/mutations';
-import * as queries from '../../graphql/queries';
-import * as subscriptions from '../../graphql/subscriptions';
-import { useChatBackend } from './ChatBackend'; // Ensure this is adapted for React Native
+import { useChatBackend } from './ChatBackend'; // This should be adapted for React Native as in the previous example
 
 function ChatMain({ user, signOut }) {
   const {
     chats,
-    setChats,
-    recipientEmail,
-    recentMessageEmail,
-    showJoinButton,
-    setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
     handleStartNewChat,
     handleSendMessage,
-    handleAlertInputChange,
-    handleAlertConfirm,
     handleAlertCancel,
     handleJoinChat,
     handleReceivedMessage,
+    showJoinButton,
+    recipientEmail,
   } = useChatBackend(user, signOut);
 
-  const [subtotalInput, setSubtotalInput] = useState("");
-
-  const handleSubtotalChange = (text) => {
-    const sanitizedValue = text.replace(/[^0-9.]/g, '');
-    const isValidValue = sanitizedValue.split('.').length <= 2;
-
-    if (isValidValue) {
-      setSubtotalInput(sanitizedValue);
-    }
-  };
-
-  useEffect(() => {
-    async function fetchChats() {
-        const allChats = await API.graphql(graphqlOperation(queries.listChats, {
-        filter: {
-          members: { contains: user.attributes.email },
-        },
-      }));
-      setChats(allChats.data.listChats.items);
-    }
-    fetchChats();
-  }, [user.attributes.email]);
-
-  useEffect(() => {
-    const sub = API.graphql(graphqlOperation(subscriptions.onCreateChat)).subscribe({
-      next: ({ value }) => {
-        handleReceivedMessage(value.data.onCreateChat);
-      },
-      error: (err) => console.log(err),
-    });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
-
   const [messageText, setMessageText] = useState("");
-  let PaymentLinkComponent = null;
-  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
-  if (groups && groups.includes('Professional')) {
-    PaymentLinkComponent = (
-      <View>
-        <TextInput
-          style={styles.input}
-          value={subtotalInput}
-          onChangeText={handleSubtotalChange}
-          placeholder="Enter subtotal"
-          keyboardType="numeric"
-        />
-        {/* PaymentLink component adaptation needed */}
-      </View>
-    );
-    
-  }
+
+  const sendMessage = () => {
+    handleSendMessage(messageText);
+    setMessageText(""); // Clear the input field after sending the message
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.chatWrapper}>
-        <View style={styles.chatContainer}>
-          <View style={styles.chatListContainer}>
-            {/* Contacts list adaptation needed */}
-          </View>
-          <View style={styles.chatButtonContainer}>
-            <Button title="Start New Chat" onPress={handleStartNewChat} />
-            {PaymentLinkComponent}
-            <Button title="Sign Out" onPress={signOut} />
-            {showAlert && (
-              <View style={styles.alert}>
-                <TextInput
-                  style={styles.input}
-                  value={recipientEmail}
-                  onChangeText={handleAlertInputChange}
-                  placeholder="Enter recipient's email"
-                />
-                <Button title="Confirm" onPress={() => {
-                  handleAlertConfirm();
-                  setShowJoinButton(true);
-                }} />
-                <Button title="Cancel" onPress={handleAlertCancel} />
-              </View>
-            )}
-          </View>
-        </View>
-
-        <View style={styles.chatBoxContainer}>
-          <ScrollView style={styles.chatBox}>
-            {chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((chat) => (
-              <View key={chat.id} style={chat.email === user.attributes.email ? styles.selfEnd : styles.otherEnd}>
-                <View style={styles.chatBoxUserInfo}>
-                  <Text style={styles.username}>{chat.email}</Text>
-                  <Text style={styles.time}>
-                    {/* Format date distance */}
-                  </Text>
-                </View>
-                <Text style={styles.text}>
-                  {chat.text}
-                </Text>
-              </View>
-            ))}
-          </ScrollView>
-          <View style={styles.inputForm}>
-            
+        <ScrollView style={styles.chatListContainer}>
+          {/* Chat list should be rendered here */}
+          {chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((chat) => (
+            <View key={chat.id} style={chat.email === user.attributes.email ? styles.selfEnd : styles.otherEnd}>
+              <Text style={styles.username}>{chat.email}</Text>
+              <Text style={styles.text}>{chat.text}</Text>
+            </View>
+          ))}
+        </ScrollView>
+        <View style={styles.inputForm}>
           <TextInput
             style={styles.inputChat}
-            onChangeText={setMessageText} // Update this line
-            onKeyPress={({ nativeEvent }) => {
-            if (nativeEvent.key === 'Enter') {
-                handleSendMessage(messageText); // Use the state variable here
-                setMessageText(""); // Clear the message text after sending
-            }
-            }}
-                placeholder="Type a message..."
-            />
-            {/* Button to send a message or use TouchableOpacity with custom styling */}
-          </View>
+            value={messageText}
+            onChangeText={setMessageText}
+            placeholder="Type a message..."
+            multiline={true}
+          />
+          <Button title="Send" onPress={sendMessage} />
         </View>
+        <Button title="Start New Chat" onPress={handleStartNewChat} />
+        {showJoinButton && <Button title="Join Chat" onPress={handleJoinChat} />}
+        <Button title="Sign Out" onPress={signOut} />
+        {recipientEmail && (
+          <View style={styles.alert}>
+            <Text>Chatting with: {recipientEmail}</Text>
+            <Button title="Cancel Chat" onPress={handleAlertCancel} />
+          </View>
+        )}
       </View>
     </View>
   );

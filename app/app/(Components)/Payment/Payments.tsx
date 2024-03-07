@@ -15,53 +15,43 @@ const initializeStripe = async () => {
 const PaymentLink = ({ subtotal, handleSendMessage }) => {
     const [paymentLink, setPaymentLink] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
-    const [userStripeAccountId, setUserStripeAccountId] = useState('');
-    const companyFee = subtotal * 0.02; // Mostpros takes 2% of the transaction.
-    
 
     useEffect(() => {
         initializeStripe();
-        async function checkStripeAccountId() {
+        async function checkUser() {
             const user = await Auth.currentAuthenticatedUser();
             setCurrentUser(user);
-            const stripeAccountId = user?.attributes['custom:stripeAccountId'] || '';
-            setUserStripeAccountId(stripeAccountId);
         }
-        checkStripeAccountId();
+        checkUser();
     }, []);
 
     const createSession = async () => {
-        if (userStripeAccountId === '') return;
-        
+        const user = await Auth.currentAuthenticatedUser();
+        if (!user) return; // Ensure the user is logged in
 
-        const result = await stripeClient.checkout.sessions.create({
-            currency: 'eur',
-            mode: 'payment',
-            customer_email: `${currentUser.attributes.email}`,
-            line_items: [{
-                price_data: {
-                    currency: 'eur',
-                    product_data: {
-                        name: "Betaling voor klus",
-                    },
-                    unit_amount: subtotal
+        const userStripeAccountId = user.attributes['custom:stripeAccountId'];
+        if (!userStripeAccountId) return; // Make sure the user has a Stripe account ID
+
+        try {
+            const response = await fetch(`${'http://192.168.1.x:3000'}/create-checkout-session`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                quantity: 1
-            }],
-            payment_method_types: ['card', 'ideal'],
-            payment_intent_data: {
-                application_fee_amount: Math.ceil(companyFee),
-                transfer_data: {
-                    destination: userStripeAccountId
-                }
-            },
-            success_url: `${window.location.origin}/payments/success`,
-            cancel_url: `${window.location.origin}/payments/canceled`,
-        });
+                body: JSON.stringify({
+                    subtotal,
+                    userEmail: user.attributes.email,
+                    userStripeAccountId,
+                }),
+            });
 
-        setPaymentLink(result.url);
-        const paymentMessage = `Hier is de betalingslink: ${result.url}`;
-        handleSendMessage(paymentMessage);
+            const { url } = await response.json();
+            setPaymentLink(url);
+            handleSendMessage(`Here is your payment link: ${url}`);
+        } catch (error) {
+            console.error("Failed to create payment session:", error);
+            // Handle errors (e.g., show an error message)
+        }
     };
 
     return (
