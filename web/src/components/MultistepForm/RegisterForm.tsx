@@ -7,7 +7,7 @@ type RegisterData = {
   lastName: string;
   email: string;
   dob: string;
-  //phoneNumber: string;
+  phoneNumber: string;
   password: string;
   repeatPassword: string;
 };
@@ -30,7 +30,7 @@ export function RegisterForm({
   updateFields,
   setUserExists,
   error,
-}: RegisterFormProps & { phoneNumber: string }) {
+}: RegisterFormProps) {
   return (
     <>
       <div className="register-container" style={{ maxHeight: "500px" }}>
@@ -82,16 +82,17 @@ export function RegisterForm({
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="">Telefoon:</label>
-            <input
-              required
-              type="number"
-              placeholder="Mobiel"
-              value={phoneNumber}
-              onChange={(e) => updateFields({ phoneNumber: e.target.value })}
+            <label htmlFor="">Telefoonnummer:</label>
+            <PhoneInput
+              defaultCountry="NL"
+              placeholder="+31658349021"
+              value={phoneNumber} // Gebruik direct de waarde uit RegisterData
+              onChange={(value) => {
+                console.log("Telefoonnummer gewijzigd:", value);
+                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
+              }}
             />
           </div>
-
           <div className="register-form-input">
             <label htmlFor="">Wachtwoord:</label>
             <input
@@ -123,17 +124,3 @@ export function RegisterForm({
     </>
   );
 }
-/*
-<div className="register-form-input">
-            <label htmlFor="">Telefoonnummer:</label>
-            <PhoneInput
-              defaultCountry="NL"
-              placeholder="+31658349021"
-              value={phoneNumber} // Gebruik direct de waarde uit RegisterData
-              onChange={(value) => {
-                console.log("Telefoonnummer gewijzigd:", value);
-                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
-              }}
-            />
-          </div>
-*/

@@ -51,7 +51,8 @@ function RegisterPage() {
             name: firstName,
             family_name: lastName,
             date_of_birth: dob,
-            custom: { user_type: user_type },
+            'custom:user_type': user_type, 
+            "custom:stripe_account": "1"// Include the custom attribute directly
           },
           autoSignIn: { enabled: true }
         });
