@@ -9,7 +9,7 @@ import './BevestigEmailPage.css'
 type PostConfig = {
     roleName: string
     nextPage: string
-    onSuccess?: Function
+    onSuccess?: () => void
 }
 
 function BevestigEmailPage() {
@@ -25,6 +25,7 @@ function BevestigEmailPage() {
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
     const postConfigMap: Record<string, PostConfig> = {
+        
         'HOMEOWNER': {
             roleName: "Homeowner",
             nextPage: '/huiseigenaar-resultaat',
@@ -67,30 +68,43 @@ function BevestigEmailPage() {
     const postConfig = postConfigMap[postConfigId] || null
 
     async function confirmSignUp(code: string) {
-        
+        if (!postConfig) {
+            console.log(location.state.postConfigId);
+            console.error("postConfig is null");
+            return;
+        }
+    
         const confirmationResult = await Auth.confirmSignUp(userEmail, code)
-        .catch(error => {
-            console.error(error)
-            const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.nextPage), 3000) },
-                "CodeMismatchException": () => { },
-                "default": () => {}
-            };
-            (errorActionMap[error.code] || errorActionMap['default'])()
-        })
+            .catch(error => {
+                console.error(error);
+                const errorActionMap: Record<string, () => void> = {
+                    "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.nextPage), 3000) },
+                    "CodeMismatchException": () => { },
+                    "default": () => { }
+                };
+                (errorActionMap[error.code] || errorActionMap['default'])()
+            });
+    
+        if (!postConfig.roleName) {
+            console.error("postConfig.roleName is null");
+            return;
+        }
+    
         const addToGroupResult = await cognitoClient.adminAddUserToGroup({
             UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
             Username: userEmail,
             GroupName: postConfig.roleName,
         }).promise()
-        .catch(error => console.error(error))
-        console.log(addToGroupResult)
-        if (!addToGroupResult) return
-        if (confirmationResult == 'SUCCESS') {
-            setIsConfirmed(true)
-            postConfig.onSuccess && postConfig.onSuccess()
+            .catch(error => console.error(error));
+    
+        console.log(addToGroupResult);
+    
+        if (confirmationResult === 'SUCCESS') {
+            setIsConfirmed(true);
+            postConfig.onSuccess && postConfig.onSuccess();
         }
     }
+    
 
     function onSubmit(e: FormEvent) {
         e.preventDefault()

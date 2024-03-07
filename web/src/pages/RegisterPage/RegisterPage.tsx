@@ -55,7 +55,7 @@ function RegisterPage() {
           autoSignIn: { enabled: true }
         });
 
-        navigate('/bevestig-email', { state: { email: email } });
+        navigate('/bevestig-email', { state: { email: email, postConfig: 'HOMEOWNER' } });
       };
 
       signUpUser();
