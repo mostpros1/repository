@@ -23,4 +23,6 @@ function createOrder(amountInCents, description, professionalEmail, userEmail, s
 
 }
 
+//Example usage:
+
 createOrder(1000, 'Product purchase', 'email@email.com', 'email@email.com', 'pending');
