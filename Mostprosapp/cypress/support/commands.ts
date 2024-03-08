@@ -35,3 +35,19 @@
 //     }
 //   }
 // }
+
+declare namespace Cypress {
+    interface Chainable {
+        setAppViewport(): void;
+        proAppTestBegin(): void;
+    }
+}
+
+Cypress.Commands.add('setAppViewport', () => {
+    cy.viewport('iphone-xr')
+});
+
+Cypress.Commands.add('proAppTestBegin', () => {
+    cy.setAppViewport
+    cy.visit('http://localhost:19006/')
+})
