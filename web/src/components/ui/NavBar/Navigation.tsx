@@ -18,6 +18,9 @@ function Navigation() {
 
   const handleLogout = async () => {
     try {
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('idToken');
+      sessionStorage.removeItem('refreshToken');
       await Auth.signOut();
       updateUser(null); // Update the user context after logout
       console.log('Logout successful'); // Update the user context after logout
@@ -32,7 +35,44 @@ function Navigation() {
       <Link to="/registreer" >Register</Link>
     </>;
 
+  const accessToken = sessionStorage.getItem('accessToken');
+  const idToken = sessionStorage.getItem('idToken');
+  const refreshToken = sessionStorage.getItem('refreshToken');
+
+  if (accessToken && idToken && refreshToken) {
+    // If session tokens are found, decode the ID token to extract user information
+    const idTokenPayload = JSON.parse(atob(idToken.split('.')[1]));
+    const groups = idTokenPayload['cognito:groups'];
+
+    // Initialize DashboardLink JSX.Element
+    let DashboardLink: JSX.Element | null = null;
+
+    // Check user groups and set DashboardLink accordingly
+    if (groups && groups.includes('Homeowner')) {
+      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
+    } else if (groups && groups.includes('Professional')) {
+      DashboardLink = <Link to="/dashboard-professional">Account</Link>;
+    }
+
+    // Display user email and authenticated actions
+    authButtons = (
+      <>
+        <p>{idTokenPayload.email}</p> {/* Display user's email */}
+        {DashboardLink} {/* Display dashboard link based on user group */}
+        <button onClick={handleLogout}>Uitloggen</button> {/* Logout button */}
+      </>
+    );
+  } else {
+    // No session tokens found, user is not authenticated
+    authButtons = (
+      <>
+        <Link to="/login">Login</Link>
+        <Link to="/registreer" >Register</Link>
+      </>
+    );
+  }
   if (user) {
+
     const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes('Homeowner')) {
@@ -40,7 +80,7 @@ function Navigation() {
     } else if (groups && groups.includes('Professional')) {
       DashboardLink = <Link to="/dashboard-professional">Account</Link>
     }
-    
+
     authButtons = (
       <>
         <p>{user.attributes.email}</p>
