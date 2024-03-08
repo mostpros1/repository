@@ -7,6 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from "../../../context/UserContext";
+import { useNavigate } from 'react-router-dom';
 
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -15,14 +16,18 @@ function Navigation() {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
+    
     try {
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('idToken');
       sessionStorage.removeItem('refreshToken');
       await Auth.signOut();
       updateUser(null); // Update the user context after logout
+      navigate('/');
       console.log('Logout successful'); // Update the user context after logout
     } catch (error) {
       console.error('Logout failed:', error);
