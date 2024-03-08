@@ -40,22 +40,30 @@ function RegisterPage() {
   function signUp(registerData: RegisterData, user_type: string): void {
     const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
 
-    try {
-      const signUpUser = async (): Promise<void> => {
-        await Auth.signUp({
-          username: email,
-          password: password,
-          attributes: {
-            phone_number: phoneNumber,
-            given_name: firstName,
-            family_name: lastName,
-            birthdate: dob,
-            'custom:user_type': user_type,// Include the custom attribute directly
-          },
-          autoSignIn: { enabled: true }
-        });
+      const signUpUser = async () => {
+        try {
+          await Auth.signUp({
+            username: email,
+            password: password,
+            attributes: {
+              phone_number: phoneNumber,
+              given_name: firstName,
+              family_name: lastName,
+              birthdate: dob,
+              'custom:user_type': user_type,
+            },
+            autoSignIn: { enabled: true },
+          });
 
-        navigate('/bevestig-email', { state: { email: email, postConfig: 'HOMEOWNER' } });
+          const user = await Auth.signIn(email, password);
+          sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+          sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+          sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+        
+        } catch (error: any) {
+          console.error('Error signing up:', error);
+          setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+        }
       };
 
       signUpUser();
@@ -68,7 +76,7 @@ function RegisterPage() {
   const handleSignUp = async () => {
     signUp(registerData, 'Homeowner');
     console.log(registerData);
-  };
+  };signUpUser
 
   const updateRegisterData = (fields) => {
     setRegisterData((prevData) => ({ ...prevData, ...fields }));
