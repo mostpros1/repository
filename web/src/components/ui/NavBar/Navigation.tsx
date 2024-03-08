@@ -25,6 +25,7 @@ function Navigation() {
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('idToken');
       sessionStorage.removeItem('refreshToken');
+      sessionStorage.removeItem('userType');
       await Auth.signOut();
       updateUser(null); // Update the user context after logout
       navigate('/');
@@ -52,8 +53,10 @@ function Navigation() {
     let DashboardLink: JSX.Element | null = null;
 
     if (groups && groups.includes('Homeowner')) {
+      sessionStorage.setItem('userType', 'Homeowner');
       DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
     } else if (groups && groups.includes('Professional')) {
+      sessionStorage.setItem('userType', 'Professional');
       DashboardLink = <Link to="/dashboard-professional">Account</Link>;
     }
 
@@ -74,13 +77,15 @@ function Navigation() {
       </>
     );
   }
-  if (user) {
+  /*if (user) {
 
     const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes('Homeowner')) {
+      sessionStorage.setItem('userType', 'Homeowner');
       DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>
     } else if (groups && groups.includes('Professional')) {
+      sessionStorage.setItem('userType', 'Professional');
       DashboardLink = <Link to="/dashboard-professional">Account</Link>
     }
 
@@ -91,7 +96,7 @@ function Navigation() {
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     );
-  }
+  }*/
 
   return (
     <div className="nav-container">
