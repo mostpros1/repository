@@ -5,10 +5,6 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
-import { addUser } from '../../../../backend_functions/addData.ts';
-import { hashPassword } from '../../../../backend_functions/hashPassword.ts';
-import { SignUp } from '@aws-amplify/ui-react/dist/types/components/Authenticator/SignUp/SignUp';
-
 
 
 function RegisterPage() {
@@ -60,6 +56,7 @@ function RegisterPage() {
           sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
           sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
         
+          navigate('/');
         } catch (error: any) {
           console.error('Error signing up:', error);
           setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
