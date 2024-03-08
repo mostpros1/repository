@@ -43,6 +43,7 @@ function LoginPage() {
       sessionStorage.setItem('accessToken', authenticatedUser.signInUserSession.accessToken.jwtToken);
       sessionStorage.setItem('idToken', authenticatedUser.signInUserSession.idToken.jwtToken);
       sessionStorage.setItem('refreshToken', authenticatedUser.signInUserSession.refreshToken.token);
+
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
