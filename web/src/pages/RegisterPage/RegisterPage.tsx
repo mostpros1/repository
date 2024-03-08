@@ -67,16 +67,13 @@ function RegisterPage() {
       };
 
       signUpUser();
-    } catch (error: any) {
-      console.error('Error signing up:', error);
-      setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
-  }
+  
 
   const handleSignUp = async () => {
     signUp(registerData, 'Homeowner');
     console.log(registerData);
-  };signUpUser
+  };
 
   const updateRegisterData = (fields) => {
     setRegisterData((prevData) => ({ ...prevData, ...fields }));
