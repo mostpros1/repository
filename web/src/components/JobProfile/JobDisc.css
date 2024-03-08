@@ -1,42 +1,129 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
 .job_disc_con {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    padding: 25px;
-    background-color: #d5ebff;
-    margin: 0 auto;
-    max-width: 1200px;
-    max-height: 600px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 25px;
+  background-color: #d5ebff;
+  margin: 0 auto;
+  max-width: 1200px;
+  max-height: 600px;
 }
 
+.JobDiscContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  padding:15px 40px;
+  margin: 0;
+}
+
+.left-grid, .middle-grid, .right-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-grid {
+    justify-content: flex-end;
+}
 .job_disc_con h3 {
-    font-size: 20px;
-    font-weight: 450;
-    text-align: center; /* Centreren van de tekst */
-    border-bottom: 1px solid #D9D9D9;
-    width: 100%; /* Maak de h3 volledige breedte */
-    padding-bottom: 10px; /* Voeg wat ruimte toe onder de h3 */
+  font-size: 20px;
+  font-weight: 450;
+  text-align: center; /* Centreren van de tekst */
+  border-bottom: 1px solid #d9d9d9;
+  width: 100%; /* Maak de h3 volledige breedte */
+  padding-bottom: 10px; /* Voeg wat ruimte toe onder de h3 */
 }
 
 .job_disc_con p,
 .job_disc_con h4,
 .job_disc_con h5 {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-align: left; /* Links uitlijnen van de tekst */
-    margin: 0; /* Verwijder standaardmarges */
+  font-size: 16px;
+  font-weight: 450;
+  line-height: 1.5;
+  text-align: left; /* Links uitlijnen van de tekst */
+  margin: 0; /* Verwijder standaardmarges */
+}
+
+.job_disc_con p {
+  font-weight: 440;
+  font-size: 15px;
 }
 
 .job_disc_con h4 {
-    font-size: 18px;
-    font-weight: 450;
-    text-align: left; /* Links uitlijnen van de tekst */
+  font-size: 20px;
+  font-weight: 450;
+  text-align: left; /* Links uitlijnen van de tekst */
+  padding-top: 15px; /* Voeg wat ruimte toe boven de h4 */
 }
+
+.job_disc_con h5 {
+  font-size: 15px;
+  font-weight: 600;
+  padding-top: 15px;
+  text-align: left; /* Links uitlijnen van de tekst */
+}
+
+.kraan {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 120px;
+}
+
+
+.job_disc_info {
+    width: 450px;
+}
+
+.job_disc_info h5 {
+    font-size: 16px;
+    font-weight: 450;
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.btn-primary {
+    background-color: #308ae4;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #205b96;
+}
+.info-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    height: 75%;
+    max-width: 500px;
+    max-height: 1200px ;
+  }
+  
+  .info-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .info-card ul li {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
