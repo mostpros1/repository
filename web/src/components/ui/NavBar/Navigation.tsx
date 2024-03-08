@@ -49,10 +49,8 @@ function Navigation() {
     const idTokenPayload = JSON.parse(atob(idToken.split('.')[1]));
     const groups = idTokenPayload['cognito:groups'];
 
-    // Initialize DashboardLink JSX.Element
     let DashboardLink: JSX.Element | null = null;
 
-    // Check user groups and set DashboardLink accordingly
     if (groups && groups.includes('Homeowner')) {
       DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
     } else if (groups && groups.includes('Professional')) {
@@ -62,9 +60,9 @@ function Navigation() {
     // Display user email and authenticated actions
     authButtons = (
       <>
-        <p>{idTokenPayload.email}</p> {/* Display user's email */}
-        {DashboardLink} {/* Display dashboard link based on user group */}
-        <button onClick={handleLogout}>Uitloggen</button> {/* Logout button */}
+        <p>{idTokenPayload.email}</p>
+        {DashboardLink}
+        <button onClick={handleLogout}>Uitloggen</button>
       </>
     );
   } else {
