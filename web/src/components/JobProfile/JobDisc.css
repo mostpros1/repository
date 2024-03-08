@@ -4,32 +4,39 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
 .job_disc_con {
-    display: flex;
     flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
+    align-items: center;
+    justify-content: center;
     gap: 25px;
     padding: 25px;
     background-color: #d5ebff;
-    margin: 0 auto; /* Center horizontally */
-    max-width: 600px; /* Set a maximum width for the box */
-    width: 80%; /* Set the width to 80% of the parent container */
-    height: 300px; /* Set a fixed height for the box */
+    margin: 0 auto;
+    max-width: 1200px;
+    max-height: 600px;
 }
 
 .job_disc_con h3 {
     font-size: 20px;
     font-weight: 450;
-    position: relative;
+    text-align: center; /* Centreren van de tekst */
+    border-bottom: 1px solid #D9D9D9;
+    width: 100%; /* Maak de h3 volledige breedte */
+    padding-bottom: 10px; /* Voeg wat ruimte toe onder de h3 */
 }
 
-.JobDiscTitle h3::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    border-bottom: 1px solid #000; /* Add this line */
+.job_disc_con p,
+.job_disc_con h4,
+.job_disc_con h5 {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+    text-align: left; /* Links uitlijnen van de tekst */
+    margin: 0; /* Verwijder standaardmarges */
+}
+
+.job_disc_con h4 {
+    font-size: 18px;
+    font-weight: 450;
+    text-align: left; /* Links uitlijnen van de tekst */
 }
