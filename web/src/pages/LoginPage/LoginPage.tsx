@@ -9,7 +9,7 @@ import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
 
-import { authenticateUser } from '../../../../backend_functions/authentecateUser.ts';
+//import { authenticateUser } from '../../../../backend_functions/authentecateUser.ts';
 
 function LoginPage() {
   const navigate = useNavigate();
