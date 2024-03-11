@@ -36,7 +36,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-03-11T09:48:40.759Z",
+      "lastPushTimeStamp": "2024-03-11T09:16:26.638Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimostpros"
@@ -82,12 +82,12 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-03-11T09:48:57.093Z",
+      "lastPushTimeStamp": "2024-03-11T09:16:26.640Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"
       },
-      "lastPushDirHash": "c7JQRK1WqhNiwAIobBgdBa1PCus="
+      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
     },
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
@@ -104,7 +104,7 @@
           ]
         }
       ],
-      "lastPushTimeStamp": "2024-03-11T09:48:57.093Z",
+      "lastPushTimeStamp": "2024-03-11T09:16:35.235Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
         "logicalId": "authuserPoolGroups"
