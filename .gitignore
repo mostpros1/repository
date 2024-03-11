@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 node_modules
 backend_functions/emailSturenWeb.js
 backend_functions/emails/config.js
 
+=======
+>>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -22,4 +25,8 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
+<<<<<<< HEAD
 #amplify-do-not-edit-end
+=======
+#amplify-do-not-edit-end
+>>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22

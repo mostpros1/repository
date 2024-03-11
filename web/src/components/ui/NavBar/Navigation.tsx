@@ -107,7 +107,6 @@ function Navigation() {
         </div>
       </Link>
       <div className="nav-rightside">
-        <JoinChat />
         <ul className="nav-list">
           <li>
             <Link to="/mijn-klussen" className='black-items'>Klussen <ExpandMoreIcon /></Link>
