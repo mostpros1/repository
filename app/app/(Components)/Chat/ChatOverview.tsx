@@ -117,6 +117,7 @@ const ChatOverview = ({ navigation }) => {
               </View>
               </TouchableOpacity>
 
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
               <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
                 <View style={styles.size}>
@@ -135,6 +136,9 @@ const ChatOverview = ({ navigation }) => {
                   </View>
                 </View>
               </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
                 <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
                   <View style={styles.size}>
@@ -153,6 +157,8 @@ const ChatOverview = ({ navigation }) => {
                     </View>
                   </View>
               </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
                 <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
                   <View style={styles.size}>
@@ -171,6 +177,8 @@ const ChatOverview = ({ navigation }) => {
                     </View>
                   </View>
               </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
                 <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
                   <View style={styles.size}>
@@ -189,6 +197,8 @@ const ChatOverview = ({ navigation }) => {
                     </View>
                   </View>
               </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
                 <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
                   <View style={styles.size}>
@@ -207,6 +217,7 @@ const ChatOverview = ({ navigation }) => {
                     </View>
                   </View>
               </View>
+              </TouchableOpacity>
               <View style={[styles.footerfix]}></View>
             </View>
           </View>
