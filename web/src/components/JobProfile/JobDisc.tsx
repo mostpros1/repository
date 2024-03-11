@@ -10,7 +10,9 @@ import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 const JobDisc = () => {
   return (
     <div className="job_disc_card">
-      <button className="btn-secondary">Terug naar start</button>
+      <div className="job_disc_header">
+          <button className="btn-secondary">Terug naar start</button>
+          </div>
       <div className="job_disc_con">
         <div className="JobDiscTitle">
           <h3>Loodgieters werk: nieuwe leiding aanleggen</h3>

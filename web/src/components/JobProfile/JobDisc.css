@@ -34,6 +34,7 @@
 .right-grid {
   justify-content: flex-end;
 }
+
 .job_disc_con h3 {
   font-size: 20px;
   font-weight: 450;
@@ -41,6 +42,18 @@
   border-bottom: 1px solid #d9d9d9;
   width: 100%; /* Maak de h3 volledige breedte */
   padding-bottom: 10px; /* Voeg wat ruimte toe onder de h3 */
+}
+
+.job_disc_header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 35px;
+  margin: 0 auto;
+  max-width: 1200px;
+  max-height: 600px;
+  left: 250px;
 }
 
 .job_disc_con p,
