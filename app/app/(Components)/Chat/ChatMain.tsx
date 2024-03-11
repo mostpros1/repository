@@ -28,8 +28,6 @@ function ChatMain({ user, signOut }) {
     setMessageText(""); // Clear the input field after sending the message
   };
 
-  
-
   return (
   <KeyboardAvoidingView 
     style={{ flex: 1 }} 
@@ -37,7 +35,7 @@ function ChatMain({ user, signOut }) {
     keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
     <View style={styles.container}>
       <View style={styles.alert}>
-        <Text>Chatting with: {recipientEmail}</Text>
+        <Text>{recipientEmail} </Text>
       </View>
       <ScrollView style={styles.chatListContainer} ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>

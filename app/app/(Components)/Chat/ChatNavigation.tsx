@@ -7,6 +7,7 @@ import {
     Pressable,
   } from "react-native";
   import React from 'react';
+  
   const ChatNavigation = ({navigation}) => {
     return (
       <SafeAreaView style={styles.view}>

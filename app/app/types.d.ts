@@ -60,4 +60,5 @@ declare global {
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
     AboutUs: undefined;
+    ChatMain: undefined;
   };

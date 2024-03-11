@@ -18,7 +18,7 @@ import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { KeyboardAvoidingView } from 'react-native';
-import Footer from '../footer'; 
+import Footer from '../Footer';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -96,7 +96,7 @@ const ChatOverview = ({ navigation }) => {
             </View>
 
             <View style={styles.middleContainer}>
-              {/* <TouchableOpacity onPress={() => navigateToChat()}> */}
+              <TouchableOpacity onPress={() => navigation.navigate("ChatMain")}>
               <View style={[styles.middleContainerFirstSection]}>
                 <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
               <View style={styles.size}>
@@ -115,7 +115,7 @@ const ChatOverview = ({ navigation }) => {
               </View>
               </View>
               </View>
-              {/* </TouchableOpacity> */}
+              </TouchableOpacity>
 
               <View style={[styles.middleContainerFirstSection]}>
               <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
