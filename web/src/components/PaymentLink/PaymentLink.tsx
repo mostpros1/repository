@@ -3,10 +3,11 @@ import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 
 type PaymentLinkProps = {
-    subtotal: number
-}
+    subtotal: number;
+    handleSendMessage: (text: any) => void; // Of het nu een Promise<void> of een andere return type moet zijn, hangt af van je implementatie
+};
 
-const PaymentLink = ({ subtotal }: PaymentLinkProps) => {
+const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     const [paymentLink, setPaymentLink] = useState('')
     const [currentUser, setCurrentUser] = useState<any>('')
     const [userStripeAccountId, setUserStripeAccountId] = useState('')
@@ -48,12 +49,16 @@ const PaymentLink = ({ subtotal }: PaymentLinkProps) => {
             },
             success_url: `${window.location.origin}/payments/success`,
             cancel_url: `${window.location.origin}/payments/canceled`,
-        }).then(result => setPaymentLink(result.url as string))
+        }).then(result => {
+            setPaymentLink(result.url as string)
+            const paymentMessage = `Hier is de betalingslink: ${result.url}`;
+            handleSendMessage(paymentMessage);
+        })
     }
 
     return <>
         <button onClick={createSession}>create payment</button>
-        <a href={paymentLink as string}>payment link</a>
+        <a href={paymentLink}>payment link</a>
     </>
 }
 
