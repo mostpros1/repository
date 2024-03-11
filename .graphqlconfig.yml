@@ -1,0 +1,14 @@
+projects:
+  mostpros:
+    schemaPath: amplify/backend/api/mostpros/build/schema.graphql
+    includes:
+      - ''
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: .
+        region: eu-north-1
+        apiId: null

@@ -19,6 +19,8 @@ type RegisterFormProps = RegisterData & {
   error: string;
 };
 
+
+
 export function RegisterForm({
   email,
   firstName,
@@ -31,6 +33,35 @@ export function RegisterForm({
   setUserExists,
   error,
 }: RegisterFormProps) {
+
+  const [isValidFirstName, setValidFirstName] = useState(true);
+
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValueFirstName = e.target.value;
+    const inputFirstNameRegex = /^[A-Za-z\s]*$/; // Allow empty string
+    const isValidFirstName = inputFirstNameRegex.test(inputValueFirstName);
+
+    setValidFirstName(isValidFirstName);
+
+    if (isValidFirstName || inputValueFirstName === '') {
+      updateFields({ firstName: inputValueFirstName });
+    }
+  };
+
+  const [isValidLastName, setValidLastName] = useState(true);
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValueLastName = e.target.value;
+    const inputLastNameRegex = /^[A-Za-z\s]*$/; // Allow empty string
+    const isValidLastName = inputLastNameRegex.test(inputValueLastName);
+
+    setValidLastName(isValidLastName);
+
+    if (isValidLastName || inputValueLastName === '') {
+      updateFields({ lastName: inputValueLastName });
+    }
+  };
+
   return (
     <>
       <div className="register-container" style={{ maxHeight: "500px" }}>
@@ -44,26 +75,29 @@ export function RegisterForm({
           <div className="register-form-input">
             <label htmlFor="">Voornaam:</label>
             <input
+              pattern="[A-Za-z\s]+"
               required
               type="text"
               placeholder="Voornaam"
               value={firstName}
-              onChange={(e) => updateFields({ firstName: e.target.value })}
+              onChange={handleFirstNameChange}
             />
           </div>
           <div className="register-form-input">
             <label htmlFor="">Achternaam:</label>
             <input
+              pattern="[A-Za-z\s]+"
               required
               type="text"
               placeholder="Achternaam"
               value={lastName}
-              onChange={(e) => updateFields({ lastName: e.target.value })}
+              onChange={handleLastNameChange}
             />
           </div>
           <div className="register-form-input">
             <label htmlFor="">Email:</label>
             <input
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               required
               type="email"
               placeholder="Email"
@@ -84,6 +118,8 @@ export function RegisterForm({
           <div className="register-form-input">
             <label htmlFor="">Telefoonnummer:</label>
             <PhoneInput
+              pattern="\+[0-9 ]{10,}"
+              maxlength="14"
               defaultCountry="NL"
               placeholder="+31658349021"
               value={phoneNumber} // Gebruik direct de waarde uit RegisterData
@@ -96,9 +132,11 @@ export function RegisterForm({
           <div className="register-form-input">
             <label htmlFor="">Wachtwoord:</label>
             <input
+              pattern=".{8,}"
               required
               type="password"
-              placeholder="Wachtwoord (min. 6 tekens)"
+              id="password"
+              placeholder="Wachtwoord (min. 8 tekens)"
               value={password}
               onChange={(e) => updateFields({ password: e.target.value })}
             />
@@ -106,8 +144,10 @@ export function RegisterForm({
           <div className="register-form-input password">
             <label htmlFor="">Herhaal wachtwoord:</label>
             <input
+              pattern=".{8,}"
               required
               type="password"
+              id="confirmPassword"
               placeholder="Herhaal wachtwoord"
               value={repeatPassword}
               onChange={(e) => updateFields({ repeatPassword: e.target.value })}
