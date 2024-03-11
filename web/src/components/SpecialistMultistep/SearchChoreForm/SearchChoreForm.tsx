@@ -137,7 +137,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 {!isValidStad && (
                     <p className="error-message">Voer alstublieft een geldige stad in (bijv. Amsterdam)</p>
                 )}
-                <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
+                <p className="form_login">Al een account? <a href="/login">Inloggen</a></p>
             </div>
         </>
     )
