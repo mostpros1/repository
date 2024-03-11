@@ -10,6 +10,7 @@ import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
+
 type FormData = {
   email: string;
   postCode: string;
@@ -64,17 +65,6 @@ const questionsData: Question[] = [
     label: "Wat is uw specialisatie",
     options: [
       "Web Development",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
-    ],
-  },
-  {
-    key: "question3",
-    label: "Wat is uw specialisaties",
-    options: [
-      "Web Developmenta",
       "Data Science",
       "Design",
       "Marketing",
@@ -151,7 +141,7 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm setError={() => { }} error={""} {...data} updateFields={updateFields} />
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },

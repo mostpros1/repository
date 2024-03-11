@@ -17,6 +17,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAvoidingView } from "react-native";
+import Footer from '../Footer';
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -75,13 +76,86 @@ const HomeOwnerResults = ({ navigation }) => {
                         <Ionicons name="star-outline" size={20} color="#FFD700" />
                     </View>
                     </View>
-                    <View style={[styles.yellow]}></View>
-                    <Text style={[styles.lightTitle]}>Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                    <View style={[styles.yellow]}>
+                      <Text style={[styles.text]}>€500</Text>
+                    </View>
+                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
                 </View>
               </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image
+                  style={styles.image}
+                  source={require("../../../assets/images/jan.png")}
+                />
+                <View style={[styles.orange]}>
+                    <View style={[styles.green]}>
+                        <Text style={[styles.text]}>Jan Schilder</Text>
+                        <Text style={[styles.title]}>Loodgieter en schoonmaakster</Text>
+                        <View style={styles.ratingContainer}>
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star-outline" size={20} color="#FFD700" />
+                    </View>
+                    </View>
+                    <View style={[styles.yellow]}>
+                      <Text style={[styles.text]}>€500</Text>
+                    </View>
+                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. </Text>
+                </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image
+                  style={styles.image}
+                  source={require("../../../assets/images/jan.png")}
+                />
+                <View style={[styles.orange]}>
+                    <View style={[styles.green]}>
+                        <Text style={[styles.text]}>Jan Schilder</Text>
+                        <Text style={[styles.title]}>Loodgieter</Text>
+                        <View style={styles.ratingContainer}>
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star-outline" size={20} color="#FFD700" />
+                    </View>
+                    </View>
+                    <View style={[styles.yellow]}>
+                      <Text style={[styles.text]}>€500</Text>
+                    </View>
+                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                </View>
+              </View>
+              <View style={[styles.middleContainerFirstSection]}>
+                <Image
+                  style={styles.image}
+                  source={require("../../../assets/images/jan.png")}
+                />
+                <View style={[styles.orange]}>
+                    <View style={[styles.green]}>
+                        <Text style={[styles.text]}>Jan Schilder</Text>
+                        <Text style={[styles.title]}>Loodgieter</Text>
+                        <View style={styles.ratingContainer}>
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star" size={20} color="#FFD700" />
+                        <Ionicons name="star-outline" size={20} color="#FFD700" />
+                    </View>
+                    </View>
+                    <View style={[styles.yellow]}>
+                      <Text style={[styles.text]}>€500</Text>
+                    </View>
+                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                </View>
+              </View> 
+              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
+        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
@@ -90,11 +164,15 @@ const styles = StyleSheet.create({
     orange:{
         flex: 1,
         height: "100%",
-        // backgroundColor: "orange",
         display: "flex",
         flexDirection: "row",
         flexWrap:"wrap",
         paddingLeft: 10,
+    },
+
+    footerfix: {
+      height: 35,
+      width: windowWidth,
     },
 
     green:{
@@ -102,25 +180,30 @@ const styles = StyleSheet.create({
         width: "70%",
         display: "flex",
         justifyContent: "center",
-        // backgroundColor: "green",
     },
 
     yellow:{
         height: "60%",
         width: "30%",
-        backgroundColor: "yellow",
+        display: "flex",
+        alignItems: "center",
+        padding: 10,
     },
 
     middleContainerFirstSection: {
-        width: windowWidth,
-        height: 150,
-        display: "flex",
-        backgroundColor: "#E9F4FF",
-        borderRadius: 10,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingLeft: 10,
-      },
+      width: windowWidth,
+      height: 150,
+      display: "flex",
+      borderBottomWidth: 3,
+      borderRadius: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      paddingLeft: 10,
+      borderColor: "#f1f1f0",
+  },
+  
+  
+  
       
   view: {
     height: "100%",

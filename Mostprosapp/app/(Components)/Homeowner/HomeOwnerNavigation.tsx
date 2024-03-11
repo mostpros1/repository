@@ -19,6 +19,9 @@ import {
                   <Text style={[styles.text]}>Results</Text>
               </Pressable>
             </View>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('HomeOwnerCreate')}>
+                  <Text style={[styles.text]}>Klus Plaatsen</Text>
+              </Pressable>
           </View>
         </ImageBackground>
       </SafeAreaView>
