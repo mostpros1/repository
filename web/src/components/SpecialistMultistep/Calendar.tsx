@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import AWS from 'aws-sdk';
+import aws from 'aws-sdk';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
 
@@ -197,29 +197,27 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
   const submitDates = async () => {
 
-    /*const item = {
-      userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
-      dates: selectedDates, // Dit is de lijst van geselecteerde datums
-    };
+    // const item = {
+    //   userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
+    //   dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    // };
     
-    const params = {
-      TableName: "UserAvailability",
-      Item: {
-        userId: "userId",
-        dates: selectedDates, // De array met geselecteerde datums
-        // Voeg eventueel andere relevante gegevens toe
-      },
-    };
+    // const params = {
+    //   TableName: "UserAvailability",
+    //   Item: {
+    //     userId: "userId",
+    //     dates: selectedDates, // De array met geselecteerde datums
+    //     // Voeg eventueel andere relevante gegevens toe
+    //   },
+    // };
   
-    try {
-      await dynamoDb.put(params).promise();
-      alert("Beschikbaarheid succesvol opgeslagen!");
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      alert("Fout bij het opslaan van beschikbaarheid.");
-    }*/
-
-
+    // try {
+    //   await dynamo.put(params).promise();
+    //   alert("Beschikbaarheid succesvol opgeslagen!");
+    // } catch (error) {
+    //   console.error("Er is een fout opgetreden bij het opslaan: ", error);
+    //   alert("Fout bij het opslaan van beschikbaarheid.");
+    // }
 
     for (let i = 0; i < selectedDates.length; i++) {
       const params = {
@@ -310,7 +308,7 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
   return (
     <div className="date-time-picker">
       <div className="calendar">
-        <div className="month-selector">
+      <div className="month-selector">
           <button
             type="button"
             className='prev-month'
