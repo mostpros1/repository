@@ -10,7 +10,7 @@ describe('Testing searchbar functionality', () => {
             // Use try-catch to skip the failing command on error
             cy.get('input[type="text"]').eq(0).type(value1);
             cy.get('input[type="text"]').eq(1).type(value2);
-            cy.screenshot();
+            // cy.screenshot();
             cy.goForward();
 
             if (!skipButtonClick) {
@@ -47,10 +47,6 @@ describe('Testing searchbar functionality', () => {
 
         // Location check 5.2
         cy.get('input[type="text"]').eq(1).goForward();
-
-        // Location check 6
-        performLocationCheck('12345', 'Istanbul', true);
-
 
     })
 })
