@@ -288,8 +288,9 @@ function Navigation() {
           </li>
         </ul>
         <div className="apps-icon">
-        <Link to="../../pages/HomeInovation/HomeInovation">LOL</Link>
+        <Link to="/HomeInovation">
           <AppsRoundedIcon />
+        </Link>
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
