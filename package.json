@@ -14,15 +14,7 @@
   },
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
-    "@types/react": "^18.2.64"
-  }
-}
-
-{
-  "dependencies": {
-    "aws-amplify": "^6.0.10"
-  },
-  "devDependencies": {
+    "@types/react": "^18.2.64",
     "typescript": "^5.3.3"
   }
 }

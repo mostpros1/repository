@@ -211,15 +211,13 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
-
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
-
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
-
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <>
+          {SearchChoreForm({ ...data, updateFields })}
+          {questionsSteps}
+          <KvKForm setShowNoKvK={setShowNoKvK} />
+          <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />
+          <KvKForm setShowNoKvK={setShowNoKvK} />
+        </>
       ],
       onStepChange: () => { },
     });
@@ -268,104 +266,106 @@ function SpecialistMultistepForm() {
       handelFormData(data);
       navigate("/specialist-resultaat");
 
-    if (!isLastStep) return next()
+      if (!isLastStep) return next()
 
-    const userData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
-    }
+      const userData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim()
+      }
 
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/specialist-resultaat')
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
+          .then(() => {
+            navigate('/specialist-resultaat')
+          })
+          .catch((err) => {
+            console.error(err)
+            if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+          })
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
+          username: userData.email,
+          password: userData.password,
+          attributes: {
+            name: userData.firstName,
+            family_name: userData.lastName,
+            email: userData.email,
+            phone_number: userData.phoneNumber,
+            "custom:group": "Professional"
+          },
+          autoSignIn: { enabled: true }
         })
-        .catch((err) => {
-          console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-        username: userData.email,
-        password: userData.password,
-        attributes: {
-          name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Professional"
-        },
-        autoSignIn: { enabled: true }
-      })
-        .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-        .catch(async error => {
-          console.error(error)
-          if (error.code == 'UsernameExistsException') {
-            await Auth.resendSignUp(userData.email)
+          .then(() => {
             navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-          }
-        })
+          })
+          .catch(async error => {
+            console.error(error)
+            if (error.code == 'UsernameExistsException') {
+              await Auth.resendSignUp(userData.email)
+              navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
+            }
+          })
 
-    if (!isLastStep) {
-      return next();
-    } else {
-      console.log(data);
-      queryUsers(data.email, "email");
-      queryUsers(data.email, "id");
-      handelFormData(data);
-      navigate("/specialist-resultaat");
->>>>>>>>> Temporary merge branch 2
+        if (!isLastStep) {
+          return next();
+        } else {
+          console.log(data);
+          queryUsers(data.email, "email");
+          queryUsers(data.email, "id");
+          handelFormData(data);
+          navigate("/specialist-resultaat");
+
+        }
+      }
+
+      const stepWidth = 100 / steps.length;
+
+      return (
+        <form onSubmit={onSubmit} className="form-con">
+          <div className="progress-con">
+            <h3>
+              Stap {currentStepIndex + 1} van {steps.length}
+            </h3>
+            <div className="progress-bar">
+              {steps.map((_, index) => (
+                <div
+                  key={index}
+                  className={`progress-step ${index <= currentStepIndex ? "active" : ""
+                    }`}
+                  style={{ width: `${stepWidth}%` }}
+                ></div>
+              ))}
+            </div>
+          </div>
+          {showNoKvK ? <NoKvK /> : <>{step}</>}
+          <>
+            <div className="btn-wrapper">
+              <button
+                type="button"
+                onClick={() => {
+                  showNoKvK ? setShowNoKvK(false) : back();
+                }}
+                className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+                style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+              >
+                Vorige
+              </button>
+              {showNoKvK ? <></> : <button type="submit" className="form-btn">
+                {isLastStep ? "Verstuur" : "Volgende"}
+              </button>}
+
+            </div>
+          </>
+        </form>
+      );
     }
   }
-
-  const stepWidth = 100 / steps.length;
-
-  return (
-    <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
-        <div className="progress-bar">
-          {steps.map((_, index) => (
-            <div
-              key={index}
-              className={`progress-step ${index <= currentStepIndex ? "active" : ""
-                }`}
-              style={{ width: `${stepWidth}%` }}
-            ></div>
-          ))}
-        </div>
-      </div>
-      {showNoKvK ? <NoKvK /> : <>{step}</>}
-      <>
-        <div className="btn-wrapper">
-          <button
-            type="button"
-            onClick={() => {
-              showNoKvK ? setShowNoKvK(false) : back();
-            }}
-            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-          >
-            Vorige
-          </button>
-          {showNoKvK ? <></> : <button type="submit" className="form-btn">
-            {isLastStep ? "Verstuur" : "Volgende"}
-          </button>}
-
-        </div>
-      </>
-    </form>
-  );
 }
 
 export default SpecialistMultistepForm;
