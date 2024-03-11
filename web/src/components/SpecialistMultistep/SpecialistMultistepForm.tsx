@@ -1,9 +1,8 @@
 import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 import { RegisterForm } from "../MultistepForm/RegisterForm";
-import { FormEvent } from "react";
+import { FormEvent, useEffect , useState } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
@@ -11,6 +10,7 @@ import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
+
 type FormData = {
   email: string;
   postCode: string;
@@ -65,17 +65,6 @@ const questionsData: Question[] = [
     label: "Wat is uw specialisatie",
     options: [
       "Web Development",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
-    ],
-  },
-  {
-    key: "question3",
-    label: "Wat is uw specialisaties",
-    options: [
-      "Web Developmenta",
       "Data Science",
       "Design",
       "Marketing",
@@ -152,7 +141,7 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm setError={() => { }} error={""} {...data} updateFields={updateFields} />
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
@@ -235,5 +224,4 @@ function SpecialistMultistepForm() {
     </form>
   );
 }
-
 export default SpecialistMultistepForm;

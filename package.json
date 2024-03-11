@@ -1,8 +1,64 @@
 {
+  "name": "mostpros",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start:frontend": "vite",
+    "start:backend": "node ../backend_functions/emailSturenWeb.js",
+    "dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "jest --watchAll --verbose",
+    "e2e": "cypress open"
+  },
   "dependencies": {
-    "aws-amplify": "^6.0.10"
+    "@aws-amplify/api": "^6.0.8",
+    "@aws-amplify/core": "^6.0.8",
+    "@aws-amplify/pubsub": "^6.0.8",
+    "@aws-amplify/ui-react": "^5.3.3",
+    "@aws-sdk/client-s3": "^3.472.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.9",
+    "@mui/material": "^5.15.5",
+    "@mui/x-date-pickers": "^6.19.0",
+    "@react-email/render": "^0.0.12",
+    "aws-amplify": "^5.3.13",
+    "aws-sdk": "2.1506.0",
+    "cors": "^2.8.5",
+    "date-fns": "^3.1.0",
+    "dotenv": "^16.4.4",
+    "fs": "^0.0.1-security",
+    "nodemailer": "^6.9.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
+    "react-phone-number-input": "^3.3.9",
+    "react-redux": "^9.0.4",
+    "redux": "^5.0.0",
+    "stripe": "^14.13.0"
   },
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "@types/jest": "^29.5.11",
+    "@types/nodemailer": "^6.4.14",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "concurrently": "^8.2.2",
+    "cypress": "^13.6.1",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "jest": "^29.7.0",
+    "react-router-dom": "^6.17.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^4.5.2",
+    "vitest": "^1.0.4"
   }
 }
+

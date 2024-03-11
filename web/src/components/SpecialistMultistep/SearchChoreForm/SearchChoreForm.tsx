@@ -1,5 +1,5 @@
-import "./SearchChoreForm.css";
-import { useState } from "react";
+import "./SearchChoreForm.css"
+import { useState } from 'react';
 
 type SpecialistData = {
     email: string
@@ -39,7 +39,6 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
         setValidEmail(isValidEmail);
         updateFields({ email: inputValueEmail });
     };
-
 
     const [postcodeInput, setPostcodeInput] = useState(postCode);
     const [isValidPostcode, setValidPostcode] = useState(true);
@@ -97,7 +96,6 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
                 )}
-
                 <label>Email:</label>
                 <input
                     type="email"
@@ -139,7 +137,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 {!isValidStad && (
                     <p className="error-message">Voer alstublieft een geldige stad in (bijv. Amsterdam)</p>
                 )}
-                <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
+                <p className="form_login">Al een account? <a href="/login">Inloggen</a></p>
             </div>
         </>
     )
