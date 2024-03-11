@@ -48,7 +48,7 @@ export function useChatBackend(userInput: any, signOut) {
             if (isMounted.current) {
                 setChats(prevChats => [...prevChats, newChat]);
             }
-        }, 500); // Simulate a delay
+        }, 50); // Simulate a delay
     };
 
     const handleAlertConfirm = () => {
