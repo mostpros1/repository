@@ -25,7 +25,9 @@
         "buildType": "app-bundle"
       },
       "env": {
-        "EXPO_ANDROID_VERSION_CODE": "3"
+        "EXPO_ANDROID_VERSION_CODE": "3",
+        "ANDROID_HOME": "/home/timon/androidSDK/",
+        "ANDROID_NDK_HOME": "/home/timon/androidSDK/ndk/26.2.11394342/"
       }
     }
   }
