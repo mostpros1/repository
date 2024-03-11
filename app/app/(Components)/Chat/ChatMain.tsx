@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import API, { graphqlOperation } from 'aws-amplify';
 import * as mutations from '../../graphql/mutations';
 import { useNavigation } from '@react-navigation/native';
 import { useChatBackend } from './ChatBackend'; // This should be adapted for React Native as in the previous example
+import { Provider as PaperProvider } from "react-native-paper";
+import Icon from "@expo/vector-icons/MaterialIcons";
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function ChatMain({ user, signOut }) {
   const navigation = useNavigation();
@@ -12,11 +15,9 @@ function ChatMain({ user, signOut }) {
 
   const {
     chats,
-    handleStartNewChat,
     handleSendMessage,
     handleAlertCancel,
     handleJoinChat,
-    handleReceivedMessage,
     showJoinButton,
     recipientEmail,
   } = useChatBackend(user, signOut);
@@ -25,8 +26,8 @@ function ChatMain({ user, signOut }) {
 
   const sendMessage = () => {
     handleSendMessage(messageText);
-    setMessageText(""); // Clear the input field after sending the message
-  };
+    setMessageText("");
+};
 
   return (
   <KeyboardAvoidingView 
@@ -34,19 +35,24 @@ function ChatMain({ user, signOut }) {
     behavior={Platform.OS === "ios" ? "padding" : "height"} 
     keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
     <View style={styles.container}>
-      <View style={styles.alert}>
-        <Text>{recipientEmail} </Text>
-      </View>
+    <PaperProvider>
+        <View style={styles.alert}>
+          <Icon name="arrow-back-ios" size={35} color="#308ae4" onPress={sendMessage} />
+          <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+          <Text style={styles.textchat}>{recipientEmail} Jan Schilder </Text>
+        </View>
       <ScrollView style={styles.chatListContainer} ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
         {chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((chat) => (
-          <View key={chat.id} style={chat.email === user.attributes.email ? styles.selfMessage : styles.otherMessage}>
-            <Text style={styles.username}>{chat.email}</Text>
-            <Text style={styles.text}>{chat.text}</Text>
-          </View>
-        ))}
+      <View key={chat.id} style={chat.email === (user?.attributes?.email || 'default@example.com') ? styles.selfMessage : styles.otherMessage}>
+        <Text style={styles.username}>{chat.email}</Text>
+        <Text style={styles.text}>{chat.text}</Text>
+      </View>
+      ))}
+
       </ScrollView>
       <View style={styles.inputForm}>
+        <Icon name="add-circle" size={50} color="grey" onPress={sendMessage} />
         <TextInput
           style={styles.inputChat}
           value={messageText}
@@ -54,8 +60,9 @@ function ChatMain({ user, signOut }) {
           placeholder="Type a message..."
           multiline={true}
           />
-        <Button title="Send" onPress={sendMessage} />
+        <Icon name="send" size={50} color="#308ae4" onPress={sendMessage} />
       </View>
+      </PaperProvider>
     </View>
   </KeyboardAvoidingView>
 );
@@ -63,23 +70,37 @@ function ChatMain({ user, signOut }) {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      justifyContent: 'flex-end', // Ensure the chat input is always visible
-      backgroundColor: '#f5f5f5', // Light grey background for contrast
+      justifyContent: 'flex-end',
+      backgroundColor: '#f5f5f5',
   },
   chatListContainer: {
-      flex: 1, // Take up all available space
-      paddingHorizontal: 10, // Spacing from sides
-      marginVertical: 10, // Spacing from top & bottom
+      flex: 1,
+      paddingHorizontal: 10,
+      marginVertical: 10,
   },
   alert: {
       marginBottom: 10,
-      backgroundColor: '#f8d7da', // Light red for alerts
-      borderRadius: 18, // Smoothed corners
-      padding: 10, // Inner spacing
-      borderWidth: 1, // Border thickness
-      borderColor: '#f5c6cb', // Border color slightly darker than the background
-      alignItems: 'center', // Center the text and button
+      padding: 10,
+      alignItems: 'center',
       marginTop: 50,
+      height: 100,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      borderBottomWidth: 2,
+      borderBottomColor: '#E0E0E0',
+  },
+  image: {
+    width: 90,
+    borderRadius: 50,
+    height: undefined,
+    aspectRatio: 1,
+    marginRight: 30,
+    marginBottom: 5,
+  },
+  textchat:{
+    fontSize: 24,
+    marginRight: 40,
   },
   inputForm: {
       flexDirection: 'row', // Align items in a row
@@ -87,7 +108,6 @@ const styles = StyleSheet.create({
       borderTopColor: '#E0E0E0', // Light border color
       borderTopWidth: 1, // Border thickness
       padding: 8, // Padding around the input area
-      marginBottom: 20,
   },
   inputChat: {
       flex: 1, // Take up as much space as possible
@@ -95,6 +115,8 @@ const styles = StyleSheet.create({
       padding: 10, // Inner text padding
       backgroundColor: '#e9e9eb', // Slightly off-white background
       borderRadius: 20, // Fully rounded corners
+      paddingTop: 15,
+      fontSize: 18,
   },
   username: {
       fontWeight: 'bold', // Bold font for usernames
