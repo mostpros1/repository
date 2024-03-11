@@ -36,7 +36,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-02-09T16:21:48.929Z",
+      "lastPushTimeStamp": "2024-03-11T09:44:17.222Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimostpros"
@@ -54,8 +54,8 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 6
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
         },
         "signupAttributes": [
           "EMAIL",
@@ -82,12 +82,37 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-02-09T16:21:48.929Z",
+      "lastPushTimeStamp": "2024-03-11T09:44:30.158Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"
       },
-      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
+      "lastPushDirHash": "c7JQRK1WqhNiwAIobBgdBa1PCus="
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "Mostpros",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2024-03-11T09:44:30.158Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "timonGroupRole": "arn:aws:iam::246293866149:role/eu-north-1_jR5BGgTBj-timonGroupRole"
+      },
+      "lastPushDirHash": "VH17O33sYNMyJ1ekrs+iDT1UFiQ="
     }
   }
 }
