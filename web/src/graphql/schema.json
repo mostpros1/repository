@@ -1675,7 +1675,8 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+=========
+>>>>>>>>> Temporary merge branch 2
         "name" : "ModelSubscriptionBooleanInput",
         "description" : null,
         "fields" : null,
@@ -1808,7 +1809,8 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+=========
+>>>>>>>>> Temporary merge branch 2
         "name" : "ModelSubscriptionIntInput",
         "description" : null,
         "fields" : null,
@@ -2293,8 +2295,7 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-=======
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+>>>>>>>>> Temporary merge branch 2
         "kind" : "OBJECT",
         "name" : "__Schema",
         "description" : "A GraphQL Introspection defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, the entry points for query, mutation, and subscription operations.",
@@ -3237,7 +3238,8 @@
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+=========
+>>>>>>>>> Temporary merge branch 2
       } ]
     }
   }

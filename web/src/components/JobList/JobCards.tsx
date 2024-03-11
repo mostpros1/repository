@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import "./JobCards.css";
 import gasleiding from "../../assets/Gasleiding.svg";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -162,7 +161,7 @@ function JobCards() {
 }
 
 
-=======
+
 import React from 'react'; // Import React
 import "./JobCards.css"; // Import the CSS for styling
 import gasleiding from "../../assets/Gasleiding.svg"; // Import the image, if you're using it in the job cards
@@ -217,5 +216,6 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => { // Provide a defa
   ));
   return <>{jobCardsRender}</>;
 };
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+
 export default JobCards;

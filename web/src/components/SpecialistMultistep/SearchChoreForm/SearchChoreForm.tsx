@@ -5,20 +5,16 @@ type SpecialistData = {
     email: string
     postCode: string
     stad: string
-<<<<<<< HEAD
     phoneNumber: string 
-=======
-    beroep?: string
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
 }
 
 type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
 
-<<<<<<< HEAD
+
 export default function SearchChoreForm({ email, phoneNumber, postCode, stad, updateFields }: SearchChoreFormProps) {
-=======
+
 
 export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
@@ -81,7 +77,9 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
         }
     };
 
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+export default function SearchChoreForm({ email, phoneNumber, postCode, stad, updateFields }: SearchChoreFormProps) {
+
     return (
         <>
             <div className="search_chore_text_con">
@@ -90,12 +88,13 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                     Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
-<<<<<<< HEAD
             <label>Email:</label>
-=======
+
 
                 <label>Uw hoofdberoep</label>
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+            <label>Email:</label>
+
                 <input
                     type="text"
                     required
@@ -105,7 +104,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                     onChange={handleBeroepChange}
                     pattern="[A-Za-z\s]+"
                 />
-<<<<<<< HEAD
+
                 <label>Telefoon:</label>
                 <input
                     type="text"
@@ -113,7 +112,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                     value={phoneNumber}
                     onChange={e => updateFields({ phoneNumber: e.target.value })}
                 />
-=======
+
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
                 )}
@@ -130,7 +129,13 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                     <p className="error-message">Voer alstublieft een geldig e-mailadres in</p>
                 )}
 
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+                <label>Telefoon:</label>
+                <input
+                    type="text"
+                    placeholder="0031612345678"
+                    value={phoneNumber}
+                    onChange={e => updateFields({ phoneNumber: e.target.value })}
+                />
                 <label>Postcode</label>
                 <div className="search_chore_address">
                     <input

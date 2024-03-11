@@ -9,7 +9,6 @@ import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-<<<<<<< HEAD
 import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
@@ -30,10 +29,6 @@ type DateTimeSpan = {
   startTime: string;
   endTime: string;
 };
-=======
-import { Auth } from "aws-amplify";
-import { AccountForm } from "../MultistepForm/AccountForm";
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
 
 type FormData = {
   beroep: string;
@@ -96,7 +91,7 @@ const questionsData: Question[] = [
       "Marketing",
       "Anders",
     ],
-<<<<<<< HEAD
+
   },/*
   {
     key: "question3",
@@ -109,9 +104,7 @@ const questionsData: Question[] = [
       "Anders",
     ],
   },*/
-=======
-  },
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
   // ... voeg andere vragen toe zoals nodig
 ];
 
@@ -178,7 +171,7 @@ function SpecialistMultistepForm() {
     />
   ));
 
-<<<<<<< HEAD
+
   function DateForm({ dateTimeSpans, updateFields }) {
     const addDateTimeSpan = () => {
       if (dateTimeSpans.length < 5) {
@@ -214,19 +207,19 @@ function SpecialistMultistepForm() {
     );
   }
 
-=======
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-<<<<<<< HEAD
+
         <KvKForm setShowNoKvK={setShowNoKvK} />,
-=======
+
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
@@ -265,7 +258,7 @@ function SpecialistMultistepForm() {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-<<<<<<< HEAD
+
     if (!isLastStep) {
       return next();
     } else {
@@ -274,7 +267,7 @@ function SpecialistMultistepForm() {
       queryUsers(data.email, "id");
       handelFormData(data);
       navigate("/specialist-resultaat");
-=======
+
     if (!isLastStep) return next()
 
     const userData = {
@@ -320,7 +313,16 @@ function SpecialistMultistepForm() {
             navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
           }
         })
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+      queryUsers(data.email, "email");
+      queryUsers(data.email, "id");
+      handelFormData(data);
+      navigate("/specialist-resultaat");
+>>>>>>>>> Temporary merge branch 2
     }
   }
 

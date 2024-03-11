@@ -21,11 +21,7 @@
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-<<<<<<< HEAD
-    "react-native": "^0.72",
-=======
-    "react-native": "^0.73.2",
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+    "react-native": "^0.73",
     "react-native-paper": "^5.12.3",
     "react-native-vector-icons": "^10.0.3",
     "typescript": "^5.1.3"

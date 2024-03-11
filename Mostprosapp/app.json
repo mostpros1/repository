@@ -33,13 +33,9 @@
         "expo-build-properties",
         {
           "android": {
-<<<<<<< HEAD
+
             "compileSdkVersion": 33,
             "targetSdkVersion": 33,
-=======
-            "compileSdkVersion": 31,
-            "targetSdkVersion": 31,
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
             "buildToolsVersion": "31.0.0"
           },
           "ios": {
@@ -50,11 +46,9 @@
     ],
     "extra": {
       "eas": {
-<<<<<<< HEAD
-        "projectId": "53cfd95e-4d4c-49bf-a47c-e5f4407c051f"
-=======
-        "projectId": "98c92f26-60b9-4624-96ac-91babaceeb52"
->>>>>>> e3a18071f752781c164cb35bc6c4d31e21705f22
+
+        "projectId": "53cfd95e-4d4c-49bf-a47c-e5f4407c051f",
+
       }
     }
   }
