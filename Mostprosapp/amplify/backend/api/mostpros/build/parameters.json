@@ -1,0 +1,8 @@
+{
+    "AppSyncApiName": "mostpros",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthModeLastUpdated": "2024-01-04T14:45:36.786Z",
+    "S3DeploymentBucket": "amplify-amplify61e2a13204214-staging-150051-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/cdff6fd96727b302e64512f96c038e87f6450a4e"
+}

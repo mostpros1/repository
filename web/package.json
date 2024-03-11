@@ -19,8 +19,8 @@
     "@aws-sdk/client-s3": "^3.472.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.9",
-    "@mui/material": "^5.15.5",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
     "@mui/x-date-pickers": "^6.19.0",
     "aws-amplify": "^5.3.13",
     "aws-sdk": "2.1506.0",
@@ -31,6 +31,7 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
+    "uuid": "^9.0.1",
     "stripe": "^14.13.0"
   },
   "devDependencies": {
