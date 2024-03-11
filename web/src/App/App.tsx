@@ -24,6 +24,7 @@ import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDa
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
+import HomeInovation from "../pages/HomeInovation/HomeInovation";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 

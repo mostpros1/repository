@@ -75,6 +75,17 @@
   gap: 15px;
 }
 
+.apps-icon {
+  display: flex;
+  border: 2px solid #49146A;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.apps-icon svg{
+  font-size: 30px;
+}
+
 .nav-list {
   list-style: none;
   display: flex;
