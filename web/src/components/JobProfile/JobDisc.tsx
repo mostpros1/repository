@@ -1,13 +1,16 @@
 import React from "react";
 import "./JobDisc.css";
 import Icon from "../../assets/kraan.svg";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import DateRangeRoundedIcon from "@mui/icons-material/DateRangeRounded";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 
 const JobDisc = () => {
   return (
     <div className="job_disc_card">
-      <div className="btn-back">
-        <button className="btn-secondary">Terug naar start</button>
-      </div>
+      <button className="btn-secondary">Terug naar start</button>
       <div className="job_disc_con">
         <div className="JobDiscTitle">
           <h3>Loodgieters werk: nieuwe leiding aanleggen</h3>
@@ -31,20 +34,48 @@ const JobDisc = () => {
           </div>
           <div className="middle-grid">
             <div className="job_disc-details">
-              <h4>Locatie</h4>
-              <h4>Binnen twee weken</h4>
-              <h4>1.1 KM van u locatie</h4>
+              <h4>
+                <div className="location-icon">
+                  <FmdGoodIcon />
+                </div>
+                locatie
+              </h4>
+              <h4>
+                <div className="calendar-icon">
+                  <DateRangeRoundedIcon />
+                </div>
+                Binnen twee weken
+              </h4>
+              <h4>
+                <div className="location-icon">
+                  <FmdGoodIcon />
+                </div>
+                1.1 KM van u locatie
+              </h4>
             </div>
           </div>
           <div className="right-grid">
             <div className="info-card">
               <h4>Contact informatie</h4>
               <ul>
-                <li>+31 0698765432</li>
-                <li>Lisazoetlief@hotmail.com</li>
+                <li>
+                  <div className="phone-icon">
+                    <PhoneInTalkIcon />
+                  </div>
+                  +31 0698765432
+                </li>
+                <li>
+                  <div className="email-sect">
+                    <EmailRoundedIcon />
+                    Lisazoetlief@hotmail.com
+                  </div>
+                </li>
               </ul>
               <div className="btn-con">
-                <button className="btn-secondary">Bericht sturen</button>
+                <button className="btn-secondary">
+                  <ForumRoundedIcon />
+                  Bericht sturen
+                </button>
               </div>
             </div>
           </div>
