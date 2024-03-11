@@ -89,5 +89,4 @@ const JobDisc = () => {
     </div>
   );
 };
-
 export default JobDisc;
