@@ -14,11 +14,6 @@
     "e2e": "cypress open"
   },
   "dependencies": {
-    "@aws-amplify/react-native": "^1.0.17",
-    "aws-amplify": "^6.0.10",
-    "aws-sdk": "^2.1570.0",
-    "expo": "^50.0.7",
-    "moment-timezone": "^0.5.45"
     "@aws-amplify/api": "^6.0.8",
     "@aws-amplify/core": "^6.0.8",
     "@aws-amplify/pubsub": "^6.0.8",

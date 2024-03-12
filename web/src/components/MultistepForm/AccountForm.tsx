@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import SearchChoreForm from "../SpecialistMultistep/SearchChoreForm/SearchChoreForm"
 
 type AccountFormData = {
-    beroep: string
     postCode: string
     stad: string
     email: string
@@ -25,7 +24,6 @@ type AccountFormProps = AccountFormData & {
     error: string;
 }
 
-export function AccountForm ({ beroep, email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, formConfig, updateFields }: AccountFormProps) {
 export function AccountForm({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false)
@@ -50,23 +48,6 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
 
     useEffect(() => {
         Auth.confirmSignUp(email, '000000', { forceAliasCreation: false })
-        .then(() => {
-            setUserExists(true)
-            setFetched(true)}
-        )
-        .catch(err => {
-            console.error(err)
-            const errorActionMap: Record<string, () => void> = {    
-                'UserNotFoundException':  () => { setFetched(true) },
-                'NotAuthorizedException': () => { setUserExists(true); setFetched(true) },
-                'AliasExistsException':   () => { setFetched(true) },
-                'CodeMismatchException':  () => { setFetched(true) },
-                'ExpiredCodeException':   () => { setFetched(true) },
-                'LimitExceededException': () => { setLimitExceeded(true) },
-                'default':                () => { setUserExists(false); setFetched(true) }
-            };
-            (errorActionMap[err.code] || errorActionMap['default'])()
-        })
             .then(() => {
                 setUserExists(true)
                 setFetched(true)
@@ -89,8 +70,6 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
 
     return (
         <>
-            { limitExceeded ? <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p> : <></> }
-            { fetched ? userExists ? formConfigMap[formConfig][0] : formConfigMap[formConfig][1] : <></> }
             {limitExceeded && <p>Er zijn te veel API-calls gemaakt. Probeer het later nogmaals.</p>}
             {fetched && userExists ? formConfig.loginForm : formConfig.registerForm}
         </>
