@@ -20,6 +20,7 @@ type DateTimeSpan = {
 };
 
 type FormData = {
+  dateTimeSpans: any;
   beroep: string;
   email: string;
   postCode: string;
@@ -35,6 +36,7 @@ type FormData = {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  dateTimeSpans: "",
   beroep: "",
   email: "",
   postCode: "",
