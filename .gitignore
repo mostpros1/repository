@@ -1,4 +1,4 @@
-backend_functions/emails/config.js
+backend_functions/emails/sendSesMail.js
 
 
 #amplify-do-not-edit-begin
