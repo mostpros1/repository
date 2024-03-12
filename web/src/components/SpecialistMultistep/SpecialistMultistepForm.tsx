@@ -12,6 +12,8 @@ import NoKvK from "./NoKvK/NoKvK";
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
 
+
+
 type FormData = {
   email: string;
   postCode: string;
@@ -23,6 +25,16 @@ type FormData = {
   repeatPassword: string;
   questions: Record<string, string>;
 };
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+  dob: string;
+}
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
@@ -76,6 +88,8 @@ const questionsData: Question[] = [
 ];
 
 function SpecialistMultistepForm() {
+
+  //const [error, setError] = useState('');
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
@@ -142,60 +156,60 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
 
+  function signUp(registerData: RegisterData, user_type: string): void {
+    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+
+    const signUpProf = async () => {
+      try {
+        await Auth.signUp({
+          username: email,
+          password: password,
+          attributes: {
+            phone_number: phoneNumber,
+            given_name: firstName,
+            family_name: lastName,
+            birthdate: dob,
+            'custom:user_type': user_type,
+          },
+          autoSignIn: { enabled: true },
+        });
+
+        /*const user = await Auth.signIn(email, password);
+        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+      */
+        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+      } catch (error: any) {
+        console.error('Error signing up:', error);
+        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      }
+    };
+
+    signUpProf();
+  }
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) return next()
 
-    const userData = {
+    const userData: RegisterData = {
       email: data.email.trim(),
       password: data.password.trim(),
       repeatPassword: data.repeatPassword.trim(),
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
+      phoneNumber: data.phoneNumber.trim(),
+      dob: "" // Add the 'dob' property here
     }
+    signUp(userData, "Professional")
 
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/specialist-resultaat')
-        })
-        .catch((err) => {
-          console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-        username: userData.email,
-        password: userData.password,
-        attributes: {
-          name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Professional"
-        },
-        autoSignIn: { enabled: true }
-      })
-        .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-        .catch(async error => {
-          console.error(error)
-          if (error.code == 'UsernameExistsException') {
-            await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-          }
-        })
-    }
+
   }
 
   const stepWidth = 100 / steps.length;
