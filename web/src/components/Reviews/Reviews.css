@@ -86,3 +86,11 @@
         height: 175px;
     }
 }
+
+.button {
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: auto;
+    font-size: 17px;
+}

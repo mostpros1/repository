@@ -4,7 +4,11 @@ import NavBar from "../ui/NavBar/NavBar";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useState } from "react";
 import * as mutations from "../../graphql/mutations";
+<<<<<<< HEAD
 //import PaymentLink from "../PaymentLink/PaymentLink";
+=======
+import PaymentLink from "../PaymentLink/PaymentLink";
+>>>>>>> acceptance
 import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../../graphql/queries";
 import intlFormatDistance from "date-fns/intlFormatDistance";
@@ -115,7 +119,11 @@ function ChatMain({ user, signOut }) {
           value={subtotalInput}
           onChange={handleSubtotalChange}
         />
+<<<<<<< HEAD
         {/* <PaymentLink subtotal={parseFloat(subtotalInput) || 0} handleSendMessage={handleSendMessage} /> */}
+=======
+        <PaymentLink subtotal={parseFloat(subtotalInput) || 0} handleSendMessage={handleSendMessage} />
+>>>>>>> acceptance
       </>
     );
   }
