@@ -10,6 +10,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import Stripe from 'stripe';
 export { dynamoDB } from "../../backend_functions/declerations.ts";
 
 Amplify.configure(awsExports);

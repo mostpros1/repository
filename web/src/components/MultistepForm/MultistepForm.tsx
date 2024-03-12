@@ -27,8 +27,6 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
-  formConfig: string
-  beroep: string
 }
 
 function MultistepForm() {
@@ -49,9 +47,7 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: "",
-    beroep: "",
-    formConfig: ""
+    repeatPassword: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -129,6 +125,7 @@ function MultistepForm() {
       ],
       onStepChange: () => {}
     });
+
     steps: [
       <LocationForm {...data} updateFields={updateFields} />,
       <DateForm updateDate={updateDate} updateFields={updateFields} />,
@@ -161,6 +158,7 @@ function MultistepForm() {
       if (!isLastStep) return next()
 
       const userData = {
+
         email: data.email,
         password: data.password,
         repeatPassword: data.repeatPassword,
@@ -173,6 +171,7 @@ function MultistepForm() {
     }
 
       const userData = {
+
         email: data.email,
         password: data.password,
         repeatPassword: data.repeatPassword,
@@ -243,4 +242,5 @@ function MultistepForm() {
     </form>
   )
 }
+
 export default MultistepForm
