@@ -35,7 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 #amplify-do-not-edit-begin
-amplify/local-env-info.json
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
