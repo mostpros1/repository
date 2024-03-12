@@ -9,6 +9,8 @@ import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
 
+//import { authenticateUser } from '../../../../backend_functions/authentecateUser.ts';
+
 function LoginPage() {
   const navigate = useNavigate();
   const { updateUser } = useUser();
@@ -21,22 +23,27 @@ function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error) {
+        updateUser(null);
+      }
+    };
+
     checkAuthStatus();
   }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const authenticatedUser = await Auth.currentAuthenticatedUser();
-      updateUser(authenticatedUser);
-    } catch (error) {
-      updateUser(null);
-    }
-  };
 
   const handleLogin = async () => {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
-      updateUser(authenticatedUser);
+
+      sessionStorage.setItem('accessToken', authenticatedUser.signInUserSession.accessToken.jwtToken);
+      sessionStorage.setItem('idToken', authenticatedUser.signInUserSession.idToken.jwtToken);
+      sessionStorage.setItem('refreshToken', authenticatedUser.signInUserSession.refreshToken.token);
+
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
@@ -54,7 +61,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => { }} handleLogin={handleLogin} setError={setError} error={error} />
         </div>
       </div>
       <Footer />
