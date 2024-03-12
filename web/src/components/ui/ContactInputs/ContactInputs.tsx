@@ -2,7 +2,7 @@ import "./ContactInputs.css";
 
 function ContactInputs() {
   return (
-    <form className="contact_form">
+    <form className="contact_form" action="/send-email">
       <div className="contact_input">
         <label>Naam</label>
         <input type="text" />
@@ -20,5 +20,8 @@ function ContactInputs() {
     </form>
   );
 }
+
+
+
 
 export default ContactInputs;

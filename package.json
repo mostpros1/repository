@@ -2,9 +2,11 @@
   "dependencies": {
     "aws-amplify": "^6.0.10",
     "aws-sdk": "^2.1575.0",
+    "cors": "^2.8.5",
     "react-icons": "^5.0.1"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "typescript": "^5.3.3"
   }
 }

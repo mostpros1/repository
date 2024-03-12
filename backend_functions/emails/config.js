@@ -9,7 +9,7 @@ const config = {
             secretAccessKey: 'your-secret-access-key',*/
             // Set the default 'from' address for SES
             from: {
-                default: 'your-default-from-address@example.com'
+                default: 'timon@timonheidenreich.eu'
             }
         }
     }
