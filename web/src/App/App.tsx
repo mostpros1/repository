@@ -18,14 +18,12 @@ import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVe
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
-import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
 import "./App.css";
-import ChatContactList from "../components/Chat/ChatContactList";
 
 const App = () => {
   return (

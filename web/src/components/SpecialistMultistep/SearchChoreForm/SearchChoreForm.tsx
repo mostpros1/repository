@@ -1,7 +1,7 @@
 import "./SearchChoreForm.css"
-import { useState } from 'react';
 
 type SpecialistData = {
+    beroep: string
     email: string
     postCode: string
     stad: string
@@ -11,7 +11,6 @@ type SpecialistData = {
 type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
-
 
 export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
@@ -82,14 +81,13 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                     Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
-
                 <label>Uw hoofdberoep</label>
                 <input
                     type="text"
-                    required
                     placeholder="Uw beroep"
-                    className={`${isValidBeroep ? '' : 'invalid'}`}
                     value={beroep}
+                    onChange={e => updateFields({ beroep: e.target.value })}
+                />
                     onChange={handleBeroepChange}
                     pattern="[A-Za-z\s]+"
                 />
@@ -98,38 +96,27 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 )}
                 <label>Email:</label>
                 <input
-                    type="email"
-                    required
+                    type="text"
                     placeholder="example@example.com"
-                    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$"
                     value={email}
-                    onChange={handleEmailChange}
+                    onChange={e => updateFields({ email: e.target.value })}
                 />
-                {!isValidEmail && (
-                    <p className="error-message">Voer alstublieft een geldig e-mailadres in</p>
-                )}
-
                 <label>Postcode</label>
                 <div className="search_chore_address">
                     <input
-                        type="postcode"
-                        required
+                        type="text"
                         placeholder="1234AB"
-                        className={`${isValidPostcode ? '' : 'invalid'}`}
-                        value={postcodeInput}
-                        onChange={handlePostcodeChange}
-                        pattern="\d{4}\s?[A-Za-z]{2}"
+                        value={postCode}
+                        onChange={e => updateFields({ postCode: e.target.value })}
                     />
                     <input
                         type="text"
-                        required
                         placeholder="Plaatsnaam"
-                        className={`${isValidStad ? '' : 'invalid'}`}
-                        value={stadInput}
-                        onChange={handleStadChange}
-                        pattern="[A-Za-z\s]+"
+                        value={stad}
+                        onChange={e => updateFields({ stad: e.target.value })}
                     />
                 </div>
+                <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
                 {!isValidPostcode && (
                     <p className="error-message">Voer alstublieft een geldige postcode in (bijv. 1234AB)</p>
                 )}

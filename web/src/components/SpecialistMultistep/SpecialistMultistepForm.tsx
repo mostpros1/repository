@@ -12,6 +12,8 @@ import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
 
 type FormData = {
+  dateTimeSpans: any;
+  beroep: string;
   email: string;
   postCode: string;
   stad: string;
@@ -26,6 +28,8 @@ type FormData = {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  dateTimeSpans: "",
+  beroep: "",
   email: "",
   postCode: "",
   stad: "",
@@ -37,7 +41,6 @@ const INITIAL_DATA: FormData = {
   questions: {
     question1: "",
     question2: "",
-    question3: "",
   },
 };
 
@@ -216,11 +219,25 @@ function SpecialistMultistepForm() {
           ))}
         </div>
       </div>
-      {showNoKvK ? <NoKvK /> : step}
-      <div className="btn-wrapper">
-        <button type="button" onClick={() => { showNoKvK ? setShowNoKvK(false) : back() }} className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`} style={{ display: isFirstStep ? 'none' : 'inline-block' }}>Vorige</button>
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-      </div>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
 }

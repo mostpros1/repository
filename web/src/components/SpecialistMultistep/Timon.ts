@@ -1,5 +1,3 @@
-
-//const dynamoDB = new AWS.DynamoDB();
 import { dynamoDB } from '../../main.tsx';
 
 
