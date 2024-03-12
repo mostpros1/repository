@@ -51,12 +51,12 @@ function RegisterPage() {
             autoSignIn: { enabled: true },
           });
 
-          const user = await Auth.signIn(email, password);
+          /*const user = await Auth.signIn(email, password);
           sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
           sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
           sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
-        
-          navigate('/');
+        */
+          navigate('/bevestig-email', { state: { email: email, roleName: 'HOMEOWNER'} });
         } catch (error: any) {
           console.error('Error signing up:', error);
           setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
