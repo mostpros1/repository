@@ -5,17 +5,21 @@ function ContactInputs() {
     <form method="Post" className="contact_form" action="http://localhost:3000/send-email">
       <div className="contact_input">
         <label>Naam</label>
-        <input type="text" />
+        <input name="firstname" type="text" />
       </div>
       <div className="contact_input">
         <label>Achternaam</label>
-        <input type="text" />
+        <input name="lastname" type="text" />
       </div>
       <div className="contact_input">
         <label>Email</label>
-        <input type="text" />
+        <input name="email" type="text" />
       </div>
-      <textarea className="contact_question" placeholder="Wat is uw vraag?"></textarea>
+      <div className="contact_input">
+        <label>Onderwerp</label>
+        <input name="subject" type="text" />
+      </div>
+      <textarea className="contact_question" name="html" placeholder="Wat is uw vraag?"></textarea>
       <input type="submit" className="contact_form_submit" value="Versturen"/>
     </form>
   );
