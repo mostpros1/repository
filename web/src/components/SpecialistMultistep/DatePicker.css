@@ -50,6 +50,9 @@
     padding-left: 55px;
     padding-right: 6px;
     gap: 20px;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
   }
 
   .week-day{
@@ -104,6 +107,7 @@
     padding: 10px;
     margin: 2px;
     background-color: #a80505;
+    background-color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
     border-radius: 10%;
@@ -272,6 +276,7 @@
 
 .time-slot-niet-beschikbaar {
   background-color: #a80505;
+  background-color: #f8f9fa;
   padding: 10px 20px;
   margin: 5px 0; /* Ruimte tussen tijdslots */
   cursor: pointer;

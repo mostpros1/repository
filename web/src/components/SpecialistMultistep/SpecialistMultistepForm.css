@@ -13,10 +13,8 @@
     border: 0;
     border-radius: 5px;
     margin-left: 20px;
-<<<<<<< HEAD
     position: absolute;
-=======
->>>>>>> acceptance
+    position: absolute;
 }
 
 .deleteKnop:hover {
@@ -60,7 +58,6 @@
 .inputTime{
     margin-right: 10px;
     margin-bottom: 5px;
-<<<<<<< HEAD
 }
 
 .tekstBovenDatum{
@@ -107,6 +104,7 @@
   .MuiFormControl-root {
     width: 100%;
   }
-=======
+
 }
->>>>>>> acceptance
+
+  }

@@ -9,6 +9,15 @@ interface DateAndTimePickerProps {
 }
 
 const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */}) => {
+import aws from 'aws-sdk';
+import { dynamo } from '../../../../backend_functions/declerations.ts';
+import professionalId from './SpecialistMultistepForm.tsx';
+
+interface DateAndTimePickerProps {
+  // onDateChange?: (selectedDates: string[]) => void;
+}
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
@@ -19,6 +28,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   const [selectedTimezone, setSelectedTimezone] = useState('GMT+01:00 Europe/Amsterdam'); // Default timezone
   const [submittedDays, setSubmittedDays] = useState([]);
 
+  // List of timezones (you can expand this list as needed)
   const timezones = [
     'GMT-08:00 America/Los_Angeles',
     'GMT-06:00 America/Mexico_City',
@@ -247,6 +257,98 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       alert("Fout bij het opslaan van beschikbaarheid.");
     }
   };
+  const submitDates = async () => {
+
+    // const item = {
+    //   userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
+    //   dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    // };
+    
+    // const params = {
+    //   TableName: "UserAvailability",
+    //   Item: {
+    //     userId: "userId",
+    //     dates: selectedDates, // De array met geselecteerde datums
+    //     // Voeg eventueel andere relevante gegevens toe
+    //   },
+    // };
+  
+    // try {
+    //   await dynamo.put(params).promise();
+    //   alert("Beschikbaarheid succesvol opgeslagen!");
+    // } catch (error) {
+    //   console.error("Er is een fout opgetreden bij het opslaan: ", error);
+    //   alert("Fout bij het opslaan van beschikbaarheid.");
+    // }
+
+    for (let i = 0; i < selectedDates.length; i++) {
+      const params = {
+        TableName: "UserAvailability",
+        Item: {
+          id: Math.floor(Math.random() * 1000000),
+          professional_id: professionalId,
+          date: selectedDates[i],
+
+        },
+      };
+      try {
+        await dynamo.put(params).promise();
+        alert("Beschikbaarheid succesvol opgeslagen!");
+      } catch (error) {
+        console.error("Er is een fout opgetreden bij het opslaan: ", error);
+        alert("Fout bij het opslaan van beschikbaarheid.");
+      }
+    }
+  };
+
+  function getId(datum: string) {
+    const params = {
+      TableName: "UserAvailability",
+      IndexName: "dateIndex",
+      KeyConditionExpression: '#d = :dateValue',
+      ExpressionAttributeNames: {
+        '#d': 'date',
+      },
+      ExpressionAttributeValues: {
+        ':dateValue': datum,
+      }
+    };
+
+    dynamo.query(params)
+      .promise()
+      .then(data => {
+        if (data.Items && data.Items.length > 0) {
+          Verwijder(data.Items[0].id);
+        } else {
+          console.error("No items found in the query result.");
+        }
+      })
+      .catch(console.error);
+
+
+  }
+
+  function Verwijder(id: number) {
+    const params = {
+      TableName: "UserAvailability",
+      Key: {
+        id: id,
+      },
+    };
+    dynamo
+      .delete(params)
+      .promise()
+      .then(data => console.log(data.Attributes))
+      .catch(console.error)
+
+  }
+
+  function deleteDates() {
+
+    for (let i = 0; i < selectedDates.length; i++) {
+      getId(selectedDates[i]);
+    }
+  }
 
 // Function to handle timezone selection
 const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -269,6 +371,7 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     <div className="date-time-picker">
       <div className="calendar">
         <div className="month-selector">
+      <div className="month-selector">
           <button
             type="button"
             className='prev-month'
@@ -339,6 +442,7 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
       
       )}
         <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
+        <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
       </div>
   );
 };

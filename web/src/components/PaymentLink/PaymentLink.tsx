@@ -2,7 +2,6 @@
 // import { stripeClient } from '../../main';
 // import { Auth } from 'aws-amplify';
 
-<<<<<<< HEAD
 // type PaymentLinkProps = {
 //     subtotal: number;
 //     handleSendMessage: (text: any) => void; // Of het nu een Promise<void> of een andere return type moet zijn, hangt af van je implementatie
@@ -13,7 +12,6 @@
 //     const [currentUser, setCurrentUser] = useState<any>('')
 //     const [userStripeAccountId, setUserStripeAccountId] = useState('')
 //     const companyFee = subtotal * 0.02 // Mostpros takes 2% of the transaction.
-=======
 type PaymentLinkProps = {
     subtotal: number;
     handleSendMessage: (text: any) => void; // Of het nu een Promise<void> of een andere return type moet zijn, hangt af van je implementatie
@@ -24,7 +22,12 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     const [currentUser, setCurrentUser] = useState<any>('')
     const [userStripeAccountId, setUserStripeAccountId] = useState('')
     const companyFee = subtotal * 0.02 // Mostpros takes 2% of the transaction.
->>>>>>> acceptance
+
+// const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
+//     const [paymentLink, setPaymentLink] = useState('')
+//     const [currentUser, setCurrentUser] = useState<any>('')
+//     const [userStripeAccountId, setUserStripeAccountId] = useState('')
+//     const companyFee = subtotal * 0.02 // Mostpros takes 2% of the transaction.
 
 //     useEffect(() => {
 //         async function checkStripeAccountId() {
@@ -39,7 +42,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
 //     const createSession = async () => {
 //         if (userStripeAccountId == '') return;
 
-<<<<<<< HEAD
+
 //         stripeClient.checkout.sessions.create({
 //             currency: 'eur',
 //             mode: 'payment',
@@ -69,7 +72,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
 //             handleSendMessage(paymentMessage);
 //         })
 //     }
-=======
+
         stripeClient.checkout.sessions.create({
             currency: 'eur',
             mode: 'payment',
@@ -99,7 +102,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
             handleSendMessage(paymentMessage);
         })
     }
->>>>>>> acceptance
+
 
 //     return <>
 //         <button onClick={createSession}>create payment</button>

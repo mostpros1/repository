@@ -7,7 +7,6 @@ import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-<<<<<<< HEAD
 import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
@@ -18,12 +17,11 @@ type DateTimeSpan = {
   startTime: string;
   endTime: string;
 };
-=======
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
->>>>>>> acceptance
 
 type FormData = {
+  dateTimeSpans: any;
   beroep: string;
   email: string;
   postCode: string;
@@ -40,6 +38,7 @@ type FormData = {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  dateTimeSpans: "",
   beroep: "",
   email: "",
   postCode: "",
@@ -172,7 +171,6 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-<<<<<<< HEAD
 
         <SearchChoreForm {...data} updateFields={updateFields}/>,
         <DateForm
@@ -182,25 +180,21 @@ function SpecialistMultistepForm() {
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
-=======
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
->>>>>>> acceptance
       ],
       onStepChange: () => { },
     });
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-<<<<<<< HEAD
     if (!isLastStep) {
       return next();
     } else {
       console.log(data);
       navigate("/specialist-resultaat");
-=======
     if (!isLastStep) return next()
 
     const userData = {
@@ -246,7 +240,6 @@ function SpecialistMultistepForm() {
             navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
           }
         })
->>>>>>> acceptance
     }
   }
 

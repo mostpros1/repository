@@ -43,7 +43,13 @@ const handleSendMessage = async (text) => {
     }
   }
   
+
 };
+
+  
+   
+};
+
 
   const handleReceivedMessage = (receivedChat) => {
     if (receivedChat.members.includes(user.attributes.email)) {

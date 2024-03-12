@@ -10,6 +10,10 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+export { dynamoDB } from "../../backend_functions/declerations.ts";
+
+Amplify.configure(awsExports);
+Auth.configure(awsExports);
 
 
 Amplify.configure(awsExports);
