@@ -2,7 +2,7 @@ import "./ContactInputs.css";
 
 function ContactInputs() {
   return (
-    <form className="contact_form" action="http://localhost:3000/send-email">
+    <form method="Post" className="contact_form" action="http://localhost:3000/send-email">
       <div className="contact_input">
         <label>Naam</label>
         <input type="text" />
