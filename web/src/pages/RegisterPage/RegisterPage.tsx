@@ -56,7 +56,8 @@ function RegisterPage() {
           sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
           sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
         */
-          navigate('/bevestig-email', { state: { email: email, roleName: 'HOMEOWNER'} });
+          //const postConfig = postConfigMap['HOMEOWNER'];
+        navigate('/bevestig-email', { state: { email: email, roleName: 'Homeowner'/*, postConfig: postConfig */} });
         } catch (error: any) {
           console.error('Error signing up:', error);
           setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

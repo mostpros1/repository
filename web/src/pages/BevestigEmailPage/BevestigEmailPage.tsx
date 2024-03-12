@@ -67,6 +67,7 @@ function BevestigEmailPage() {
     }
     const postConfig = postConfigMap[postConfigId] || null
 
+
     async function confirmSignUp(code: string) {
 
         const confirmationResult = await Auth.confirmSignUp(userEmail, code)
@@ -88,11 +89,21 @@ function BevestigEmailPage() {
         console.log(addToGroupResult)
         if (!addToGroupResult) return
         if (confirmationResult == 'SUCCESS') {
-            setIsConfirmed(true)
+            if (confirmationResult === 'SUCCESS' && addToGroupResult) {
+                setIsConfirmed(true);
 
-            
-            postConfig.onSuccess && postConfig.onSuccess()
-            navigate("/")
+                // Sign in the user
+                /*const user = await Auth.signIn(userEmail, userPassword);
+                sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+                sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+                sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+*/
+                // Perform any additional actions (if needed) upon successful sign-in
+                postConfig.onSuccess && postConfig.onSuccess();
+
+                // Navigate the user to the desired page
+                //navigate('/');
+            }
         }
     }
 
@@ -147,5 +158,6 @@ function BevestigEmailPage() {
         userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
     )
 }
+
 
 export default BevestigEmailPage
