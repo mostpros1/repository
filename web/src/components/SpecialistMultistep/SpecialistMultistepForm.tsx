@@ -194,6 +194,8 @@ function SpecialistMultistepForm() {
 
     signUpProf();
   }
+
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) return next()
@@ -207,7 +209,8 @@ function SpecialistMultistepForm() {
       phoneNumber: data.phoneNumber.trim(),
       dob: "" // Add the 'dob' property here
     }
-    signUp(userData, "Professional")
+
+    signUp(userData, "Professional");
 
 
   }

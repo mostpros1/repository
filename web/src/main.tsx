@@ -12,11 +12,11 @@ import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 
-/*aws.config.update({
+aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
   secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
   region: import.meta.env.VITE_AWS_REGION,
-});*/
+});
 
 import { dynamoDB } from "./../../backend_functions/declerations.ts";
 
