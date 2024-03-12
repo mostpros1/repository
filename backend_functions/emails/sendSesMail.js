@@ -1,14 +1,14 @@
-const AWS = require('aws-sdk');
+const aws = require('aws-sdk');
 
 const config = require('./config'); // load configurations file
 
-AWS.config.update({
-    accessKeyId: config.aws.key,
-    secretAccessKey: config.aws.secret,
-    region: config.aws.ses.region
+aws.config.update({
+    region: import.meta.env.VITE_AWS_REGION,
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
 });
 
-const ses = new AWS.SES({apiVersion: '2010-12-01'});
+const ses = new aws.SES({apiVersion: '2010-12-01'});
 
 const sendMail = (to, subject, message, from) => {
     const params = {
