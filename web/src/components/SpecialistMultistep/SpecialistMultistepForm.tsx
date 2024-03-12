@@ -1,18 +1,25 @@
-import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 import { RegisterForm } from "../MultistepForm/RegisterForm";
-import { FormEvent, useEffect , useState } from "react";
+import { FormEvent } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-import { Auth } from "aws-amplify";
-import { AccountForm } from "../MultistepForm/AccountForm";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
-  dateTimeSpans: any;
   beroep: string;
   email: string;
   postCode: string;
@@ -23,12 +30,12 @@ type FormData = {
   password: string;
   repeatPassword: string;
   questions: Record<string, string>;
+  dateTimeSpans: DateTimeSpan[];
 };
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
-  dateTimeSpans: "",
   beroep: "",
   email: "",
   postCode: "",
@@ -42,6 +49,7 @@ const INITIAL_DATA: FormData = {
     question1: "",
     question2: "",
   },
+  dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
 };
 
 type Question = {
@@ -139,64 +147,47 @@ function SpecialistMultistepForm() {
     />
   ));
 
+  function DateForm({ dateTimeSpans, updateFields }) {
+    const addDateTimeSpan = () => {
+      if (dateTimeSpans.length < 5) {
+        const newDateTimeSpan = { date: new Date(), startTime: "", endTime: "" };
+        updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
+      }
+    };
+  
+    return (
+      <form action="" method="POST">
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar />
+        </div>
+      </form>
+    );
+  }
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
+
+        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <DateForm
+          dateTimeSpans={data.dateTimeSpans}
+          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
+          />,
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!isLastStep) return next()
-
-    const userData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/specialist-resultaat')
-        })
-        .catch((err) => {
-          console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-        username: userData.email,
-        password: userData.password,
-        attributes: {
-          name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Professional"
-        },
-        autoSignIn: { enabled: true }
-      })
-        .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-        .catch(async error => {
-          console.error(error)
-          if (error.code == 'UsernameExistsException') {
-            await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-          }
-        })
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+      navigate("/specialist-resultaat");
     }
   }
 
@@ -241,4 +232,5 @@ function SpecialistMultistepForm() {
     </form>
   );
 }
+
 export default SpecialistMultistepForm;
