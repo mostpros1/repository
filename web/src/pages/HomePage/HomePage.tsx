@@ -9,7 +9,6 @@ import Reviews from "../../components/Reviews/Reviews"
 import Professionals from "../../components/Professionals/Professionals"
 import Footer from "../../components/ui/Footer/Footer"
 
-
 function HomePage() {
   return (
     <>
