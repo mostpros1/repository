@@ -1,13 +1,13 @@
-import { dynamoDB } from '../../main.tsx';
+// import { dynamoDB } from '../../main.tsx';
 
 
-    dynamoDB.listTables({}, (err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(data);
-        }
-    });
+//     dynamoDB.listTables({}, (err, data) => {
+//         if (err) {
+//             console.error(err);
+//         } else {
+//             console.log(data);
+//         }
+//     });
 
 
 /*function createTableAvailibility() {
