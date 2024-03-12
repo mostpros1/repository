@@ -17,14 +17,14 @@ const HowItWorksThreeSpecialist = ({navigation}) => {
                 </View>
                 <View>
                     <View style={styles.imageContainer}>
-                        <Image style={styles.image} source={require("../../../assets/images/HowItWorksThree.png")} />
+                       
                     </View>
                 </View>
 
             </View>
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    <Image source={require("../../../assets/images/three.png")} />
+                    
                     <Text style={styles.title}>Klus uitvoeren</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>

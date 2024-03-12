@@ -155,19 +155,18 @@ function MultistepForm() {
       return next();
     }
 
-
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
       console.log('Form Data:', data);
       if (!isLastStep) return next()
 
       const userData = {
-        email: data.email.trim(),
-        password: data.password.trim(),
-        repeatPassword: data.repeatPassword.trim(),
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
         firstName: data.firstName.trim(),
         lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber.trim()
+        phoneNumber: data.phoneNumber
       }
       setValidDatum(true);
       return next();
