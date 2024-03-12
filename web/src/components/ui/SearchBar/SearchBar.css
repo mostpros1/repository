@@ -72,3 +72,8 @@
 .search_dropdown_item:hover {
     background-color: #f1f1f1;
 }
+
+/* In SearchBar.css */
+.search_dropdown_item.selected {
+  background-color: #f0f0f0; /* Example color for highlighting */
+}

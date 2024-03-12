@@ -1,8 +1,8 @@
+import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 import { RegisterForm } from "../MultistepForm/RegisterForm";
-import { FormEvent } from "react";
+import { FormEvent, useEffect , useState } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
@@ -30,7 +30,6 @@ type FormData = {
   password: string;
   repeatPassword: string;
   questions: Record<string, string>;
-  dateTimeSpans: DateTimeSpan[];
 };
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -49,7 +48,6 @@ const INITIAL_DATA: FormData = {
     question1: "",
     question2: "",
   },
-  dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
 };
 
 type Question = {
@@ -232,5 +230,4 @@ function SpecialistMultistepForm() {
     </form>
   );
 }
-
 export default SpecialistMultistepForm;

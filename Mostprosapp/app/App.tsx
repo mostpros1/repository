@@ -26,7 +26,33 @@ import ProfileNotifications from "./(Components)/Profile/ProfileNotifications";
 import ProfileGeneralSettings from "./(Components)/Profile/ProfileGeneralSettings";
 import ChatOverview from "./(Components)/Chat/ChatOverview";
 import HomePageSpecialist from "./(Components)/Specialist/HomePageSpecialist";
+import HomeOwnerCreate from "./(Components)/Homeowner/HomeOwnerCreate";
+import HomeOwnerPostalCode from "./(Components)/Homeowner/HomeOwnerPostalCode";
+import HomeOwnerEmail from "./(Components)/Homeowner/HomeOwnerEmail";
+import HomeOwnerAppLoodgieter from "./(Components)/Homeowner/HomeOwnerAppLoodgieter";
+import HomeOwnerAppHovenier from "./(Components)/Homeowner/HomeOwnerAppHovenier";
+import HomeOwnerAppDakdekker from "./(Components)/Homeowner/HomeOwnerAppDakdekker";
+import HomeOwnerAppSchoonmaker from "./(Components)/Homeowner/HomeOwnerAppSchoonmaker";
+import HomeOwnerAppAannemer from "./(Components)/Homeowner/HomeOwnerAppAannemer";
+import HomeOwnerAppElektricien from "./(Components)/Homeowner/HomeOwnerAppElektricien";
+import HomeOwnerAppAI_home_adviseur from "./(Components)/Homeowner/HomeOwnerAppAI-home-adviseur";
+import HomeOwnerAppBadkamerspecialist from "./(Components)/Homeowner/HomeOwnerAppBadkamerspecialist";
+import PostalCodeSpecialist from "./(Components)/Specialist/PostalCodeSpecialist";
+import GegevensSpecialist from "./(Components)/Specialist/GegevensSpecialist";
+import HomeOwnerExtraInfo from "./(Components)/Homeowner/HomeOwnerExtraInfo";
+import OmgevingSpecialist from "./(Components)/Specialist/OmgevingSpecialist";
+import CompanySituation1 from "./(Components)/Specialist/CompanySituation1";
+import CompanySituation2 from "./(Components)/Specialist/CompanySituation2";
+import CompanySituation3 from "./(Components)/Specialist/CompanySituation3";
+import CompanySituation4 from "./(Components)/Specialist/CompanySituation4";
+import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
+import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
+import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
+import Footer from "./(Components)/Footer";
+import Contact from "./(Components)/Contact/Contact";
+import AboutUs from "./(Components)/AboutUs/AboutUs";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
+import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -92,7 +118,33 @@ const App = () => {
         <Stack.Screen name="ChatNavigation" component={ChatNavigation}/>
         <Stack.Screen name="HomeOwnerNavigation" component={HomeOwnerNavigation}/>
         <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults}/>
-
+        <Stack.Screen name="HomeOwnerCreate" component={HomeOwnerCreate}/>
+        <Stack.Screen name="HomeOwnerPostalCode" component={HomeOwnerPostalCode}/>
+        <Stack.Screen name="HomeOwnerAppLoodgieter" component={HomeOwnerAppLoodgieter}/>
+        <Stack.Screen name="HomeOwnerAppHovenier" component={HomeOwnerAppHovenier}/>
+        <Stack.Screen name="HomeOwnerAppDakdekker" component={HomeOwnerAppDakdekker}/>
+        <Stack.Screen name="HomeOwnerAppSchoonmaker" component={HomeOwnerAppSchoonmaker}/>
+        <Stack.Screen name="HomeOwnerAppAannemer" component={HomeOwnerAppAannemer}/>
+        <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien}/>
+        <Stack.Screen name="HomeOwnerEmail" component={HomeOwnerEmail}/>
+        <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo}/>
+        <Stack.Screen name="HomeOwnerAppAI_home_adviseur" component={HomeOwnerAppAI_home_adviseur}/>
+        <Stack.Screen name="HomeOwnerAppBadkamerspecialist" component={HomeOwnerAppBadkamerspecialist}/>
+        <Stack.Screen name="PostalCodeSpecialist" component={PostalCodeSpecialist}/>
+        <Stack.Screen name="GegevensSpecialist" component={GegevensSpecialist} />
+        <Stack.Screen name="OmgevingSpecialist" component={OmgevingSpecialist} />
+        <Stack.Screen name="CompanySituation1" component={CompanySituation1} />
+        <Stack.Screen name="CompanySituation2" component={CompanySituation2}/>
+        <Stack.Screen name="CompanySituation3" component={CompanySituation3} />
+        <Stack.Screen name="CompanySituation4" component={CompanySituation4} />
+        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
+        <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
+        <Stack.Screen name="NoKvKInfo" component={NoKvKInfo} />
+        <Stack.Screen name="Footer" component={Footer}/>
+        <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
+        <Stack.Screen name="Contact" component={Contact}/>
+        <Stack.Screen name="AboutUs" component={AboutUs}/>
+        
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

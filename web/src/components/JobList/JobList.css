@@ -80,3 +80,9 @@ select option {
     background-color: #fff; /* Background color of the options */
     color: #333; /* Text color of the options */
 }
+
+.job-con{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+}

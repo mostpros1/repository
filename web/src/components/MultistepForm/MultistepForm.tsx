@@ -27,6 +27,8 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  formConfig: string
+  beroep: string
 }
 
 function MultistepForm() {
@@ -47,7 +49,9 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    beroep: "",
+    formConfig: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -125,11 +129,49 @@ function MultistepForm() {
       ],
       onStepChange: () => {}
     });
+    steps: [
+      <LocationForm {...data} updateFields={updateFields} />,
+      <DateForm updateDate={updateDate} updateFields={updateFields} />,
+      <InfoForm {...data} updateFields={updateFields} />,
+      <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+    ],
+    onStepChange: () => { }
+  });
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+
+
+    if (!isLastStep) {
+      // Check if the data for the second step is filled
+      if (currentStepIndex === 1 && data.date.trim() === "") {
+        // Display an error or handle the case where the second step is not filled
+        setValidDatum(false);
+        return;
+      }
+
+      setValidDatum(true);
+      return next();
+    }
+
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
       console.log('Form Data:', data);
       if (!isLastStep) return next()
+
+      const userData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim()
+      }
+      setValidDatum(true);
+      return next();
+    }
 
       const userData = {
         email: data.email,
@@ -202,5 +244,4 @@ function MultistepForm() {
     </form>
   )
 }
-
 export default MultistepForm
