@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar';
+import { useNavigate } from 'react-router-dom';
 
-function DateForm({ updateDate, updateFields }) {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [dateOptions, setDateOptions] = useState<Array<Date>>([]);
+interface DateFormProps {
+  updateDate: (date: Date) => void;
+  updateFields: (fields: { date: string }) => void;
+}
+
+const DateForm: React.FC<DateFormProps> = ({ updateDate, updateFields }) => {
+    const [currentDate, setCurrentDate] = useState<Date>(new Date());
+    const [dateOptions, setDateOptions] = useState<Date[]>([]);
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
-    const [showMoreDates, setShowMoreDates] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [isValidDate, setIsValidDate] = useState(true);
+    const [showMoreDates, setShowMoreDates] = useState<boolean>(false);
+    const [isValidDate, setIsValidDate] = useState<boolean>(true); // Toegevoegde state voor de datumvalidatie
+    const navigate = useNavigate();
 
     useEffect(() => {
         const generateDateOptions = () => {
-            const options: Array<Date> = [];
+            const options: Date[] = [];
             for (let i = 0; i < 5; i++) {
                 const date = new Date(currentDate);
                 date.setDate(currentDate.getDate() + i);
@@ -21,16 +27,13 @@ function DateForm({ updateDate, updateFields }) {
         };
 
         generateDateOptions();
-
     }, [currentDate]);
 
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
-
         const isValid = selectedDate >= currentDate;
-        setIsValidDate(isValid);
+        setIsValidDate(isValid); // Update de validatiestatus op basis van de geselecteerde datum
 
-        // Only update date and fields if the selected date is valid
         if (isValid) {
             const isoDateString = selectedDate.toISOString();
             setSelectedCard(index === selectedCard ? null : index);
@@ -41,11 +44,9 @@ function DateForm({ updateDate, updateFields }) {
 
     const handleCalendarDateSelect = (isoDateString: string) => {
         const selectedDate = new Date(isoDateString);
-
         const isValid = selectedDate >= currentDate;
-        setIsValidDate(isValid);
+        setIsValidDate(isValid); // Update de validatiestatus op basis van de geselecteerde datum
 
-        // Only update date and fields if the selected date is valid
         if (isValid) {
             updateDate(selectedDate);
             updateFields({ date: isoDateString });
@@ -53,18 +54,21 @@ function DateForm({ updateDate, updateFields }) {
     };
 
     const handleMoreDatesClick = () => {
-        setShowMoreDates(true); // Zet showMoreDates op true om de Calendar te laten zien
+        setShowMoreDates(true);
     };
 
-    const handleLessDatesClick = () => {
-        setShowMoreDates(false); // Zet showMoreDates op true om de Calendar te laten zien
+    const handleCloseCalendar = () => {
+        setShowMoreDates(false);
     };
 
     return (
         <div className="dateForm_wrapper">
-            <h2>Wanneer moet de klus gedaan worden</h2>
+            <h2>Wanneer moet de klus gedaan worden?</h2>
             {showMoreDates ? (
-                <Calendar onDateSelect={handleCalendarDateSelect} />
+                <div>
+                    <button onClick={handleCloseCalendar} className="close-calendar-button">X</button>
+                    <Calendar onDateSelect={handleCalendarDateSelect} />
+                </div>
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (
@@ -85,12 +89,12 @@ function DateForm({ updateDate, updateFields }) {
                     </div>
                 </div>
             )}
-
-            {isValidDate ? null : (
-                <p className="error-message">Voer alstublieft een geldige datum in</p>
+            
+            {!isValidDate && (
+                <p className="error-message">Voer alstublieft een geldige datum in.</p>
             )}
         </div>
     );
-}
+};
 
 export default DateForm;

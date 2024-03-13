@@ -50,7 +50,7 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
           </div>
           <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
           <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
-          <button type="button" onClick={handleLogin}>
+          <button className='Button-login' type="button" onClick={handleLogin}>
             Login
           </button>
         </div>

@@ -48,6 +48,13 @@ declare namespace Cypress {
         janTestBegin(): void;
         testBegin(): void
         clear(): void;
+        testreg(): void;
+        nextreg(): void;
+        testinlog(): void;
+        nextinlog(): void;
+        inlogmenu():void;
+        uitloggen():void;
+        
     }
 }
 
@@ -98,3 +105,30 @@ Cypress.Commands.add('goForward', () => {
     cy.get('[class="form-btn"]').click();
 });
 
+//
+Cypress.Commands.add('testreg', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/registreer") // Go to website 
+});
+Cypress.Commands.add('nextreg', () => {
+    cy.get('[class="registerForm_wrapper"]').click();
+    //cy.get('#308AE4').click();
+});
+//
+Cypress.Commands.add('testinlog', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/login") // Go to website 
+});
+
+Cypress.Commands.add('nextinlog', () => {
+    cy.get('[class="Button-login"]').click();
+    //cy.get('#308AE4').click();
+});
+Cypress.Commands.add('inlogmenu', () => {
+    cy.get('[class="dropdown-container"]').click();
+    //cy.get('#308AE4').click();
+});
+Cypress.Commands.add('uitloggen', () => {
+    cy.get('[class="authButtons"]').click();
+    //cy.get('#308AE4').click();
+});

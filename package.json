@@ -3,6 +3,7 @@
     "aws-amplify": "^6.0.10"
   },
   "devDependencies": {
+    "faker": "^5.5.3",
     "typescript": "^5.3.3"
   }
 }
