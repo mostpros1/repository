@@ -111,10 +111,31 @@ const PageSpecialisten = () => {
     };
   
     const applyFilters = () => {
-      // Implement your filter logic here
-      console.log({ location, sortBy, priceFrom });
-      // Add the code to filter your data based on the selected values
-    };
+      let filteredSpecialists = exampleSpecialists;
+  
+      // Filter by location
+      if (location) {
+          filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
+      }
+  
+      // Filter by price
+      if (priceFrom) {
+          filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
+      }
+  
+      // Sort by criteria
+      if (sortBy) {
+          if (sortBy === 'priceLowHigh') {
+              filteredSpecialists.sort((a, b) => a.price - b.price);
+          } else if (sortBy === 'priceHighLow') {
+              filteredSpecialists.sort((a, b) => b.price - a.price);
+          } else if (sortBy === 'rating') {
+              filteredSpecialists.sort((a, b) => b.rating - a.rating);
+          }
+      }
+  
+      setSpecialists(filteredSpecialists);
+  };
   
   const [specialists, setSpecialists] = useState(exampleSpecialists);
   useEffect(() => {
