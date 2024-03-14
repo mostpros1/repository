@@ -39,20 +39,21 @@ function LoginPage() {
   const handleLogin = async () => {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
-
-      sessionStorage.setItem('accessToken', authenticatedUser.signInUserSession.accessToken.jwtToken);
-      sessionStorage.setItem('idToken', authenticatedUser.signInUserSession.idToken.jwtToken);
-      sessionStorage.setItem('refreshToken', authenticatedUser.signInUserSession.refreshToken.token);
-
+  
+      localStorage.setItem('accessToken', authenticatedUser.signInUserSession.accessToken.jwtToken);
+      localStorage.setItem('idToken', authenticatedUser.signInUserSession.idToken.jwtToken);
+      localStorage.setItem('refreshToken', authenticatedUser.signInUserSession.refreshToken.token);
+  
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
-    } catch (error: any) {
+    } catch (error: Error) {
       console.error('Login failed:', error);
       setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
   };
+  
 
-  const updateLoginData = (fields) => {
+  const updateLoginData = (fields: any) => {
     setLoginData((prevData) => ({ ...prevData, ...fields }));
   };
 

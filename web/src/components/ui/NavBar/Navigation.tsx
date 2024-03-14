@@ -10,9 +10,13 @@ import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import { Apps } from "@mui/icons-material";
 
+//const authentecatedUser = await Auth.currentAuthenticatedUser();
+
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
+
+
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -20,13 +24,22 @@ function Navigation() {
 
   const handleLogout = async () => {
     try {
+
       await Auth.signOut();
-      updateUser(null); // Update the user context after logout
-      console.log("Logout successful"); // Update the user context after logout
+
+      updateUser(null);
+      // Clear tokens from local storage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('idToken');
+      localStorage.removeItem('refreshToken');
+
+
+      console.log("Logout successful");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
+
 
   let authButtons = (
     <>
@@ -34,6 +47,9 @@ function Navigation() {
       <Link to="/registreer">Register</Link>
     </>
   );
+
+  //console.log(authentecatedUser);
+  //updateUser(authentecatedUser);
 
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
@@ -288,9 +304,9 @@ function Navigation() {
           </li>
         </ul>
         <div className="apps-icon">
-        <Link to="/HomeInovation">
-          <AppsRoundedIcon />
-        </Link>
+          <Link to="/HomeInovation">
+            <AppsRoundedIcon />
+          </Link>
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
