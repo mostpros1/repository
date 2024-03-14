@@ -61,4 +61,5 @@ declare global {
     HomeOwnerEmail: undefined;
     AboutUs: undefined;
     SpecialistResults: undefined;
+    MyWork: undefined;
   };

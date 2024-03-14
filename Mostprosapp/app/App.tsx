@@ -49,6 +49,7 @@ import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
+import MyWork from "./(Components)/Specialist/MyWork";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
@@ -144,6 +145,7 @@ const App = () => {
         <Stack.Screen name="Contact" component={Contact}/>
         <Stack.Screen name="AboutUs" component={AboutUs}/>
         <Stack.Screen name="SpecialistResults" component={SpecialistResults}/>
+        <Stack.Screen name="MyWork" component={MyWork}/>
         
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
