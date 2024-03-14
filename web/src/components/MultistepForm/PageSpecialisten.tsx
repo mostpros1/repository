@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './PageSpecialisten.css'; // Zorg ervoor dat je een CSS-bestand aanmaakt voor de styling
+import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
+import { dynamo } from "../../../../backend_functions/declerations";
 
-// Voorbeeld van een specialistenlijst
 const exampleSpecialists = [
   {
     id: 1,
@@ -45,8 +45,8 @@ const exampleSpecialists = [
     id: 5,
     name: 'Jan Schilder',
     profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 500,
+    location: 'Utrecht',
+    price: 450,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
@@ -55,7 +55,7 @@ const exampleSpecialists = [
     name: 'Jan Schilder',
     profession: 'Loodgieter',
     location: 'Amsterdam',
-    price: 500,
+    price: 200,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
@@ -64,7 +64,7 @@ const exampleSpecialists = [
     name: 'Jan Schilder',
     profession: 'Loodgieter',
     location: 'Amsterdam',
-    price: 500,
+    price: 300,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
@@ -86,21 +86,74 @@ const exampleSpecialists = [
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
-  // Voeg meer specialisten toe zoals nodig
 ];
 
 const PageSpecialisten = () => {
-  // Je kunt hier state gebruiken voor het laden van echte data
+    const [location, setLocation] = useState('');
+    const [sortBy, setSortBy] = useState('');
+    const [priceFrom, setPriceFrom] = useState('');
+  
+    useEffect(() => {
+      // This function will be called automatically whenever location, sortBy, or priceFrom changes.
+      applyFilters();
+    }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
+  
+    const handleLocationChange = (event) => {
+      setLocation(event.target.value);
+    };
+  
+    const handleSortByChange = (event) => {
+      setSortBy(event.target.value);
+    };
+  
+    const handlePriceFromChange = (event) => {
+      setPriceFrom(event.target.value);
+    };
+  
+    const applyFilters = () => {
+      // Implement your filter logic here
+      console.log({ location, sortBy, priceFrom });
+      // Add the code to filter your data based on the selected values
+    };
+  
   const [specialists, setSpecialists] = useState(exampleSpecialists);
-
-  // Deze effect kan worden gebruikt om data te laden van een API
   useEffect(() => {
-    // Laad je specialisten data
-    // setSpecialists(loadedSpecialists);
-  }, []);
+    dynamo.query({
+        TableName: "Specialists",
+        IndexName: "profession",
+        KeyConditionExpression: "profession = :profession",
+        ExpressionAttributeValues: {
+            ":profession": "" // inplaats van de "" zet je de input van de zoek balk
+        }
+    }).promise()
+        .then(data => {
+            // Process the data and update the specialists state
+            setSpecialists(data.Items);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}, []);
 
   return (
+    
     <div className="specialisten-container">
+      <div className="filter-bar">
+      <select value={location} onChange={handleLocationChange} className="filter-select">
+        <option value="">Select a location</option>
+        <option value="amsterdam">Amsterdam</option>
+        <option value="rotterdam">Rotterdam</option>
+        <option value="utrecht">Utrecht</option>
+        // Add more options as needed
+      </select>
+      <select value={sortBy} onChange={handleSortByChange} className="filter-select">
+        <option value="">Sort by</option>
+        <option value="priceLowHigh">Price: Low to High</option>
+        <option value="priceHighLow">Price: High to Low</option>
+        <option value="rating">Rating</option>
+        // Add more options as needed
+      </select>
+    </div>
       {specialists.map((specialist) => (
         <div key={specialist.id} className="specialist-card">
         <div className="specialist-header">
@@ -129,5 +182,4 @@ const PageSpecialisten = () => {
     </div>
   );
 };
-
 export default PageSpecialisten;
