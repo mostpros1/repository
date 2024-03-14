@@ -21,7 +21,7 @@ const HomeOwnerEmail = ({ navigation }) => {
         } else if (!validateEmail(email)) {
             Alert.alert('Ongeldige Email', 'Vul een geldig emailadres in.');
         } else {
-            navigation.navigate('TestHome');
+            navigation.navigate('HomeOwnerResults');
         }
     };
 

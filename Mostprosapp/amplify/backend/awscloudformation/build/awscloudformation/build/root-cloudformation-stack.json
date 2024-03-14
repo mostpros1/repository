@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify Console",
+  "Description": "Root Stack for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -226,6 +226,51 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
+          "env": "staging"
+        }
+      }
+    },
+    "authuserPoolGroups": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "Parameters": {
+          "AuthRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
+          "UnauthRoleArn": {
+            "Fn::GetAtt": [
+              "UnauthRole",
+              "Arn"
+            ]
+          },
+          "authMostprosUserPoolId": {
+            "Fn::GetAtt": [
+              "authMostpros",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authMostprosAppClientIDWeb": {
+            "Fn::GetAtt": [
+              "authMostpros",
+              "Outputs.AppClientIDWeb"
+            ]
+          },
+          "authMostprosAppClientID": {
+            "Fn::GetAtt": [
+              "authMostpros",
+              "Outputs.AppClientID"
+            ]
+          },
+          "authMostprosIdentityPoolId": {
+            "Fn::GetAtt": [
+              "authMostpros",
+              "Outputs.IdentityPoolId"
+            ]
+          },
           "env": "staging"
         }
       }
