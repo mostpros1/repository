@@ -1,0 +1,87 @@
+.specialisten-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Afstand tussen kaarten */
+  justify-content: center; /* Centreert de kaarten indien minder dan de volle breedte */
+  padding: 20px; /* Ruimte rondom de container */
+  width: 1400px;
+}
+
+.specialist-card {
+  background: white;
+  border-radius: 15px; /* Afgeronde hoeken */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lichte schaduw voor diepte */
+  width: 340px; /* Vaste breedte voor elke kaart */
+  overflow: hidden; /* Zorgt dat inhoud binnen de randen blijft */
+}
+
+.specialist-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.specialist-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Vaste hoogte voor afbeeldingen */
+  object-fit: cover; /* Zorgt dat de afbeeldingen goed passen zonder te vervormen */
+  margin: 20px;
+  margin-right: 50px;
+}
+
+.specialist-info-1 {
+  text-align: center; /* Centreert de tekst in de info div */
+  margin-right: 20px;
+}
+.specialist-info-1 h5 {
+  margin-top: 20px; /* Centreert de tekst in de info div */
+}
+
+.specialist-info-2 {
+  padding: 15px; /* Ruimte binnen de informatie sectie */
+}
+
+.specialist-info-2 h3 {
+  margin-top: 0;
+  color: #333; /* Donkere tekstkleur voor de naam */
+}
+
+.specialist-info-2 p {
+  margin: 10px 0;
+  color: #666; /* Lichtere tekstkleur voor overige informatie */
+}
+
+.specialist-footer {
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 20px; /* Ruimte boven de voettekst */
+}
+
+.price {
+  color: #000000; /* Groene kleur voor de prijs */
+  margin-left: 135px; /* Maakt de prijs vetgedrukt */
+  font-size: 28px;
+}
+
+.rating {
+  color: #FFD700;
+  font-size: 22px; /* Gouden kleur voor de beoordelingssterren */
+}
+
+.contact-button {
+  background-color: #308ae4; /* Blauwe achtergrondkleur voor de knop */
+  color: white;
+  border: none;
+  border-radius: 10px; /* Alleen afgeronde hoeken onderaan */
+  padding: 10px 20px;
+  cursor: pointer; /* Verandert de cursor in een handje wanneer erover gehoverd wordt */
+  transition: background-color 0.4s;
+  margin-bottom: 20px;
+  margin-left: 75px;
+}
+
+.contact-button:hover {
+  background-color: #0056b3; /* Donkerdere blauwe kleur wanneer erover gehoverd wordt */
+}

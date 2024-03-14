@@ -38,8 +38,8 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
-    "uuid": "^9.0.1",
-    "stripe": "^14.13.0"
+    "stripe": "^14.13.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

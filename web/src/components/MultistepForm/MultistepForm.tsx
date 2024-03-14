@@ -13,6 +13,10 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
+import PageSpecialisten from './PageSpecialisten.tsx'
+
+
+
 
 type FormData = {
   postCode: string
@@ -123,14 +127,17 @@ function MultistepForm() {
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
     steps: [
-      <LocationForm {...data} updateFields={updateFields} />,
-      <DateForm updateDate={updateDate} updateFields={updateFields} />,
-      <InfoForm {...data} updateFields={updateFields} />,
-      <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+      <>
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <InfoForm {...data} updateFields={updateFields} />,
+        
+        <PageSpecialisten />
+      </>
     ],
     onStepChange: () => { }
   });
-
+//<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     console.log('Form Data:', data);
