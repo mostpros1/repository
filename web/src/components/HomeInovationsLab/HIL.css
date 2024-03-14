@@ -1,43 +1,62 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .image-container {
-    position: relative;
+  position: relative;
 }
 
 .image-container img {
-    width: 1300px;
-    height: auto;
-    border-radius: 15px;
-    filter: brightness(0.6);
+  width: 1300px;
+  height: auto;
+  border-radius: 15px;
+  filter: brightness(0.6);
 }
 
 .text-overlay {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
 }
 
 .text-overlay h1 {
-    font-size: 56px;
-    padding-bottom: 25px;
-    text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4); /* Adjust the values for shadow position and intensity */
-
+  font-size: 56px;
+  padding-bottom: 25px;
+  text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4); /* Adjust the values for shadow position and intensity */
 }
 
 .text-overlay p {
-    font-size: 30px;
+  font-size: 26px;
+  text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4); /* Adjust the values for shadow position and intensity */
+}
+
+.grid-con {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 20px;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.grid-con p {
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
+.grid-con svg {
+  color: #308ae4;
+  font-size: 20px;
 }

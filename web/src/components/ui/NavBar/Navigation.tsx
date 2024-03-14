@@ -64,9 +64,9 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className="black-items">
+            {/* <Link to="/mijn-klussen" className="black-items">
               Klussen <ExpandMoreIcon />
-            </Link>
+            </Link> */}
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
