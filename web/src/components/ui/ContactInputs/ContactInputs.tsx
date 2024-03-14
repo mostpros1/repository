@@ -13,7 +13,7 @@ function ContactInputs() {
       </div>
       <div className="contact_input">
         <label>Email</label>
-        <input name="email" type="text" />
+        <input name="to" type="text" />
       </div>
       <div className="contact_input">
         <label>Onderwerp</label>
