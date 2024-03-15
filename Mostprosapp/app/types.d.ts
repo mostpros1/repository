@@ -62,4 +62,5 @@ declare global {
     AboutUs: undefined;
     SpecialistResults: undefined;
     MyWork: undefined;
+    MyWorkTwo: undefined;
   };
