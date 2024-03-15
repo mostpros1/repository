@@ -19,7 +19,8 @@
           "userPoolName": "Mostpros-staging",
           "webClientId": "205hq6m5duq8u95vjhisd3c60h"
         },
-        "Mostpros": {}
+        "Mostpros": {},
+        "userPoolGroups": {}
       }
     }
   }
