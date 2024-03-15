@@ -16,7 +16,6 @@ function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
 
-/*
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
@@ -30,7 +29,7 @@ function Navigation() {
       checkAuthStatus();
     }
   }, [user, updateUser]);
-*/
+
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -41,10 +40,6 @@ function Navigation() {
       await Auth.signOut();
 
       updateUser(null);
-      // Clear tokens from local storage
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('idToken');
-      localStorage.removeItem('refreshToken');
 
 
       console.log("Logout successful");
