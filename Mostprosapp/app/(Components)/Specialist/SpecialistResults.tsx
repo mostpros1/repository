@@ -80,7 +80,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -108,7 +108,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -136,7 +136,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -164,7 +164,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -192,7 +192,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -220,7 +220,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -248,7 +248,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -276,7 +276,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
             <View style={styles.card}>
@@ -304,7 +304,7 @@ const SpecialistResults = ({ navigation }) => {
                    </Pressable>
                 </View>
                 <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link}>Meer info</Text>
+                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
                 </Pressable>
             </View>
 
