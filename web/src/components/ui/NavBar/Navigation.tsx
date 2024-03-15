@@ -16,24 +16,21 @@ function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
 
- // Add the missing import statement
-
+/*
   useEffect(() => {
-    const checkUserSession = async () => {
-      if (localStorage.getItem('accessToken') && !user) {
-        try {
-          const authenticatedUser = await Auth.currentAuthenticatedUser();
-          
-          updateUser(authenticatedUser);
-        } catch (error) {
-          console.error(error);
-        }
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error: unknown) {
+        updateUser(null);
       }
     };
-
-    checkUserSession();
+    if (!user) {
+      checkAuthStatus();
+    }
   }, [user, updateUser]);
-
+*/
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
