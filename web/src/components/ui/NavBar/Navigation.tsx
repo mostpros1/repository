@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
@@ -16,7 +16,23 @@ function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
 
+ // Add the missing import statement
 
+  useEffect(() => {
+    const checkUserSession = async () => {
+      if (localStorage.getItem('accessToken') && !user) {
+        try {
+          const authenticatedUser = await Auth.currentAuthenticatedUser();
+          
+          updateUser(authenticatedUser);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    checkUserSession();
+  }, [user, updateUser]);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
