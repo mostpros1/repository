@@ -75,24 +75,6 @@
   gap: 15px;
 }
 
-.apps-icon {
-  display: flex;
-  box-shadow: 0 0 5px #c7c7c7;
-  border: 2px solid #c7c7c7;
-  border-radius: 15px;
-  padding: 5px 10px 5px 10px;
-  transition: all 0.2s;
-}
-
-.apps-icon:hover {
-  cursor: pointer;
-  background-color: #6e6c70;
-}
-
-.apps-icon svg {
-  font-size: 30px;
-}
-
 .nav-list {
   list-style: none;
   display: flex;
