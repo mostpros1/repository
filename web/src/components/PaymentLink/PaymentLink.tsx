@@ -110,4 +110,4 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
 //     </>
 // }
 
-// export default PaymentLink
+export default PaymentLink
