@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* This ensures that the content area takes at least the full height of the viewport */
+}
+
+.main-content {
+    flex: 1; /* This allows the main content area to expand to fill the remaining vertical space */
+    padding-top: 70px;
+    padding-bottom: 100px;
+}
+
+.footer {
+    flex-shrink: 0; /* Prevent the footer from shrinking */
+}

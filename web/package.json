@@ -19,15 +19,21 @@
     "@aws-amplify/pubsub": "^6.0.8",
     "@aws-amplify/ui-react": "^5.3.3",
     "@aws-sdk/client-s3": "^3.472.0",
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.10",
-    "@mui/material": "^5.15.10",
+    "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
     "@mui/x-date-pickers": "^6.19.0",
+<<<<<<< HEAD
     "@react-email/render": "^0.0.12",
     "aws-amplify": "^5.3.13",
     "aws-sdk": "2.1506.0",
     "cors": "^2.8.5",
+=======
+    "aws-amplify": "^5.3.15",
+    "aws-sdk": "2.1506.0",
+    "aws-sdk": "^2.1506.0",
+>>>>>>> acceptance
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
     "fs": "^0.0.1-security",
@@ -38,8 +44,18 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
+<<<<<<< HEAD
     "stripe": "^14.13.0",
     "uuid": "^9.0.1"
+=======
+    "redux": "^5.0.0",
+    "redux": "^5.0.0",
+    "stripe": "^14.13.0",
+    "uuid": "^9.0.1",
+    "stripe": "^14.13.0",
+    "uuid": "^9.0.1"
+
+>>>>>>> acceptance
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

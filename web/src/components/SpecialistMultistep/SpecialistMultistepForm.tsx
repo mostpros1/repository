@@ -1,4 +1,3 @@
-import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 //import { RegisterForm } from "../MultistepForm/RegisterForm";
 import { FormEvent } from "react";
@@ -9,12 +8,23 @@ import { useNavigate } from "react-router-dom";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 //import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
 
 
 
 type FormData = {
+  beroep: string;
   email: string;
   postCode: string;
   stad: string;
@@ -24,6 +34,7 @@ type FormData = {
   password: string;
   repeatPassword: string;
   questions: Record<string, string>;
+  dateTimeSpans: DateTimeSpan[];
 };
 
 interface RegisterData {
@@ -39,6 +50,7 @@ interface RegisterData {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
   email: "",
   postCode: "",
   stad: "",
@@ -50,8 +62,8 @@ const INITIAL_DATA: FormData = {
   questions: {
     question1: "",
     question2: "",
-    question3: "",
   },
+  dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
 };
 
 type Question = {
@@ -151,13 +163,39 @@ function SpecialistMultistepForm() {
     />
   ));
 
+  function DateForm({ dateTimeSpans, updateFields }) {
+    const addDateTimeSpan = () => {
+      if (dateTimeSpans.length < 5) {
+        const newDateTimeSpan = { date: new Date(), startTime: "", endTime: "" };
+        updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
+      }
+    };
+  
+    return (
+      <form action="" method="POST">
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar />
+        </div>
+      </form>
+    );
+  }
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
+
+        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <DateForm
+          dateTimeSpans={data.dateTimeSpans}
+          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
+          />,
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
+        ...questionsSteps,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
@@ -198,6 +236,11 @@ function SpecialistMultistepForm() {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (!isLastStep) {
+      return next();
+    } else {
+      console.log(data);
+      navigate("/specialist-resultaat");
     if (!isLastStep) return next()
 
     const userData: RegisterData = {
@@ -234,11 +277,25 @@ function SpecialistMultistepForm() {
           ))}
         </div>
       </div>
-      {showNoKvK ? <NoKvK /> : step}
-      <div className="btn-wrapper">
-        <button type="button" onClick={() => { showNoKvK ? setShowNoKvK(false) : back() }} className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`} style={{ display: isFirstStep ? 'none' : 'inline-block' }}>Vorige</button>
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-      </div>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
 }

@@ -1,8 +1,7 @@
+const nodemailer = require('nodemailer');
 const express = require('express');
 const cors = require('cors');
 const { sendMail } = require('./emails/sendSesMail.js');
-
-const mostprosEmail = "timon.heidenreich@icloud.com";
 
 const app = express();
 
@@ -15,13 +14,10 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/send-email', async (req, res) => {
-    const { to, text, html } = req.body;
-    
+    const { subject, to, text, html } = req.body;
     try {
-        
-        //console.log(to);
-        await sendEmail(to, text, html);
-        res.send({ message: 'Email sent successfully' }, { message: to });
+        await sendEmail(subject, to, text, html);
+        res.send({ message: 'Email sent successfully' });
     } catch (error) {
         res.status(500).send({ message: 'Failed to send email', error: error.message });
     }
@@ -32,12 +28,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const mostprosEmail = "timon.heidenreich@gmail.com";
 
-
-
-async function sendEmail(to, text, html) {
+async function sendEmail(subject, to, text, html) {
     /*try {
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -63,14 +56,15 @@ async function sendEmail(to, text, html) {
         throw error; // Rethrow the error to be caught by the caller
     }*/
     try {
-        
-        const subject = "Test Email";
-        const from = mostprosEmail;
-        const naar = [to];
-
-        sendMail(naar, subject, text, html, from);
+        const to = 'timon.heidenreich@icloud.com';
+        const subject = 'test';
+        const message = '<p>Your HTML Message Here</p>';
+        const from = 'timon.heidenreich@icloud.com';
+    
+        sendMail(to, subject, message, from);
     } catch (error) {
         console.error("Error sending email:", error);
         // Handle the error here
     }
 }
+
