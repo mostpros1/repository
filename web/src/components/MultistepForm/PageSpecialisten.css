@@ -20,6 +20,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-top: 30px;
 }
 
 .specialist-image img {
@@ -79,9 +80,13 @@
   cursor: pointer; /* Verandert de cursor in een handje wanneer erover gehoverd wordt */
   transition: background-color 0.4s;
   margin-bottom: 20px;
-  margin-left: 75px;
 }
 
 .contact-button:hover {
   background-color: #0056b3; /* Donkerdere blauwe kleur wanneer erover gehoverd wordt */
+}
+
+.filter-bar{
+text-align: center;
+margin-bottom: 40px;
 }
