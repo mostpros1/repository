@@ -49,15 +49,8 @@ import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
-import WorkNavigation from "./(Components)/Specialist/WorkNavigation";
-import MyWork from "./(Components)/Specialist/MyWork";
-import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
-import MyWorkThree from "./(Components)/Specialist/MyWorkThree";
-import Changedate from "./(Components)/Specialist/Changedate";
-import ChangedateTwo from "./(Components)/Specialist/ChangedateTwo";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
-import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
@@ -151,15 +144,7 @@ const App = () => {
         <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
         <Stack.Screen name="Contact" component={Contact}/>
         <Stack.Screen name="AboutUs" component={AboutUs}/>
-        <Stack.Screen name="SpecialistResults" component={SpecialistResults}/>
-        <Stack.Screen name="MyWork" component={MyWork}/>
-        <Stack.Screen name="MyWorkTwo" component={MyWorkTwo}/>
-        <Stack.Screen name="WorkNavigation" component={WorkNavigation}/>
-        <Stack.Screen name="MyWorkThree" component={MyWorkThree} />
-        <Stack.Screen name="Changedate" component={Changedate}/>
-        <Stack.Screen name="ChangedateTwo" component={ChangedateTwo}/>
         
-       
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
