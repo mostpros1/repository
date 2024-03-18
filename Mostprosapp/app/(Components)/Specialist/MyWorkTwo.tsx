@@ -24,16 +24,16 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const MyWorkTwo = ({ navigation }) => {
-    const phoneNumber = "+310698765432";
-    const emailAddress = "Lisazoetlief@hotmail.com";
-  
-    const handleMessagePress = () => {
-      Linking.openURL(`sms:${phoneNumber}`);
-    };
-  
-    const handleEmailPress = () => {
-      Linking.openURL(`mailto:${emailAddress}`);
-    };
+  const phoneNumber = "+310698765432";
+  const emailAddress = "Lisazoetlief@hotmail.com";
+
+  const handleMessagePress = () => {
+    Linking.openURL(`sms:${phoneNumber}`);
+  };
+
+  const handleEmailPress = () => {
+    Linking.openURL(`mailto:${emailAddress}`);
+  };
 
   return (
     <PaperProvider>
@@ -95,29 +95,72 @@ const MyWorkTwo = ({ navigation }) => {
                     momenteel is.
                   </Text>
                 </View>
-                
+
               </View>
 
               <Pressable style={styles.infoCard}>
-                <Text style={styles.linkText}>Klus bekijken</Text>
+                <Text style={styles.linkTextBottom}>Klus bekijken</Text>
               </Pressable>
             </View>
 
             <View style={styles.cardOne}>
-                <Pressable style={styles.circleBlue}>
-                    <Icon name="add" size={28} color="white" />
-                </Pressable>
-                <Text>Nieuwe klus zoeken</Text>
+              <Pressable style={styles.circleBlue}>
+                <Icon name="add" size={28} color="white" />
+              </Pressable>
+              <Text>Nieuwe klus zoeken</Text>
             </View>
 
             <View style={styles.cardTwo}>
-                <View style={styles.underlineTitleBox}>
-                    <Text>Geïnteresseerd klanten</Text>
+              <View style={styles.underlineTitleBox}>
+                <Text>Geïnteresseerd klanten</Text>
+              </View>
+              <View style={styles.profileBox}>
+                <View style={styles.profileWrapper}>
+                  <Image source={require("../../../assets/images/jan.png")} style={styles.profileImage} resizeMode="contain" />
+                  <Text>Lisa Zoetlief</Text>
                 </View>
+                <Text style={styles.linkText}>Bekijken</Text>
+              </View>
             </View>
+
+            <View style={styles.cardTwo}>
+              <View style={styles.underlineTitleBox}>
+                <Text>Geselecteerde Klussen</Text>
+              </View>
+              <View style={styles.profileBox}>
+                <View style={styles.profileWrapper}>
+                  <Image source={require("../../../assets/images/jan.png")} style={styles.profileImage} resizeMode="contain" />
+                  <Text>Lisa Zoetlief</Text>
+                </View>
+                <Text style={styles.linkText}>Bekijken</Text>
+              </View>
+              <View style={styles.profileBox}>
+                <View style={styles.profileWrapper}>
+                  <Image source={require("../../../assets/images/jan.png")} style={styles.profileImage} resizeMode="contain" />
+                  <Text>Lisa Zoetlief</Text>
+                </View>
+                <Text style={styles.linkText}>Bekijken</Text>
+              </View>
+              <View style={styles.profileBox}>
+                <View style={styles.profileWrapper}>
+                  <Image source={require("../../../assets/images/jan.png")} style={styles.profileImage} resizeMode="contain" />
+                  <Text>Lisa Zoetlief</Text>
+                </View>
+                <Text style={styles.linkText}>Bekijken</Text>
+              </View>
+              <View style={styles.profileBox}>
+                <View style={styles.profileWrapper}>
+                  <Image source={require("../../../assets/images/jan.png")} style={styles.profileImage} resizeMode="contain" />
+                  <Text>Lisa Zoetlief</Text>
+                </View>
+                <Text style={styles.linkText}>Bekijken</Text>
+              </View>
+              <Text style={styles.linkTextTop}>Meer tonen</Text>
+            </View>
+
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="ChatOverview" />
+        <Footer navigation={navigation} activePage="ChatOverview"/>
       </SafeAreaView>
     </PaperProvider>
   );
@@ -125,19 +168,58 @@ const MyWorkTwo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   view: {
-    height: windowHeight * 1.5,
+    height: windowHeight * 1.8,
     width: windowWidth,
     display: "flex",
     alignItems: "center",
     backgroundColor: "white",
   },
 
-  underlineTitleBox:{
-    height: 50,
-    width: "100%",
+
+  profileImage: {
+    width: 55,
+    height: 55,
+    borderRadius: 27,
+  },
+
+  profileWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
+    gap: 10,
+  },
+
+  profileBox: {
+    marginTop: 3,
+    height: 60,
+    paddingLeft: 15,
+    paddingRight: 23,
+    width: "85%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 3,
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+
+  underlineTitleBox: {
+    marginTop: 10,
+    height: 40,
+    width: "85%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 1.5,
+    borderColor: "#D9D9D9",
   },
 
   cardTwo: {
@@ -151,15 +233,15 @@ const styles = StyleSheet.create({
     elevation: 6,
     backgroundColor: "white",
     width: windowWidth - 50,
-    height: 182,
     marginTop: 30,
+    paddingBottom: 20,
     gap: 10,
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
   },
 
-  circleBlue:{
+  circleBlue: {
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -189,9 +271,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  linkText:{
+  linkTextBottom: {
     color: "#17A1FA",
     marginBottom: 15,
+  },
+
+  linkTextTop: {
+    color: "#17A1FA",
+    marginTop: 15,
+  },
+
+  linkText: {
+    color: "#17A1FA",
   },
 
   whiteText: {
