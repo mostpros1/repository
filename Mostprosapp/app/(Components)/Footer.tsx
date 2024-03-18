@@ -9,7 +9,7 @@ const Footer = ({ navigation, activePage }) => {
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.footerImage}
-            onPress={() => navigation.navigate('ProfileNavigation')}
+            onPress={() => navigation.navigate('TestHome')}
           >
             {activePage === 'HomePageSpecialist' ? (
               <Image

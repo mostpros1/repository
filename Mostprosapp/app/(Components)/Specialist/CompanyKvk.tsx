@@ -31,7 +31,7 @@ const CompanyKvk = ({ navigation }) => {
         "Voer alstublieft de bedrijfsnaam in."
       );
     } else {
-      navigation.navigate("TestHome");
+      navigation.navigate("SpecialistResults");
     }
   };
 
