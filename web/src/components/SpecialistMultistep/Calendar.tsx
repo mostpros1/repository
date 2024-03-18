@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
+import AWS from 'aws-sdk';
+
+interface DateAndTimePickerProps {
+  onDateChange?: (selectedDates: string[]) => void;
+}
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */}) => {
 import aws from 'aws-sdk';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
@@ -19,6 +26,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState('GMT+01:00 Europe/Amsterdam'); // Default timezone
+  const [submittedDays, setSubmittedDays] = useState([]);
 
   // List of timezones (you can expand this list as needed)
   const timezones = [
@@ -126,6 +134,26 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       );
     }
 
+    // for (let day = 1; day <= daysInMonth; day++) {
+    //   const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    //   const isSubmitted = submittedDays.includes(dateString); // Controleer of de dag is ingediend
+      
+    //   // Voeg uw dag elementen toe zoals gebruikelijk, maar pas de nieuwe stijl toe als de dag is ingediend
+    //   week.push(
+    //       <TouchableOpacity
+    //           key={`current-month-day-${day}`}
+    //           style={[
+    //               styles.day, 
+    //               isSubmitted && styles.submittedDay, // Pas submittedDay stijl toe als de dag is ingediend
+    //               // Uw andere voorwaardelijke stijlen...
+    //           ]}
+    //           onPress={() => handleDateSelect(day, currentDay)}
+    //       >
+    //           <Text style={styles.dayText}>{day}</Text>
+    //       </TouchableOpacity>
+    //   );
+    // }
+
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
       const weekDay = dayDate.getDay();
@@ -195,6 +223,40 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     setDate(new Date()); // Zet de datum terug naar vandaag
   };
 
+  //const handleSubmitDays = async (selectedDays) => {
+    // Verstuur de geselecteerde dagen naar de database
+    // Dit is een voorbeeld, vervang dit met je eigen logica om naar de database te sturen
+    //const response = await sendDaysToDatabase(selectedDays); 
+
+    // Als de verzending naar de database succesvol was, update dan de submittedDays state
+    //if (response.success) {
+       // setSubmittedDays(selectedDays);
+    //} else {
+        // Behandel eventuele fouten (bijvoorbeeld door een foutbericht weer te geven)
+    //}
+//};
+
+  const submitDates = async () => {
+    
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const item = {
+      userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
+      dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    };
+    
+    const params = {
+      TableName: "UserAvailability",
+      Item: item, // Use the 'item' object instead of creating a new one
+    };
+  
+    try {
+      await dynamoDb.put(params).promise();
+      alert("Beschikbaarheid succesvol opgeslagen!");
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      alert("Fout bij het opslaan van beschikbaarheid.");
+    }
+  };
   const submitDates = async () => {
 
     // const item = {
@@ -308,6 +370,7 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
   return (
     <div className="date-time-picker">
       <div className="calendar">
+        <div className="month-selector">
       <div className="month-selector">
           <button
             type="button"

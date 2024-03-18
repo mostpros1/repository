@@ -16,35 +16,61 @@ function RegisterPage() {
     phoneNumber: '',
     password: '',
     repeatPassword: '',
+    dob: '',
   });
 
   const [error, setError] = useState('');
 
   const navigate = useNavigate()
 
-  const handleSignUp = async () => {
-    const { email, password, firstName, lastName, phoneNumber } = registerData;
+  interface RegisterData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    repeatPassword: string;
+    dob: string;
+  }
 
-    try {
-      await Auth.signUp({
-        username: email,
-        password,
-        attributes: {
-          email,
-          name: firstName, // "given_name" is often used for the first name
-          family_name: lastName, // "family_name" for the last name
-          phone_number: phoneNumber,
-        },
-        autoSignIn: { enabled: true }
-      });
+  function signUp(registerData: RegisterData, user_type: string): void {
+    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
 
-      // Handle successful registration, e.g., redirect to another page
-      navigate('/bevestig-email', { state: { email: email } });
-    } catch (error: any) {
-      // Handle registration error, e.g., show an error message
-      console.error('Error signing up:', error);
-      setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      const signUpUser = async () => {
+        try {
+          await Auth.signUp({
+            username: email,
+            password: password,
+            attributes: {
+              phone_number: phoneNumber,
+              given_name: firstName,
+              family_name: lastName,
+              birthdate: dob,
+              'custom:user_type': user_type,
+            },
+            autoSignIn: { enabled: true },
+          });
+
+          /*const user = await Auth.signIn(email, password);
+          sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+          sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+          sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+        */
+          //const postConfig = postConfigMap['HOMEOWNER'];
+          navigate('/bevestig-email', { state: { email: email, postConfig: "HOMEOWNER" } })
+        } catch (error: any) {
+          console.error('Error signing up:', error);
+          setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+        }
+      };
+
+      signUpUser();
     }
+  
+
+  const handleSignUp = async () => {
+    signUp(registerData, 'Homeowner');
+    console.log(registerData);
   };
 
   const updateRegisterData = (fields) => {
@@ -57,12 +83,13 @@ function RegisterPage() {
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
           <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
-          <button onClick={handleSignUp}>Sign Up</button>
+          <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
-      <Footer />
+
     </>
   );
 }
 
 export default RegisterPage;
+/*<Footer />*/
