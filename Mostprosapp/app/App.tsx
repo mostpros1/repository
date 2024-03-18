@@ -54,6 +54,7 @@ import MyWork from "./(Components)/Specialist/MyWork";
 import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
 import MyWorkThree from "./(Components)/Specialist/MyWorkThree";
 import Changedate from "./(Components)/Specialist/Changedate";
+import ChangedateTwo from "./(Components)/Specialist/ChangedateTwo";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
@@ -154,6 +155,7 @@ const App = () => {
         <Stack.Screen name="WorkNavigation" component={WorkNavigation}/>
         <Stack.Screen name="MyWorkThree" component={MyWorkThree} />
         <Stack.Screen name="Changedate" component={Changedate}/>
+        <Stack.Screen name="ChangedateTwo" component={ChangedateTwo}/>
         
        
         {/* <Stack.Screen name="" component={} /> */}

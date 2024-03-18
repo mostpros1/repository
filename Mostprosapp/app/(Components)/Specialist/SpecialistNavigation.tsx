@@ -28,7 +28,7 @@ import {
                 <Text style={[styles.text]}>Result</Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('WorkNavigation')}>
-                <Text style={[styles.text]}>Klussen navigatie</Text>
+                <Text style={[styles.text]}>Klussen/ChangeDate navigatie</Text>
               </Pressable>
             </View>
           </View>

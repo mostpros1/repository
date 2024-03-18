@@ -27,6 +27,9 @@ const WorkNavigation = ({ navigation }) => {
                         <Pressable style={styles.link} onPress={() => navigation.navigate('Changedate')}>
                             <Text style={[styles.text]}>ChageDate</Text>
                         </Pressable>
+                        <Pressable style={styles.link} onPress={() => navigation.navigate('ChangedateTwo')}>
+                            <Text style={[styles.text]}>ChageDateTwo</Text>
+                        </Pressable>
                     </View>
                 </View>
             </ImageBackground>
