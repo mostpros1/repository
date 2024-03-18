@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     linkTextBottom: {
         color: "#17A1FA",
         marginBottom: 15,
-        paddingLeft: 24,
+        paddingLeft: 15,
 
     },
 
