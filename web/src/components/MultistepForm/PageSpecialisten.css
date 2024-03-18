@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin-top: 30px;
   }
   
   .specialist-image img {
@@ -79,7 +80,6 @@
     cursor: pointer; /* Verandert de cursor in een handje wanneer erover gehoverd wordt */
     transition: background-color 0.4s;
     margin-bottom: 20px;
-    margin-left: 75px;
   }
   
   .contact-button:hover {

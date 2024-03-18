@@ -9,7 +9,7 @@ const exampleSpecialists = [
     id: 1,
     name: 'Jan Schilder',
     profession: 'Loodgieter',
-    location: 'Amsterdam',
+    location: 'Haarlem',
     price: 500,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
@@ -20,68 +20,14 @@ const exampleSpecialists = [
     profession: 'Loodgieter',
     location: 'Amsterdam',
     price: 500,
-    rating: 4.5,
+    rating: 2,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
   {
     id: 3,
     name: 'Jan Schilder',
     profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 500,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 4,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 500,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 5,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Utrecht',
-    price: 450,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 6,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 200,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 7,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 300,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 8,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 500,
-    rating: 4.5,
-    bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
-  },
-  {
-    id: 9,
-    name: 'Jan Schilder',
-    profession: 'Loodgieter',
-    location: 'Amsterdam',
+    location: 'Haarlem',
     price: 500,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
@@ -149,7 +95,7 @@ const PageSpecialisten = () => {
     }).promise()
         .then(data => {
             // Process the data and update the specialists state
-            setSpecialists(data.Items);
+            setSpecialists(data.Items[0]);
         })
         .catch(err => {
             console.log(err);
@@ -176,9 +122,6 @@ const PageSpecialisten = () => {
       {specialists.map((specialist) => (
         <div key={specialist.id} className="specialist-card">
         <div className="specialist-header">
-            <div className="specialist-image">
-                <img src="arrowL.png"/>
-            </div>
             <div className="specialist-info-1">
                 <h3>{specialist.name}</h3>
                 <h5>{specialist.profession}</h5>
@@ -186,14 +129,6 @@ const PageSpecialisten = () => {
         </div>
           <div className="specialist-info-2">
             <p>{specialist.bio}</p>
-            <div className="specialist-footer">
-              <span className="rating"><FaStar /></span>
-              <span className="rating"><FaStar /></span>
-              <span className="rating"><FaStar /></span>
-              <span className="rating"><FaStar /></span>
-              <span className="rating"><FaStarHalf /></span>
-              <span className="price">€{specialist.price}</span>
-            </div>
           </div>
           <button className="contact-button">Contact opnemen</button>
         </div>
