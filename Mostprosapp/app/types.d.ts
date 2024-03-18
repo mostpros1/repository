@@ -15,7 +15,7 @@ declare global {
     HowItWorksTwoSpecialist: undefined;
     HowItWorksThreeSpecialist: undefined;
     Home: undefined;
-    testHome: undefined;
+    TestHome: undefined;
     ProfileNavigation: undefined;
     SpecialistNavigation: undefined;
     HomeOwnerNavigation: undefined;

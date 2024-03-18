@@ -1,1 +1,0 @@
-//# sourceMappingURL=AWSKinesisProvider.js.map

@@ -1,6 +1,6 @@
 import "./MyTaskList.css";
 import TaskCard from "./TaskCard";
-import NewTaskButton from "./NewTaskButton";
+import DashboardTaskButton from "../ui/DashboardTaskButton/DashboardTaskButton";
 
 function MyTaskList() {
     let taskCards = [
@@ -46,7 +46,7 @@ function MyTaskList() {
                             {ongoingTasks.map((taskCard) => (
                                 <TaskCard key={taskCard.id} {...taskCard} />
                             ))}
-                            <NewTaskButton />
+                            <DashboardTaskButton />
                         </div>
                     </div>
                     <div className="finished_task_con">

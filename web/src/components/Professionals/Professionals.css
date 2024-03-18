@@ -1,0 +1,9 @@
+.prof_price{
+    font-size: 16px;
+}
+.button_container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+
+}
