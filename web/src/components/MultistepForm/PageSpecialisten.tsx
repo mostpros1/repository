@@ -18,7 +18,7 @@ const exampleSpecialists = [
     profession: 'Loodgieter',
     location: 'Amsterdam',
     price: 500,
-    rating: 2,
+    rating: 3,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
   {
