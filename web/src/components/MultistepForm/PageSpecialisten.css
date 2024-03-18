@@ -86,3 +86,7 @@
     background-color: #0056b3; /* Donkerdere blauwe kleur wanneer erover gehoverd wordt */
   }
   
+.filter-bar{
+  text-align: center;
+  margin-bottom: 40px;
+}

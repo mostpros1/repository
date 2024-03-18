@@ -157,24 +157,22 @@ const PageSpecialisten = () => {
 }, []);
 
   return (
-    
-    <div className="specialisten-container">
-      <div className="filter-bar">
+      
+    <div className="filter-bar">
       <select value={location} onChange={handleLocationChange} className="filter-select">
         <option value="">Select a location</option>
         <option value="amsterdam">Amsterdam</option>
         <option value="rotterdam">Rotterdam</option>
         <option value="utrecht">Utrecht</option>
-        // Add more options as needed
+        <option value="haarlem">Haarlem</option>
       </select>
       <select value={sortBy} onChange={handleSortByChange} className="filter-select">
         <option value="">Sort by</option>
         <option value="priceLowHigh">Price: Low to High</option>
         <option value="priceHighLow">Price: High to Low</option>
         <option value="rating">Rating</option>
-        // Add more options as needed
       </select>
-    </div>
+    <div className="specialisten-container">
       {specialists.map((specialist) => (
         <div key={specialist.id} className="specialist-card">
         <div className="specialist-header">
@@ -200,6 +198,7 @@ const PageSpecialisten = () => {
           <button className="contact-button">Contact opnemen</button>
         </div>
       ))}
+    </div>
     </div>
   );
 };
