@@ -60,4 +60,11 @@ declare global {
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
     AboutUs: undefined;
+    SpecialistResults: undefined;
+    MyWork: undefined;
+    MyWorkTwo: undefined;
+    WorkNavigation: undefined;
+    MyWorkThree: undefined;
+    Changedate: undefined;
+    ChangedateTwo: undefined;
   };

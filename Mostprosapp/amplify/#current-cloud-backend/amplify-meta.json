@@ -36,12 +36,12 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-03-12T11:25:36.987Z",
-      "lastPushTimeStamp": "2024-02-19T11:19:15.476Z",
+      "lastPushTimeStamp": "2024-03-11T09:16:26.638Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimostpros"
-      }
+      },
+      "lastPushDirHash": "wWFQc23V8Y+PplNEfTfu9RgQ8EM="
     }
   },
   "auth": {
@@ -54,7 +54,7 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 6,
+          "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
         },
         "signupAttributes": [
@@ -82,11 +82,37 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-02-19T11:19:15.484Z",
+      "lastPushTimeStamp": "2024-03-11T09:16:26.640Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"
-      }
+      },
+      "lastPushDirHash": "zmwAxTPVknibl3NQCpt8tVsyBwM="
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "Mostpros",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2024-03-11T09:16:35.235Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "timonGroupRole": "arn:aws:iam::246293866149:role/eu-north-1_jR5BGgTBj-timonGroupRole"
+      },
+      "lastPushDirHash": "VH17O33sYNMyJ1ekrs+iDT1UFiQ="
     }
   }
 }
