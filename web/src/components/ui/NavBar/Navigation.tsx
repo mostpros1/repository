@@ -59,7 +59,6 @@ function Navigation() {
   //console.log(authentecatedUser);
   //updateUser(authentecatedUser);
 
-<<<<<<< HEAD
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: JSX.Element | null = null;
@@ -76,15 +75,6 @@ function Navigation() {
         <button onClick={handleLogout}>Uitloggen</button>
       </>
     );
-=======
-if (user && user.signInUserSession && user.signInUserSession.accessToken) {
-  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
-  let DashboardLink: JSX.Element | null = null;
-  if (groups && groups.includes('Homeowner')) {
-      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
-  } else if (groups && groups.includes('Professional')) {
-      DashboardLink = <Link to="/dashboard-professional">Account</Link>;
->>>>>>> acceptance
   }
   
   authButtons = (
