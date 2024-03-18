@@ -2,39 +2,32 @@ import "./Footer.css";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { Link } from "react-router-dom";
+
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer_container">
         <div className="footerSection">
-          <h4>Bedrijf</h4>
+          <h4>Navigatie</h4>
           <Link to="/hoe-werkt-het">Hoe werkt het</Link>
           <a href="">Waarom mostpros</a>
           <Link to="/over-ons">Over</Link>
-          <Link to="/over-ons">Jobs</Link>
-          <Link to="/over-ons">Product updates</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/MijnKlussen">Mijn Klussen</Link>
-        </div>
-        <div className="footerSection">
-          <h4>Huiseigenaar</h4>
-          <p>Vind vakspecialist</p>
-          <p>Help</p>
-        </div>
-        <div className="footerSection">
-          <h4>Vakspecialist</h4>
-          <Link to="/over-ons">Inschrijven als vakspecialist</Link>
-          <p>Pro bedrijven centrum</p>
-          <p>Help voor professionals</p>
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>
+          <p>Vakspecialist</p>
           <p>Huiseigenaren</p>
-          <p>Vakspecialisten</p>
           <p>Developers</p>
           <p>Partners</p>
           <p>Studenten</p>
           <p>Startups</p>
+        </div>
+        <div className="footerSection">
+          <h4>Office</h4>
+          <p>2013 AS, Haarlem</p>
+          <p>Kinderhuissingel 6-K</p>
         </div>
         <div className="footerSection">
           <h4>Social</h4>
@@ -60,4 +53,5 @@ function Footer() {
     </footer>
   );
 }
+
 export default Footer;

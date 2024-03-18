@@ -1,5 +1,4 @@
 import "./FilterBar.css";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -21,8 +20,7 @@ function FilterBar() {
   const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showPriceOptions, setShowPriceOptions] = useState(false);
-
-  const [selectedLocation, setSelectedLocation] = useState("Select a location");
+  const [selectedLocation, setSelectedLocation] = useState("All");
   const [selectedSort, setSelectedSort] = useState("Select a sorting option");
   const [selectedPrice, setSelectedPrice] = useState("Select a price option");
   const [filteredItems, setFilteredItems] = useState<JobListingItem[]>([]); // Initialize with all items
@@ -30,97 +28,89 @@ function FilterBar() {
     {
       id: 1,
       name: "Mark",
-      distance: 6,
+      distance: 2.3,
       title: "gas lekkage",
       description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Rotterdam",
       availability: "4 dagen",
     },
-
     {
       id: 2,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 10,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
-
     {
       id: 3,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 5,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
-
     {
       id: 4,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 5,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 4.5,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 6,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 7,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 3.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 8,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 9,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 55,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Rotterdam",
       availability: "4 dagen",
@@ -128,103 +118,98 @@ function FilterBar() {
     {
       id: 10,
       name: "Mark",
-      distance: 3,
+      distance: 2.3,
       title: "gas lekkage",
       description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Haarlem",
       availability: "4 dagen",
     },
-
     {
       id: 11,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 5,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Amsterdam",
       availability: "4 dagen",
     },
-
     {
       id: 12,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 3.5,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
     {
       id: 13,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 5.6,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Haarlem",
       availability: "4 dagen",
     },
     {
       id: 14,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Amsterdam",
       availability: "4 dagen",
     },
     {
       id: 15,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 1.9,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
     {
       id: 16,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
     {
       id: 17,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
     {
       id: 18,
-      name: "Mark van bomen",
+      name: "Mark",
       distance: 2.3,
-      title: "Kapotte leiding maken en lekkage verhelpen.",
-      description: "De leiding is niet meer in  goede staat deze moet vervangen worden en....",
-
+      title: "gas lekkage",
+      description: "Spreek je ananas uis als ananas of aanaanas?",
       img: gasleiding,
       location: "Utrecht",
       availability: "4 dagen",
     },
   ];
-
   useEffect(() => {
     console.log("Effect triggered");
     filterItems();
   }, [selectedLocation, selectedSort, selectedPrice]);
-
   const filterItems = () => {
     console.log("Filtering items");
     let filtered = [...joblisting]; // Copy array to prevent mutating original
@@ -251,9 +236,12 @@ function FilterBar() {
         break;
     }
   };
-
   const locationOptions = ["All", "Amsterdam", "Rotterdam", "Haarlem"];
-  const sortOptions = ["Van laag naar hoog", "Van hoog naar laag", "Alfabetisch"];
+  const sortOptions = [
+    "Van laag naar hoog",
+    "Van hoog naar laag",
+    "Alfabetisch",
+  ];
   const priceOptions = ["€100", "€200", "€300"];
   const handleLocationSelect = (option: string) => {
     setSelectedLocation(option);
@@ -279,19 +267,21 @@ function FilterBar() {
           <div className="filter_items_con">
             <p>Locatie</p>
             <div className="sort_text_con">
-              <p onClick={() => setShowLocationOptions(!showLocationOptions)}>{selectedLocation}</p>
-              <ExpandMoreIcon onClick={() => setShowLocationOptions(!showLocationOptions)} />
+              <p onClick={() => setShowLocationOptions(!showLocationOptions)}>
+                {selectedLocation}
+              </p>
+              <ExpandMoreIcon
+                onClick={() => setShowLocationOptions(!showLocationOptions)}
+              />
               {showLocationOptions && (
                 <ul className="filter_items">
                   {locationOptions.map((option, index) => (
-                    <li key={index} onClick={() => handleLocationSelect(option)}>
-                      <p onClick={() => setShowLocationOptions(!showLocationOptions)}>
-                        {selectedLocation}
-                      </p>
-                      <ExpandMoreIcon
-                        onClick={() => setShowLocationOptions(!showLocationOptions)}
-                      />
-                    </li> // Added closing tag for 'li'
+                    <li
+                      key={index}
+                      onClick={() => handleLocationSelect(option)}
+                    >
+                      {option}
+                    </li>
                   ))}
                 </ul>
               )}
@@ -301,8 +291,12 @@ function FilterBar() {
           <div className="filter_items_con">
             <p>Sorteren</p>
             <div className="sort_text_con">
-              <p onClick={() => setShowSortOptions(!showSortOptions)}>{selectedSort}</p>
-              <ExpandMoreIcon onClick={() => setShowSortOptions(!showSortOptions)} />
+              <p onClick={() => setShowSortOptions(!showSortOptions)}>
+                {selectedSort}
+              </p>
+              <ExpandMoreIcon
+                onClick={() => setShowSortOptions(!showSortOptions)}
+              />
               {showSortOptions && (
                 <ul className="filter_items">
                   {sortOptions.map((option, index) => (
@@ -318,8 +312,12 @@ function FilterBar() {
           <div className="filter_items_con">
             <p>Prijs vanaf</p>
             <div className="sort_text_con">
-              <p onClick={() => setShowPriceOptions(!showPriceOptions)}>{selectedPrice}</p>
-              <ExpandMoreIcon onClick={() => setShowPriceOptions(!showPriceOptions)} />
+              <p onClick={() => setShowPriceOptions(!showPriceOptions)}>
+                {selectedPrice}
+              </p>
+              <ExpandMoreIcon
+                onClick={() => setShowPriceOptions(!showPriceOptions)}
+              />
               {showPriceOptions && (
                 <ul className="filter_items">
                   {priceOptions.map((option, index) => (
@@ -333,7 +331,9 @@ function FilterBar() {
           </div>
         </div>
         {/* Button to apply filters */}
-        <button className="filter_search_btn" onClick={handleSearch}>Zoeken</button>
+        <button className="filter_search_btn" onClick={handleSearch}>
+          Zoeken
+        </button>
       </div>
       {/* Banenlijst sectie */}
       <div className="job-list">
@@ -347,12 +347,12 @@ function FilterBar() {
                 {job.distance}km
               </p>
             </div>
-
+            
             <div className="job-info">
-
+            
               <h3>{job.title}</h3>
               <p>{job.description}</p>
-
+            
             </div>
 
             <div className="jobInfo-extra-con">
@@ -379,7 +379,6 @@ function FilterBar() {
         ))}
       </div>
     </div>
-  ); // Added closing parenthesis
+  );
 }
-
 export default FilterBar;

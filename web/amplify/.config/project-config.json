@@ -9,15 +9,6 @@
     "framework": "react",
     "config": {
       "SourceDir": "src",
-<<<<<<< HEAD
-=======
-      "DistributionDir": "build",
-      "BuildCommand": "npm.cmd run-script build",
-      "StartCommand": "npm.cmd run-script start",
-      "DistributionDir": "build",
-      "BuildCommand": "npm.cmd run-script build",
-      "StartCommand": "npm.cmd run-script start",
->>>>>>> acceptance
       "DistributionDir": "dist",
       "BuildCommand": "npm run-script build",
       "StartCommand": "npm run-script start"

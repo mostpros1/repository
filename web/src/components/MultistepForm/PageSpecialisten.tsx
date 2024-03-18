@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
+import { FaStar } from "react-icons/fa";
+import { FaStarHalf } from "react-icons/fa";
 import { dynamo } from "../../../../backend_functions/declerations";
 
 const exampleSpecialists = [
@@ -18,7 +20,7 @@ const exampleSpecialists = [
     profession: 'Loodgieter',
     location: 'Amsterdam',
     price: 500,
-    rating: 3,
+    rating: 2,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
   {
