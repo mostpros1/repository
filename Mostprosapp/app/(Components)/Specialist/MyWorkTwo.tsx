@@ -536,7 +536,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderBottomEndRadius: 250,
     borderBottomStartRadius: 250,
-    marginBottom: 40,
   },
   topButtonsContainer: {
     flexDirection: "row",

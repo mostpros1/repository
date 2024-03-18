@@ -65,4 +65,5 @@ declare global {
     MyWorkTwo: undefined;
     WorkNavigation: undefined;
     MyWorkThree: undefined;
+    Changedate: undefined;
   };

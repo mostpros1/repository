@@ -53,6 +53,7 @@ import WorkNavigation from "./(Components)/Specialist/WorkNavigation";
 import MyWork from "./(Components)/Specialist/MyWork";
 import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
 import MyWorkThree from "./(Components)/Specialist/MyWorkThree";
+import Changedate from "./(Components)/Specialist/Changedate";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
@@ -151,7 +152,9 @@ const App = () => {
         <Stack.Screen name="MyWork" component={MyWork}/>
         <Stack.Screen name="MyWorkTwo" component={MyWorkTwo}/>
         <Stack.Screen name="WorkNavigation" component={WorkNavigation}/>
-        <Stack.Screen name="MyWorkThree" component={MyWorkThree}/>
+        <Stack.Screen name="MyWorkThree" component={MyWorkThree} />
+        <Stack.Screen name="Changedate" component={Changedate}/>
+        
        
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
