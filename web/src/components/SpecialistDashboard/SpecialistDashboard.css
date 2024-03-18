@@ -97,7 +97,6 @@
   margin-right: 25px;
   font-size: 50px; /* Adjust the size as necessary */
   color: #333;
-  float: left; /* Move the SVG to the left side */
 }
 
 .current-task-title {
@@ -108,6 +107,7 @@
   background-color: #e9f4ff; /* Adjust the color as needed */
   padding: 15px 20px; /* Vertical and horizontal padding */
   border-radius: 10px; /* Rounded corners */
+  margin-right: 175px;
   margin-bottom: 20px; /* Space between items */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 30%;
@@ -250,7 +250,26 @@
 
 /* Media queries */
 
-@media only screen and (max-width: 1458px) {
+/*bigger screens*/
+@media only screen and (min-width: 764px) {
+  .new-task-card {
+    max-width: 600px; /* Example max width, adjust as necessary */
+  }
+
+  /* Adjust the current-task-title alignment for larger screens */
+  .current-task-title {
+    margin-left: 0; /* Align with the content */
+    /* other styles */
+  }
+
+  /* Make sure task cards don't grow too large */
+  .task-card,
+  .new-task-card {
+    max-width: 600px; /* Or whatever max width fits your design */
+  }
+}
+
+@media only screen and (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
     align-items: center;
@@ -265,13 +284,16 @@
   .main-content {
     flex-direction: column; /* Stack the cards on smaller screens */
     align-items: center; /* Center the cards */
-
   }
 
   .task-card {
     padding-top: 25px;
     margin-top: 20px;
-    width: 100%; /* Adjust width for smaller screens */
+  }
+
+  .task-title {
+    font-size: 16px; /* Adjust font size for smaller screens */
+    padding-bottom: 20px; /* Adjust padding for smaller screens */
   }
 
   .new-task-card {
