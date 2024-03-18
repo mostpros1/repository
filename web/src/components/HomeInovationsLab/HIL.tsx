@@ -20,22 +20,32 @@ function HIL() {
         </div>
       </div>
       <div className="grid-con">
-        <p>
-          <TrendingUpRoundedIcon />
-          Growth
-        </p>
-        <p>
-          <PeopleAltRoundedIcon />
-          People
-        </p>
-        <p>
-          <WbCloudyRoundedIcon />
-          Cloud ICT
-        </p>
-        <p>
-          <MemoryRoundedIcon />
-          3 A.I Data
-        </p>
+        <div className="grid-row">
+          <div className="grid-col">
+            <p>
+              <TrendingUpRoundedIcon />
+              Growth
+            </p>
+          </div>
+          <div className="grid-col">
+            <p>
+              <PeopleAltRoundedIcon />
+              People
+            </p>
+          </div>
+          <div className="grid-col">
+            <p>
+              <WbCloudyRoundedIcon />
+              Cloud ICT
+            </p>
+          </div>
+          <div className="grid-col">
+            <p>
+              <MemoryRoundedIcon />
+              A.I Data
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

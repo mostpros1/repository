@@ -25,6 +25,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
 import HomeInovation from "../pages/HomeInovation/HomeInovation";
+import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -47,6 +48,7 @@ const App = () => {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/HomeInovation" element={<HomeInovation />} />
+      <Route path="/VSDashboard" element={<VSDashboard />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

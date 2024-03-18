@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
@@ -13,6 +14,11 @@ import { Apps } from "@mui/icons-material";
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
+  const navigate = useNavigate(); // Create a navigate function
+
+  const handleIconClick = () => {
+    navigate("/HomeInovation"); // Use navigate function to redirect
+  };
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -287,10 +293,8 @@ function Navigation() {
             </Link>
           </li>
         </ul>
-        <div className="apps-icon">
-        <Link to="/HomeInovation">
-          <AppsRoundedIcon />
-        </Link>
+        <div className="apps-icon" onClick={handleIconClick}>
+            <AppsRoundedIcon />
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
