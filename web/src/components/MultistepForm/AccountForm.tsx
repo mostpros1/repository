@@ -14,8 +14,8 @@ type AccountFormData = {
     password: string
     repeatPassword: string
     formConfig?: string
-    beroep?: string
-    formConfig?: "HOMEOWNER"
+    //beroep?: string
+    //formConfig?: "HOMEOWNER"
 }
 
 type AccountFormProps = AccountFormData & {
@@ -24,7 +24,7 @@ type AccountFormProps = AccountFormData & {
     error: string;
 }
 
-export function AccountForm ({ beroep, email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, formConfig, updateFields }: AccountFormProps) {
+
 export function AccountForm({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false)

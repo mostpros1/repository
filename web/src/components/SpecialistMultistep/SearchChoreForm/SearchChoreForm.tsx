@@ -1,4 +1,5 @@
 import "./SearchChoreForm.css"
+import React, { useState } from 'react';
 
 type SpecialistData = {
     beroep?: string
@@ -12,9 +13,10 @@ type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
 
-export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
 export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
+
+
 
     const [isValidBeroep, setValidBeroep] = useState(true);
 

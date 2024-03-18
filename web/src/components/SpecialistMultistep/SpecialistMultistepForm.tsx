@@ -170,7 +170,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
       }
     };
-  
+
     return (
       <form action="" method="POST">
         <div>
@@ -185,11 +185,11 @@ function SpecialistMultistepForm() {
     useMultistepForm({
       steps: [
 
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-          />,
+        />,
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
@@ -241,63 +241,64 @@ function SpecialistMultistepForm() {
     } else {
       console.log(data);
       navigate("/specialist-resultaat");
-    if (!isLastStep) return next()
+      if (!isLastStep) return next()
 
-    const userData: RegisterData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim(),
-      dob: "" // Add the 'dob' property here
+      const userData: RegisterData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim(),
+        dob: "" // Add the 'dob' property here
+      }
+
+      signUp(userData, "Professional");
+
+
     }
 
-    signUp(userData, "Professional");
+    const stepWidth = 100 / steps.length;
 
+    return (
+      <form onSubmit={onSubmit} className="form-con">
+        <div className="progress-con">
+          <h3>
+            Stap {currentStepIndex + 1} van {steps.length}
+          </h3>
+          <div className="progress-bar">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`progress-step ${index <= currentStepIndex ? "active" : ""
+                  }`}
+                style={{ width: `${stepWidth}%` }}
+              ></div>
+            ))}
+          </div>
+        </div>
+        {showNoKvK ? <NoKvK /> : <>{step}</>}
+        <>
+          <div className="btn-wrapper">
+            <button
+              type="button"
+              onClick={() => {
+                showNoKvK ? setShowNoKvK(false) : back();
+              }}
+              className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+              style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+            >
+              Vorige
+            </button>
+            {showNoKvK ? <></> : <button type="submit" className="form-btn">
+              {isLastStep ? "Verstuur" : "Volgende"}
+            </button>}
 
+          </div>
+        </>
+      </form>
+    );
   }
-
-  const stepWidth = 100 / steps.length;
-
-  return (
-    <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
-        <div className="progress-bar">
-          {steps.map((_, index) => (
-            <div
-              key={index}
-              className={`progress-step ${index <= currentStepIndex ? "active" : ""
-                }`}
-              style={{ width: `${stepWidth}%` }}
-            ></div>
-          ))}
-        </div>
-      </div>
-      {showNoKvK ? <NoKvK /> : <>{step}</>}
-      <>
-        <div className="btn-wrapper">
-          <button
-            type="button"
-            onClick={() => {
-              showNoKvK ? setShowNoKvK(false) : back();
-            }}
-            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-          >
-            Vorige
-          </button>
-          {showNoKvK ? <></> : <button type="submit" className="form-btn">
-            {isLastStep ? "Verstuur" : "Volgende"}
-          </button>}
-
-        </div>
-      </>
-    </form>
-  );
 }
 
 export default SpecialistMultistepForm;

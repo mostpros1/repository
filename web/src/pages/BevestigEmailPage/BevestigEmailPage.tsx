@@ -4,6 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
+import { stripeClient } from '../../main'
+import { cognitoClient } from '../../main'
+import { PostConfig } from './types';
+
 
 function BevestigEmailPage() {
 
@@ -14,8 +18,9 @@ function BevestigEmailPage() {
     const inputRef = useRef([])
 
     const userEmail = location.state === null ? "" : location.state.email
-<<<<<<< HEAD
     const postConfigId = location.state === null ? "" : location.state.postConfig
+
+     // Replace './types' with the correct path to the module containing the PostConfig type
 
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
@@ -32,6 +37,8 @@ function BevestigEmailPage() {
                     email: userEmail,
                     country: 'NL',
                 })
+                
+
                 .then(stripeAccount => {
                     cognitoClient.adminUpdateUserAttributes({
                         UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -84,8 +91,6 @@ function BevestigEmailPage() {
             postConfig.onSuccess && postConfig.onSuccess()
         }
     }
-=======
->>>>>>> acceptance
 
     function onSubmit(e: FormEvent) {
         e.preventDefault()
@@ -102,7 +107,6 @@ function BevestigEmailPage() {
         }})
     }
 
-<<<<<<< HEAD
     function onNewCode() {
         Auth.resendSignUp(userEmail)
         .catch(error => {
@@ -112,8 +116,6 @@ function BevestigEmailPage() {
             }
         })
     }
-=======
->>>>>>> acceptance
     const form =
     <div className="confirmemail-container">
         <form className="confirmemail-card" onSubmit={onSubmit}>
