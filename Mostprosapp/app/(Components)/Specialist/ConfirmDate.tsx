@@ -23,7 +23,7 @@ import { Ionicons } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const ChangedateTwo = ({ navigation }) => {
+const ConfirmDate = ({ navigation }) => {
 
     return (
         <PaperProvider>
@@ -47,54 +47,21 @@ const ChangedateTwo = ({ navigation }) => {
                             </View>
                         </View>
 
-                        <View style={styles.topTitleBox}>
-                            <Text style={styles.h1Title}>Uw huidige klus: Loodgieter werk</Text>
-                        </View>
-
-                        <View style={styles.bigCard}>
-                            <View style={styles.textLine}>
-                                <Text>Loodgieters werk: nieuwe leiding aanleggen</Text>
-                                <View style={styles.line}></View>
-                            </View>
-                            <View style={styles.infoCard}>
-                                <View style={styles.infoWrapper}>
-                                    <Text style={styles.locationText}>
-                                        Lisa Zoetlief heeft op 30 September de volgende datum in uw kalender gereserveerd: 10 Oktober 2023. Indien deze datum niet mogelijk is wijzig deze hier beneden.
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        <View style={styles.cardTwo}>
-                            <View style={styles.underlineTitleBox}>
-                                <Text>Wijzig datum</Text>
+                        <View style={styles.squareWrapper}>
+                            <View style={styles.mainSquare}>
+                                <View style={styles.flexDirection}>
                                 <Pressable
                                     style={styles.crossCircle}
                                     onPress={() => navigation.navigate("SpecialistNavigation")}
                                 >
                                     <Text style={styles.crossTitle}>X</Text>
                                 </Pressable>
-                            </View>
+                                </View>
+                                <Text>De klant heeft uw bevestiging gekregen.</Text>
+                                <Image style={styles.image} source={require("../../../assets/images/thumbsup.png")} />
 
-                            <View style={styles.flexDirection}>
-                                <View style={styles.circleBlue}>
-                                    <Icon name="arrow-back" size={28} color="white" />
-                                </View>
-                                <View style={styles.dateInfoLeft}>
-                                    <View style={styles.dateInfoTextWrapper}>
-                                        <Text style={styles.dateTitle}>10</Text>
-                                        <Text>Oktober</Text>
-                                        <Text>2023</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.circleBlue}>
-                                    <Icon name="arrow-forward" size={28} color="white" />
-                                </View>
                             </View>
                         </View>
-                        <Pressable style={styles.nextButton} onPress={() => navigation.navigate('')}>
-                            <Text style={styles.whiteText}>Datum Bevestigen</Text>
-                        </Pressable>
                     </View>
                 </ScrollView>
                 <Footer navigation={navigation} activePage="ChatOverview" />
@@ -112,6 +79,39 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
 
+    squareWrapper: {
+        flex: 1,
+        width: windowWidth,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    image: {
+        width: 220,
+        objectFit: "contain",
+    },
+
+
+    mainSquare: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        elevation: 3,
+        backgroundColor: "white",
+        width: "80%",
+        height: 350,
+        display: "flex",
+        alignItems: "flex-end",
+        justifyContent: "center",
+    },
+
+    
+
     crossCircle: {
         width: 40,
         height: 40,
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
     },
-
 
     topTitleBox: {
         height: 50,
@@ -193,8 +192,6 @@ const styles = StyleSheet.create({
 
     profileWrapper: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         flexDirection: "row",
         gap: 10,
     },
@@ -202,9 +199,6 @@ const styles = StyleSheet.create({
     flexDirection: {
         flexDirection: "row",
         display: "flex",
-        alignItems: "center",
-        gap: 20,
-        marginTop: 25,
     },
 
     profileBox: {
@@ -234,12 +228,9 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         alignItems: "center",
-        justifyContent: "flex-end",
+        justifyContent: "center",
         borderBottomWidth: 1.5,
-        borderColor: "#D9D9D9", 
-        flexDirection: "row",
-        gap: 68,
-        paddingBottom: 10,
+        borderColor: "#D9D9D9",
     },
 
     cardTwo: {
@@ -296,7 +287,7 @@ const styles = StyleSheet.create({
     linkTextBottom: {
         color: "#17A1FA",
         marginBottom: 15,
-        paddingLeft: 24,
+        paddingLeft: 15,
 
     },
 
@@ -314,12 +305,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "bold",
         letterSpacing: 0.25,
-        color: "#FFFFFF",
+        color: "white",
     },
 
     nextButton: {
         borderRadius: 10,
-        backgroundColor: "#B3B3B3",
+        backgroundColor: "#308AE4",
         width: 160,
         height: 50,
         textAlign: "center",
@@ -603,13 +594,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         gap: 10,
     },
-    image: {
-        flex: 1,
-        width: "100%",
-        height: undefined,
-        aspectRatio: 1,
-        transform: [{ scale: 1.6 }],
-    },
+
     button: {
         borderRadius: 10,
         display: "flex",
@@ -717,4 +702,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChangedateTwo;
+export default ConfirmDate;

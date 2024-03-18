@@ -67,4 +67,5 @@ declare global {
     MyWorkThree: undefined;
     Changedate: undefined;
     ChangedateTwo: undefined;
+    ConfirmDate: undefined;
   };
