@@ -13,11 +13,7 @@ function NavLinks() {
         {
             name: 'Inschrijven als vakspecialist',
             link: '/inschrijven-als-specialist'
-        },
-        {
-        name: 'HIL',
-        link: '/home-inovations-lab'
-    }
+        }
     ]
 
     let navItemsToBeRendered = navItems.map(Item => {

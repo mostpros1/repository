@@ -14,76 +14,6 @@ function BevestigEmailPage() {
     const inputRef = useRef([])
 
     const userEmail = location.state === null ? "" : location.state.email
-    const postConfigId = location.state === null ? "" : location.state.postConfig
-
-    const postConfigMap: Record<string, PostConfig> = {
-        'HOMEOWNER': {
-            roleName: "Homeowner",
-            nextPage: '/huiseigenaar-resultaat',
-            onSuccess: () => setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000)
-        },
-        'PROFESSIONAL': {
-            roleName: "Professional",
-            nextPage: '/specialist-resultaat',
-            onSuccess: () => {
-                stripeClient.accounts.create({
-                    type: 'standard',
-                    email: userEmail,
-                    country: 'NL',
-                })
-                .then(stripeAccount => {
-                    cognitoClient.adminUpdateUserAttributes({
-                        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                        Username: userEmail,
-                        UserAttributes: [{
-                            Name: 'custom:stripeAccountId',
-                            Value: stripeAccount.id
-                        }]
-                    }).promise()
-                    .then(() => {
-                        stripeClient.accountLinks.create({
-                            account: stripeAccount.id,
-                            type: 'account_onboarding',
-                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                            return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
-                        })
-                        .then(result => window.location.href = result.url)
-                        .catch(err => console.error(err))
-                    })
-                    .catch(err => console.error(err))
-                })
-                .catch(err => console.error(err))
-            },
-        }
-    }
-    const postConfig = postConfigMap[postConfigId] || null
-
-    async function confirmSignUp(code: string) {
-        
-        const confirmationResult = await Auth.confirmSignUp(userEmail, code)
-        .catch(error => {
-            console.error(error)
-            const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
-                "CodeMismatchException": () => { },
-                "default": () => {}
-            };
-            (errorActionMap[error.code] || errorActionMap['default'])()
-        })
-        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
-            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-            Username: userEmail,
-            GroupName: postConfig.roleName,
-        }).promise()
-        .catch(error => console.error(error))
-        console.log(addToGroupResult)
-        if (!addToGroupResult) return
-        if (confirmationResult == 'SUCCESS') {
-            setIsConfirmed(true)
-            postConfig.onSuccess && postConfig.onSuccess()
-        }
-    }
-
 
     function onSubmit(e: FormEvent) {
         e.preventDefault()
@@ -100,15 +30,6 @@ function BevestigEmailPage() {
         }})
     }
 
-    function onNewCode() {
-        Auth.resendSignUp(userEmail)
-        .catch(error => {
-            if (error.code == "InvalidParameterException") {
-                setUserExists(true)
-                setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
-            }
-        })
-    }
     const form =
     <div className="confirmemail-container">
         <form className="confirmemail-card" onSubmit={onSubmit}>

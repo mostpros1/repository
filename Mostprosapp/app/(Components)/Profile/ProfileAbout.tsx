@@ -17,7 +17,6 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -112,7 +111,6 @@ const ProfileAbout = ({ navigation }) => {
                         </View>                  
                     </View>
                 </ScrollView>
-                <Footer navigation={navigation} activePage="Profile" />
             </SafeAreaView>
         </PaperProvider>
     );
@@ -120,7 +118,7 @@ const ProfileAbout = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     view: {
-        height: windowHeight * 1.2,
+        height: windowHeight * 1.1,
         width: windowWidth,
         display: "flex",
         alignItems: "center",
