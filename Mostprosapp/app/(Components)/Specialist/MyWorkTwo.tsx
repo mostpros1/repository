@@ -57,7 +57,9 @@ const MyWorkTwo = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-
+            <View style={styles.topTitleBox}>
+              <Text style={styles.h1Title}>Uw huidige klus: Loodgieter werk</Text>
+            </View>
             <View style={styles.bigCard}>
               <View style={styles.textLine}>
                 <Text>Loodgieters werk: nieuwe leiding aanleggen</Text>
@@ -160,7 +162,7 @@ const MyWorkTwo = ({ navigation }) => {
 
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="ChatOverview"/>
+        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
@@ -174,6 +176,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
   },
+
+  topTitleBox: {
+    height: 50,
+    width: "87%",
+    marginBottom: 40,
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+
+  },
+
+  h1Title: {
+    fontSize: 15,
+    fontWeight: "500",
+  },
+
 
 
   profileImage: {

@@ -58,6 +58,10 @@ const MyWork = ({ navigation }) => {
               </View>
             </View>
 
+            <View style={styles.topTitleBox}>
+                            <Text style={styles.h1Title}>Uw huidige klus: Loodgieter werk</Text>
+                        </View>
+
             <View style={styles.bigCard}>
               <View style={styles.textLine}>
                 <Text>Loodgieters werk: nieuwe leiding aanleggen</Text>
@@ -161,6 +165,21 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     backgroundColor: "white",
+  },
+
+  topTitleBox: {
+    height: 50,
+    width: "87%",
+    marginBottom: 40,
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+
+  },
+
+  h1Title: {
+    fontSize: 15,
+    fontWeight: "500",
   },
 
   whiteText: {
@@ -397,7 +416,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderBottomEndRadius: 250,
     borderBottomStartRadius: 250,
-    marginBottom: 40,
   },
   topButtonsContainer: {
     flexDirection: "row",

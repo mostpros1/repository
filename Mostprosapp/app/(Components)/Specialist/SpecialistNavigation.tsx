@@ -27,11 +27,8 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('SpecialistResults')}>
                 <Text style={[styles.text]}>Result</Text>
               </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('MyWork')}>
-                <Text style={[styles.text]}>Mijn Klussen</Text>
-              </Pressable>
-              <Pressable style={styles.link} onPress={() => navigation.navigate('MyWorkTwo')}>
-                <Text style={[styles.text]}>Mijn Klussen 2</Text>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('WorkNavigation')}>
+                <Text style={[styles.text]}>Klussen navigatie</Text>
               </Pressable>
             </View>
           </View>

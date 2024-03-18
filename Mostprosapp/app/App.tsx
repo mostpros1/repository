@@ -49,8 +49,10 @@ import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
+import WorkNavigation from "./(Components)/Specialist/WorkNavigation";
 import MyWork from "./(Components)/Specialist/MyWork";
 import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
+import MyWorkThree from "./(Components)/Specialist/MyWorkThree";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
@@ -148,7 +150,9 @@ const App = () => {
         <Stack.Screen name="SpecialistResults" component={SpecialistResults}/>
         <Stack.Screen name="MyWork" component={MyWork}/>
         <Stack.Screen name="MyWorkTwo" component={MyWorkTwo}/>
-        
+        <Stack.Screen name="WorkNavigation" component={WorkNavigation}/>
+        <Stack.Screen name="MyWorkThree" component={MyWorkThree}/>
+       
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

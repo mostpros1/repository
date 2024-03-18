@@ -63,4 +63,6 @@ declare global {
     SpecialistResults: undefined;
     MyWork: undefined;
     MyWorkTwo: undefined;
+    WorkNavigation: undefined;
+    MyWorkThree: undefined;
   };
