@@ -14,7 +14,6 @@ function Footer() {
           <Link to="/over-ons">Jobs</Link>
           <Link to="/over-ons">Product updates</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/MijnKlussen">Mijn Klussen</Link>
         </div>
         <div className="footerSection">
           <h4>Huiseigenaar</h4>
@@ -55,7 +54,7 @@ function Footer() {
         <p>©2023</p>
         <Link to="/privacybeleid">Privacybeleid.</Link>
         <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
-        <Link to="/disclaimer">Disclaimer.</Link>
+        <Link to="/disclaimer">Disclaimer</Link>
         <Link to="/VSDashboard">.</Link>
       </div>
     </footer>

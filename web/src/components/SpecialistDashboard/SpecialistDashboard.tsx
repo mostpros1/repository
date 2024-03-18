@@ -45,11 +45,9 @@ const SpecialistDashboard = () => {
         </nav>
       </aside>
       {/* <!-- Main Content --> */}
-        <a href="#" className="current-tasks-title">
-          Huidige Klussen
-        </a>
       <main className="main-content">
         {/* <!-- Task Card --> */}
+        <a className="current-task-title">Huidige Klussen</a>
         <div className="task-card">
           <h3 className="task-title">
             Loodgieters werk: nieuwe leiding aanleggen

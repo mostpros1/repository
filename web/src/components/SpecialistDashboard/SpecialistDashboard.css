@@ -100,28 +100,30 @@
   float: left; /* Move the SVG to the left side */
 }
 
-.current-tasks-title {
-  width: calc(50% - 20px); /* Match the task cards width */
-  font-size: 24px; /* Example font size, adjust as needed */
-  color: #333; /* Example text color, adjust as needed */
-  padding: 20px; /* Add padding to match task cards styling */
-  margin-left: 35px; /* Align with the task cards, adjust as needed */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional, if you want it to match task cards */
-  background-color: #fff; /* Optional, if you want it to match task cards */
+.current-task-title {
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+  color: #333;
+  background-color: #e9f4ff; /* Adjust the color as needed */
+  padding: 15px 20px; /* Vertical and horizontal padding */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 20px; /* Space between items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30%;
 }
 
 .main-content {
-  flex-grow: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   max-width: 100%;
   max-height: fit-content;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .task-card,
 .new-task-card {
-  padding: 20px; /* Reduce the padding */
+  padding: 25px; /* Reduce the padding */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 1; /* Allow flex items to grow and shrink */
@@ -129,6 +131,7 @@
     50% - 20px
   ); /* Set a max-width with consideration for the gap */
   min-width: 300px; /* Set a min-width to ensure cards do not get too small */
+  margin-bottom: 80px;
 }
 
 .task-title {
@@ -209,6 +212,7 @@
 .new-task-card {
   display: flex;
   align-items: center;
+  margin-top: 75px;
   padding: 288px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -246,7 +250,7 @@
 
 /* Media queries */
 
-@media only screen and (max-width: 1058px) {
+@media only screen and (max-width: 1458px) {
   .dashboard-container {
     flex-direction: column;
     align-items: center;
@@ -261,6 +265,7 @@
   .main-content {
     flex-direction: column; /* Stack the cards on smaller screens */
     align-items: center; /* Center the cards */
+
   }
 
   .task-card {
