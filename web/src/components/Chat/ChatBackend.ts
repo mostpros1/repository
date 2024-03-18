@@ -43,7 +43,7 @@ export function useChatBackend(user: any) {
 
   const handleReceivedMessage = (receivedChat: any) => {
     if (receivedChat.members.includes(user.attributes.email)) {
-      setChats((prevChats) => [...prevChats, receivedChat]);
+      setChats((prevChats: any[]) => [...prevChats, receivedChat]);
       setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail with the email of the sender
       if (receivedChat.email) {
         setShowJoinButton(true);
@@ -53,7 +53,7 @@ export function useChatBackend(user: any) {
 
   const handleStartNewChat = () => {
     setRecipientEmail(
-      prompt("Enter the email of the person you want to chat with:")
+      prompt("Enter the email of the person you want to chat with:") ?? ""
     );
     setShowAlert(true);
   };
