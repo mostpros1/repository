@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView, TouchableOpacity, Image, } from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, Pressable, ScrollView } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider, Switch } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -17,23 +16,23 @@ const ProfileNotifications = ({ navigation }) => {
 
   return (
     <PaperProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <ScrollView>
           <View style={styles.view}>
-            <View style={styles.topContainer}>
-              <View style={styles.topButtonsContainer}>
-                <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
-                  <View style={styles.smallCircle}>
-                    <Icon name="arrow-back" size={28} color="#308AE4" />
-                  </View>
+          <View style={styles.topContainer}>
+          <View style={styles.topButtonsContainer}>
+            <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
+                     <View style={styles.smallCircle}>
+                        <Icon name="arrow-back" size={28} color="#308AE4" />
+                    </View>
                 </Pressable>
-              </View>
-              <View style={styles.topContainerSecondSectionTwo}>
-                <Text style={[styles.name, styles.textBold]}>
-                  Settings
-                </Text>
-              </View>
             </View>
+                            <View style={styles.topContainerSecondSectionTwo}>
+                                <Text style={[styles.name, styles.textBold]}>
+                                    Settings
+                                </Text>
+                            </View>
+                        </View>
 
             <View style={styles.firstMiddleContainerWrapper}>
               <Text style={[styles.textButtonBlack, styles.smallTitle]}>
@@ -58,7 +57,7 @@ const ProfileNotifications = ({ navigation }) => {
               </Text>
 
               <View style={styles.middleContainerFirstSection}>
-                <Pressable style={[styles.agendaButton, styles.blockColorTop,]} onPress={() => navigation.navigate('')}>
+              <Pressable style={[styles.agendaButton, styles.blockColorTop,]} onPress={() => navigation.navigate('')}>
                   <Text style={[styles.text, styles.textButtonBlack]}>Vibratie</Text>
                   <View style={styles.textButtonWrapper}>
                     <Text style={[styles.lightTitle]}>Set</Text>
@@ -80,37 +79,34 @@ const ProfileNotifications = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
-        <Footer navigation={navigation} /> 
       </SafeAreaView>
     </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   view: {
-    flex: 1,
+    height: windowHeight,
+    width: windowWidth,
+    display: "flex",
     alignItems: "center",
     backgroundColor: "white",
   },
- 
+
   textButtonBlack: {
     color: "black",
-  },
+},
 
-  topButtonsContainer: {
+topButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '60%',
     paddingHorizontal: 20,
     position: 'absolute',
     top: -25,
-  },
+},
 
-  linkOne: {
+linkOne: {
     borderRadius: 10,
     backgroundColor: "#308AE4",
     width: 250,
@@ -118,20 +114,20 @@ const styles = StyleSheet.create({
     padding: 10,
     bottom: -60,
     alignItems: "center",
-  },
+},
 
-  blockColorTop: {
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    backgroundColor: "#E9F4FF",
-  },
+blockColorTop:{
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+        backgroundColor: "#E9F4FF",
+},
 
-  blockColorBottom: {
+blockColorBottom:{
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     backgroundColor: "#E9F4FF",
-  },
-  topContainer: {
+},
+topContainer: {
     width: 700,
     height: 100,
     display: "flex",
@@ -140,14 +136,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderBottomEndRadius: 250,
     borderBottomStartRadius: 250,
-  },
+},
 
   returnButton: {
     backgroundColor: "transparent",
     width: 60,
     textAlign: "center",
-  },
-
+},
+  
   circleContainer: {
     marginTop: windowHeight * 0.07,
     width: windowWidth * 0.4,
@@ -173,10 +169,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 54,
     gap: 2,
-  },
-  name: {
+},
+name: {
     color: 'white',
-  },
+},
   firstMiddleContainerWrapper: {
     width: "100%",
     backgroundColor: "white",
@@ -213,7 +209,7 @@ const styles = StyleSheet.create({
     fontSize: windowWidth * 0.042,
     lineHeight: windowHeight * 0.053,
     fontWeight: "bold",
-  },
+},
   smallTitle: {
     fontSize: windowWidth * 0.034,
     fontWeight: "bold",
@@ -233,23 +229,23 @@ const styles = StyleSheet.create({
     paddingVertical: windowHeight * 0.012,
     paddingHorizontal: windowWidth * 0.04,
   },
-  arrow: {
-    fontSize: windowWidth * 0.06,
-  },
+    arrow: {
+        fontSize: windowWidth * 0.06,
+    },
   arrowButton: {
     flex: 1,
     display: "flex",
     alignItems: "flex-end",
-  },
-  smallCircle: {
+},
+smallCircle: {
     width: 40,
     height: 40,
-    borderRadius: 25,
+    borderRadius: 25, 
     backgroundColor: 'white',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
+},
 });
 
 export default ProfileNotifications;

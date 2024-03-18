@@ -46,10 +46,6 @@
   
   .week-days{
     display: flex;
-    justify-content: space-evenly;
-    padding-left: 55px;
-    padding-right: 6px;
-    gap: 20px;
     justify-content: space-between;
     padding-left: 80px;
     padding-right: 20px;
@@ -74,39 +70,6 @@
   .day {
     padding: 10px;
     margin: 2px;
-    background-color: #a80505;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 10%;
-    display: flex;
-    width: 55px;
-    height: 50px;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: light;
-    color: white;
-  }
-
-  .dayBeschikbaar{
-    padding: 10px;
-    margin: 2px;
-    background-color: #20ce11;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 10%;
-    display: flex;
-    width: 55px;
-    height: 50px;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: light;
-    color: white;
-  }
-
-  .dayNietBeschikbaar{
-    padding: 10px;
-    margin: 2px;
-    background-color: #a80505;
     background-color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -117,7 +80,6 @@
     justify-content: center;
     font-size: 20px;
     font-weight: light;
-    color: white;
   }
   
   .day:hover, .day.selected, .week-number {
@@ -263,19 +225,6 @@
 }
 
 .time-slot {
-  background-color: #a80505;
-  padding: 10px 20px;
-  margin: 5px 0; /* Ruimte tussen tijdslots */
-  cursor: pointer;
-  text-align: center;
-  border-radius: 20px;
-  transition: background-color 0.3s, color 0.3s;
-  width: 225px;
-  color: white;
-}
-
-.time-slot-niet-beschikbaar {
-  background-color: #a80505;
   background-color: #f8f9fa;
   padding: 10px 20px;
   margin: 5px 0; /* Ruimte tussen tijdslots */
@@ -284,19 +233,6 @@
   border-radius: 20px;
   transition: background-color 0.3s, color 0.3s;
   width: 225px;
-  color: white;
-}
-
-.time-slot-beschikbaar {
-  background-color: #20ce11;
-  padding: 10px 20px;
-  margin: 5px 0; /* Ruimte tussen tijdslots */
-  cursor: pointer;
-  text-align: center;
-  border-radius: 20px;
-  transition: background-color 0.3s, color 0.3s;
-  width: 225px;
-  color: white;
 }
 
 .time-slot:hover {
@@ -310,7 +246,6 @@
 }
 
 .day.today {
-  background-color: #3a72ff;
   border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
   border-radius: 20%; /* Maakt de rand rond */
   justify-content: center;

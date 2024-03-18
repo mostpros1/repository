@@ -14,68 +14,17 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
-import {specialists} from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
-
-
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const HomePageSpecialist = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showOptions, setShowOptions] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [inputText, setInputText] = useState('');
-
-  const handleInputChange = (text) => {
-      setInputText(text);
-  };
-
-  const handleInputFocus = () => {
-      setShowOptions(true);
-  };
-
-  const handleOptionPress = (option) => {
-      setInputText(option.title);
-      setSelectedOption(option);
-      setShowOptions(false);
-  };
-
-  const handleOutsidePress = () => {
-      Keyboard.dismiss();
-      setShowOptions(false);
-  };
-
-  const handleForwardButtonPress = () => {
-      if (!selectedOption) {
-          setErrorMessage("Kies eerst een Specialist");
-          setTimeout(() => {
-              setErrorMessage('');
-          }, 3000);
-          return;
-      }
-      navigation.navigate('HomeOwnerPostalCode', { selectedOption });
-  };
-
-  const filteredOptions = specialists.filter(option =>
-    option.title.toLowerCase().includes(inputText.toLowerCase())
-  );
-  
-  const handlePress = (text) => {
-    navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
-  };
   return (
     <PaperProvider>
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <SafeAreaView>
         <ScrollView>
           <View style={[styles.view]}>
@@ -93,16 +42,16 @@ const HomePageSpecialist = ({ navigation }) => {
               </View>
               <View style={[styles.textSearchWrapper]}>
                 <Text style={[styles.whiteBoldText]}>Stad \/</Text>
-                <Pressable style={styles.container} onPress={handleForwardButtonPress}>
-                <TextInput
-                        placeholder="Zoeken:"
-                        style={styles.input}
-                        onChangeText={handleInputChange}
-                        onFocus={handleInputFocus}
-                        value={inputText}
-                    />
+                <View style={styles.container}>
+                  <TextInput
+                    placeholder="Zoeken"
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      // hier invullen wat er moet gebeuren met de input
+                    }}
+                  />
                   <Icon name="forward" size={25} color="#318ae5" />
-                </Pressable>
+                </View>
               </View>
               <View style={[styles.iconsText]}>
                 <Pressable style={[styles.iconsTextWrapper]}>
@@ -122,30 +71,30 @@ const HomePageSpecialist = ({ navigation }) => {
                   <Text style={[styles.whiteIconText]}>Zak</Text>
                 </Pressable>
               </View>
-              <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
+              <Pressable style={[styles.searchBar]}>
                 <View style={styles.smallCircle}>
                   <Icon name="add" size={28} color="#308AE4" />
                 </View>
-                <Text style={[styles.whiteIconText]}>Nieuwe klus plaatsen</Text>
+                <Text style={[styles.whiteIconText]}>Klussen vinden</Text>
               </Pressable>
             </View>
             <View style={[styles.titleWrap]}>
               <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
             </View>
             <View style={[styles.iconsText]}>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Hovenier")}>
+              <Pressable style={[styles.iconsTextWrapper]}>
                 <Icon name="grass" size={50} color="#4999e7" />
                 <Text style={[styles.blackIconText]}>Hovenier</Text>
               </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Elektricien")}>
+              <Pressable style={[styles.iconsTextWrapper]}>
                 <Icon name="lightbulb" size={50} color="#4999e7" />
                 <Text style={[styles.blackIconText]}>Elektricien</Text>
               </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Dakdekker")}>
+              <Pressable style={[styles.iconsTextWrapper]}>
                 <Icon name="house" size={50} color="#4999e7" />
                 <Text style={[styles.blackIconText]}>Dekker</Text>
               </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Schoonmaker")}>
+              <Pressable style={[styles.iconsTextWrapper]}>
                 <Icon name="sanitizer" size={50} color="#4999e7" />
                 <Text style={[styles.blackIconText]}>Schoonmaker</Text>
               </Pressable>
@@ -244,29 +193,10 @@ const HomePageSpecialist = ({ navigation }) => {
                   </Pressable>
                 </View>
               </View>
-              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
-        {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
-                        {filteredOptions.map(option => (
-                            <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
-                                <Text>{option.title}</Text>
-                            </Pressable>
-                        ))}
-                    </ScrollView>
-                )}
-                {errorMessage ? (
-                    <View style={styles.errorMessageContainer}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                    </View>
-                ) : null}
-
-        <Footer navigation={navigation} activePage="HomePageSpecialist" />
-
       </SafeAreaView>
-    </TouchableWithoutFeedback>
     </PaperProvider>
   );
 };
@@ -278,54 +208,13 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
-  optionsContainer: {
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 234 : 190,
-    left: 20,
-    right: 20,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    borderWidth: 1,
-    maxHeight: windowHeight * 0.3,
-    ...Platform.select({
-        ios: {
-            shadowColor: 'black',
-            shadowOffset: {
-                width: 1,
-                height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-        },
-        android: {
-            elevation: 5,
-        },
-    }),
-},
 
-footerfix: {
-  height: 60,
-  width: windowWidth,
-},
-option: {
-    paddingVertical: 10,
-    paddingLeft: 20,
-},
-errorMessageContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-},
-errorMessage: {
-    color: 'red',
-    fontSize: 16,
-},
   cardFirstHalf: {
     width: 170,
     height: 110,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#b5dcff",
+    justifyContent: "center"
   },
 
   cardSecondHalf: {

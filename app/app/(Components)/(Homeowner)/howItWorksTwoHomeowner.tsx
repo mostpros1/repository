@@ -29,14 +29,17 @@ const HowItWorksTwoHomeowne = ({ navigation }) => {
         </View>
         <View style={styles.imageContainer}>
           <View>
-
+            <Image
+              style={styles.image}
+              source={require("../../../assets/images/HowItWorksTwo.png")}
+            />
           </View>
         </View>
       </View>
 
       <View style={styles.middleContainer}>
         <View style={styles.middleContainerFirstSection}>
-          
+          <Image source={require("../../../assets/images/two.png")} />
           <Text style={styles.title}>Krijg een vakspecialist</Text>
         </View>
         <View style={styles.middleContainerSecondSection}>

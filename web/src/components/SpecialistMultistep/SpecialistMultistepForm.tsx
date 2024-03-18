@@ -19,8 +19,6 @@ type DateTimeSpan = {
   startTime: string;
   endTime: string;
 };
-import { Auth } from "aws-amplify";
-import { AccountForm } from "../MultistepForm/AccountForm";
 
 type FormData = {
   beroep: string;
@@ -179,9 +177,6 @@ function SpecialistMultistepForm() {
           />,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
@@ -193,51 +188,6 @@ function SpecialistMultistepForm() {
     } else {
       console.log(data);
       navigate("/specialist-resultaat");
-    if (!isLastStep) return next()
-
-    const userData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/specialist-resultaat')
-        })
-        .catch((err) => {
-          console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-        username: userData.email,
-        password: userData.password,
-        attributes: {
-          name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Professional"
-        },
-        autoSignIn: { enabled: true }
-      })
-        .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        })
-        .catch(async error => {
-          console.error(error)
-          if (error.code == 'UsernameExistsException') {
-            await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-          }
-        })
     }
   }
 

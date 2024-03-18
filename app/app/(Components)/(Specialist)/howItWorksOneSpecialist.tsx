@@ -27,14 +27,17 @@ const HowItWorksOneSpecialist = ({navigation}) => {
         </View>
         <View style={styles.imageContainer}>
           <View>
-
+            <Image
+              style={styles.image}
+              source={require("../../../assets/images/HowItWorksFour.png")}
+            />
           </View>
         </View>
       </View>
 
       <View style={styles.middleContainer}>
         <View style={styles.middleContainerFirstSection}>
-          
+          <Image source={require("../../../assets/images/one.png")} />
           <Text style={styles.title}>Zoek een klus</Text>
         </View>
         <View style={styles.middleContainerSecondSection}>
