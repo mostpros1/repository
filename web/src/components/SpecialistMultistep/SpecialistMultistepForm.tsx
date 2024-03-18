@@ -12,6 +12,7 @@ import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
 import Calendar from './Calendar';
+import { AccountForm } from "../MultistepForm/AccountForm";
 
 type DateTimeSpan = {
   date: Date;
@@ -170,14 +171,13 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-
-        <SearchChoreForm {...data} updateFields={updateFields}/>,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
+        ...questionsSteps,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
           />,
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,

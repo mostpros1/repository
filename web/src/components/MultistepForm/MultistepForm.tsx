@@ -13,6 +13,7 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
+import PageSpecialisten from './PageSpecialisten'
 
 type FormData = {
   postCode: string
@@ -119,9 +120,10 @@ function MultistepForm() {
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields}/>,
-        <Calendar />,
+        //<Calendar />,
         <InfoForm {...data} updateFields={updateFields} />,
-        <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>
+        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
+        <PageSpecialisten />
       ],
       onStepChange: () => {}
     });
