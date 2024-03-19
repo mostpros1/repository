@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Button,
@@ -21,13 +21,11 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
-import {specialists} from '../../specialists.js';
+import { specialists } from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import Footer from '../Footer'; 
-
-
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -37,44 +35,58 @@ const HomePageHomeOwner = ({ navigation }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [inputText, setInputText] = useState('');
+  const [isScannerVisible, setIsScannerVisible] = useState(false);
 
   const handleInputChange = (text) => {
-      setInputText(text);
+    setInputText(text);
   };
 
   const handleInputFocus = () => {
-      setShowOptions(true);
+    setShowOptions(true);
   };
 
   const handleOptionPress = (option) => {
-      setInputText(option.title);
-      setSelectedOption(option);
-      setShowOptions(false);
+    setInputText(option.title);
+    setSelectedOption(option);
+    setShowOptions(false);
   };
 
   const handleOutsidePress = () => {
-      Keyboard.dismiss();
-      setShowOptions(false);
+    Keyboard.dismiss();
+    setShowOptions(false);
   };
 
   const handleForwardButtonPress = () => {
-      if (!selectedOption) {
-          setErrorMessage("Kies eerst een Professional");
-          setTimeout(() => {
-              setErrorMessage('');
-          }, 3000);
-          return;
-      }
-      navigation.navigate('HomeOwnerPostalCode', { selectedOption });
+    if (!selectedOption) {
+      setErrorMessage("Kies eerst een Professional");
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
+    navigation.navigate('HomeOwnerPostalCode', { selectedOption });
   };
 
   const filteredOptions = specialists.filter(option =>
     option.title.toLowerCase().includes(inputText.toLowerCase())
   );
-  
+
   const handlePress = (text) => {
     navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
   };
+
+  const handleScannerOpen = () => {
+    setIsScannerVisible(true);
+  };
+
+  const handleScannerClose = () => {
+    setIsScannerVisible(false);
+  };
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    alert(`Scanned data: ${data}`);
+  };
+
   return (
     <PaperProvider>
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
@@ -95,18 +107,18 @@ const HomePageHomeOwner = ({ navigation }) => {
               </View>
               <View style={[styles.textSearchWrapper]}>
                 <Pressable style={styles.container} onPress={handleForwardButtonPress}>
-                <TextInput
-                        placeholder="Zoeken:"
-                        style={styles.input}
-                        onChangeText={handleInputChange}
-                        onFocus={handleInputFocus}
-                        value={inputText}
-                    />
+                  <TextInput
+                    placeholder="Zoeken:"
+                    style={styles.input}
+                    onChangeText={handleInputChange}
+                    onFocus={handleInputFocus}
+                    value={inputText}
+                  />
                   <Icon name="forward" size={25} color="#318ae5" />
                 </Pressable>
               </View>
               <View style={[styles.iconsText]}>
-                <Pressable style={[styles.iconsTextWrapper]}>
+                <Pressable style={[styles.iconsTextWrapper]} onPress={handleScannerOpen}>
                   <Icon name="qr-code" size={50} color="#f7fbff" />
                   <Text style={[styles.whiteIconText]}>Scan</Text>
                 </Pressable>
@@ -119,8 +131,8 @@ const HomePageHomeOwner = ({ navigation }) => {
                   <Text style={[styles.whiteIconText]}>Klussen</Text>
                 </Pressable>
                 <Pressable style={[styles.iconsTextWrapper]}>
-                <FontAwesome5 name="wallet" size={50} color="#f7fbff" />
-                <Text style={[styles.whiteIconText]}>Wallet</Text>
+                  <FontAwesome5 name="wallet" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Wallet</Text>
                 </Pressable>
               </View>
               <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('HomeOwnerCreate')}>
@@ -248,26 +260,38 @@ const HomePageHomeOwner = ({ navigation }) => {
               <View style={[styles.footerfix]}></View>
             </View>
           </View>
-        </ScrollView>
+          </ScrollView>
+          
         {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
-                        {filteredOptions.map(option => (
-                            <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
-                                <Text>{option.title}</Text>
-                            </Pressable>
-                        ))}
-                    </ScrollView>
-                )}
-                {errorMessage ? (
-                    <View style={styles.errorMessageContainer}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                    </View>
-                ) : null}
+          <ScrollView style={styles.optionsContainer}>
+            {filteredOptions.map(option => (
+              <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
+                <Text>{option.title}</Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+        )}
+        {errorMessage ? (
+          <View style={styles.errorMessageContainer}>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+          </View>
+        ) : null}
 
-        <Footer navigation={navigation} activePage="HomePageSpecialist" />
+        {!isScannerVisible && <Footer navigation={navigation} activePage="HomePageSpecialist" />}
 
       </SafeAreaView>
     </TouchableWithoutFeedback>
+    {isScannerVisible && (
+      <View style={styles.scannerContainer}>
+        <BarCodeScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
+        <Pressable onPress={handleScannerClose} style={styles.closeScannerButton}>
+          <Text style={styles.closeScannerButtonText}>Close Scanner</Text>
+        </Pressable>
+      </View>
+    )}
     </PaperProvider>
   );
 };
@@ -279,6 +303,29 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
+
+  scannerContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "black",
+    zIndex: 999,
+  },
+  
+  closeScannerButton: {
+    position: 'absolute',
+    bottom: 40,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  closeScannerButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+
   optionsContainer: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 234 : 190,
