@@ -93,6 +93,7 @@ const PageSpecialisten = (updateDate) => {
     let Availibility;
     let Specialists;
 
+    console.log(updateDate);
     const hashTag = window.location.hash.replace("#", "").split("?")[0];
     console.log(hashTag);
     const task = window.location.hash.replace("#", "").split("?")[1];
@@ -108,14 +109,14 @@ const PageSpecialisten = (updateDate) => {
       },
     }).promise()
       .then(data => {
-        //setSpecialists(data.Items);
+        setSpecialists(data.Items);
         Specialists = data.Items;
         console.log(data.Items);
       })
       .catch(err => {
         console.log(err);
       });
-
+      console.log(JSON.stringify(updateDate)+ "updatedate");
     dynamo.query({
       TableName: "beschikbaarheid",
       IndexName: "datum",
@@ -142,6 +143,7 @@ const PageSpecialisten = (updateDate) => {
       const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
       const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
       console.log(matchingSpecialists);
+
       //return matchingSpecialists;
       }
     };
