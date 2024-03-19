@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = () => {
+const PageSpecialisten = (updateDate) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -84,16 +84,19 @@ const PageSpecialisten = () => {
   };
 
   const [specialists, setSpecialists] = useState(exampleSpecialists);
-  
-//make a function to grab data behind the hashtag in the url and print it into the console
+
+  //make a function to grab data behind the hashtag in the url and print it into the console
 
 
-//backend niet verwijderen
+  //backend niet verwijderen
   useEffect(() => {
-      const hashTag = window.location.hash.replace("#", "").split("?")[0];
-      console.log(hashTag);
-      const task = window.location.hash.replace("#", "").split("?")[1];
-      console.log(task);
+    let Availibility;
+    let Specialists;
+
+    const hashTag = window.location.hash.replace("#", "").split("?")[0];
+    console.log(hashTag);
+    const task = window.location.hash.replace("#", "").split("?")[1];
+    console.log(task);
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
@@ -105,14 +108,47 @@ const PageSpecialisten = () => {
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items)
+        //setSpecialists(data.Items);
+        Specialists = data.Items;
         console.log(data.Items);
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
 
+    dynamo.query({
+      TableName: "beschikbaarheid",
+      IndexName: "datum",
+      KeyConditionExpression: "datum = :date",
+      ExpressionAttributeValues: {
+        ":date": updateDate,
+      },
+    }).promise()
+      .then(output => {
+
+        Availibility = output.Items
+        console.log(output.Items);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
+    const checkEmailInJson = (email) => {
+      if (Specialists && Availibility) {
+      // Replace with the email address you want to check
+      const specialistEmails = Specialists.map(specialist => specialist.email);
+      const availibilityEmails = Availibility.map(item => item.email);
+      const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
+      const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
+      console.log(matchingSpecialists);
+      //return matchingSpecialists;
+      }
+    };
+
+    checkEmailInJson('example@example.com');
+
+  }, [updateDate]);
 
   return (
 
