@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 12,
     color: "black",
-    marginTop: 3, // Add some space between the icon and text
+    marginTop: 3,
   },
 });
 
