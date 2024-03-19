@@ -87,6 +87,8 @@ const PageSpecialisten = () => {
   
 //make a function to grab data behind the hashtag in the url and print it into the console
 
+
+//backend niet verwijderen
   useEffect(() => {
       const hashTag = window.location.hash.replace("#", "");
       console.log(hashTag);
@@ -99,7 +101,6 @@ const PageSpecialisten = () => {
       },
     }).promise()
       .then(data => {
-        // Process the data and update the specialists state
         //setSpecialists(data.Items[0])
         console.log(data.Items[0]);
       })
