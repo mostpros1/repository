@@ -30,6 +30,9 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('WorkNavigation')}>
                 <Text style={[styles.text]}>Klussen/ChangeDate navigatie</Text>
               </Pressable>
+              <Pressable style={styles.link} onPress={() => navigation.navigate('PaymentSend')}>
+                <Text style={[styles.text]}>Payment Send</Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>

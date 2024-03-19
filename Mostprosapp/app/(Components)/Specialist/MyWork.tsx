@@ -13,6 +13,7 @@ import {
   Linking,
   Modal,
   TouchableOpacity,
+  Platform ,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -160,7 +161,7 @@ const MyWork = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   view: {
-    height: windowHeight * 1.2,
+    height: Platform.OS === 'ios' ? windowHeight * 1.2 : Platform.OS === 'android' ? windowHeight * 1.4 : 'auto', // Adjust height based on platform
     width: windowWidth,
     display: "flex",
     alignItems: "center",
@@ -373,7 +374,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     backgroundColor: "white",
     width: windowWidth - 50,
-    height: "75%",
+    height: Platform.OS === 'ios' ? windowHeight * 0.87 : Platform.OS === 'android' ? 750 : 'auto', // Adjust height based on platform
   },
 
   textLine: {

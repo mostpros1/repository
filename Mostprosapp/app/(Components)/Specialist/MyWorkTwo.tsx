@@ -13,6 +13,7 @@ import {
   Linking,
   Modal,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -170,7 +171,8 @@ const MyWorkTwo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   view: {
-    height: windowHeight * 1.8,
+    height: Platform.OS === 'ios' ? windowHeight * 1.8 : Platform.OS === 'android' ? windowHeight * 2 : 'auto', // Adjust height based on platform
+
     width: windowWidth,
     display: "flex",
     alignItems: "center",

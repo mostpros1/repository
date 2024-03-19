@@ -68,4 +68,5 @@ declare global {
     Changedate: undefined;
     ChangedateTwo: undefined;
     ConfirmDate: undefined;
+    PaymentSend: undefined;
   };

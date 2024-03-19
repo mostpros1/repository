@@ -13,6 +13,7 @@ import {
     Linking,
     Modal,
     TouchableOpacity,
+    Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -50,6 +51,7 @@ const ConfirmDate = ({ navigation }) => {
                         <View style={styles.squareWrapper}>
                             <View style={styles.mainSquare}>
                                 <View style={styles.flexDirection}>
+                                    <View style={styles.headerCardBox}>
                                 <Pressable
                                     style={styles.crossCircle}
                                     onPress={() => navigation.navigate("SpecialistNavigation")}
@@ -57,7 +59,8 @@ const ConfirmDate = ({ navigation }) => {
                                     <Text style={styles.crossTitle}>X</Text>
                                 </Pressable>
                                 </View>
-                                <Text>De klant heeft uw bevestiging gekregen.</Text>
+                                </View>
+                                <Text style={styles.smallerCardTitle}>De klant heeft uw bevestiging gekregen.</Text>
                                 <Image style={styles.image} source={require("../../../assets/images/thumbsup.png")} />
 
                             </View>
@@ -72,11 +75,24 @@ const ConfirmDate = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     view: {
-        height: windowHeight,
+        height: Platform.OS === 'ios' ? windowHeight - 70 : Platform.OS === 'android' ? windowHeight * 1.1 : 'auto', // Adjust height based on platform
         width: windowWidth,
         display: "flex",
         alignItems: "center",
         backgroundColor: "white",
+    },
+
+    smallerCardTitle: {
+        fontWeight: "600",  // Set font weight to 700
+        fontSize: 15,
+    },
+
+    headerCardBox:{
+        display: "flex",
+        alignItems: "flex-end",
+        paddingRight: 20,
+        width: "100%",
+        marginBottom: 20,
     },
 
     squareWrapper: {
@@ -88,7 +104,7 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        width: 220,
+        width: 250,
         objectFit: "contain",
     },
 
@@ -106,7 +122,7 @@ const styles = StyleSheet.create({
         width: "80%",
         height: 350,
         display: "flex",
-        alignItems: "flex-end",
+        alignItems: "center",
         justifyContent: "center",
     },
 

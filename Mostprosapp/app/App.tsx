@@ -53,6 +53,7 @@ import WorkNavigation from "./(Components)/Specialist/WorkNavigation";
 import MyWork from "./(Components)/Specialist/MyWork";
 import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
 import MyWorkThree from "./(Components)/Specialist/MyWorkThree";
+import PaymentSend from "./(Components)/Specialist/PaymentSend";
 import Changedate from "./(Components)/Specialist/Changedate";
 import ChangedateTwo from "./(Components)/Specialist/ChangedateTwo";
 import ConfirmDate from "./(Components)/Specialist/ConfirmDate";
@@ -158,6 +159,7 @@ const App = () => {
         <Stack.Screen name="Changedate" component={Changedate}/>
         <Stack.Screen name="ChangedateTwo" component={ChangedateTwo} />
         <Stack.Screen name="ConfirmDate" component={ConfirmDate} />
+        <Stack.Screen name="PaymentSend" component={PaymentSend} />
         
        
         {/* <Stack.Screen name="" component={} /> */}

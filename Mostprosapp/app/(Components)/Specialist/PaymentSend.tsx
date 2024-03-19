@@ -13,6 +13,7 @@ import {
     Linking,
     Modal,
     TouchableOpacity,
+    Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -23,7 +24,7 @@ import { Ionicons } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const Changedate = ({ navigation }) => {
+const PaymentSend = ({ navigation }) => {
 
     return (
         <PaperProvider>
@@ -46,11 +47,6 @@ const Changedate = ({ navigation }) => {
                                 </Text>
                             </View>
                         </View>
-
-                        <View style={styles.topTitleBox}>
-                            <Text style={styles.h1Title}>Uw huidige klus: Loodgieter werk</Text>
-                        </View>
-
                         <View style={styles.bigCard}>
                             <View style={styles.textLine}>
                                 <Text>Loodgieters werk: nieuwe leiding aanleggen</Text>
@@ -64,47 +60,8 @@ const Changedate = ({ navigation }) => {
                                 </View>
                             </View>
                         </View>
-
-                        <View style={styles.cardTwo}>
-                            <View style={styles.underlineTitleBox}>
-                                <Text>Datum uitvoering</Text>
-                            </View>
-                            <View style={styles.flexDirection}>
-                                <View style={styles.dateInfoLeft}>
-                                    <View style={styles.dateInfoTextWrapper}>
-                                        <Text style={styles.dateTitle}>10</Text>
-                                        <Text>Oktober</Text>
-                                        <Text>2023</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.dateInfoRight}>
-                                    <View style={styles.dateLocationInfoWrapper}>
-                                        <View style={styles.locationInfo}>
-                                            <Ionicons name="mail" size={20} color="#308AE4" />
-                                            <Text style={styles.locationText}>
-                                                Adres: iets straat 23
-                                            </Text>
-                                        </View>
-                                        <View style={styles.locationInfo}>
-                                            <Ionicons name="home" size={20} color="#308AE4" />
-                                            <Text style={styles.locationText}>
-                                                Postcode: 1320 DP
-                                            </Text>
-                                        </View>
-                                        <View style={styles.locationInfo}>
-                                            <Ionicons name="location" size={20} color="#308AE4" />
-                                            <Text style={styles.locationText}>
-                                                Locatie: Haarlem
-                                            </Text>
-                                        </View>
-                                    </View>
-                                    <Text style={styles.linkTextBottom}>Wijzig Datum</Text>
-                                </View>
-                            </View>
-
-                        </View>
                         <Pressable style={styles.nextButton} onPress={() => navigation.navigate('')}>
-                            <Text style={styles.whiteText}>Datum Bevestigen</Text>
+                            <Text style={styles.whiteText}>Betaal verzoek {'\n'} verzenden </Text>
                         </Pressable>
                     </View>
                 </ScrollView>
@@ -116,11 +73,26 @@ const Changedate = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     view: {
-        height: windowHeight * 1.1,
+        height: Platform.OS === 'ios' ? windowHeight - 90 : Platform.OS === 'android' ? windowHeight * 1.1: 'auto', // Adjust height based on platform
         width: windowWidth,
         display: "flex",
         alignItems: "center",
         backgroundColor: "white",
+    },
+
+    crossCircle: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: "#318ae5",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    crossTitle: {
+        color: "#fefffe",
+        fontSize: 20,
+        fontWeight: "bold",
     },
 
 
@@ -158,7 +130,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 1,
         elevation: 3,
-        paddingBottom: 8,
         backgroundColor: "white",
     },
 
@@ -199,6 +170,9 @@ const styles = StyleSheet.create({
     flexDirection: {
         flexDirection: "row",
         display: "flex",
+        alignItems: "center",
+        gap: 20,
+        marginTop: 25,
     },
 
     profileBox: {
@@ -228,9 +202,12 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         borderBottomWidth: 1.5,
-        borderColor: "#D9D9D9",
+        borderColor: "#D9D9D9", 
+        flexDirection: "row",
+        gap: 68,
+        paddingBottom: 10,
     },
 
     cardTwo: {
@@ -287,7 +264,7 @@ const styles = StyleSheet.create({
     linkTextBottom: {
         color: "#17A1FA",
         marginBottom: 15,
-        paddingLeft: 15,
+        paddingLeft: 24,
 
     },
 
@@ -305,7 +282,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "bold",
         letterSpacing: 0.25,
-        color: "white",
+        color: "#FFFFFF",
+        textAlign: "center",
     },
 
     nextButton: {
@@ -525,6 +503,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         borderBottomEndRadius: 250,
         borderBottomStartRadius: 250,
+        marginBottom: 60,
     },
     topButtonsContainer: {
         flexDirection: "row",
@@ -708,4 +687,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Changedate;
+export default PaymentSend;
