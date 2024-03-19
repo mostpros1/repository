@@ -23,6 +23,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import {specialists} from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
+import { FontAwesome5 } from '@expo/vector-icons';
 import Footer from '../Footer'; 
 
 
@@ -92,7 +93,6 @@ const HomePageSpecialist = ({ navigation }) => {
                 </View>
               </View>
               <View style={[styles.textSearchWrapper]}>
-                <Text style={[styles.whiteBoldText]}>Stad \/</Text>
                 <Pressable style={styles.container} onPress={handleForwardButtonPress}>
                 <TextInput
                         placeholder="Zoeken:"
@@ -106,27 +106,27 @@ const HomePageSpecialist = ({ navigation }) => {
               </View>
               <View style={[styles.iconsText]}>
                 <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="scanner" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Scannen</Text>
-                </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="payment" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Betalingen</Text>
+                  <Icon name="qr-code" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Scan</Text>
                 </Pressable>
                 <Pressable style={[styles.iconsTextWrapper]}>
                   <Icon name="local-parking" size={50} color="#f7fbff" />
                   <Text style={[styles.whiteIconText]}>Parkeren</Text>
                 </Pressable>
                 <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="work" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Zak</Text>
+                  <Icon name="construction" size={50} color="#f7fbff" />
+                  <Text style={[styles.whiteIconText]}>Klussen</Text>
+                </Pressable>
+                <Pressable style={[styles.iconsTextWrapper]}>
+                <FontAwesome5 name="wallet" size={50} color="#f7fbff" />
+                <Text style={[styles.whiteIconText]}>Wallet</Text>
                 </Pressable>
               </View>
               <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
                 <View style={styles.smallCircle}>
                   <Icon name="add" size={28} color="#308AE4" />
                 </View>
-                <Text style={[styles.whiteIconText]}>Nieuwe klus plaatsen</Text>
+                <Text style={[styles.whiteIconText]}>Klussen Vinden</Text>
               </Pressable>
             </View>
             <View style={[styles.titleWrap]}>
@@ -484,7 +484,7 @@ errorMessage: {
     height: 40,
     borderRadius: 10,
     padding: 10,
-    width: "75%",
+    width: "100%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
