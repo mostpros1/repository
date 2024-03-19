@@ -85,21 +85,23 @@ const PageSpecialisten = () => {
   
   const [specialists, setSpecialists] = useState(exampleSpecialists);
   useEffect(() => {
-    dynamo.query({
-        TableName: "Specialists",
-        IndexName: "profession",
-        KeyConditionExpression: "profession = :profession",
-        ExpressionAttributeValues: {
-            ":profession": "" // inplaats van de "" zet je de input van de zoek balk
-        }
-    }).promise()
-        .then(data => {
-            // Process the data and update the specialists state
-            setSpecialists(data.Items[0]);
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    const hashTag = window.location.hash.replace("#", "");
+    console.log(hashTag);
+  dynamo.query({
+    TableName: "Specialists",
+    IndexName: "profession",
+    KeyConditionExpression: "profession = :profession",
+    ExpressionAttributeValues: {
+      ":profession": hashTag,
+    },
+  }).promise()
+    .then(data => {
+      //setSpecialists(data.Items[0])
+      console.log(data.Items[0]);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }, []);
 
   return (
