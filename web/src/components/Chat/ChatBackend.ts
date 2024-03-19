@@ -4,6 +4,9 @@ import * as mutations from "../../graphql/mutations";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 
+
+
+
 export function useChatBackend(user: any, signOut) {
   const [chats, setChats] = React.useState([]);
   const [recipientEmail, setRecipientEmail] = React.useState("");
@@ -13,6 +16,8 @@ export function useChatBackend(user: any, signOut) {
     React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
+
+    
 
 // // sends messages ///
 const handleSendMessage = async (text) => {
@@ -43,9 +48,6 @@ const handleSendMessage = async (text) => {
     }
   }
   
-
-};
-
   
    
 };
@@ -99,6 +101,8 @@ const handleSendMessage = async (text) => {
     setShowConfirmedConnection(true); 
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
   };
+
+   
 
 return {
     chats,

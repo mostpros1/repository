@@ -4,7 +4,6 @@ import { Auth } from 'aws-amplify';
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuIcon from "@mui/icons-material/Menu";
-import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from "../../../context/UserContext";
 
@@ -63,7 +62,6 @@ if (user && user.signInUserSession && user.signInUserSession.accessToken) {
       </Link>
       <div className="nav-rightside">
         <ul className="nav-list">
-        <JoinChat />
           <li>
             <Link to="/mijn-klussen" className='black-items'>Klussen <ExpandMoreIcon /></Link>
             <div className="mega-box">

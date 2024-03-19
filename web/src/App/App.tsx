@@ -28,9 +28,6 @@ const App = () => {
     const [userGroup, setUserGroup] = useState<string[]>([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { user } = useUser();
-    const [userGroup, setUserGroup] = useState<string[]>([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const { user } = useUser();
 
     useEffect(() => {
         const checkAuthState = async () => {
@@ -85,100 +82,5 @@ const App = () => {
         </Routes>
     )
 }
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/mijn-klussen" element={<MyTaskPage />} />
-      <Route path="/klussen" element={<KlussenPage />} />
-      <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
-      <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
-      <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
-      <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
-      <Route path="/bevestig-email" element={<BevestigEmailPage />} />
-      <Route path="/huiseigenaar-resultaat" element={<DashboardPage />} />
-      <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-      <Route path="/specialist-resultaat" element={<ResultsPage />} />
-      <Route path="/over-ons" element={<AboutUsPage />} />
-      <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/MijnKlussen" element={<MijnKlussen />} />
-
-    useEffect(() => {
-        const checkAuthState = async () => {
-            try {
-                const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
-                setUserGroup(groups);
-                setIsAuthenticated(true);
-            } catch (error) {
-                setIsAuthenticated(false);
-            }
-        };
-        
-        if (user) {
-            checkAuthState();
-        }
-    }, [user]);
-
-    useEffect(() => {
-        console.log("User Group:", userGroup);
-        console.log(isAuthenticated);
-    }, [userGroup]);
-
-    return (
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/mijn-klussen" element={<MyTaskPage />} />
-            <Route path="/klussen" element={<KlussenPage />} />
-            <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
-            <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
-            <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/registreer" element={<RegisterPage />} />
-            <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
-            <Route path="/bevestig-email" element={<BevestigEmailPage />} />
-            <Route path="/huiseigenaar-resultaat" element={<DashboardPage />} />
-            <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-            <Route path="/specialist-resultaat" element={<ResultsPage />} />
-            <Route path="/over-ons" element={<AboutUsPage />} />
-            <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            {isAuthenticated && userGroup.includes('Homeowner') && (
-               <Route path="/dashboard-huiseigenaar" element={<HomeOwnerDashboard />} /> 
-            )}
-            {isAuthenticated && userGroup.includes('Professional') && (
-                <Route path="/dashboard-professional" element={<ProfessionalDashboard />} />
-            )} 
-            <Route path="/admin-paneel" element={<AdminSideBar />} >
-                <Route index element={<AdminMain />} />
-                <Route path="manage-users" element={<ManageUser />} />
-            </Route>
-            <Route path="/chat" element={<ChatPage />} />
-        </Routes>
-    )
-}
-      <Route
-        path="/dashboard-huiseigenaar"
-        element={
-          <ProtectedRoute
-            allowedRoles={["Homeowner"]}
-            page={<HomeOwnerDashboard />}
-            redirectTo="/"
-          />
-        }
-      />
-      <Route
-        path="/dashboard-professional"
-        element={
-          <ProtectedRoute
-            allowedRoles={["Professional"]}
-            page={<ProfessionalDashboard />}
-            redirectTo="/"
-          />
-        }
-      />
-    </Routes>
-  );
-};
-
 
 export default App;
