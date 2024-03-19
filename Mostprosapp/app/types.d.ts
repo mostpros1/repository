@@ -70,4 +70,5 @@ declare global {
     ConfirmDate: undefined;
     PaymentSend: undefined;
     EditProfile: undefined;
+    TestHome: undefined;
   };
