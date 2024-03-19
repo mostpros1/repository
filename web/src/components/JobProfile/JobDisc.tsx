@@ -11,7 +11,9 @@ const JobDisc = () => {
   return (
     <div className="job_disc_card">
       <div className="job_disc_header">
-        <button className="btn-secondary" onClick={() => history.back()}>Terug naar start</button>
+        <button className="btn-secondary" onClick={() => history.back()}>
+          Terug naar start
+        </button>
       </div>
       <div className="job_disc_con">
         <div className="JobDiscTitle">
