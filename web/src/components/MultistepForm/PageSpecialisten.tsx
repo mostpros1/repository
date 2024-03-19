@@ -90,19 +90,23 @@ const PageSpecialisten = () => {
 
 //backend niet verwijderen
   useEffect(() => {
-      const hashTag = window.location.hash.replace("#", "");
+      const hashTag = window.location.hash.replace("#", "").split("?")[0];
       console.log(hashTag);
+      const task = window.location.hash.replace("#", "").split("?")[1];
+      console.log(task);
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
+      FilterExpression: "task = :task",
       ExpressionAttributeValues: {
         ":profession": hashTag,
+        ":task": task,
       },
     }).promise()
       .then(data => {
-        //setSpecialists(data.Items[0])
-        console.log(data.Items[0]);
+        setSpecialists(data.Items)
+        console.log(data.Items);
       })
       .catch(err => {
         console.log(err);
