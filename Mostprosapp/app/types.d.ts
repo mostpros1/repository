@@ -69,4 +69,5 @@ declare global {
     ChangedateTwo: undefined;
     ConfirmDate: undefined;
     PaymentSend: undefined;
+    EditProfile: undefined;
   };

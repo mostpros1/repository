@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
 
     smallerCardTitle: {
-        fontWeight: "600",  // Set font weight to 700
+        fontWeight: "600",
         fontSize: 15,
     },
 

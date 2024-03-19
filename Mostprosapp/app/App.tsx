@@ -61,6 +61,7 @@ import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
+import EditProfile from "./(Components)/Profile/EditProfile";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
@@ -160,6 +161,7 @@ const App = () => {
         <Stack.Screen name="ChangedateTwo" component={ChangedateTwo} />
         <Stack.Screen name="ConfirmDate" component={ConfirmDate} />
         <Stack.Screen name="PaymentSend" component={PaymentSend} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
         
        
         {/* <Stack.Screen name="" component={} /> */}

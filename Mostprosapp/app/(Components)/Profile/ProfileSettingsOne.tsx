@@ -52,9 +52,9 @@ const ProfileSettingsOne = ({ navigation }) => {
               <View style={styles.textSpacer}>
                 <Text style={styles.title}>Lisa Zoetlief</Text>
                 <TouchableOpacity>
-                  <View>
-                    <Text style={styles.clickableText}>Profiel Bijwerken</Text>
-                  </View>
+                  <Pressable>
+                    <Text style={styles.clickableText} onPress={() => navigation.navigate("EditProfile")}>Profiel Bijwerken</Text>
+                  </Pressable>
                 </TouchableOpacity>
               </View>
             </View>
