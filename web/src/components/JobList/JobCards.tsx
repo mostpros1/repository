@@ -15,7 +15,6 @@ interface Job {
   availability: string;
   // img: string; // Uncomment if you're using the image
 }
-
 // Define the props for the JobCards component
 interface JobCardsProps {
   jobs?: Job[]; // Make jobs optional or provide a default prop value

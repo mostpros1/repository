@@ -1,7 +1,7 @@
 import "./SearchChoreForm.css"
 
 type SpecialistData = {
-    beroep: string
+    beroep?: string
     email: string
     postCode: string
     stad: string

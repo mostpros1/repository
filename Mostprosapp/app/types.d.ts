@@ -35,4 +35,12 @@ declare global {
     ProfileAbout: undefined;
     HomeOwnerResults: undefined;
     DateAndTimePicker: undefined;
+    CompanyKvk: undefined;
+    NoKvKInfo: undefined;
+    Footer: undefined;
+    Contact: undefined;
+    HomePageHomeOwner: undefined;
+    HomeOwnerExtraInfo: undefined;
+    HomeOwnerEmail: undefined;
+    AboutUs: undefined;
   };
