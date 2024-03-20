@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Button,
@@ -11,17 +11,29 @@ import {
   ScrollView,
   ImageBackground,
   TextInput,
+  TouchableOpacity,
+  Animated,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAvoidingView } from "react-native";
-import Footer from '../Footer';
+import Footer from "../Footer";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const HomeOwnerResults = ({ navigation }) => {
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState(
+    Array(500).fill(false)
+  );
+
+  const toggleCheckbox = (index) => {
+    const updatedCheckboxes = [...selectedCheckboxes];
+    updatedCheckboxes[index] = !updatedCheckboxes[index];
+    setSelectedCheckboxes(updatedCheckboxes);
+  };
+
   const CustomIcon = (props) => {
     return (
       <View>
@@ -53,105 +65,59 @@ const HomeOwnerResults = ({ navigation }) => {
             <View style={styles.container}>
               <Icon name="tune" size={55} color="black" />
               <View style={styles.blueBox}>
-                <Text style={styles.textButtonBlack}>Selecteer 10 vakspecialisten om sneller een reactie op je klus te krijgen.</Text>
+                <Text style={styles.textButtonBlack}>
+                  Selecteer 10 vakspecialisten om sneller een reactie op je
+                  klus te krijgen.
+                </Text>
               </View>
-
             </View>
 
             <View style={styles.middleContainer}>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
+              {[...Array(5)].map((_, index) => (
+                <View style={styles.middleContainerFirstSection} key={index}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../../assets/images/jan.png")}
+                  />
+                  <View style={styles.orange}>
+                    <View style={styles.green}>
+                      <Text style={styles.text}>Jan Schilder</Text>
+                      <Text style={styles.title}>Loodgieter</Text>
+                      <View style={styles.ratingContainer}>
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
+                        <Ionicons
+                          name="star-outline"
+                          size={20}
+                          color="#FFD700"
+                        />
+                      </View>
                     </View>
+                    <View style={styles.yellow}>
+                      <Text style={styles.text}>€500</Text>
+                      <TouchableOpacity
+                        onPress={() => toggleCheckbox(index)}
+                        activeOpacity={1}
+                        style={[
+                          styles.checkbox,
+                          selectedCheckboxes[index] ? styles.selected : null,
+                        ]}
+                      ></TouchableOpacity>
                     </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                    <Text
+                      style={styles.lightTitle}
+                      numberOfLines={2}
+                      ellipsizeMode="tail"
+                    >
+                      Ik werk in en om de omgeving van Amsterdam. Voor hoge
+                      kwaliteit werk moet je bij mij zijn.
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter en schoonmaakster</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. </Text>
-                </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
-                </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
-                </View>
-              </View> 
-              <View style={[styles.footerfix]}></View>
+              ))}
+              <View style={styles.footerfix}></View>
             </View>
           </View>
         </ScrollView>
@@ -168,6 +134,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap:"wrap",
         paddingLeft: 10,
+    },
+
+    checkbox: {
+      width: 24,
+      height: 24,
+      borderRadius: 4,
+      borderWidth: 1.4,
+      borderColor: "black",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 10,
+    },
+    selected: {
+      backgroundColor: "#308AE4",
     },
 
     footerfix: {
@@ -433,13 +413,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  selected: {
-    borderWidth: 2,
-    borderColor: "#308AE4",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
   container: {
     flexDirection: "row",
     alignItems: "center",
