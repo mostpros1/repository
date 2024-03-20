@@ -29,9 +29,9 @@ const HomeOwnerAppElektricien = ({ navigation }) => {
                 </View>
 
                 <View style={styles.progressContainer}>
-                    <Text style={styles.progressText}>Stap {progress} van de 4</Text>
+                    <Text style={styles.progressText}>Stap {progress} van de 5</Text>
                     <View style={styles.progressBar}>
-                        <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
+                        <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
                     </View>
                 </View>
 
