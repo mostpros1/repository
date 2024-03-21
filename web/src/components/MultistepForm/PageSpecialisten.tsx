@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = (updateDate) => {
+const PageSpecialisten = (updateDate, { date }) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -116,8 +116,9 @@ const PageSpecialisten = (updateDate) => {
       .catch(err => {
         console.log(err);
       });
-      console.log(JSON.stringify(updateDate)+ "updatedate");
-    dynamo.query({
+      
+      //JSON.parse(dateString).Date.split('T')[0]
+    /*dynamo.query({
       TableName: "beschikbaarheid",
       IndexName: "datum",
       KeyConditionExpression: "datum = :date",
@@ -132,26 +133,25 @@ const PageSpecialisten = (updateDate) => {
       })
       .catch(error => {
         console.log(error);
-      });
-
-
+      });*/
+      
     const checkEmailInJson = (email) => {
       if (Specialists && Availibility) {
-      // Replace with the email address you want to check
-      const specialistEmails = Specialists.map(specialist => specialist.email);
-      const availibilityEmails = Availibility.map(item => item.email);
-      const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
-      const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
-      console.log(matchingSpecialists);
-
-      //return matchingSpecialists;
+        // Replace with the email address you want to check
+        const specialistEmails = Specialists.map(specialist => specialist.email);
+        const availibilityEmails = Availibility.map(item => item.email);
+        const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
+        const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
+        console.log(matchingSpecialists);
       }
     };
+
+    
 
     checkEmailInJson('example@example.com');
 
   }, [updateDate]);
-
+      
   return (
 
     <div className="filter-bar">

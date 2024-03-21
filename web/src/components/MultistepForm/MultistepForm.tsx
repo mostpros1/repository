@@ -58,9 +58,17 @@ function MultistepForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [isValidDatum, setValidDatum] = useState(true);
 
+
+  /*const updateDate = (newDate) => {
+      setDate(newDate);
+  };*/
+
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
+
+  const [date, setDate] = useState<string | null>(null);
 
   const updateDate = (selectedDate: Date) => {
     const year = selectedDate.getFullYear();
@@ -68,6 +76,7 @@ function MultistepForm() {
     const day = String(selectedDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
+    setDate(formattedDate);
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
@@ -130,13 +139,13 @@ function MultistepForm() {
         
         <InfoForm {...data} updateFields={updateFields} />,
         
-        <PageSpecialisten />
+        <PageSpecialisten date={date} />
 
       </>
     ],
     onStepChange: () => { }
   });
-
+  console.log(updateDate);
   //<Calendar />,
   //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
   const stepWidth = 100 / steps.length;
