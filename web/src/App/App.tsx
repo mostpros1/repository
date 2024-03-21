@@ -26,6 +26,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
 import HomeInovation from "../pages/HomeInovation/HomeInovation";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
+import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -49,6 +50,7 @@ const App = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/HomeInovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
+      <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />
