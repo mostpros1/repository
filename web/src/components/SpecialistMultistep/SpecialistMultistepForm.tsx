@@ -177,9 +177,6 @@ function SpecialistMultistepForm() {
           />,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
