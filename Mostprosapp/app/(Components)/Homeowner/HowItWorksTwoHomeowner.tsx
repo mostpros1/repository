@@ -53,7 +53,7 @@ const HowItWorksTwoHomeowne = ({ navigation }) => {
         <View style={styles.progressionBarFull}></View>
         <View style={styles.progressionBarEmpty}></View>
       </View>
-      <Pressable style={styles.link} onPress={() => navigation.navigate('HowItWorksThreeHomeowner')}>
+      <Pressable testID="volgendeBtn2" style={styles.link} onPress={() => navigation.navigate('HowItWorksThreeHomeowner')}>
         <Text style={[styles.text, styles.textNext]}>Volgende</Text>
       </Pressable>
     </SafeAreaView>

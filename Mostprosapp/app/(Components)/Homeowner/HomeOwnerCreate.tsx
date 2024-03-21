@@ -63,6 +63,7 @@ const HomeOwnerCreate = ({ navigation }) => {
 
                 <View style={styles.inputContainer}>
                     <TextInput
+                        testID='beroepBtn'
                         placeholder="Bijvoorbeeld: Schilderwerk."
                         style={styles.input}
                         onChangeText={handleInputChange}

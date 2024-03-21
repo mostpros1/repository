@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
-  Pressable,
-  Image,
-  ScrollView,
-  ImageBackground,
-  Linking,
-  Modal,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
+    StyleSheet,
+    Button,
+    View,
+    SafeAreaView,
+    Text,
+    Alert,
+    Pressable,
+    Image,
+    ScrollView,
+    ImageBackground,
+    Linking,
+    Modal,
+    TextInput,
+    TouchableOpacity,
+    Keyboard,
+    Platform,
+    TouchableWithoutFeedback,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
-import {specialists} from '../../specialists.js';
+import { specialists } from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
 
 const windowWidth = Dimensions.get('window').width;
@@ -43,26 +43,26 @@ const PostalCodeSpecialist = ({ navigation }) => {
             setPostalCode({ ...postalCode, part2: text });
         }
     };
-  
+
     const handleInputChange = (text) => {
         setInputText(text);
     };
-  
+
     const handleInputFocus = () => {
         setShowOptions(true);
     };
-  
+
     const handleOptionPress = (option) => {
         setInputText(option.title);
         setSelectedOption(option);
         setShowOptions(false);
     };
-  
+
     const handleOutsidePress = () => {
         Keyboard.dismiss();
         setShowOptions(false);
     };
-  
+
     const handleForwardButtonPress = () => {
         if (!email) {
             Alert.alert('Fout Melding', 'Vul je email in.');
@@ -76,65 +76,65 @@ const PostalCodeSpecialist = ({ navigation }) => {
             navigation.navigate('GegevensSpecialist', { selectedOption });
         }
     };
-    
+
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
     };
-    
-  
+
+
     const filteredOptions = specialists.filter(option =>
-      option.title.toLowerCase().includes(inputText.toLowerCase())
+        option.title.toLowerCase().includes(inputText.toLowerCase())
     );
-    
+
     const handlePress = (text) => {
-      navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
+        navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
     };
 
     return (
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <SafeAreaView>
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-            <SafeAreaView style={styles.container}>
-                <View style={styles.header}>
-                    <View style={{ flex: 1 }}></View>
-                    <Pressable style={styles.crossCircle} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
-                        <Text style={styles.crossTitle}>X</Text>
-                    </Pressable>
-                </View>
+            <SafeAreaView>
+                <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+                    <SafeAreaView style={styles.container}>
+                        <View style={styles.header}>
+                            <View style={{ flex: 1 }}></View>
+                            <Pressable style={styles.crossCircle} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
+                                <Text style={styles.crossTitle}>X</Text>
+                            </Pressable>
+                        </View>
 
-                <View style={styles.titleBox}>
-                    <Text style={styles.title}>Zoek uw klus</Text>
-                </View>
-                <View style={styles.titleBox}>
-                    <Text style={styles.titleLight}>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</Text>
-                </View>
+                        <View style={styles.titleBox}>
+                            <Text style={styles.title}>Zoek uw klus</Text>
+                        </View>
+                        <View style={styles.titleBox}>
+                            <Text style={styles.titleLight}>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</Text>
+                        </View>
 
-                <View style={styles.beroepContainer}>
-                        <Text style={styles.beroepTitle}>Uw hoofdberoep</Text>
-                        <Pressable style={styles.containerInput}>
-                    <TextInput
-                            placeholder="Zoeken:"
-                            style={styles.input}
-                            onChangeText={handleInputChange}
-                            onFocus={handleInputFocus}
-                            value={inputText}
-                        />
-                    </Pressable>
-                    <Text style={styles.beroepTitle}>Email</Text>
-                        <Pressable style={styles.containerInput}>
-                    <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            onChangeText={setEmail}
-                            value={email}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                        />
-                    </Pressable>
-                    <Text style={styles.beroepTitle}>Postcode</Text>
-                    <View style={styles.inputContainer}>
+                        <View style={styles.beroepContainer}>
+                            <Text style={styles.beroepTitle}>Uw hoofdberoep</Text>
+                            <Pressable testID="beroepInput" style={styles.containerInput}>
                                 <TextInput
+                                    placeholder="Zoeken:"
+                                    style={styles.input}
+                                    onChangeText={handleInputChange}
+                                    onFocus={handleInputFocus}
+                                    value={inputText}
+                                />
+                            </Pressable>
+                            <Text style={styles.beroepTitle}>Email</Text>
+                            <Pressable testID="emailInput" style={styles.containerInput}>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Email"
+                                    onChangeText={setEmail}
+                                    value={email}
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                />
+                            </Pressable>
+                            <Text style={styles.beroepTitle}>Postcode</Text>
+                            <View style={styles.inputContainer}>
+                                <TextInput testID="nummerInput"
                                     style={styles.inputPostal}
                                     placeholder="1234"
                                     onChangeText={(text) => handlePostalCodeChange(text, 'part1')}
@@ -142,7 +142,7 @@ const PostalCodeSpecialist = ({ navigation }) => {
                                     maxLength={4}
                                     keyboardType="numeric"
                                 />
-                                <TextInput
+                                <TextInput testID="letterInput"
                                     style={styles.inputPostal}
                                     placeholder="AB"
                                     onChangeText={(text) => handlePostalCodeChange(text.toUpperCase(), 'part2')}
@@ -153,20 +153,20 @@ const PostalCodeSpecialist = ({ navigation }) => {
                             <Pressable style={styles.containerLogin} onPress={() => navigation.navigate('Login')}>
                                 <Text style={{ color: '#000', fontSize: 16, }}>Al een account? <Text style={{ color: '#308BE5', fontSize: 16, }}>Inloggen</Text></Text>
 
-                            </Pressable> 
-                </View>
-                <View style={styles.bottomButtonsContainer}>
-                <View style={styles.buttonsContainer}>
-                    <Pressable style={[styles.nextButton]} onPress={handleForwardButtonPress}>
-                        <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
-                    </Pressable>
-                </View>
-                
-            </View>
-            </SafeAreaView>
-        </ScrollView>
+                            </Pressable>
+                        </View>
+                        <View style={styles.bottomButtonsContainer}>
+                            <View style={styles.buttonsContainer}>
+                                <Pressable testID="volgendeBtn" style={[styles.nextButton]} onPress={handleForwardButtonPress}>
+                                    <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
+                                </Pressable>
+                            </View>
+
+                        </View>
+                    </SafeAreaView>
+                </ScrollView>
                 {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
+                    <ScrollView testID="optionsID" style={styles.optionsContainer}>
                         {filteredOptions.map(option => (
                             <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
                                 <Text>{option.title}</Text>
@@ -174,8 +174,8 @@ const PostalCodeSpecialist = ({ navigation }) => {
                         ))}
                     </ScrollView>
                 )}
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         height: windowHeight - 100,
     },
 
-    containerLogin:{
+    containerLogin: {
         flex: 1,
         width: 300,
         display: "flex",
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
-    beroepTitle:{
+    beroepTitle: {
         textAlign: "left",
     },
 
@@ -201,15 +201,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         display: "flex",
-        
+
     },
-      
-      input: {
+
+    input: {
         flex: 1,
         fontSize: 16,
-      },
+    },
 
-      inputPostal:{
+    inputPostal: {
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
@@ -222,17 +222,17 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         borderColor: "#f5f5f9",
         backgroundColor: "#fffefe",
-      },
+    },
 
-      beroepContainer:{
+    beroepContainer: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: windowHeight - 400,
         paddingTop: 60,
-      },
+    },
 
-      optionsContainer: {
+    optionsContainer: {
         position: 'absolute',
         top: Platform.OS === 'ios' ? 425 : 390,
         left: 20,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 
-      containerInput: {
+    containerInput: {
         flexDirection: "row",
         alignItems: "center",
         borderColor: "#f5f5f9",
@@ -284,9 +284,9 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         marginTop: 15,
         marginBottom: 15,
-      },
-    
-      textSearchWrapper: {
+    },
+
+    textSearchWrapper: {
         width: windowWidth,
         height: 30,
         display: "flex",
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         paddingLeft: 30,
         paddingRight: 30,
         gap: 20,
-      },
+    },
     scrollViewContainer: {
         flexGrow: 1,
         height: windowHeight,
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
     },
-    titleLight:{
+    titleLight: {
         color: "#202121",
         textAlign: 'center',
         fontSize: 15,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
     },
-    buttonsContainer:{
+    buttonsContainer: {
         display: "flex",
         flexDirection: "row",
         gap: 15,
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    nextButtonColorOne:{
+    nextButtonColorOne: {
         backgroundColor: "#fffefe",
         borderWidth: 3,
         borderColor: "#7db7ec",
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: 'center',
     },
-    whiteButtonText:{
+    whiteButtonText: {
         color: "#fff",
     },
 });

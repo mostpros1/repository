@@ -11,10 +11,10 @@ const KeuzePage = ({ navigation }) => {
           <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>
         </View>
         <View style={styles.viewContainer1}>
-          <Pressable style={styles.button} onPress={() => navigation.navigate('HowItWorksOneHomeowner')}>
+          <Pressable testID="homeOwnerBtn" style={styles.button} onPress={() => navigation.navigate('HowItWorksOneHomeowner')}>
             <Text style={styles.text}>Verder als Huiseigenaar</Text>
           </Pressable>
-          <Pressable style={styles.buttonTwo} onPress={() => navigation.navigate('HowItWorksOneSpecialist')}>
+          <Pressable testID="homePofessionalBtn" style={styles.buttonTwo} onPress={() => navigation.navigate('HowItWorksOneSpecialist')}>
             <Text style={styles.textTwo}>Verder als vakspecialist</Text>
           </Pressable>
         </View>

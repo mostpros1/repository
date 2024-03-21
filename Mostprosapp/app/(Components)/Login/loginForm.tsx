@@ -40,13 +40,13 @@ export function LoginForm({
       <View style={styles.view}>
         {/* <Text>Login om vakspecialist te vinden</Text> */}
         <Image
-              style={styles.image}
-              source={require("../../../assets/images/logo2.png")}
-            />
+          style={styles.image}
+          source={require("../../../assets/images/logo2.png")}
+        />
         <View>
           <View>
             <Text style={styles.inputTitle}>Email</Text>
-            <Pressable style={styles.containerInput}>
+            <Pressable testID="loginEmailInput" style={styles.containerInput}>
               <TextInput
                 placeholder="Bijv. joe@hotmail.com"
                 value={email}
@@ -54,7 +54,7 @@ export function LoginForm({
               />
             </Pressable>
             <Text style={styles.inputTitle}>Wachtwoord</Text>
-            <Pressable style={styles.containerInput}>
+            <Pressable testID="loginWachtInput" style={styles.containerInput}>
               <TextInput
                 placeholder="Wachtwoord"
                 value={password}
@@ -77,18 +77,18 @@ export function LoginForm({
           <View style={styles.loginbuttonsWrapper}>
             <Text>Of login met onderstaande opties</Text>
             <View style={styles.loginbuttonsWrapperTwo}>
-            <Image
-              style={styles.image}
-              source={require("../../../assets/images/facebook.png")}
-            />
-            <Image
-              style={styles.image}
-              source={require("../../../assets/images/google.png")}
-            />
-            <Image
-              style={styles.image}
-              source={require("../../../assets/images/insta.png")}
-            />
+              <Image
+                style={styles.image}
+                source={require("../../../assets/images/facebook.png")}
+              />
+              <Image
+                style={styles.image}
+                source={require("../../../assets/images/google.png")}
+              />
+              <Image
+                style={styles.image}
+                source={require("../../../assets/images/insta.png")}
+              />
             </View>
             {/* <View><img src={facebook} alt="" />Facebook</View> */}
             {/* <View><img src={google} alt="" />Gmail</View>
