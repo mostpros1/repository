@@ -37,7 +37,7 @@ const HowItWorksThreeHomeowner = ({ navigation }) => {
                 <View style={styles.progressionBarFull}></View>
                 <View style={styles.progressionBarFull}></View>
             </View>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('HomePageHomeOwner')}>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('TestHome')}>
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Pressable>
         </SafeAreaView>

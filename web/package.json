@@ -35,10 +35,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
+    "react-native": "^0.73.6",
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
-    "stripe": "^14.13.0",
+    "stripe": "^14.21.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

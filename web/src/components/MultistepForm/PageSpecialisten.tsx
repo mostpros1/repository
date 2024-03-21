@@ -82,7 +82,7 @@ const PageSpecialisten = (updateDate, { date }) => {
 
     setSpecialists(filteredSpecialists);
   };
-
+  
   const [specialists, setSpecialists] = useState(exampleSpecialists);
 
   //make a function to grab data behind the hashtag in the url and print it into the console
@@ -168,22 +168,22 @@ const PageSpecialisten = (updateDate, { date }) => {
         <option value="priceHighLow">Price: High to Low</option>
         <option value="rating">Rating</option>
       </select>
-      <div className="specialisten-container">
-        {specialists.map((specialist) => (
-          <div key={specialist.id} className="specialist-card">
-            <div className="specialist-header">
-              <div className="specialist-info-1">
+    <div className="specialisten-container">
+      {specialists.map((specialist) => (
+        <div key={specialist.id} className="specialist-card">
+        <div className="specialist-header">
+            <div className="specialist-info-1">
                 <h3>{specialist.name}</h3>
                 <h5>{specialist.profession}</h5>
-              </div>
             </div>
-            <div className="specialist-info-2">
-              <p>{specialist.bio}</p>
-            </div>
-            <button className="contact-button">Contact opnemen</button>
+        </div>
+          <div className="specialist-info-2">
+            <p>{specialist.bio}</p>
           </div>
-        ))}
-      </div>
+          <button className="contact-button">Contact opnemen</button>
+        </div>
+      ))}
+    </div>
     </div>
   );
 };

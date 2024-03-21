@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import TwoWorkers from '../../assets/2personenmettools.png'
 import { useLocation } from 'react-router-dom';
