@@ -127,71 +127,22 @@ function MultistepForm() {
       <>
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
-        //<Calendar />,
+        
         <InfoForm {...data} updateFields={updateFields} />,
-        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
+        
         <PageSpecialisten />
 
       </>
     ],
     onStepChange: () => { }
   });
-  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    console.log('Form Data:', data);
-    if (!isLastStep) return next()
 
-    const userData = {
-      email: data.email,
-      password: data.password,
-      repeatPassword: data.repeatPassword,
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/huiseigenaar-resultaat')
-        })
-        .catch((err) => {
-          console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
-        })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-        username: userData.email,
-        password: userData.password,
-        attributes: {
-          name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Homeowner"
-        },
-        autoSignIn: { enabled: true }
-      })
-        .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
-        })
-        .catch(async error => {
-          console.error(error)
-          if (error.code == 'UsernameExistsException') {
-            await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
-          }
-        })
-    }
-  }
-
+  //<Calendar />,
+  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
   const stepWidth = 100 / steps.length;
 
   return (
-    <form onSubmit={onSubmit} className='form-con'>
+    <form onSubmit={onsubmit} className='form-con'>
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
