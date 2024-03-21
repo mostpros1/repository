@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import AWS from 'aws-sdk';
+import aws from 'aws-sdk';
+import { dynamo } from '../../../../backend_functions/declerations.ts';
+import professionalId from './SpecialistMultistepForm.tsx';
 
 interface DateAndTimePickerProps {
   // onDateChange?: (selectedDates: string[]) => void;
@@ -15,7 +17,27 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
   const currentYear = date.getFullYear();
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedTimezone, setSelectedTimezone] = useState('GMT+01:00 Europe/Amsterdam'); // Default timezone
 
+  // List of timezones (you can expand this list as needed)
+  const timezones = [
+    'GMT-08:00 America/Los_Angeles',
+    'GMT-06:00 America/Mexico_City',
+    'GMT-05:00 America/New_York',
+    'GMT-03:00 America/Sao_Paulo',
+    'GMT+00:00 Europe/London',
+    'GMT+01:00 Europe/Amsterdam',
+    'GMT+02:00 Africa/Cairo',
+    'GMT+03:00 Europe/Istanbul',
+    'GMT+04:00 Asia/Dubai',
+    'GMT+05:30 Asia/Kolkata',
+    'GMT+07:00 Asia/Bangkok',
+    'GMT+08:00 Asia/Shanghai',
+    'GMT+09:00 Asia/Tokyo',
+    'GMT+11:00 Australia/Sydney'
+  ];
+  
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
@@ -37,7 +59,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       setSelectedDay(null); // Zet selectedDay op null
     }
   };
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
   const handleTimeSelect = (time: string) => {
     setSelectedTimes(prevTimes => {
       if (prevTimes.includes(time)) {
@@ -105,8 +126,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       );
     }
 
-    
-    
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
       const weekDay = dayDate.getDay();
@@ -122,9 +141,13 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       
       weekDays.push(
         <div
-        key={day}
-        className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
-        onClick={() => handleDateSelect(day, dayDate)}
+          key={day}
+          className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
+          onClick={() => handleDateSelect(day, dayDate)}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleDateSelect(day, dayDate)}
+          tabIndex={0}
+          role="button"
+          aria-label={`Kies ${dayDate.toLocaleDateString()}`}
         >
           {day}
         </div>
@@ -163,42 +186,157 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
       </div>
     ));
   };
-  
-  
+
+  <div aria-live="polite" aria-atomic="true" className="visually-hidden">
+    {months[currentMonth]} {currentYear} is nu zichtbaar
+  </div>
+
   const handleCurrentMonth = () => {
     setDate(new Date()); // Zet de datum terug naar vandaag
   };
 
   const submitDates = async () => {
+
+    // const item = {
+    //   userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
+    //   dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    // };
     
-    const dynamoDb = new AWS.DynamoDB.DocumentClient();
-    const item = {
-      userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
-      dates: selectedDates, // Dit is de lijst van geselecteerde datums
-    };
-    
-    const params = {
-      TableName: "UserAvailability",
-      Item: item, // Use the 'item' object instead of creating a new one
-    };
+    // const params = {
+    //   TableName: "UserAvailability",
+    //   Item: {
+    //     userId: "userId",
+    //     dates: selectedDates, // De array met geselecteerde datums
+    //     // Voeg eventueel andere relevante gegevens toe
+    //   },
+    // };
   
-    try {
-      await dynamoDb.put(params).promise();
-      alert("Beschikbaarheid succesvol opgeslagen!");
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      alert("Fout bij het opslaan van beschikbaarheid.");
+    // try {
+    //   await dynamo.put(params).promise();
+    //   alert("Beschikbaarheid succesvol opgeslagen!");
+    // } catch (error) {
+    //   console.error("Er is een fout opgetreden bij het opslaan: ", error);
+    //   alert("Fout bij het opslaan van beschikbaarheid.");
+    // }
+
+    for (let i = 0; i < selectedDates.length; i++) {
+      const params = {
+        TableName: "UserAvailability",
+        Item: {
+          id: Math.floor(Math.random() * 1000000),
+          professional_id: professionalId,
+          date: selectedDates[i],
+
+        },
+      };
+      try {
+        await dynamo.put(params).promise();
+        alert("Beschikbaarheid succesvol opgeslagen!");
+      } catch (error) {
+        console.error("Er is een fout opgetreden bij het opslaan: ", error);
+        alert("Fout bij het opslaan van beschikbaarheid.");
+      }
     }
   };
-  
+
+  function getId(datum: string) {
+    const params = {
+      TableName: "UserAvailability",
+      IndexName: "dateIndex",
+      KeyConditionExpression: '#d = :dateValue',
+      ExpressionAttributeNames: {
+        '#d': 'date',
+      },
+      ExpressionAttributeValues: {
+        ':dateValue': datum,
+      }
+    };
+
+    dynamo.query(params)
+      .promise()
+      .then(data => {
+        if (data.Items && data.Items.length > 0) {
+          Verwijder(data.Items[0].id);
+        } else {
+          console.error("No items found in the query result.");
+        }
+      })
+      .catch(console.error);
+
+
+  }
+
+  function Verwijder(id: number) {
+    const params = {
+      TableName: "UserAvailability",
+      Key: {
+        id: id,
+      },
+    };
+    dynamo
+      .delete(params)
+      .promise()
+      .then(data => console.log(data.Attributes))
+      .catch(console.error)
+
+  }
+
+  function deleteDates() {
+
+    for (let i = 0; i < selectedDates.length; i++) {
+      getId(selectedDates[i]);
+    }
+  }
+
+// Function to handle timezone selection
+const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedTime = event.target.value;
+  setSelectedTimes((currentTimes) => {
+     if (currentTimes.includes(selectedTime)) {
+       return currentTimes.filter(time => time !== selectedTime); // Deselect the time if it was already selected
+     } else {
+       return [...currentTimes, selectedTime]; // Add the selected time
+     }
+  });
+ };
+
+ const handleTimezoneChange = (event) => {
+  setSelectedTimezone(event.target.value);
+};
+
+
   return (
     <div className="date-time-picker">
       <div className="calendar">
-        <div className="month-selector">
-          <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL'/></button>
-          <button type="button" onClick={handleCurrentMonth} className='buttonToday'>Today</button> {/* Voeg deze regel toe */}
-          <span>{months[currentMonth]} {currentYear}</span>
-          <button type="button" className='next-month' onClick={handleNextMonth}><img src={Next} className='fotoinButtonR'/></button>
+      <div className="month-selector">
+          <button
+            type="button"
+            className='prev-month'
+            onClick={handlePrevMonth}
+            aria-label="Vorige maand"
+            tabIndex={0}
+            >
+            <img src={Prev} className='fotoinButtonL' alt="Vorige" />
+          </button>
+          <button
+            type="button"
+            onClick={handleCurrentMonth}
+            className='buttonToday'
+            aria-label="Ga naar huidige maand"
+             tabIndex={0}
+          >
+          Today
+          </button>
+          <span aria-live="polite">{months[currentMonth]} {currentYear}</span>
+          <button
+            type="button"
+            className='next-month'
+            onClick={handleNextMonth}
+            aria-label="Volgende maand"
+            tabIndex={0}
+          >
+          <img src={Next} className='fotoinButtonR' alt="Volgende" />
+          </button>
         </div>
         <div className="week-days">
           {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
@@ -208,21 +346,40 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         <div className="week">
           {renderCalendar()}
         </div>
+        <div className="timezone-selector">
+          <label htmlFor="timezone-select">Timezone:</label>
+          <select
+            id="timezone-select"
+            value={selectedTimezone}
+            onChange={handleTimezoneChange}
+            className="timezone-select"
+          >
+            {timezones.map(tz => (
+              <option className='timezones' key={tz} value={tz}>{tz}</option>
+            ))}
+          </select>
+        </div>
       </div>
         {selectedDay && (
         <div className="time-selector">
-        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00','11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
+        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
           <div
             key={time}
             className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
             onClick={() => handleTimeSelect(time)}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleTimeSelect(time)}
+            tabIndex={0}
+            role="button"
+            aria-label={`Kies tijdslot ${time}`}
           >
             {time}
           </div>
         ))}
       </div>
+      
       )}
         <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
+        <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
       </div>
   );
 };

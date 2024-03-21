@@ -1,10 +1,12 @@
 import Stripe from 'stripe';
+import Stripe from 'stripe';
 import { Amplify, Auth } from "aws-amplify";
+import awsExports from "./aws-exports.js";
 import awsExports from "./aws-exports.js";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
-import aws from "aws-sdk";
+import * as aws from "aws-sdk";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/nl.js";

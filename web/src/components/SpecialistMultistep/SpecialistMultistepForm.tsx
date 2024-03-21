@@ -9,10 +9,17 @@ import { useNavigate } from "react-router-dom";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
 //import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-import { Auth } from "aws-amplify";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
 import { AccountForm } from "../MultistepForm/AccountForm";
 
-
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
   email: string;
@@ -156,8 +163,15 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <DateForm
+          dateTimeSpans={data.dateTimeSpans}
+          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
+          />,
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <SearchChoreForm {...data} updateFields={updateFields} />,
+        ...questionsSteps,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });

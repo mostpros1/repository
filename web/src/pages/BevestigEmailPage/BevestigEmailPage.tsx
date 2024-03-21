@@ -92,6 +92,7 @@ function BevestigEmailPage() {
         }
     }
 
+
     function onSubmit(e: FormEvent) {
         e.preventDefault()
         let code: string = ""

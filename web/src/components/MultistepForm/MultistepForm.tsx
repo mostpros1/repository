@@ -13,10 +13,7 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
-import PageSpecialisten from './PageSpecialisten.tsx'
-
-
-
+import PageSpecialisten from './PageSpecialisten'
 
 type FormData = {
   postCode: string
@@ -129,8 +126,14 @@ function MultistepForm() {
     steps: [
       <>
         <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
+        //<Calendar />,
         <InfoForm {...data} updateFields={updateFields} />,
+        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
+        <PageSpecialisten />
+      ],
+      onStepChange: () => {}
+    });
         
         <PageSpecialisten updateDate={updateDate}/>
       </>
@@ -162,28 +165,16 @@ function MultistepForm() {
       if (!isLastStep) return next()
 
       const userData = {
-        email: data.email.trim(),
-        password: data.password.trim(),
-        repeatPassword: data.repeatPassword.trim(),
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
         firstName: data.firstName.trim(),
         lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber.trim()
+        phoneNumber: data.phoneNumber
       }
-      setValidDatum(true);
-      return next();
-    }
-
-    const userData = {
-      email: data.email,
-      password: data.password,
-      repeatPassword: data.repeatPassword,
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
+  
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
         .then(() => {
           navigate('/huiseigenaar-resultaat')
         })

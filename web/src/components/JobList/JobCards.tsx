@@ -18,15 +18,17 @@ interface Job {
 interface JobCardsProps {
   jobs?: Job[]; // Make jobs optional or provide a default prop value
 }
+
 // Define the JobCards component
 const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => { // Provide a default empty array
   // Check if jobs is defined and has length; if not, you can render a fallback UI or return null/empty fragment
   if (!jobs || jobs.length === 0) {
-    return <></> // or return <></> for nothing
+    return <div>No jobs available.</div>; // or return <></> for nothing
   }
+
   // Map over the jobs array to create job cards
   const jobCardsRender = jobs.map((job) => (
-    <div key={job.id} className="job-item">
+    <div key={job.id} className="taskCard">
       <div className="user-detail">
         <h2>{job.name}</h2>
         <p><LocationOnIcon />{job.distance}KM</p>
@@ -50,6 +52,8 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => { // Provide a defa
       </a>
     </div>
   ));
+
   return <>{jobCardsRender}</>;
 };
+
 export default JobCards;
