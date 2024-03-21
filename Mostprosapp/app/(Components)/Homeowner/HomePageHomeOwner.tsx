@@ -212,7 +212,7 @@ const HomePageHomeOwner = ({ navigation }) => {
                   </View>
                   <View style={[styles.cardSecondHalf]}>
                     <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                      Hoe aan de {"\n"} slag te gaan?
                     </Text>
                     <Pressable>
                       <Text style={[styles.blueText]}>Meer info</Text>

@@ -64,7 +64,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                         </View>
 
                         <View style={styles.titleBox}>
-                            <Text style={styles.title}>Voer je postcode in om vakspecialisten in{'\n'} jouw omgeving te vinden.</Text>
+                            <Text style={styles.title}>Voer je postcode in om professionals in{'\n'} jouw omgeving te vinden.</Text>
                         </View>
 
                         <View style={styles.imageContainer}>

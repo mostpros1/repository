@@ -20,7 +20,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
     const handleNext = () => {
         if (selectedItems.length === 0) {
-            Alert.alert('Geen klus gekozen', 'Selecteer minimaal 1 of meer klussen.');
+            Alert.alert('Geen klussen gekozen', 'Selecteer minimaal één of meer klussen.');
         } else {
             navigation.navigate('HomeOwnerExtraInfo');
         }
@@ -44,7 +44,8 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Wat moet er gedaan worden?</Text>
+                <Text style={styles.title}>Wat moet er gebeuren?</Text>
+
                 </View>
 
                 <View style={styles.cardsContainer}>

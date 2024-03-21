@@ -39,12 +39,11 @@ const HowItWorksTwoHomeowne = ({ navigation }) => {
       <View style={styles.middleContainer}>
         <View style={styles.middleContainerFirstSection}>
           <Image source={require("../../../assets/images/two.png")} />
-          <Text style={styles.title}>Krijg een vakspecialist</Text>
+          <Text style={styles.title}>Ontvang een professional</Text>
         </View>
         <View style={styles.middleContainerSecondSection}>
           <Text>
-            Ontvang reacties van vakspecialisten uit jouw omgeving of kies zelf
-            een specialist en neem contact met hem/haar op.
+          Ontvang reacties van professionals uit uw omgeving of selecteer zelf een specialist en neem rechtstreeks contact met hem of haar op.
           </Text>
         </View>
       </View>

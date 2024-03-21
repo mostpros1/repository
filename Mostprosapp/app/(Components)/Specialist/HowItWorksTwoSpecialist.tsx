@@ -43,9 +43,7 @@ const HowItWorksTwoSpecialist = ({ navigation }) => {
         </View>
         <View style={styles.middleContainerSecondSection}>
           <Text>
-            Ontvang reacties van huiseigenaren uit jouw omgeving of kies zelf
-            uit onze database van klussen en neem contact met hem/haar op om je
-            ideale klus te vinden.
+          Ontvang reacties van huiseigenaren uit jouw omgeving, of kies zelf uit onze lijst met klussen en neem contact met hen op om jouw ideale klus te vinden.
           </Text>
         </View>
       </View>

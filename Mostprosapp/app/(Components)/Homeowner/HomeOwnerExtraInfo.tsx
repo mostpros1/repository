@@ -26,10 +26,12 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Aanvullende Informatie (niet verplicht)</Text>
+                <Text style={styles.title}>Aanvullende Informatie (optioneel)</Text>
+
                 </View>
                 <View style={styles.titleBox}>
-                    <Text style={styles.titleLight}>Deel hier a.u.b niet je contactgegevens.</Text>
+                <Text style={styles.titleLight}>Deel hier a.u.b niet uw contactgegevens.</Text>
+
                 </View>
 
                 <View style={styles.textAreaContainer}>
@@ -37,7 +39,7 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                         style={styles.textArea}
                         onChangeText={setAdditionalInfo}
                         value={additionalInfo}
-                        placeholder="Beschrijf je klus hier met aanvullende informatie denk aan eventuele schade, enz."
+                        placeholder="Beschrijf hier uw project met aanvullende informatie, denk aan eventuele schade, etc."
                         placeholderTextColor="#b6b8bd"
                         multiline
                     />

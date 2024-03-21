@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
-  Button,
   View,
   SafeAreaView,
   Text,
@@ -9,23 +8,59 @@ import {
   Pressable,
   Image,
   ScrollView,
-  ImageBackground,
-  TextInput,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
-import { KeyboardAvoidingView } from "react-native";
 import Footer from "../Footer";
+
+const professionals = {
+  professional: [
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+  ],
+};
+
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 const HomeOwnerResults = ({ navigation }) => {
   const [selectedCheckboxes, setSelectedCheckboxes] = useState(
-    Array(500).fill(false)
+    Array(5).fill(false)
   );
 
   const selectedCount = selectedCheckboxes.filter(
@@ -45,31 +80,27 @@ const HomeOwnerResults = ({ navigation }) => {
           <View style={styles.view}>
             <View style={styles.topContainer}>
               <Text style={[styles.bigTitle]}>
-                Maak een selectie uit de beste {"\n"} vak specialisten in jouw
-                omgeving
+                Maak een selectie uit de beste{"\n"}professionals in uw omgeving
               </Text>
             </View>
             <View style={styles.container}>
               <Icon name="tune" size={55} color="black" />
               <View style={styles.blueBox}>
                 <Text style={styles.textButtonBlack}>
-                  Selecteer 10 vakspecialisten om sneller een reactie op je klus
-                  te krijgen.
+                  Selecteer meerdere professionals om sneller een reactie op uw
+                  klus te krijgen.
                 </Text>
               </View>
             </View>
 
             <View style={styles.middleContainer}>
-              {[...Array(5)].map((_, index) => (
+              {professionals.professional.map((professional, index) => (
                 <View style={styles.middleContainerFirstSection} key={index}>
-                  <Image
-                    style={styles.image}
-                    source={require("../../../assets/images/jan.png")}
-                  />
+                  <Image style={styles.image} source={professional.image} />
                   <View style={styles.orange}>
                     <View style={styles.green}>
-                      <Text style={styles.text}>Jan Schilder</Text>
-                      <Text style={styles.title}>Loodgieter</Text>
+                      <Text style={styles.text}>{professional.name}</Text>
+                      <Text style={styles.title}>{professional.title}</Text>
                       <View style={styles.ratingContainer}>
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
@@ -83,7 +114,6 @@ const HomeOwnerResults = ({ navigation }) => {
                       </View>
                     </View>
                     <View style={styles.yellow}>
-                      <Text style={styles.text}>€500</Text>
                       <TouchableOpacity
                         onPress={() => toggleCheckbox(index)}
                         activeOpacity={1}
@@ -98,8 +128,7 @@ const HomeOwnerResults = ({ navigation }) => {
                       numberOfLines={2}
                       ellipsizeMode="tail"
                     >
-                      Ik werk in en om de omgeving van Amsterdam. Voor hoge
-                      kwaliteit werk moet je bij mij zijn.
+                      {professional.description}
                     </Text>
                   </View>
                 </View>
@@ -168,20 +197,20 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 24,
     height: 24,
-    borderWidth: 1.5, // Increased border width for better visibility
+    borderWidth: 1.5,
     borderColor: "black",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
-    backgroundColor: "transparent", // Set background color to transparent
+    backgroundColor: "transparent",
   },
 
   selected: {
-    backgroundColor: "#308AE4", // Use a different color for the selected state
+    backgroundColor: "#308AE4",
   },
 
   footerfix: {
-    height: 100,
+    height: 80,
     width: windowWidth,
   },
 
@@ -241,6 +270,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     height: undefined,
     aspectRatio: 1,
+    backgroundColor: "orange",
   },
 
   size: {

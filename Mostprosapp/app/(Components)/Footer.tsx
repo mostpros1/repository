@@ -40,7 +40,7 @@ const Footer = ({ navigation, activePage }) => {
             source={activePage === 'Profile' ? require("../../assets/images/footericonblue.png") : require("../../assets/images/footericon.png")}
             style={styles.image}
           />
-          <Text style={styles.footerText}>Profile</Text>
+          <Text style={styles.footerText}>Profiel</Text>
         </View>
       </TouchableOpacity>
     </View>
