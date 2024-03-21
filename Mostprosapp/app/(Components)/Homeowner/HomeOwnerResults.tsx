@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Button,
@@ -28,29 +28,16 @@ const HomeOwnerResults = ({ navigation }) => {
     Array(500).fill(false)
   );
 
+  const selectedCount = selectedCheckboxes.filter(
+    (checkbox) => checkbox
+  ).length;
+
   const toggleCheckbox = (index) => {
     const updatedCheckboxes = [...selectedCheckboxes];
     updatedCheckboxes[index] = !updatedCheckboxes[index];
     setSelectedCheckboxes(updatedCheckboxes);
   };
 
-  const CustomIcon = (props) => {
-    return (
-      <View>
-        <Icon
-          name={props.name}
-          size={props.size}
-          style={{
-            backgroundColor: `${props.bcolor}`,
-            color: `${props.color}`,
-            paddingLeft: props.pLeft,
-            borderRadius: props.rad,
-            padding: props.pad,
-          }}
-        />
-      </View>
-    );
-  };
   return (
     <PaperProvider>
       <SafeAreaView>
@@ -66,8 +53,8 @@ const HomeOwnerResults = ({ navigation }) => {
               <Icon name="tune" size={55} color="black" />
               <View style={styles.blueBox}>
                 <Text style={styles.textButtonBlack}>
-                  Selecteer 10 vakspecialisten om sneller een reactie op je
-                  klus te krijgen.
+                  Selecteer 10 vakspecialisten om sneller een reactie op je klus
+                  te krijgen.
                 </Text>
               </View>
             </View>
@@ -117,6 +104,21 @@ const HomeOwnerResults = ({ navigation }) => {
                   </View>
                 </View>
               ))}
+              <Pressable
+                style={[
+                  styles.nextButton,
+                  selectedCount >= 1 ? styles.nextButtonColorOne : null,
+                ]}
+                onPress={() => {
+                  if (selectedCount >= 1) {
+                    navigation.goBack();
+                  } else if (selectedCount === 0) {
+                    Alert.alert("Selecteer minimaal één vakspecialist.");
+                  }
+                }}
+              >
+                <Text style={styles.whiteButtonText}>Bevestigen</Text>
+              </Pressable>
               <View style={styles.footerfix}></View>
             </View>
           </View>
@@ -127,64 +129,89 @@ const HomeOwnerResults = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-    orange:{
-        flex: 1,
-        height: "100%",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap:"wrap",
-        paddingLeft: 10,
-    },
-
-    checkbox: {
-      width: 24,
-      height: 24,
-      borderRadius: 4,
-      borderWidth: 1.4,
-      borderColor: "black",
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 10,
-    },
-    selected: {
-      backgroundColor: "#308AE4",
-    },
-
-    footerfix: {
-      height: 35,
-      width: windowWidth,
-    },
-
-    green:{
-        height: "60%",
-        width: "70%",
-        display: "flex",
-        justifyContent: "center",
-    },
-
-    yellow:{
-        height: "60%",
-        width: "30%",
-        display: "flex",
-        alignItems: "center",
-        padding: 10,
-    },
-
-    middleContainerFirstSection: {
-      width: windowWidth,
-      height: 150,
-      display: "flex",
-      borderBottomWidth: 3,
-      borderRadius: 10,
-      flexDirection: "row",
-      alignItems: "center",
-      paddingLeft: 10,
-      borderColor: "#f1f1f0",
+  orange: {
+    flex: 1,
+    height: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingLeft: 10,
   },
-  
-  
-  
-      
+
+  nextButton: {
+    backgroundColor: "#B3B3B3",
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    alignSelf: "center",
+    width: 170,
+    height: 60,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  nextButtonColorOne: {
+    backgroundColor: "#318ae5",
+  },
+
+  nextButtonText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  whiteButtonText: {
+    color: "#fff",
+  },
+
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 1.5, // Increased border width for better visibility
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    backgroundColor: "transparent", // Set background color to transparent
+  },
+
+  selected: {
+    backgroundColor: "#308AE4", // Use a different color for the selected state
+  },
+
+  footerfix: {
+    height: 100,
+    width: windowWidth,
+  },
+
+  green: {
+    height: "60%",
+    width: "70%",
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  yellow: {
+    height: "60%",
+    width: "30%",
+    display: "flex",
+    alignItems: "center",
+    padding: 10,
+  },
+
+  middleContainerFirstSection: {
+    width: windowWidth,
+    height: 150,
+    display: "flex",
+    borderBottomWidth: 3,
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 10,
+    borderColor: "#f1f1f0",
+  },
+
   view: {
     height: "100%",
     width: windowWidth,
@@ -193,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  bigTitle:{
+  bigTitle: {
     color: "#303030",
     textAlign: "center",
     fontWeight: "bold",
@@ -250,8 +277,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingBottom: 15,
     flexDirection: "column",
-    borderBottomWidth: 6, 
-    borderBottomColor: "#f4f4f5", 
+    borderBottomWidth: 6,
+    borderBottomColor: "#f4f4f5",
   },
   topButtonsContainer: {
     width: "60%",
@@ -422,7 +449,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  blueBox:{
+  blueBox: {
     width: "75%",
     backgroundColor: "#e9f2fe",
     height: "70%",
