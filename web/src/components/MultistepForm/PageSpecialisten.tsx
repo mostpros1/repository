@@ -117,7 +117,7 @@ const PageSpecialisten = (updateDate, { date }) => {
         console.log(err);
       });
       
-      //JSON.parse(dateString).Date.split('T')[0]
+      console.log(JSON.stringify(updateDate).split('T')[0]);
     /*dynamo.query({
       TableName: "beschikbaarheid",
       IndexName: "datum",
