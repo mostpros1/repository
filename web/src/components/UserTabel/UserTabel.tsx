@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import aws from "aws-sdk";
 import "./UserTabel.css";
-import { cognitoClient } from "../../main";
 
 const UserTabel = () => {
   const [userList, setUserList] = useState<any[]>([]);
@@ -17,7 +16,7 @@ const UserTabel = () => {
       const cognitoIdentityServiceProvider =
         new aws.CognitoIdentityServiceProvider();
       const listUsersParams = {
-        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+        UserPoolId: import.meta.env.VITE_USER_POOL_ID,
       };
 
       const data = await cognitoIdentityServiceProvider
@@ -28,6 +27,10 @@ const UserTabel = () => {
       console.error("Error fetching user list:", error);
     }
   };
+
+  // Define cognitoIdentityServiceProvider within the component scope
+  const cognitoIdentityServiceProvider =
+    new aws.CognitoIdentityServiceProvider();
 
   // Calculate total number of pages based on usersPerPage
   const totalPages = Math.ceil(userList.length / usersPerPage);
@@ -48,10 +51,10 @@ const UserTabel = () => {
       try {
         // Implement the AWS SDK delete user logic here
         const deleteUserParams = {
-          UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+          UserPoolId: import.meta.env.VITE_USER_POOL_ID,
           Username: username,
         };
-        await cognitoClient
+        await cognitoIdentityServiceProvider
           .adminDeleteUser(deleteUserParams)
           .promise();
         alert(`User ${username} deleted successfully`);

@@ -60,6 +60,7 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 Amplify.configure(awsconfig);
 import { RootStackParamList } from "./types";
+import DateAndTimePicker from "./(Components)/Booking-Availability/Calender";
 
 const App = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -100,6 +101,7 @@ const App = () => {
         <Stack.Screen name="TestHome" component={TestHome}/>
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker}/>
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ProfileSecurity" component={ProfileSecurity} />
