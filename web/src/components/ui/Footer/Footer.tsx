@@ -16,6 +16,17 @@ function Footer() {
           <Link to="/contact">Contact</Link>
         </div>
         <div className="footerSection">
+          <h4>Huiseigenaar</h4>
+          <p>Vind vakspecialist</p>
+          <p>Help</p>
+        </div>
+        <div className="footerSection">
+          <h4>Vakspecialist</h4>
+          <Link to="/over-ons">Inschrijven als vakspecialist</Link>
+          <p>Pro bedrijven centrum</p>
+          <p>Help voor professionals</p>
+        </div>
+        <div className="footerSection">
           <h4>Netwerk</h4>
           <p>Vakspecialist</p>
           <p>Huiseigenaren</p>
