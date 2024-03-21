@@ -1,59 +1,61 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, } from "react-native";
 import { Dimensions } from "react-native";
 
 const Footer = ({ navigation, activePage }) => {
+
   return (
-    <View style={styles.footer}>
-      <TouchableOpacity
-        style={styles.footerImage}
-        onPress={() => navigation.navigate("ProfileNavigation")}
-      >
-        {activePage === "HomePageSpecialist" ? (
-          <Image
-            source={require("../../assets/images/footerhouseblue.png")}
-            style={styles.image}
-          />
-        ) : (
-          <Image
-            source={require("../../assets/images/footerhouse.png")}
-            style={styles.image}
-          />
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.footerImage}
-        onPress={() => navigation.navigate("ChatOverview")}
-      >
-        {activePage === "ChatOverview" ? (
-          <Image
-            source={require("../../assets/images/footerchatblue.png")}
-            style={styles.image}
-          />
-        ) : (
-          <Image
-            source={require("../../assets/images/footerchat.png")}
-            style={styles.image}
-          />
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.footerImage}
-        onPress={() => navigation.navigate("ProfileSettingsOne")}
-      >
-        {activePage === "Profile" ? (
-          <Image
-            source={require("../../assets/images/footericonblue.png")}
-            style={styles.image}
-          />
-        ) : (
-          <Image
-            source={require("../../assets/images/footericon.png")}
-            style={styles.image}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
+    
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.footerImage}
+            onPress={() => navigation.navigate('ProfileNavigation')}
+          >
+            {activePage === 'HomePageSpecialist' ? (
+              <Image
+                source={require("../../assets/images/footerhouseblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footerhouse.png")}
+                style={styles.image}
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.footerImage}
+            onPress={() => navigation.navigate('ChatOverview')}
+          >
+            {activePage === 'ChatOverview' ? (
+              <Image
+                source={require("../../assets/images/footerchatblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footerchat.png")}
+                style={styles.image}
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.footerImage}
+            onPress={() => navigation.navigate('ProfileSettingsOne')}
+          >
+            {activePage === 'Profile' ? (
+              <Image
+                source={require("../../assets/images/footericonblue.png")}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../assets/images/footericon.png")}
+                style={styles.image}
+              />
+            )}
+          </TouchableOpacity>
+      </View>
   );
 };
 
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    objectFit: "contain",
-    height: 30,
+    objectFit: "contain", 
+    height: 30, 
   },
   footerText: {
     fontSize: 16,
