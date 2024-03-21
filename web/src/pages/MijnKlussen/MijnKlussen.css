@@ -13,6 +13,7 @@ html, body {
 .main-content {
     flex: 1; /* This allows the main content area to expand to fill the remaining vertical space */
     padding-top: 70px;
+    padding-bottom: 100px;
 }
 
 .footer {

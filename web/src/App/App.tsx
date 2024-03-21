@@ -22,11 +22,6 @@ import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
-import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
-import HomeInovation from "../pages/HomeInovation/HomeInovation";
-import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
-import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-
 import "./App.css";
 
 const App = () => {
@@ -73,10 +68,6 @@ const App = () => {
             <Route path="/over-ons" element={<AboutUsPage />} />
             <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/MijnKlussen" element={<MijnKlussen />} />
-            <Route path="/HomeInovation" element={<HomeInovation />} />
-            <Route path="/VSDashboard" element={<VSDashboard />} />
-            <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
             {isAuthenticated && userGroup.includes('Homeowner') && (
                <Route path="/dashboard-huiseigenaar" element={<HomeOwnerDashboard />} /> 
             )}
@@ -91,3 +82,5 @@ const App = () => {
         </Routes>
     )
 }
+
+export default App;
