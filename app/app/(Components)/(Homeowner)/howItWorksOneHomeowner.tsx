@@ -17,14 +17,14 @@ const HowItWorksOneHomeowner = ({navigation}) => {
                 </View>
                 <View style={styles.imageContainer}>
                     <View>
-                        
+                        <Image style={styles.image} source={require("../../../assets/images/HowItWorksOne.png")} />
                     </View>
                 </View>
             </View>
 
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
-                    
+                    <Image source={require("../../../assets/images/one.png")} />
                     <Text style={styles.title}>Beschrijf je klus</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>

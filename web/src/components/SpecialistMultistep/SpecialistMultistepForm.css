@@ -14,7 +14,6 @@
     border-radius: 5px;
     margin-left: 20px;
     position: absolute;
-    position: absolute;
 }
 
 .deleteKnop:hover {
@@ -103,8 +102,4 @@
   
   .MuiFormControl-root {
     width: 100%;
-  }
-
-}
-
   }
