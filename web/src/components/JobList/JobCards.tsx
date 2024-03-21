@@ -3,7 +3,6 @@ import "./JobCards.css"; // Import the CSS for styling
 import gasleiding from "../../assets/Gasleiding.svg"; // Import the image, if you're using it in the job cards
 import LocationOnIcon from '@mui/icons-material/LocationOn'; // Import icons
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-
 // Define the structure of a job object
 interface Job {
   id: number;

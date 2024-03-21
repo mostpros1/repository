@@ -34,78 +34,126 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = () => {
-    const [location, setLocation] = useState('');
-    const [sortBy, setSortBy] = useState('');
-    const [priceFrom, setPriceFrom] = useState('');
-  
-    useEffect(() => {
-      // This function will be called automatically whenever location, sortBy, or priceFrom changes.
-      applyFilters();
-    }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
-  
-    const handleLocationChange = (event) => {
-      setLocation(event.target.value);
-    };
-  
-    const handleSortByChange = (event) => {
-      setSortBy(event.target.value);
-    };
-  
-    const handlePriceFromChange = (event) => {
-      setPriceFrom(event.target.value);
-    };
-  
-    const applyFilters = () => {
-      let filteredSpecialists = exampleSpecialists;
-  
-      // Filter by location
-      if (location) {
-          filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
+const PageSpecialisten = (updateDate, { date }) => {
+  const [location, setLocation] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [priceFrom, setPriceFrom] = useState('');
+
+  useEffect(() => {
+    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
+    applyFilters();
+  }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSortByChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  const handlePriceFromChange = (event) => {
+    setPriceFrom(event.target.value);
+  };
+
+  const applyFilters = () => {
+    let filteredSpecialists = exampleSpecialists;
+
+    // Filter by location
+    if (location) {
+      filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
+    }
+
+    // Filter by price
+    if (priceFrom) {
+      filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
+    }
+
+    // Sort by criteria
+    if (sortBy) {
+      if (sortBy === 'priceLowHigh') {
+        filteredSpecialists.sort((a, b) => a.price - b.price);
+      } else if (sortBy === 'priceHighLow') {
+        filteredSpecialists.sort((a, b) => b.price - a.price);
+      } else if (sortBy === 'rating') {
+        filteredSpecialists.sort((a, b) => b.rating - a.rating);
       }
-  
-      // Filter by price
-      if (priceFrom) {
-          filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
-      }
-  
-      // Sort by criteria
-      if (sortBy) {
-          if (sortBy === 'priceLowHigh') {
-              filteredSpecialists.sort((a, b) => a.price - b.price);
-          } else if (sortBy === 'priceHighLow') {
-              filteredSpecialists.sort((a, b) => b.price - a.price);
-          } else if (sortBy === 'rating') {
-              filteredSpecialists.sort((a, b) => b.rating - a.rating);
-          }
-      }
-  
-      setSpecialists(filteredSpecialists);
+    }
+
+    setSpecialists(filteredSpecialists);
   };
   
   const [specialists, setSpecialists] = useState(exampleSpecialists);
-  useEffect(() => {
-    const hashTag = window.location.hash.replace("#", "");
-    console.log(hashTag);
-  dynamo.query({
-    TableName: "Specialists",
-    IndexName: "profession",
-    KeyConditionExpression: "profession = :profession",
-    ExpressionAttributeValues: {
-      ":profession": hashTag,
-    },
-  }).promise()
-    .then(data => {
-      //setSpecialists(data.Items[0])
-      console.log(data.Items[0]);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}, []);
 
-  return (
+  //make a function to grab data behind the hashtag in the url and print it into the console
+
+
+  //backend niet verwijderen
+  useEffect(() => {
+    let Availibility;
+    let Specialists;
+
+    console.log(updateDate);
+    const hashTag = window.location.hash.replace("#", "").split("?")[0];
+    console.log(hashTag);
+    const task = window.location.hash.replace("#", "").split("?")[1];
+    console.log(task);
+    dynamo.query({
+      TableName: "Specialists",
+      IndexName: "profession",
+      KeyConditionExpression: "profession = :profession",
+      FilterExpression: "task = :task",
+      ExpressionAttributeValues: {
+        ":profession": hashTag,
+        ":task": task,
+      },
+    }).promise()
+      .then(data => {
+        setSpecialists(data.Items);
+        Specialists = data.Items;
+        console.log(data.Items);
+      })
+      .catch(err => {
+        console.log(err);
+      });
       
+      console.log(JSON.stringify(updateDate).split('T')[0]);
+    /*dynamo.query({
+      TableName: "beschikbaarheid",
+      IndexName: "datum",
+      KeyConditionExpression: "datum = :date",
+      ExpressionAttributeValues: {
+        ":date": updateDate,
+      },
+    }).promise()
+      .then(output => {
+
+        Availibility = output.Items
+        console.log(output.Items);
+      })
+      .catch(error => {
+        console.log(error);
+      });*/
+      
+    const checkEmailInJson = (email) => {
+      if (Specialists && Availibility) {
+        // Replace with the email address you want to check
+        const specialistEmails = Specialists.map(specialist => specialist.email);
+        const availibilityEmails = Availibility.map(item => item.email);
+        const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
+        const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
+        console.log(matchingSpecialists);
+      }
+    };
+
+    
+
+    checkEmailInJson('example@example.com');
+
+  }, [updateDate]);
+      
+  return (
+
     <div className="filter-bar">
       <select value={location} onChange={handleLocationChange} className="filter-select">
         <option value="">Select a location</option>

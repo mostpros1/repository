@@ -9,6 +9,8 @@ import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
 
+//import { authenticateUser } from '../../../../backend_functions/authentecateUser.ts';
+
 function LoginPage() {
   const navigate = useNavigate();
   const { updateUser } = useUser();
@@ -21,31 +23,34 @@ function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error) {
+        updateUser(null);
+      }
+    };
+
     checkAuthStatus();
   }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const authenticatedUser = await Auth.currentAuthenticatedUser();
-      updateUser(authenticatedUser);
-    } catch (error) {
-      updateUser(null);
-    }
-  };
 
   const handleLogin = async () => {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
-      updateUser(authenticatedUser);
+    
+      
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
-    } catch (error: any) {
+    } catch (error: Error) {
       console.error('Login failed:', error);
       setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
   };
 
-  const updateLoginData = (fields) => {
+
+  const updateLoginData = (fields: any) => {
     setLoginData((prevData) => ({ ...prevData, ...fields }));
   };
 
@@ -54,7 +59,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => { }} handleLogin={handleLogin} setError={setError} error={error} />
         </div>
       </div>
       <Footer />

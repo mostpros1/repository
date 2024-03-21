@@ -4,11 +4,14 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { Link } from "react-router-dom";
 
 
+
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer_container">
         <div className="footerSection">
+          <h4>Navigatie</h4>
           <h4>Navigatie</h4>
           <Link to="/hoe-werkt-het">Hoe werkt het</Link>
           <a href="">Waarom mostpros</a>
