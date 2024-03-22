@@ -47,7 +47,7 @@ const WachtwoordVergetenPage = () => {
                         onChange={e => setFields({...fields, email: e.target.value })}
                     />
                 </div>
-                { codeSent ?
+                { codeSent &&
                     <>
                         <DigitInputs amount={6} inputRef={codeInputRef}/>
                         <div className="resetpassword-form_field">
@@ -72,11 +72,10 @@ const WachtwoordVergetenPage = () => {
                                 onChange={e => setFields({...fields, repeatNewPassword: e.target.value })}
                             />
                         </div>
-                    </> :
-                    <></>
+                    </>
                 }
                 <button className="resetpassword-card_button" type="submit">Bevestigen</button>
-                { codeSent ? <a className="confirmemail-card_newCode" onClick={() => Auth.forgotPassword(fields.email)}>Nieuwe code versturen</a> : <></>}
+                { codeSent && <a className="confirmemail-card_newCode" onClick={() => Auth.forgotPassword(fields.email)}>Nieuwe code versturen</a>}
             </form>
         </div>
     )
