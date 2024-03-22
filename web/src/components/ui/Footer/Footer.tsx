@@ -25,7 +25,7 @@ function Footer() {
         </div>
         <div className="footerSection">
           <h4>Vakspecialist</h4>
-          <Link to="/over-ons">Inschrijven als vakspecialist</Link>
+          <Link to="/inschrijven-als-specialist">Inschrijven als vakspecialist</Link>
           <p>Pro bedrijven centrum</p>
           <p>Help voor professionals</p>
         </div>
