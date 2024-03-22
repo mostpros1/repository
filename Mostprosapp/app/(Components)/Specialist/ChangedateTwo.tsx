@@ -59,7 +59,7 @@ const ChangedateTwo = ({ navigation }) => {
                             <View style={styles.infoCard}>
                                 <View style={styles.infoWrapper}>
                                     <Text style={styles.locationText}>
-                                        Lisa Zoetlief heeft op 30 September de volgende datum in uw kalender gereserveerd: 10 Oktober 2023. Indien deze datum niet mogelijk is wijzig deze hier beneden.
+                                    Lisa Zoetlief heeft op 30 september de volgende datum in uw agenda gereserveerd: 10 Oktober 2023. Indien deze datum niet geschikt is, kunt u deze hieronder wijzigen.
                                     </Text>
                                 </View>
                             </View>

@@ -38,14 +38,14 @@ const ProfileSettingsTwo = ({ navigation }) => {
                             </View>
                             <View style={styles.topContainerSecondSectionTwo}>
                                 <Text style={[styles.name, styles.textBold]}>
-                                    Settings
+                                Instellingen
                                 </Text>
                             </View>
                         </View>
 
                         <View style={styles.firstMiddleContainerWrapper}>
                             <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                Profiel overzicht
+                            Profieloverzicht
                             </Text>
 
                             <View style={styles.middleContainerFirstSection}>
@@ -72,7 +72,7 @@ const ProfileSettingsTwo = ({ navigation }) => {
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
                                     <Icon name="settings" size={23} color="black"/>
-                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>General</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Algemeen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
@@ -89,20 +89,20 @@ const ProfileSettingsTwo = ({ navigation }) => {
 
                         <View style={styles.secondMiddleContainerWrapper}>
                             <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                                Applicatie settingen
+                            Applicatie-instellingen
                             </Text>
 
                             <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="help" size={23} color="gray"/>
-                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Help en feedback</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Hulp en feedback</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="info" size={23} color="#308AE4"/>
-                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Over</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Info</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>

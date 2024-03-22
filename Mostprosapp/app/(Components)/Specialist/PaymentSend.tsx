@@ -55,13 +55,13 @@ const PaymentSend = ({ navigation }) => {
                             <View style={styles.infoCard}>
                                 <View style={styles.infoWrapper}>
                                     <Text style={styles.locationText}>
-                                        Lisa Zoetlief heeft op 30 September de volgende datum in uw kalender gereserveerd: 10 Oktober 2023. Indien deze datum niet mogelijk is wijzig deze hier beneden.
+                                    Bespreek met de klant een bedrag als jullie beide overeenkomen met het bedrag kunt u hieronder verder gaan.
                                     </Text>
                                 </View>
                             </View>
                         </View>
                         <Pressable style={styles.nextButton} onPress={() => navigation.navigate('')}>
-                            <Text style={styles.whiteText}>Betaal verzoek {'\n'} verzenden </Text>
+                            <Text style={styles.whiteText}>Betaalverzoek{'\n'} verzenden </Text>
                         </Pressable>
                     </View>
                 </ScrollView>

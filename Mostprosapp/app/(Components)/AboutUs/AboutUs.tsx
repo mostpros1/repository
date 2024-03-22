@@ -52,18 +52,18 @@ const AboutUs = ({ navigation }) => {
               source={require("../../../assets/images/aboutus.png")}
             />
             <View style={styles.textContainerTwo}>
-              <Text>
-              Mostpros is een community marktplaats voor huiseigenaren om een moderne lokale vakspecialist te vinden. Samen met ons groeiende netwerk bouwen we mee aan de huizen voor de toekomst.
-              {'\n'}{'\n'}
-Samen helpen we mensen groeien. We accepteren de home service industrie niet zoals die is, samen willen we het veranderen terwijl we plezier hebben.
-              </Text>
+            <Text>
+  MostPros is een community marktplaats voor huiseigenaren om een moderne lokale professional te vinden. Samen met ons groeiende netwerk bouwen we mee aan de huizen voor de toekomst.
+  {'\n\n'}
+  Samen helpen wij mensen groeien. Wij accepteren de home service industrie niet zoals die is, maar streven ernaar om het te veranderen terwijl we plezier hebben.
+</Text>
             </View>
             <ImageBackground
           source={require("../../../assets/images/textbubble.png")}
           style={styles.imageBackground}
           resizeMode="cover"
         >
-          <Text style={styles.textOnImage}>Wij koppelen je aan de vakspecialist en de {'\n'} klus die perfect aansluit bij jouw{'\n'}vaardigheden en voorkeuren.</Text>
+          <Text style={styles.textOnImage}>Wij koppelen je aan de professional en de {'\n'} klus die perfect aansluit bij jouw{'\n'}vaardigheden en voorkeuren.</Text>
         </ImageBackground>
           </View>
         </ScrollView>

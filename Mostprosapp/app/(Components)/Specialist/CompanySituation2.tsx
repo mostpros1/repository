@@ -79,7 +79,7 @@ const CompanySituation2 = ({ navigation }) => {
                         />
                     </Pressable>
                     <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
-                        <Text>Ik wil een nieuwe manier om klanten te vinden uitproberen</Text>
+                        <Text>Ik wil een nieuwe manier van {'\n'} klanten vinden uitproberen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}

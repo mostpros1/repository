@@ -68,7 +68,7 @@ const ProfileNotifications = ({ navigation }) => {
                   </View>
                 </Pressable>
                 <Pressable style={[styles.agendaButton, styles.blockColorBottom,]} onPress={() => navigation.navigate('')}>
-                  <Text style={[styles.text, styles.textButtonBlack]}>Vibratie</Text>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Beltoon</Text>
                   <View style={styles.textButtonWrapper}>
                     <Text style={[styles.lightTitle]}>Set</Text>
                     <Pressable style={styles.button}>
