@@ -9,6 +9,7 @@ import { dynamo } from "../../../../backend_functions/declerations";
 type RegisterData = {
   firstName: string;
   lastName: string;
+  dob: string;
   email: string;
   phoneNumber: string;
   password: string;
@@ -28,13 +29,14 @@ export function RegisterForm({
   email,
   firstName,
   lastName,
+  dob,
   phoneNumber,
   password,
   repeatPassword,
   updateFields,
   setUserExists,
   error,
-}: RegisterFormProps) {
+}) {
 
   const [isValidFirstName, setValidFirstName] = useState(true);
 
@@ -75,7 +77,7 @@ export function RegisterForm({
   //       // Add other attributes here
   //     },
   //   };
-  
+
   //   dynamoDb.put(params, (err, data) => {
   //     if (err) {
   //       console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2));
@@ -84,7 +86,7 @@ export function RegisterForm({
   //     }
   //   });
   // };
-  
+
 
   return (
     <>
@@ -120,6 +122,15 @@ export function RegisterForm({
               onChange={handleLastNameChange}
               id="achternaam"
               name="achternaam"
+            />
+          </div>
+          <div className="register-form-input">
+            <label htmlFor="">Date of Birth:</label>
+            <input
+              type="date"
+              placeholder="Date of Birth"
+              value={dob}
+              onChange={(e) => updateFields({ dob: e.target.value })}
             />
           </div>
           <div className="register-form-input">
