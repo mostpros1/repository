@@ -12,6 +12,7 @@ import './/SpecialistMultistepForm.css';
 import { Margin } from "@mui/icons-material";
 import React from 'react';
 import Calendar from './Calendar';
+import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
 
 type DateTimeSpan = {
@@ -34,6 +35,16 @@ type FormData = {
   dateTimeSpans: DateTimeSpan[];
 };
 
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+  dob: string;
+}
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
@@ -155,7 +166,7 @@ function SpecialistMultistepForm() {
         updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
       }
     };
-  
+
     return (
       <form action="" method="POST">
         <div>
@@ -174,21 +185,71 @@ function SpecialistMultistepForm() {
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-          />,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
+        />,
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
 
+  function signUp(registerData: RegisterData, user_type: string): void {
+    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+
+    const signUpProf = async () => {
+      try {
+        await Auth.signUp({
+          username: email,
+          password: password,
+          attributes: {
+            phone_number: phoneNumber,
+            given_name: firstName,
+            family_name: lastName,
+            birthdate: dob,
+            'custom:user_type': user_type,
+          },
+          autoSignIn: { enabled: true },
+        });
+
+        /*const user = await Auth.signIn(email, password);
+        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+      */
+        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+      } catch (error: any) {
+        console.error('Error signing up:', error);
+        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      }
+    };
+
+    signUpProf();
+  }
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {
-      return next();
+      return next()
     } else {
       console.log(data);
       navigate("/specialist-resultaat");
     }
+
+    const userData: RegisterData = {
+      email: data.email.trim(),
+      password: data.password.trim(),
+      repeatPassword: data.repeatPassword.trim(),
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber.trim(),
+      dob: "" // Add the 'dob' property here
+    }
+    try {
+      signUp(userData, "Professional");
+    } catch (error) {
+      console.error('Error signing up:', error);
+      //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+    }
+
   }
 
   const stepWidth = 100 / steps.length;

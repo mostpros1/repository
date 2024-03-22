@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
-import AWS from 'aws-sdk';
+import { dynamo } from '../../../../backend_functions/declerations.ts';
 
 interface DateAndTimePickerProps {
   // onDateChange?: (selectedDates: string[]) => void;
@@ -171,9 +171,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
   const submitDates = async () => {
     
-    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    
     const item = {
-      userId: "1", // Dit zou iets unieks moeten zijn, zoals een user-id
+      prof_email: "1",
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
     };
     
@@ -183,7 +183,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     };
   
     try {
-      await dynamoDb.put(params).promise();
+      await dynamo.put(params).promise();
       alert("Beschikbaarheid succesvol opgeslagen!");
     } catch (error) {
       console.error("Er is een fout opgetreden bij het opslaan: ", error);
