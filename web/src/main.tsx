@@ -11,6 +11,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { sendMail } from "../../backend_functions/email.ts";
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
+          <button type="button" onClick={sendMail("timon@timonheidenreich.eu", "test", "test", "<p>test</p>")}>Click me</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
