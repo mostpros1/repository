@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
 import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from "../../../context/UserContext";
@@ -168,7 +168,7 @@ function Navigation() {
         </ul>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
-            <MenuIcon />
+            <MoreVertOutlinedIcon /> {/* Changed icon here */}
             <PermIdentityIcon />
           </button>
           {dropdownOpen && (
