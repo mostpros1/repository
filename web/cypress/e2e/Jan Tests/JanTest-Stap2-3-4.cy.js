@@ -24,24 +24,29 @@ describe('Testing "Register as specialist"' , () => {
 
         // STAP 2-3-4
         
-        // check 1
+        // Check 1 H: Navigate forward three pages.
         for (let k = 0; k < 3; k++) {
             cy.goForward()
         }
-
+        // Then navigate back three pages using the back button in the form.
         for (let l = 0; l < 3; l++) {
             cy.get('[class="form-btn back"]').click()
         }
         
 
-        // check 2-3
+        // Check 2-3: Iterate through the first six radio inputs, 
+        // clicking each one and navigating forward and then back to test navigation functionality.
+
         for (let i = 0; i < 6; i++) {
             cy.get('input[type="radio"]').eq(i).click()
             cy.goForward()
             cy.get('[class="form-btn back"]').click()
         }
-
+        // Proceed to the next page in the form.
         cy.goForward()
+
+        // Double iteration to test clicking on the first five radio buttons, navigating forward,
+        // and then back, repeated for two cycles. This likely checks the persistence of selected options across navigation.
 
         for (let g = 0; g < 2; g++) {
             for (let z = 0; z < 5; z++) {

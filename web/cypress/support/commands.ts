@@ -54,6 +54,8 @@ declare namespace Cypress {
         nextinlog(): void;
         inlogmenu():void;
         uitloggen():void;
+        performInputCheck2(value1, value2):void;
+        performInputChecktestreg(value1, value2,value3,value4,value5,value6):void;
         
     }
 }
@@ -129,6 +131,34 @@ Cypress.Commands.add('inlogmenu', () => {
     //cy.get('#308AE4').click();
 });
 Cypress.Commands.add('uitloggen', () => {
-    cy.get('[class="authButtons"]').click();
+    cy.get('[class="logoutButton"]').click();
     //cy.get('#308AE4').click();
 });
+
+Cypress.Commands.add('performInputCheck2', (value1, value2) => {
+    cy.get('input[type="email"]').eq(0).type(value1);
+    cy.get('input[type="password"]').type(value2);
+    cy.nextinlog();
+        
+
+    cy.wait(2000);
+
+    cy.inlogmenu();
+
+    cy.uitloggen();
+
+    cy.testinlog();
+});
+
+Cypress.Commands.add('performInputChecktestreg', (value1, value2,value3,value4,value5,value6) => {
+    cy.get('input[type="text"]').eq(0).type(value1);
+    cy.get('input[type="text"]').eq(1).type(value2);
+    cy.get('input[type="email"]').clear();
+    cy.get('input[type="email"]').type(value3);
+    cy.get('input[type="tel"]').type(value4);
+    cy.get('input[type="password"]').eq(0).type(value5);
+    cy.get('input[type="password"]').eq(1).type(value6);
+    cy.nextreg();
+    cy.testreg();
+})
+

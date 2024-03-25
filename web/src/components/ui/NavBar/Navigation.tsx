@@ -45,8 +45,9 @@ function Navigation() {
       <>
         <p>{user.attributes.email}</p>
         {DashboardLink}
-        <button onClick={handleLogout}>Uitloggen</button>
-      </>
+        <button onClick={handleLogout} className="logoutButton">Uitloggen</button>
+        {/* <button onClick={handleLogout}>Uitloggen</button> */}
+    </>
     );
   }
 

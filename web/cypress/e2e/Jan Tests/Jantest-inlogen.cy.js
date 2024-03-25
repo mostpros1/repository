@@ -1,27 +1,28 @@
 describe('Testing "inlogen"', () => {
-    it('type in input', () => {
+    it('test 1', () => {
         cy.testinlog();
-        // Helper function for input checks
-        function performInputCheck(value1, value2) {
-            cy.get('input[type="email"]').eq(0).type(value1);
-            cy.get('input[type="password"]').type(value2);
-            cy.nextinlog();
-              // Wait for 5 seconds
 
-            cy.wait(2000);
-
-            cy.inlogmenu();
-
-            cy.uitloggen();
-
-            cy.testinlog();
-        }
-        // Check 1
-        performInputCheck('abdelrahmanfox22@yahoo.com','0123456789' );
-        // Check 2
-        performInputCheck('abdelrahmanfox22@yahoo.com','0123456789' );
-        // Wait for 5 seconds
+        // Check 1 //Juiste Inlog gegevens //email // passwoord
+        cy.performInputCheck2('abdelrahmanfox22@yahoo.com','0123456789' );
 
         cy.testinlog();
+    })
+
+    it('test 2', () => { 
+        cy.testinlog();
+        // Check 2 //onjuiste e-mail //juiste passwoord
+        cy.performInputCheck2('abdelrahmavdfvfd@yahoo.com','0123456789' );
+    })
+
+    it('test 3', () => { 
+        cy.testinlog();
+        // check 3 // Juiste e-mail // onjuiste passwoord
+        cy.performInputCheck2('abdelrahmanfox22@yahoo.com','5481616' );
+    })
+
+    it('test 4', () => { 
+        cy.testinlog();
+        // check 4 // leeg e-mail // leeg passwoord
+        cy.performInputCheck2(' ',' ' );
     })
 })
