@@ -175,11 +175,8 @@ function SpecialistMultistepForm() {
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
           />,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        //<AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
+        //<KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });

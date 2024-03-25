@@ -7,8 +7,6 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
-import React from 'react';
-import Footer from '../Footer';
 const StartPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.view}>
@@ -26,18 +24,6 @@ const StartPage = ({navigation}) => {
             </Pressable>
             <Pressable style={styles.link} onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.text]}>Profile</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
-                <Text style={[styles.text]}>DateAndTimePicker</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatMain')}>
-                <Text style={[styles.text]}>TestChat</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatOverview')}>
-                <Text style={[styles.text]}>ChatOverview</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('ChatNavigation')}>
-                <Text style={[styles.text]}>ChatNavigation</Text>
             </Pressable>
           </View>
         </View>
