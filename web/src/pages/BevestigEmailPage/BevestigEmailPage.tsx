@@ -139,6 +139,7 @@ function BevestigEmailPage() {
 
     return (
         userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
+        userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
     )
 }
 
