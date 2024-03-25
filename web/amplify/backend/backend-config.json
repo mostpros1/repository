@@ -33,7 +33,7 @@
         ],
         "passwordProtectionSettings": {
           "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
+          "passwordPolicyMinLength": 6
         },
         "signupAttributes": [
           "EMAIL",
