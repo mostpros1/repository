@@ -13,7 +13,6 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
-import PageSpecialisten from './PageSpecialisten'
 
 type FormData = {
   postCode: string
@@ -50,6 +49,9 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
+    repeatPassword: "",
+    beroep: "",
+    formConfig: ""
     repeatPassword: "",
     beroep: "",
     formConfig: ""
@@ -174,4 +176,4 @@ function MultistepForm() {
   )
 }
 
-export default MultistepForm;
+export default MultistepForm

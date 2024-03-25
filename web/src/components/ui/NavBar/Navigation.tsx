@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,6 +13,8 @@ import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import { Apps } from "@mui/icons-material";
 
 //const authentecatedUser = await Auth.currentAuthenticatedUser();
+import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
+import { Apps } from "@mui/icons-material";
 
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -29,6 +33,11 @@ function Navigation() {
       checkAuthStatus();
     }
   }, [user, updateUser]);
+  const navigate = useNavigate(); // Create a navigate function
+
+  const handleIconClick = () => {
+    navigate("/HomeInovation"); // Use navigate function to redirect
+  };
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -43,12 +52,15 @@ function Navigation() {
 
 
       console.log("Logout successful");
+      updateUser(null); // Update the user context after logout
+      console.log("Logout successful"); // Update the user context after logout
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
 
+  let authButtons = (
   let authButtons = (
     <>
       <Link to="/login">Login</Link>
@@ -58,6 +70,14 @@ function Navigation() {
 
   //console.log(authentecatedUser);
   //updateUser(authentecatedUser);
+
+  if (user) {
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    let DashboardLink: JSX.Element | null = null;
+    if (groups && groups.includes("Homeowner")) {
+      <Link to="/registreer">Register</Link>
+    </>
+  );
 
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
@@ -88,9 +108,9 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className="black-items">
+            {/* <Link to="/mijn-klussen" className="black-items">
               Klussen <ExpandMoreIcon />
-            </Link>
+            </Link> */}
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
@@ -311,10 +331,8 @@ function Navigation() {
             </Link>
           </li>
         </ul>
-        <div className="apps-icon">
-          <Link to="/HomeInovation">
+        <div className="apps-icon" onClick={handleIconClick}>
             <AppsRoundedIcon />
-          </Link>
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>

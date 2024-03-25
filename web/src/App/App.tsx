@@ -23,6 +23,11 @@ import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
+import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
+import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
+import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
+import EditProfile from "../pages/EditProfilePage/EditProfile";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
