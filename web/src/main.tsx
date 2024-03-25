@@ -33,6 +33,7 @@ Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
 
+//sendMail("timon@timonheidenreich.eu", "test", "test", "<p>test</p><br><p>test</p>");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -40,7 +41,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
           <App />
-          <button type="button" onClick={sendMail("timon@timonheidenreich.eu", "test", "test", "<p>test</p>")}>Click me</button>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
