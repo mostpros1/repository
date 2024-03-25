@@ -27,6 +27,30 @@ import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
 const App = () => {
+    const [userGroup, setUserGroup] = useState<string[]>([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { user } = useUser();
+
+    useEffect(() => {
+        const checkAuthState = async () => {
+            try {
+                const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+                setUserGroup(groups);
+                setIsAuthenticated(true);
+            } catch (error) {
+                setIsAuthenticated(false);
+            }
+        };
+        
+        if (user) {
+            checkAuthState();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        console.log("User Group:", userGroup);
+        console.log(isAuthenticated);
+    }, [userGroup]);
 
     return (
         <Routes>
@@ -53,17 +77,7 @@ const App = () => {
                 <Route path="canceled"                  element={<>Betaling is geannuleerd.</>} />
                 <Route path="onboarding-failed"         element={<>Er is een fout opgetreden. Mogelijk is deze link niet meer in gebruik.</>} />
             </Route>
-        
-            <Route path="/chat"                         element={<ChatPage />} />
-        
-            {/* Protected routes */}
-            <Route path="/admin-paneel"                 element={<ProtectedRoute allowedRoles={["Admin"]} page={<AdminSideBar/>} redirectTo="/" />}>
-                <Route index                            element={<AdminMain />} />
-                <Route path="manage-users"              element={<ManageUser />} />
-            </Route>
-            
-            <Route path="/dashboard-huiseigenaar" element={<ProtectedRoute allowedRoles={["Homeowner"]} page={<HomeOwnerDashboard />} redirectTo="/" />} />
-            <Route path="/dashboard-professional" element={<ProtectedRoute allowedRoles={["Professional"]} page={<ProfessionalDashboard />} redirectTo="/" />} />
+            <Route path="/chat" element={<ChatPage />} />
         </Routes>
     )
 }

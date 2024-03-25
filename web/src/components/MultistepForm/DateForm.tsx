@@ -31,13 +31,17 @@ const DateForm: React.FC<DateFormProps> = ({ updateDate, updateFields }) => {
 
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
+
         const isValid = selectedDate >= currentDate;
-        setIsValidDate(isValid); // Update de validatiestatus op basis van de geselecteerde datum
+        setIsValidDate(isValid);
 
         if (isValid) {
             const isoDateString = selectedDate.toISOString();
             setSelectedCard(index === selectedCard ? null : index);
+            console.log(isoDateString);
             updateDate(selectedDate);
+            //updateDate(isoDateString);
+            console.log("SELECTED:" + selectedDate);
             updateFields({ date: isoDateString });
         }
     };

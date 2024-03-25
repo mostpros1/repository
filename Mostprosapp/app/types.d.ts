@@ -15,7 +15,7 @@ declare global {
     HowItWorksTwoSpecialist: undefined;
     HowItWorksThreeSpecialist: undefined;
     Home: undefined;
-    testHome: undefined;
+    TestHome: undefined;
     ProfileNavigation: undefined;
     SpecialistNavigation: undefined;
     HomeOwnerNavigation: undefined;
@@ -34,4 +34,13 @@ declare global {
     ProfilePrivacy: undefined;
     ProfileAbout: undefined;
     HomeOwnerResults: undefined;
+    DateAndTimePicker: undefined;
+    CompanyKvk: undefined;
+    NoKvKInfo: undefined;
+    Footer: undefined;
+    Contact: undefined;
+    HomePageHomeOwner: undefined;
+    HomeOwnerExtraInfo: undefined;
+    HomeOwnerEmail: undefined;
+    AboutUs: undefined;
   };

@@ -13,6 +13,7 @@
     border: 0;
     border-radius: 5px;
     margin-left: 20px;
+    position: absolute;
 }
 
 .deleteKnop:hover {
@@ -57,3 +58,48 @@
     margin-right: 10px;
     margin-bottom: 5px;
 }
+
+.tekstBovenDatum{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.verdeeldeTekst{
+    margin-right: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-days {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .day-abbreviations {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .day-abbreviations span {
+    width: calc(100% / 7);
+    text-align: center;
+  }
+  
+  .month-name {
+    margin: 0;
+  }
+  
+  .MuiFormControl-root {
+    width: 100%;
+  }
