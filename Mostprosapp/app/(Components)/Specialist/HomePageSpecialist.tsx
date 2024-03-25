@@ -14,12 +14,10 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
+<<<<<<< HEAD
 import { useNavigation } from "@react-navigation/native";
 import { specialists } from "../../specialists.js";
 import Icon from "@expo/vector-icons/MaterialIcons";
@@ -27,11 +25,15 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from "@expo/vector-icons";
 import Footer from "../Footer";
+=======
+import Icon from "@expo/vector-icons/MaterialIcons";
+>>>>>>> acceptance
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const HomePageSpecialist = ({ navigation }) => {
+<<<<<<< HEAD
   const [selectedOption, setSelectedOption] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -171,6 +173,37 @@ const HomePageSpecialist = ({ navigation }) => {
               </View>
               <View style={[styles.titleWrap]}>
                 <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
+=======
+  return (
+    <PaperProvider>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={[styles.view]}>
+            <View style={[styles.headerSquare]}>
+              <View style={[styles.logoNotificationWrapper]}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../../assets/images/logo.png")}
+                  />
+                </View>
+                <View style={styles.iconContainer}>
+                  <Icon name="notifications" size={45} color="white" />
+                </View>
+              </View>
+              <View style={[styles.textSearchWrapper]}>
+                <Text style={[styles.whiteBoldText]}>Stad \/</Text>
+                <View style={styles.container}>
+                  <TextInput
+                    placeholder="Zoeken"
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      // hier invullen wat er moet gebeuren met de input
+                    }}
+                  />
+                  <Icon name="forward" size={25} color="#318ae5" />
+                </View>
+>>>>>>> acceptance
               </View>
               <View style={[styles.iconsText]}>
                 <Pressable
@@ -202,6 +235,7 @@ const HomePageSpecialist = ({ navigation }) => {
                   <Text style={[styles.blackIconText]}>Schoonmaker</Text>
                 </Pressable>
               </View>
+<<<<<<< HEAD
               <View style={[styles.cardWrapper]}>
                 <View style={[styles.card]}>
                   <View style={[styles.cardFirstHalf]}>
@@ -213,6 +247,51 @@ const HomePageSpecialist = ({ navigation }) => {
                   <View style={[styles.cardSecondHalf]}>
                     <Text style={[styles.cardTitle]}>
                       Hoe aan de slag {"\n"} gaan
+=======
+              <Pressable style={[styles.searchBar]}>
+                <View style={styles.smallCircle}>
+                  <Icon name="add" size={28} color="#308AE4" />
+                </View>
+                <Text style={[styles.whiteIconText]}>Klussen vinden</Text>
+              </Pressable>
+            </View>
+            <View style={[styles.titleWrap]}>
+              <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
+            </View>
+            <View style={[styles.iconsText]}>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="grass" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Hovenier</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="lightbulb" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Elektricien</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="house" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Dekker</Text>
+              </Pressable>
+              <Pressable style={[styles.iconsTextWrapper]}>
+                <Icon name="sanitizer" size={50} color="#4999e7" />
+                <Text style={[styles.blackIconText]}>Schoonmaker</Text>
+              </Pressable>
+            </View>
+            <View style={[styles.cardWrapper]}>
+              <View style={[styles.card]}>
+                <View style={[styles.cardFirstHalf]}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../../assets/images/howToStart.png")}
+                  />
+                </View>
+                <View style={[styles.cardSecondHalf]}>
+                  <Text style={[styles.cardTitle]}>
+                    Hoe aan de slag {"\n"} gaan
+                  </Text>
+                  <Pressable>
+                    <Text style={[styles.blueText]}>
+                     Meer info
+>>>>>>> acceptance
                     </Text>
                     <Pressable>
                       <Text style={[styles.blueText]}>Meer info</Text>
@@ -407,6 +486,7 @@ const HomePageSpecialist = ({ navigation }) => {
                 <View style={[styles.footerfix]}></View>
               </View>
             </View>
+<<<<<<< HEAD
           </ScrollView>
           {showOptions && (
             <ScrollView style={styles.optionsContainer}>
@@ -446,6 +526,11 @@ const HomePageSpecialist = ({ navigation }) => {
           </Pressable>
         </View>
       )}
+=======
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+>>>>>>> acceptance
     </PaperProvider>
   );
 };
@@ -457,6 +542,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
+<<<<<<< HEAD
 
   locationTimeInfoWrapper: {
     display: "flex",
@@ -596,13 +682,15 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
   },
+=======
+
+>>>>>>> acceptance
   cardFirstHalf: {
     width: 170,
     height: 110,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#b5dcff",
+    justifyContent: "center"
   },
 
   cardSecondHalf: {

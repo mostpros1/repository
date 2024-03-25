@@ -14,6 +14,7 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const HowItWorksThreeHomeowner = ({ navigation }) => {
+<<<<<<< HEAD
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topContainer}>
@@ -21,6 +22,43 @@ const HowItWorksThreeHomeowner = ({ navigation }) => {
           <View style={[styles.button, styles.skipButton]}>
             <Pressable onPress={() => navigation.navigate("TestHome")}>
               <Text style={[styles.text]}>Overslaan</Text>
+=======
+    return (
+        <SafeAreaView style={styles.view}>
+            <View style={styles.topContainer}>
+                <View style={styles.standardContainer}>
+                    <View style={[styles.button, styles.skipButton]} >
+                    <Pressable onPress={() => navigation.navigate('TestHome')}>
+                            <Text style={[styles.text]}>
+                                Overslaan
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
+                <View>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={require("../../../assets/images/HowItWorksThree.png")} />
+                    </View>
+                </View>
+
+            </View>
+            <View style={styles.middleContainer}>
+                <View style={styles.middleContainerFirstSection}>
+                    <Image source={require("../../../assets/images/three.png")} />
+                    <Text style={styles.title}>Klus wordt uitgevoerd</Text>
+                </View>
+                <View style={styles.middleContainerSecondSection}>
+                    <Text>De vakspecialist voert uw klus uit op de afgesproken dag.</Text>
+                </View>
+            </View>
+            <View style={styles.progressionBarContainer}>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+                <View style={styles.progressionBarFull}></View>
+            </View>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('TestHome')}>
+                <Text style={[styles.text, styles.textNext]}>Volgende</Text>
+>>>>>>> acceptance
             </Pressable>
           </View>
         </View>

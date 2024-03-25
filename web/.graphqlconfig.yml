@@ -1,0 +1,30 @@
+projects:
+  Mostpros:
+    schemaPath: amplify/backend/api/Mostpros/build/schema.graphql
+    includes:
+      - amplify/backend/api/Mostpros/build/schema.graphql
+    excludes:
+      - ./amplify/**
+      - src/API.ts
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: amplify/backend/api/Mostpros/build
+        region: eu-north-1
+        apiId: null
+        maxDepth: 2
+  mostpros:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: src/graphql
+extensions:
+  amplify:
+    version: 3

@@ -17,7 +17,6 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -48,9 +47,9 @@ const Profile = ({ navigation }) => {
 
   return (
     <PaperProvider>
-      <SafeAreaView style={styles.scrollViewContainer}>
+      <SafeAreaView>
 
-        <ScrollView style={styles.scrollContainer}>
+        <ScrollView>
           <View style={styles.view}>
             <View style={styles.topContainer}>
               <View style={styles.topButtonsContainer}>
@@ -77,7 +76,7 @@ const Profile = ({ navigation }) => {
                   Loodgieter
                 </Text>
                 <Text style={[styles.location]}>
-                  <Icon name="location-on" size={20} color="white" />
+                <Icon name="location-on" size={20} color="white" />
                   Amsterdam, Noord-Holland
                 </Text>
                 <View style={styles.starWrapper}>
@@ -137,7 +136,6 @@ const Profile = ({ navigation }) => {
                   <Text style={[styles.text, styles.textButtonBlack]}>Chatten</Text>
                 </Pressable>
               </View>
-              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
@@ -159,41 +157,17 @@ const Profile = ({ navigation }) => {
             />
           </View>
         </Modal>
-        <Footer navigation={navigation} activePage="Profile" />
-
       </SafeAreaView>
     </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-
-  container: {
-    backgroundColor: "orange",
-    flex: 1,
-  },
-
-    scrollContainer: {
-    flexGrow: 1,
-    paddingBottom: 120, // Adjust this value based on your footer height
-  },
-
-  scrollViewContainer: {
-    flexGrow: 1,
-    height: "100%",
-  },
-
   view: {
+    display: "flex",
     alignItems: "center",
     backgroundColor: "white",
   },
-
-  footerfix: {
-    marginTop: 50,
-    height: 90,
-    width: windowWidth,
-  },
-  
   topContainer: {
     width: 700,
     height: 400,
@@ -217,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     width: 60,
     textAlign: "center",
-  },
+    },
   favouriteButton: {
     backgroundColor: "transparent",
     width: 60,
@@ -240,7 +214,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     marginTop: 15,
-    gap: 2,
+    gap:2,
   },
   name: {
     color: 'white',
@@ -284,6 +258,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   bottomContainer: {
+    display: "flex",
     alignItems: "flex-start",
     width: "75%",
     marginTop: 40,
@@ -307,12 +282,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   bottomContainerSecondSection: {
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 20,
-    marginBottom: 20,
-    width: "100%",
+    paddingBottom: 100,
     gap: 20,
+    justifyContent: "space-evenly",
   },
   image: {
     flex: 1,

@@ -25,7 +25,40 @@ function Searchbar() {
   const handleInputFocus = () => {
     setShowList(true);
   };
+  const handleResultClick = (link: string) => {
+    navigate(`/klussen#${link}`);
+  };
 
+
+  const handleInputKeyDown = (e) => {
+    switch (e.key) {
+      case "ArrowUp":
+        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        break;
+      case "ArrowDown":
+        setSelectedIndex((prevIndex) =>
+          Math.min(prevIndex + 1, slicedResults.length - 1)
+        );
+        break;
+      case "Enter":
+        if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
+          const selectedResult = slicedResults[selectedIndex];
+          handleResultClick(selectedResult.link);
+        }
+        break;
+      case "Tab": // Implementing autocomplete on Tab key
+        if (slicedResults.length > 0) {
+          const selectedResult = slicedResults[0];
+          setValue(selectedResult.task); // Autocomplete with the first suggestion
+          setSelectedIndex(0);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  
   const searchResults = () => {
     const searchTerm = value.toLowerCase().trim();
 
@@ -59,11 +92,18 @@ function Searchbar() {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/klussen${result.link}`}
+      to={`/klussen#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
       key={index}
-      className="search_dropdown_item"
+      className={`search_dropdown_item ${
+        index === selectedIndex ? "selected" : ""
+      }`}
+      onClick={() => handleResultClick(result.specialistName.replace('/', '') + result.link.replace('/', ''))}
+      onMouseOver={() => setSelectedIndex(index)}
     >
-      {`${result.specialistName ? `${result.specialistName} - ` : ''}${result.task}`}
+      <span>
+        {result.specialistName ? `${result.specialistName} - ` : ""}
+        {result.task}
+      </span>
     </Link>
   ));
 

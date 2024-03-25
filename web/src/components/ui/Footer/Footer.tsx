@@ -4,16 +4,30 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { Link } from "react-router-dom";
 
 
+
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer_container">
         <div className="footerSection">
           <h4>Navigatie</h4>
-          <a href="">Hoe werkt het</a>
+          <h4>Navigatie</h4>
+          <Link to="/hoe-werkt-het">Hoe werkt het</Link>
           <a href="">Waarom mostpros</a>
           <Link to="/over-ons">Over</Link>
           <Link to="/contact">Contact</Link>
+        </div>
+        <div className="footerSection">
+          <h4>Huiseigenaar</h4>
+          <p>Vind vakspecialist</p>
+          <p>Help</p>
+        </div>
+        <div className="footerSection">
+          <h4>Vakspecialist</h4>
+          <Link to="/over-ons">Inschrijven als vakspecialist</Link>
+          <p>Pro bedrijven centrum</p>
+          <p>Help voor professionals</p>
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>

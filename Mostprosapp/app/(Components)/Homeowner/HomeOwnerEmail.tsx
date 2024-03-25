@@ -26,6 +26,7 @@ const HomeOwnerEmail = ({ navigation }) => {
     return regex.test(email);
   };
 
+<<<<<<< HEAD
   const handleNext = () => {
     if (!email.trim()) {
       Alert.alert("Email Ontbreekt", "Vul uw email in voor u doorgaat.");
@@ -35,6 +36,17 @@ const HomeOwnerEmail = ({ navigation }) => {
       navigation.navigate("HomeOwnerResults");
     }
   };
+=======
+    const handleNext = () => {
+        if (!email.trim()) {
+            Alert.alert('Email Ontbreekt', 'Vul uw email in voor u doorgaat.');
+        } else if (!validateEmail(email)) {
+            Alert.alert('Ongeldige Email', 'Vul een geldig emailadres in.');
+        } else {
+            navigation.navigate('TestHome');
+        }
+    };
+>>>>>>> acceptance
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>

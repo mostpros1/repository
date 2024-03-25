@@ -49,6 +49,7 @@ import HomePageHomeOwner from "./(Components)/Homeowner/HomePageHomeOwner";
 import CompanyKvk from "./(Components)/Specialist/CompanyKvk";
 import NoKvKInfo from "./(Components)/Specialist/NoKvKInfo";
 import Footer from "./(Components)/Footer";
+<<<<<<< HEAD
 import WorkNavigation from "./(Components)/Specialist/WorkNavigation";
 import MyWork from "./(Components)/Specialist/MyWork";
 import MyWorkTwo from "./(Components)/Specialist/MyWorkTwo";
@@ -57,12 +58,16 @@ import PaymentSend from "./(Components)/Specialist/PaymentSend";
 import Changedate from "./(Components)/Specialist/Changedate";
 import ChangedateTwo from "./(Components)/Specialist/ChangedateTwo";
 import ConfirmDate from "./(Components)/Specialist/ConfirmDate";
+=======
+>>>>>>> acceptance
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
-import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
+<<<<<<< HEAD
 import EditProfile from "./(Components)/Profile/EditProfile";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
+=======
+>>>>>>> acceptance
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
 import RevenueTool from "./(Components)/RevenueTool/RevenueTool";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
@@ -71,6 +76,7 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 Amplify.configure(awsconfig);
 import { RootStackParamList } from "./types";
+import DateAndTimePicker from "./(Components)/Booking-Availability/Calender";
 
 const App = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -111,6 +117,7 @@ const App = () => {
         <Stack.Screen name="TestHome" component={TestHome} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker}/>
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ProfileSecurity" component={ProfileSecurity} />
@@ -149,6 +156,7 @@ const App = () => {
         <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
         <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
         <Stack.Screen name="NoKvKInfo" component={NoKvKInfo} />
+<<<<<<< HEAD
         <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner} />
         <Stack.Screen name="Contact" component={Contact} />
@@ -165,6 +173,13 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="RevenueTool" component={RevenueTool}/>
 
+=======
+        <Stack.Screen name="Footer" component={Footer}/>
+        <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
+        <Stack.Screen name="Contact" component={Contact}/>
+        <Stack.Screen name="AboutUs" component={AboutUs}/>
+        
+>>>>>>> acceptance
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>

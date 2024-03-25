@@ -24,6 +24,7 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('DateAndTimePicker')}>
                 <Text style={[styles.text]}>DateAndTimePicker</Text>
               </Pressable>
+<<<<<<< HEAD
               <Pressable style={styles.link} onPress={() => navigation.navigate('SpecialistResults')}>
                 <Text style={[styles.text]}>Result</Text>
               </Pressable>
@@ -33,6 +34,8 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('PaymentSend')}>
                 <Text style={[styles.text]}>Payment Send</Text>
               </Pressable>
+=======
+>>>>>>> acceptance
             </View>
           </View>
         </ImageBackground>

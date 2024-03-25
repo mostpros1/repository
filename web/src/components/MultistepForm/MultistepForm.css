@@ -199,6 +199,54 @@ input{
     color: #C0C0C8; 
 }
 
+.dateForm_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dateCards_wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.dateCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+    border: 3px solid #308AE4;
+    border-radius: 15px;
+    transition: all 0.2s;
+    padding: 25px;
+}
+
+.dateCards:last-child {
+    justify-content: center;
+    align-items: center;
+}
+
+.dateCards:hover, .dateCards.selected {  /* Voeg .selected toe voor geselecteerde kaart */
+    background-color: #308AE4;
+    color: white;
+}
+
+.dateCards_info {
+    height: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dateCards_info.number {
+    font-size: 36px;
+}
+
+.hidden {
+    display: none;
+  }
+
 .email-con{
     display: flex;
     flex-direction: column;
@@ -228,12 +276,14 @@ input{
 .login-con{
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     gap: 25px;
 }
 
 .login-form-con{   
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     padding: 0px 100px 0px 100px;   
@@ -285,7 +335,7 @@ input{
     left: 0;
 }
 
-.register-con{
+.register-container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -294,18 +344,23 @@ input{
     padding: 0px 100px 0px 100px;
 }
 
-.reg-form-con{
+.register-form-container{
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 15px;
 }
 
-.reg-link{
+.register-form-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.register-link{
     font-size: 14px;
 }
 
-.reg-link a{
+.register-link a{
     color: #308AE4;
 }
 
@@ -313,4 +368,14 @@ input{
     width: 100%;
 }
   
-  
+.error-con{
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8d7da;
+    border: 2px solid #f1aeb5;
+}
+.error-message{
+    color: red;
+    font-size: 14px;
+}

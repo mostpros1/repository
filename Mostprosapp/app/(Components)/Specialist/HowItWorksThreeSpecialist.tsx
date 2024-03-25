@@ -37,7 +37,7 @@ const HowItWorksThreeSpecialist = ({ navigation }) => {
                 <View style={styles.progressionBarFull}></View>
                 <View style={styles.progressionBarFull}></View>
             </View>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('HomePageSpecialist')}>
+            <Pressable style={styles.link} onPress={() => navigation.navigate('Home')}>
                 <Text style={[styles.text, styles.textNext]}>Volgende</Text>
             </Pressable>
         </SafeAreaView>

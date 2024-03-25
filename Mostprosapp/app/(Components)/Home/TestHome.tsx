@@ -16,13 +16,13 @@ import {
           <View style={styles.standardContainer}>
             <View style={styles.sectionContainer}>
               <Pressable style={styles.link} onPress={() => navigation.navigate('ProfileNavigation')}>
-                  <Text style={[styles.text]}>Profile</Text>
+                  <Text style={[styles.text]}>Profile </Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('ChatNavigation')}>
-                  <Text style={[styles.text]}>Chat</Text>
+                  <Text style={[styles.text]}>Chat </Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
-                  <Text style={[styles.text]}>Login</Text>
+                  <Text style={[styles.text]}>Login </Text>
               </Pressable>
               <Pressable style={styles.link} onPress={() => navigation.navigate('Register')}>
                   <Text style={[styles.text]}>Register</Text>
@@ -33,6 +33,7 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('HomeOwnerNavigation')}>
                   <Text style={[styles.text]}>HomeOwner</Text>
               </Pressable>
+<<<<<<< HEAD
               <Pressable style={styles.link} onPress={() => navigation.navigate('Contact')}>
                   <Text style={[styles.text]}>Contact</Text>
               </Pressable>
@@ -42,6 +43,8 @@ import {
               <Pressable style={styles.link} onPress={() => navigation.navigate('RevenueTool')}>
                   <Text style={[styles.text]}>RevenueTool</Text>
               </Pressable>
+=======
+>>>>>>> acceptance
             </View>
           </View>
         </ImageBackground>

@@ -14,6 +14,7 @@ import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
+<<<<<<< HEAD
 import Footer from "../Footer";
 
 const professionals = {
@@ -56,6 +57,9 @@ const professionals = {
   ],
 };
 
+=======
+import { KeyboardAvoidingView } from "react-native";
+>>>>>>> acceptance
 const windowWidth = Dimensions.get("window").width;
 
 const HomeOwnerResults = ({ navigation }) => {
@@ -123,6 +127,7 @@ const HomeOwnerResults = ({ navigation }) => {
                         ]}
                       ></TouchableOpacity>
                     </View>
+<<<<<<< HEAD
                     <Text
                       style={styles.lightTitle}
                       numberOfLines={2}
@@ -149,15 +154,21 @@ const HomeOwnerResults = ({ navigation }) => {
                 <Text style={styles.whiteButtonText}>Bevestigen</Text>
               </Pressable>
               <View style={styles.footerfix}></View>
+=======
+                    <View style={[styles.yellow]}></View>
+                    <Text style={[styles.lightTitle]}>Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                </View>
+              </View>
+>>>>>>> acceptance
             </View>
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
 };
 const styles = StyleSheet.create({
+<<<<<<< HEAD
   orange: {
     flex: 1,
     height: "100%",
@@ -241,6 +252,43 @@ const styles = StyleSheet.create({
     borderColor: "#f1f1f0",
   },
 
+=======
+    orange:{
+        flex: 1,
+        height: "100%",
+        // backgroundColor: "orange",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap:"wrap",
+        paddingLeft: 10,
+    },
+
+    green:{
+        height: "60%",
+        width: "70%",
+        display: "flex",
+        justifyContent: "center",
+        // backgroundColor: "green",
+    },
+
+    yellow:{
+        height: "60%",
+        width: "30%",
+        backgroundColor: "yellow",
+    },
+
+    middleContainerFirstSection: {
+        width: windowWidth,
+        height: 150,
+        display: "flex",
+        backgroundColor: "#E9F4FF",
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 10,
+      },
+      
+>>>>>>> acceptance
   view: {
     height: "100%",
     width: windowWidth,

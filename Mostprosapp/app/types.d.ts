@@ -15,7 +15,7 @@ declare global {
     HowItWorksTwoSpecialist: undefined;
     HowItWorksThreeSpecialist: undefined;
     Home: undefined;
-    testHome: undefined;
+    TestHome: undefined;
     ProfileNavigation: undefined;
     SpecialistNavigation: undefined;
     HomeOwnerNavigation: undefined;
@@ -34,23 +34,6 @@ declare global {
     ProfilePrivacy: undefined;
     ProfileAbout: undefined;
     HomeOwnerResults: undefined;
-    HomeOwnerCreate: undefined;
-    HomeOwnerPostalCode: undefined;
-    HomeOwnerAppLoodgieter: undefined;
-    HomeOwnerAppHovenier: undefined;
-    HomeOwnerAppDakdekker: undefined;
-    HomeOwnerAppSchoonmaker: undefined;
-    HomeOwnerAppAannemer: undefined;
-    HomeOwnerAppElektricien: undefined;
-    HomeOwnerAppAI_home_adviseur: undefined;
-    HomeOwnerAppBadkamerspecialist: undefined;
-    PostalCodeSpecialist: undefined;
-    GegevensSpecialist: undefined;
-    OmgevingSpecialist: undefined;
-    CompanySituation1: undefined;
-    CompanySituation2: undefined;
-    CompanySituation3: undefined;
-    CompanySituation4: undefined;
     DateAndTimePicker: undefined;
     CompanyKvk: undefined;
     NoKvKInfo: undefined;
@@ -60,6 +43,7 @@ declare global {
     HomeOwnerExtraInfo: undefined;
     HomeOwnerEmail: undefined;
     AboutUs: undefined;
+<<<<<<< HEAD
     SpecialistResults: undefined;
     MyWork: undefined;
     MyWorkTwo: undefined;
@@ -72,4 +56,6 @@ declare global {
     EditProfile: undefined;
     TestHome: undefined;
     RevenueTool: undefined;
+=======
+>>>>>>> acceptance
   };
