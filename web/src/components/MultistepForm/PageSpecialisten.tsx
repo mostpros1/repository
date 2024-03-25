@@ -57,7 +57,7 @@ const PageSpecialisten = (updateDate, { date }) => {
   };
 
   const applyFilters = () => {
-    let filteredSpecialists = exampleSpecialists;
+    let filteredSpecialists = specialists;
 
     // Filter by location
     if (location) {
