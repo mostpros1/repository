@@ -34,7 +34,7 @@ function RegisterPage() {
   }
 
   function signUp(registerData: RegisterData, user_type: string): void {
-    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+    const { email, phoneNumber, password, firstName, lastName } = registerData;
 
       const signUpUser = async () => {
         try {
@@ -43,9 +43,8 @@ function RegisterPage() {
             password: password,
             attributes: {
               phone_number: phoneNumber,
-              given_name: firstName,
+              name: firstName,
               family_name: lastName,
-              birthdate: dob,
               'custom:user_type': user_type,
             },
             autoSignIn: { enabled: true },
