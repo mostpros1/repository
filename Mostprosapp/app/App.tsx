@@ -64,6 +64,7 @@ import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import EditProfile from "./(Components)/Profile/EditProfile";
 import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
+import RevenueTool from "./(Components)/RevenueTool/RevenueTool";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Amplify } from "aws-amplify";
@@ -76,9 +77,9 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName="LandingPage"
-        screenOptions={{ headerShown: false }} 
+        screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="KeuzePage" component={KeuzePage} />
@@ -107,7 +108,7 @@ const App = () => {
           component={HowItWorksThreeSpecialist}
         />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="TestHome" component={TestHome}/>
+        <Stack.Screen name="TestHome" component={TestHome} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Verify" component={Verify} />
@@ -115,55 +116,55 @@ const App = () => {
         <Stack.Screen name="ProfileSecurity" component={ProfileSecurity} />
         <Stack.Screen name="ProfileSettingsOne" component={ProfileSettingsOne} />
         <Stack.Screen name="ProfileNotifications" component={ProfileNotifications} />
-        <Stack.Screen name="ProfileSettingsTwo" component={ProfileSettingsTwo}/>
-        <Stack.Screen name="ProfileGeneralSettings" component={ProfileGeneralSettings}/>
-        <Stack.Screen name="ChatOverview" component={ChatOverview}/>
-        <Stack.Screen name="HomePageSpecialist" component={HomePageSpecialist}/>
-        <Stack.Screen name="ProfilePrivacy" component={ProfilePrivacy}/>
-        <Stack.Screen name="ProfileAbout" component={ProfileAbout}/>
-        <Stack.Screen name="ProfileNavigation" component={ProfileNavigation}/>
-        <Stack.Screen name="SpecialistNavigation" component={SpecialistNavigation}/>
-        <Stack.Screen name="ChatNavigation" component={ChatNavigation}/>
-        <Stack.Screen name="HomeOwnerNavigation" component={HomeOwnerNavigation}/>
-        <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults}/>
-        <Stack.Screen name="HomeOwnerCreate" component={HomeOwnerCreate}/>
-        <Stack.Screen name="HomeOwnerPostalCode" component={HomeOwnerPostalCode}/>
-        <Stack.Screen name="HomeOwnerAppLoodgieter" component={HomeOwnerAppLoodgieter}/>
-        <Stack.Screen name="HomeOwnerAppHovenier" component={HomeOwnerAppHovenier}/>
-        <Stack.Screen name="HomeOwnerAppDakdekker" component={HomeOwnerAppDakdekker}/>
-        <Stack.Screen name="HomeOwnerAppSchoonmaker" component={HomeOwnerAppSchoonmaker}/>
-        <Stack.Screen name="HomeOwnerAppAannemer" component={HomeOwnerAppAannemer}/>
-        <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien}/>
-        <Stack.Screen name="HomeOwnerEmail" component={HomeOwnerEmail}/>
-        <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo}/>
-        <Stack.Screen name="HomeOwnerAppAI_home_adviseur" component={HomeOwnerAppAI_home_adviseur}/>
-        <Stack.Screen name="HomeOwnerAppBadkamerspecialist" component={HomeOwnerAppBadkamerspecialist}/>
-        <Stack.Screen name="PostalCodeSpecialist" component={PostalCodeSpecialist}/>
+        <Stack.Screen name="ProfileSettingsTwo" component={ProfileSettingsTwo} />
+        <Stack.Screen name="ProfileGeneralSettings" component={ProfileGeneralSettings} />
+        <Stack.Screen name="ChatOverview" component={ChatOverview} />
+        <Stack.Screen name="HomePageSpecialist" component={HomePageSpecialist} />
+        <Stack.Screen name="ProfilePrivacy" component={ProfilePrivacy} />
+        <Stack.Screen name="ProfileAbout" component={ProfileAbout} />
+        <Stack.Screen name="ProfileNavigation" component={ProfileNavigation} />
+        <Stack.Screen name="SpecialistNavigation" component={SpecialistNavigation} />
+        <Stack.Screen name="ChatNavigation" component={ChatNavigation} />
+        <Stack.Screen name="HomeOwnerNavigation" component={HomeOwnerNavigation} />
+        <Stack.Screen name="HomeOwnerResults" component={HomeOwnerResults} />
+        <Stack.Screen name="HomeOwnerCreate" component={HomeOwnerCreate} />
+        <Stack.Screen name="HomeOwnerPostalCode" component={HomeOwnerPostalCode} />
+        <Stack.Screen name="HomeOwnerAppLoodgieter" component={HomeOwnerAppLoodgieter} />
+        <Stack.Screen name="HomeOwnerAppHovenier" component={HomeOwnerAppHovenier} />
+        <Stack.Screen name="HomeOwnerAppDakdekker" component={HomeOwnerAppDakdekker} />
+        <Stack.Screen name="HomeOwnerAppSchoonmaker" component={HomeOwnerAppSchoonmaker} />
+        <Stack.Screen name="HomeOwnerAppAannemer" component={HomeOwnerAppAannemer} />
+        <Stack.Screen name="HomeOwnerAppElektricien" component={HomeOwnerAppElektricien} />
+        <Stack.Screen name="HomeOwnerEmail" component={HomeOwnerEmail} />
+        <Stack.Screen name="HomeOwnerExtraInfo" component={HomeOwnerExtraInfo} />
+        <Stack.Screen name="HomeOwnerAppAI_home_adviseur" component={HomeOwnerAppAI_home_adviseur} />
+        <Stack.Screen name="HomeOwnerAppBadkamerspecialist" component={HomeOwnerAppBadkamerspecialist} />
+        <Stack.Screen name="PostalCodeSpecialist" component={PostalCodeSpecialist} />
         <Stack.Screen name="GegevensSpecialist" component={GegevensSpecialist} />
         <Stack.Screen name="OmgevingSpecialist" component={OmgevingSpecialist} />
         <Stack.Screen name="CompanySituation1" component={CompanySituation1} />
-        <Stack.Screen name="CompanySituation2" component={CompanySituation2}/>
+        <Stack.Screen name="CompanySituation2" component={CompanySituation2} />
         <Stack.Screen name="CompanySituation3" component={CompanySituation3} />
         <Stack.Screen name="CompanySituation4" component={CompanySituation4} />
         <Stack.Screen name="DateAndTimePicker" component={DateAndTimePicker} />
         <Stack.Screen name="CompanyKvk" component={CompanyKvk} />
         <Stack.Screen name="NoKvKInfo" component={NoKvKInfo} />
-        <Stack.Screen name="Footer" component={Footer}/>
-        <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner}/>
-        <Stack.Screen name="Contact" component={Contact}/>
-        <Stack.Screen name="AboutUs" component={AboutUs}/>
-        <Stack.Screen name="SpecialistResults" component={SpecialistResults}/>
-        <Stack.Screen name="MyWork" component={MyWork}/>
-        <Stack.Screen name="MyWorkTwo" component={MyWorkTwo}/>
-        <Stack.Screen name="WorkNavigation" component={WorkNavigation}/>
+        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="HomePageHomeOwner" component={HomePageHomeOwner} />
+        <Stack.Screen name="Contact" component={Contact} />
+        <Stack.Screen name="AboutUs" component={AboutUs} />
+        <Stack.Screen name="SpecialistResults" component={SpecialistResults} />
+        <Stack.Screen name="MyWork" component={MyWork} />
+        <Stack.Screen name="MyWorkTwo" component={MyWorkTwo} />
+        <Stack.Screen name="WorkNavigation" component={WorkNavigation} />
         <Stack.Screen name="MyWorkThree" component={MyWorkThree} />
-        <Stack.Screen name="Changedate" component={Changedate}/>
+        <Stack.Screen name="Changedate" component={Changedate} />
         <Stack.Screen name="ChangedateTwo" component={ChangedateTwo} />
         <Stack.Screen name="ConfirmDate" component={ConfirmDate} />
         <Stack.Screen name="PaymentSend" component={PaymentSend} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
-        
-       
+        <Stack.Screen name="RevenueTool" component={RevenueTool}/>
+
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
     </NavigationContainer>
