@@ -1,31 +1,21 @@
+import faker from 'faker'
+
 describe('Testing "Register as specialist"', () => {
+    let password = faker.internet.password(); // Maak een wachtwoord dat voor beide wachtwoordvelden zal worden gebruikt
     it('type in input', () => {
-
         cy.testAgain();
-
-        // Helper function for input checks
-        function performInputCheck(value1, value2) {
-            cy.get('input[type="text"]').eq(0).type(value1);
-            cy.get('input[type="text"]').eq(1).type(value2);
+        function performInputCheck() {
+            cy.get('input[type="text"]').eq(0).type(faker.name.firstName());
+            cy.get('input[type="text"]').eq(1).type(faker.name.lastName());
+            cy.get('input[type="email"]').clear().type(faker.internet.email());
+            cy.get('input[type="tel"]').type(faker.phone.phoneNumber());
+            cy.get('input[type="password"]').eq(0).type(password);
+            cy.get('input[type="password"]').eq(1).type(password);
             cy.goForward();
             cy.testAgain();
         }
-
-        // Check 1
-        performInputCheck('Mostpros', '9305 6589');
-
-        // Check 2
-        performInputCheck('dsnajdnuws^&%*', 'JDNASJD7^%&*');
-
-        // Check 3
-        performInputCheck('KOÇTAŞ', 'sadvdsfadsss');
-
-        // Check 4
-        performInputCheck('123543546', '&/%/()(&%+');
-
-        // Check 5
+        // Perform input check with random values
+        performInputCheck();
         cy.goForward();
-
-
-    })
-})
+    });
+});

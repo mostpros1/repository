@@ -39,15 +39,37 @@
 declare namespace Cypress {
     interface Chainable {
         setAppViewport(): void;
-        proAppTestBegin(): void;
+        homeProAppTestBegin(): void;
+        homeOwnerAppTestBegin(): void;
     }
 }
 
 Cypress.Commands.add('setAppViewport', () => {
-    cy.viewport('iphone-xr')
+    cy.viewport('iphone-x')
 });
 
-Cypress.Commands.add('proAppTestBegin', () => {
-    cy.setAppViewport
+Cypress.Commands.add('homeProAppTestBegin', () => {
     cy.visit('http://localhost:19006/')
+
+
+    cy.get(':nth-child(3) > .css-view-175oi2r').click()
+    cy.get('[data-testid="homePofessionalBtn"]').click()
+
+    for (let i = 1; i < 4; i++) {
+        cy.get(`[data-testid="volgendeBtn${i}"]`).click()
+        cy.wait(100);
+    }
+})
+
+Cypress.Commands.add('homeOwnerAppTestBegin', () => {
+    cy.visit('http://localhost:19006/')
+
+
+    cy.get(':nth-child(3) > .css-view-175oi2r').click()
+    cy.get('[data-testid="homeOwnerBtn"]').click()
+
+    for (let i = 1; i < 4; i++) {
+        cy.get(`[data-testid="volgendeBtn${i}"]`).click()
+        cy.wait(100);
+    }
 })
