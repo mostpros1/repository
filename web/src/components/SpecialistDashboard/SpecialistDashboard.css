@@ -5,11 +5,14 @@
 }
 
 .dashboard-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Adjust the column width as needed */
+  gap: 25px;
   max-width: 1300px;
-  margin: 20px auto;
+  margin: 60px;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: center;
+  margin: 60px 0px 0px 70px;
 }
 
 .profile-card {
@@ -61,7 +64,7 @@
 }
 
 .sidebar {
-  margin: 60px 35px 5px 0;
+  padding-right: 15px;
 }
 
 .sidebar-nav {
@@ -101,19 +104,19 @@
 
 .current-task-title {
   text-align: center;
-  font-size: 18px;
+  font-size: 12px;
   text-decoration: none;
   color: #333;
-  background-color: #e9f4ff; /* Adjust the color as needed */
-  padding: 15px 20px; /* Vertical and horizontal padding */
-  border-radius: 10px; /* Rounded corners */
+  background-color: #e9f4ff;
+  padding: 15px 20px;
+  border-radius: 10px;
   margin-right: 175px;
-  margin-bottom: 20px; /* Space between items */
+  margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  width: 40%;
 }
 
-.main-content {
+.maincards {
   display: flex;
   max-width: 100%;
   max-height: fit-content;
@@ -123,15 +126,23 @@
 
 .task-card,
 .new-task-card {
-  padding: 25px; /* Reduce the padding */
+  display: flex;
+  padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Allow flex items to grow and shrink */
-  max-width: calc(
-    50% - 20px
-  ); /* Set a max-width with consideration for the gap */
-  min-width: 300px; /* Set a min-width to ensure cards do not get too small */
+  width: 500px;
+  height: 700px;
   margin-bottom: 80px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.task-card p,
+.new-task-card p {
+  font-size: 15px;
+  max-height: 300px; /* Limit the height of the text */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds an ellipsis to indicate text has been cut off */
 }
 
 .task-title {
@@ -174,7 +185,6 @@
   flex-direction: column; /* Change the flex direction to column */
   align-items: center; /* Center the items horizontally */
   justify-content: center; /* Center the items vertically */
-  border: 1px solid #d0e2ff; /* Light grey border */
   border-radius: 10px;
   padding: 20px;
   background-color: #ffffff;
@@ -212,8 +222,8 @@
 .new-task-card {
   display: flex;
   align-items: center;
-  margin-top: 75px;
-  padding: 288px;
+  margin-top: 65px;
+  padding: 300px 300px 315px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   flex-direction: column;
@@ -249,7 +259,6 @@
 }
 
 /* Media queries */
-
 /*bigger screens*/
 @media only screen and (min-width: 764px) {
   .new-task-card {
@@ -271,66 +280,69 @@
 
 @media only screen and (max-width: 768px) {
   .dashboard-container {
-    flex-direction: column;
-    align-items: center;
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Adjust column distribution */
+      gap: 20px;
+    }
+
+    .profile-card,
+    .sidebar {
+      width: 90%; /* Adjust width for smaller screens */
+      margin-bottom: 20px; /* Space between elements */
+    }
+
+    .maincards {
+      flex-direction: column; /* Stack the cards on smaller screens */
+      align-items: center; /* Center the cards */
+    }
+
+    .task-card {
+      padding-top: 25px;
+      margin-top: 20px;
+    }
+
+    .task-title {
+      font-size: 16px; /* Adjust font size for smaller screens */
+      padding-bottom: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .new-task-card {
+      padding: 20px; /* Adjust padding for smaller screens */
+      width: 100%; /* Adjust width for smaller screens */
+    }
   }
 
-  .profile-card,
-  .sidebar {
-    width: 90%; /* Adjust width for smaller screens */
-    margin-bottom: 20px; /* Space between elements */
-  }
+  @media only screen and (max-width: 480px) {
+    .dashboard-container {
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .main-content {
-    flex-direction: column; /* Stack the cards on smaller screens */
-    align-items: center; /* Center the cards */
-  }
+    .profile-card,
+    .sidebar {
+      width: 90%; /* Adjust width for smaller screens */
+      margin-bottom: 20px; /* Space between elements */
+    }
 
-  .task-card {
-    padding-top: 25px;
-    margin-top: 20px;
-  }
+    .maincards {
+      flex-direction: column; /* Stack the cards on smaller screens */
+      align-items: center; /* Center the cards */
+    }
 
-  .task-title {
-    font-size: 16px; /* Adjust font size for smaller screens */
-    padding-bottom: 20px; /* Adjust padding for smaller screens */
-  }
+    .task-card {
+      padding-top: 25px;
+      margin-top: 20px;
+    }
 
-  .new-task-card {
-    padding: 20px; /* Adjust padding for smaller screens */
-    width: 100%; /* Adjust width for smaller screens */
-  }
-}
+    .task-title {
+      font-size: 16px; /* Adjust font size for smaller screens */
+      padding-bottom: 20px; /* Adjust padding for smaller screens */
+    }
 
-@media only screen and (max-width: 480px) {
-  .dashboard-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-card,
-  .sidebar {
-    width: 90%; /* Adjust width for smaller screens */
-    margin-bottom: 20px; /* Space between elements */
-  }
-
-  .main-content {
-    flex-direction: column; /* Stack the cards on smaller screens */
-    align-items: center; /* Center the cards */
-  }
-
-  .task-card {
-    padding-top: 25px;
-    margin-top: 20px;
-  }
-
-  .task-title {
-    font-size: 16px; /* Adjust font size for smaller screens */
-    padding-bottom: 20px; /* Adjust padding for smaller screens */
-  }
-
-  .new-task-card {
-    padding: 20px; /* Adjust padding for smaller screens */
-    width: 100%; /* Adjust width for smaller screens */
+    .new-task-card {
+      padding: 20px; /* Adjust padding for smaller screens */
+      width: 100%; /* Adjust width for smaller screens */
+    }
   }
 }

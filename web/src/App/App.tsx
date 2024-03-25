@@ -24,9 +24,10 @@ import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDa
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
-import HomeInovation from "../pages/HomeInovation/HomeInovation";
+import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
+import EditProfile from "../pages/EditProfilePage/EditProfile";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -51,6 +52,7 @@ const App = () => {
       <Route path="/HomeInovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
+      <Route path="/EditProfileSection" element={<EditProfile />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

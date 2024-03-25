@@ -1,6 +1,3 @@
-.main-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.maincontent {
+margin: 0px auto 0px auto;
 }

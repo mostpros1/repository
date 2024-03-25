@@ -7,7 +7,7 @@ function VSDashboard() {
   return (
     <div id="root">
       <NavBar />
-      <div className="main-content">
+      <div className="maincontent">
         <SpecialistDashboard />
       </div>
       <Footer />

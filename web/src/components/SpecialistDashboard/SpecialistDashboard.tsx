@@ -44,8 +44,8 @@ const SpecialistDashboard = () => {
           </a>
         </nav>
       </aside>
-      {/* <!-- Main Content --> */}
-      <main className="main-content">
+      {/* <!-- Main Cards --> */}
+      <main className="maincards">
         {/* <!-- Task Card --> */}
         <a className="current-task-title">Huidige Klussen</a>
         <div className="task-card">
@@ -75,13 +75,13 @@ const SpecialistDashboard = () => {
         </div>
 
         {/* <!-- New Task Card Search --> */}
+      </main>
         <div className="new-task-card">
           <div className="plus-con">
             <AddIcon />
             <p>Nieuwe klus zoeken</p>
           </div>
         </div>
-      </main>
     </div>
   );
 };
