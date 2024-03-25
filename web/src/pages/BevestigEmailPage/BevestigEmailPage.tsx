@@ -1,7 +1,6 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
 import { cognitoClient, stripeClient } from '../../main'
-import { cognitoClient, stripeClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
@@ -16,6 +15,7 @@ type PostConfig = {
 function BevestigEmailPage() {
 
     const [isConfirmed, setIsConfirmed] = useState(false)
+    const [userExists, setUserExists] = useState(false)
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -104,7 +104,10 @@ function BevestigEmailPage() {
     function onNewCode() {
         Auth.resendSignUp(userEmail)
         .catch(error => {
-            console.error(error)
+            if (error.code == "InvalidParameterException") {
+                setUserExists(true)
+                setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
+            }
         })
     }
     const form =
@@ -138,7 +141,6 @@ function BevestigEmailPage() {
     </div>
 
     return (
-        userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
         userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
     )
 }
