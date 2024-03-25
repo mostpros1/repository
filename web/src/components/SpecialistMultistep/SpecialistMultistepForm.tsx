@@ -204,9 +204,8 @@ function SpecialistMultistepForm() {
           password: password,
           attributes: {
             phone_number: phoneNumber,
-            given_name: firstName,
+            name: firstName,
             family_name: lastName,
-            birthdate: dob,
             'custom:user_type': user_type,
           },
           autoSignIn: { enabled: true },

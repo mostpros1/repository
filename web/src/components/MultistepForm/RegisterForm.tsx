@@ -9,7 +9,6 @@ import { dynamo } from "../../../../backend_functions/declerations";
 type RegisterData = {
   firstName: string;
   lastName: string;
-  dob: string;
   email: string;
   phoneNumber: string;
   password: string;
@@ -29,7 +28,6 @@ export function RegisterForm({
   email,
   firstName,
   lastName,
-  dob,
   phoneNumber,
   password,
   repeatPassword,
@@ -122,15 +120,6 @@ export function RegisterForm({
               onChange={handleLastNameChange}
               id="achternaam"
               name="achternaam"
-            />
-          </div>
-          <div className="register-form-input">
-            <label htmlFor="">Date of Birth:</label>
-            <input
-              type="date"
-              placeholder="Date of Birth"
-              value={dob}
-              onChange={(e) => updateFields({ dob: e.target.value })}
             />
           </div>
           <div className="register-form-input">

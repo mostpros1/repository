@@ -42,7 +42,7 @@ const PageSpecialisten = (updateDate, { date }) => {
   useEffect(() => {
     // This function will be called automatically whenever location, sortBy, or priceFrom changes.
     applyFilters();
-  }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
+  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
 
   const handleLocationChange = (event) => {
     setLocation(event.target.value);
@@ -52,9 +52,9 @@ const PageSpecialisten = (updateDate, { date }) => {
     setSortBy(event.target.value);
   };
 
-  const handlePriceFromChange = (event) => {
+  /*const handlePriceFromChange = (event) => {
     setPriceFrom(event.target.value);
-  };
+  };*/
 
   const [specialists, setSpecialists] = useState(exampleSpecialists);
 
@@ -97,8 +97,8 @@ const PageSpecialisten = (updateDate, { date }) => {
     let Specialists;
 
     console.log(updateDate);
-    const hashTag = window.location.hash.replace("#", "").split("?")[0];
-    console.log(hashTag);
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    console.log(profession);
     const task = window.location.hash.replace("#", "").split("?")[1];
     console.log(task);
     dynamo.query({
@@ -107,7 +107,7 @@ const PageSpecialisten = (updateDate, { date }) => {
       KeyConditionExpression: "profession = :profession",
       FilterExpression: "task = :task",
       ExpressionAttributeValues: {
-        ":profession": hashTag,
+        ":profession": profession,
         ":task": task,
       },
     }).promise()
