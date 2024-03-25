@@ -2,11 +2,11 @@ import "./SearchChoreForm.css"
 import { useState } from 'react';
 
 type SpecialistData = {
-    email: string
-    postCode: string
-    stad: string
-    beroep?: string
-}
+  email: string;
+  postCode: string;
+  stad: string;
+  beroep: string;
+};
 
 type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void

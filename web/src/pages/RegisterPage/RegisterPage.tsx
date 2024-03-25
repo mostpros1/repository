@@ -39,7 +39,7 @@ function RegisterPage() {
       });
 
       // Handle successful registration, e.g., redirect to another page
-      navigate('/bevestig-email', { state: { email: email } });
+      navigate('/bevestig-email', { state: { email: email, postConfig: "HOMEOWNER" } })
     } catch (error: any) {
       // Handle registration error, e.g., show an error message
       console.error('Error signing up:', error);

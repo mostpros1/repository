@@ -379,3 +379,43 @@ input{
     color: red;
     font-size: 14px;
 }
+
+.Button-login{
+    background-color: #308AE4;
+    color: white;
+    font-size: 20px;
+    padding: 10px 25px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:none;
+}
+.Button-login:hover {
+    border: 2px solid #308AE4;
+    background-color: white;
+    color: #000000;
+  }
+  .dateForm_wrapper {
+    position: relative;
+    /* Andere stijlen die je mogelijk hebt */
+}
+
+/* Stijl voor de sluitknop */
+.close-calendar-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333; /* Pas dit aan volgens uw kleurenschema */
+    position: absolute; /* Absoluut positioneren om het naar rechtsboven te verplaatsen */
+    top: 0; /* Aan de bovenkant van de parent container */
+    right: 0; /* Aan de rechterkant van de parent container */
+    padding: 55px; /* Voeg wat padding toe voor touch targets en spacing */
+}
+
+.close-calendar-button:hover {
+    color: red; /* Lichtere kleur bij hover */
+}
+  

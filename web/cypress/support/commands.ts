@@ -47,6 +47,16 @@ declare namespace Cypress {
         goForward(): void;
         janTestBegin(): void;
         testBegin(): void
+        clear(): void;
+        testreg(): void;
+        nextreg(): void;
+        testinlog(): void;
+        nextinlog(): void;
+        inlogmenu():void;
+        uitloggen():void;
+        performInputCheck2(value1, value2):void;
+        performInputChecktestreg(value1, value2,value3,value4,value5,value6):void;
+        
     }
 }
 
@@ -76,7 +86,10 @@ Cypress.Commands.add('testAgain', () => {
     cy.setDesktopViewport();
     cy.visit("http://localhost:5173/");
     cy.get('.nav-blue-btn > .black-items').click();
-
+    cy.get('input').eq(0).type('Loodgieter')
+    cy.get('input').eq(1).type('test@test.com')
+    cy.get('input').eq(2).type('2020EB')
+    cy.get('input').eq(3).type('Amsterdam')
     for (let r = 0; r < 4; r++) {
         cy.goForward();
     }
@@ -93,3 +106,59 @@ Cypress.Commands.add('goBack', () => {
 Cypress.Commands.add('goForward', () => {
     cy.get('[class="form-btn"]').click();
 });
+
+//
+Cypress.Commands.add('testreg', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/registreer") // Go to website 
+});
+Cypress.Commands.add('nextreg', () => {
+    cy.get('[class="registerForm_wrapper"]').click();
+    //cy.get('#308AE4').click();
+});
+//
+Cypress.Commands.add('testinlog', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/login") // Go to website 
+});
+
+Cypress.Commands.add('nextinlog', () => {
+    cy.get('[class="Button-login"]').click();
+    //cy.get('#308AE4').click();
+});
+Cypress.Commands.add('inlogmenu', () => {
+    cy.get('[class="dropdown-container"]').click();
+    //cy.get('#308AE4').click();
+});
+Cypress.Commands.add('uitloggen', () => {
+    cy.get('[class="logoutButton"]').click();
+    //cy.get('#308AE4').click();
+});
+
+Cypress.Commands.add('performInputCheck2', (value1, value2) => {
+    cy.get('input[type="email"]').eq(0).type(value1);
+    cy.get('input[type="password"]').type(value2);
+    cy.nextinlog();
+        
+
+    cy.wait(2000);
+
+    cy.inlogmenu();
+
+    cy.uitloggen();
+
+    cy.testinlog();
+});
+
+Cypress.Commands.add('performInputChecktestreg', (value1, value2,value3,value4,value5,value6) => {
+    cy.get('input[type="text"]').eq(0).type(value1);
+    cy.get('input[type="text"]').eq(1).type(value2);
+    cy.get('input[type="email"]').clear();
+    cy.get('input[type="email"]').type(value3);
+    cy.get('input[type="tel"]').type(value4);
+    cy.get('input[type="password"]').eq(0).type(value5);
+    cy.get('input[type="password"]').eq(1).type(value6);
+    cy.nextreg();
+    cy.testreg();
+})
+
