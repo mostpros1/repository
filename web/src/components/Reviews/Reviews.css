@@ -66,6 +66,7 @@
     font-size: 16px;
 }
 
+
 @media screen and (max-width: 768px){
     .review_con{
         padding: 50px 25px;
@@ -87,6 +88,29 @@
     }
 }
 
+@media screen and (max-width: 480px) {
+    .review_con {
+        padding: 20px 10px;
+    }
+
+    .reviewImg_con {
+        height: 120px;
+    }
+
+    .review_title, .review_name, .review_comment {
+        font-size: smaller;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    /* Other adjustments for smaller elements */
+}
+
+
+/* Button: Nieuwe Klus plaatsen */
 .button {
     padding-top: 0px;
     padding-left: 0px;
