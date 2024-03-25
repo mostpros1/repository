@@ -56,9 +56,12 @@ const PageSpecialisten = (updateDate, { date }) => {
     setPriceFrom(event.target.value);
   };
 
+  const [specialists, setSpecialists] = useState(exampleSpecialists);
+
   const applyFilters = () => {
     let filteredSpecialists = specialists;
 
+    console.log("hello:  ", filteredSpecialists);
     // Filter by location
     if (location) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
@@ -67,7 +70,7 @@ const PageSpecialisten = (updateDate, { date }) => {
     // Filter by price
     if (priceFrom) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
-    }
+    } 
 
     // Sort by criteria
     if (sortBy) {
@@ -83,7 +86,7 @@ const PageSpecialisten = (updateDate, { date }) => {
     setSpecialists(filteredSpecialists);
   };
   
-  const [specialists, setSpecialists] = useState(exampleSpecialists);
+  
 
   //make a function to grab data behind the hashtag in the url and print it into the console
 
