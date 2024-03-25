@@ -21,9 +21,9 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
-import {specialists} from '../../specialists.js';
+import { specialists } from '../../specialists.js';
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 
 
@@ -37,236 +37,236 @@ const HomePageSpecialist = ({ navigation }) => {
   const [inputText, setInputText] = useState('');
 
   const handleInputChange = (text) => {
-      setInputText(text);
+    setInputText(text);
   };
 
   const handleInputFocus = () => {
-      setShowOptions(true);
+    setShowOptions(true);
   };
 
   const handleOptionPress = (option) => {
-      setInputText(option.title);
-      setSelectedOption(option);
-      setShowOptions(false);
+    setInputText(option.title);
+    setSelectedOption(option);
+    setShowOptions(false);
   };
 
   const handleOutsidePress = () => {
-      Keyboard.dismiss();
-      setShowOptions(false);
+    Keyboard.dismiss();
+    setShowOptions(false);
   };
 
   const handleForwardButtonPress = () => {
-      if (!selectedOption) {
-          setErrorMessage("Kies eerst een Specialist");
-          setTimeout(() => {
-              setErrorMessage('');
-          }, 3000);
-          return;
-      }
-      navigation.navigate('HomeOwnerPostalCode', { selectedOption });
+    if (!selectedOption) {
+      setErrorMessage("Kies eerst een Specialist");
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
+    navigation.navigate('HomeOwnerPostalCode', { selectedOption });
   };
 
   const filteredOptions = specialists.filter(option =>
     option.title.toLowerCase().includes(inputText.toLowerCase())
   );
-  
+
   const handlePress = (text) => {
     navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
   };
   return (
     <PaperProvider>
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView>
-        <ScrollView>
-          <View style={[styles.view]}>
-            <View style={[styles.headerSquare]}>
-              <View style={[styles.logoNotificationWrapper]}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    style={styles.image}
-                    source={require("../../../assets/images/logo.png")}
-                  />
-                </View>
-                <View style={styles.iconContainer}>
-                  <Icon name="notifications" size={45} color="white" />
-                </View>
-              </View>
-              <View style={[styles.textSearchWrapper]}>
-                <Text style={[styles.whiteBoldText]}>Stad \/</Text>
-                <Pressable style={styles.container} onPress={handleForwardButtonPress}>
-                <TextInput
-                        placeholder="Zoeken:"
-                        style={styles.input}
-                        onChangeText={handleInputChange}
-                        onFocus={handleInputFocus}
-                        value={inputText}
+        <SafeAreaView>
+          <ScrollView>
+            <View style={[styles.view]}>
+              <View style={[styles.headerSquare]}>
+                <View style={[styles.logoNotificationWrapper]}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={styles.image}
+                      source={require("../../../assets/images/logo.png")}
                     />
-                  <Icon name="forward" size={25} color="#318ae5" />
+                  </View>
+                  <View style={styles.iconContainer}>
+                    <Icon name="notifications" size={45} color="white" />
+                  </View>
+                </View>
+                <View style={[styles.textSearchWrapper]}>
+                  <Text style={[styles.whiteBoldText]}>Stad \/</Text>
+                  <Pressable style={styles.container} onPress={handleForwardButtonPress}>
+                    <TextInput
+                      placeholder="Zoeken:"
+                      style={styles.input}
+                      onChangeText={handleInputChange}
+                      onFocus={handleInputFocus}
+                      value={inputText}
+                    />
+                    <Icon name="forward" size={25} color="#318ae5" />
+                  </Pressable>
+                </View>
+                <View style={[styles.iconsText]}>
+                  <Pressable style={[styles.iconsTextWrapper]}>
+                    <Icon name="scanner" size={50} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Scannen</Text>
+                  </Pressable>
+                  <Pressable style={[styles.iconsTextWrapper]}>
+                    <Icon name="payment" size={50} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Betalingen</Text>
+                  </Pressable>
+                  <Pressable style={[styles.iconsTextWrapper]}>
+                    <Icon name="local-parking" size={50} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Parkeren</Text>
+                  </Pressable>
+                  <Pressable style={[styles.iconsTextWrapper]}>
+                    <Icon name="work" size={50} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Zak</Text>
+                  </Pressable>
+                </View>
+                <Pressable testID="klusBtn" style={[styles.searchBar]} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
+                  <View style={styles.smallCircle}>
+                    <Icon name="add" size={28} color="#308AE4" />
+                  </View>
+                  <Text style={[styles.whiteIconText]}>Nieuwe klus plaatsen</Text>
                 </Pressable>
+              </View>
+              <View style={[styles.titleWrap]}>
+                <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
               </View>
               <View style={[styles.iconsText]}>
-                <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="scanner" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Scannen</Text>
+                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Hovenier")}>
+                  <Icon name="grass" size={50} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>Hovenier</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="payment" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Betalingen</Text>
+                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Elektricien")}>
+                  <Icon name="lightbulb" size={50} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>Elektricien</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="local-parking" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Parkeren</Text>
+                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Dakdekker")}>
+                  <Icon name="house" size={50} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>Dekker</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="work" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Zak</Text>
+                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Schoonmaker")}>
+                  <Icon name="sanitizer" size={50} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>Schoonmaker</Text>
                 </Pressable>
               </View>
-              <Pressable style={[styles.searchBar]} onPress={() => navigation.navigate('PostalCodeSpecialist')}>
-                <View style={styles.smallCircle}>
-                  <Icon name="add" size={28} color="#308AE4" />
-                </View>
-                <Text style={[styles.whiteIconText]}>Nieuwe klus plaatsen</Text>
-              </Pressable>
-            </View>
-            <View style={[styles.titleWrap]}>
-              <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
-            </View>
-            <View style={[styles.iconsText]}>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Hovenier")}>
-                <Icon name="grass" size={50} color="#4999e7" />
-                <Text style={[styles.blackIconText]}>Hovenier</Text>
-              </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Elektricien")}>
-                <Icon name="lightbulb" size={50} color="#4999e7" />
-                <Text style={[styles.blackIconText]}>Elektricien</Text>
-              </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Dakdekker")}>
-                <Icon name="house" size={50} color="#4999e7" />
-                <Text style={[styles.blackIconText]}>Dekker</Text>
-              </Pressable>
-              <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Schoonmaker")}>
-                <Icon name="sanitizer" size={50} color="#4999e7" />
-                <Text style={[styles.blackIconText]}>Schoonmaker</Text>
-              </Pressable>
-            </View>
-            <View style={[styles.cardWrapper]}>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
-                  <Image
-                    style={styles.image}
-                    source={require("../../../assets/images/howToStart.png")}
-                  />
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+              <View style={[styles.cardWrapper]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
+                    <Image
+                      style={styles.image}
+                      source={require("../../../assets/images/howToStart.png")}
+                    />
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
                     <Text style={[styles.cardBigTitle]}>Keuken</Text>
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
                     <Text style={[styles.cardBigTitle]}>Huis</Text>
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
                     <Text style={[styles.cardBigTitle]}>Badkamer</Text>
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
                     <Text style={[styles.cardBigTitle]}>Tuin</Text>
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.card]}>
-                <View style={[styles.cardFirstHalf]}>
+                <View style={[styles.card]}>
+                  <View style={[styles.cardFirstHalf]}>
                     <Text style={[styles.cardBigTitle]}>Schuur</Text>
-                </View>
-                <View style={[styles.cardSecondHalf]}>
-                  <Text style={[styles.cardTitle]}>
-                    Hoe aan de slag {"\n"} gaan
-                  </Text>
-                  <Pressable>
-                    <Text style={[styles.blueText]}>
-                     Meer info
+                  </View>
+                  <View style={[styles.cardSecondHalf]}>
+                    <Text style={[styles.cardTitle]}>
+                      Hoe aan de slag {"\n"} gaan
                     </Text>
-                  </Pressable>
+                    <Pressable>
+                      <Text style={[styles.blueText]}>
+                        Meer info
+                      </Text>
+                    </Pressable>
+                  </View>
                 </View>
+                <View style={[styles.footerfix]}></View>
               </View>
-              <View style={[styles.footerfix]}></View>
             </View>
-          </View>
-        </ScrollView>
-        {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
-                        {filteredOptions.map(option => (
-                            <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
-                                <Text>{option.title}</Text>
-                            </Pressable>
-                        ))}
-                    </ScrollView>
-                )}
-                {errorMessage ? (
-                    <View style={styles.errorMessageContainer}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                    </View>
-                ) : null}
+          </ScrollView>
+          {showOptions && (
+            <ScrollView style={styles.optionsContainer}>
+              {filteredOptions.map(option => (
+                <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
+                  <Text>{option.title}</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+          )}
+          {errorMessage ? (
+            <View style={styles.errorMessageContainer}>
+              <Text style={styles.errorMessage}>{errorMessage}</Text>
+            </View>
+          ) : null}
 
-        <Footer navigation={navigation} activePage="HomePageSpecialist" />
+          <Footer navigation={navigation} activePage="HomePageSpecialist" />
 
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     </PaperProvider>
   );
 };
@@ -288,37 +288,37 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     maxHeight: windowHeight * 0.3,
     ...Platform.select({
-        ios: {
-            shadowColor: 'black',
-            shadowOffset: {
-                width: 1,
-                height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 1,
+          height: 2,
         },
-        android: {
-            elevation: 5,
-        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
     }),
-},
+  },
 
-footerfix: {
-  height: 60,
-  width: windowWidth,
-},
-option: {
+  footerfix: {
+    height: 60,
+    width: windowWidth,
+  },
+  option: {
     paddingVertical: 10,
     paddingLeft: 20,
-},
-errorMessageContainer: {
+  },
+  errorMessageContainer: {
     alignItems: 'center',
     marginTop: 10,
-},
-errorMessage: {
+  },
+  errorMessage: {
     color: 'red',
     fontSize: 16,
-},
+  },
   cardFirstHalf: {
     width: 170,
     height: 110,
