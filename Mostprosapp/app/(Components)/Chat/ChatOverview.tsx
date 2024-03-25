@@ -11,14 +11,11 @@ import {
   ScrollView,
   ImageBackground,
   TextInput,
-  Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { KeyboardAvoidingView } from 'react-native';
-import Footer from '../Footer'; 
-
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -205,34 +202,20 @@ const ChatOverview = ({ navigation }) => {
                     </View>
                   </View>
               </View>
-              <View style={[styles.footerfix]}></View>
             </View>
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
 };
 const styles = StyleSheet.create({
   view: {
-    ...Platform.select({
-      ios: {
-        height: windowHeight * 1.2, // Adjust height for iOS
-      },
-      android: {
-        height: windowHeight * 1.31, // Adjust height for Android
-      },
-    }),
+    height: "100%",
     width: windowWidth,
     display: "flex",
     alignItems: "center",
     backgroundColor: "white",
-  },
-
-  footerfix: {
-    height: 35,
-    width: windowWidth,
   },
 
   notification:{

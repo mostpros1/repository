@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = () => {
+const PageSpecialisten = (updateDate, { date }) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -82,18 +82,21 @@ const PageSpecialisten = () => {
 
     setSpecialists(filteredSpecialists);
   };
-
-  const [specialists, setSpecialists] = useState(exampleSpecialists);
   
-//make a function to grab data behind the hashtag in the url and print it into the console
+  const [specialists, setSpecialists] = useState(exampleSpecialists);
 
+  //make a function to grab data behind the hashtag in the url and print it into the console
 
-//backend niet verwijderen
+  //backend niet verwijderen
   useEffect(() => {
-      const hashTag = window.location.hash.replace("#", "").split("?")[0];
-      console.log(hashTag);
-      const task = window.location.hash.replace("#", "").split("?")[1];
-      console.log(task);
+    let Availibility;
+    let Specialists;
+
+    console.log(updateDate);
+    const hashTag = window.location.hash.replace("#", "").split("?")[0];
+    console.log(hashTag);
+    const task = window.location.hash.replace("#", "").split("?")[1];
+    console.log(task);
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
@@ -105,15 +108,46 @@ const PageSpecialisten = () => {
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items)
+        setSpecialists(data.Items);
+        Specialists = data.Items;
         console.log(data.Items);
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
+      
+      console.log(JSON.stringify(updateDate).split('T')[0]);
+    /*dynamo.query({
+      TableName: "beschikbaarheid",
+      IndexName: "datum",
+      KeyConditionExpression: "datum = :date",
+      ExpressionAttributeValues: {
+        ":date": updateDate,
+      },
+    }).promise()
+      .then(output => {
 
+        Availibility = output.Items
+        console.log(output.Items);
+      })
+      .catch(error => {
+        console.log(error);
+      });*/
+      
+    const checkEmailInJson = (email) => {
+      if (Specialists && Availibility) {
+        // Replace with the email address you want to check
+        const specialistEmails = Specialists.map(specialist => specialist.email);
+        const availibilityEmails = Availibility.map(item => item.email);
+        const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
+        const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
+        console.log(matchingSpecialists);
+      }
+    };
+    checkEmailInJson('example@example.com');
 
+  }, [updateDate]);
+      
   return (
 
     <div className="filter-bar">
@@ -130,23 +164,24 @@ const PageSpecialisten = () => {
         <option value="priceHighLow">Price: High to Low</option>
         <option value="rating">Rating</option>
       </select>
-      <div className="specialisten-container">
-        {specialists.map((specialist) => (
-          <div key={specialist.id} className="specialist-card">
-            <div className="specialist-header">
-              <div className="specialist-info-1">
+    <div className="specialisten-container">
+      {specialists.map((specialist) => (
+        <div key={specialist.id} className="specialist-card">
+        <div className="specialist-header">
+            <div className="specialist-info-1">
                 <h3>{specialist.name}</h3>
                 <h5>{specialist.profession}</h5>
-              </div>
             </div>
-            <div className="specialist-info-2">
-              <p>{specialist.bio}</p>
-            </div>
-            <button className="contact-button">Contact opnemen</button>
+        </div>
+          <div className="specialist-info-2">
+            <p>{specialist.bio}</p>
           </div>
-        ))}
-      </div>
+          <button className="contact-button">Contact opnemen</button>
+        </div>
+      ))}
+    </div>
     </div>
   );
 };
+
 export default PageSpecialisten;

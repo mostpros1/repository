@@ -247,18 +247,22 @@ function FilterBar() {
     setSelectedLocation(option);
     setShowLocationOptions(false);
   };
+
   const handleSortSelect = (option: string) => {
     setSelectedSort(option);
     setShowSortOptions(false);
   };
+
   const handlePriceSelect = (option: string) => {
     setSelectedPrice(option);
     setShowPriceOptions(false);
   };
+
   const handleSearch = () => {
     console.log("Search button clicked");
     filterItems();
   };
+
   return (
     <div className="filterbar">
       <div className="filter-con">
