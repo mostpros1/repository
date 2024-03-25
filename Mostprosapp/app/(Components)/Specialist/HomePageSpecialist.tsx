@@ -198,7 +198,7 @@ const HomePageSpecialist = ({ navigation }) => {
                   style={[styles.iconsTextWrapper]}
                   onPress={() => handlePress("Schoonmaker")}
                 >
-                  <Icon name="sanitizer" size={50} color="#4999e7" />
+                  <Icon name="sanitizer" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Schoonmaker</Text>
                 </Pressable>
               </View>
