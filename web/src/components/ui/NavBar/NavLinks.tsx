@@ -16,7 +16,7 @@ function NavLinks() {
         }
     ]
 
-    let navItemsToBeRendered = navItems.map(Item => {
+    const navItemsToBeRendered = navItems.map(Item => {
         return(
             <li key={Item.name}>
                 <Link to={Item.link} className='black-items'>{Item.name}</Link>

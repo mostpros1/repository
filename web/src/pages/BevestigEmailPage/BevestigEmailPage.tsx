@@ -28,7 +28,7 @@ function BevestigEmailPage() {
         'HOMEOWNER': {
             roleName: "Homeowner",
             nextPage: '/huiseigenaar-resultaat',
-            onSuccess: () => setTimeout(() => navigate(postConfig.nextPage), 3000)
+            onSuccess: () => setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000)
         },
         'PROFESSIONAL': {
             roleName: "Professional",
@@ -53,7 +53,7 @@ function BevestigEmailPage() {
                             account: stripeAccount.id,
                             type: 'account_onboarding',
                             refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                            return_url: `${window.location.origin}${postConfig.nextPage}`
+                            return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
                         })
                         .then(result => window.location.href = result.url)
                         .catch(err => console.error(err))
@@ -72,7 +72,7 @@ function BevestigEmailPage() {
         .catch(error => {
             console.error(error)
             const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.nextPage), 3000) },
+                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
                 "CodeMismatchException": () => { },
                 "default": () => {}
             };
@@ -92,6 +92,7 @@ function BevestigEmailPage() {
         }
     }
 
+
     function onSubmit(e: FormEvent) {
         e.preventDefault()
         let code: string = ""
@@ -105,7 +106,7 @@ function BevestigEmailPage() {
         .catch(error => {
             if (error.code == "InvalidParameterException") {
                 setUserExists(true)
-                setTimeout(() => navigate(postConfig.nextPage), 3000)
+                setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
             }
         })
     }

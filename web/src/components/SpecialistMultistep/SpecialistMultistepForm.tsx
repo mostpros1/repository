@@ -1,16 +1,26 @@
 import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
-import { RegisterForm } from "../MultistepForm/RegisterForm";
+//import { RegisterForm } from "../MultistepForm/RegisterForm";
 import { FormEvent } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HomeButton from "../ui/HomeButton/HomeButton";
+//import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
-import KvKForm from "./KvKForm/KvKForm";
+//import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-import { Auth } from "aws-amplify";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
 import { AccountForm } from "../MultistepForm/AccountForm";
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
+
 type FormData = {
   email: string;
   postCode: string;
@@ -22,6 +32,16 @@ type FormData = {
   repeatPassword: string;
   questions: Record<string, string>;
 };
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+  dob: string;
+}
 
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
@@ -71,21 +91,12 @@ const questionsData: Question[] = [
       "Anders",
     ],
   },
-  {
-    key: "question3",
-    label: "Wat is uw specialisaties",
-    options: [
-      "Web Developmenta",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
-    ],
-  },
   // ... voeg andere vragen toe zoals nodig
 ];
 
 function SpecialistMultistepForm() {
+
+  //const [error, setError] = useState('');
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
@@ -152,60 +163,67 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm setError={() => {}} error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <DateForm
+          dateTimeSpans={data.dateTimeSpans}
+          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
+          />,
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
       ],
       onStepChange: () => { },
     });
+
+  function signUp(registerData: RegisterData, user_type: string): void {
+    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+
+    const signUpProf = async () => {
+      try {
+        await Auth.signUp({
+          username: email,
+          password: password,
+          attributes: {
+            phone_number: phoneNumber,
+            given_name: firstName,
+            family_name: lastName,
+            birthdate: dob,
+            'custom:user_type': user_type,
+          },
+          autoSignIn: { enabled: true },
+        });
+
+        /*const user = await Auth.signIn(email, password);
+        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+      */
+        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+      } catch (error: any) {
+        console.error('Error signing up:', error);
+        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      }
+    };
+
+    signUpProf();
+  }
+
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) return next()
 
-    const userData = {
+    const userData: RegisterData = {
       email: data.email.trim(),
       password: data.password.trim(),
       repeatPassword: data.repeatPassword.trim(),
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim()
+      phoneNumber: data.phoneNumber.trim(),
+      dob: "" // Add the 'dob' property here
     }
 
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
-      .then(() => {
-        navigate('/specialist-resultaat')
-      })
-      .catch((err) => {
-        console.error(err)
-        if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
-      username: userData.email,
-      password: userData.password,
-      attributes: {
-        name: userData.firstName,
-        family_name: userData.lastName,
-        email: userData.email,
-        phone_number: userData.phoneNumber,
-        "custom:group": "Professional"
-      },
-      autoSignIn: { enabled: true }
-      })
-      .then(() => {
-        navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-      })
-      .catch(async error => {
-        console.error(error)
-        if (error.code == 'UsernameExistsException') {
-          await Auth.resendSignUp(userData.email)
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "PROFESSIONAL" } })
-        }
-      })
-    }
+    signUp(userData, "Professional");
+
+
   }
 
   const stepWidth = 100 / steps.length;
