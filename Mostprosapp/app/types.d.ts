@@ -71,4 +71,5 @@ declare global {
     PaymentSend: undefined;
     EditProfile: undefined;
     TestHome: undefined;
+    RevenueTool: undefined;
   };

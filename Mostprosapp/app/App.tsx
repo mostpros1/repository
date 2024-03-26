@@ -59,6 +59,7 @@ import ChangedateTwo from "./(Components)/Specialist/ChangedateTwo";
 import ConfirmDate from "./(Components)/Specialist/ConfirmDate";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
+import RevenueTool from "./(Components)/RevenueTool/RevenueTool";
 import SpecialistResults from "./(Components)/Specialist/SpecialistResults";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
 import EditProfile from "./(Components)/Profile/EditProfile";
@@ -162,7 +163,7 @@ const App = () => {
         <Stack.Screen name="ConfirmDate" component={ConfirmDate} />
         <Stack.Screen name="PaymentSend" component={PaymentSend} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
-        
+        <Stack.Screen name="RevenueTool" component={RevenueTool}/>
        
         {/* <Stack.Screen name="" component={} /> */}
       </Stack.Navigator>
