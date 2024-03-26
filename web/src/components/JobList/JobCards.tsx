@@ -53,10 +53,13 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
   }
 
   const jobCardsRender = jobs.map((job) => (
-    <div key={job.id} className="taskCard">
+    <div key={job.id} className="job-item">
       <div className="user-detail">
         <h2>{job.name}</h2>
-        <p><LocationOnIcon />{job.distance}KM</p>
+        <p>
+          <LocationOnIcon />
+          {job.distance}KM
+        </p>
       </div>
       <div className="job-info">
         <h2 className="job-title">{job.title}</h2>
@@ -77,8 +80,6 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       </a>
     </div>
   ));
-
   return <>{jobCardsRender}</>;
 };
-
 export default JobCards;

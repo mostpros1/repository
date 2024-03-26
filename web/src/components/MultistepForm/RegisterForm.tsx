@@ -1,10 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { dynamo } from "../../../../backend_functions/declerations";
-//import AWS from 'aws-sdk';
-
-//const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 type RegisterData = {
   firstName: string;
@@ -64,28 +60,6 @@ export function RegisterForm({
     }
   };
 
-  // const sendDataToDynamoDB = (firstName, lastName) => {
-  //   const params = {
-  //     TableName: '', // replace with your table name
-  //     Item: {
-  //       // Assume your table's partition key is 'userId', adjust as necessary
-  //       userId: `${Date.now()}`, // Example to generate unique ids, adjust based on your schema
-  //       firstName: firstName,
-  //       lastName: lastName,
-  //       // Add other attributes here
-  //     },
-  //   };
-  
-  //   dynamoDb.put(params, (err, data) => {
-  //     if (err) {
-  //       console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2));
-  //     } else {
-  //       console.log('Added item:', JSON.stringify(data, null, 2));
-  //     }
-  //   });
-  // };
-  
-
   return (
     <>
       <div className="register-container">
@@ -105,8 +79,6 @@ export function RegisterForm({
               placeholder="Voornaam"
               value={firstName}
               onChange={handleFirstNameChange}
-              id="voornaam"
-              name="voornaam"
             />
           </div>
           <div className="register-form-input">
@@ -118,8 +90,6 @@ export function RegisterForm({
               placeholder="Achternaam"
               value={lastName}
               onChange={handleLastNameChange}
-              id="achternaam"
-              name="achternaam"
             />
           </div>
           <div className="register-form-input">
