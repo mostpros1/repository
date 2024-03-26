@@ -1,42 +1,18 @@
-.chat_wrapper{
-  width: 100%;
-  height: 100vh;
-  padding: 150px 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.chat_con{
-  max-width: 1200px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-}
-
-.chat_leftside{
-  border: 2px solid #308AE4;
-  width: 20%;
-}
-
-.chat_btn_con{
-  display: flex;
-  height: 30%;
-  flex-direction: column;
-  padding: 15px;
-  gap: 10px;
+.button_containerc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .buttonc {
+    height: 5rem;
+    width: 18rem;
     background-color: #308AE4;
-    border-radius: 10px;
-    padding: 15px;
-    width: 100%;
+    border-radius: 1.5rem;
     border: none;
     color: white;
     margin: auto;
-    font-size: 15px;
+
     &:hover {
     background-color: #367fc8;
     cursor: pointer;
@@ -44,117 +20,53 @@
 }
 
 .username {
-  font-size: 18px;
+    width:fit-content;
+    background-color: #308AE4;
+    border-left: 10px solid #308AE4;
+    border-right: 10px solid #308AE4;
+    border-radius: 1.5rem;
+    
+    color: white;
 }
 
 .time {
   font-size: small;
+  
 }
 
-.contact_list{
-  height: 70%;
-  border-bottom: 2px solid #308AE4;
-}
-
-.chat_box_con{
-  width: 80%;
-}
-
-.chat_box {
-  display: flex;
-  flex-direction: column; /* Ondersteuning voor flex-direction om berichten van onder naar boven weer te geven */
-  width: 100%;
-  height: 500px;
-  gap: 40px;
-  overflow: auto;
-  padding: 15px;
-}
-
-.chat_box_user_info{
-  display: flex;
-  flex-direction: column;
-}
-
-.other-end{
-  background-color: #308AE4;
-  width: fit-content;
-  padding: 5px 15px;
-  border-radius: 10px;
-  max-width: 70%;
-}
-
-.other-end > div, .other-end > p{
-  color: white;
-  word-wrap: break-word;
-}
-
-.other-end > p {
-  font-size: 18px;
-}
-
-.self-end {
-  align-self: flex-end;
-  background-color: rgb(236, 236, 236);
-  padding: 5px 15px;
-  border-radius: 10px;
-  max-width: 70%;
-}
-
-.self-end > div, .self-end > p{
-  word-wrap: break-word;
-}
-
-.self-end > p {
-  font-size: 18px;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #bdbcbc; 
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #9e9e9e; 
-}
-
-.input_form {
-  overflow: auto;
-  border: 2px solid #C0C0C8;
-  width: 100%;
-  outline: none;
-  display: flex;
-  flex-direction: row;
-}
-
-.inputchat{
-  width: 100%;
-  border: none;
-  outline: none;
+.text {
+  background-color: rgb(212, 210, 210);
+  border-radius: 1.5rem;
+  width:fit-content;
+  border-left: 10px solid rgb(212, 210, 210);
+  border-right: 10px solid rgb(212, 210, 210);
+  margin-bottom: 40px;
 }
 
 .chat-enter{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-left: 2px solid #C0C0C8;
-  padding: 15px;
-  transition: all 0.3s;
-  font-family: inherit;
+  float: right;
+  margin-right: 7px;
+  margin-top: 17px;
 }
 
-.chat-enter:hover{
-  cursor: pointer;
-  background-color: #308AE4;
-  color: white;
+.chat_box {
+  width: 900px;
+  height: 500px;
+  background: rgb(224, 241, 255);
+  overflow: auto;
+  margin-left: 300px;
+}
+
+.input_form {
+  margin-left: 590px;
+  overflow: auto;
+  border: 2px solid #308AE4;
+  border-radius: 15px;
+  width: 360px;
+  outline: none;
+  &:hover {
+    border: 2.2px solid #2d73b9;
+    cursor: pointer;
+    }
 }

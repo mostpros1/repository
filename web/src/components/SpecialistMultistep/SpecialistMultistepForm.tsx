@@ -1,12 +1,12 @@
 import "../MultistepForm/MultistepForm.css";
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
-//import { RegisterForm } from "../MultistepForm/RegisterForm";
-import { FormEvent } from "react";
+import { RegisterForm } from "../MultistepForm/RegisterForm";
+import { FormEvent, useState } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
 import { useNavigate } from "react-router-dom";
-//import HomeButton from "../ui/HomeButton/HomeButton";
+import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
-//import KvKForm from "./KvKForm/KvKForm";
+import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import { Auth } from "aws-amplify";
 import { AccountForm } from "../MultistepForm/AccountForm";
@@ -153,17 +153,8 @@ function SpecialistMultistepForm() {
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-<<<<<<< HEAD
-        <DateForm
-          dateTimeSpans={data.dateTimeSpans}
-          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
-          />,
-        //<AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />,
-        //<KvKForm setShowNoKvK={setShowNoKvK} />,
-=======
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
         // <KvKForm setShowNoKvK={setShowNoKvK} />,
->>>>>>> f739aa8d2fd0e4c7ac010885a7d333064345ed36
       ],
       onStepChange: () => { },
     });
@@ -248,9 +239,4 @@ function SpecialistMultistepForm() {
     </form>
   );
 }
-<<<<<<< HEAD
-
 export default SpecialistMultistepForm;
-=======
-export default SpecialistMultistepForm;
->>>>>>> f739aa8d2fd0e4c7ac010885a7d333064345ed36

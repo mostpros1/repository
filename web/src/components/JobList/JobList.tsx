@@ -11,8 +11,4 @@ function JobList() {
   );
 }
 
-<<<<<<< HEAD
 export default JobList;
-=======
-export default JobList;
->>>>>>> f739aa8d2fd0e4c7ac010885a7d333064345ed36
