@@ -39,25 +39,6 @@ const PageSpecialisten = (updateDate, { date }) => {
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
 
-  useEffect(() => {
-    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
-    applyFilters();
-  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  /*const handlePriceFromChange = (event) => {
-    setPriceFrom(event.target.value);
-  };*/
-
-  const [specialists, setSpecialists] = useState(exampleSpecialists);
-
   const applyFilters = () => {
     let filteredSpecialists = specialists;
 
@@ -85,6 +66,27 @@ const PageSpecialisten = (updateDate, { date }) => {
 
     setSpecialists(filteredSpecialists);
   };
+
+  useEffect(() => {
+    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
+    applyFilters();
+  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSortByChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  /*const handlePriceFromChange = (event) => {
+    setPriceFrom(event.target.value);
+  };*/
+
+  const [specialists, setSpecialists] = useState(exampleSpecialists);
+
+  
   
   
 
