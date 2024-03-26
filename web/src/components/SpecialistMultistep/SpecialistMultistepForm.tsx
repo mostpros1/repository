@@ -187,8 +187,8 @@ function SpecialistMultistepForm() {
       onStepChange: () => { },
     });
 
-  function signUp(registerData: RegisterData, user_type: string): void {
-    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+  function signUp(registerData: RegisterData): void {
+    const { email, phoneNumber, password, firstName, lastName } = registerData;
 
     const signUpProf = async () => {
       try {
@@ -199,7 +199,6 @@ function SpecialistMultistepForm() {
             phone_number: phoneNumber,
             name: firstName,
             family_name: lastName,
-            'custom:user_type': user_type,
           },
           autoSignIn: { enabled: true },
         });

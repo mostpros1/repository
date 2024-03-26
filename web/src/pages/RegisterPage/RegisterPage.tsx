@@ -16,7 +16,6 @@ function RegisterPage() {
     phoneNumber: '',
     password: '',
     repeatPassword: '',
-    dob: '',
   });
 
   const [error, setError] = useState('');
@@ -30,10 +29,9 @@ function RegisterPage() {
     phoneNumber: string;
     password: string;
     repeatPassword: string;
-    dob: string;
   }
 
-  function signUp(registerData: RegisterData, user_type: string): void {
+  function signUp(registerData: RegisterData): void {
     const { email, phoneNumber, password, firstName, lastName } = registerData;
 
       const signUpUser = async () => {
@@ -45,7 +43,6 @@ function RegisterPage() {
               phone_number: phoneNumber,
               name: firstName,
               family_name: lastName,
-              'custom:user_type': user_type,
             },
             autoSignIn: { enabled: true },
           });
@@ -81,8 +78,6 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error} />
-          <button onClick={handleSignUp}>Sign Up</button>
           <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/>
           <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
         </div>
