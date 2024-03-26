@@ -4,17 +4,17 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { Link } from "react-router-dom";
 
 
-
-
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer_container">
         <div className="footerSection">
-          <h4>Navigatie</h4>
+          <h4>Bedrijf</h4>
           <Link to="/hoe-werkt-het">Hoe werkt het</Link>
           <a href="">Waarom mostpros</a>
           <Link to="/over-ons">Over</Link>
+          <Link to="/over-ons">Jobs</Link>
+          <Link to="/over-ons">Product updates</Link>
           <Link to="/contact">Contact</Link>
         </div>
         <div className="footerSection">
@@ -30,8 +30,8 @@ function Footer() {
         </div>
         <div className="footerSection">
           <h4>Netwerk</h4>
-          <p>Vakspecialist</p>
           <p>Huiseigenaren</p>
+          <p>Vakspecialisten</p>
           <p>Developers</p>
           <p>Partners</p>
           <p>Studenten</p>
@@ -63,10 +63,10 @@ function Footer() {
         <p>©2023</p>
         <Link to="/privacybeleid">Privacybeleid.</Link>
         <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
-        <Link to="/disclaimer">Disclaimer.</Link>
+        <Link to="/disclaimer">Disclaimer</Link>
+        <Link to="/VSDashboard">.</Link>
       </div>
     </footer>
   );
 }
-
 export default Footer;

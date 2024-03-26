@@ -1,34 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
 import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import { Apps } from "@mui/icons-material";
 
-//const authentecatedUser = await Auth.currentAuthenticatedUser();
-
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
+  const navigate = useNavigate(); // Create a navigate function
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        updateUser(authenticatedUser);
-      } catch (error: unknown) {
-        updateUser(null);
-      }
-    };
-    if (!user) {
-      checkAuthStatus();
-    }
-  }, [user, updateUser]);
+  const handleIconClick = () => {
+    navigate("/HomeInovation"); // Use navigate function to redirect
+  };
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -36,18 +26,13 @@ function Navigation() {
 
   const handleLogout = async () => {
     try {
-
       await Auth.signOut();
-
-      updateUser(null);
-
-
-      console.log("Logout successful");
+      updateUser(null); // Update the user context after logout
+      console.log("Logout successful"); // Update the user context after logout
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
-
 
   let authButtons = (
     <>
@@ -55,9 +40,6 @@ function Navigation() {
       <Link to="/registreer">Register</Link>
     </>
   );
-
-  //console.log(authentecatedUser);
-  //updateUser(authentecatedUser);
 
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
@@ -88,9 +70,9 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className="black-items">
+            {/* <Link to="/mijn-klussen" className="black-items">
               Klussen <ExpandMoreIcon />
-            </Link>
+            </Link> */}
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
@@ -311,14 +293,12 @@ function Navigation() {
             </Link>
           </li>
         </ul>
-        <div className="apps-icon">
-          <Link to="/HomeInovation">
-            <AppsRoundedIcon />
-          </Link>
+        <div className="apps-icon" onClick={handleIconClick}>
+          <AppsRoundedIcon />
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
-            <MenuIcon />
+            <MoreVertOutlinedIcon /> {/* Changed icon here */}
             <PermIdentityIcon />
           </button>
           {dropdownOpen && (

@@ -5,8 +5,8 @@ const specialists = [
         tasks: [
             { task: "Lekkende Kranen/Leidingen Reparatie", link: "/lekkages-repareren" },
             { task: "Sanitair Installatie/Vervanging", link: "/sanitair-installeren" },
-            { task: "Afvoer Ontstopping", link: "/afvoer-ontstopping" },
-            { task: "Boiler/Geiser Onderhoud", link: "/boiler-geiser-nderhoud" },
+            { task: "Afvoer Ontstopping", link: "/lekkages-repareren" },
+            { task: "Boiler/Geiser Onderhoud", link: "/lekkages-repareren" },
             { task: "Verwarmingssysteem Reparatie/Installatie", link: "/verwarmingssysteem-reparatie-installatie" },
         ]
     },
@@ -36,6 +36,17 @@ const specialists = [
             { task: "Elektrische Onderhoud", link: "/elektrische-olnderhoud" },
             { task: "Groepenkast Werkzaamheden", link: "/groepenkast-werkzaamheden" },
             { task: "Verlichtingsarmaturen Werkzaamheden", link: "/verlichtingsarmaturen-werkzaamheden" },
+            { task: "Stopcontacten werkzaamheden", link: "/stopcontacten-werkzaamheden" },
+            { task: "Elektrische aarding veiligstellen", link: "/elektrische-aarding-veiligstellen" },
+            { task: "Elektrische inspecties", link: "/elektrische-inspecties" },
+            { task: "Data/communicatiebedrading werkzaamheden", link: "/data-communicatiebedrading-werkzaamheden" },
+            { task: "Beveiligingssystemen installatie", link: "/beveiligingssystemen-installatie" },
+            { task: "Domotica/smart home installatie", link: "/domotica-smart-home-installatie" },
+            { task: "Generatoren/noodstroom installatie", link: "/generatoren-noodstroom-installatie" },
+            { task: "Energiezuinige oplossingen advies", link: "/energiezuinige-oplossingen-advies" },
+            { task: "Elektrische verwarmingssystemen werkzaamheden", link: "/elektrische-verwarmingssystemen-werkzaamheden" },
+            { task: "Ventilatie/airco elektrische aansluitingen", link: "/ventilatie-airco-elektrische-aansluitingen" },
+            { task: "Grote elektrische apparaten aansluiting/reparatie", link: "/grote-elektrische-apparaten-aansluiting-reparatie" }
         ]
     },
     {
@@ -50,6 +61,20 @@ const specialists = [
             { task: "Beschadigde Daken Repareren", link: "/beschadigde-daken-repareren" },
             { task: "Dakisolatie Installeren", link: "/dakisolatie-installeren" },
             { task: "Dakbedekking Aanbrengen", link: "/dakbedekking-aanbrengen" },
+            { task: "Dakconstructie/dakbedekking maken", link: "/dakconstructie-dakbedekking-maken" },
+            { task: "Buitenconstructies (schuttingen, terrassen, pergola's)", link: "/buitenconstructies-schuttingen-terrassen-pergolas" },
+            { task: "Houtstructuren/meubels repareren", link: "/houtstructuren-meubels-repareren" },
+            { task: "Maatwerk houten meubels", link: "/maatwerk-houten-meubels" },
+            { task: "Houten kozijnen plaatsen/repareren", link: "/houten-kozijnen-plaatsen-repareren" },
+            { task: "Renovatie/restauratie werkzaamheden", link: "/renovatie-restauratie-werkzaamheden" },
+            { task: "Houten panelen/wandbekleding", link: "/houten-panelen-wandbekleding" },
+            { task: "Geluidsisolatie/bouwkundige aanpassingen", link: "/geluidsisolatie-bouwkundige-aanpassingen" },
+            { task: "Houten aan/uitbouwen", link: "/houten-aan-uitbouwen" },
+            { task: "Overkappingen/carports bouwen", link: "/overkappingen-carports-bouwen" },
+            { task: "Tuinhuisjes/schuren/buitenconstructies", link: "/tuinhuisjes-schuren-buitenconstructies" },
+            { task: "Samenwerking met andere vakmensen", link: "/samenwerking-met-andere-vakmensen" },
+            { task: "Houten gevelbekleding", link: "/houten-gevelbekleding" },
+            { task: "Houten speeltoestellen/buitenmeubels maken", link: "/houten-speeltoestellen-buitenmeubels-maken" }
         ]
     },
     {
@@ -64,6 +89,21 @@ const specialists = [
             { task: "Meubels/Oppervlakken Afstoffen", link: "/meubels-oppervlakken-afstoffen" },
             { task: "Ramen/Spiegels Reinigen", link: "/ramen-spiegels-reinigen" },
             { task: "Prullenbakken Legen/Vervangen", link: "/prullenbakken-legen-vervangen" },
+            { task: "Keuken schoonmaak (aanrecht, apparaten, vloer)", link: "/keuken-schoonmaak" },
+            { task: "Badkamer schoonmaak (toilet, douche, bad, wastafel)", link: "/badkamer-schoonmaak" },
+            { task: "Beddengoed verschonen", link: "/beddengoed-verschonen" },
+            { task: "Vlekkenbehandeling (vloeren/meubels)", link: "/vlekkenbehandeling-vloeren-meubels" },
+            { task: "Oppervlakken desinfecteren", link: "/oppervlakken-desinfecteren" },
+            { task: "Buitenruimtes (terrassen/balkons) reinigen", link: "/buitenruimtes-reinigen" },
+            { task: "Tapijt stoomreinigen", link: "/tapijt-stoomreinigen" },
+            { task: "Opruimen rondslingerende spullen", link: "/opruimen-rondslingerende-spullen" },
+            { task: "Meubels/metalen polijsten", link: "/meubels-metalen-polijsten" },
+            { task: "Gordijnen/raambekleding reinigen", link: "/gordijnen-raambekleding-reinigen" },
+            { task: "Huishoudelijke apparaten schoonmaken", link: "/huishoudelijke-apparaten-schoonmaken" },
+            { task: "Schimmel/kalkaanslag verwijderen", link: "/schimmel-kalkaanslag-verwijderen" },
+            { task: "Luchtkanalen/ventilatie reinigen", link: "/luchtkanalen-ventilatie-reinigen" },
+            { task: "Kinderspeelgoed/speelruimtes desinfecteren", link: "/kinderspeelgoed-speelruimtes-desinfecteren" },
+            { task: "Periodieke dieptereiniging/grote schoonmaak", link: "/periodieke-dieptereiniging-grote-schoonmaak" }
         ]
     },
     {
@@ -108,6 +148,20 @@ const specialists = [
             { task: "Voorstrijk/primer aanbrengen", link: "/voorstrijk-primer-aanbrengen" },
             { task: "Behangrollen knippen/meten", link: "/behangrollen-knippen-meten" },
             { task: "Behanglijm aanbrengen", link: "/behanglijm-aanbrengen" },
+            { task: "Behang gladstrijken (luchtbellen)", link: "/behang-gladstrijken-luchtbellen" },
+            { task: "Afwerking hoeken/randen/stopcontacten", link: "/afwerking-hoeken-randen-stopcontacten" },
+            { task: "Verschillende behangsoorten", link: "/verschillende-behangsoorten" },
+            { task: "Patronen/naden aansluiten", link: "/patronen-naden-aansluiten" },
+            { task: "Decoratieve wandbekleding (muurstickers)", link: "/decoratieve-wandbekleding-muurstickers" },
+            { task: "Plafonds/schuine wanden behangen", link: "/plafonds-schuine-wanden-behangen" },
+            { task: "Behangtype/ontwerp advies", link: "/behangtype-ontwerp-advies" },
+            { task: "Kleuren/patronen mengen", link: "/kleuren-patronen-mengen" },
+            { task: "Speciale technieken (fotobehang, 3D)", link: "/speciale-technieken-fotobehang-3d" },
+            { task: "Muurbeschadigingen herstellen", link: "/muurbeschadigingen-herstellen" },
+            { task: "Gereedschap onderhoud", link: "/gereedschap-onderhoud" },
+            { task: "Nazorg/behang onderhoudsinstructies", link: "/nazorg-behang-onderhoudsinstructies" },
+            { task: "Beschermende coatings over behang", link: "/beschermende-coatings-over-behang" },
+            { task: "Periodiek onderhoud/behang vervanging", link: "/periodiek-onderhoud-behang-vervanging" }
         ]
     },
     {
@@ -327,7 +381,22 @@ const specialists = [
             { task: "Terrassen leggen", link: "/terrassen-leggen" },
             { task: "Tuinpaden aanleggen", link: "/tuinpaden-aanleggen" },
             { task: "Trottoirs/stoepen plaatsen", link: "/trottoirs-stoepen-plaatsen" },
-            { task: "Sierbestrating leggen", link: "/sierbestrating-leggen" },
+            { task: "Sierbestrating leggen", link: "/sierbestrating-leggen" }, 
+            { task: "Verzakte bestrating herstellen", link: "/verzakte-bestrating-herstellen" },
+            { task: "Kantopsluitingen aanbrengen", link: "/kantopsluitingen-aanbrengen" },
+            { task: "Goten/afwateringssystemen plaatsen", link: "/goten-afwateringssystemen-plaatsen" },
+            { task: "Parkeerplaatsen/-terreinen leggen", link: "/parkeerplaatsen-terreinen-leggen" },
+            { task: "Openbare wegen/pleinen aanleggen", link: "/openbare-wegen-pleinen-aanleggen" },
+            { task: "Bestaande bestrating onderhoud", link: "/bestaande-bestrating-onderhoud" },
+            { task: "Speelplekken/schoolpleinen aanleggen", link: "/speelplekken-schoolpleinen-aanleggen" },
+            { task: "Fiets-/wandelpaden leggen", link: "/fiets-wandelpaden-leggen" },
+            { task: "Diverse bestratingsmaterialen toepassen", link: "/diverse-bestratingsmaterialen-toepassen" },
+            { task: "Belijning/markeringen aanbrengen", link: "/belijning-markeringen-aanbrengen" },
+            { task: "Straatmeubilair plaatsen", link: "/straatmeubilair-plaatsen" },
+            { task: "Oude bestrating verwijderen", link: "/oude-bestrating-verwijderen" },
+            { task: "Grondwerk voorbereiding voor bestrating", link: "/grondwerk-voorbereiding-voor-bestrating" },
+            { task: "Materiaalkeuze/legpatronen advies", link: "/materiaalkeuze-legpatronen-advies" },
+            { task: "Bestraten onder afschot (afwatering)", link: "/bestraten-onder-afschot-afwatering" }
         ]
     },
     {
@@ -338,7 +407,21 @@ const specialists = [
             { task: "Irrigatie-/druppelsystemen aanleggen", link: "/irrigatie-druppelsystemen-aanleggen" },
             { task: "Vijverpompen/-filters installatie", link: "/vijverpompen-filters-installatie" },
             { task: "Fonteinen/waterpartijen plaatsen/onderhoud", link: "/fonteinen-waterpartijen-plaatsen-onderhoud" },
-            { task: "Tuinberegeningssystemen installeren", link: "/tuinberegeningssystemen-installeren" },
+            { task: "Tuinberegeningssystemen installeren", link: "/tuinberegeningssystemen-installeren" }, 
+            { task: "Tuingereedschap/-machines onderhoud/reparatie", link: "/tuingereedschap-machines-onderhoud-reparatie" },
+            { task: "Elektrische bekabeling voor tuinapparatuur aanleggen", link: "/elektrische-bekabeling-tuinapparatuur-aanleggen" },
+            { task: "Buitenstopcontacten plaatsen", link: "/buitenstopcontacten-plaatsen" },
+            { task: "Energiezuinige tuinoplossingen advies", link: "/energiezuinige-tuinoplossingen-advies" },
+            { task: "Tuin-/terrasverwarmers installatie", link: "/tuin-terrasverwarmers-installatie" },
+            { task: "Zwemvijvers/natuurlijke zwembaden aanleg/onderhoud", link: "/zwemvijvers-natuurlijke-zwembaden-aanleg-onderhoud" },
+            { task: "Automatische tuinpoorten/hekwerken installeren", link: "/automatische-tuinpoorten-hekwerken-installeren" },
+            { task: "Technische problemen in tuin oplossen", link: "/technische-problemen-tuin-oplossen" },
+            { task: "Technische installaties tuin periodieke controles", link: "/technische-installaties-tuin-periodieke-controles" },
+            { task: "Bodemvochtigheidssensoren advies/installatie", link: "/bodemvochtigheidssensoren-advies-installatie" },
+            { task: "Zonnepanelen/energieopslag voor tuinapparatuur", link: "/zonnepanelen-energieopslag-tuinapparatuur" },
+            { task: "Tuinspeakers/geluidssystemen onderhoud/installatie", link: "/tuinspeakers-geluidssystemen-onderhoud-installatie" },
+            { task: "Tuinserres mechanische/elektrische onderdelen onderhoud", link: "/tuinserres-mechanische-elektrische-onderdelen-onderhoud" },
+            { task: "Automatische mest-/voedingssystemen plaatsen", link: "/automatische-mest-voedingssystemen-plaatsen" }
         ]
     },
     {
@@ -350,6 +433,22 @@ const specialists = [
             { task: "Inbouwzwembaden installeren", link: "/inbouwzwembaden-installeren" },
             { task: "Bovengrondse zwembaden aanleggen", link: "/bovengrondse-zwembaden-aanleggen" },
             { task: "Zwembadpompen/filters installeren", link: "/zwembadpompen-filters-installeren" },
+            { task: "Zwembadverwarmingssystemen aansluiten/installeren", link: "/zwembadverwarmingssystemen-aansluiten-installeren" },
+            { task: "Zwembadverlichting plaatsen", link: "/zwembadverlichting-plaatsen" },
+            { task: "Zwembadafdekkingen/veiligheidshekken installeren", link: "/zwembadafdekkingen-veiligheidshekken-installeren" },
+            { task: "Zwembadonderhoud/reparatie", link: "/zwembadonderhoud-reparatie" },
+            { task: "Jacuzzi's/spa's installeren", link: "/jacuzzis-spas-installeren" },
+            { task: "Zwembadtegels/voeringen aanbrengen", link: "/zwembadtegels-voeringen-aanbrengen" },
+            { task: "Zwembadtrappen/duikplanken installeren", link: "/zwembadtrappen-duikplanken-installeren" },
+            { task: "Watervallen/waterpartijen aanleggen", link: "/watervallen-waterpartijen-aanleggen" },
+            { task: "Zwembadwater behandeling (chemicaliën) advies", link: "/zwembadwater-behandeling-chemicalien-advies" },
+            { task: "Zoutwatersystemen installatie", link: "/zoutwatersystemen-installatie" },
+            { task: "Lekdetectie/reparatie zwembaden", link: "/lekdetectie-reparatie-zwembaden" },
+            { task: "Automatische zwembadreinigers installeren", link: "/automatische-zwembadreinigers-installeren" },
+            { task: "Zwembadranden/terrassen aanleggen", link: "/zwembadranden-terrassen-aanleggen" },
+            { task: "Energiezuinige zwembadoplossingen advies", link: "/energiezuinige-zwembadoplossingen-advies" },
+            { task: "Saunafaciliteiten installeren/onderhouden", link: "/saunafaciliteiten-installeren-onderhouden" }
+
         ]
     },
     {
@@ -361,6 +460,21 @@ const specialists = [
             { task: "Slimme tuinverlichting installeren", link: "/slimme-tuinverlichting-installeren" },
             { task: "Slimme weersensoren integreren", link: "/slimme-weersensoren-integreren" },
             { task: "Plantenmonitors/bodemsensoren configureren", link: "/plantenmonitors-bodemsensoren-configureren" },
+            { task: "Automatische meststof-/pesticidedoseringssystemen optimaliseren", link: "/automatische-meststof-pesticidedoseringssystemen-optimaliseren" },
+            { task: "Robotmaaiers advies/installatie", link: "/robotmaaiers-advies-installatie" },
+            { task: "Geautomatiseerd vijver-/waterelementmanagement opzetten", link: "/geautomatiseerd-vijver-waterelementmanagement-opzetten" },
+            { task: "Smart home systemen/tuinapparaten integratie", link: "/smart-home-systemen-tuinapparaten-integratie" },
+            { task: "Tuincamera's/beveiligingssystemen installeren/configureren", link: "/tuincameras-beveiligingssystemen-installeren-configureren" },
+            { task: "Automatische plantenverzorgingssystemen (kassen/serres)", link: "/automatische-plantenverzorgingssystemen-kassen-serres" },
+            { task: "Training/uitleg slimme tuinapparaten bediening", link: "/training-uitleg-slimme-tuinapparaten-bediening" },
+            { task: "App-/software-integraties tuinbeheer ondersteuning", link: "/app-software-integraties-tuinbeheer-ondersteuning" },
+            { task: "Problemen/storingen slimme tuinapparatuur oplossen", link: "/problemen-storingen-slimme-tuinapparatuur-oplossen" },
+            { task: "Energie-/waterbesparing tuin advies", link: "/energie-waterbesparing-tuin-advies" },
+            { task: "Slimme composteringssystemen implementeren", link: "/slimme-composteringssystemen-implementeren" },
+            { task: "Zonne-energiesystemen tuin integratie ondersteuning", link: "/zonne-energiesystemen-tuin-integratie-ondersteuning" },
+            { task: "Geautomatiseerde dierafweersystemen advies/installatie", link: "/geautomatiseerde-dierafweersystemen-advies-installatie" },
+            { task: "Slimme vogelvoer-/observatiesystemen implementeren", link: "/slimme-vogelvoer-observatiesystemen-implementeren" },
+            { task: "Slim tuinieren/stadslandbouw geïntegreerde systemen opzetten", link: "/slim-tuinieren-stadslandbouw-geintegreerde-systemen-opzetten" }
         ]
     },
     {
@@ -372,7 +486,22 @@ const specialists = [
             { task: "Verhuisdozen/meubels laden in verhuiswagen", link: "/verhuisdozen-meubels-laden-in-verhuiswagen" },
             { task: "Inboedel vervoeren naar nieuwe locatie", link: "/inboedel-vervoeren-naar-nieuwe-locatie" },
             { task: "Verhuisdozen/meubels uitladen op nieuwe locatie", link: "/verhuisdozen-meubels-uitladen-op-nieuwe-locatie" },
-        ]
+            { task: "Meubels monteren op nieuwe locatie", link: "/meubels-monteren-op-nieuwe-locatie" },
+            { task: "Verhuisdozen uitpakken", link: "/verhuisdozen-uitpakken" },
+            { task: "Tijdelijke inboedelopslag", link: "/tijdelijke-inboedelopslag" },
+            { task: "Speciale verpakkingen voor breekbare/waardevolle items", link: "/speciale-verpakkingen-breekbare-waardevolle-items" },
+            { task: "Speciale items verhuizen (piano's, kluizen, kunstwerken)", link: "/speciale-items-verhuizen" },
+            { task: "Apparaten aansluiten op nieuwe locatie", link: "/apparaten-aansluiten-nieuwe-locatie" },
+            { task: "Verhuislift regelen", link: "/verhuislift-regelen" },
+            { task: "Overtollige spullen/afval afvoeren", link: "/overtollige-spullen-afval-afvoeren" },
+            { task: "Parkeervergunningen/logistieke zaken regelen", link: "/parkeervergunningen-logistieke-zaken-regelen" },
+            { task: "Verhuisstrategie advies", link: "/verhuisstrategie-advies" },
+            { task: "Internationale verhuizingen (douaneformaliteiten)", link: "/internationale-verhuizingen-douaneformaliteiten" },
+            { task: "Tijdelijke verhuisverzekeringen", link: "/tijdelijke-verhuisverzekeringen" },
+            { task: "Lange termijn opslagoplossingen", link: "/lange-termijn-opslagoplossingen" },
+            { task: "Hulp bij inrichten/plaatsen meubels in nieuwe woning", link: "/hulp-bij-inrichten-plaatsen-meubels" },
+            { task: "Lege verhuisdozen/verpakkingsmateriaal terugnemen", link: "/lege-verhuisdozen-verpakkingsmateriaal-terugnemen" }
+                    ]
     },
     {
         id: 33,
@@ -383,7 +512,23 @@ const specialists = [
             { task: "Nieuwe sloten installeren", link: "/nieuwe-sloten-installeren" },
             { task: "Beschadigde sloten repareren", link: "/beschadigde-sloten-repareren" },
             { task: "Inbraakpreventie advies", link: "/inbraakpreventie-advies" },
-        ]
+            { task: "Meerpuntssluitingen plaatsen", link: "/meerpuntssluitingen-plaatsen" },
+            { task: "Sleutels bijmaken", link: "/sleutels-bijmaken" },
+            { task: "Digitale/elektronische sloten installeren", link: "/digitale-elektronische-sloten-installeren" },
+            { task: "Afgebroken sleutels uit sloten verwijderen", link: "/afgebroken-sleutels-uit-sloten-verwijderen" },
+            { task: "Veiligheidsbeslag aanbrengen", link: "/veiligheidsbeslag-aanbrengen" },
+            { task: "Cilinders vervangen/installeren", link: "/cilinders-vervangen-installeren" },
+            { task: "Bijzetsloten plaatsen", link: "/bijzetsloten-plaatsen" },
+            { task: "Raamsloten installeren", link: "/raamsloten-installeren" },
+            { task: "Kluisjes/veilige opbergsystemen advies/plaatsen", link: "/kluisjes-veilige-opbergsystemen-advies-plaatsen" },
+            { task: "Kluizen openen (verlies combinatie/sleutel)", link: "/kluizen-openen-verlies-combinatie-sleutel" },
+            { task: "Autosloten repareren/vervangen", link: "/autosloten-repareren-vervangen" },
+            { task: "Autosleutels bijmaken/transponders programmeren", link: "/autosleutels-bijmaken-transponders-programmeren" },
+            { task: "Beveiligingsadvies (woningen/bedrijfspanden)", link: "/beveiligingsadvies-woningen-bedrijfspanden" },
+            { task: "Toegangscontrolesystemen installeren", link: "/toegangscontrolesystemen-installeren" },
+            { task: "Periodiek onderhoud sloten/beveiligingssystemen", link: "/periodiek-onderhoud-sloten-beveiligingssystemen" }
+          ]
+          
     },
     {
         id: 34,
@@ -394,7 +539,24 @@ const specialists = [
             { task: "Verduurzamingsplan opstellen", link: "/verduurzamingsplan-opstellen" },
             { task: "Terugverdientijd duurzame investeringen berekenen", link: "/terugverdientijd-duurzame-investeringen-berekenen" },
             { task: "Isolatietypen voordelen uitleggen", link: "/isolatietypen-voordelen-uitleggen" },
-        ]
+            { task: "Subsidies/Financiële regelingen voor verduurzaming advies", link: "/subsidies-financiele-regelingen-verduurzaming-advies" },
+            { task: "Isolatietypen voordelen uitleggen", link: "/isolatietypen-voordelen-uitleggen" },
+            { task: "Duurzame verwarmingsmethoden aanbevelen", link: "/duurzame-verwarmingsmethoden-aanbevelen" },
+            { task: "Zonnepanelen plaatsing/opbrengst advies", link: "/zonnepanelen-plaatsing-opbrengst-advies" },
+            { task: "Energielabels/-certificaten begeleiding", link: "/energielabels-certificaten-begeleiding" },
+            { task: "Samenwerking met aannemers/installateurs", link: "/samenwerking-aannemers-installateurs" },
+            { task: "Waterbesparende maatregelen informeren", link: "/waterbesparende-maatregelen-informeren" },
+            { task: "Duurzame bouwmaterialen/-technieken advies", link: "/duurzame-bouwmaterialen-technieken-advies" },
+            { task: "Groene daken/gevels voordelen uitleggen", link: "/groene-daken-gevels-voordelen-uitleggen" },
+            { task: "Hergebruik/recycling mogelijkheden beoordelen", link: "/hergebruik-recycling-mogelijkheden-beoordelen" },
+            { task: "Informatiebijeenkomsten/workshops over verduurzaming", link: "/informatiebijeenkomsten-workshops-verduurzaming" },
+            { task: "Nieuwe technologieën/innovaties in verduurzaming bijhouden", link: "/nieuwe-technologieen-innovaties-verduurzaming-bijhouden" },
+            { task: "Samenwerking met overheidsinstanties (lokale duurzaamheidsinitiatieven)", link: "/samenwerking-overheidsinstanties-lokale-duurzaamheidsinitiatieven" },
+            { task: "Domotica/smart home systemen voor energiebeheer integratie", link: "/domotica-smart-home-systemen-energiebeheer-integratie" },
+            { task: "Impact verduurzamingsmaatregelen evalueren", link: "/impact-verduurzamingsmaatregelen-evalueren" },
+            { task: "Overstap naar duurzame energieleveranciers/energiecontracten begeleiden", link: "/overstap-duurzame-energieleveranciers-energiecontracten-begeleiden" }
+          ]
+          
     },
     {
         id: 35,
@@ -405,7 +567,23 @@ const specialists = [
             { task: "Bedwantsen bestrijden", link: "/bedwantsen-bestrijden" },
             { task: "Vlooienplagen aanpakken", link: "/vlooienplagen-aanpakken" },
             { task: "Kakkerlakken bestrijden", link: "/kakkerlakken-bestrijden" },
-        ]
+            { task: "Mierenoverlast verhelpen", link: "/mierenoverlast-verhelpen" },
+            { task: "Zilvervisjes/Papiervisjes aanpakken", link: "/zilvervisjes-papiervisjes-aanpakken" },
+            { task: "Houtworm/Boktor bestrijden", link: "/houtworm-boktor-bestrijden" },
+            { task: "Ongediertepreventie advies", link: "/ongediertepreventie-advies" },
+            { task: "Vogelwering plaatsen", link: "/vogelwering-plaatsen" },
+            { task: "Mollen in tuinen bestrijden", link: "/mollen-in-tuinen-bestrijden" },
+            { task: "Motmuggen/Fruitvliegjes aanpakken", link: "/motmuggen-fruitvliegjes-aanpakken" },
+            { task: "Ongedierte inspectie in panden", link: "/ongedierte-inspectie-in-panden" },
+            { task: "Endoscopisch onderzoek bij ongedierte", link: "/endoscopisch-onderzoek-bij-ongedierte" },
+            { task: "Voorlichting over ongedierte/gezondheidsrisico's", link: "/voorlichting-ongedierte-gezondheidsrisicos" },
+            { task: "Knaagdieren/Insecten wering aanbrengen", link: "/knaagdieren-insecten-wering-aanbrengen" },
+            { task: "Spinnen/Overige insecten bestrijden", link: "/spinnen-overige-insecten-bestrijden" },
+            { task: "Bestrijdingsmiddelen/Apparatuur onderhoud", link: "/bestrijdingsmiddelen-apparatuur-onderhoud" },
+            { task: "Samenwerking bij grootschalige plagen", link: "/samenwerking-grootschalige-plagen" },
+            { task: "Veilig gebruik bestrijdingsmiddelen advies", link: "/veilig-gebruik-bestrijdingsmiddelen-advies" }
+          ]
+          
     },
     {
         id: 36,

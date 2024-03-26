@@ -32,7 +32,7 @@ function Searchbar() {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/klussen#${link}`);
+    navigate(`/klussen${link}`);
   };
 
 
@@ -104,7 +104,7 @@ function Searchbar() {
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""
       }`}
-      onClick={() => handleResultClick(result.specialistName.replace('/', '') + result.link.replace('/', ''))}
+      onClick={() => handleResultClick(result.link)}
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
