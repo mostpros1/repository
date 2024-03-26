@@ -1,4 +1,3 @@
-import React from "react";
 import "./JobDisc.css";
 import Icon from "../../assets/kraan.svg";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";

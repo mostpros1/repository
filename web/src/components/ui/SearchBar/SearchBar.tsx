@@ -1,7 +1,8 @@
-import './SearchBar.css';
-import specialists from '../../../data/specialists.js';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import "./SearchBar.css";
+import specialists from "../../../data/specialists.js";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ...
 
@@ -13,20 +14,25 @@ interface Specialist {
 }
 
 function Searchbar() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const handleInputBlur = (e) => {
-    if (!e.relatedTarget || e.relatedTarget.className !== 'search_dropdown_item') {
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (
+      !e.relatedTarget ||
+      !e.relatedTarget.classList.contains("search_dropdown_item")
+    ) {
       setShowList(false);
     }
   };
 
+  const navigate = useNavigate();
   const handleInputFocus = () => {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/klussen#${link}`);
+    navigate(`/klussen${link}`);
   };
 
 
@@ -62,7 +68,7 @@ function Searchbar() {
   const searchResults = () => {
     const searchTerm = value.toLowerCase().trim();
 
-    // Zoek overal naar overeenkomsten in de individuele taken en specialistnamen
+    // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
       const tasks = specialist.tasks
         .filter((task) => task.task.toLowerCase().includes(searchTerm))
@@ -75,15 +81,16 @@ function Searchbar() {
       return tasks.length > 0 ? tasks : [];
     });
 
+  
     const specialistResults = specialists
-      .filter((specialist) => specialist.name.toLowerCase().includes(searchTerm))
-      .flatMap((specialist: Specialist) => {
-        return specialist.tasks.map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
-      });
+      .filter((specialist) =>
+        specialist.name.toLowerCase().includes(searchTerm)
+      )
+      .map((specialist: Specialist) => ({
+        specialistName: specialist.name.toLowerCase(),
+        task: "", // Assuming a task field is required, you might want to adjust this
+        link: specialist.link || "", // Assuming a link field is required, you might want to adjust this
+      }));
 
     return [...taskResults, ...specialistResults];
   };
@@ -97,7 +104,7 @@ function Searchbar() {
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""
       }`}
-      onClick={() => handleResultClick(result.specialistName.replace('/', '') + result.link.replace('/', ''))}
+      onClick={() => handleResultClick(result.link)}
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
@@ -106,6 +113,11 @@ function Searchbar() {
       </span>
     </Link>
   ));
+
+  // Helper function to navigate to the selected result
+  const navigateToResult = (link: string) => {
+    navigate(`/klussen${link}`);
+  };
 
   return (
     <>
@@ -118,6 +130,7 @@ function Searchbar() {
           placeholder="Bijvoorbeeld: loodgieter"
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
+          onKeyDown={handleInputKeyDown}
         />
         <div className={showList ? "search_dropdown open" : "search_dropdown"}>
           {resultsRender}
@@ -126,7 +139,6 @@ function Searchbar() {
     </>
   );
 }
-
 // ...
 
 export default Searchbar;
