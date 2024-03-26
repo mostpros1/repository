@@ -22,5 +22,26 @@
         "Mostpros": {}
       }
     }
+  },
+  "acceptance": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mostpros-acceptance-130736-authRole",
+      "UnauthRoleArn": "arn:aws:iam::246293866149:role/amplify-mostpros-acceptance-130736-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::246293866149:role/amplify-mostpros-acceptance-130736-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-mostpros-acceptance-130736-deployment",
+      "UnauthRoleName": "amplify-mostpros-acceptance-130736-unauthRole",
+      "StackName": "amplify-mostpros-acceptance-130736",
+      "StackId": "arn:aws:cloudformation:eu-north-1:246293866149:stack/amplify-mostpros-acceptance-130736/6f989c70-eb69-11ee-b0bd-0afe5f77460e",
+      "AmplifyAppId": "d2j290dx5bs7ht"
+    },
+    "categories": {
+      "auth": {
+        "Mostpros": {}
+      },
+      "api": {
+        "mostpros": {}
+      }
+    }
   }
 }

@@ -137,9 +137,7 @@ function MultistepForm() {
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
-        
         <PageSpecialisten date={date} />
-
       </>
     ],
     onStepChange: () => { }

@@ -50,26 +50,83 @@ function ChatMain({ user, signOut }) {
     const sub = API.graphql(
       graphqlOperation(subscriptions.onCreateChat)
       // @ts-ignore
-    ).subscribe({
-      next: ({ value }) => {
-        console.log("Received a new message:", value.data.onCreateChat);
-        handleReceivedMessage(value.data.onCreateChat);
-      },
-      error: (err) => console.log(err),
-    });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
-
-  return (
-    <div>
+      ).subscribe({
+        next: ({ value }) => {
+          console.log("Received a new message:", value.data.onCreateChat);
+          handleReceivedMessage(value.data.onCreateChat);
+        },
+        error: (err) => console.log(err),
+      });
+      return () => sub.unsubscribe();
+    }, [user.attributes.email]);
+    
+    return (
+      <div>
+      {showConfirmedConnection && (
+        <div className="textjoined">
+          {/* Render a notification message */}
+          <p>{notificationMessage}</p>
+          {/* You can render a message or button to indicate that the user has joined the chat */}
+          <p>You have joined the chat</p>
+        </div>
+      )}
       <div className="button_containerc">
         <button type="button" className="buttonc" onClick={handleStartNewChat}>
           Start New Chat
         </button>
+        <button type="button" className="buttonc" onClick={() => signOut()}>
+          Sign Out
+        </button>
       </div>
 
       <div className="">
-        <div className="chat_box">
+        <div className="personlist">
+          
+        </div>
+        <div className="chat-box">
+          <div className="input-form">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              onKeyUp={async (e) => {
+                if (e.key === "Enter") {
+                  // @ts-ignore
+                  const messageText = e.target.value;
+                  if (messageText && recipientEmail) {
+                    await handleSendMessage(messageText);
+                    // @ts-ignore
+                    e.target.value = "";
+                  }
+                }
+              }}
+              className="inputchat"
+            />
+            <div className="chat-enter">
+              <kbd className="">Enter</kbd>
+            </div>
+          </div>
+          <div className="anderpersoon">
+          {showAlert && (
+            <div className="alert">
+              <input
+                type="text"
+                placeholder="Enter recipient's email"
+                value={recipientEmail}
+                onChange={handleAlertInputChange}
+              />
+              <button
+                onClick={() => {
+                  handleAlertConfirm();
+                  setShowJoinButton(true);
+                }}
+              >
+                Confirm
+              </button>
+              <button onClick={handleAlertCancel}>Cancel</button>
+            </div>
+          )}
+          </div>
           {chats
             // @ts-ignore
             .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
@@ -110,54 +167,8 @@ function ChatMain({ user, signOut }) {
             ))}
         </div>
         <div>
-          <div className="input_form">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  // @ts-ignore
-                  const messageText = e.target.value;
-                  if (messageText && recipientEmail) {
-                    await handleSendMessage(messageText);
-                    // @ts-ignore
-                    e.target.value = "";
-                  }
-                }
-              }}
-              className="inputchat"
-            />
-            <div className="chat-enter">
-              <kbd className="">Enter</kbd>
-            </div>
-          </div>
         </div>
       </div>
-      <div className="button_containerc">
-        <button type="button" className="buttonc" onClick={() => signOut()}>
-          Sign Out
-        </button>
-      </div>
-      {showAlert && (
-        <div className="alert">
-          <input
-            type="text"
-            placeholder="Enter recipient's email"
-            value={recipientEmail}
-            onChange={handleAlertInputChange}
-          />
-          <button
-            onClick={() => {
-              handleAlertConfirm();
-              setShowJoinButton(true);
-            }}
-          >
-            Confirm
-          </button>
-          <button onClick={handleAlertCancel}>Cancel</button>
-        </div>
-      )}
 
       {showJoinButton &&
         user.attributes.email !== recentMessageEmail &&
@@ -169,14 +180,6 @@ function ChatMain({ user, signOut }) {
           </div>
         )}
 
-      {showConfirmedConnection && (
-        <div>
-          {/* Render a notification message */}
-          <p>{notificationMessage}</p>
-          {/* You can render a message or button to indicate that the user has joined the chat */}
-          <p>You have joined the chat</p>
-        </div>
-      )}
     </div>
   );
 }

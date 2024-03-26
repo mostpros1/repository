@@ -1,72 +1,79 @@
-.button_containerc {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.chat-box{
+  width: 55%;
+  height: 650px;
+  background-color: #3a72ff5c;
+  border-radius: 15px;
+  right: 40px;
+  position: absolute;
 }
 
-.buttonc {
-    height: 5rem;
-    width: 18rem;
-    background-color: #308AE4;
-    border-radius: 1.5rem;
-    border: none;
-    color: white;
-    margin: auto;
-
-    &:hover {
-    background-color: #367fc8;
-    cursor: pointer;
-    }
+.input-form{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
 }
 
-.username {
-    width:fit-content;
-    background-color: #308AE4;
-    border-left: 10px solid #308AE4;
-    border-right: 10px solid #308AE4;
-    border-radius: 1.5rem;
-    
-    color: white;
-}
-
-.time {
-  font-size: small;
-  
-}
-
-.text {
-  background-color: rgb(212, 210, 210);
-  border-radius: 1.5rem;
-  width:fit-content;
-  border-left: 10px solid rgb(212, 210, 210);
-  border-right: 10px solid rgb(212, 210, 210);
-  margin-bottom: 40px;
+.inputchat{
+  width: 100%;
+  height: 50px;
+  border: solid black 2px;
 }
 
 .chat-enter{
+  background-color: #3a72ffd4;
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
   display: flex;
-  float: right;
-  margin-right: 7px;
-  margin-top: 17px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
-.chat_box {
-  width: 900px;
-  height: 500px;
-  background: rgb(224, 241, 255);
-  overflow: auto;
-  margin-left: 300px;
-}
-
-.input_form {
-  margin-left: 590px;
-  overflow: auto;
-  border: 2px solid #308AE4;
+.chat-enter:hover{
+  background-color: #3a72ffd4;
   border-radius: 15px;
-  width: 360px;
-  outline: none;
-  &:hover {
-    border: 2.2px solid #2d73b9;
-    cursor: pointer;
-    }
+}
+
+.button_containerc{
+  display: block;
+  margin: 20px;
+  gap: 40px;
+  margin-left: 150px;
+}
+
+.buttonc{
+  border-radius: 10px;
+  background-color: #3a72ffd4;
+  color: white;
+  height: 50px;
+  width: 160px;
+  border: 0;
+  margin-left: 10px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.buttonc:hover{
+  border-radius: 15px;
+  background-color: #3a72ff;
+}
+
+.anderpersoon{
+  width: 100%;
+  height: 140px;
+  background-color: #3a72ff;
+  border-radius: 15px;
+}
+
+.personlist{
+  height: 350px;
+  width: 20%;
+  background-color: grey;
+  border-radius: 20px;
+  position: absolute;
 }
