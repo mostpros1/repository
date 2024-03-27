@@ -99,7 +99,7 @@ function Searchbar() {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/klussen${result.link}`}
+      to={`/klussen#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""

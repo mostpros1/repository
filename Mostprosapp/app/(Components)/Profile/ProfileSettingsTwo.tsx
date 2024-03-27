@@ -17,7 +17,6 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -63,14 +62,14 @@ const ProfileSettingsTwo = ({ navigation }) => {
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('ProfilePrivacy')}>
+                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="lock" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Privacy</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
+                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="settings" size={23} color="black"/>
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>General</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
@@ -111,7 +110,6 @@ const ProfileSettingsTwo = ({ navigation }) => {
                         </View>
                     </View>
                 </ScrollView>
-        <Footer navigation={navigation} activePage="Profile" />
             </SafeAreaView>
         </PaperProvider>
     );
