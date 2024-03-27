@@ -65,7 +65,7 @@ function RegisterPage() {
   
 
   const handleSignUp = async () => {
-    signUp(registerData, 'Homeowner');
+    signUp(registerData);
     console.log(registerData);
   };
 

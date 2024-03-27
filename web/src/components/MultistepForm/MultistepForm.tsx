@@ -135,9 +135,9 @@ function MultistepForm() {
     steps: [
       <>
         <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-        
+
         <PageSpecialisten date={date} />
 
       </>
@@ -149,29 +149,29 @@ function MultistepForm() {
   //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
   const stepWidth = 100 / steps.length;
 
-  // return (
-  //   <form onSubmit={onsubmit} className='form-con'>
-  //     <div className='progress-con'>
-  //       <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
-  //       <div className="progress-bar">
-  //         {steps.map((_, index) => (
-  //           <div
-  //             key={index}
-  //             className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-  //             style={{ width: `${stepWidth}%` }}
-  //           ></div>
-  //         ))}
-  //       </div>
-  //     </div>
+  return (
+    <form onSubmit={onsubmit} className='form-con'>
+      <div className='progress-con'>
+        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
+        <div className="progress-bar">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
+              style={{ width: `${stepWidth}%` }}
+            ></div>
+          ))}
+        </div>
+      </div>
 
-  //     {step}
+      {step}
 
-  //     <div className='btn-wrapper'>
-  //       {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
-  //       <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-  //     </div>
-  //   </form>
-  // )
+      <div className='btn-wrapper'>
+        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
+        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
+      </div>
+    </form>
+  )
 }
 
 export default MultistepForm;
