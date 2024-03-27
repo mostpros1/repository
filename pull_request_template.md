@@ -1,3 +1,8 @@
+## Checklist
+- [ ] no unused files
+- [ ] no unused code
+- [ ] no `console.log`
+
 ## Related Issue
 - [ ] Please link to the issue that this pull request is related to. If there is no related issue, please explain why this change is necessary.
 
