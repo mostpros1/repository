@@ -21,7 +21,7 @@ function ContactInputs() {
     console.log('Subject:', subject);
     console.log('Question:', question);
 
-    sendMail(String(email), String(subject), String(question), "<p>"+ String(question) + "</p>");
+    sendMail(String(email), String(subject), String(firstname) + " " + String(lastname) + " " + String(question), "<p>"+ String(firstname) + " " + String(lastname) + " " + String(question) + "</p>");
   };
   return (
     <form method="Post" className="contact_form" onSubmit={handleSubmit}>
