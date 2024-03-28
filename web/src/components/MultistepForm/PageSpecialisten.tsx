@@ -51,7 +51,7 @@ const PageSpecialisten = (updateDate, { date }) => {
     // Filter by price
     if (priceFrom) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
-    } 
+    }
 
     // Sort by criteria
     if (sortBy) {
@@ -86,9 +86,9 @@ const PageSpecialisten = (updateDate, { date }) => {
 
   const [specialists, setSpecialists] = useState(exampleSpecialists);
 
-  
-  
-  
+
+
+
 
   //make a function to grab data behind the hashtag in the url and print it into the console
 
@@ -116,32 +116,41 @@ const PageSpecialisten = (updateDate, { date }) => {
       .then(data => {
         setSpecialists(data.Items);
         Specialists = data.Items;
-        console.log(data.Items);
+
+        for (let i = 0; i < data.Items.length; i++) {
+          console.log(data.Items[i].email);
+
+          dynamo.query({
+            TableName: "UserAvailability",
+            IndexName: "email_index",
+            KeyConditionExpression: "email = :email",
+            FilterExpression: "datum = :date ",
+            ExpressionAttributeValues: {
+              ":date": "2024-04-01",//JSON.stringify(updateDate).replace('T', '"').split('"')[3],
+              ":email": "timon@timonheidenreich.eu",//data.Items[i].email,
+            },
+          }).promise()
+            .then(output => {
+              console.log(data.Items);
+              //Availibility = Availibility.concat(output.Items);
+              Specialists = data.Items;
+              console.log(output.Items);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+        /*for ( let i = 0; i < data.Items.length; i++) {
+          console.log("timon" + data.Items[i]);
+        }*/
       })
       .catch(err => {
         console.log(err);
       });
-      
-      console.log(JSON.stringify(updateDate).split('T')[0]);
-    dynamo.query({
-      TableName: "beschikbaarheid",
-      IndexName: "datum",
-      KeyConditionExpression: "datum = :date",
-      FilterExpression: "datum = :date AND profession = :profession",
-      ExpressionAttributeValues: {
-        ":date": updateDate,
-        ":profession": profession,
-      },
-    }).promise()
-      .then(output => {
 
-        Availibility = output.Items
-        console.log(output.Items);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-      
+    console.log(JSON.stringify(updateDate).replace('T', '"').split('"')[3]);
+
+
     const checkEmailInJson = (email) => {
       if (Specialists && Availibility) {
         // Replace with the email address you want to check
@@ -153,12 +162,12 @@ const PageSpecialisten = (updateDate, { date }) => {
       }
     };
 
-    
+
 
     checkEmailInJson('example@example.com');
 
   }, [updateDate]);
-      
+
   return (
 
     <div className="filter-bar">
@@ -175,22 +184,22 @@ const PageSpecialisten = (updateDate, { date }) => {
         <option value="priceHighLow">Price: High to Low</option>
         <option value="rating">Rating</option>
       </select>
-    <div className="specialisten-container">
-      {specialists.map((specialist) => (
-        <div key={specialist.id} className="specialist-card">
-        <div className="specialist-header">
-            <div className="specialist-info-1">
+      <div className="specialisten-container">
+        {specialists.map((specialist) => (
+          <div key={specialist.id} className="specialist-card">
+            <div className="specialist-header">
+              <div className="specialist-info-1">
                 <h3>{specialist.name}</h3>
                 <h5>{specialist.profession}</h5>
+              </div>
             </div>
-        </div>
-          <div className="specialist-info-2">
-            <p>{specialist.bio}</p>
+            <div className="specialist-info-2">
+              <p>{specialist.bio}</p>
+            </div>
+            <button className="contact-button">Contact opnemen</button>
           </div>
-          <button className="contact-button">Contact opnemen</button>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
     </div>
   );
 };

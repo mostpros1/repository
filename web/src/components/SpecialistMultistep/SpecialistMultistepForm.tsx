@@ -95,6 +95,8 @@ function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
+  
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -163,14 +165,14 @@ function SpecialistMultistepForm() {
 
     return (
       <form action="" method="POST">
-        <div>
-          <h1>Selecteer uw beschikbaarheid:</h1>
-          <Calendar />
-        </div>
+      <div>
+        <h1>Selecteer uw beschikbaarheid:</h1>
+        <Calendar email={data.email} />
+      </div>
       </form>
     );
   }
-
+  
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
@@ -182,8 +184,8 @@ function SpecialistMultistepForm() {
         />,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />,
         <KvKForm setShowNoKvK={setShowNoKvK} />,
-        
-        
+
+
       ],
       onStepChange: () => { },
     });
@@ -238,7 +240,7 @@ function SpecialistMultistepForm() {
       dob: "" // Add the 'dob' property here
     }
     try {
-      signUp(userData, "Professional");
+      signUp(userData);
     } catch (error) {
       console.error('Error signing up:', error);
       //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
