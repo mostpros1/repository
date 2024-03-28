@@ -15,11 +15,7 @@ function ContactInputs() {
     const question = formData.get('question');
 
     // Now you can use these variables as needed (e.g., send them to your server)
-    console.log('First Name:', firstname);
-    console.log('Last Name:', lastname);
-    console.log('Email:', email);
-    console.log('Subject:', subject);
-    console.log('Question:', question);
+   
 
     sendMail(String(email), String(subject), String(firstname) + " " + String(lastname) + " " + String(question), "<p>"+ String(firstname) + " " + String(lastname) + " " + String(question) + "</p>");
   };
