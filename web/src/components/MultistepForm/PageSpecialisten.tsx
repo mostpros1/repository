@@ -117,7 +117,7 @@ const PageSpecialisten = (updateDate, { date }) => {
         setSpecialists(data.Items);
         Specialists = data.Items;
 
-        /*for (let i = 0; i < data.Items.length; i++) {
+        for (let i = 0; i < data.Items.length; i++) {
           console.log("Processing item:", data.Items[i]);
           const emailadress: string = data.Items[i].email;
           console.log("Email Address:", emailadress);
@@ -140,7 +140,7 @@ const PageSpecialisten = (updateDate, { date }) => {
               console.log("Error occurred:", error);
             });
         }
-*/
+        
       })
       .catch(err => {
         console.log(err);
