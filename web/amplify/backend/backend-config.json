@@ -33,7 +33,7 @@
         ],
         "passwordProtectionSettings": {
           "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 6
+          "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
           "EMAIL",
@@ -50,40 +50,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_auth_mostpros88966fcb_nativeClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "mostpros88966fcb"
-        }
-      ]
-    },
-    "AMPLIFY_auth_mostpros88966fcb_userPoolId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "mostpros88966fcb"
-        }
-      ]
-    },
-    "AMPLIFY_auth_mostpros88966fcb_userPoolName": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "mostpros88966fcb"
-        }
-      ]
-    },
-    "AMPLIFY_auth_mostpros88966fcb_webClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "mostpros88966fcb"
-        }
-      ]
     }
   }
 }

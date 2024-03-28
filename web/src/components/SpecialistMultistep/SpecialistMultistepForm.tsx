@@ -199,7 +199,7 @@ function SpecialistMultistepForm() {
           attributes: {
             phone_number: phoneNumber,
             name: firstName,
-            family_name: lastName,
+            "custom:family_name": lastName,
           },
           autoSignIn: { enabled: true },
         });

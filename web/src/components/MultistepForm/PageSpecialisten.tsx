@@ -123,12 +123,14 @@ const PageSpecialisten = (updateDate, { date }) => {
       });
       
       console.log(JSON.stringify(updateDate).split('T')[0]);
-    /*dynamo.query({
+    dynamo.query({
       TableName: "beschikbaarheid",
       IndexName: "datum",
       KeyConditionExpression: "datum = :date",
+      FilterExpression: "datum = :date AND profession = :profession",
       ExpressionAttributeValues: {
         ":date": updateDate,
+        ":profession": profession,
       },
     }).promise()
       .then(output => {
@@ -138,7 +140,7 @@ const PageSpecialisten = (updateDate, { date }) => {
       })
       .catch(error => {
         console.log(error);
-      });*/
+      });
       
     const checkEmailInJson = (email) => {
       if (Specialists && Availibility) {
