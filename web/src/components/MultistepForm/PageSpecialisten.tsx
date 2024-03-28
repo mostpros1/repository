@@ -117,32 +117,30 @@ const PageSpecialisten = (updateDate, { date }) => {
         setSpecialists(data.Items);
         Specialists = data.Items;
 
-        for (let i = 0; i < data.Items.length; i++) {
-          console.log(data.Items[i].email);
+        /*for (let i = 0; i < data.Items.length; i++) {
+          console.log("Processing item:", data.Items[i]);
+          const emailadress: string = data.Items[i].email;
+          console.log("Email Address:", emailadress);
 
           dynamo.query({
             TableName: "UserAvailability",
             IndexName: "email_index",
             KeyConditionExpression: "email = :email",
-            FilterExpression: "datum = :date ",
+            FilterExpression: "datum = :date",
             ExpressionAttributeValues: {
-              ":date": "2024-04-01",//JSON.stringify(updateDate).replace('T', '"').split('"')[3],
-              ":email": "timon@timonheidenreich.eu",//data.Items[i].email,
+              ":date": JSON.stringify(updateDate).replace('T', '"').split('"')[3],
+              ":email": emailadress,
             },
           }).promise()
             .then(output => {
-              console.log(data.Items);
-              //Availibility = Availibility.concat(output.Items);
-              Specialists = data.Items;
-              console.log(output.Items);
+              console.log("Query result:", output);
+              console.log("Fetched items:", output.Items);
             })
             .catch(error => {
-              console.log(error);
+              console.log("Error occurred:", error);
             });
         }
-        /*for ( let i = 0; i < data.Items.length; i++) {
-          console.log("timon" + data.Items[i]);
-        }*/
+*/
       })
       .catch(err => {
         console.log(err);
