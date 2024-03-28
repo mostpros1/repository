@@ -1,5 +1,5 @@
 import aws from 'aws-sdk';
-
+import env from "../web/src/vite-env";
 
 export const dynamoDB = new aws.DynamoDB({
     region: import.meta.env.VITE_AWS_REGION,
