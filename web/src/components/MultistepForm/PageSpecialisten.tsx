@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = (updateDate, { date }) => {
+const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -87,7 +87,6 @@ const PageSpecialisten = (updateDate, { date }) => {
 
   //make a function to grab data behind the hashtag in the url and print it into the console
 
-
   //backend niet verwijderen
   useEffect(() => {
     let Availibility;
@@ -109,7 +108,7 @@ const PageSpecialisten = (updateDate, { date }) => {
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items);
+        //setSpecialists(data.Items);
         Specialists = data.Items;
         console.log(data.Items);
       })
@@ -118,37 +117,33 @@ const PageSpecialisten = (updateDate, { date }) => {
       });
       
       console.log(JSON.stringify(updateDate).split('T')[0]);
-    /*dynamo.query({
-      TableName: "beschikbaarheid",
-      IndexName: "datum",
-      KeyConditionExpression: "datum = :date",
-      ExpressionAttributeValues: {
-        ":date": updateDate,
-      },
-    }).promise()
-      .then(output => {
-
-        Availibility = output.Items
-        console.log(output.Items);
-      })
-      .catch(error => {
-        console.log(error);
-      });*/
+      // dynamo.query({
+      //   TableName: "beschikbaarheid",
+      //   IndexName: "datum",
+      //   KeyConditionExpression: "datum = :date",
+      //   ExpressionAttributeValues: {
+      //     ":date": updateDate,
+      //   },
+      // }).promise()
+      //   .then(output => {
+      //     Availibility = output.Items
+      //     console.log(output.Items);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      // });
       
-    const checkEmailInJson = (email) => {
-      if (Specialists && Availibility) {
-        // Replace with the email address you want to check
-        const specialistEmails = Specialists.map(specialist => specialist.email);
-        const availibilityEmails = Availibility.map(item => item.email);
-        const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
-        const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
-        console.log(matchingSpecialists);
-      }
-    };
-
-    
-
-    checkEmailInJson('example@example.com');
+    // const checkEmailInJson = (email) => {
+    //   if (Specialists && Availibility) {
+    //     // Replace with the email address you want to check
+    //     const specialistEmails = Specialists.map(specialist => specialist.email);
+    //     const availibilityEmails = Availibility.map(item => item.email);
+    //     const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
+    //     const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
+    //     console.log(matchingSpecialists);
+    //   }
+    // };
+    // checkEmailInJson('example@example.com');
 
   }, [updateDate]);
       
@@ -187,4 +182,5 @@ const PageSpecialisten = (updateDate, { date }) => {
     </div>
   );
 };
+
 export default PageSpecialisten;
