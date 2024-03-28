@@ -146,24 +146,6 @@ const PageSpecialisten = (updateDate, { date }) => {
         console.log(err);
       });
 
-    console.log(JSON.stringify(updateDate).replace('T', '"').split('"')[3]);
-
-
-    const checkEmailInJson = (email) => {
-      if (Specialists && Availibility) {
-        // Replace with the email address you want to check
-        const specialistEmails = Specialists.map(specialist => specialist.email);
-        const availibilityEmails = Availibility.map(item => item.email);
-        const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
-        const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
-        console.log(matchingSpecialists);
-      }
-    };
-
-
-
-    checkEmailInJson('example@example.com');
-
   }, [updateDate]);
 
   return (
