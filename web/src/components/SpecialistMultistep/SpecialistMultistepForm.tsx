@@ -15,6 +15,7 @@ import Calendar from './Calendar';
 import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
 import { Datums } from "./Calendar.tsx";
+import { dynamo } from "./../../../../backend_functions/declerations.ts";
 
 type DateTimeSpan = {
   date: Date;
@@ -281,11 +282,10 @@ function SpecialistMultistepForm() {
       },
     };
     try {
-      await dynamo.put(params).promise();
-      alert("Beschikbaarheid succesvol opgeslagen!");
+      dynamo.put(params).promise();
     } catch (error) {
       console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      alert("Fout bij het opslaan van beschikbaarheid.");
+      //delete user
     }
   }
 
