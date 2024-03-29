@@ -3,6 +3,7 @@ import Footer from '../../components/ui/Footer/Footer'
 import './MijnKlussen.css'
 import JobDisc from '../../components/JobProfile/JobDisc'
 
+
 function KlussenPage() {
     return (
         <div id="root">

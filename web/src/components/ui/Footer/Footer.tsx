@@ -57,7 +57,7 @@ function Footer() {
         <Link to="/privacybeleid">Privacybeleid.</Link>
         <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
         <Link to="/disclaimer">Disclaimer</Link>
-        <Link to="/VSDashboard">.</Link>
+        <Link to="/EditProfileSection">.</Link>
       </div>
     </footer>
   );
