@@ -3,9 +3,12 @@ import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
 import { RegisterForm } from "../MultistepForm/RegisterForm";
 import { FormEvent } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../ui/HomeButton/HomeButton";
+import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
+import KvKForm from "./KvKForm/KvKForm";
 import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
 import './/SpecialistMultistepForm.css';
@@ -14,6 +17,12 @@ import React from 'react';
 import Calendar from './Calendar';
 import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
   beroep: string;
@@ -42,6 +51,7 @@ interface RegisterData {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
   beroep: "",
   email: "",
   postCode: "",
@@ -286,7 +296,27 @@ function SpecialistMultistepForm() {
 
         </div>
       </>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
 }
+
 export default SpecialistMultistepForm;

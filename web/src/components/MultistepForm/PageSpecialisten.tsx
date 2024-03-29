@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = (updateDate, { date }) => {
+const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -92,7 +92,6 @@ const PageSpecialisten = (updateDate, { date }) => {
 
   //make a function to grab data behind the hashtag in the url and print it into the console
 
-
   //backend niet verwijderen
   useEffect(() => {
     let Availibility;
@@ -114,7 +113,7 @@ const PageSpecialisten = (updateDate, { date }) => {
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items);
+        //setSpecialists(data.Items);
         Specialists = data.Items;
 
         for (let i = 0; i < data.Items.length; i++) {
@@ -183,4 +182,5 @@ const PageSpecialisten = (updateDate, { date }) => {
     </div>
   );
 };
+
 export default PageSpecialisten;

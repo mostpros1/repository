@@ -1,6 +1,5 @@
 backend_functions/emails/sendSesMail.js
 
-
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
