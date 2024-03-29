@@ -113,7 +113,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
       },
     }).promise()
       .then(data => {
-        //setSpecialists(data.Items);
+        setSpecialists(data.Items);
         Specialists = data.Items;
 
         for (let i = 0; i < data.Items.length; i++) {
