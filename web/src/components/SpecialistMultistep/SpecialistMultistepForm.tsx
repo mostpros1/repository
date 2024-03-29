@@ -14,6 +14,7 @@ import React from 'react';
 import Calendar from './Calendar';
 import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
+import { Datums } from "./Calendar.tsx";
 
 type DateTimeSpan = {
   date: Date;
@@ -257,6 +258,12 @@ function SpecialistMultistepForm() {
 
   const stepWidth = 100 / steps.length;
 
+
+function addProfessional(dates: string[]) {
+  console.log(dates);
+}
+
+addProfessional(Datums);
   return (
     <form onSubmit={onSubmit} className="form-con">
       <div className="progress-con">
