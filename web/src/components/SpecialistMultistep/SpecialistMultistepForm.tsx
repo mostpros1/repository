@@ -103,7 +103,7 @@ function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
-  
+
 
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
@@ -173,14 +173,14 @@ function SpecialistMultistepForm() {
 
     return (
       <form action="" method="POST">
-      <div>
-        <h1>Selecteer uw beschikbaarheid:</h1>
-        <Calendar email={data.email} />
-      </div>
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar email={data.email} />
+        </div>
       </form>
     );
   }
-  
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
@@ -259,11 +259,37 @@ function SpecialistMultistepForm() {
   const stepWidth = 100 / steps.length;
 
 
-function addProfessional(dates: string[]) {
-  console.log(dates);
-}
+  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
+    console.log(availibility);
 
-addProfessional(Datums);
+    
+    //availibility is als Datums opgeslagen
+    
+    const params = {
+      TableName: "Specialists",
+      Item: {
+        id: Math.floor(Math.random() * 1000000),
+        name: name,
+        email: email,
+        profession: profession,
+        location: location,
+        price: price,
+        rating: rating,
+        bio: bio,
+        availibility: availibility,
+
+      },
+    };
+    try {
+      await dynamo.put(params).promise();
+      alert("Beschikbaarheid succesvol opgeslagen!");
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      alert("Fout bij het opslaan van beschikbaarheid.");
+    }
+  }
+
+  
   return (
     <form onSubmit={onSubmit} className="form-con">
       <div className="progress-con">
