@@ -11,7 +11,11 @@ interface DateAndTimePickerProps {
   // onDateChange?: (selectedDates: string[]) => void;
 }
 
-const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ email }) => {
+export let Datums: any[] = [];
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
+
+
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
@@ -197,7 +201,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ email }) => {
   };
 
   const submitDates = async () => {
-
+    
     /*const item = {
       userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
@@ -221,7 +225,11 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ email }) => {
       alert("Fout bij het opslaan van beschikbaarheid.");
     }*/
 
+    
     for (let i = 0; i < selectedDates.length; i++) {
+      Datums = [...Datums, selectedDates[i]];
+      
+      
       const params = {
         TableName: "UserAvailability",
         Item: {

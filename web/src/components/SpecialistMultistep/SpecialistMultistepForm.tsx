@@ -14,6 +14,14 @@ import React from 'react';
 import Calendar from './Calendar';
 import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
+import { Datums } from "./Calendar.tsx";
+import { dynamo } from "./../../../../backend_functions/declerations.ts";
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
   beroep: string;
@@ -42,6 +50,7 @@ interface RegisterData {
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
   beroep: "",
   email: "",
   postCode: "",
@@ -95,7 +104,7 @@ function SpecialistMultistepForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
 
-  
+
 
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
@@ -165,14 +174,14 @@ function SpecialistMultistepForm() {
 
     return (
       <form action="" method="POST">
-      <div>
-        <h1>Selecteer uw beschikbaarheid:</h1>
-        <Calendar email={data.email} />
-      </div>
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar email={data.email} />
+        </div>
       </form>
     );
   }
-  
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
@@ -250,6 +259,37 @@ function SpecialistMultistepForm() {
 
   const stepWidth = 100 / steps.length;
 
+
+  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
+    console.log(availibility);
+
+    
+    //availibility is als Datums opgeslagen
+    
+    const params = {
+      TableName: "Specialists",
+      Item: {
+        id: Math.floor(Math.random() * 1000000),
+        name: name,
+        email: email,
+        profession: profession,
+        location: location,
+        price: price,
+        rating: rating,
+        bio: bio,
+        availibility: availibility,
+
+      },
+    };
+    try {
+      dynamo.put(params).promise();
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      //delete user
+    }
+  }
+
+  
   return (
     <form onSubmit={onSubmit} className="form-con">
       <div className="progress-con">
@@ -286,7 +326,27 @@ function SpecialistMultistepForm() {
 
         </div>
       </>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
 }
+
 export default SpecialistMultistepForm;

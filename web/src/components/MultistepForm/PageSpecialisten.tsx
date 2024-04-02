@@ -34,7 +34,7 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = (updateDate, { date }) => {
+const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
@@ -42,7 +42,7 @@ const PageSpecialisten = (updateDate, { date }) => {
   const applyFilters = () => {
     let filteredSpecialists = specialists;
 
-    console.log("hello:  ", filteredSpecialists);
+    //console.log("hello:  ", filteredSpecialists);
     // Filter by location
     if (location) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
@@ -93,16 +93,15 @@ const PageSpecialisten = (updateDate, { date }) => {
   //make a function to grab data behind the hashtag in the url and print it into the console
 
 
+
   //backend niet verwijderen
   useEffect(() => {
-    let Availibility;
-    let Specialists;
+    let professionals: any[] = [];
 
-    console.log(updateDate);
     const profession = window.location.hash.replace("#", "").split("?")[0];
-    console.log(profession);
+    
     const task = window.location.hash.replace("#", "").split("?")[1];
-    console.log(task);
+    
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
@@ -114,38 +113,48 @@ const PageSpecialisten = (updateDate, { date }) => {
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items);
-        Specialists = data.Items;
 
-        for (let i = 0; i < data.Items.length; i++) {
-          console.log("Processing item:", data.Items[i]);
-          const emailadress: string = data.Items[i].email;
-          console.log("Email Address:", emailadress);
 
-          dynamo.query({
-            TableName: "UserAvailability",
-            IndexName: "email_index",
-            KeyConditionExpression: "email = :email",
-            FilterExpression: "datum = :date",
-            ExpressionAttributeValues: {
-              ":date": JSON.stringify(updateDate).replace('T', '"').split('"')[3],
-              ":email": emailadress,
-            },
-          }).promise()
-            .then(output => {
-              console.log("Query result:", output);
-              console.log("Fetched items:", output.Items);
-            })
-            .catch(error => {
-              console.log("Error occurred:", error);
-            });
+        const convertedItems = data.Items.map(item => ({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          profession: item.profession,
+          location: item.location,
+          price: item.price,
+          rating: item.rating,
+          bio: item.bio,
+          availibility: item.availibility,
+        }));
+        /*
+                const Availability = JSON.parse(convertedItems[0].availibility);
+                '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
+                console.log("Availability =", Availability);
+        */
+
+
+        for (let i: number = 0; i < convertedItems.length; i++) {
+          if (convertedItems[i].availibility) {
+            const Availability = JSON.parse(convertedItems[i].availibility);
+
+            for (let x: number = 0; x < Availability.dates.length; x++) {
+
+              const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
+
+              if (selected == Availability.dates[x]) {
+                professionals = [...professionals, convertedItems[i]];
+                break;
+              }
+            }
+          }
         }
-        
-      })
-      .catch(err => {
+        setSpecialists(/*convertedItems*/professionals);
+
+
+      }).catch(err => {
         console.log(err);
       });
-
+  
   }, [updateDate]);
 
   return (
@@ -183,4 +192,5 @@ const PageSpecialisten = (updateDate, { date }) => {
     </div>
   );
 };
+
 export default PageSpecialisten;
