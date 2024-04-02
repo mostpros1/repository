@@ -115,17 +115,17 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
       .then(data => {
 
 
-        const convertedItems = data.Items.map(item => ({
-          id: item.id,
-          name: item.name,
-          email: item.email,
-          profession: item.profession,
-          location: item.location,
-          price: item.price,
-          rating: item.rating,
-          bio: item.bio,
-          availibility: item.availibility,
-        }));
+        // const convertedItems = data.Items.map(item => ({
+        //   id: item.id,
+        //   name: item.name,
+        //   email: item.email,
+        //   profession: item.profession,
+        //   location: item.location,
+        //   price: item.price,
+        //   rating: item.rating,
+        //   bio: item.bio,
+        //   availibility: item.availibility,
+        // }));
         /*
                 const Availability = JSON.parse(convertedItems[0].availibility);
                 '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
@@ -133,21 +133,21 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
         */
 
 
-        for (let i: number = 0; i < convertedItems.length; i++) {
-          if (convertedItems[i].availibility) {
-            const Availability = JSON.parse(convertedItems[i].availibility);
+        // for (let i: number = 0; i < convertedItems.length; i++) {
+        //   if (convertedItems[i].availibility) {
+        //     const Availability = JSON.parse(convertedItems[i].availibility);
 
-            for (let x: number = 0; x < Availability.dates.length; x++) {
+        //     for (let x: number = 0; x < Availability.dates.length; x++) {
 
-              const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
+        //       const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
 
-              if (selected == Availability.dates[x]) {
-                professionals = [...professionals, convertedItems[i]];
-                break;
-              }
-            }
-          }
-        }
+        //       if (selected == Availability.dates[x]) {
+        //         professionals = [...professionals, convertedItems[i]];
+        //         break;
+        //       }
+        //     }
+        //   }
+        // }
         setSpecialists(/*convertedItems*/professionals);
 
 
