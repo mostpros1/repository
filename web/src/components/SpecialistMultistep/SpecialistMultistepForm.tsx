@@ -47,7 +47,7 @@ interface RegisterData {
   password: string;
   repeatPassword: string;
   dob: string;
-  
+
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
@@ -215,29 +215,27 @@ function SpecialistMultistepForm() {
           },
           autoSignIn: { enabled: true },
         });
+       /*
+        dynamo
+          .put({
+            Item: {
 
-      /*  const { profession, location, price, rating, bio } = registerData;
+              id: Math.floor(Math.random() * 1000000000),
+              name: stopXSS(firstName) + " " + stopXSS(lastName),
+              email: stopXSS(email),
+              profession: stopXSS(data.beroep),
+              location: stopXSS(data.question1),
+              //rating: "Unrated",
+              bio: stopXSS(data.bio),
+              availibility: Datums,
+            },
+            TableName: "Specialists",
+          })
+          .promise()
+          .then(data => console.log(data.Attributes))
+          .catch(console.error)
 
-      dynamo
-  .put({
-    Item: {
-
-      id: Math.floor(Math.random() * 1000000000),
-          name: stopXSS(firstName) + " " + stopXSS(lastName),
-          email: stopXSS(email),
-          profession: stopXSS(data.beroep),
-          location: stopXSS(data.question1),
-          //rating: "Unrated",
-          bio: stopXSS(data.bio),
-          availibility: Datums,
-    },
-    TableName: "Specialists",
-  })
-  .promise()
-  .then(data => console.log(data.Attributes))
-  .catch(console.error)
-
-      */
+          * /
 
 
         /*const user = await Auth.signIn(email, password);
@@ -289,9 +287,9 @@ function SpecialistMultistepForm() {
   function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
     console.log(availibility);
 
-    
+
     //availibility is als Datums opgeslagen
-    
+
     const params = {
       TableName: "Specialists",
       Item: {
@@ -315,7 +313,7 @@ function SpecialistMultistepForm() {
     }
   }
 
-  
+
   return (
     <form onSubmit={onSubmit} className="form-con">
       <div className="progress-con">
