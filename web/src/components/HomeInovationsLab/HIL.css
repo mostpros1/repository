@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Kanit, sans-serif;
+  font-family: "Kanit", sans-serif;
 }
 
 .main-content {
@@ -13,11 +13,14 @@
 }
 
 .image-container {
+  display: flex;
   position: relative;
+  justify-content: space-around;
 }
 
 .image-container img {
-  width: 100%;
+  display: flex;
+  width: 75%;
   height: auto;
   border-radius: 15px;
   filter: brightness(0.6);
@@ -57,7 +60,7 @@
 }
 
 .grid-col {
-  height: 600px;
+  height: 150px;
   margin: auto;
   width: 24%;
 }

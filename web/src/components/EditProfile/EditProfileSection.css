@@ -19,7 +19,7 @@
 
 .profile-con {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   padding: 50px;
   justify-items: start;
@@ -106,14 +106,14 @@
   float: right;
 }
 
-.location {
+.profile-desc {
   padding-top: 10px;
   font-size: 1.4rem;
   color: #9c9c9c;
   width: 350px;
 }
 
-.location svg {
+.profile-desc svg {
   font-size: 25px;
   color: #308ae4;
   float: left;
@@ -130,8 +130,8 @@
   margin: auto;
   margin-bottom: 25px;
 }
-.content-con {
-  grid-row: 2;
+.availability-con {
+  padding: 15px;
   margin: auto 15px 50px;
 }
 
@@ -140,24 +140,10 @@
   color: white;
   border: none;
   border-radius: 15px;
-  padding: 10px 20px;
+  padding: 15px 20px;
   font-size: 1.4rem;
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-}
-
-.text-con {
-  grid-row: 3;
-  white-space: wrap;
-}
-
-.text-con p {
-  font-size: 15px;
-  margin-bottom: 15px;
-}
-
-.text-con span {
-  font-size: 15px;
 }
 
 .availability-btn {
@@ -170,6 +156,21 @@
 .availability-btn svg {
   margin-right: 15px;
   font-size: 30px;
+}
+
+.text-con {
+  padding: 25px;
+  grid-row: 3;
+  white-space: wrap;
+}
+
+.text-con p {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.text-con span {
+  font-size: 15px;
 }
 
 .profile-under-sec {
@@ -295,4 +296,119 @@
 .change-btn:hover {
   background-color: #308ae4;
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-con-upper {
+    width: auto;
+    margin: auto;
+  }
+
+  .profile-con {
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+  }
+
+  .sidebar-con {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .profile-right-con {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    padding: 1rem;
+  }
+
+  .profile-info-card {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .profile-info-con {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
+
+  .profile-info-con h1 {
+    text-align: center;
+  }
+
+  .job-title {
+    padding: 0px 0px 10px 0px;
+    text-align: center;
+    font-size: 1.4rem;
+  }
+
+  .profile-info-con-side {
+    align-items: center;
+  }
+
+  .profile-pic {
+    width: 16rem;
+  }
+
+  .star-review {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content-con {
+    margin: auto 10px 30px;
+  }
+
+  .text-con p {
+    font-size: 14px;
+  }
+
+  .profile-under-sec {
+    margin: 30px 20px;
+    padding-left: 0;
+  }
+
+  .photos-videos-section {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .img-col img {
+    max-width: 100px;
+    margin: auto;
+  }
+
+  .upload-dot-layout {
+    padding: 30px;
+    width: 300px;
+    height: 200px;
+  }
+
+  .upload-dot-layout button {
+    padding: 15px;
+  }
+
+  .large-img img {
+    margin: 10px;
+    max-height: 200px;
+    max-width: 200px;
+  }
+
+  .small-images {
+    grid-template-columns: repeat(1, 1fr);
+    padding-left: 10px;
+  }
+
+  .small-images img {
+    max-width: 100px;
+  }
+
+  .change-btn {
+    width: 150px;
+    height: 47px;
+    font-size: 1.3rem;
+  }
 }

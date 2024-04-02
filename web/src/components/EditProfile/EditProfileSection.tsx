@@ -33,10 +33,10 @@ const EditProfileSection = () => {
               </div>
               <div className="profile-info-con">
                 <h1>Jason D. Schilder</h1>
-                <div className="job-title">
-                  <p>Loodgieter</p>
-                </div>
-                <div className="location">
+                <div className="profile-desc">
+                  <div className="job-title">
+                    <p>Loodgieter</p>
+                  </div>
                   <LocationOnIcon />
                   <p>
                     <span className="profile-info-con-side">
@@ -48,48 +48,47 @@ const EditProfileSection = () => {
                 </div>
               </div>
             </div>
-            <div className="profile-right-con">
-              <div className="profile-info-card">
-                <h4>Contact informatie</h4>
-                <ul>
-                  <li>
-                    <div className="phone-icon">
-                      <PhoneInTalkIcon />
-                    </div>
-                    +31 0612345678
-                  </li>
-                  <li>
-                    <div className="email-sect">
-                      <EmailRoundedIcon />
-                      Janschilder@hotmail.com
-                    </div>
-                  </li>
-                </ul>
-              </div>
+          </div>
+          <div className="profile-right-con">
+            <div className="profile-info-card">
+              <h4>Contact informatie</h4>
+              <ul>
+                <li>
+                  <div className="phone-icon">
+                    <PhoneInTalkIcon />
+                  </div>
+                  +31 0612345678
+                </li>
+                <li>
+                  <div className="email-sect">
+                    <EmailRoundedIcon />
+                    Janschilder@hotmail.com
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="content-con">
+          <div className="availability-con">
             <button className="availability-btn">
               <CalendarMonthIcon />
               Beschikbaarheid doorgeven
             </button>
           </div>
-          <div className="text-con">
-            <p>Hallo, ik ben Jan.</p>
-            <span>
-              Ik ben een Loodgieter voor meer dan 10 jaar. Ik heb aan veel
-              projecten gewerkt en heb veel ervaring met alle klussen die te
-              maken hebben met loodgieterswerk dus als je mij nodig heb neem
-              meteen contact op met mij.
-            </span>
-          </div>
         </div>
-        <div className="profile-btn-con">
-          <button className="change-btn">Wijzigen</button>
+        <div className="text-con">
+          <p>Hallo, ik ben Jan.</p>
+          <span>
+            Ik ben een Loodgieter voor meer dan 10 jaar. Ik heb aan veel
+            projecten gewerkt en heb veel ervaring met alle klussen die te maken
+            hebben met loodgieterswerk dus als je mij nodig heb neem meteen
+            contact op met mij.
+          </span>
         </div>
       </div>
-      <div className="profile-under-sec">
+      <div className="profile-btn-con">
+        <button className="change-btn">Wijzigen</button>
       </div>
+      <div className="profile-under-sec"></div>
       <div className="img-slideshow-con">
         <p>Foto's en Video's</p>
         <div className="img-upload">
@@ -105,9 +104,9 @@ const EditProfileSection = () => {
             </div>
             <div className="small-images">
               <img src={Bas_R} alt="Bas_R" />
-              <img src={Gardener} alt="Bas_R" /> 
-              <img src={Rik} alt="Bas_R" /> 
-              <img src={Robbert} alt="Bas_R" /> 
+              <img src={Gardener} alt="Bas_R" />
+              <img src={Rik} alt="Bas_R" />
+              <img src={Robbert} alt="Bas_R" />
             </div>
           </div>
         </div>
