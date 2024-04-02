@@ -201,7 +201,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
   };
 
   const submitDates = async () => {
-    
+
     /*const item = {
       userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
@@ -225,12 +225,12 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
       alert("Fout bij het opslaan van beschikbaarheid.");
     }*/
 
-    
+    Datums = [];
     for (let i = 0; i < selectedDates.length; i++) {
       Datums = [...Datums, selectedDates[i]];
-      
-      
-      const params = {
+
+
+      /*const params = {
         TableName: "UserAvailability",
         Item: {
           id: Math.floor(Math.random() * 1000000),
@@ -247,6 +247,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
         console.error("Er is een fout opgetreden bij het opslaan: ", error);
         alert("Fout bij het opslaan van beschikbaarheid.");
       }
+    */
     }
   };
 

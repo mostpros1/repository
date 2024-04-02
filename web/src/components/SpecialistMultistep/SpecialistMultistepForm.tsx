@@ -46,11 +46,11 @@ interface RegisterData {
   password: string;
   repeatPassword: string;
   dob: string;
+  
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
-  beroep: "",
   beroep: "",
   email: "",
   postCode: "",
@@ -176,7 +176,7 @@ function SpecialistMultistepForm() {
       <form action="" method="POST">
         <div>
           <h1>Selecteer uw beschikbaarheid:</h1>
-          <Calendar email={data.email} />
+          <Calendar />
         </div>
       </form>
     );
@@ -215,6 +215,30 @@ function SpecialistMultistepForm() {
           autoSignIn: { enabled: true },
         });
 
+      /*  const { profession, location, price, rating, bio } = registerData;
+
+      dynamoDB
+  .put({
+    Item: {
+
+      id: Math.floor(Math.random() * 1000000000),
+          name: firstName + " " + lastName,
+          email: email,
+          profession: data.beroep,
+          location: data.question1,
+          //rating: "Unrated",
+          bio: data.bio,
+          availibility: Datums,
+    },
+    TableName: "Specialists",
+  })
+  .promise()
+  .then(data => console.log(data.Attributes))
+  .catch(console.error)
+
+      */
+
+
         /*const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
         sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
@@ -248,12 +272,13 @@ function SpecialistMultistepForm() {
       phoneNumber: data.phoneNumber.trim(),
       dob: "" // Add the 'dob' property here
     }
-    try {
+    console.log(Datums);
+    /*try {
       signUp(userData);
     } catch (error) {
       console.error('Error signing up:', error);
       //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-    }
+    }*/
 
   }
 
@@ -307,25 +332,6 @@ function SpecialistMultistepForm() {
           ))}
         </div>
       </div>
-      {showNoKvK ? <NoKvK /> : <>{step}</>}
-      <>
-        <div className="btn-wrapper">
-          <button
-            type="button"
-            onClick={() => {
-              showNoKvK ? setShowNoKvK(false) : back();
-            }}
-            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-          >
-            Vorige
-          </button>
-          {showNoKvK ? <></> : <button type="submit" className="form-btn">
-            {isLastStep ? "Verstuur" : "Volgende"}
-          </button>}
-
-        </div>
-      </>
       {showNoKvK ? <NoKvK /> : <>{step}</>}
       <>
         <div className="btn-wrapper">
