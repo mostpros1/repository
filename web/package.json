@@ -41,6 +41,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.25",
     "@types/nodemailer": "^6.4.14",
