@@ -1,4 +1,4 @@
-import aws from 'aws-sdk';
+import aws from 'aws-sdk/clients/all';
 
 export const ses = new aws.SES({
     region: import.meta.env.VITE_AWS_REGION,
