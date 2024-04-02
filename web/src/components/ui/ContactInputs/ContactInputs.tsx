@@ -1,5 +1,5 @@
 import "./ContactInputs.css";
-//import { sendMail } from "./../../../../../backend_functions/email.ts";
+import { sendMail } from "./../../../../../backend_functions/email.ts";
 
 
 function ContactInputs() {
@@ -15,7 +15,7 @@ function ContactInputs() {
     const question = formData.get('question');
    
 
-    //sendMail(String(email), String(subject), String(firstname) + " " + String(lastname) + " " + String(question), "<p>"+ String(firstname) + " " + String(lastname) + " " + String(question) + "</p>");
+    sendMail(String(email), String(subject), String(firstname) + " " + String(lastname) + " " + String(question), "<p>"+ String(firstname) + " " + String(lastname) + " " + String(question) + "</p>");
   };
   return (
     <form method="Post" className="contact_form" onSubmit={handleSubmit}>
