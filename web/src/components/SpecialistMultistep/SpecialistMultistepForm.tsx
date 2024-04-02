@@ -34,6 +34,7 @@ type FormData = {
   phoneNumber: string;
   password: string;
   repeatPassword: string;
+  bio: string;
   questions: Record<string, string>;
   dateTimeSpans: DateTimeSpan[];
 };
@@ -215,7 +216,7 @@ function SpecialistMultistepForm() {
           },
           autoSignIn: { enabled: true },
         });
-       /*
+       
         dynamo
           .put({
             Item: {
@@ -224,8 +225,8 @@ function SpecialistMultistepForm() {
               name: stopXSS(firstName) + " " + stopXSS(lastName),
               email: stopXSS(email),
               profession: stopXSS(data.beroep),
-              location: stopXSS(data.question1),
-              //rating: "Unrated",
+              location: stopXSS(data.questions.question1),
+              rating: "Unrated",
               bio: stopXSS(data.bio),
               availibility: Datums,
             },
@@ -235,7 +236,7 @@ function SpecialistMultistepForm() {
           .then(data => console.log(data.Attributes))
           .catch(console.error)
 
-          * /
+          
 
 
         /*const user = await Auth.signIn(email, password);
