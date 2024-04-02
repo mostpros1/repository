@@ -16,6 +16,7 @@ import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
 import { Datums } from "./Calendar.tsx";
 import { dynamo } from "./../../../../backend_functions/declerations.ts";
+import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 
 type DateTimeSpan = {
   date: Date;
@@ -217,17 +218,17 @@ function SpecialistMultistepForm() {
 
       /*  const { profession, location, price, rating, bio } = registerData;
 
-      dynamoDB
+      dynamo
   .put({
     Item: {
 
       id: Math.floor(Math.random() * 1000000000),
-          name: firstName + " " + lastName,
-          email: email,
-          profession: data.beroep,
-          location: data.question1,
+          name: stopXSS(firstName) + " " + stopXSS(lastName),
+          email: stopXSS(email),
+          profession: stopXSS(data.beroep),
+          location: stopXSS(data.question1),
           //rating: "Unrated",
-          bio: data.bio,
+          bio: stopXSS(data.bio),
           availibility: Datums,
     },
     TableName: "Specialists",
