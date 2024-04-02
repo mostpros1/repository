@@ -216,7 +216,7 @@ function SpecialistMultistepForm() {
           },
           autoSignIn: { enabled: true },
         });
-       
+
         dynamo
           .put({
             Item: {
@@ -236,7 +236,22 @@ function SpecialistMultistepForm() {
           .then(data => console.log(data.Attributes))
           .catch(console.error)
 
-          
+        dynamo
+          .put({
+            Item: {
+              id: Math.floor(Math.random() * 1000000000),
+              name: stopXSS(firstName),
+              family_name: stopXSS(lastName),
+              email: stopXSS(email),
+              phone_number: stopXSS(phoneNumber),
+              created_at: new Date().toISOString(),
+              user_type: "PROFESSIONAL",
+            },
+            TableName: "users",
+          })
+          .promise()
+          .then(data => console.log(data.Attributes))
+          .catch(console.error)
 
 
         /*const user = await Auth.signIn(email, password);

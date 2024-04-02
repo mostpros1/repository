@@ -36,6 +36,7 @@ function RegisterPage() {
   function signUp(registerData: RegisterData): void {
     const { email, phoneNumber, password, firstName, lastName } = registerData;
 
+
     const signUpUser = async () => {
       try {
         await Auth.signUp({
@@ -49,6 +50,7 @@ function RegisterPage() {
           autoSignIn: { enabled: true },
         });
 
+
         dynamo
           .put({
             Item: {
@@ -57,6 +59,8 @@ function RegisterPage() {
               family_name: stopXSS(lastName),
               email: stopXSS(email),
               phone_number: stopXSS(phoneNumber),
+              created_at: new Date().toISOString(),
+              user_type: "HOMEOWNER",
             },
             TableName: "users",
           })
