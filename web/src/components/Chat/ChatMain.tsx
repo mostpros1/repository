@@ -1,187 +1,96 @@
-import "@aws-amplify/ui-react/styles.css";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect } from "react";
-import * as mutations from "../../graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "../../graphql/queries";
-import intlFormatDistance from "date-fns/intlFormatDistance";
-import * as subscriptions from "../../graphql/subscriptions";
-import { useChatBackend } from "./ChatBackend";
-import "./chatbox.css";
+import React, { useState, useRef, useEffect } from 'react';
+import './ChatMain.css'; // Make sure the path is correct
 
-function ChatMain({ user, signOut }) {
-  const {
-    chats,
-    setChats,
-    recipientEmail,
-    recentMessageEmail,
-    showJoinButton,
-    setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
-    handleStartNewChat,
-    handleSendMessage,
-    handleAlertInputChange,
-    handleAlertConfirm,
-    handleAlertCancel,
-    handleJoinChat,
-    handleReceivedMessage,
-  } = useChatBackend(user, signOut);
+interface Message {
+  id: number;
+  text: string;
+  senderId: string; // Identifier for the sender
+}
 
-  useEffect(() => {
-    async function fetchChats() {
-      const allChats = await API.graphql({
-        query: queries.listChats,
-        variables: {
-          filter: {
-            members: { contains: user.attributes.email },
-          },
-        },
-      });
-      // @ts-ignore
-      setChats(allChats.data.listChats.items);
+// Assuming there's a structure for people - Adjust as necessary
+interface Person {
+  id: string; // Unique identifier
+  name: string;
+  previewMessage: string;
+}
+
+function ChatMain() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputText, setInputText] = useState('');
+  const [selectedPerson, setSelectedPerson] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const people: Person[] = [ // Example people - adjust based on your data
+    { id: 'Jan Ja', name: 'Jan Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+    { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Just finished the report. Sending it over now!' },
+    { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Just finished the report. Sending it over now!' },
+  ];
+
+  const handleSendMessage = () => {
+    if (inputText.trim() !== '' && selectedPerson) {
+      const newMessage: Message = {
+        id: messages.length + 1,
+        text: inputText,
+        senderId: selectedPerson,
+      };
+      setMessages([...messages, newMessage]);
+      setInputText('');
     }
-    fetchChats();
-  }, [user.attributes.email]);
+  };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevents form submission on Enter key press
+      handleSendMessage();
+    }
+  };
+
+  // Scroll to the bottom of the messages container when messages update
   useEffect(() => {
-    console.log("Checking for new messages...");
-    const sub = API.graphql(
-      graphqlOperation(subscriptions.onCreateChat)
-      // @ts-ignore
-      ).subscribe({
-        next: ({ value }) => {
-          console.log("Received a new message:", value.data.onCreateChat);
-          handleReceivedMessage(value.data.onCreateChat);
-        },
-        error: (err) => console.log(err),
-      });
-      return () => sub.unsubscribe();
-    }, [user.attributes.email]);
-    
-    return (
-      <div>
-      {showConfirmedConnection && (
-        <div className="textjoined">
-          {/* Render a notification message */}
-          <p>{notificationMessage}</p>
-          {/* You can render a message or button to indicate that the user has joined the chat */}
-          <p>You have joined the chat</p>
-        </div>
-      )}
-      <div className="button_containerc">
-        <button type="button" className="buttonc" onClick={handleStartNewChat}>
-          Start New Chat
-        </button>
-        <button type="button" className="buttonc" onClick={() => signOut()}>
-          Sign Out
-        </button>
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  return (
+    <div className="chat">
+      <div className='list-people'>
+        {people.map(person => (
+          <a key={person.id} className="people-block" onClick={() => setSelectedPerson(person.id)}>
+            <h2>{person.name}</h2>
+            <p>Message: "{person.previewMessage}"</p>
+          </a>
+        ))}
       </div>
 
-      <div className="">
-        <div className="personlist">
-          
+      <div className="chat-main">
+        <div className="messages" style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }}>
+          {messages.filter(msg => msg.senderId === selectedPerson).map((msg) => (
+            <p key={msg.id} style={{ padding: '5px 0' }}>{msg.text}</p>
+          ))}
+          {/* Dummy element for automatic scrolling */}
+          <div ref={messagesEndRef} />
         </div>
-        <div className="chat-box">
-          <div className="input-form">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  // @ts-ignore
-                  const messageText = e.target.value;
-                  if (messageText && recipientEmail) {
-                    await handleSendMessage(messageText);
-                    // @ts-ignore
-                    e.target.value = "";
-                  }
-                }
-              }}
-              className="inputchat"
-            />
-            <div className="chat-enter">
-              <kbd className="">Enter</kbd>
-            </div>
-          </div>
-          <div className="anderpersoon">
-          {showAlert && (
-            <div className="alert">
-              <input
-                type="text"
-                placeholder="Enter recipient's email"
-                value={recipientEmail}
-                onChange={handleAlertInputChange}
-              />
-              <button
-                onClick={() => {
-                  handleAlertConfirm();
-                  setShowJoinButton(true);
-                }}
-              >
-                Confirm
-              </button>
-              <button onClick={handleAlertCancel}>Cancel</button>
-            </div>
-          )}
-          </div>
-          {chats
-            // @ts-ignore
-            .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-            .map((chat) => (
-              <div
-                // @ts-ignore
-                key={chat.id}
-                className={`flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200 w-3/4 my-2 ${
-                  // @ts-ignore
-                  chat.email === user.attributes.email && "self-end bg-gray-200"
-                }`}
-              >
-                <div>
-                  <div className="">
-                    <div className="username">
-                      <span className="username-name">
-                        {
-                          // @ts-ignore
-                          chat.email.split("@")[0]
-                        }
-                      </span>{" "}
-                    </div>
-                    <time dateTime="2023-01-23T15:56" className="time">
-                      {
-                        // @ts-ignore
-                        intlFormatDistance(new Date(chat.createdAt), new Date())
-                      }
-                    </time>
-                  </div>
-                  <p className="text">
-                    {
-                      // @ts-ignore
-                      chat.text
-                    }
-                  </p>
-                </div>
-              </div>
-            ))}
-        </div>
-        <div>
-        </div>
+        <div className="input">
+        <input
+          type="text"
+          className="message-input"
+          placeholder="Type a message..."
+          value={inputText}
+          onChange={e => setInputText(e.target.value)}
+          onKeyDown={handleKeyDown}
+          style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc' }}
+        />
+        <button onClick={handleSendMessage} className='sendbutton'>Send</button>
       </div>
-
-      {showJoinButton &&
-        user.attributes.email !== recentMessageEmail &&
-        !showConfirmedConnection && (
-          <div className="button_containerc">
-            <button type="button" className="buttonc" onClick={handleJoinChat}>
-              Join Chat
-            </button>
-          </div>
-        )}
-
+        </div>
     </div>
   );
 }
 
-export default withAuthenticator(ChatMain);
+export default ChatMain;

@@ -1,0 +1,117 @@
+/* ChatMain.css */
+
+.chat{
+  display: flex;
+}
+
+.chat-main {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 200px;
+    height: 600px;
+  margin-top: 100px;
+  }
+  
+  .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .message-input {
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .message-input:focus {
+    outline: none;
+  }
+  
+  p {
+    margin: 0;
+    padding: 10px;
+    background-color: #e7f3ff;
+    border-radius: 15px;
+    max-width: 75%;
+    word-break: break-word;
+  }
+  
+  /* Pas deze stijl toe op berichten van de huidige gebruiker */
+  .my-message {
+    align-self: flex-end;
+    background-color: #d1e7dd;
+  }
+  
+  .list-people {
+    max-width: 600px; /* Adjusts the maximum width of the container */
+    height: 600px; /* Fixed height for the scrollable area */
+    overflow-y: auto; /* Enables vertical scrolling */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px; /* Adds padding around the container */
+    background-color: #f4f4f4; /* Light grey background for the container */
+    border-radius: 8px; /* Rounds the corners of the container */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+    margin-top: 100px;
+  }
+  
+  .people-block {
+    background-color: #ffffff; /* White background for each person block */
+    padding: 15px; /* Adds padding inside each person block */
+    margin-bottom: 10px; /* Adds space between each person block */
+    border-radius: 5px; /* Rounds the corners of each person block */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Adds a subtle shadow to each person block */
+    cursor: pointer; /* Changes the cursor to indicate the block is clickable */
+    display: block; /* Ensures the anchor behaves as a block for full width clickability */
+    text-decoration: none; /* Removes the default anchor underline */
+    color: inherit; /* Ensures text color inherits from the parent element */
+  }
+  
+  .people-block:hover {
+    background-color: #e9e9e9; /* Changes background color on hover */
+  }
+  
+  .people-block h2 {
+    margin-top: 0; /* Removes the top margin from the heading */
+    color: #333; /* Dark grey color for the text */
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+  }
+  
+  .people-block p {
+    color: #666; /* Medium grey color for the text */
+    font-size: 16px; /* Sets the font size */
+    line-height: 1.5; /* Adjusts the line height for readability */
+  }
+  
+  .list-people a.people-block {
+    display: block; /* Makes the link fill the container */
+    text-decoration: none; /* Removes the underline from links */
+    color: inherit; /* Inherits the text color from the parent */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+  }
+  
+  .list-people a.people-block:hover {
+    background-color: #e9e9e9; /* Changes background color on hover */
+  }
+
+.input{
+  display: flex;
+}
+
+.sendbutton{
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+}
