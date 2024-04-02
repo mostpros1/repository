@@ -121,7 +121,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
           email: item.email,
           profession: item.profession,
           location: item.location,
-          //price: item.price,
+          price: item.price,
           rating: item.rating,
           bio: item.bio,
           availibility: item.availibility,

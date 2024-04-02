@@ -14,17 +14,10 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-<<<<<<< HEAD
     "emailVerificationSubject": "Verification code: {####}",
     "emailVerificationMessage": "Hello,\nThank you for joining us. To get started, use code **{####}** to verify your email address.",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 6,
-=======
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
->>>>>>> d0379b20c31f52063fb52b3d936715cf5bd52f1b
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
       "email",
@@ -45,7 +38,6 @@
     "usernameAttributes": [
       "email"
     ],
-<<<<<<< HEAD
     "useDefault": "manual",
     "userPoolGroups": false,
     "userPoolGroupList": [],
@@ -54,29 +46,5 @@
     "authProviders": [],
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
-=======
-    "useDefault": "default",
-    "userPoolGroups": false,
-    "userPoolGroupList": [],
-    "adminQueries": false,
-    "usernameCaseSensitive": false,
-    "useEnabledMfas": true,
-    "authRoleArn": {
-      "Fn::GetAtt": [
-        "AuthRole",
-        "Arn"
-      ]
-    },
-    "unauthRoleArn": {
-      "Fn::GetAtt": [
-        "UnauthRole",
-        "Arn"
-      ]
-    },
-    "breakCircularDependency": true,
-    "dependsOn": [],
-    "hostedUI": false,
-    "authProviders": []
->>>>>>> d0379b20c31f52063fb52b3d936715cf5bd52f1b
   }
 }

@@ -1,0 +1,6 @@
+{
+  "AppSyncApiName": "mostpros",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2024-01-04T14:45:36.786Z"
+}
