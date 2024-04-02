@@ -114,7 +114,6 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     }).promise()
       .then(data => {
 
-
         const convertedItems = data.Items.map(item => ({
           id: item.id,
           name: item.name,
