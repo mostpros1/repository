@@ -43,9 +43,8 @@ function LoginPage() {
       
       navigate('/');
       console.log('Logged in user:', authenticatedUser);
-    } catch (error: Error) {
+    } catch (error) {
       console.error('Login failed:', error);
-      setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
     }
   };
 
