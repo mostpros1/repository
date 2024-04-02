@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { dynamo } from "./../../../../backend_functions/declerations.ts";
-import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 
 
 type RegisterData = {
@@ -63,28 +61,6 @@ export function RegisterForm({
     }
   };
 
-  //function registerUserInDatabase(firstName, lastName, email, phoneNumber) {
-
-  dynamo
-    .put({
-      Item: {
-        id: Math.floor(Math.random() * 1000000000),
-        name: stopXSS(firstName),
-        family_name: stopXSS(lastName),
-        email: stopXSS(email),
-        phone_number: stopXSS(phoneNumber),
-      },
-      TableName: "users",
-    })
-    .promise()
-    .then(data => console.log(data.Attributes))
-    .catch(console.error)
-
-
-  /*}
-
-  registerUserInDatabase(firstName, lastName, email, phoneNumber)
-*/
   return (
     <>
       <div className="register-container">
