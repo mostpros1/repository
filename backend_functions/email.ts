@@ -1,4 +1,4 @@
-import { ses } from "./declerations.ts";
+import { SES } from "./declerations.ts";
 
 const MostropsEmail = "timon@timonheidenreich.eu";
 
@@ -23,7 +23,7 @@ export function sendMail(email: string, subject: string, text: string, html: str
         },
     };
 
-    ses.sendEmail(params, (err, data) => {
+    SES.sendEmail(params, (err, data) => {
         if (err) {
             console.error('Error sending email:', err);
         } else {
