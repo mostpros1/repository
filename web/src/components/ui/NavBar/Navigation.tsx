@@ -5,7 +5,7 @@ import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
-import JoinChat from "../../Chat/JoinChat";
+import Chatbtn from "../../Chat/Chatbtn";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -38,6 +38,7 @@ function Navigation() {
     <>
       <Link to="/login">Login</Link>
       <Link to="/registreer">Register</Link>
+      <Link to="/chat">Chat</Link>
     </>
   );
 
