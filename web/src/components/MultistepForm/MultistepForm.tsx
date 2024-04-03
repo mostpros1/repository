@@ -13,36 +13,34 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
-import PageSpecialisten from './PageSpecialisten'
+import PageSpecialisten from './PageSpecialisten';
 
 type FormData = {
-  postCode: string
-  stad: string
+  postCode: string;
+  stad: string;
   date: string;
   questions: Record<string, string>;
-  aanvullendeInformatie: string
-  info: string
-  email: string
-  firstName: string
-  lastName: string
-  phoneNumber: string
-  password: string
-  repeatPassword: string
-  formConfig: string
-  beroep: string
-}
+  aanvullendeInformatie: string;
+  info: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+  formConfig: string;
+  beroep: string;
+};
 
 function MultistepForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const questionsData = useQuestionData();
 
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
     date: "",
-    questions: Object.fromEntries(
-      questionsData.map((question) => [question.key, ""])
-    ),
+    questions: Object.fromEntries(questionsData.map(question => [question.key, ""])),
     aanvullendeInformatie: "",
     info: "",
     email: "",
@@ -51,106 +49,43 @@ function MultistepForm() {
     phoneNumber: "",
     password: "",
     repeatPassword: "",
-    beroep: "",
-    formConfig: ""
-  }
+    formConfig: "",
+    beroep: ""
+  };
 
-  const [data, setData] = useState(INITIAL_DATA);
-  const [isValidDatum, setValidDatum] = useState(true);
+  const [data, setData] = useState<FormData>(INITIAL_DATA);
 
-
-  /*const updateDate = (newDate) => {
-      setDate(newDate);
-  };*/
-
-
-  function updateFields(fields: Partial<FormData>) {
-    setData((prev) => ({ ...prev, ...fields }));
-  }
-
-  const [date, setDate] = useState<string | null>(null);
+  const updateFields = (fields: Partial<FormData>) => {
+    setData(prev => ({ ...prev, ...fields }));
+  };
 
   const updateDate = (selectedDate: Date) => {
-    const year = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-    const day = String(selectedDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
+    const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
-    setDate(formattedDate);
   };
-
-  function updateQuestionAnswers(questionKey: string, answer: string) {
-    setData((prev) => ({
-      ...prev,
-      questions: updateQuestions(prev.questions, {
-        [questionKey]: answer,
-      }),
-    }));
-  }
-
-  function updateQuestions(
-    prevQuestions: Record<string, string>,
-    answers: Record<string, string>
-  ): Record<string, string> {
-    const filteredAnswers: Record<string, string> = {};
-
-    for (const key in answers) {
-      if (Object.prototype.hasOwnProperty.call(answers, key)) {
-        const value = answers[key];
-        if (value !== undefined) {
-          filteredAnswers[key] = value;
-        }
-      }
-    }
-
-    const updatedQuestions: Record<string, string> = {
-      ...prevQuestions,
-      ...filteredAnswers,
-    };
-
-    return updatedQuestions;
-  }
-
-  const optionImages = {
-    "Nieuwe leiding aanleggen": kraan,
-    "Kapotte leiding maken": kraan,
-    "Anders": kraan
-    // ... voeg andere opties en bijbehorende afbeeldingen toe
-  };
-
-  const questionsSteps = questionsData.map((question) => (
-    <CategoryForm
-      key={question.key}
-      question={question}
-      questions={data.questions}
-      updateQuestionAnswers={(answers) => {
-        updateQuestionAnswers(question.key, answers[question.key] as string);
-      }}
-      optionImages={optionImages}
-    />
-  ));
-
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
     steps: [
-      <>
-        <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
-        <InfoForm {...data} updateFields={updateFields} />,
-        
-        <PageSpecialisten date={date} />
-
-      </>
+      <LocationForm key="location" {...data} updateFields={updateFields} />,
+      <DateForm key="date" updateDate={updateDate} updateFields={updateFields} />,
+      <InfoForm key="info" {...data} updateFields={updateFields} />,
+      <PageSpecialisten key="specialists" date={data.date} />
     ],
-    onStepChange: () => { }
+    onStepChange: () => {}
   });
-  console.log(updateDate);
-  //<Calendar />,
-  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
-  const stepWidth = 100 / steps.length;
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isLastStep) {
+      console.log("Formulierdata:", data);
+      // Optioneel: Verwerk de formulierdata, bijvoorbeeld het verzenden naar een server
+    } else {
+      next();
+    }
+  };
 
   return (
-    <form onSubmit={onsubmit} className='form-con'>
+    <form onSubmit={handleSubmit} className='form-con'>
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
@@ -158,7 +93,7 @@ function MultistepForm() {
             <div
               key={index}
               className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-              style={{ width: `${stepWidth}%` }}
+              style={{ width: `${100 / steps.length}%` }}
             ></div>
           ))}
         </div>
@@ -171,7 +106,7 @@ function MultistepForm() {
         <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
       </div>
     </form>
-  )
+  );
 }
 
 export default MultistepForm;

@@ -31,13 +31,4 @@ describe('Testing "Register as specialist"', () => {
         cy.performInputChecktestreg(' ', ' ',' ',' ',' ',' ' );
     })
 
-
-
-        // erformInputCheck('hfghnljnglhn', 'dfgdfgbkjdfb','dhshgoihgodfhg','fsgsdfgsd','22554477Ds','22554477Ds' );
-        // // Check 3
-        // performInputCheck('KOÇTAŞ', 'ÉÉÉÔÔÔ$$$&&#*','dlfngldfngl12@test.com','465456446^&%*','22554477Ds&!!','22554477Ds&!!');
-        // // Check 4
-        // performInputCheck('3216516165', '126+541651',' ',' ',' ',' ' );
-        // // Check 5
-        // performInputCheck(' ', ' ',' ',' ',' ',' ' );
 })
