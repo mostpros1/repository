@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './ChatMain.css'; // Make sure the path is correct
+import './ChatMain.css';
 
 interface Message {
   id: number;
   text: string;
-  senderId: string; // Identifier for the sender
+  senderId: string;
+  timestamp: string;
 }
 
-// Assuming there's a structure for people - Adjust as necessary
 interface Person {
-  id: string; // Unique identifier
+  id: string;
   name: string;
   previewMessage: string;
 }
@@ -19,19 +19,20 @@ function ChatMain() {
   const [inputText, setInputText] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const currentUserId = 'currentUser';
 
-  const people: Person[] = [ // Example people - adjust based on your data
-    { id: 'Jan Ja', name: 'Jan Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
-    { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Just finished the report. Sending it over now!' },
-    { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Just finished the report. Sending it over now!' },
-  ];
+  const people: Person[] = [
+  { id: 'Jan Ja', name: 'Jan Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Just finished the report. Sending it over now!' },
+];
 
   const handleSendMessage = () => {
     if (inputText.trim() !== '' && selectedPerson) {
@@ -39,23 +40,26 @@ function ChatMain() {
         id: messages.length + 1,
         text: inputText,
         senderId: selectedPerson,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages([...messages, newMessage]);
       setInputText('');
     }
   };
+  
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevents form submission on Enter key press
+      event.preventDefault();
       handleSendMessage();
     }
   };
 
-  // Scroll to the bottom of the messages container when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const selectedPersonName = people.find(person => person.id === selectedPerson)?.name;
 
   return (
     <div className="chat">
@@ -69,26 +73,32 @@ function ChatMain() {
       </div>
 
       <div className="chat-main">
-        <div className="messages" style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }}>
-          {messages.filter(msg => msg.senderId === selectedPerson).map((msg) => (
-            <p key={msg.id} style={{ padding: '5px 0' }}>{msg.text}</p>
+        {selectedPerson && (
+          <div className="chat-header">
+            <h2>{selectedPersonName}</h2>
+          </div>
+        )}
+        <div className="messages">
+          {messages.filter(msg => msg.senderId === selectedPerson || msg.senderId === currentUserId).map((msg) => (
+            <p key={msg.id} className={`message ${msg.senderId === currentUserId ? 'self' : 'other'}`}>
+              {msg.text}
+              <span className="message-timestamp">{msg.timestamp}</span>
+            </p>
           ))}
-          {/* Dummy element for automatic scrolling */}
           <div ref={messagesEndRef} />
         </div>
         <div className="input">
-        <input
-          type="text"
-          className="message-input"
-          placeholder="Type a message..."
-          value={inputText}
-          onChange={e => setInputText(e.target.value)}
-          onKeyDown={handleKeyDown}
-          style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc' }}
-        />
-        <button onClick={handleSendMessage} className='sendbutton'>Send</button>
-      </div>
+          <input
+            type="text"
+            className="message-input"
+            placeholder="Type a message..."
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <button onClick={handleSendMessage} className='sendbutton'>Send</button>
         </div>
+      </div>
     </div>
   );
 }
