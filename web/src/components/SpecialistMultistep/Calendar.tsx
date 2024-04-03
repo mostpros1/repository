@@ -6,11 +6,16 @@ import aws from 'aws-sdk';
 import { dynamo } from '../../../../backend_functions/declerations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
 
+
 interface DateAndTimePickerProps {
   // onDateChange?: (selectedDates: string[]) => void;
 }
 
-const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
+export let Datums: any[] = [];
+
+const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
+
+
   const today = new Date();
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
@@ -37,13 +42,13 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     'GMT+09:00 Asia/Tokyo',
     'GMT+11:00 Australia/Sydney'
   ];
-  
+
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
     const dateString = date.toISOString().split('T')[0];
     if (date < today) return; // Voorkomt selectie van vorige dagen
-    
+
     setSelectedDates((prevDates) => {
       if (prevDates.includes(dateString)) { // Als de dag al geselecteerd was, deselecteer het
         setSelectedDay(null); // Verwijder de selectie van de dag
@@ -53,7 +58,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         return [...prevDates, dateString]; // Voeg deze datum toe aan de geselecteerde datums
       }
     });
-    
+
     if (selectedDates.length === 1 && selectedDates[0] === dateString) {
       // Als de enige geselecteerde datum de datum is die net gedeselecteerd werd
       setSelectedDay(null); // Zet selectedDay op null
@@ -74,17 +79,17 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
   const handlePrevMonth = () => {
     setDate(prevDate => {
-        const year = prevDate.getMonth() === 0 ? prevDate.getFullYear() - 1 : prevDate.getFullYear();
-        const month = prevDate.getMonth() === 0 ? 11 : prevDate.getMonth() - 1;
-        return new Date(year, month, 1);
+      const year = prevDate.getMonth() === 0 ? prevDate.getFullYear() - 1 : prevDate.getFullYear();
+      const month = prevDate.getMonth() === 0 ? 11 : prevDate.getMonth() - 1;
+      return new Date(year, month, 1);
     });
   };
 
   const handleNextMonth = () => {
     setDate(prevDate => {
-        const year = prevDate.getMonth() === 11 ? prevDate.getFullYear() + 1 : prevDate.getFullYear();
-        const month = prevDate.getMonth() === 11 ? 0 : prevDate.getMonth() + 1;
-        return new Date(year, month, 1);
+      const year = prevDate.getMonth() === 11 ? prevDate.getFullYear() + 1 : prevDate.getFullYear();
+      const month = prevDate.getMonth() === 11 ? 0 : prevDate.getMonth() + 1;
+      return new Date(year, month, 1);
     });
   };
 
@@ -104,11 +109,11 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     let weekDays: JSX.Element[] = [];
     let weekStartDates: Date[] = []; // Deze array zal de startdatum van elke week bevatten
     const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
-    
+
     // Bereken de dag van de week van de eerste dag van de maand
     let dayOfWeek = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // Aanpassing voor Maandag als eerste dag van de week
     let previousMonthDisplay = dayOfWeek;
-  
+
     // Voeg dagen van de vorige maand toe aan de kalender
     for (let i = previousMonthDisplay; i > 0; i--) {
       const day = prevMonthDays - i + 1;
@@ -129,16 +134,16 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(currentYear, currentMonth, day);
       const weekDay = dayDate.getDay();
-      
+
       // Controleer of dit de start van een nieuwe week is
       if (weekDay === 1 || (day === 1 && weekDays.length === 0)) {
         weekStartDates.push(dayDate);
       }
-      
+
       const isSelected = selectedDates.includes(dayDate.toISOString().split('T')[0]);
       const isPastDay = dayDate < today;
       const isToday = dayDate.getDate() === today.getDate() && dayDate.getMonth() === today.getMonth() && dayDate.getFullYear() === today.getFullYear();
-      
+
       weekDays.push(
         <div
           key={day}
@@ -152,7 +157,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
           {day}
         </div>
       );
-      
+
       if (weekDay === 0 || day === daysInMonth) {
         while (weekDays.length < 7) { // Vul de laatste week aan met dagen van de volgende maand
           let nextDay = weekDays.length - weekDay + 1;
@@ -161,15 +166,15 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
           }
           weekDays.push(
             <div
-            key={`next-${nextDay}`}
-            className="days-next"
+              key={`next-${nextDay}`}
+              className="days-next"
               onClick={() => handleDateSelect(nextDay, new Date(currentYear, currentMonth + 1, nextDay))}
-              >
+            >
               {nextDay}
             </div>
           );
         }
-        
+
         weeks.push(
           <div key={weekStartDates.length} className="days-container">
             {weekDays}
@@ -178,7 +183,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         weekDays = [];
       }
     }
-    
+
     return weeks.map((week, index) => (
       <div key={index} className="week">
         <div className="week-number">{weekStartDates[index] ? getWeekNumber(weekStartDates[index]) : 'N/A'}</div>
@@ -197,35 +202,41 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
   const submitDates = async () => {
 
-    // const item = {
-    //   userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
-    //   dates: selectedDates, // Dit is de lijst van geselecteerde datums
-    // };
-    
-    // const params = {
-    //   TableName: "UserAvailability",
-    //   Item: {
-    //     userId: "userId",
-    //     dates: selectedDates, // De array met geselecteerde datums
-    //     // Voeg eventueel andere relevante gegevens toe
-    //   },
-    // };
-  
-    // try {
-    //   await dynamo.put(params).promise();
-    //   alert("Beschikbaarheid succesvol opgeslagen!");
-    // } catch (error) {
-    //   console.error("Er is een fout opgetreden bij het opslaan: ", error);
-    //   alert("Fout bij het opslaan van beschikbaarheid.");
-    // }
+    /*const item = {
+      userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
+      dates: selectedDates, // Dit is de lijst van geselecteerde datums
+    };
 
+    const params = {
+      TableName: "UserAvailability",
+      Item: {
+        userId: "userId",
+        dates: selectedDates,
+         // De array met geselecteerde datums
+        // Voeg eventueel andere relevante gegevens toe
+      },
+    };
+
+    try {
+      await dynamo.put(params).promise();
+      alert("Beschikbaarheid succesvol opgeslagen!");
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      alert("Fout bij het opslaan van beschikbaarheid.");
+    }*/
+
+    Datums = [];
     for (let i = 0; i < selectedDates.length; i++) {
-      const params = {
+      Datums = [...Datums, selectedDates[i]];
+
+
+      /*const params = {
         TableName: "UserAvailability",
         Item: {
           id: Math.floor(Math.random() * 1000000),
           professional_id: professionalId,
-          date: selectedDates[i],
+          datum: selectedDates[i],
+          email: email,
 
         },
       };
@@ -236,6 +247,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         console.error("Er is een fout opgetreden bij het opslaan: ", error);
         alert("Fout bij het opslaan van beschikbaarheid.");
       }
+    */
     }
   };
 
@@ -288,34 +300,34 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     }
   }
 
-// Function to handle timezone selection
-const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  const selectedTime = event.target.value;
-  setSelectedTimes((currentTimes) => {
-     if (currentTimes.includes(selectedTime)) {
-       return currentTimes.filter(time => time !== selectedTime); // Deselect the time if it was already selected
-     } else {
-       return [...currentTimes, selectedTime]; // Add the selected time
-     }
-  });
- };
+  // Function to handle timezone selection
+  const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedTime = event.target.value;
+    setSelectedTimes((currentTimes) => {
+      if (currentTimes.includes(selectedTime)) {
+        return currentTimes.filter(time => time !== selectedTime); // Deselect the time if it was already selected
+      } else {
+        return [...currentTimes, selectedTime]; // Add the selected time
+      }
+    });
+  };
 
- const handleTimezoneChange = (event) => {
-  setSelectedTimezone(event.target.value);
-};
+  const handleTimezoneChange = (event) => {
+    setSelectedTimezone(event.target.value);
+  };
 
 
   return (
     <div className="date-time-picker">
       <div className="calendar">
-      <div className="month-selector">
+        <div className="month-selector">
           <button
             type="button"
             className='prev-month'
             onClick={handlePrevMonth}
             aria-label="Vorige maand"
             tabIndex={0}
-            >
+          >
             <img src={Prev} className='fotoinButtonL' alt="Vorige" />
           </button>
           <button
@@ -323,9 +335,9 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
             onClick={handleCurrentMonth}
             className='buttonToday'
             aria-label="Ga naar huidige maand"
-             tabIndex={0}
+            tabIndex={0}
           >
-          Today
+            Today
           </button>
           <span aria-live="polite">{months[currentMonth]} {currentYear}</span>
           <button
@@ -335,7 +347,7 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
             aria-label="Volgende maand"
             tabIndex={0}
           >
-          <img src={Next} className='fotoinButtonR' alt="Volgende" />
+            <img src={Next} className='fotoinButtonR' alt="Volgende" />
           </button>
         </div>
         <div className="week-days">
@@ -360,27 +372,27 @@ const handleTimeSlotSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
           </select>
         </div>
       </div>
-        {selectedDay && (
+      {selectedDay && (
         <div className="time-selector">
-        {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
-          <div
-            key={time}
-            className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
-            onClick={() => handleTimeSelect(time)}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleTimeSelect(time)}
-            tabIndex={0}
-            role="button"
-            aria-label={`Kies tijdslot ${time}`}
-          >
-            {time}
-          </div>
-        ))}
-      </div>
-      
+          {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
+            <div
+              key={time}
+              className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
+              onClick={() => handleTimeSelect(time)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleTimeSelect(time)}
+              tabIndex={0}
+              role="button"
+              aria-label={`Kies tijdslot ${time}`}
+            >
+              {time}
+            </div>
+          ))}
+        </div>
+
       )}
-        <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
-        <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
-      </div>
+      <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
+      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
+    </div>
   );
 };
 

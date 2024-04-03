@@ -6,6 +6,7 @@ type SpecialistData = {
     postCode: string
     stad: string
     beroep?: string
+    bio?: string    
 }
 
 type SearchChoreFormProps = SpecialistData & {
@@ -13,7 +14,7 @@ type SearchChoreFormProps = SpecialistData & {
 }
 
 
-export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
+export default function SearchChoreForm({ beroep, bio, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
     const [isValidBeroep, setValidBeroep] = useState(true);
 
@@ -26,6 +27,20 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
 
         if (isValidBeroep || inputValueBeroep === '') {
             updateFields({ beroep: inputValueBeroep });
+        }
+    };
+
+    const [isValidBio, setValidBio] = useState(true);
+
+    const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const inputValueBio = e.target.value;
+        const inputBioRegex = /^[A-Za-z0-9\s]*$/; // Allow empty string
+        const isValidBio = inputBioRegex.test(inputValueBio);
+
+        setValidBio(isValidBio);
+
+        if (isValidBio || inputValueBio === '') {
+            updateFields({ bio: inputValueBio });
         }
     };
 
@@ -82,20 +97,7 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
 
             </div>
             <div className="search_chore_form">
-                <label>Uw hoofdberoep</label>
-                <input
-                    type="text"
-                    placeholder="Uw beroep"
-                    value={beroep}
-                    onChange={e => updateFields({ beroep: e.target.value })}
-                />
-                <label>Email:</label>
-                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar u wilt werken, dan helpen wij u bij het vinden van passende klussen.<br />
-                    Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
-
-            </div>
-            <div className="search_chore_form">
-                <label>Uw hoofdberoep</label>
+            <label>Uw hoofdberoep</label>
                 <input
                     type="text"
                     required
@@ -107,6 +109,16 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
                 />
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
+                )}
+                <label>Uw Bio</label>
+                <textarea
+                    required={true}
+                    placeholder="Uw Bio"
+                    value={bio}
+                    onChange={handleBioChange}
+                />
+                {!isValidBio && (
+                    <p className="error-message">Voer alstublieft een geldige Bio in</p>
                 )}
                 <label>Email:</label>
                 <input
