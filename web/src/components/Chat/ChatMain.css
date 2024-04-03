@@ -41,13 +41,15 @@
 /* Berichten van anderen */
 .message.other {
   align-self: flex-start;
-  background-color: #e7f3ff;
+  background-color: #ffe7e7;
+  font-size: 20px;
 }
   
 /* Eigen berichten */
 .message.self {
   align-self: flex-end;
-  background-color: #3955d18b;
+  background-color: #e7f3ff;
+  font-size: 20px;
 }
   
 @keyframes slideIn {
@@ -81,7 +83,7 @@ p {
   overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f4f4f4;
+  background-color: #6167c86f;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-top: 150px;
@@ -112,7 +114,7 @@ p {
 }
   
 .people-block p {
-   color: #666;
+  color: #666;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -134,8 +136,11 @@ p {
 
 .sendbutton{
   width: 80px;
-  height: 40px;
-  border-radius: 10px;
+  height: 60px;
+  border-radius: 5px;
+  border: 0;
+  font-size: 20px;
+  background-color: #6167c86f;
 }
 
 .message-timestamp {
@@ -148,8 +153,20 @@ p {
   text-align: center;
 }
 
+.chat-header{
+  background-color: #6167c86f;
+}
+
 .message-input{
   font-size: 20px;
-  height: 40px;
+  height: 60px;
   width: 100%;
+}
+
+.addImage{
+  border-radius: 5px;
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+  margin: 5px;
 }

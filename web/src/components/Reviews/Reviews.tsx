@@ -1,5 +1,4 @@
 import "./Reviews.css";
-
 import * as React from "react";
 import handyman from "../../assets/handyman.png";
 import GardenDesigner from "../../assets/WillemBraakman_small.png";

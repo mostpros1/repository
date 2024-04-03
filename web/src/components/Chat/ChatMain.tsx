@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './ChatMain.css';
+import { FcAddImage } from "react-icons/fc";
+import { FcOldTimeCamera } from "react-icons/fc";
 
 interface Message {
   id: number;
@@ -24,15 +26,15 @@ function ChatMain() {
 
   const people: Person[] = [
   { id: 'Jan Ja', name: 'Jan Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
-  { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Just finished the report. Sending it over now!' },
-  { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Just finished the report. Sending it over now!' },
+  { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
 ];
 
 const handleSendMessage = () => {
@@ -62,6 +64,38 @@ const handleSendMessage = () => {
 
   const selectedPersonName = people.find(person => person.id === selectedPerson)?.name;
 
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+
+      console.log(file);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
+  const inputFotoRef = useRef<HTMLInputElement>(null);
+
+  const handleCapture = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+
+    console.log(file);
+  }
+  };
+
+  const handleButtonFotoClick = () => {
+    if (inputFotoRef.current) {
+      inputFotoRef.current.click();
+    }
+  };
+
   return (
     <div className="chat">
       <div className='list-people'>
@@ -88,6 +122,27 @@ const handleSendMessage = () => {
           <div ref={messagesEndRef} />
         </div>
         <div className="input">
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            ref={inputFileRef}
+            onChange={handleFileChange}
+          />
+          <button className='addImage' onClick={handleButtonClick}>
+            <FcAddImage size={50} />
+          </button>
+          <input
+            type="file"
+            accept="image/*"
+            capture="user"
+            style={{ display: 'none' }}
+            ref={inputFileRef}
+            onChange={handleCapture}
+          />
+          <button className='addImage' onClick={handleButtonFotoClick}>
+            <FcOldTimeCamera size={50}/>
+          </button>
           <input
             type="text"
             className="message-input"
