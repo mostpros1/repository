@@ -5,6 +5,7 @@ interface Message {
   id: number;
   text: string;
   senderId: string;
+  receiverId: string;
   timestamp: string;
 }
 
@@ -34,20 +35,20 @@ function ChatMain() {
   { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Just finished the report. Sending it over now!' },
 ];
 
-  const handleSendMessage = () => {
-    if (inputText.trim() !== '' && selectedPerson) {
-      const newMessage: Message = {
-        id: messages.length + 1,
-        text: inputText,
-        senderId: selectedPerson,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages([...messages, newMessage]);
-      setInputText('');
-    }
-  };
+const handleSendMessage = () => {
+  if (inputText.trim() !== '' && selectedPerson) {
+    const newMessage: Message = {
+      id: messages.length + 1,
+      text: inputText,
+      senderId: currentUserId,
+      receiverId: selectedPerson,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages([...messages, newMessage]);
+    setInputText('');
+  }
+};
   
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -71,7 +72,6 @@ function ChatMain() {
           </a>
         ))}
       </div>
-
       <div className="chat-main">
         {selectedPerson && (
           <div className="chat-header">
@@ -79,12 +79,12 @@ function ChatMain() {
           </div>
         )}
         <div className="messages">
-          {messages.filter(msg => msg.senderId === selectedPerson || msg.senderId === currentUserId).map((msg) => (
-            <p key={msg.id} className={`message ${msg.senderId === currentUserId ? 'self' : 'other'}`}>
-              {msg.text}
-              <span className="message-timestamp">{msg.timestamp}</span>
-            </p>
-          ))}
+        {messages.filter(msg => (msg.senderId === selectedPerson && msg.receiverId === currentUserId) || (msg.senderId === currentUserId && msg.receiverId === selectedPerson)).map((msg) => (
+          <p key={msg.id} className={`message ${msg.senderId === currentUserId ? 'self' : 'other'}`}>
+            {msg.text}
+            <span className="message-timestamp">{msg.timestamp}</span>
+          </p>
+        ))}
           <div ref={messagesEndRef} />
         </div>
         <div className="input">
