@@ -54,6 +54,7 @@ interface RegisterData {
 
 const INITIAL_DATA: FormData = {
   beroep: "",
+  bio: "",
   email: "",
   postCode: "",
   stad: "",
