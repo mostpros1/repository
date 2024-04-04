@@ -2,12 +2,8 @@ import { dynamo } from "./declerations.ts";
 import { cognitoIdentityServiceProvider } from "./declerations.ts";
 
 export function deleteAccount(email, Token, userType) {
-    const AWS = require('aws-sdk');
-    AWS.config.update({ region: 'eu-north-1' });
-
+   
     //delete user from cognito
-
-
     const params = {
         AccessToken: Token,
     };
