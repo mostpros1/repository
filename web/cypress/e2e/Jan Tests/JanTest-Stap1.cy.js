@@ -11,7 +11,7 @@
 //             ['', '', '', '']
 //         ];
 
-        // cy.janTestBegin()// Deze is de oude stap 1 versie 0.1
+       /// cy.janTestBegin()// Deze is de oude stap 1 versie 0.1
 
         import faker from 'faker';
         describe('Testing "Register as specialist"' , () => {
