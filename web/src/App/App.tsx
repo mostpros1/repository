@@ -28,6 +28,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import EditProfile from "../pages/EditProfilePage/EditProfile";
+import TestPage from "../pages/DaniTestPage/TestPage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -53,6 +54,8 @@ const App = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
+      <Route path="/TestPage" element={<TestPage />} />
+
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

@@ -1,12 +1,15 @@
-import "./TestPage.css";
+import NavBar from '../../components/ui/NavBar/NavBar';
+import Footer from '../../components/ui/Footer/Footer';
+import TestComp from "../../components/TestComp/TestComp"
 
-const TestPage = () => {
+function TestPage() {
     return (
-        <div className="maindiv">
-            <h1>Welcome to my website!</h1>
-            <p>This is the homepage content.</p>
+        <div id="root">
+            <NavBar />   
+            <TestComp/>             
+            <Footer />
         </div>
-    );
-};
+    )
+}
 
 export default TestPage;
