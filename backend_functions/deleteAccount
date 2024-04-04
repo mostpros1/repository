@@ -57,7 +57,7 @@ export function deleteAccount(email, Token, userType) {
                     .then(data => console.log(data.Attributes))
                     .catch(console.error)
             ).catch(console.error);
-    } else {
+    } else if (userType == "SPECIALIST"){
 
         dynamo
             .query({
@@ -81,5 +81,7 @@ export function deleteAccount(email, Token, userType) {
                     .then(data => console.log(data.Attributes))
                     .catch(console.error)
             ).catch(console.error);
+    }else{
+        console.log("User type not found");
     }
 }
