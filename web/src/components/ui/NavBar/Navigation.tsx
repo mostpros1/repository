@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
@@ -15,6 +15,20 @@ function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
   const navigate = useNavigate(); // Create a navigate function
+
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error) {
+        updateUser(null);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
 
   const handleIconClick = () => {
     navigate("/HomeInovation"); // Use navigate function to redirect
