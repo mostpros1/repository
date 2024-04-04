@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'; // Import React and useState, useEffect hooks
-import AWS from 'aws-sdk'; // Import AWS SDK
-import "./JobCards.css"; // Import the CSS for styling
-import gasleiding from "../../assets/Gasleiding.svg"; // Import the image, if you're using it in the job cards
-import LocationOnIcon from '@mui/icons-material/LocationOn'; // Import icons
+import React, { useEffect, useState } from 'react';
+import AWS from 'aws-sdk';
+import "./JobCards.css";
+import gasleiding from "../../assets/Gasleiding.svg";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { dynamo } from "../../../../backend_functions/declerations";
 
-// Define the structure of a job object
 interface Job {
   id: number;
   name: string;
@@ -15,21 +14,19 @@ interface Job {
   description: string;
   location: string;
   availability: string;
-  // img: string; // Uncomment if you're using the image
+  // img: string;
 }
 
-// Define the props for the JobCards component
 interface JobCardsProps {
-  jobs?: Job[]; // Make jobs optional or provide a default prop value
+  jobs?: Job[];
 }
 
-// Define the JobCards component
 const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
   const [specialists, setSpecialists] = useState<Job[]>([]);
 
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
-    console.log(hashTag);
+    
     dynamo.query({
       TableName: "clients",
       IndexName: "plaats",
@@ -40,8 +37,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
     }).promise()
       .then(data => {
         if (data.Items && data.Items.length > 0) {
-          console.log(data.Items[0]);
-          setSpecialists(data.Items);
+          console.log(data.Items);
         } else {
           console.log('No items found');
         }
@@ -49,19 +45,21 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
 
-  // Render logic remains unchanged
+  }, [window.location.hash]);
+
   if (!specialists || specialists.length === 0) {
     return <div>No jobs available.</div>;
   }
 
-  // Map over the jobs array to create job cards
   const jobCardsRender = jobs.map((job) => (
-    <div key={job.id} className="taskCard">
+    <div key={job.id} className="job-item">
       <div className="user-detail">
         <h2>{job.name}</h2>
-        <p><LocationOnIcon />{job.distance}KM</p>
+        <p>
+          <LocationOnIcon />
+          {job.distance}KM
+        </p>
       </div>
       <div className="job-info">
         <h2 className="job-title">{job.title}</h2>
@@ -82,8 +80,6 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       </a>
     </div>
   ));
-
   return <>{jobCardsRender}</>;
 };
-
 export default JobCards;

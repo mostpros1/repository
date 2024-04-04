@@ -1,5 +1,4 @@
-import aws from 'aws-sdk';
-
+import aws from "aws-sdk";
 
 export const dynamoDB = new aws.DynamoDB({
     region: import.meta.env.VITE_AWS_REGION,

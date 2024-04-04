@@ -28,12 +28,14 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  formConfig: string
+  beroep: string
 }
 
 function MultistepForm() {
   const navigate = useNavigate()
   const questionsData = useQuestionData();
-  
+
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -48,14 +50,25 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    beroep: "",
+    formConfig: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  
+  const [isValidDatum, setValidDatum] = useState(true);
+
+
+  /*const updateDate = (newDate) => {
+      setDate(newDate);
+  };*/
+
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
+
+  const [date, setDate] = useState<string | null>(null);
 
   const updateDate = (selectedDate: Date) => {
     const year = selectedDate.getFullYear();
@@ -63,6 +76,7 @@ function MultistepForm() {
     const day = String(selectedDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
+    setDate(formattedDate);
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
@@ -116,11 +130,21 @@ function MultistepForm() {
     />
   ));
 
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
-      steps: [
+    steps: [
+      <>
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields}/>,
         <InfoForm {...data} updateFields={updateFields} />,
+        <PageSpecialisten date={date} />
+      </>
+    ],
+    onStepChange: () => { }
+  });
+  console.log(updateDate);
+  //<Calendar />,
+  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
         <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
         <PageSpecialisten />
       ],
@@ -179,29 +203,29 @@ function MultistepForm() {
 
   const stepWidth = 100 / steps.length;
 
-  return (
-    <form onSubmit={onSubmit} className='form-con'>
-      <div className='progress-con'>
-        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
-        <div className="progress-bar">
-          {steps.map((_, index) => (
-            <div
-              key={index}
-              className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-              style={{ width: `${stepWidth}%` }}
-            ></div>
-          ))}
-        </div>
-      </div>
+  // return (
+  //   <form onSubmit={onsubmit} className='form-con'>
+  //     <div className='progress-con'>
+  //       <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
+  //       <div className="progress-bar">
+  //         {steps.map((_, index) => (
+  //           <div
+  //             key={index}
+  //             className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
+  //             style={{ width: `${stepWidth}%` }}
+  //           ></div>
+  //         ))}
+  //       </div>
+  //     </div>
 
-      {step}
+  //     {step}
 
-      <div className='btn-wrapper'>
-        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-      </div>
-    </form>
-  )
+  //     <div className='btn-wrapper'>
+  //       {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
+  //       <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
+  //     </div>
+  //   </form>
+  // )
 }
 
-export default MultistepForm
+export default MultistepForm;

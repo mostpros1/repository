@@ -169,8 +169,8 @@ function SpecialistMultistepForm() {
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
-        <SearchChoreForm {...data} updateFields={updateFields} />,
-        ...questionsSteps,
+        // <SearchChoreForm {...data} updateFields={updateFields} />,
+        // ...questionsSteps,
         <DateForm
           dateTimeSpans={data.dateTimeSpans}
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}

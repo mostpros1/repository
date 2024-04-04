@@ -1,0 +1,1 @@
+export type UserRoles = "Admin" | "Homeowner" | "Professional"
