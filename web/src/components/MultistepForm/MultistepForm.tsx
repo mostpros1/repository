@@ -123,7 +123,7 @@ function MultistepForm() {
         <InfoForm {...data} updateFields={updateFields} />,
 
         //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
-        <PageSpecialisten />
+        <PageSpecialisten updateDate={data.date}/>
       ],
       onStepChange: () => {}
     });

@@ -99,9 +99,9 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     let professionals: any[] = [];
 
     const profession = window.location.hash.replace("#", "").split("?")[0];
-    
+
     const task = window.location.hash.replace("#", "").split("?")[1];
-    
+
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
@@ -135,7 +135,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
         for (let i: number = 0; i < convertedItems.length; i++) {
           if (convertedItems[i].availibility) {
             const Availability = JSON.parse(convertedItems[i].availibility);
-
+            console.log(Availability);
             for (let x: number = 0; x < Availability.dates.length; x++) {
 
               const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
@@ -153,7 +153,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
       }).catch(err => {
         console.log(err);
       });
-  
+
   }, [updateDate]);
 
   return (
