@@ -1,5 +1,4 @@
 import { SES } from "./declerations.ts";
-import aws from 'aws-sdk';
 
 const MostropsEmail = "timon@timonheidenreich.eu";
 
