@@ -2,7 +2,8 @@
 - [ ] no unused files
 - [ ] no unused code
 - [ ] no `console.log`
-- [ ] max 300 lines of code
+- [ ] max 300 lines of code (If more than 300, make 2 PR's)
+- [ ] Correct file names (English, no spaces)
 
 ## Related Issue
 - [ ] Please link to the issue that this pull request is related to. If there is no related issue, please explain why this change is necessary.
