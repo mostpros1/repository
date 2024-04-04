@@ -1,11 +1,5 @@
-//import { SES } from "./declerations.ts";
+import { SES } from "./declerations.ts";
 import aws from 'aws-sdk';
-
-const SES = new aws.SES({
-    region: import.meta.env.VITE_AWS_REGION,
-    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
-});
 
 const MostropsEmail = "timon@timonheidenreich.eu";
 
