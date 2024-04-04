@@ -1,61 +1,49 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Image, } from "react-native";
+import React from "react";
+import { StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
 import { Dimensions } from "react-native";
 
 const Footer = ({ navigation, activePage }) => {
 
   return (
     
-        <View style={styles.footer}>
-          <TouchableOpacity
-            style={styles.footerImage}
-            onPress={() => navigation.navigate('ProfileNavigation')}
-          >
-            {activePage === 'HomePageSpecialist' ? (
-              <Image
-                source={require("../../assets/images/footerhouseblue.png")}
-                style={styles.image}
-              />
-            ) : (
-              <Image
-                source={require("../../assets/images/footerhouse.png")}
-                style={styles.image}
-              />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.footerImage}
-            onPress={() => navigation.navigate('ChatOverview')}
-          >
-            {activePage === 'ChatOverview' ? (
-              <Image
-                source={require("../../assets/images/footerchatblue.png")}
-                style={styles.image}
-              />
-            ) : (
-              <Image
-                source={require("../../assets/images/footerchat.png")}
-                style={styles.image}
-              />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.footerImage}
-            onPress={() => navigation.navigate('ProfileSettingsOne')}
-          >
-            {activePage === 'Profile' ? (
-              <Image
-                source={require("../../assets/images/footericonblue.png")}
-                style={styles.image}
-              />
-            ) : (
-              <Image
-                source={require("../../assets/images/footericon.png")}
-                style={styles.image}
-              />
-            )}
-          </TouchableOpacity>
-      </View>
+    <View style={styles.footer}>
+      <TouchableOpacity
+        style={styles.footerImage}
+        onPress={() => navigation.navigate('TestHome')}
+      >
+        <View style={styles.iconContainer}>
+          <Image
+            source={activePage === 'HomePageSpecialist' ? require("../../assets/images/footerhouseblue.png") : require("../../assets/images/footerhouse.png")}
+            style={styles.image}
+          />
+          <Text style={styles.footerText}>Home</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.footerImage}
+        onPress={() => navigation.navigate('ChatOverview')}
+      >
+        <View style={styles.iconContainer}>
+          <Image
+            source={activePage === 'ChatOverview' ? require("../../assets/images/footerchatblue.png") : require("../../assets/images/footerchat.png")}
+            style={styles.image}
+          />
+          <Text style={styles.footerText}>Chat</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.footerImage}
+        onPress={() => navigation.navigate('ProfileSettingsOne')}
+      >
+        <View style={styles.iconContainer}>
+          <Image
+            source={activePage === 'Profile' ? require("../../assets/images/footericonblue.png") : require("../../assets/images/footericon.png")}
+            style={styles.image}
+          />
+          <Text style={styles.footerText}>Profiel</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -85,13 +73,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  iconContainer: {
+    alignItems: "center",
+  },
   image: {
     objectFit: "contain", 
     height: 30, 
   },
   footerText: {
-    fontSize: 16,
+    fontSize: 12,
     color: "black",
+    marginTop: 3,
   },
 });
 

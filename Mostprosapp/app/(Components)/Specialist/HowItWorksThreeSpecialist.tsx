@@ -26,10 +26,10 @@ const HowItWorksThreeSpecialist = ({ navigation }) => {
             <View style={styles.middleContainer}>
                 <View style={styles.middleContainerFirstSection}>
                     <Image source={require("../../../assets/images/three.png")} />
-                    <Text style={styles.title}>Klus uitvoeren</Text>
+                    <Text style={styles.title}>De klus uitvoeren</Text>
                 </View>
                 <View style={styles.middleContainerSecondSection}>
-                    <Text>Je voert de klus uit op de afgesproken dag.</Text>
+                    <Text>U voert de klus uit op de afgesproken dag.</Text>
                 </View>
             </View>
             <View style={styles.progressionBarContainer}>

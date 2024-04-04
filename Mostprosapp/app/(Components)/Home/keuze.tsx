@@ -8,14 +8,14 @@ const KeuzePage = ({ navigation }) => {
           <Image style={styles.img} source={require("../../../assets/images/logo2.png")} />
         </View>
         <View style={styles.viewContainer1}>
-          <Text style={styles.welkom}>Maak een keuze om verder te gaan</Text>
+          <Text style={styles.welkom}>Maak alstublieft uw keuze:</Text>
         </View>
         <View style={styles.viewContainer1}>
           <Pressable style={styles.button} onPress={() => navigation.navigate('HowItWorksOneHomeowner')}>
-            <Text style={styles.text}>Verder als Huiseigenaar</Text>
+            <Text style={styles.text}>Ik ben een huiseigenaar</Text>
           </Pressable>
           <Pressable style={styles.buttonTwo} onPress={() => navigation.navigate('HowItWorksOneSpecialist')}>
-            <Text style={styles.textTwo}>Verder als vakspecialist</Text>
+            <Text style={styles.textTwo}>Ik ben een professional</Text>
           </Pressable>
         </View>
       </View>

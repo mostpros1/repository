@@ -32,7 +32,7 @@ export function RegisterForm({
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ voornaam: text })}
-          placeholder="Enter your email"
+          placeholder="Voer uw voornaam in:"
           value={voornaam}
           keyboardType="email-address"
         />
@@ -42,28 +42,28 @@ export function RegisterForm({
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ achternaam: text })}
-          placeholder="Enter your email"
+          placeholder="Voer uw achternaam in:"
           value={achternaam}
         />
         <Text>Email</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ email: text })}
-          placeholder="Enter your email"
+          placeholder="Voer uw email in:"
           value={email}
         />
         <Text>Telefoon Nummer</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ telefoonNummer: text })}
-          placeholder="Enter your email"
+          placeholder="Voer uw telefoon nummer in:"
           value={telefoonNummer}
         />
         <Text>Password</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => updateFields({ password: text })}
-          placeholder="Enter your email"
+          placeholder="Vul uw wachtwoord in:"
           value={password}
         />
       </View>

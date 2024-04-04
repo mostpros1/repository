@@ -51,7 +51,7 @@ const ProfileAbout = ({ navigation }) => {
                                 <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoBottom, styles.bottomRadius, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Icon name="info" size={23} color="#308AE4"/>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Over</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Info</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                             <Text style={[styles.arrow]}>&gt;</Text>
                                         </TouchableOpacity>
@@ -72,7 +72,7 @@ const ProfileAbout = ({ navigation }) => {
                                         </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Privacy beleid</Text>
+                                <Text style={[styles.text, styles.textButtonBlack]}>Privacybeleid</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                             <Text style={[styles.arrow]}>&gt;</Text>
                                         </TouchableOpacity>
@@ -102,7 +102,7 @@ const ProfileAbout = ({ navigation }) => {
                                         </TouchableOpacity>
                                 </Pressable>
                                 <Pressable style={[styles.linkTwoBottom, styles.bottomRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Veel gestelde vragen</Text>
+                                <Text style={[styles.text, styles.textButtonBlack]}>Veelgestelde vragen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                             <Text style={[styles.arrow]}>&gt;</Text>
                                         </TouchableOpacity>

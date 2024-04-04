@@ -26,7 +26,7 @@ import {
               />
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.welkom}> Welkom</Text>
+              <Text style={styles.welkom}>Welkom</Text>
             </View>
             <View style={styles.sectionContainer}>
               <Pressable style={styles.link} onPress={() => navigation.navigate('KeuzePage')}>

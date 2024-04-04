@@ -14,6 +14,9 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -28,7 +31,7 @@ import Footer from "../Footer";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const HomePageSpecialist = ({ navigation }) => {
+const HomePageHomeOwner = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -110,7 +113,7 @@ const HomePageSpecialist = ({ navigation }) => {
                 <View style={[styles.logoNotificationWrapper]}>
                   <View style={styles.imageContainer}>
                     <Image
-                      style={styles.image}
+                      style={styles.logoimg}
                       source={require("../../../assets/images/logo.png")}
                     />
                   </View>
@@ -130,7 +133,7 @@ const HomePageSpecialist = ({ navigation }) => {
                       onFocus={handleInputFocus}
                       value={inputText}
                     />
-                    <Icon name="forward" size={25} color="#318ae5" />
+                    <Icon name="search" size={25} color="#318ae5" />
                   </Pressable>
                 </View>
                 <View style={[styles.iconsText]}>
@@ -138,34 +141,97 @@ const HomePageSpecialist = ({ navigation }) => {
                     style={[styles.iconsTextWrapper]}
                     onPress={handleScannerOpen}
                   >
-                    <Icon name="qr-code" size={50} color="#f7fbff" />
+                    <Icon name="qr-code" size={40} color="#f7fbff" />
                     <Text style={[styles.whiteIconText]}>Scan</Text>
                   </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                  <Icon name="local-parking" size={50} color="#f7fbff" />
-                  <Text style={[styles.whiteIconText]}>Parkeren</Text>
-                </Pressable>
+                    <Icon name="euro" size={40} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Betalen</Text>
+                  </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                    <Icon name="construction" size={50} color="#f7fbff" />
+                    <Icon name="construction" size={40} color="#f7fbff" />
                     <Text style={[styles.whiteIconText]}>Klussen</Text>
                   </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                    <FontAwesome5 name="wallet" size={50} color="#f7fbff" />
+                    <FontAwesome5 name="wallet" size={40} color="#f7fbff" />
                     <Text style={[styles.whiteIconText]}>Wallet</Text>
                   </Pressable>
                 </View>
                 <Pressable
                   style={[styles.searchBar]}
-                  onPress={() => navigation.navigate("Login")}
+                  onPress={() => navigation.navigate("HomeOwnerCreate")}
                 >
                   <View style={styles.smallCircle}>
                     <Icon name="add" size={28} color="#308AE4" />
                   </View>
                   <Text style={[styles.whiteIconText]}>
-                    Nieuwe klus vinden
+                    Nieuwe klus plaatsen
                   </Text>
                 </Pressable>
               </View>
+
+              <View style={[styles.appCenter]}>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 1</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 2</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 3</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 4</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 5</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 6</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 7</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 8</Text>
+                </Pressable>
+                
+              </View>
+
+
+
               <View style={[styles.titleWrap]}>
                 <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
               </View>
@@ -174,28 +240,28 @@ const HomePageSpecialist = ({ navigation }) => {
                   style={[styles.iconsTextWrapper]}
                   onPress={() => handlePress("Hovenier")}
                 >
-                  <Icon name="grass" size={50} color="#4999e7" />
+                  <Icon name="grass" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Hovenier</Text>
                 </Pressable>
                 <Pressable
                   style={[styles.iconsTextWrapper]}
                   onPress={() => handlePress("Elektricien")}
                 >
-                  <Icon name="lightbulb" size={50} color="#4999e7" />
+                  <Icon name="lightbulb" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Elektricien</Text>
                 </Pressable>
                 <Pressable
                   style={[styles.iconsTextWrapper]}
                   onPress={() => handlePress("Dakdekker")}
                 >
-                  <Icon name="house" size={50} color="#4999e7" />
+                  <Icon name="house" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Dekker</Text>
                 </Pressable>
                 <Pressable
                   style={[styles.iconsTextWrapper]}
                   onPress={() => handlePress("Schoonmaker")}
                 >
-                  <Icon name="sanitizer" size={50} color="#4999e7" />
+                  <Icon name="sanitizer" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Schoonmaker</Text>
                 </Pressable>
               </View>
@@ -209,7 +275,7 @@ const HomePageSpecialist = ({ navigation }) => {
                   </View>
                   <View style={[styles.cardSecondHalf]}>
                     <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                      Hoe aan de {"\n"} slag te gaan?
                     </Text>
                     <Pressable>
                       <Text style={[styles.blueText]}>Meer info</Text>
@@ -441,6 +507,7 @@ const HomePageSpecialist = ({ navigation }) => {
           >
             <Text style={styles.closeScannerButtonText}>Close Scanner</Text>
           </Pressable>
+          
         </View>
       )}
     </PaperProvider>
@@ -453,6 +520,18 @@ const styles = StyleSheet.create({
     width: windowWidth,
     display: "flex",
     alignItems: "center",
+  },
+
+
+  appCenter: {
+    marginTop: 60,
+    width: windowWidth,
+    flexDirection: "row",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 5,
   },
 
   locationTimeInfoWrapper: {
@@ -598,7 +677,8 @@ const styles = StyleSheet.create({
     height: 110,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#b5dcff",
   },
 
   cardSecondHalf: {
@@ -651,7 +731,7 @@ const styles = StyleSheet.create({
 
   searchBar: {
     width: "70%",
-    height: "20%",
+    height: "23%",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -680,6 +760,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+  },
+
+  iconsTextWrapperTwo: {
+    width: 90,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    paddingBottom: 10,
   },
 
   whiteIconText: {
@@ -782,7 +871,7 @@ const styles = StyleSheet.create({
   },
 
   headerSquare: {
-    height: 350,
+    height: 330,
     width: windowWidth,
     backgroundColor: "#74bcfd",
     display: "flex",
@@ -797,13 +886,18 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    paddingBottom: 25,
+    alignItems: "center",
   },
 
   imageContainer: {
+    width: "75%",
     height: 100,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
+  },
+
+  logoimg: {
+    resizeMode: "contain",
   },
 
   image: {
@@ -812,10 +906,7 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    position: "absolute",
-    right: 25,
-    bottom: 56,
   },
 });
 
-export default HomePageSpecialist;
+export default HomePageHomeOwner;

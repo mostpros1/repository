@@ -133,7 +133,7 @@ const Profile = ({ navigation }) => {
                 </Pressable>
                 <Pressable style={[styles.linkOne, styles.messageButton]} onPress={() => navigation.navigate('')}>
                   <Icon name="message" size={30} color="#308AE4" />
-                  <Text style={[styles.text, styles.textButtonBlack]}>Bericht sturen</Text>
+                  <Text style={[styles.text, styles.textButtonBlack]}>Chatten</Text>
                 </Pressable>
               </View>
             </View>

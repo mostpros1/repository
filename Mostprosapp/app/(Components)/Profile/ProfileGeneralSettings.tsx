@@ -72,7 +72,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                     color="black"
                   />
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Tekst vertaler
+                    Tekstvertalen                  
                   </Text>
                   <View style={[styles.button, styles.arrowButton]}>
                     <Switch
@@ -89,7 +89,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                 >
                   <Icon name="title" size={windowWidth * 0.05} color="black" />
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Tekst grootte
+                  Lettergrootte
                   </Text>
                   <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                     <Text style={[styles.arrow]}>&gt;</Text>
@@ -103,7 +103,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   ]}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Donker Modus
+                  Donkere modus
                   </Text>
                   <Switch
                     value={isSwitchOn2}
@@ -126,7 +126,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   onPress={() => navigation.navigate("")}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Opslag Beheren
+                  Opslagbeheer
                   </Text>
                   <View style={styles.textButtonWrapper}>
                     <Text style={[styles.lightTitle]}>Beheer Cache</Text>
@@ -144,7 +144,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   onPress={() => navigation.navigate("")}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Chat berichten wissen
+                  Chatberichten verwijderen
                   </Text>
                   <View style={styles.textButtonWrapper}>
                     <TouchableOpacity style={styles.button}>

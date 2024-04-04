@@ -53,7 +53,7 @@ const ProfilePrivacy = ({ navigation }) => {
                         <View style={styles.firstMiddleContainerWrapper}>
                             <View style={styles.middleContainerFirstSection}>
                             <Pressable style={[styles.linkTwoTop, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Systeem permissie</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Systeempermissie</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                             <Text style={[styles.arrow]}>&gt;</Text>
                                         </TouchableOpacity>
@@ -70,7 +70,7 @@ const ProfilePrivacy = ({ navigation }) => {
                         <View style={styles.secondMiddleContainerWrapper}>
                                 <View style={styles.middleContainerFirstSection}>
                                 <Pressable style={[styles.linkTwoBottom, styles.bottomRadius, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Text style={[styles.text, styles.textButtonBlack]}>Privacy Beleid</Text>
+                                    <Text style={[styles.text, styles.textButtonBlack]}>Privacybeleid</Text>
                                     <View style={styles.textButtonWrapper}>
                                         <TouchableOpacity style={styles.button}>
                                             <Text style={[styles.arrow]}>&gt;</Text>

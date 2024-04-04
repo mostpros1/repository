@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   TextInput,
@@ -35,6 +36,7 @@ export function LoginForm({
   setUserExists,
   handleLogin,
 }: LoginFormProps) {
+  const navigation = useNavigation();
   return (
     <>
       <View>
@@ -71,6 +73,13 @@ export function LoginForm({
           <View><img src={google} alt="" />Gmail</View>
           <View><img src={instagram} alt="" />Instagram</View> */}
         </View>
+
+        <Pressable style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.buttonTitle}>Inloggen</Text>
+        </Pressable>
+        <Pressable style={styles.loginButton} onPress={() => navigation.navigate("PostalCodeSpecialist")}>
+  <Text style={styles.buttonTitle}>Tijdelijke Login Knop</Text>
+</Pressable>
       </View>
     </>
   );
