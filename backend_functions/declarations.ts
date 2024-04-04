@@ -9,7 +9,6 @@ export const SES = new aws.SES({
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
 });
 
-
 export const dynamoDB = new aws.DynamoDB({
     region: import.meta.env.VITE_AWS_REGION,
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
