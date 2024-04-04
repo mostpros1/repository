@@ -20,22 +20,22 @@ type FormData = {
   stad: string;
   date: string;
   questions: Record<string, string>;
-  aanvullendeInformatie: string;
-  info: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  password: string;
-  repeatPassword: string;
-  formConfig: string;
-  beroep: string;
-};
+  aanvullendeInformatie: string
+  info: string
+  email: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
+  password: string
+  repeatPassword: string
+  formConfig: string
+  beroep: string
+}
 
 function MultistepForm() {
   const navigate = useNavigate();
   const questionsData = useQuestionData();
-
+  
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -49,43 +49,103 @@ function MultistepForm() {
     phoneNumber: "",
     password: "",
     repeatPassword: "",
-    formConfig: "",
-    beroep: ""
-  };
+    beroep: "",
+    formConfig: ""
+  }
 
-  const [data, setData] = useState<FormData>(INITIAL_DATA);
+  const [data, setData] = useState(INITIAL_DATA);
+  const [isValidDatum, setValidDatum] = useState(true);
 
-  const updateFields = (fields: Partial<FormData>) => {
-    setData(prev => ({ ...prev, ...fields }));
-  };
+
+  /*const updateDate = (newDate) => {
+      setDate(newDate);
+  };*/
+
+
+  function updateFields(fields: Partial<FormData>) {
+    setData((prev) => ({ ...prev, ...fields }));
+  }
+
+  const [date, setDate] = useState<string | null>(null);
 
   const updateDate = (selectedDate: Date) => {
     const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
+    setDate(formattedDate);
   };
+
+  function updateQuestionAnswers(questionKey: string, answer: string) {
+    setData((prev) => ({
+      ...prev,
+      questions: updateQuestions(prev.questions, {
+        [questionKey]: answer,
+      }),
+    }));
+  }
+
+  function updateQuestions(
+    prevQuestions: Record<string, string>,
+    answers: Record<string, string>
+  ): Record<string, string> {
+    const filteredAnswers: Record<string, string> = {};
+
+    for (const key in answers) {
+      if (Object.prototype.hasOwnProperty.call(answers, key)) {
+        const value = answers[key];
+        if (value !== undefined) {
+          filteredAnswers[key] = value;
+        }
+      }
+    }
+
+    const updatedQuestions: Record<string, string> = {
+      ...prevQuestions,
+      ...filteredAnswers,
+    };
+
+    return updatedQuestions;
+  }
+
+  const optionImages = {
+    "Nieuwe leiding aanleggen": kraan,
+    "Kapotte leiding maken": kraan,
+    "Anders": kraan
+    // ... voeg andere opties en bijbehorende afbeeldingen toe
+  };
+
+  const questionsSteps = questionsData.map((question) => (
+    <CategoryForm
+      key={question.key}
+      question={question}
+      questions={data.questions}
+      updateQuestionAnswers={(answers) => {
+        updateQuestionAnswers(question.key, answers[question.key] as string);
+      }}
+      optionImages={optionImages}
+    />
+  ));
+
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
     steps: [
-      <LocationForm key="location" {...data} updateFields={updateFields} />,
-      <DateForm key="date" updateDate={updateDate} updateFields={updateFields} />,
-      <InfoForm key="info" {...data} updateFields={updateFields} />,
-      <PageSpecialisten key="specialists" date={data.date} />
-    ],
-    onStepChange: () => {}
-  });
+      <>
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
+        <InfoForm {...data} updateFields={updateFields} />,
+        
+        <PageSpecialisten date={date} />
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (isLastStep) {
-      console.log("Formulierdata:", data);
-      // Optioneel: Verwerk de formulierdata, bijvoorbeeld het verzenden naar een server
-    } else {
-      next();
-    }
-  };
+      </>
+    ],
+    onStepChange: () => { }
+  });
+  console.log(updateDate);
+  //<Calendar />,
+  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
+  const stepWidth = 100 / steps.length;
 
   return (
-    <form onSubmit={handleSubmit} className='form-con'>
+    <form onSubmit={onsubmit} className='form-con'>
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">

@@ -64,7 +64,8 @@
 .days-container{
   display: flex;
   position: absolute;
-  gap: 7px;
+  gap: 11px;
+  margin-left: 65px;
 }
 
 .day {
@@ -203,7 +204,7 @@ justify-content: center;
 align-items: center;
 display: flex;
 cursor: pointer;
-margin-left: 140px;
+margin-left: 147px;
 margin-top: 20px;
 margin-bottom: 10px;
 }

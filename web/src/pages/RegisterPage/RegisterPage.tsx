@@ -5,6 +5,8 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
+import { dynamo } from "./../../../../backend_functions/declerations.ts";
+import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 
 
 function RegisterPage() {
@@ -22,8 +24,17 @@ function RegisterPage() {
 
   const navigate = useNavigate()
 
-  const handleSignUp = async () => {
-    const { email, password, firstName, lastName, phoneNumber } = registerData;
+  interface RegisterData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    repeatPassword: string;
+  }
+
+  function signUp(registerData: RegisterData): void {
+    const { email, phoneNumber, password, firstName, lastName } = registerData;
 
     try {
       await Auth.signUp({
@@ -39,7 +50,7 @@ function RegisterPage() {
       });
 
       // Handle successful registration, e.g., redirect to another page
-      navigate('/bevestig-email', { state: { email: email, postConfig: "HOMEOWNER" } })
+      navigate('/bevestig-email', { state: { email: email } });
     } catch (error: any) {
       // Handle registration error, e.g., show an error message
       console.error('Error signing up:', error);
@@ -57,12 +68,13 @@ function RegisterPage() {
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
           <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error} />
-          <button onClick={handleSignUp}>Sign Up</button>
+          <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
-      <Footer />
+
     </>
   );
 }
 
 export default RegisterPage;
+/*<Footer />*/

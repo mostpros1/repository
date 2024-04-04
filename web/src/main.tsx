@@ -4,13 +4,14 @@ import awsExports from "./aws-exports.js";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
-import * as aws from "aws-sdk";
+import aws from "aws-sdk";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { sendMail } from "../../backend_functions/email.ts";
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -33,6 +34,7 @@ Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
 
+//sendMail("timon@timonheidenreich.eu", "test", "test", "<p>test</p><br><p>test</p>");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -45,3 +47,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+export { dynamoDB };
