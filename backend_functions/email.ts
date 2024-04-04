@@ -1,4 +1,4 @@
-//import { SES } from "./declerations.ts";
+//import { SES } from "./declarations.ts";
 import aws from 'aws-sdk';
 
 const SES = new aws.SES({
