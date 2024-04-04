@@ -20,7 +20,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
     const handleNext = () => {
         if (selectedItems.length === 0) {
-            Alert.alert('Geen klus gekozen', 'Selecteer minimaal 1 of meer klussen.');
+            Alert.alert('Geen klussen gekozen', 'Selecteer minimaal één of meer klussen.');
         } else {
             navigation.navigate('HomeOwnerExtraInfo');
         }
@@ -37,14 +37,15 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.progressContainer}>
-                    <Text style={styles.progressText}>Stap {progress} van de 4</Text>
+                    <Text style={styles.progressText}>Stap {progress} van de 5</Text>
                     <View style={styles.progressBar}>
-                        <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
+                        <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
                     </View>
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Wat moet er gedaan worden?</Text>
+                <Text style={styles.title}>Wat moet er gebeuren?</Text>
+
                 </View>
 
                 <View style={styles.cardsContainer}>

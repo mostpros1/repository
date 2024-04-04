@@ -58,7 +58,7 @@ const HomeOwnerCreate = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Vind Direct wat je nodig hebt: {'\n'} Type hieronder in en ontdek!</Text>
+                    <Text style={styles.title}>Vind Direct wat je nodig hebt: {'\n'} Kies een optie en ontdek!</Text>
                 </View>
 
                 <View style={styles.inputContainer}>

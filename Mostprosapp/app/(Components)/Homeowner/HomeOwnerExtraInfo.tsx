@@ -19,17 +19,19 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                 </View>
 
                 <View style={styles.progressContainer}>
-                    <Text style={styles.progressText}>Stap {progress} van de 4</Text>
+                    <Text style={styles.progressText}>Stap {progress} van de 5</Text>
                     <View style={styles.progressBar}>
-                        <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
+                        <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
                     </View>
                 </View>
 
                 <View style={styles.titleBox}>
-                    <Text style={styles.title}>Aanvullende Informatie (niet verplicht)</Text>
+                <Text style={styles.title}>Aanvullende Informatie (optioneel)</Text>
+
                 </View>
                 <View style={styles.titleBox}>
-                    <Text style={styles.titleLight}>Deel hier a.u.b niet je contactgegevens.</Text>
+                <Text style={styles.titleLight}>Deel hier a.u.b niet uw contactgegevens.</Text>
+
                 </View>
 
                 <View style={styles.textAreaContainer}>
@@ -37,7 +39,7 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                         style={styles.textArea}
                         onChangeText={setAdditionalInfo}
                         value={additionalInfo}
-                        placeholder="Beschrijf je klus hier met aanvullende informatie denk aan eventuele schade, enz."
+                        placeholder="Beschrijf hier uw project met aanvullende informatie, denk aan eventuele schade, etc."
                         placeholderTextColor="#b6b8bd"
                         multiline
                     />
@@ -49,7 +51,7 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                     <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('HomeOwnerEmail')}>
+                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('DateAndTimePicker')}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>

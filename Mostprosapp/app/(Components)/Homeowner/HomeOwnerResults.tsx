@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
-  Button,
   View,
   SafeAreaView,
   Text,
@@ -9,36 +8,71 @@ import {
   Pressable,
   Image,
   ScrollView,
-  ImageBackground,
-  TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
-import { KeyboardAvoidingView } from "react-native";
-import Footer from '../Footer';
+import Footer from "../Footer";
+
+const professionals = {
+  professional: [
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+    {
+      name: "Jan Schilder",
+      title: "Loodgieter",
+      description:
+        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
+      image: require("../../../assets/images/jan.png"),
+    },
+  ],
+};
+
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 const HomeOwnerResults = ({ navigation }) => {
-  const CustomIcon = (props) => {
-    return (
-      <View>
-        <Icon
-          name={props.name}
-          size={props.size}
-          style={{
-            backgroundColor: `${props.bcolor}`,
-            color: `${props.color}`,
-            paddingLeft: props.pLeft,
-            borderRadius: props.rad,
-            padding: props.pad,
-          }}
-        />
-      </View>
-    );
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState(
+    Array(5).fill(false)
+  );
+
+  const selectedCount = selectedCheckboxes.filter(
+    (checkbox) => checkbox
+  ).length;
+
+  const toggleCheckbox = (index) => {
+    const updatedCheckboxes = [...selectedCheckboxes];
+    updatedCheckboxes[index] = !updatedCheckboxes[index];
+    setSelectedCheckboxes(updatedCheckboxes);
   };
+
   return (
     <PaperProvider>
       <SafeAreaView>
@@ -46,112 +80,75 @@ const HomeOwnerResults = ({ navigation }) => {
           <View style={styles.view}>
             <View style={styles.topContainer}>
               <Text style={[styles.bigTitle]}>
-                Maak een selectie uit de beste {"\n"} vak specialisten in jouw
-                omgeving
+                Maak een selectie uit de beste{"\n"}professionals in uw omgeving
               </Text>
             </View>
             <View style={styles.container}>
               <Icon name="tune" size={55} color="black" />
               <View style={styles.blueBox}>
-                <Text style={styles.textButtonBlack}>Selecteer 10 vakspecialisten om sneller een reactie op je klus te krijgen.</Text>
+                <Text style={styles.textButtonBlack}>
+                  Selecteer meerdere professionals om sneller een reactie op uw
+                  klus te krijgen.
+                </Text>
               </View>
-
             </View>
 
             <View style={styles.middleContainer}>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
+              {professionals.professional.map((professional, index) => (
+                <View style={styles.middleContainerFirstSection} key={index}>
+                  <Image style={styles.image} source={professional.image} />
+                  <View style={styles.orange}>
+                    <View style={styles.green}>
+                      <Text style={styles.text}>{professional.name}</Text>
+                      <Text style={styles.title}>{professional.title}</Text>
+                      <View style={styles.ratingContainer}>
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
                         <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
+                        <Ionicons
+                          name="star-outline"
+                          size={20}
+                          color="#FFD700"
+                        />
+                      </View>
                     </View>
+                    <View style={styles.yellow}>
+                      <TouchableOpacity
+                        onPress={() => toggleCheckbox(index)}
+                        activeOpacity={1}
+                        style={[
+                          styles.checkbox,
+                          selectedCheckboxes[index] ? styles.selected : null,
+                        ]}
+                      ></TouchableOpacity>
                     </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
+                    <Text
+                      style={styles.lightTitle}
+                      numberOfLines={2}
+                      ellipsizeMode="tail"
+                    >
+                      {professional.description}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter en schoonmaakster</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. Wij zijn een duo die graag open staan voor je klussen neem snel contact met ons op. </Text>
-                </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
-                </View>
-              </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../assets/images/jan.png")}
-                />
-                <View style={[styles.orange]}>
-                    <View style={[styles.green]}>
-                        <Text style={[styles.text]}>Jan Schilder</Text>
-                        <Text style={[styles.title]}>Loodgieter</Text>
-                        <View style={styles.ratingContainer}>
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star" size={20} color="#FFD700" />
-                        <Ionicons name="star-outline" size={20} color="#FFD700" />
-                    </View>
-                    </View>
-                    <View style={[styles.yellow]}>
-                      <Text style={[styles.text]}>€500</Text>
-                    </View>
-                    <Text style={[styles.lightTitle]} numberOfLines={2} ellipsizeMode="tail">Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
-                </View>
-              </View> 
-              <View style={[styles.footerfix]}></View>
+              ))}
+              <Pressable
+                style={[
+                  styles.nextButton,
+                  selectedCount >= 1 ? styles.nextButtonColorOne : null,
+                ]}
+                onPress={() => {
+                  if (selectedCount >= 1) {
+                    navigation.goBack();
+                  } else if (selectedCount === 0) {
+                    Alert.alert("Selecteer minimaal één vakspecialist.");
+                  }
+                }}
+              >
+                <Text style={styles.whiteButtonText}>Bevestigen</Text>
+              </Pressable>
+              <View style={styles.footerfix}></View>
             </View>
           </View>
         </ScrollView>
@@ -161,50 +158,89 @@ const HomeOwnerResults = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-    orange:{
-        flex: 1,
-        height: "100%",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap:"wrap",
-        paddingLeft: 10,
-    },
-
-    footerfix: {
-      height: 35,
-      width: windowWidth,
-    },
-
-    green:{
-        height: "60%",
-        width: "70%",
-        display: "flex",
-        justifyContent: "center",
-    },
-
-    yellow:{
-        height: "60%",
-        width: "30%",
-        display: "flex",
-        alignItems: "center",
-        padding: 10,
-    },
-
-    middleContainerFirstSection: {
-      width: windowWidth,
-      height: 150,
-      display: "flex",
-      borderBottomWidth: 3,
-      borderRadius: 10,
-      flexDirection: "row",
-      alignItems: "center",
-      paddingLeft: 10,
-      borderColor: "#f1f1f0",
+  orange: {
+    flex: 1,
+    height: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingLeft: 10,
   },
-  
-  
-  
-      
+
+  nextButton: {
+    backgroundColor: "#B3B3B3",
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    alignSelf: "center",
+    width: 170,
+    height: 60,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  nextButtonColorOne: {
+    backgroundColor: "#318ae5",
+  },
+
+  nextButtonText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  whiteButtonText: {
+    color: "#fff",
+  },
+
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 1.5,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    backgroundColor: "transparent",
+  },
+
+  selected: {
+    backgroundColor: "#308AE4",
+  },
+
+  footerfix: {
+    height: 80,
+    width: windowWidth,
+  },
+
+  green: {
+    height: "60%",
+    width: "70%",
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  yellow: {
+    height: "60%",
+    width: "30%",
+    display: "flex",
+    alignItems: "center",
+    padding: 10,
+  },
+
+  middleContainerFirstSection: {
+    width: windowWidth,
+    height: 150,
+    display: "flex",
+    borderBottomWidth: 3,
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 10,
+    borderColor: "#f1f1f0",
+  },
+
   view: {
     height: "100%",
     width: windowWidth,
@@ -213,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  bigTitle:{
+  bigTitle: {
     color: "#303030",
     textAlign: "center",
     fontWeight: "bold",
@@ -234,6 +270,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     height: undefined,
     aspectRatio: 1,
+    backgroundColor: "orange",
   },
 
   size: {
@@ -270,8 +307,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingBottom: 15,
     flexDirection: "column",
-    borderBottomWidth: 6, 
-    borderBottomColor: "#f4f4f5", 
+    borderBottomWidth: 6,
+    borderBottomColor: "#f4f4f5",
   },
   topButtonsContainer: {
     width: "60%",
@@ -433,13 +470,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  selected: {
-    borderWidth: 2,
-    borderColor: "#308AE4",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -449,7 +479,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  blueBox:{
+  blueBox: {
     width: "75%",
     backgroundColor: "#e9f2fe",
     height: "70%",

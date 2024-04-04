@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useState, } from 'react';
+import { useNavigation } from '@react-navigation/native'; 
+import { View, Text, Button, Image, TouchableOpacity, ScrollView, Alert, Pressable, } from 'react-native';
 import { StyleSheet } from 'react-native';
 const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const today = new Date();
+  const [progress, setProgress] = useState(4); 
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
   const currentYear = date.getFullYear();
@@ -114,11 +116,19 @@ const renderCalendarDays = () => {
       <Text key={day} style={styles.weekDay}>{day}</Text>
     ));
   };
+  const navigation = useNavigation();
+
   return (
   <View style={styles.container}>
     <TouchableOpacity>
       <Image source={require('../../../assets/images/arrowL.png')} style={styles.arrowBack} />
     </TouchableOpacity>
+    <View style={styles.progressContainer}>
+                            <Text style={styles.progressText}>Stap {progress} van de 5</Text>
+                            <View style={styles.progressBar}>
+                                <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
+                            </View>
+                        </View>
   <Text style={styles.headerTitle}>Selecteer een beschikbare datum</Text>
   <View style={styles.header}>
     <TouchableOpacity onPress={handlePrevMonth}>
@@ -138,8 +148,11 @@ const renderCalendarDays = () => {
     {renderCalendarDays()}
   </View>
   <TouchableOpacity style={styles.confirmButton}>
+  <Pressable onPress={() => navigation.navigate('HomeOwnerEmail')}>
     <Text style={styles.confirmButtonText}>Bevestig keuze</Text>
+</Pressable>
   </TouchableOpacity>
+
   </View>
   );
 };
@@ -150,6 +163,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
+
+  progressContainer: {
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 30,
+},
+progressText: {
+    marginBottom: 5,
+},
+progressBar: {
+    width: 300,
+    height: 10,
+    backgroundColor: '#ccc',
+    borderRadius: 5,
+},
+progressIndicator: {
+    height: '100%',
+    backgroundColor: '#318ae5',
+    borderRadius: 5,
+},
+
   arrowBack: {
     width: 40,
     height: 40,

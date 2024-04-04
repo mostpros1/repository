@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
   StyleSheet,
   Button,
@@ -20,12 +20,13 @@ import {
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
-import { specialists } from '../../specialists.js';
+import { useNavigation } from "@react-navigation/native";
+import { specialists } from "../../specialists.js";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer';
-
-
+import { FontAwesome5 } from "@expo/vector-icons";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { Ionicons } from "@expo/vector-icons";
+import Footer from "../Footer";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -33,46 +34,75 @@ const windowHeight = Dimensions.get("window").height;
 const HomePageHomeOwner = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [inputText, setInputText] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [isScannerVisible, setIsScannerVisible] = useState(false);
 
-  const handleInputChange = (text) => {
+  const handleInputChange = useCallback((text) => {
     setInputText(text);
-  };
+  }, []);
 
-  const handleInputFocus = () => {
+  const handleInputFocus = useCallback(() => {
     setShowOptions(true);
-  };
+  }, []);
 
-  const handleOptionPress = (option) => {
+  const handleOptionPress = useCallback((option) => {
     setInputText(option.title);
     setSelectedOption(option);
     setShowOptions(false);
-  };
+  }, []);
 
-  const handleOutsidePress = () => {
+  const handleOutsidePress = useCallback(() => {
     Keyboard.dismiss();
     setShowOptions(false);
-  };
+  }, []);
 
-  const handleForwardButtonPress = () => {
+  const handleForwardButtonPress = useCallback(() => {
     if (!selectedOption) {
       setErrorMessage("Kies eerst een Professional");
       setTimeout(() => {
-        setErrorMessage('');
+        setErrorMessage("");
       }, 3000);
       return;
     }
-    navigation.navigate('HomeOwnerPostalCode', { selectedOption });
-  };
+    navigation.navigate("HomeOwnerPostalCode", { selectedOption });
+  }, [navigation, selectedOption]);
 
-  const filteredOptions = specialists.filter(option =>
-    option.title.toLowerCase().includes(inputText.toLowerCase())
+  const handlePress = useCallback(
+    (text) => {
+      navigation.navigate("HomeOwnerPostalCode", { parameterName: text });
+    },
+    [navigation]
   );
 
-  const handlePress = (text) => {
-    navigation.navigate('HomeOwnerPostalCode', { parameterName: text });
-  };
+  const handleScannerOpen = useCallback(() => {
+    setIsScannerVisible(true);
+  }, []);
+
+  const handleScannerClose = useCallback(() => {
+    setIsScannerVisible(false);
+  }, []);
+
+  const handleBarCodeScanned = useCallback(({ type, data }) => {
+    alert(`Scanned data: ${data}`);
+  }, []);
+
+  const filteredOptions = useMemo(() => {
+    return specialists.filter((option) =>
+      option.title.toLowerCase().includes(inputText.toLowerCase())
+    );
+  }, [inputText]);
+
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      handleOutsidePress
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, [handleOutsidePress]);
+
   return (
     <PaperProvider>
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
@@ -83,7 +113,7 @@ const HomePageHomeOwner = ({ navigation }) => {
                 <View style={[styles.logoNotificationWrapper]}>
                   <View style={styles.imageContainer}>
                     <Image
-                      style={styles.image}
+                      style={styles.logoimg}
                       source={require("../../../assets/images/logo.png")}
                     />
                   </View>
@@ -92,8 +122,10 @@ const HomePageHomeOwner = ({ navigation }) => {
                   </View>
                 </View>
                 <View style={[styles.textSearchWrapper]}>
-                  <Text style={[styles.whiteBoldText]}>Stad \/</Text>
-                  <Pressable style={styles.container} onPress={handleForwardButtonPress}>
+                  <Pressable
+                    style={styles.container}
+                    onPress={handleForwardButtonPress}
+                  >
                     <TextInput
                       placeholder="Zoeken:"
                       style={styles.input}
@@ -101,52 +133,135 @@ const HomePageHomeOwner = ({ navigation }) => {
                       onFocus={handleInputFocus}
                       value={inputText}
                     />
-                    <Icon name="forward" size={25} color="#318ae5" />
+                    <Icon name="search" size={25} color="#318ae5" />
                   </Pressable>
                 </View>
                 <View style={[styles.iconsText]}>
-                  <Pressable style={[styles.iconsTextWrapper]}>
-                    <Icon name="scanner" size={50} color="#f7fbff" />
-                    <Text style={[styles.whiteIconText]}>Scannen</Text>
+                  <Pressable
+                    style={[styles.iconsTextWrapper]}
+                    onPress={handleScannerOpen}
+                  >
+                    <Icon name="qr-code" size={40} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Scan</Text>
                   </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                    <Icon name="payment" size={50} color="#f7fbff" />
-                    <Text style={[styles.whiteIconText]}>Betalingen</Text>
+                    <Icon name="euro" size={40} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Betalen</Text>
                   </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                    <Icon name="local-parking" size={50} color="#f7fbff" />
-                    <Text style={[styles.whiteIconText]}>Parkeren</Text>
+                    <Icon name="construction" size={40} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Klussen</Text>
                   </Pressable>
                   <Pressable style={[styles.iconsTextWrapper]}>
-                    <Icon name="work" size={50} color="#f7fbff" />
-                    <Text style={[styles.whiteIconText]}>Zak</Text>
+                    <FontAwesome5 name="wallet" size={40} color="#f7fbff" />
+                    <Text style={[styles.whiteIconText]}>Wallet</Text>
                   </Pressable>
                 </View>
-                <Pressable testID="klusBtn" style={[styles.searchBar]} onPress={() => navigation.navigate('HomeOwnerCreate')}>
+                <Pressable
+                  style={[styles.searchBar]}
+                  onPress={() => navigation.navigate("HomeOwnerCreate")}
+                >
                   <View style={styles.smallCircle}>
                     <Icon name="add" size={28} color="#308AE4" />
                   </View>
-                  <Text style={[styles.whiteIconText]}>Klussen Vinden</Text>
+                  <Text style={[styles.whiteIconText]}>
+                    Nieuwe klus plaatsen
+                  </Text>
                 </Pressable>
               </View>
+
+              <View style={[styles.appCenter]}>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 1</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 2</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 3</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 4</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 5</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 6</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 7</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.iconsTextWrapperTwo]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="gamepad" size={40} color="#4999e7" />
+                  <Text style={[styles.blackIconText]}>App 8</Text>
+                </Pressable>
+                
+              </View>
+
+
+
               <View style={[styles.titleWrap]}>
                 <Text style={[styles.blackTitle]}>Populaire Klussen</Text>
               </View>
               <View style={[styles.iconsText]}>
-                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Hovenier")}>
-                  <Icon name="grass" size={50} color="#4999e7" />
+                <Pressable
+                  style={[styles.iconsTextWrapper]}
+                  onPress={() => handlePress("Hovenier")}
+                >
+                  <Icon name="grass" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Hovenier</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Elektricien")}>
-                  <Icon name="lightbulb" size={50} color="#4999e7" />
+                <Pressable
+                  style={[styles.iconsTextWrapper]}
+                  onPress={() => handlePress("Elektricien")}
+                >
+                  <Icon name="lightbulb" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Elektricien</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Dakdekker")}>
-                  <Icon name="house" size={50} color="#4999e7" />
+                <Pressable
+                  style={[styles.iconsTextWrapper]}
+                  onPress={() => handlePress("Dakdekker")}
+                >
+                  <Icon name="house" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Dekker</Text>
                 </Pressable>
-                <Pressable style={[styles.iconsTextWrapper]} onPress={() => handlePress("Schoonmaker")}>
-                  <Icon name="sanitizer" size={50} color="#4999e7" />
+                <Pressable
+                  style={[styles.iconsTextWrapper]}
+                  onPress={() => handlePress("Schoonmaker")}
+                >
+                  <Icon name="sanitizer" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>Schoonmaker</Text>
                 </Pressable>
               </View>
@@ -160,89 +275,197 @@ const HomePageHomeOwner = ({ navigation }) => {
                   </View>
                   <View style={[styles.cardSecondHalf]}>
                     <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                      Hoe aan de {"\n"} slag te gaan?
                     </Text>
                     <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                      <Text style={[styles.blueText]}>Meer info</Text>
                     </Pressable>
                   </View>
                 </View>
-                <View style={[styles.card]}>
-                  <View style={[styles.cardFirstHalf]}>
-                    <Text style={[styles.cardBigTitle]}>Keuken</Text>
+                <View style={styles.cardProffesional}>
+                  <View style={styles.titleKmWrapper}>
+                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                    <View style={styles.kmWrapper}>
+                      <Ionicons name="location" size={24} color="#308AE4" />
+                      <Text>1.0 KM</Text>
+                    </View>
                   </View>
-                  <View style={[styles.cardSecondHalf]}>
-                    <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                  <View style={styles.twoTextWrapper}>
+                    <Text style={styles.textBold}>
+                      Kapotte leiding maken en lekkage verhelpen.
                     </Text>
-                    <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                    <Text style={styles.textLight}>
+                      De leiding is niet meer in goede staat deze moet vervangen
+                      worden en....
+                    </Text>
+                  </View>
+
+                  <View style={styles.locationTimeInfoWrapper}>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Locatie: Amsterdam</Text>
+                    </Pressable>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Binnen een maand</Text>
                     </Pressable>
                   </View>
+                  <Pressable style={styles.moreInfo}>
+                    <Text
+                      style={styles.link}
+                      onPress={() => navigation.navigate("MyWork")}
+                    >
+                      Meer info
+                    </Text>
+                  </Pressable>
                 </View>
-                <View style={[styles.card]}>
-                  <View style={[styles.cardFirstHalf]}>
-                    <Text style={[styles.cardBigTitle]}>Huis</Text>
+                <View style={styles.cardProffesional}>
+                  <View style={styles.titleKmWrapper}>
+                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                    <View style={styles.kmWrapper}>
+                      <Ionicons name="location" size={24} color="#308AE4" />
+                      <Text>1.0 KM</Text>
+                    </View>
                   </View>
-                  <View style={[styles.cardSecondHalf]}>
-                    <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                  <View style={styles.twoTextWrapper}>
+                    <Text style={styles.textBold}>
+                      Kapotte leiding maken en lekkage verhelpen.
                     </Text>
-                    <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                    <Text style={styles.textLight}>
+                      De leiding is niet meer in goede staat deze moet vervangen
+                      worden en....
+                    </Text>
+                  </View>
+
+                  <View style={styles.locationTimeInfoWrapper}>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Locatie: Amsterdam</Text>
+                    </Pressable>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Binnen een maand</Text>
                     </Pressable>
                   </View>
+                  <Pressable style={styles.moreInfo}>
+                    <Text
+                      style={styles.link}
+                      onPress={() => navigation.navigate("MyWork")}
+                    >
+                      Meer info
+                    </Text>
+                  </Pressable>
                 </View>
-                <View style={[styles.card]}>
-                  <View style={[styles.cardFirstHalf]}>
-                    <Text style={[styles.cardBigTitle]}>Badkamer</Text>
+                <View style={styles.cardProffesional}>
+                  <View style={styles.titleKmWrapper}>
+                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                    <View style={styles.kmWrapper}>
+                      <Ionicons name="location" size={24} color="#308AE4" />
+                      <Text>1.0 KM</Text>
+                    </View>
                   </View>
-                  <View style={[styles.cardSecondHalf]}>
-                    <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                  <View style={styles.twoTextWrapper}>
+                    <Text style={styles.textBold}>
+                      Kapotte leiding maken en lekkage verhelpen.
                     </Text>
-                    <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                    <Text style={styles.textLight}>
+                      De leiding is niet meer in goede staat deze moet vervangen
+                      worden en....
+                    </Text>
+                  </View>
+
+                  <View style={styles.locationTimeInfoWrapper}>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Locatie: Amsterdam</Text>
+                    </Pressable>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Binnen een maand</Text>
                     </Pressable>
                   </View>
+                  <Pressable style={styles.moreInfo}>
+                    <Text
+                      style={styles.link}
+                      onPress={() => navigation.navigate("MyWork")}
+                    >
+                      Meer info
+                    </Text>
+                  </Pressable>
                 </View>
-                <View style={[styles.card]}>
-                  <View style={[styles.cardFirstHalf]}>
-                    <Text style={[styles.cardBigTitle]}>Tuin</Text>
+                <View style={styles.cardProffesional}>
+                  <View style={styles.titleKmWrapper}>
+                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                    <View style={styles.kmWrapper}>
+                      <Ionicons name="location" size={24} color="#308AE4" />
+                      <Text>1.0 KM</Text>
+                    </View>
                   </View>
-                  <View style={[styles.cardSecondHalf]}>
-                    <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                  <View style={styles.twoTextWrapper}>
+                    <Text style={styles.textBold}>
+                      Kapotte leiding maken en lekkage verhelpen.
                     </Text>
-                    <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                    <Text style={styles.textLight}>
+                      De leiding is niet meer in goede staat deze moet vervangen
+                      worden en....
+                    </Text>
+                  </View>
+
+                  <View style={styles.locationTimeInfoWrapper}>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Locatie: Amsterdam</Text>
+                    </Pressable>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Binnen een maand</Text>
                     </Pressable>
                   </View>
+                  <Pressable style={styles.moreInfo}>
+                    <Text
+                      style={styles.link}
+                      onPress={() => navigation.navigate("MyWork")}
+                    >
+                      Meer info
+                    </Text>
+                  </Pressable>
                 </View>
-                <View style={[styles.card]}>
-                  <View style={[styles.cardFirstHalf]}>
-                    <Text style={[styles.cardBigTitle]}>Schuur</Text>
+                <View style={styles.cardProffesional}>
+                  <View style={styles.titleKmWrapper}>
+                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                    <View style={styles.kmWrapper}>
+                      <Ionicons name="location" size={24} color="#308AE4" />
+                      <Text>1.0 KM</Text>
+                    </View>
                   </View>
-                  <View style={[styles.cardSecondHalf]}>
-                    <Text style={[styles.cardTitle]}>
-                      Hoe aan de slag {"\n"} gaan
+                  <View style={styles.twoTextWrapper}>
+                    <Text style={styles.textBold}>
+                      Kapotte leiding maken en lekkage verhelpen.
                     </Text>
-                    <Pressable>
-                      <Text style={[styles.blueText]}>
-                        Meer info
-                      </Text>
+                    <Text style={styles.textLight}>
+                      De leiding is niet meer in goede staat deze moet vervangen
+                      worden en....
+                    </Text>
+                  </View>
+
+                  <View style={styles.locationTimeInfoWrapper}>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Locatie: Amsterdam</Text>
+                    </Pressable>
+                    <Pressable style={styles.kmWrapper}>
+                      <Ionicons name="location" size={32} color="#308AE4" />
+                      <Text>Binnen een maand</Text>
                     </Pressable>
                   </View>
+                  <Pressable style={styles.moreInfo}>
+                    <Text
+                      style={styles.link}
+                      onPress={() => navigation.navigate("MyWork")}
+                    >
+                      Meer info
+                    </Text>
+                  </Pressable>
                 </View>
                 <View style={[styles.footerfix]}></View>
               </View>
@@ -250,8 +473,12 @@ const HomePageHomeOwner = ({ navigation }) => {
           </ScrollView>
           {showOptions && (
             <ScrollView style={styles.optionsContainer}>
-              {filteredOptions.map(option => (
-                <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
+              {filteredOptions.map((option) => (
+                <Pressable
+                  key={option.id}
+                  style={styles.option}
+                  onPress={() => handleOptionPress(option)}
+                >
                   <Text>{option.title}</Text>
                 </Pressable>
               ))}
@@ -263,10 +490,26 @@ const HomePageHomeOwner = ({ navigation }) => {
             </View>
           ) : null}
 
-          <Footer navigation={navigation} activePage="HomePageSpecialist" />
-
+          {!isScannerVisible && (
+            <Footer navigation={navigation} activePage="HomePageSpecialist" />
+          )}
         </SafeAreaView>
       </TouchableWithoutFeedback>
+      {isScannerVisible && (
+        <View style={styles.scannerContainer}>
+          <BarCodeScanner
+            onBarCodeScanned={handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          />
+          <Pressable
+            onPress={handleScannerClose}
+            style={styles.closeScannerButton}
+          >
+            <Text style={styles.closeScannerButtonText}>Close Scanner</Text>
+          </Pressable>
+          
+        </View>
+      )}
     </PaperProvider>
   );
 };
@@ -278,18 +521,128 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
+
+
+  appCenter: {
+    marginTop: 60,
+    width: windowWidth,
+    flexDirection: "row",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 5,
+  },
+
+  locationTimeInfoWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    marginTop: 20,
+  },
+
+  moreInfo: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+
+  cardProffesional: {
+    width: windowWidth - 30,
+    borderRadius: 9,
+    marginBottom: 12,
+    paddingTop: 13,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+    backgroundColor: "white",
+  },
+
+  link: {
+    color: "#308AE4",
+  },
+
+  textBold: {
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  textLight: {
+    fontSize: 15,
+    textAlign: "center",
+    color: "#8B8D96",
+  },
+
+  twoTextWrapper: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 30,
+    paddingRight: 20,
+    gap: 10,
+    paddingTop: 10,
+  },
+
+  kmWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+  },
+
+  titleKmWrapper: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 30,
+    paddingRight: 20,
+  },
+
+  scannerContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+    zIndex: 999,
+  },
+
+  closeScannerButton: {
+    position: "absolute",
+    bottom: 40,
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  closeScannerButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
   optionsContainer: {
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 234 : 190,
+    position: "absolute",
+    top: Platform.OS === "ios" ? 234 : 190,
     left: 20,
     right: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 8,
     borderWidth: 1,
     maxHeight: windowHeight * 0.3,
     ...Platform.select({
       ios: {
-        shadowColor: 'black',
+        shadowColor: "black",
         shadowOffset: {
           width: 1,
           height: 2,
@@ -312,11 +665,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   errorMessageContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   errorMessage: {
-    color: 'red',
+    color: "red",
     fontSize: 16,
   },
   cardFirstHalf: {
@@ -378,7 +731,7 @@ const styles = StyleSheet.create({
 
   searchBar: {
     width: "70%",
-    height: "20%",
+    height: "23%",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -407,6 +760,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+  },
+
+  iconsTextWrapperTwo: {
+    width: 90,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    paddingBottom: 10,
   },
 
   whiteIconText: {
@@ -484,7 +846,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     padding: 10,
-    width: "75%",
+    width: "100%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -509,7 +871,7 @@ const styles = StyleSheet.create({
   },
 
   headerSquare: {
-    height: 350,
+    height: 330,
     width: windowWidth,
     backgroundColor: "#74bcfd",
     display: "flex",
@@ -524,13 +886,18 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    paddingBottom: 25,
+    alignItems: "center",
   },
 
   imageContainer: {
+    width: "75%",
     height: 100,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
+  },
+
+  logoimg: {
+    resizeMode: "contain",
   },
 
   image: {
@@ -539,9 +906,6 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    position: "absolute",
-    right: 25,
-    bottom: 56,
   },
 });
 

@@ -56,7 +56,7 @@ const Contact = ({ navigation }) => {
             </View>
             <View style={styles.mainPage}>
               <Text style={styles.titleText}>
-                Heb je vragen neem contact met ons op!
+                Heb je vragen? neem contact met ons op!
               </Text>
               <Pressable
                 style={styles.locationWrapper}
@@ -76,7 +76,7 @@ const Contact = ({ navigation }) => {
                   <Text>Naam</Text>
                   <Pressable style={styles.containerInput}>
                     <TextInput
-                      placeholder="Voornaam:"
+                      placeholder="Voer uw Voornaam in:"
                       style={styles.input}
                     />
                   </Pressable>
@@ -87,7 +87,7 @@ const Contact = ({ navigation }) => {
                   <Text>Achternaam</Text>
                   <Pressable style={styles.containerInput}>
                     <TextInput
-                      placeholder="Voornaam:"
+                      placeholder="Voer uw Achternaam in:"
                       style={styles.input}
                     />
                   </Pressable>
@@ -98,7 +98,7 @@ const Contact = ({ navigation }) => {
                   <Text>Email</Text>
                   <Pressable style={styles.containerInput}>
                     <TextInput
-                      placeholder="Voornaam:"
+                      placeholder="Voer uw Email in:"
                       style={styles.input}
                     />
                   </Pressable>
@@ -108,7 +108,7 @@ const Contact = ({ navigation }) => {
                         style={styles.textArea}
                         onChangeText={setAdditionalInfo}
                         value={additionalInfo}
-                        placeholder="Wat is uw vraag?"
+                        placeholder="Waarbij heeft u hulp nodig?"
                         placeholderTextColor="#b6b8bd"
                         multiline
                     />

@@ -39,13 +39,11 @@ const HowItWorksOneSpecialist = ({ navigation }) => {
       <View style={styles.middleContainer}>
         <View style={styles.middleContainerFirstSection}>
           <Image source={require("../../../assets/images/one.png")} />
-          <Text style={styles.title}>Zoek een klus</Text>
+          <Text style={styles.title}>Vind een klus</Text>
         </View>
         <View style={styles.middleContainerSecondSection}>
           <Text>
-            Voer in de zoekbalk de type klus die je zoekt, noteer je postcode en
-            krijg klussen van mensen in jouw omgeving. Let op: U dient aan het
-            einde in te loggen om aanbod te ontvangen.
+          Zoek de gewenste klus door het in de zoekbalk in te voeren en je postcode op te geven. Ontvang klussen van mensen in jouw omgeving. Onthoud: om klussen te ontvangen, moet je inloggen.
           </Text>
         </View>
       </View>

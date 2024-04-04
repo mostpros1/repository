@@ -36,7 +36,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2024-02-29T14:47:15.651Z",
+      "lastPushTimeStamp": "2024-03-12T11:25:36.987Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimostpros"
@@ -81,7 +81,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "Mostpros"
       },
-      "lastPushTimeStamp": "2024-02-29T14:47:15.654Z",
+      "lastPushTimeStamp": "2024-03-12T11:25:36.995Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify61e2a13204214-staging-150051-deployment/amplify-cfn-templates/auth/Mostpros-cloudformation-template.json",
         "logicalId": "authMostpros"

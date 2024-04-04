@@ -1,59 +1,47 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Image, } from "react-native";
+import React from "react";
+import { StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
 import { Dimensions } from "react-native";
 
 const Footer = ({ navigation, activePage }) => {
 
   return (
-
+    
     <View style={styles.footer}>
-      <TouchableOpacity testID="footer homeBtn"
+      <TouchableOpacity
         style={styles.footerImage}
-        onPress={() => navigation.navigate('HomePageSpecialist')}
+        onPress={() => navigation.navigate('TestHome')}
       >
-        {activePage === 'HomePageSpecialist' ? (
+        <View style={styles.iconContainer}>
           <Image
-            source={require("../../assets/images/footerhouseblue.png")}
+            source={activePage === 'HomePageSpecialist' ? require("../../assets/images/footerhouseblue.png") : require("../../assets/images/footerhouse.png")}
             style={styles.image}
           />
-        ) : (
-          <Image
-            source={require("../../assets/images/footerhouse.png")}
-            style={styles.image}
-          />
-        )}
+          <Text style={styles.footerText}>Home</Text>
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity testID="footer chatOverviewBtn"
+      <TouchableOpacity
         style={styles.footerImage}
         onPress={() => navigation.navigate('ChatOverview')}
       >
-        {activePage === 'ChatOverview' ? (
+        <View style={styles.iconContainer}>
           <Image
-            source={require("../../assets/images/footerchatblue.png")}
+            source={activePage === 'ChatOverview' ? require("../../assets/images/footerchatblue.png") : require("../../assets/images/footerchat.png")}
             style={styles.image}
           />
-        ) : (
-          <Image
-            source={require("../../assets/images/footerchat.png")}
-            style={styles.image}
-          />
-        )}
+          <Text style={styles.footerText}>Chat</Text>
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity testID="footer profileBtn"
+      <TouchableOpacity
         style={styles.footerImage}
         onPress={() => navigation.navigate('ProfileSettingsOne')}
       >
-        {activePage === 'Profile' ? (
+        <View style={styles.iconContainer}>
           <Image
-            source={require("../../assets/images/footericonblue.png")}
+            source={activePage === 'Profile' ? require("../../assets/images/footericonblue.png") : require("../../assets/images/footericon.png")}
             style={styles.image}
           />
-        ) : (
-          <Image
-            source={require("../../assets/images/footericon.png")}
-            style={styles.image}
-          />
-        )}
+          <Text style={styles.footerText}>Profiel</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -85,13 +73,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  iconContainer: {
+    alignItems: "center",
+  },
   image: {
     objectFit: "contain",
     height: 30,
   },
   footerText: {
-    fontSize: 16,
+    fontSize: 12,
     color: "black",
+    marginTop: 3,
   },
 });
 

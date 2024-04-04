@@ -57,14 +57,14 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                         </View>
 
                         <View style={styles.progressContainer}>
-                            <Text style={styles.progressText}>Stap {progress} van de 4</Text>
+                            <Text style={styles.progressText}>Stap {progress} van de 5</Text>
                             <View style={styles.progressBar}>
-                                <View style={[styles.progressIndicator, { width: `${(progress / 4) * 100}%` }]}></View>
+                                <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
                             </View>
                         </View>
 
                         <View style={styles.titleBox}>
-                            <Text style={styles.title}>Voer je postcode in om vakspecialisten in{'\n'} jouw omgeving te vinden.</Text>
+                            <Text style={styles.title}>Voer je postcode in om professionals in{'\n'} jouw omgeving te vinden.</Text>
                         </View>
 
                         <View style={styles.imageContainer}>

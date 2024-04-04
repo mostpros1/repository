@@ -30,7 +30,7 @@ const NoKvKInfo = ({ navigation }) => {
                     </View>
                     <View style={styles.imgTextWrapper}>
                         <Image source={require("../../../assets/images/gaterug.png")} style={styles.cardImage} />
-                        <Text style={styles.textInfo}>Helaas, als je geen KVK-nummer hebt, kun je geen account aanmaken. We verzoeken je vriendelijk om een KVK-nummer aan te vragen en op een later moment opnieuw te proberen om een account aan te maken. </Text>
+                        <Text style={styles.textInfo}>Helaas, indien je geen KVK-nummer hebt, kun je geen account aanmaken. We verzoeken je vriendelijk om een KVK-nummer aan te vragen en het op een later moment opnieuw te proberen.</Text>
                         <View style={styles.buttonsContainer}>
                         <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
