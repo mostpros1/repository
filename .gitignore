@@ -25,4 +25,3 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 backend_functions/postcodesTest.js
-web/postcodes.js
