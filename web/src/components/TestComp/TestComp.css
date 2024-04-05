@@ -1,5 +1,34 @@
 main{
     width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+}
+
+.pageTitle{
+    font-size: 20px;
+}
+
+.topButtonContainer{
+    width: 57%;
+    height: 19rem;
+    display: flex;
     background: orange;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.topButton {
+    height: 5.5rem;
+    width: 18rem;
+    background: white;
+    border: 2px solid #308AE4;
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
 }
