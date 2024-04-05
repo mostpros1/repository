@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #333; /* Adjust the color to match your design */
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-item {
+  margin-bottom: 5px;
+  font-weight: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sidebar-item svg {
+  margin-right: 10px; /* Adjust the space between icon and text */
+  font-size: 20px;
+}
+
+.sidebar-bottom {
+  padding-top: 35px;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: white; /* Or any other color as per your design */
+  display: block;
+  padding: 5px; /* Adjust padding as needed */
+}
+
+.sidebar-link:hover {
+  color: #207CD8;
+}

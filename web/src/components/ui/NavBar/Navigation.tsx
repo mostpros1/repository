@@ -68,11 +68,12 @@ function Navigation() {
         </div>
       </Link>
       <div className="nav-rightside">
-        <ul className="nav-list">
+        {/* Unhide this if u want the old navbar back */}
+        {/* <ul className="nav-list"> 
           <li>
-            {/* <Link to="/mijn-klussen" className="black-items">
+            <Link to="/mijn-klussen" className="black-items">
               Klussen <ExpandMoreIcon />
-            </Link> */}
+            </Link>
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
@@ -292,7 +293,8 @@ function Navigation() {
               Inschrijven als vakspecialist
             </Link>
           </li>
-        </ul>
+        </ul> */}
+
         <div className="apps-icon" onClick={handleIconClick}>
           <AppsRoundedIcon />
         </div>

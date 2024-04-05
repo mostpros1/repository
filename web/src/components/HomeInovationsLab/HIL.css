@@ -5,22 +5,16 @@
   font-family: "Kanit", sans-serif;
 }
 
-.main-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 .image-container {
   display: flex;
   position: relative;
-  justify-content: space-around;
+  margin: 0;
+  width: 75%; /* Adjust if necessary */
+  height: auto; /* Adjust or set a fixed height if necessary */
 }
 
 .image-container img {
-  display: flex;
-  width: 75%;
+  width: 100%;
   height: auto;
   border-radius: 15px;
   filter: brightness(0.6);
@@ -28,7 +22,7 @@
 
 .text-overlay {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -47,15 +41,14 @@
 }
 
 .grid-con {
-  margin: 20px auto auto;
-  width: 70%;
+margin: 0;
+  width: 75%; /* Set this to match the width of the image-container */
 }
 
 .grid-row {
   display: flex;
   flex-direction: row;
-  margin-bottom: 30px;
-  margin-top: 50px;
+  margin: 50px 0; /* Remove side margins and keep only vertical margins */
   width: 100%;
 }
 
@@ -77,6 +70,7 @@
 .grid-row svg {
   color: #308ae4;
   font-size: 40px;
+  margin-right: 15px;
 }
 
 /* Media Queries */
