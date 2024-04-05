@@ -1,15 +1,15 @@
 import NavBar from '../../components/ui/NavBar/NavBar';
 import Footer from '../../components/ui/Footer/Footer';
-import TestComp from "../../components/TestComp/TestComp"
+import DetailJobComp from "../../components/DetailJobComp/DetailJobComp"
 
-function TestPage() {
+function DetailJobPage() {
     return (
         <div id="root">
             <NavBar />   
-            <TestComp/>             
+            <DetailJobComp/>             
             <Footer />
         </div>
     )
 }
 
-export default TestPage;
+export default DetailJobPage;

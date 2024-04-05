@@ -1,10 +1,10 @@
-import "./TestComp.css";
+import "./DetailJobComp.css";
 import EmailIcon from "@mui/icons-material/Email";
 import HouseIcon from "@mui/icons-material/House";
-import LocationOnIcon from "@mui/icons-material/LocationOn"; // Import the LocationOnIcon
+import LocationOnIcon from "@mui/icons-material/LocationOn"; 
 import Icon from "../../assets/kraan.svg";
 
-function TestComp() {
+function DetailJobComp() {
   return (
     <main>
       <section className="topButtonContainer">
@@ -72,4 +72,4 @@ function TestComp() {
   );
 }
 
-export default TestComp;
+export default DetailJobComp;
