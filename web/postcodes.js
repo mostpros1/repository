@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import express from 'express';
+import { APIKEY } from './APIkey.js';
 
 const app = express();
 const PORT = 3000;
@@ -44,7 +45,7 @@ app.get('/postcode/:postcode', async (req, res) => {
     try {
         const postcode = req.params.postcode;
         const myHeaders = {
-            'token': import.meta.env.VITE_LOCATION_API_KEY, // Replace 'YOUR_TOKEN_HERE' with your actual token
+            'token': APIKEY, // Replace 'YOUR_TOKEN_HERE' with your actual token
             // Add other headers if needed (e.g., Content-Type)
         };
 
