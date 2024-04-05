@@ -33,6 +33,8 @@ function measureDistance(postcode1, postcode2) {
 measureDistance("3981TS", "3531HB");
 */
 
+
+
 function deg2rad(degrees) {
     return degrees * (Math.PI / 180);
 }
@@ -56,5 +58,28 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Example usage:
-const distance = calculateDistance(52.080181, 5.137187, 52.068354, 5.188855);
-console.log(`Distance: ${distance.toFixed(1)} km`);
+//const distance = calculateDistance(52.080181, 5.137187, 52.068354, 5.188855);
+//console.log(`Distance: ${distance.toFixed(1)} km`);
+
+
+function getInfo(data){
+    console.log(data.latitude);
+    console.log(data.longitude);
+    const distance = calculateDistance( data.latitude, data.longitude, 52.080181, 5.137187);
+    console.log(`Distance: ${distance.toFixed(1)} km`);
+
+}
+
+const myHeaders = new Headers();
+myHeaders.append('token', 'api key');
+// Add other headers if needed (e.g., Content-Type)
+
+const postcode = '3981TS';
+
+fetch('https://json.api-postcode.nl?postcode=' + postcode + '&number=1', {
+  method: 'GET',
+  headers: myHeaders,
+})
+  .then(response => response.json())
+  .then(data => getInfo(data))
+  .catch(error => console.error('Error fetching data:', error));
