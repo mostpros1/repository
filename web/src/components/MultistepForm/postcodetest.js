@@ -30,7 +30,7 @@ function getInfo(data){
     console.log(data.longitude);
     const distance = calculateDistance( data.latitude, data.longitude, 52.080181, 5.137187);
     console.log(`Distance: ${distance.toFixed(1)} km`);
-    return `Distance: ${distance.toFixed(1)} km`;
+    return distance.toFixed(1);
 
 }
 
