@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
-import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -15,20 +14,6 @@ function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
   const navigate = useNavigate(); // Create a navigate function
-
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        updateUser(authenticatedUser);
-      } catch (error) {
-        updateUser(null);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
 
   const handleIconClick = () => {
     navigate("/HomeInovation"); // Use navigate function to redirect
@@ -52,6 +37,7 @@ function Navigation() {
     <>
       <Link to="/login">Login</Link>
       <Link to="/registreer">Register</Link>
+      <Link to="/chat">Chat</Link>
     </>
   );
 
@@ -69,6 +55,7 @@ function Navigation() {
         <p>{user.attributes.email}</p>
         {DashboardLink}
         <button onClick={handleLogout}>Uitloggen</button>
+        <Link to="/chat">Chat</Link>
       </>
     );
   }

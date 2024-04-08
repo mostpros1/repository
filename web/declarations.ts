@@ -2,7 +2,6 @@ import aws from 'aws-sdk';
 
 export const cognitoIdentityServiceProvider = new aws.CognitoIdentityServiceProvider();
 
-
 export const SES = new aws.SES({
     region: import.meta.env.VITE_AWS_REGION,
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,

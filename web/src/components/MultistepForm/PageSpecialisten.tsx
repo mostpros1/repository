@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import { dynamo } from "../../../../backend_functions/declarations";
+import { dynamo } from "../../../declarations";
 
 const exampleSpecialists = [
   {
@@ -117,7 +117,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     }).promise()
       .then(data => {
 
-        const convertedItems = data.Items.map(item => ({
+        const convertedItems = data.Items?.map(item => ({
           id: item.id,
           first_name: item.first_name,
           last_name: item.last_name,
@@ -136,27 +136,26 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
                 console.log("Availability =", Availability);
         */
 
+        if (convertedItems) {
+          for (let i: number = 0; i < convertedItems.length; i++) {
+            if (convertedItems[i].availibility) {
+              const Availability = JSON.parse(convertedItems[i].availibility);
 
-        for (let i: number = 0; i < convertedItems.length; i++) {
-          if (convertedItems[i].availibility) {
-            const Availability = JSON.parse(convertedItems[i].availibility);
-            console.log(Availability);
-            for (let x: number = 0; x < Availability.dates.length; x++) {
+              for (let x: number = 0; x < Availability.dates.length; x++) {
 
-              const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
+                const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
 
-              if (selected == Availability.dates[x]) {
-                professionals = [...professionals, convertedItems[i]];
-                break;
+                if (selected == Availability.dates[x]) {
+                  professionals = [...professionals, convertedItems[i]];
+                  break;
+                }
               }
             }
           }
-        }
-        console.log("professionals:" +  professionals);
         setSpecialists(/*convertedItems*/professionals);
 
 
-      }).catch(err => {
+      }}).catch(err => {
         console.log(err);
       });
 
