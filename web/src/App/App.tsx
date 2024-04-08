@@ -30,6 +30,7 @@ import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile"
 import EditProfile from "../pages/EditProfilePage/EditProfile";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
+import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -58,6 +59,7 @@ const App = () => {
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
 
+      <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

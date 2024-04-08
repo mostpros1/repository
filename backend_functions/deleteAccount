@@ -1,5 +1,5 @@
-import { dynamo } from "./declerations.ts";
-import { cognitoIdentityServiceProvider } from "./declerations.ts";
+import { dynamo } from "./declarations.ts";
+import { cognitoIdentityServiceProvider } from "./declarations.ts";
 
 export function deleteAccount(email, Token, userType) {
    
