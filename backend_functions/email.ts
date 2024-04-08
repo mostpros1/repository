@@ -1,5 +1,5 @@
-import { SES } from "./declarations.ts";
-import { MostropsEmail } from "./declarations.ts";
+import { SES } from "../web/declarations.ts";
+import { MostropsEmail } from "../web/declarations.ts";
 
 
 export function sendMail(email: string, subject: string, text: string, html: string) {
