@@ -31,9 +31,9 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
     const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword };
 
     const formConfig = {
-        loginForm: <LoginForm handleLogin={() => { }} setError={setError} error={error} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
-        registerForm: <RegisterForm setError={setError} error={error} {...data} updateFields={updateFields} setUserExists={setUserExists} />
-    };
+        loginForm: <LoginForm handleLogin={() => { }} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        registerForm: <RegisterForm /*setError={() => { }}*/ error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
+    }
 
     useEffect(() => {
         Auth.confirmSignUp(email, '000000', { forceAliasCreation: false })

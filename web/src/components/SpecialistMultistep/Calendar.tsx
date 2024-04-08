@@ -3,7 +3,7 @@ import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import aws from 'aws-sdk';
-import { dynamo } from '../../../../backend_functions/declerations.ts';
+import { dynamo } from '../../../../backend_functions/declarations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
 
 

@@ -1,5 +1,5 @@
-import { dynamoDB } from './declerations.ts';
-import { dynamo } from './declerations.ts';
+import { dynamoDB } from './declarations.ts';
+import { dynamo } from './declarations.ts';
 
 import { sanatiseInput } from './stopXSS.ts';
 import { sendMail } from './sendMail.ts';

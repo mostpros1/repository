@@ -1,4 +1,4 @@
-import { dynamo } from './declerations.ts';
+import { dynamo } from './declarations.ts';
 import { queryUsers } from './queryUsers.ts';
 
 export async function addVerificationCodes(email: string) {

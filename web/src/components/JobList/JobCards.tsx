@@ -4,7 +4,7 @@ import "./JobCards.css";
 import gasleiding from "../../assets/Gasleiding.svg";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { dynamo } from "../../../../backend_functions/declerations";
+import { dynamo } from "../../../../backend_functions/declarations";
 
 interface Job {
   id: number;
