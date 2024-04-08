@@ -63,7 +63,10 @@ function DetailJobComp() {
             </div>
           </article>
           <div className="moreInfoBox">
-            <p className="moreInfoName">Meer info</p>
+            <a href=""
+              rel="noopener noreferrer" className="noDecoration">
+              <p className="moreInfoName">Meer info</p>
+            </a>
           </div>
         </article>
         <a href=""
