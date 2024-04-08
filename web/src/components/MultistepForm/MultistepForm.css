@@ -233,10 +233,14 @@ input{
 }
 
 .dateCards_info {
-    height: 33.33%;
+    height: 91.33%;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    
 }
 
 .dateCards_info.number {
@@ -379,7 +383,6 @@ input{
     color: red;
     font-size: 14px;
 }
-
 .Button-login{
     background-color: #308AE4;
     color: white;

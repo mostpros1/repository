@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
-
 type RegisterData = {
   firstName: string;
   lastName: string;
@@ -31,7 +30,7 @@ export function RegisterForm({
   updateFields,
   setUserExists,
   error,
-}) {
+}: RegisterFormProps) {
 
   const [isValidFirstName, setValidFirstName] = useState(true);
 

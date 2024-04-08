@@ -13,11 +13,10 @@ import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
-import PageSpecialisten from './PageSpecialisten';
 
 type FormData = {
-  postCode: string;
-  stad: string;
+  postCode: string
+  stad: string
   date: string;
   questions: Record<string, string>;
   aanvullendeInformatie: string
@@ -33,14 +32,16 @@ type FormData = {
 }
 
 function MultistepForm() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const questionsData = useQuestionData();
-  
+
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
     date: "",
-    questions: Object.fromEntries(questionsData.map(question => [question.key, ""])),
+    questions: Object.fromEntries(
+      questionsData.map((question) => [question.key, ""])
+    ),
     aanvullendeInformatie: "",
     info: "",
     email: "",
@@ -56,22 +57,16 @@ function MultistepForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [isValidDatum, setValidDatum] = useState(true);
 
-
-  /*const updateDate = (newDate) => {
-      setDate(newDate);
-  };*/
-
-
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
 
-  const [date, setDate] = useState<string | null>(null);
-
   const updateDate = (selectedDate: Date) => {
-    const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}T00:00:00.000Z`;
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
-    setDate(formattedDate);
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
@@ -128,24 +123,99 @@ function MultistepForm() {
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
     steps: [
-      <>
-        <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
-        <InfoForm {...data} updateFields={updateFields} />,
-        
-        <PageSpecialisten date={date} />
-
-      </>
+      <LocationForm {...data} updateFields={updateFields} />,
+      <DateForm updateDate={updateDate} updateFields={updateFields} />,
+      <InfoForm {...data} updateFields={updateFields} />,
+      <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
     ],
     onStepChange: () => { }
   });
-  console.log(updateDate);
-  //<Calendar />,
-  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+
+
+    if (!isLastStep) {
+      // Check if the data for the second step is filled
+      if (currentStepIndex === 1 && data.date.trim() === "") {
+        // Display an error or handle the case where the second step is not filled
+        setValidDatum(false);
+        return;
+      }
+      
+      setValidDatum(true);
+      return next();
+    }
+
+
+    async function onSubmit(e: FormEvent) {
+      e.preventDefault()
+      console.log('Form Data:', data);
+      if (!isLastStep) return next()
+
+      const userData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim()
+      }
+      setValidDatum(true);
+      return next();
+    }
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber
+    }
+
+    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+      await Auth.signIn(userData.email, userData.password)
+        .then(() => {
+          navigate('/huiseigenaar-resultaat')
+        })
+        .catch((err) => {
+          console.error(err)
+          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+        })
+    }
+    else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.firstName,
+          family_name: userData.lastName,
+          email: userData.email,
+          phone_number: userData.phoneNumber,
+          "custom:group": "Homeowner"
+        },
+        autoSignIn: { enabled: true }
+      })
+        .then(() => {
+          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+        })
+        .catch(async error => {
+          console.error(error)
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          }
+        })
+    }
+  }
+
   const stepWidth = 100 / steps.length;
 
   return (
-    <form onSubmit={onsubmit} className='form-con'>
+    <form onSubmit={onSubmit} className='form-con'>
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
@@ -153,7 +223,7 @@ function MultistepForm() {
             <div
               key={index}
               className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-              style={{ width: `${100 / steps.length}%` }}
+              style={{ width: `${stepWidth}%` }}
             ></div>
           ))}
         </div>
@@ -166,7 +236,6 @@ function MultistepForm() {
         <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
       </div>
     </form>
-  );
+  )
 }
-
-export default MultistepForm;
+export default MultistepForm
