@@ -33,9 +33,9 @@ function ProfessionalDashboardLeftside() {
             {userInfo}
           </div>
         </div>
-        <div className="dashboard_btn_con">
+{/*         <div className="dashboard_btn_con">
           <JoinChat/>
-        </div>
+        </div> */}
       </div>
     )
 }
