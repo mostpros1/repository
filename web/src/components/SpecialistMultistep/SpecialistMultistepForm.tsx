@@ -1,17 +1,31 @@
-import "../MultistepForm/MultistepForm.css";
+import { useState } from 'react';
 import SearchChoreForm from "./SearchChoreForm/SearchChoreForm";
-//import { RegisterForm } from "../MultistepForm/RegisterForm";
+import { RegisterForm } from "../MultistepForm/RegisterForm";
 import { FormEvent } from "react";
 import { useMultistepForm } from "../../hooks/useMultistepForm";
 import { useNavigate } from "react-router-dom";
-//import HomeButton from "../ui/HomeButton/HomeButton";
+import HomeButton from "../ui/HomeButton/HomeButton";
 import TestQ from "./SpecialistQ/TestQ/TestQ";
-//import KvKForm from "./KvKForm/KvKForm";
+import KvKForm from "./KvKForm/KvKForm";
 import NoKvK from "./NoKvK/NoKvK";
-import { Auth } from "aws-amplify";
+import './/SpecialistMultistepForm.css';
+import { Margin } from "@mui/icons-material";
+import React from 'react';
+import Calendar from './Calendar';
+import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
+import { Datums } from "./Calendar.tsx";
+import { dynamo } from "./../../../../backend_functions/declarations.ts";
+import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
+
+type DateTimeSpan = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+};
 
 type FormData = {
+  beroep: string;
   email: string;
   postCode: string;
   stad: string;
@@ -20,8 +34,11 @@ type FormData = {
   phoneNumber: string;
   password: string;
   repeatPassword: string;
+  bio: string;
   questions: Record<string, string>;
+  dateTimeSpans: DateTimeSpan[];
 };
+
 
 interface RegisterData {
   firstName: string;
@@ -31,11 +48,13 @@ interface RegisterData {
   password: string;
   repeatPassword: string;
   dob: string;
-}
 
+}
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
 
 const INITIAL_DATA: FormData = {
+  beroep: "",
+  bio: "",
   email: "",
   postCode: "",
   stad: "",
@@ -47,8 +66,8 @@ const INITIAL_DATA: FormData = {
   questions: {
     question1: "",
     question2: "",
-    question3: "",
   },
+  dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
 };
 
 type Question = {
@@ -85,10 +104,10 @@ const questionsData: Question[] = [
 ];
 
 function SpecialistMultistepForm() {
-
-  //const [error, setError] = useState('');
   const [data, setData] = useState(INITIAL_DATA);
   const [showNoKvK, setShowNoKvK] = useState(false);
+
+
 
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
@@ -148,19 +167,43 @@ function SpecialistMultistepForm() {
     />
   ));
 
+  function DateForm({ dateTimeSpans, updateFields }) {
+    const addDateTimeSpan = () => {
+      if (dateTimeSpans.length < 5) {
+        const newDateTimeSpan = { date: new Date(), startTime: "", endTime: "" };
+        updateFields({ dateTimeSpans: [...dateTimeSpans, newDateTimeSpan] });
+      }
+    };
+
+    return (
+      <form action="" method="POST">
+        <div>
+          <h1>Selecteer uw beschikbaarheid:</h1>
+          <Calendar />
+        </div>
+      </form>
+    );
+  }
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm({
       steps: [
         <SearchChoreForm {...data} updateFields={updateFields} />,
         ...questionsSteps,
-        <AccountForm formConfig={"HOMEOWNER"} setError={() => { } } error={""} {...data} updateFields={updateFields} />
-        // <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <DateForm
+          dateTimeSpans={data.dateTimeSpans}
+          updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
+        />,
+        <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} />,
+
+
       ],
       onStepChange: () => { },
     });
 
-  function signUp(registerData: RegisterData, user_type: string): void {
-    const { email, phoneNumber, password, firstName, lastName, dob } = registerData;
+  function signUp(registerData: RegisterData): void {
+    const { email, phoneNumber, password, firstName, lastName } = registerData;
 
     const signUpProf = async () => {
       try {
@@ -169,13 +212,48 @@ function SpecialistMultistepForm() {
           password: password,
           attributes: {
             phone_number: phoneNumber,
-            given_name: firstName,
-            family_name: lastName,
-            birthdate: dob,
-            'custom:user_type': user_type,
+            name: firstName,
+            "custom:family_name": lastName,
           },
           autoSignIn: { enabled: true },
         });
+
+        dynamo
+          .put({
+            Item: {
+
+              id: Math.floor(Math.random() * 1000000000),
+              name: stopXSS(firstName) + " " + stopXSS(lastName),
+              email: stopXSS(email),
+              profession: stopXSS(data.beroep),
+              location: stopXSS(data.questions.question1),
+              rating: "Unrated",
+              bio: stopXSS(data.bio),
+              availibility: Datums,
+            },
+            TableName: "Specialists",
+          })
+          .promise()
+          .then(data => console.log(data.Attributes))
+          .catch(console.error)
+
+        dynamo
+          .put({
+            Item: {
+              id: Math.floor(Math.random() * 1000000000),
+              name: stopXSS(firstName),
+              family_name: stopXSS(lastName),
+              email: stopXSS(email),
+              phone_number: stopXSS(phoneNumber),
+              created_at: new Date().toISOString(),
+              user_type: "PROFESSIONAL",
+            },
+            TableName: "users",
+          })
+          .promise()
+          .then(data => console.log(data.Attributes))
+          .catch(console.error)
+
 
         /*const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
@@ -192,10 +270,14 @@ function SpecialistMultistepForm() {
     signUpProf();
   }
 
-
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!isLastStep) return next()
+    if (!isLastStep) {
+      return next()
+    } else {
+      console.log(data);
+      navigate("/specialist-resultaat");
+    }
 
     const userData: RegisterData = {
       email: data.email.trim(),
@@ -206,13 +288,48 @@ function SpecialistMultistepForm() {
       phoneNumber: data.phoneNumber.trim(),
       dob: "" // Add the 'dob' property here
     }
-
-    signUp(userData, "Professional");
-
+    console.log(Datums);
+    /*try {
+      signUp(userData);
+    } catch (error) {
+      console.error('Error signing up:', error);
+      //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+    }*/
 
   }
 
   const stepWidth = 100 / steps.length;
+
+
+  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
+    console.log(availibility);
+
+
+    //availibility is als Datums opgeslagen
+
+    const params = {
+      TableName: "Specialists",
+      Item: {
+        id: Math.floor(Math.random() * 1000000),
+        name: name,
+        email: email,
+        profession: profession,
+        location: location,
+        price: price,
+        rating: rating,
+        bio: bio,
+        availibility: availibility,
+
+      },
+    };
+    try {
+      dynamo.put(params).promise();
+    } catch (error) {
+      console.error("Er is een fout opgetreden bij het opslaan: ", error);
+      //delete user
+    }
+  }
+
 
   return (
     <form onSubmit={onSubmit} className="form-con">
@@ -231,12 +348,27 @@ function SpecialistMultistepForm() {
           ))}
         </div>
       </div>
-      {showNoKvK ? <NoKvK /> : step}
-      <div className="btn-wrapper">
-        <button type="button" onClick={() => { showNoKvK ? setShowNoKvK(false) : back() }} className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`} style={{ display: isFirstStep ? 'none' : 'inline-block' }}>Vorige</button>
-        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-      </div>
+      {showNoKvK ? <NoKvK /> : <>{step}</>}
+      <>
+        <div className="btn-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              showNoKvK ? setShowNoKvK(false) : back();
+            }}
+            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+          >
+            Vorige
+          </button>
+          {showNoKvK ? <></> : <button type="submit" className="form-btn">
+            {isLastStep ? "Verstuur" : "Volgende"}
+          </button>}
+
+        </div>
+      </>
     </form>
   );
 }
+
 export default SpecialistMultistepForm;

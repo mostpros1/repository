@@ -1,5 +1,6 @@
 {
   "acceptance": {
+
     "awscloudformation": {
       "AuthRoleName": "amplify-mostpros-acceptance-130736-authRole",
       "UnauthRoleArn": "arn:aws:iam::246293866149:role/amplify-mostpros-acceptance-130736-unauthRole",
@@ -14,7 +15,9 @@
     "categories": {
       "auth": {
         "Mostpros": {}
+      },
+      "api": {
+        "mostpros": {}
       }
     }
   }
-}

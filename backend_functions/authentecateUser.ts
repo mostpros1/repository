@@ -1,4 +1,4 @@
-import { dynamo } from "./declerations.ts";
+import { dynamo } from "./declarations.ts";
 import { comparePassword } from "./hashPassword.ts";
 
 

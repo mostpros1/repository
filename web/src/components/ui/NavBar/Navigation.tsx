@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
 import JoinChat from "../../Chat/JoinChat";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
@@ -21,6 +21,21 @@ function Navigation() {
   // Get the user's display name
   const getDisplayName = () => {
     return user.attributes.name || user.username;
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        updateUser(authenticatedUser);
+      } catch (error) {
+        updateUser(null);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
+  const handleIconClick = () => {
+    navigate("/HomeInovation"); // Use navigate function to redirect
   };
 
   // const handleIconClick = () => {
@@ -88,6 +103,8 @@ function Navigation() {
         </div> */}
         <div className="dropdown-container">
           <div className="loginButton" onClick={handleDropdownToggle}>
+          <button className="loginButton" onClick={handleDropdownToggle}>
+            <MoreVertOutlinedIcon /> {/* Changed icon here */}
             <PermIdentityIcon />
           </div>
           {dropdownOpen && (

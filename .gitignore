@@ -1,5 +1,7 @@
 backend_functions/emails/sendSesMail.js
 
+# Ignore all .env files - Do not remove this line
+*.env
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
