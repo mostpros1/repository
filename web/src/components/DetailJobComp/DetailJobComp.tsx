@@ -6,10 +6,10 @@ import Icon from "../../assets/kraan.svg";
 
 function DetailJobComp() {
   return (
-    <main>
+    <main className="detailJobMain">
       <section className="topButtonContainer">
         <a
-          className="topButton"
+          className="topButtonDetailJob"
           href=""
           rel="noopener noreferrer"
         >
@@ -25,8 +25,8 @@ function DetailJobComp() {
           <h5>Beschrijving</h5>
           <h6>Opdrachtnummer: 234561</h6>
           <h6>Type Klus:</h6>
-          <article className="jobCard">
-            <img src={Icon} alt="Klus Icon" className="klus-icon" />
+          <article className="jobCardDetail">
+            <img src={Icon} alt="Klus Icon" className="klus-iconDetail" />
             <p className="jobCardText">Nieuwe leiding aanleggen</p>
           </article>
           <article>
@@ -44,22 +44,22 @@ function DetailJobComp() {
           </article>
           <article className="dateCard">
             <h3 className="dateDay">4</h3>
-            <p className="date">Oktober</p>
-            <p className="date">2023</p>
+            <p className="dateDetail">Oktober</p>
+            <p className="dateDetail">2023</p>
           </article>
 
           <article className="iconInfoBox">
             <div className="divFlex">
               <EmailIcon style={{ fontSize: "2.4rem", color: "#308AE4" }} />
-              <p className="date">Adres: iets straat 23</p>
+              <p className="dateDetail">Adres: iets straat 23</p>
             </div>
             <div className="divFlex">
               <HouseIcon style={{ fontSize: "2.5rem", color: "#308AE4" }} /> {/* Replace EmailIcon with HouseIcon */}
-              <p className="date">Postcode: 1320 DP</p>
+              <p className="dateDetail">Postcode: 1320 DP</p>
             </div>
             <div className="divFlex">
               <LocationOnIcon style={{ fontSize: "2.5rem", color: "#308AE4" }} /> {/* Replace EmailIcon with LocationOnIcon */}
-              <p className="date">Locatie: Haarlem</p>
+              <p className="dateDetail">Locatie: Haarlem</p>
             </div>
           </article>
           <div className="moreInfoBox">

@@ -1,18 +1,106 @@
-main {
-  height: 100vh;
+#MijnKlussenOverzichtMain {
   width: 100%;
-  background: orange;
+  display: flex;
+  align-items: center;
+  padding-top: 4rem;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 8rem;
+  background:orange;
+  padding-left: 42rem;
+  padding-right: 42rem;
 }
 
-.topButtonContainer {
-  width: 57%;
+#cardTitleWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 1rem;
+}
+
+#cardTitle{
+  font-size: 19px;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+#whiteCardOne {
+  width: 45rem;
+  min-height: 45rem;
+  background: white;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: space-between;
+  padding: 3rem;
+  padding-top: 1; 
+  position: relative; 
+  border-radius: 1.2rem;
+}
+
+#whiteCardTwo{
+  width: 45rem;
+  min-height: 45rem;
+  background: white;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  padding: 2rem;  
+  border-radius: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#blueCircle{
+  width: 6rem;
+  height: 6rem;
+  background: #308AE4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#blueCirclePlus{
+  font-size: 40px;
+  color: white;
+}
+
+#moreInfoName {
+  position: absolute; 
+  bottom: 2rem; 
+  left: 50%;
+  transform: translateX(-50%); 
+}
+
+#marginBottom{
+  margin-bottom: 2rem;
+}
+
+#smallSectionsContainer{
+  width: 100%;
+  background: blue;
+  display: flex;
+  justify-content: center;
+  padding: 5rem;
+  gap: 6rem;
+  flex-wrap: wrap;
+}
+
+#topButtonContainer {
+  width: 100%;
   height: 15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: green;
 }
 
-.topButton {
+#topButton {
   height: 4rem;
   max-width: 13rem;
   background: white;
@@ -26,6 +114,6 @@ main {
   border-radius: 8px;
 }
 
-.pageTitle {
+#pageTitle {
   font-size: 20px;
 }

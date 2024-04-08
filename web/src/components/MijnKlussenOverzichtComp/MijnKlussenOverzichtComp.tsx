@@ -1,28 +1,33 @@
 import "./MijnKlussenOverzichtComp.css";
+import Icon from "../../assets/kraan.svg";
 
 function MijnKlussenOverzichtComp() {
   return (
-    <main>
-      <section className="topButtonContainer">
+    <main id="MijnKlussenOverzichtMain">
+      <section id="topButtonContainer">
         <a
-          className="topButton"
+          id="topButton"
           href=""
           rel="noopener noreferrer"
         >
           Terug naar start
         </a>
-        <h2 className="pageTitle">Uw huidige klussen</h2>
+        <h2 id="pageTitle">Uw huidige klussen</h2>
       </section>
 
-      <article className="whiteCardLeftWrapper">
+      <section id="smallSectionsContainer">
+        <article id="whiteCardOne">
+        <article id="cardTitleWrapper">
+          <h4 id="cardTitle">Loodgieters werk: nieuwe leiding aanleggen</h4>
+        </article>
           <h5>Beschrijving</h5>
           <h6>Opdrachtnummer: 234561</h6>
           <h6>Type Klus:</h6>
-          <article className="jobCard">
-            <img src={Icon} alt="Klus Icon" className="klus-icon" />
+          <article className="jobCardDetail">
+            <img src={Icon} alt="Klus Icon" className="klus-iconDetail" />
             <p className="jobCardText">Nieuwe leiding aanleggen</p>
           </article>
-          <article>
+          <article id="marginBottom">
             <h6>Aanvullende Informatie:</h6>
             <p className="infoText">
               De leiding in de keuken, badkamer en in de tuin moeten aangelegd
@@ -30,7 +35,17 @@ function MijnKlussenOverzichtComp() {
               schade in de tuin waar de leiding momenteel is.
             </p>
           </article>
+          <a href=""
+          rel="noopener noreferrer" className="noDecoration"><p className="moreInfoName" id="moreInfoName">Klus bekijken</p></a>
         </article>
+        <article id="whiteCardTwo">
+          <div id="blueCircle"><p id="blueCirclePlus">+</p></div>
+          <h5>Nieuwe klus zoeken</h5>
+        </article>
+        <article id="whiteCardOne"></article>
+        <article id="whiteCardOne"></article>
+    
+      </section>
     </main>
   );
 }
