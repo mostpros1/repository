@@ -151,6 +151,10 @@ main {
     font-size: 15px;
     font-weight: 600;
   }
+
+  .noDecoration{
+    text-decoration: none;
+  }
   
   /* Media queries for responsiveness */
   

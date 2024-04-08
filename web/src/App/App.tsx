@@ -54,7 +54,7 @@ const App = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
-      <Route path="/DetailJobPage" element={<DetailJobPage />} />
+      <Route path="/DetailJob" element={<DetailJobPage />} />
 
 
       <Route path="/login" element={<LoginPage />} />

@@ -1,7 +1,7 @@
 import "./DetailJobComp.css";
 import EmailIcon from "@mui/icons-material/Email";
 import HouseIcon from "@mui/icons-material/House";
-import LocationOnIcon from "@mui/icons-material/LocationOn"; 
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Icon from "../../assets/kraan.svg";
 
 function DetailJobComp() {
@@ -65,8 +65,9 @@ function DetailJobComp() {
           <div className="moreInfoBox">
             <p className="moreInfoName">Meer info</p>
           </div>
-        </article>  
-        <p className="moreInfoName">Klus beëindigen</p>
+        </article>
+        <a href=""
+          rel="noopener noreferrer" className="noDecoration"><p className="moreInfoName">Klus beëindigen</p></a>
       </section>
     </main>
   );
