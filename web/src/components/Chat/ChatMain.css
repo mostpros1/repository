@@ -85,7 +85,7 @@ p {
   padding: 20px;
   background-color: #6167c86f;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   margin-top: 150px;
 }
   
@@ -139,8 +139,11 @@ p {
   height: 60px;
   border-radius: 5px;
   border: 0;
-  font-size: 20px;
-  background-color: #6167c86f;
+  font-size: 30px;
+  color: #6166c8;
+  background-color: white;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .message-timestamp {
@@ -151,16 +154,19 @@ p {
 
 .chat-header h2{
   text-align: center;
+  margin-top: 20px;
 }
 
 .chat-header{
   background-color: #6167c86f;
+  height: 80px;
 }
 
 .message-input{
   font-size: 20px;
   height: 60px;
   width: 100%;
+  margin: 5px;
 }
 
 .addImage{
@@ -169,4 +175,11 @@ p {
   border: 0;
   cursor: pointer;
   margin: 5px;
+}
+
+.searchList{
+  width: 100%;
+  border-radius: 10px;
+  border: 0;
+  margin-bottom: 10px;
 }

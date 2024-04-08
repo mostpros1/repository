@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import './ChatMain.css';
 import { FcAddImage } from "react-icons/fc";
 import { FcOldTimeCamera } from "react-icons/fc";
+import { IoSend } from "react-icons/io5";
+import { CiMoneyCheck1 } from "react-icons/ci";
+import PaymentLink from '../PaymentLink/PaymentLink';
 
 interface Message {
   id: number;
@@ -80,32 +83,34 @@ const handleSendMessage = () => {
     }
   };
 
-  const inputFotoRef = useRef<HTMLInputElement>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleCapture = (event) => {
-  const file = event.target.files[0];
-  if (file) {
+const filteredPeople = people.filter(person => person.name.toLowerCase().includes(searchTerm.toLowerCase()) || person.id.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    console.log(file);
-  }
-  };
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+    const [subtotal, setSubtotal] = useState(0); // Dit zou je op een of andere manier moeten instellen, afhankelijk van je app's logica
 
-  const handleButtonFotoClick = () => {
-    if (inputFotoRef.current) {
-      inputFotoRef.current.click();
-    }
-  };
+    const handlePaySendMessage = (text) => {
+        console.log(text); // Of een andere logica om berichten te versturen in je chat
+    };
 
   return (
     <div className="chat">
-      <div className='list-people'>
-        {people.map(person => (
-          <a key={person.id} className="people-block" onClick={() => setSelectedPerson(person.id)}>
-            <h2>{person.name}</h2>
-            <p>Message: "{person.previewMessage}"</p>
-          </a>
-        ))}
-      </div>
+
+    <div className='list-people'>
+      <input
+        type="text"
+        placeholder="Zoek gebruikers..."
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className='searchList'
+      />
+      {filteredPeople.map(person => (
+        <a key={person.id} className="people-block" onClick={() => setSelectedPerson(person.id)}>
+          <h2>{person.name}</h2>
+          <p>Message: "{person.previewMessage}"</p>
+        </a>
+      ))}
+    </div>
       <div className="chat-main">
         {selectedPerson && (
           <div className="chat-header">
@@ -132,17 +137,14 @@ const handleSendMessage = () => {
           <button className='addImage' onClick={handleButtonClick}>
             <FcAddImage size={50} />
           </button>
-          <input
-            type="file"
-            accept="image/*"
-            capture="user"
-            style={{ display: 'none' }}
-            ref={inputFileRef}
-            onChange={handleCapture}
-          />
-          <button className='addImage' onClick={handleButtonFotoClick}>
-            <FcOldTimeCamera size={50}/>
-          </button>
+          <button onClick={() => setShowPaymentLink(true)} className='addImage'><CiMoneyCheck1 size={50} /></button>
+            {showPaymentLink && (
+                <PaymentLink
+                    subtotal={subtotal}
+                    handleSendMessage={handlePaySendMessage}
+                />
+            )}
+            
           <input
             type="text"
             className="message-input"
@@ -151,7 +153,7 @@ const handleSendMessage = () => {
             onChange={e => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <button onClick={handleSendMessage} className='sendbutton'>Send</button>
+          <button onClick={handleSendMessage} className='sendbutton'><IoSend /></button>
         </div>
       </div>
     </div>
