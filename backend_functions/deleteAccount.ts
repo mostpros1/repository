@@ -53,11 +53,11 @@ export function deleteAccount(email, Token, userType) {
                     .then(data => console.log(data.Attributes))
                     .catch(console.error)
             ).catch(console.error);
-    } else if (userType == "SPECIALIST"){
+    } else if (userType == "PROFESSIONAL") {
 
         dynamo
             .query({
-                TableName: 'Specialists',
+                TableName: 'Professionals',
                 IndexName: 'emailIndex',
                 KeyConditionExpression: 'email = :email',
                 ExpressionAttributeValues: {
@@ -68,7 +68,7 @@ export function deleteAccount(email, Token, userType) {
             .then(data =>
                 dynamo
                     .delete({
-                        TableName: "Specialists",
+                        TableName: "Professionals",
                         Key: {
                             id: data.Items[0].id,
                         },

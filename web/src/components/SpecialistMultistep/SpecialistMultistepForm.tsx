@@ -223,15 +223,16 @@ function SpecialistMultistepForm() {
             Item: {
 
               id: Math.floor(Math.random() * 1000000000),
-              name: stopXSS(firstName) + " " + stopXSS(lastName),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
               email: stopXSS(email),
               profession: stopXSS(data.beroep),
-              location: stopXSS(data.questions.question1),
-              rating: "Unrated",
+              region: stopXSS(data.questions.question1),
+              rating: 0,
               bio: stopXSS(data.bio),
               availibility: Datums,
             },
-            TableName: "Specialists",
+            TableName: "Professionals",
           })
           .promise()
           .then(data => console.log(data.Attributes))
@@ -308,7 +309,7 @@ function SpecialistMultistepForm() {
     //availibility is als Datums opgeslagen
 
     const params = {
-      TableName: "Specialists",
+      TableName: "Professionals",
       Item: {
         id: Math.floor(Math.random() * 1000000),
         name: name,

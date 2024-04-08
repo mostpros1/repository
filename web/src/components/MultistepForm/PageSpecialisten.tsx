@@ -103,7 +103,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     const task = window.location.hash.replace("#", "").split("?")[1];
 
     dynamo.query({
-      TableName: "Specialists",
+      TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
       FilterExpression: "task = :task",
