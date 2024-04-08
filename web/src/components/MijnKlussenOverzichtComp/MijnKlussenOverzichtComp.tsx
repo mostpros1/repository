@@ -1,5 +1,7 @@
 import "./MijnKlussenOverzichtComp.css";
 import Icon from "../../assets/kraan.svg";
+import Lisa from "../../assets/Lisa_V.png";
+
 
 function MijnKlussenOverzichtComp() {
   return (
@@ -17,9 +19,9 @@ function MijnKlussenOverzichtComp() {
 
       <section id="smallSectionsContainer">
         <article id="whiteCardOne">
-        <article id="cardTitleWrapper">
-          <h4 id="cardTitle">Loodgieters werk: nieuwe leiding aanleggen</h4>
-        </article>
+          <article id="cardTitleWrapper">
+            <h4 id="cardTitle">Loodgieters werk: nieuwe leiding aanleggen</h4>
+          </article>
           <h5>Beschrijving</h5>
           <h6>Opdrachtnummer: 234561</h6>
           <h6>Type Klus:</h6>
@@ -36,15 +38,60 @@ function MijnKlussenOverzichtComp() {
             </p>
           </article>
           <a href=""
-          rel="noopener noreferrer" className="noDecoration"><p className="moreInfoName" id="moreInfoName">Klus bekijken</p></a>
+            rel="noopener noreferrer" className="noDecoration"><p className="moreInfoName" id="moreInfoName">Klus bekijken</p></a>
         </article>
         <article id="whiteCardTwo">
           <div id="blueCircle"><p id="blueCirclePlus">+</p></div>
           <h5>Nieuwe klus zoeken</h5>
         </article>
-        <article id="whiteCardOne"></article>
-        <article id="whiteCardOne"></article>
-    
+        <article id="whiteCardOne">
+          <article id="cardTitleWrapper">
+            <h4 id="cardTitle">Geselecteerd Klussen</h4>
+          </article>
+          <article id="profileBeam">
+            <div id="pfpNameWrapper">
+              <img src={Lisa} id="pfpIcon" alt="" />
+              <h5 id="pfpName">Lisa Zoetlief</h5>
+            </div>
+            <p id="profileBeamButton">Bekijken</p>
+          </article>
+          <article id="profileBeam">
+            <div id="pfpNameWrapper">
+              <img src={Lisa} id="pfpIcon" alt="" />
+              <h5 id="pfpName">Lisa Zoetlief</h5>
+            </div>
+            <p id="profileBeamButton">Bekijken</p>
+          </article>
+          <article id="profileBeam">
+            <div id="pfpNameWrapper">
+              <img src={Lisa} id="pfpIcon" alt="" />
+              <h5 id="pfpName">Lisa Zoetlief</h5>
+            </div>
+            <p id="profileBeamButton">Bekijken</p>
+          </article>
+          <article id="profileBeam">
+            <div id="pfpNameWrapper">
+              <img src={Lisa} id="pfpIcon" alt="" />
+              <h5 id="pfpName">Lisa Zoetlief</h5>
+            </div>
+            <p id="profileBeamButton">Bekijken</p>
+          </article>
+
+        </article>
+        <article id="whiteCardOne">
+          <article id="cardTitleWrapper">
+            <h4 id="cardTitle">Geïnteresseerd klanten</h4>
+          </article>
+          <article id="profileBeam">
+            <div id="pfpNameWrapper">
+              <img src={Lisa} id="pfpIcon" alt="" />
+              <h5 id="pfpName">Lisa Zoetlief</h5>
+            </div>
+            <p id="profileBeamButton">Bekijken</p>
+          </article>
+
+        </article>
+
       </section>
     </main>
   );
