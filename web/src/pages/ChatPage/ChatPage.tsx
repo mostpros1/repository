@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import ChatMain from "../../components/Chat/ChatMain";
 
 function ChatPage() {
-  return <ChatMain user={undefined} signOut={undefined} />;
+  <ChatMain />;
 }
 
 export default ChatPage;
