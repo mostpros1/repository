@@ -28,14 +28,12 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
-  formConfig: string
-  beroep: string
 }
 
 function MultistepForm() {
   const navigate = useNavigate()
   const questionsData = useQuestionData();
-
+  
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -50,25 +48,14 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: "",
-    beroep: "",
-    formConfig: ""
+    repeatPassword: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  const [isValidDatum, setValidDatum] = useState(true);
-
-
-  /*const updateDate = (newDate) => {
-      setDate(newDate);
-  };*/
-
-
+  
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
-
-  const [date, setDate] = useState<string | null>(null);
 
   const updateDate = (selectedDate: Date) => {
     const year = selectedDate.getFullYear();
@@ -76,7 +63,6 @@ function MultistepForm() {
     const day = String(selectedDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
-    setDate(formattedDate);
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
@@ -130,46 +116,93 @@ function MultistepForm() {
     />
   ));
 
-
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
-    steps: [
-      <>
+      steps: [
         <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields}/>,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-        <PageSpecialisten date={date} />
-      </>
-    ],
-    onStepChange: () => { }
-  });
-  console.log(updateDate);
-  //<Calendar />,
-  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
+
+        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
+        <PageSpecialisten />
+      ],
+      onStepChange: () => {}
+    });
+
+    async function onSubmit(e: FormEvent) {
+      e.preventDefault()
+      console.log('Form Data:', data);
+      if (!isLastStep) return next()
+
+      const userData = {
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber
+      }
+  
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
+        .then(() => {
+          navigate('/huiseigenaar-resultaat')
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          name: userData.firstName,
+          family_name: userData.lastName,
+          email: userData.email,
+          phone_number: userData.phoneNumber
+        },
+        autoSignIn: { enabled: true }
+        })
+        .then(() => {
+          navigate('/bevestig-email', { state: { email: userData.email } })
+        })
+        .catch(async error => {
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            navigate('/bevestig-email', { state: { email: userData.email } })
+          } else {
+            console.error("foutmelding:", error)
+          }
+        })
+      }
+    }
+
   const stepWidth = 100 / steps.length;
 
-  // return (
-  //   <form onSubmit={onsubmit} className='form-con'>
-  //     <div className='progress-con'>
-  //       <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
-  //       <div className="progress-bar">
-  //         {steps.map((_, index) => (
-  //           <div
-  //             key={index}
-  //             className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
-  //             style={{ width: `${stepWidth}%` }}
-  //           ></div>
-  //         ))}
-  //       </div>
-  //     </div>
+  return (
+    <form onSubmit={onSubmit} className='form-con'>
+      <div className='progress-con'>
+        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
+        <div className="progress-bar">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-step ${index <= currentStepIndex ? "active" : ""}`}
+              style={{ width: `${stepWidth}%` }}
+            ></div>
+          ))}
+        </div>
+      </div>
 
-  //     {step}
+      {step}
 
-  //     <div className='btn-wrapper'>
-  //       {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
-  //       <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
-  //     </div>
-  //   </form>
-  // )
+      <div className='btn-wrapper'>
+        {!isFirstStep && <button type="button" onClick={back} className='form-btn back'>Vorige</button>}
+        <button type="submit" className='form-btn'>{isLastStep ? "Verstuur" : "Volgende"}</button>
+      </div>
+    </form>
+  )
 }
 
-export default MultistepForm;
+export default MultistepForm

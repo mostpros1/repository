@@ -182,4 +182,6 @@ p {
   border-radius: 10px;
   border: 0;
   margin-bottom: 10px;
+  height: 60px;
+  font-size: 18px;
 }

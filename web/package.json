@@ -25,7 +25,7 @@
     "@mui/material": "^5.15.10",
     "@mui/x-date-pickers": "^6.19.0",
     "aws-amplify": "^5.3.15",
-    "aws-sdk": "^2.1506.0",
+    "aws-sdk": "^2.1590.0",
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
     "fs": "^0.0.1-security",
@@ -41,6 +41,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.25",
     "@types/nodemailer": "^6.4.14",

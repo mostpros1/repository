@@ -69,7 +69,7 @@ function DateForm({ updateDate, updateFields }) {
         <div className="dateForm_wrapper">
             <h2>Wanneer moet de klus gedaan worden</h2>
             {showMoreDates ? (
-                <Calendar onDateSelect={handleCalendarDateSelect} />
+                <Calendar />
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (

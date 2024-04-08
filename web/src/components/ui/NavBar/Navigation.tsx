@@ -5,7 +5,10 @@ import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
+<<<<<<< HEAD
 import {ChatBtn} from "../../Chat/Chatbtn";
+=======
+>>>>>>> ff283c8d73cf88d1b6ed875c719c3b9881c98657
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";

@@ -70,16 +70,16 @@ const JobDisc = () => {
                 <li>
                   <div className="email-sect">
                     <EmailRoundedIcon />
-                    Lisazoetlief@hotmail.com
                   </div>
+                  Lisazoetlief@hotmail.com
                 </li>
+                <div className="btn-con">
+                  <button className="btn-secondary">
+                    <ForumRoundedIcon />
+                    Bericht sturen
+                  </button>
+                </div>
               </ul>
-              <div className="btn-con">
-                <button className="btn-secondary">
-                  <ForumRoundedIcon />
-                  Bericht sturen
-                </button>
-              </div>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import { dynamo } from "../../../../backend_functions/declerations";
+import { dynamo } from "../../../declarations";
 
 const exampleSpecialists = [
   {
@@ -39,26 +39,10 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
 
-  useEffect(() => {
-    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
-    applyFilters();
-  }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const handlePriceFromChange = (event) => {
-    setPriceFrom(event.target.value);
-  };
-
   const applyFilters = () => {
-    let filteredSpecialists = exampleSpecialists;
+    let filteredSpecialists = specialists;
 
+    //console.log("hello:  ", filteredSpecialists);
     // Filter by location
     if (location) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
@@ -82,71 +66,96 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
 
     setSpecialists(filteredSpecialists);
   };
-  
+
+  useEffect(() => {
+    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
+    applyFilters();
+  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSortByChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  /*const handlePriceFromChange = (event) => {
+    setPriceFrom(event.target.value);
+  };*/
+
   const [specialists, setSpecialists] = useState(exampleSpecialists);
+
+
+
+
 
   //make a function to grab data behind the hashtag in the url and print it into the console
 
+
+
   //backend niet verwijderen
   useEffect(() => {
-    let Availibility;
-    let Specialists;
+    let professionals: any[] = [];
 
-    console.log(updateDate);
-    const hashTag = window.location.hash.replace("#", "").split("?")[0];
-    console.log(hashTag);
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    
     const task = window.location.hash.replace("#", "").split("?")[1];
-    console.log(task);
+    
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
       FilterExpression: "task = :task",
       ExpressionAttributeValues: {
-        ":profession": hashTag,
+        ":profession": profession,
         ":task": task,
       },
     }).promise()
       .then(data => {
-        //setSpecialists(data.Items);
-        Specialists = data.Items;
-        console.log(data.Items);
-      })
-      .catch(err => {
+
+        const convertedItems = data.Items?.map(item => ({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          profession: item.profession,
+          location: item.location,
+          price: item.price,
+          rating: item.rating,
+          bio: item.bio,
+          availibility: item.availibility,
+        }));
+        /*
+                const Availability = JSON.parse(convertedItems[0].availibility);
+                '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
+                console.log("Availability =", Availability);
+        */
+
+        if (convertedItems) {
+          for (let i: number = 0; i < convertedItems.length; i++) {
+            if (convertedItems[i].availibility) {
+              const Availability = JSON.parse(convertedItems[i].availibility);
+
+              for (let x: number = 0; x < Availability.dates.length; x++) {
+
+                const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
+
+                if (selected == Availability.dates[x]) {
+                  professionals = [...professionals, convertedItems[i]];
+                  break;
+                }
+              }
+            }
+          }
+        setSpecialists(/*convertedItems*/professionals);
+
+
+      }}).catch(err => {
         console.log(err);
       });
-      
-      console.log(JSON.stringify(updateDate).split('T')[0]);
-      // dynamo.query({
-      //   TableName: "beschikbaarheid",
-      //   IndexName: "datum",
-      //   KeyConditionExpression: "datum = :date",
-      //   ExpressionAttributeValues: {
-      //     ":date": updateDate,
-      //   },
-      // }).promise()
-      //   .then(output => {
-      //     Availibility = output.Items
-      //     console.log(output.Items);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      // });
-      
-    // const checkEmailInJson = (email) => {
-    //   if (Specialists && Availibility) {
-    //     // Replace with the email address you want to check
-    //     const specialistEmails = Specialists.map(specialist => specialist.email);
-    //     const availibilityEmails = Availibility.map(item => item.email);
-    //     const matchingEmails = specialistEmails.filter(email => availibilityEmails.includes(email));
-    //     const matchingSpecialists = Specialists.filter(specialist => matchingEmails.includes(specialist.email));
-    //     console.log(matchingSpecialists);
-    //   }
-    // };
-    // checkEmailInJson('example@example.com');
-
+  
   }, [updateDate]);
-      
+
   return (
 
     <div className="filter-bar">
@@ -163,22 +172,22 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
         <option value="priceHighLow">Price: High to Low</option>
         <option value="rating">Rating</option>
       </select>
-    <div className="specialisten-container">
-      {specialists.map((specialist) => (
-        <div key={specialist.id} className="specialist-card">
-        <div className="specialist-header">
-            <div className="specialist-info-1">
+      <div className="specialisten-container">
+        {specialists.map((specialist) => (
+          <div key={specialist.id} className="specialist-card">
+            <div className="specialist-header">
+              <div className="specialist-info-1">
                 <h3>{specialist.name}</h3>
                 <h5>{specialist.profession}</h5>
+              </div>
             </div>
-        </div>
-          <div className="specialist-info-2">
-            <p>{specialist.bio}</p>
+            <div className="specialist-info-2">
+              <p>{specialist.bio}</p>
+            </div>
+            <button className="contact-button">Contact opnemen</button>
           </div>
-          <button className="contact-button">Contact opnemen</button>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 
 interface Message {
- id: string;
- text: string;
+  id: number;
+  text: string;
+  senderId: string;
+  receiverId: string;
+  timestamp: string;
+}
+
+interface Person {
+  id: string;
+  name: string;
+  previewMessage: string;
 }
 
 export function useChatBackend() {

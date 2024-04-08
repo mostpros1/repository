@@ -1,4 +1,4 @@
-import { dynamoDB } from './declerations.ts';
+import { dynamoDB } from './declarations.ts';
 
 export function listTables() {
   dynamoDB
