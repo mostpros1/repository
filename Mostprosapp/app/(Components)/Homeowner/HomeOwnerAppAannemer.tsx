@@ -44,13 +44,14 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                <Text style={styles.title}>Wat moet er gebeuren?</Text>
+                    <Text style={styles.title}>Wat moet er gebeuren?</Text>
 
                 </View>
 
                 <View style={styles.cardsContainer}>
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(0)}>
                         <TouchableOpacity
+                            testID='keuze1'
                             style={[styles.checkbox, selectedItems.includes(0) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(0)}
                         />
@@ -60,6 +61,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(1)}>
                         <TouchableOpacity
+                            testID='keuze2'
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
                         />
@@ -69,6 +71,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(2)}>
                         <TouchableOpacity
+                            testID='keuze3'
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
@@ -78,6 +81,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(3)}>
                         <TouchableOpacity
+                            testID='keuze4'
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
@@ -87,6 +91,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(4)}>
                         <TouchableOpacity
+                            testID='keuze5'
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
@@ -96,6 +101,7 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
 
                     <Pressable style={styles.card} onPress={() => toggleItemSelection(5)}>
                         <TouchableOpacity
+                            testID='keuze6'
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(5)}
                         />
@@ -105,10 +111,10 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                    <Pressable testID='vorigeBtn' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={handleNext}>
+                    <Pressable testID='volgendeBtn' style={[styles.nextButton]} onPress={handleNext}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
@@ -168,7 +174,7 @@ const styles = StyleSheet.create({
     cardImage: {
         width: 65,
         height: 65,
-        resizeMode: 'contain', 
+        resizeMode: 'contain',
         marginBottom: 10,
     },
     cardTitle: {
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    buttonsContainer:{
+    buttonsContainer: {
         paddingTop: 12,
         marginBottom: 12,
         display: "flex",
@@ -246,7 +252,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
-    nextButtonColorOne:{
+    nextButtonColorOne: {
         backgroundColor: "#fffefe",
         borderWidth: 3,
         borderColor: "#7db7ec",
@@ -258,7 +264,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-    whiteButtonText:{
+    whiteButtonText: {
         color: "#fff",
     },
 });

@@ -1,10 +1,10 @@
 import React, { useState, } from 'react';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, Button, Image, TouchableOpacity, ScrollView, Alert, Pressable, } from 'react-native';
 import { StyleSheet } from 'react-native';
 const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const today = new Date();
-  const [progress, setProgress] = useState(4); 
+  const [progress, setProgress] = useState(4);
   const [date, setDate] = useState(today);
   const currentMonth = date.getMonth();
   const currentYear = date.getFullYear();
@@ -15,7 +15,7 @@ const DateAndTimePicker = ({ /* onDateChange */ }) => {
   const handleDateSelect = (_day, date) => {
     const dateString = date.toISOString().split('T')[0];
     if (date < today) return;
-    
+
     setSelectedDates((prevDates) => {
       if (prevDates.includes(dateString)) {
         setSelectedDay(null);
@@ -59,101 +59,114 @@ const DateAndTimePicker = ({ /* onDateChange */ }) => {
     startOfYear.setUTCDate(startOfYear.getUTCDate() - startOfYear.getUTCDay() + 1);
     const weekNumber = Math.ceil(((current.getTime() - startOfYear.getTime()) / 86400000 + 1) / 7);
     return weekNumber;
-};
-const renderCalendarDays = () => {
-  const weeks = [];
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  let week = [];
-  const firstDayOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-  const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
-  let weekCount = 0;
-  // Dagen van de vorige maand toevoegen om de eerste week te vullen
-  for (let i = firstDayOffset; i > 0; i--) {
-    week.push(
-      <View key={`prev-month-day-${i}`} style={styles.day}>
-        <Text style={styles.dayText}>{prevMonthDays - i + 1}</Text>
-      </View>
-    );
-  }
-  // Voeg de weeknummer aan het begin van elke week toe
-  const addWeekNumber = (date) => {
-    const weekNumber = getWeekNumber(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
-    return (
-      <View style={styles.weekNumber}>
-        <Text style={styles.weekNumber}>{weekNumber}</Text>
-      </View>
-    );
   };
-  // Dagen van de huidige maand toevoegen
-  for (let day = 1; day <= daysInMonth; day++) {
-    const currentDay = new Date(currentYear, currentMonth, day);
-    if (currentDay.getDay() === 1 || day === 1) {
-      week.unshift(addWeekNumber(currentDay)); // Voeg weeknummer toe aan het begin van de week
-    }
-    week.push(
-      <TouchableOpacity
-        key={`current-month-day-${day}`}
-        style={[styles.day, selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`) && styles.selectedDay]}
-        onPress={() => handleDateSelect(day, currentDay)}
-      >
-        <Text style={styles.dayText}>{day}</Text>
-      </TouchableOpacity>
-    );
-    if (currentDay.getDay() === 0 || day === daysInMonth) {
-      weeks.push(
-        <View key={`week-${currentYear}-${currentMonth}-${weekCount++}`} style={styles.week}>
-          <View style={styles.daysRow}>{[...week]}</View>
+  const renderCalendarDays = () => {
+    const weeks = [];
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let week = [];
+    const firstDayOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+    const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+    let weekCount = 0;
+
+    // Dagen van de vorige maand toevoegen om de eerste week te vullen
+    for (let i = firstDayOffset; i > 0; i--) {
+      const prevMonthDay = prevMonthDays - i + 1;
+      week.push(
+        <View key={`prev-month-day-${prevMonthDay}`} style={[styles.day, styles.prevMonthDay]}>
+          <Text style={[styles.dayText, styles.prevMonthDayText]}>{prevMonthDay}</Text>
         </View>
       );
-      week = [];
     }
-  }
-  return weeks;
-};
+
+    // Dagen van de huidige maand toevoegen
+    for (let day = 1; day <= daysInMonth; day++) {
+      const currentDay = new Date(currentYear, currentMonth, day);
+      const isToday = currentDay.toDateString() === today.toDateString();
+      const isSelected = selectedDates.includes(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+
+      week.push(
+        <TouchableOpacity
+          key={`current-month-day-${day}`}
+          style={[
+            styles.day,
+            isSelected && styles.selectedDay,
+            isToday && styles.today,
+          ]}
+          onPress={() => handleDateSelect(day, currentDay)}
+          testID={`date-${currentYear}-${currentMonth + 1}-${day}`} // Adding testID prop for each date
+        >
+          <Text style={[styles.dayText, isToday && styles.todayText]}>{day}</Text>
+        </TouchableOpacity>
+      );
+
+      if (currentDay.getDay() === 0 || day === daysInMonth) {
+        weeks.push(
+          <View key={`week-${currentYear}-${currentMonth}-${weekCount++}`} style={styles.week}>
+            <View style={styles.weekNumber}>
+              <Text style={styles.weekNumberText}>
+                {getWeekNumber(new Date(currentYear, currentMonth, day))}
+              </Text>
+            </View>
+            <View style={styles.daysRow}>{[...week]}</View>
+          </View>
+        );
+        week = [];
+      }
+    }
+    return weeks;
+  };
+
   const renderWeekDays = () => {
-    return ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
-      <Text key={day} style={styles.weekDay}>{day}</Text>
+    return ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((day, index) => (
+      <Text
+        key={index}
+        style={styles.weekDay}
+        testID={`weekday-${day.toLowerCase()}`} // Adding testID prop for each day
+      >
+        {day}
+      </Text>
     ));
   };
+
   const navigation = useNavigation();
 
   return (
-  <View style={styles.container}>
-    <TouchableOpacity>
-      <Image source={require('../../../assets/images/arrowL.png')} style={styles.arrowBack} />
-    </TouchableOpacity>
-    <View style={styles.progressContainer}>
-                            <Text style={styles.progressText}>Stap {progress} van de 5</Text>
-                            <View style={styles.progressBar}>
-                                <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
-                            </View>
-                        </View>
-  <Text style={styles.headerTitle}>Selecteer een beschikbare datum</Text>
-  <View style={styles.header}>
-    <TouchableOpacity onPress={handlePrevMonth}>
-      <Image source={require('../../../assets/images/arrowL.png')} style={styles.arrow} />
-    </TouchableOpacity>
-    <TouchableOpacity onPress={handleNextMonth}>
-      <Image source={require('../../../assets/images/arrowR.png')} style={styles.arrow} />
-    </TouchableOpacity>
-  </View>
-  <View style={styles.monthSelector}>
-    <Text style={styles.monthText}>{months[currentMonth]} {currentYear}</Text>
-  </View>
-  <View style={styles.weekDays}>
-    {renderWeekDays()}
-  </View>
-  <View style={styles.daysContainer}>
-    {renderCalendarDays()}
-  </View>
-  <TouchableOpacity style={styles.confirmButton}>
-  <Pressable onPress={() => navigation.navigate('HomeOwnerEmail')}>
-    <Text style={styles.confirmButtonText}>Bevestig keuze</Text>
-</Pressable>
-  </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity>
+        <Image source={require('../../../assets/images/arrowL.png')} style={styles.arrowBack} />
+      </TouchableOpacity>
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>Stap {progress} van de 5</Text>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressIndicator, { width: `${(progress / 5) * 100}%` }]}></View>
+        </View>
+      </View>
+      <Text style={styles.headerTitle}>Selecteer een beschikbare datum</Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handlePrevMonth}>
+          <Image source={require('../../../assets/images/arrowL.png')} style={styles.arrow} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNextMonth}>
+          <Image source={require('../../../assets/images/arrowR.png')} style={styles.arrow} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.monthSelector}>
+        <Text style={styles.monthText}>{months[currentMonth]} {currentYear}</Text>
+      </View>
+      <View style={styles.weekDays}>
+        {renderWeekDays()}
+      </View>
+      <View style={styles.daysContainer}>
+        {renderCalendarDays()}
+      </View>
+      <TouchableOpacity style={styles.confirmButton}>
+        <Pressable onPress={() => navigation.navigate('HomeOwnerEmail')}>
+          <Text style={styles.confirmButtonText}>Bevestig keuze</Text>
+        </Pressable>
+      </TouchableOpacity>
 
-  </View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -163,27 +176,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
-
   progressContainer: {
     alignItems: "center",
     marginTop: 20,
     marginBottom: 30,
-},
-progressText: {
+  },
+  progressText: {
     marginBottom: 5,
-},
-progressBar: {
+  },
+  progressBar: {
     width: 300,
     height: 10,
     backgroundColor: '#ccc',
     borderRadius: 5,
-},
-progressIndicator: {
+  },
+  progressIndicator: {
     height: '100%',
     backgroundColor: '#318ae5',
     borderRadius: 5,
-},
-
+  },
   arrowBack: {
     width: 40,
     height: 40,
@@ -256,6 +267,9 @@ progressIndicator: {
     lineHeight: 30,
     overflow: 'hidden',
   },
+  weekNumberText: {
+    color: 'white',
+  },
   weekDays: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -277,7 +291,7 @@ progressIndicator: {
     padding: 16,
   },
   day: {
-    width: 40, 
+    width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
@@ -289,7 +303,19 @@ progressIndicator: {
   selectedDay: {
     backgroundColor: '#3a72ffd4',
     width: 40,
-    height: 40, 
+    height: 40,
+  },
+  prevMonthDay: {
+    backgroundColor: '#ccc',
+  },
+  prevMonthDayText: {
+    color: '#888',
+  },
+  today: {
+    backgroundColor: '#ff0', // For example, using yellow to highlight today
+  },
+  todayText: {
+    fontWeight: 'bold',
   },
   dayText: {
     fontSize: 16,

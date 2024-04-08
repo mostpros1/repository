@@ -9,7 +9,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const HomeOwnerPostalCode = ({ navigation, route }) => {
     const { selectedOption, parameterName } = route.params;
-    const [progress, setProgress] = useState(1); 
+    const [progress, setProgress] = useState(1);
     const [postalCode, setPostalCode] = useState({ part1: '', part2: '' });
 
     const handlePostalCodeChange = (text, part) => {
@@ -45,7 +45,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
     };
 
     return (
-        <KeyboardAvoidingView style={styles.contentContainer} behavior={Platform.OS === "ios" ? "padding" : null} keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
+        <KeyboardAvoidingView style={styles.contentContainer} behavior={Platform.OS === "ios" ? "padding" : null} keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                 <TouchableWithoutFeedback onPress={dismissKeyboard}>
                     <SafeAreaView style={styles.container}>
@@ -73,6 +73,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
 
                         <View style={styles.inputContainer}>
                             <TextInput
+                                testID='postcodeNummerInput'
                                 style={styles.input}
                                 placeholder="1234"
                                 onChangeText={(text) => handlePostalCodeChange(text, 'part1')}
@@ -81,6 +82,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                                 keyboardType="numeric"
                             />
                             <TextInput
+                                testID='postcodeLetterInput'
                                 style={styles.input}
                                 placeholder="AB"
                                 onChangeText={(text) => handlePostalCodeChange(text.toUpperCase(), 'part2')}
@@ -88,7 +90,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                                 maxLength={2}
                             />
                         </View>
-                        <Pressable style={styles.nextButton} onPress={handleNextPress}>
+                        <Pressable testID='volgendeBtn' style={styles.nextButton} onPress={handleNextPress}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>

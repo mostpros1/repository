@@ -127,13 +127,14 @@ const HomePageHomeOwner = ({ navigation }) => {
                     onPress={handleForwardButtonPress}
                   >
                     <TextInput
+                      testID="searchbar"
                       placeholder="Zoeken:"
                       style={styles.input}
                       onChangeText={handleInputChange}
                       onFocus={handleInputFocus}
                       value={inputText}
                     />
-                    <Icon name="search" size={25} color="#318ae5" />
+                    <Icon testID="zoekBtn" name="search" size={25} color="#318ae5" />
                   </Pressable>
                 </View>
                 <View style={[styles.iconsText]}>
@@ -158,6 +159,7 @@ const HomePageHomeOwner = ({ navigation }) => {
                   </Pressable>
                 </View>
                 <Pressable
+                  testID="nieuwKlusBtn"
                   style={[styles.searchBar]}
                   onPress={() => navigation.navigate("HomeOwnerCreate")}
                 >
@@ -227,7 +229,7 @@ const HomePageHomeOwner = ({ navigation }) => {
                   <Icon name="gamepad" size={40} color="#4999e7" />
                   <Text style={[styles.blackIconText]}>App 8</Text>
                 </Pressable>
-                
+
               </View>
 
 
@@ -472,7 +474,7 @@ const HomePageHomeOwner = ({ navigation }) => {
             </View>
           </ScrollView>
           {showOptions && (
-            <ScrollView style={styles.optionsContainer}>
+            <ScrollView testID="options" style={styles.optionsContainer}>
               {filteredOptions.map((option) => (
                 <Pressable
                   key={option.id}
@@ -507,7 +509,7 @@ const HomePageHomeOwner = ({ navigation }) => {
           >
             <Text style={styles.closeScannerButtonText}>Close Scanner</Text>
           </Pressable>
-          
+
         </View>
       )}
     </PaperProvider>

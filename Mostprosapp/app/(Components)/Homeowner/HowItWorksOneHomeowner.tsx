@@ -51,6 +51,7 @@ const HowItWorksOneHomeowner = ({ navigation }) => {
         <View style={styles.progressionBarEmpty}></View>
       </View>
       <Pressable
+        testID="volgendeBtn1"
         style={styles.link}
         onPress={() => navigation.navigate("HowItWorksTwoHomeowner")}
       >

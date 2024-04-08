@@ -70,6 +70,7 @@ const HomeOwnerEmail = ({ navigation }) => {
         <View style={styles.inputContainer}>
           <Text style={styles.titleLight}>Email</Text>
           <TextInput
+            testID="emailInput"
             style={styles.input}
             placeholder="E-mailadres (verplicht)"
             onChangeText={setEmail}
@@ -83,12 +84,13 @@ const HomeOwnerEmail = ({ navigation }) => {
       <View style={styles.bottomButtonsContainer}>
         <View style={styles.buttonsContainer}>
           <Pressable
+            testID="vorigeBtn"
             style={[styles.nextButton, styles.nextButtonColorOne]}
             onPress={() => navigation.goBack()}
           >
             <Text style={styles.nextButtonText}>Vorige</Text>
           </Pressable>
-          <Pressable style={[styles.nextButton]} onPress={handleNext}>
+          <Pressable testID="volgendeBtn" style={[styles.nextButton]} onPress={handleNext}>
             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
               Volgende
             </Text>

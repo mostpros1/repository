@@ -26,16 +26,17 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                 </View>
 
                 <View style={styles.titleBox}>
-                <Text style={styles.title}>Aanvullende Informatie (optioneel)</Text>
+                    <Text style={styles.title}>Aanvullende Informatie (optioneel)</Text>
 
                 </View>
                 <View style={styles.titleBox}>
-                <Text style={styles.titleLight}>Deel hier a.u.b niet uw contactgegevens.</Text>
+                    <Text style={styles.titleLight}>Deel hier a.u.b niet uw contactgegevens.</Text>
 
                 </View>
 
                 <View style={styles.textAreaContainer}>
                     <TextInput
+                        testID='infoInput'
                         style={styles.textArea}
                         onChangeText={setAdditionalInfo}
                         value={additionalInfo}
@@ -45,13 +46,13 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
                     />
                 </View>
             </SafeAreaView>
-            
+
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.buttonsContainer}>
-                    <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                    <Pressable testID='vorigeBtn' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable style={[styles.nextButton]} onPress={() => navigation.navigate('DateAndTimePicker')}>
+                    <Pressable testID='volgendeBtn' style={[styles.nextButton]} onPress={() => navigation.navigate('DateAndTimePicker')}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
     },
-    titleLight:{
+    titleLight: {
         fontWeight: "bold",
         color: "#b6b8bd",
         textAlign: 'center',
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
     },
-    buttonsContainer:{
+    buttonsContainer: {
         display: "flex",
         flexDirection: "row",
         gap: 15,
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    nextButtonColorOne:{
+    nextButtonColorOne: {
         backgroundColor: "#fffefe",
         borderWidth: 3,
         borderColor: "#7db7ec",
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: 'center',
     },
-    whiteButtonText:{
+    whiteButtonText: {
         color: "#fff",
     },
 });
