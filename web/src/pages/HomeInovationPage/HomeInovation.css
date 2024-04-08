@@ -1,0 +1,10 @@
+#content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 100px;
+    height: 100vh;
+    justify-items: center;
+    margin: 25px auto 0 150px;
+    align-content: space-around;
+}

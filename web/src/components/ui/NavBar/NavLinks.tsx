@@ -13,10 +13,14 @@ function NavLinks() {
         {
             name: 'Inschrijven als vakspecialist',
             link: '/inschrijven-als-specialist'
-        }
+        },
+        {
+        name: 'HIL',
+        link: '/home-inovations-lab'
+    }
     ]
 
-    let navItemsToBeRendered = navItems.map(Item => {
+    const navItemsToBeRendered = navItems.map(Item => {
         return(
             <li key={Item.name}>
                 <Link to={Item.link} className='black-items'>{Item.name}</Link>

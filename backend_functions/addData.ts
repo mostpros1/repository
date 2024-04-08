@@ -1,5 +1,5 @@
-import { dynamoDB } from './declerations.ts';
-import { dynamo } from './declerations.ts';
+import { dynamoDB } from './declarations.ts';
+import { dynamo } from './declarations.ts';
 
 import { sanatiseInput } from './stopXSS.ts';
 import { sendMail } from './sendMail.ts';
@@ -37,9 +37,6 @@ export function addUser(email: string, phone_number: number, password: string, f
         }
     });
 }
-
-
-
 
 export function addClient(phone: number, contact_email: string, adress: string, industry: string, name: string) {
 
@@ -260,9 +257,6 @@ export function addStripe_connected_accounts(id: number, user_id: number, accoun
     });
 }
 
-
-
-
 function getId(professional_id: number) {
     const params = {
         TableName: "UserAvailability",
@@ -281,8 +275,6 @@ function getId(professional_id: number) {
             }/*Verwijder(data.Items[0].id)*/
         })
         .catch(console.error);
-
-
 }
 
 async function Verwijder(id: number) {
@@ -298,11 +290,6 @@ async function Verwijder(id: number) {
         .then(data => console.log(data.Attributes))
         .catch(console.error)
 }
-
-
-
-
-
 
 export function addProfessionals(id: number, user_id: number, email: void | string, phonenumber: string, postcode: string, region: string, field_of_work: string, slug: string) {
     const param = {

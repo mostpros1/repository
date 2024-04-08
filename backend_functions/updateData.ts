@@ -1,4 +1,4 @@
-import { dynamo } from './declerations.ts';
+import { dynamo } from './declarations.ts';
 
 export function updateData(TableName: string, Key: any, UpdateExpression: string, ExpressionAttributeValues: any) {
   return new Promise((resolve, reject) => {

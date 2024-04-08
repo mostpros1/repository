@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Kanit", sans-serif;
+}
+
+.image-container {
+  display: flex;
+  position: relative;
+  margin: 0;
+  width: 75%; /* Adjust if necessary */
+  height: auto; /* Adjust or set a fixed height if necessary */
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  filter: brightness(0.6);
+}
+
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.text-overlay h1 {
+  font-size: 56px;
+  padding-bottom: 25px;
+  text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4); /* Adjust the values for shadow position and intensity */
+}
+
+.text-overlay p {
+  font-size: 26px;
+  text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4); /* Adjust the values for shadow position and intensity */
+}
+
+.grid-con {
+margin: 0;
+  width: 75%; /* Set this to match the width of the image-container */
+}
+
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  margin: 50px 0; /* Remove side margins and keep only vertical margins */
+  width: 100%;
+}
+
+.grid-col {
+  height: 150px;
+  margin: auto;
+  width: 24%;
+}
+
+.grid-row p {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.grid-row svg {
+  color: #308ae4;
+  font-size: 40px;
+  margin-right: 15px;
+}
+
+/* Media Queries */
+
+@media (max-width: 768px) {
+  .grid-col {
+    width: 48%;
+  }
+  .text-overlay h1 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-col {
+    width: 100%;
+  }
+  .text-overlay h1 {
+    font-size: 30px;
+  }
+}

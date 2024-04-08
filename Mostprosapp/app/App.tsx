@@ -52,7 +52,6 @@ import Footer from "./(Components)/Footer";
 import Contact from "./(Components)/Contact/Contact";
 import AboutUs from "./(Components)/AboutUs/AboutUs";
 import ProfilePrivacy from "./(Components)/Profile/ProfilePrivacy";
-import DateAndTimePicker from "./(Components)/Specialist/DateAndTimePicker";
 import ProfileAbout from "./(Components)/Profile/ProfileAbout";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

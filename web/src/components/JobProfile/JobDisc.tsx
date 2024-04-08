@@ -1,4 +1,3 @@
-import React from "react";
 import "./JobDisc.css";
 import Icon from "../../assets/kraan.svg";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
@@ -11,8 +10,10 @@ const JobDisc = () => {
   return (
     <div className="job_disc_card">
       <div className="job_disc_header">
-          <button className="btn-secondary">Terug naar start</button>
-          </div>
+        <button className="btn-secondary" onClick={() => history.back()}>
+          Terug naar start
+        </button>
+      </div>
       <div className="job_disc_con">
         <div className="JobDiscTitle">
           <h3>Loodgieters werk: nieuwe leiding aanleggen</h3>
@@ -69,16 +70,16 @@ const JobDisc = () => {
                 <li>
                   <div className="email-sect">
                     <EmailRoundedIcon />
-                    Lisazoetlief@hotmail.com
                   </div>
+                  Lisazoetlief@hotmail.com
                 </li>
+                <div className="btn-con">
+                  <button className="btn-secondary">
+                    <ForumRoundedIcon />
+                    Bericht sturen
+                  </button>
+                </div>
               </ul>
-              <div className="btn-con">
-                <button className="btn-secondary">
-                  <ForumRoundedIcon />
-                  Bericht sturen
-                </button>
-              </div>
             </div>
           </div>
         </div>

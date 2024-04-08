@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import { dynamo } from "../../../../backend_functions/declerations";
+import { dynamo } from "../../../declarations";
 
 const exampleSpecialists = [
   {
@@ -34,31 +34,15 @@ const exampleSpecialists = [
   },
 ];
 
-const PageSpecialisten = () => {
+const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
 
-  useEffect(() => {
-    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
-    applyFilters();
-  }, [location, sortBy, priceFrom]); // These are the dependencies for the effect.
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const handlePriceFromChange = (event) => {
-    setPriceFrom(event.target.value);
-  };
-
   const applyFilters = () => {
-    let filteredSpecialists = exampleSpecialists;
+    let filteredSpecialists = specialists;
 
+    //console.log("hello:  ", filteredSpecialists);
     // Filter by location
     if (location) {
       filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
@@ -83,36 +67,94 @@ const PageSpecialisten = () => {
     setSpecialists(filteredSpecialists);
   };
 
-  const [specialists, setSpecialists] = useState(exampleSpecialists);
-  
-//make a function to grab data behind the hashtag in the url and print it into the console
-
-
-//backend niet verwijderen
   useEffect(() => {
-      const hashTag = window.location.hash.replace("#", "").split("?")[0];
-      console.log(hashTag);
-      const task = window.location.hash.replace("#", "").split("?")[1];
-      console.log(task);
+    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
+    applyFilters();
+  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSortByChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  /*const handlePriceFromChange = (event) => {
+    setPriceFrom(event.target.value);
+  };*/
+
+  const [specialists, setSpecialists] = useState(exampleSpecialists);
+
+
+
+
+
+  //make a function to grab data behind the hashtag in the url and print it into the console
+
+
+
+  //backend niet verwijderen
+  useEffect(() => {
+    let professionals: any[] = [];
+
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    
+    const task = window.location.hash.replace("#", "").split("?")[1];
+    
     dynamo.query({
       TableName: "Specialists",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
       FilterExpression: "task = :task",
       ExpressionAttributeValues: {
-        ":profession": hashTag,
+        ":profession": profession,
         ":task": task,
       },
     }).promise()
       .then(data => {
-        setSpecialists(data.Items)
-        console.log(data.Items);
-      })
-      .catch(err => {
+
+        const convertedItems = data.Items?.map(item => ({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          profession: item.profession,
+          location: item.location,
+          price: item.price,
+          rating: item.rating,
+          bio: item.bio,
+          availibility: item.availibility,
+        }));
+        /*
+                const Availability = JSON.parse(convertedItems[0].availibility);
+                '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
+                console.log("Availability =", Availability);
+        */
+
+        if (convertedItems) {
+          for (let i: number = 0; i < convertedItems.length; i++) {
+            if (convertedItems[i].availibility) {
+              const Availability = JSON.parse(convertedItems[i].availibility);
+
+              for (let x: number = 0; x < Availability.dates.length; x++) {
+
+                const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
+
+                if (selected == Availability.dates[x]) {
+                  professionals = [...professionals, convertedItems[i]];
+                  break;
+                }
+              }
+            }
+          }
+        setSpecialists(/*convertedItems*/professionals);
+
+
+      }}).catch(err => {
         console.log(err);
       });
-  }, []);
-
+  
+  }, [updateDate]);
 
   return (
 
@@ -149,4 +191,5 @@ const PageSpecialisten = () => {
     </div>
   );
 };
+
 export default PageSpecialisten;

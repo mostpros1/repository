@@ -12,3 +12,6 @@ projects:
         docsFilePath: .
         region: eu-north-1
         apiId: null
+extensions:
+  amplify:
+    version: 3

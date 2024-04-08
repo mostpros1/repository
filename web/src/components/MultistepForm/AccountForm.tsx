@@ -32,7 +32,7 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
 
     const formConfig = {
         loginForm: <LoginForm handleLogin={() => { }} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
-        registerForm: <RegisterForm setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
+        registerForm: <RegisterForm /*setError={() => { }}*/ error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
 
     useEffect(() => {

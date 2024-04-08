@@ -1,0 +1,333 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Adjust the column width as needed */
+  gap: 25px;
+  max-width: 1300px;
+  margin: 60px;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 60px 0px 0px 70px;
+}
+
+.profile-card {
+  background-color: #e9f4ff; /* Adjust the color as needed */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px; /* Space between profile and nav items */
+  text-align: center;
+  width: 300px; /* Adjust based on your layout needs */
+}
+
+.profile-card h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-bottom: 35px;
+}
+
+.profile-card p {
+  font-size: 25x;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-picture {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 4px solid #ffffff; /* Adjust the color and size as needed */
+  object-fit: cover;
+}
+
+.profile-card p svg {
+  font-size: 25px;
+  margin-right: 5px;
+  float: left;
+}
+
+.CallIcon {
+  color: #5ce45a;
+}
+
+.EmailIcon {
+  color: #007bff;
+}
+
+.sidebar {
+  padding-right: 15px;
+}
+
+.sidebar-nav {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sidebar-nav .nav-item {
+  display: flex;
+  align-items: center; /* Align items vertically center */
+  justify-content: flex-start; /* Align content to the start */
+  text-decoration: none;
+  color: #333;
+  background-color: #e9f4ff; /* Adjust the color as needed */
+  padding: 15px 20px; /* Vertical and horizontal padding */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 10px; /* Space between items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width of the parent */
+  box-sizing: border-box; /* Include padding and border in the element's width */
+}
+
+.sidebar-nav .nav-item:hover {
+  background-color: #d0e2ff;
+}
+
+.sidebar-nav .nav-item svg {
+  display: inline-block;
+  margin-right: 25px;
+  font-size: 50px; /* Adjust the size as necessary */
+  color: #333;
+}
+
+
+.maincards {
+  display: flex;
+  max-width: 100%;
+  max-height: fit-content;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.new-task-card {
+  display: flex;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  height: 700px;
+  margin-bottom: 80px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.new-task-card p {
+  font-size: 15px;
+  max-height: 300px; /* Limit the height of the text */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds an ellipsis to indicate text has been cut off */
+}
+
+.task-title {
+  font-size: 19px; /* Match font size to design */
+  color: #333;
+  font-weight: bold; /* Make it bold */
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px groove #d9d9d9;
+  padding-bottom: 30px; /* Add space between text and bottom border */
+  white-space: nowrap;
+}
+
+.task-detail h4 {
+  font-size: 25px; /* Increase font size */
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.task-detail p {
+  padding-bottom: 20px;
+}
+
+.task-detail span {
+  font-weight: 550;
+  font-size: 17px;
+}
+
+.task-detail h5 {
+  font-size: 18px; /* Increase font size */
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.type-klus {
+  display: flex;
+  flex-direction: column; /* Change the flex direction to column */
+  align-items: center; /* Center the items horizontally */
+  justify-content: center; /* Center the items vertically */
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 150px; /* Make the width fit its content */
+  height: auto; /* Make the height fit its content */
+}
+
+.type-klus span {
+  font-size: 14px; /* Font size for the text */
+  color: #333;
+  text-align: center;
+}
+
+.klus-icon {
+  margin-bottom: 10px; /* Space between icon and text */
+  width: 50px; /* Icon size */
+  height: 50px; /* Icon size, make it square */
+}
+
+.task-button {
+  margin: 0;
+  background: none;
+  color: #17a1fa;
+  padding-top: 30px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  border: none;
+}
+
+.new-task-card {
+  display: flex;
+  align-items: center;
+  margin-top: 65px;
+  padding: 300px 300px 315px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-direction: column;
+  margin-left: 35px;
+  max-width: calc(50% - 20px);
+  min-width: 300px;
+}
+
+.new-task-card:hover {
+  background-color: #f0f0f0;
+}
+
+.plus-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-con svg {
+  font-size: 60px;
+  margin: 0;
+  color: white;
+  background-color: #007bff;
+  border-radius: 50px;
+}
+
+.plus-con p {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* Media queries */
+/*bigger screens*/
+@media only screen and (min-width: 764px) {
+  .new-task-card {
+    max-width: 600px; /* Example max width, adjust as necessary */
+  }
+
+  /* Adjust the current-task-title alignment for larger screens */
+  .current-task-title {
+    margin-left: 0; /* Align with the content */
+    /* other styles */
+  }
+
+  /* Make sure task cards don't grow too large */
+  .task-card,
+  .new-task-card {
+    max-width: 600px; /* Or whatever max width fits your design */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .dashboard-container {
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Adjust column distribution */
+      gap: 20px;
+    }
+
+    .profile-card,
+    .sidebar {
+      width: 90%; /* Adjust width for smaller screens */
+      margin-bottom: 20px; /* Space between elements */
+    }
+
+    .maincards {
+      flex-direction: column; /* Stack the cards on smaller screens */
+      align-items: center; /* Center the cards */
+    }
+
+    .task-card {
+      padding-top: 25px;
+      margin-top: 20px;
+    }
+
+    .task-title {
+      font-size: 16px; /* Adjust font size for smaller screens */
+      padding-bottom: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .new-task-card {
+      padding: 20px; /* Adjust padding for smaller screens */
+      width: 100%; /* Adjust width for smaller screens */
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .dashboard-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-card,
+    .sidebar {
+      width: 90%; /* Adjust width for smaller screens */
+      margin-bottom: 20px; /* Space between elements */
+    }
+
+    .maincards {
+      flex-direction: column; /* Stack the cards on smaller screens */
+      align-items: center; /* Center the cards */
+    }
+
+    .task-card {
+      padding-top: 25px;
+      margin-top: 20px;
+    }
+
+    .task-title {
+      font-size: 16px; /* Adjust font size for smaller screens */
+      padding-bottom: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .new-task-card {
+      padding: 20px; /* Adjust padding for smaller screens */
+      width: 100%; /* Adjust width for smaller screens */
+    }
+  }
+}

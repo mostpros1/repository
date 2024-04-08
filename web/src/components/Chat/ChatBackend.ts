@@ -4,11 +4,8 @@ import * as mutations from "../../graphql/mutations";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 
-
-
-
 export function useChatBackend(user: any, signOut) {
-  const [chats, setChats] = React.useState([]);
+  const [chats, setChats] = React.useState<any[]>([]);
   const [recipientEmail, setRecipientEmail] = React.useState("");
   const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
   const [showJoinButton, setShowJoinButton] = React.useState(false);
@@ -17,52 +14,32 @@ export function useChatBackend(user: any, signOut) {
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
 
-    
-
 // // sends messages ///
 const handleSendMessage = async (text) => {
   const members = [user.attributes.email, recipientEmail];
-  console.log("Sending message to: ", members); // Debugging log
-  try {
-    await API.graphql(graphqlOperation(mutations.createChat, {
+  await API.graphql({
+    query: mutations.createChat,
+    variables: {
       input: {
-        text,
+        text: text, // Correct gebruik van de 'text' variabele
         email: user.attributes.email,
         members,
         sortKey: members.sort().join("#"), // Create a unique sortKey
       },
-    }));
-  } catch (error) {
-    if (typeof error === 'object' && error !== null) { // Checks if it's a non-null object
-      // Assuming error is of GraphQL structure
-      const graphQLError = error as { errors: Array<{ message: string }> };
-      if (graphQLError.errors && graphQLError.errors.length > 0) {
-        console.error("GraphQL errors:", graphQLError.errors.map(e => e.message).join(', '));
-      } else {
-        console.error("GraphQL Error without message", graphQLError);
-      }
-    } else if (error instanceof Error) {
-      console.error("Error sending message:", error.message);
-    } else {
-      console.error("An unknown error occurred:", error);
-    }
-  }
-  
-  
-   
+    },
+  });
 };
 
-
-  const handleReceivedMessage = (receivedChat) => {
-    if (receivedChat.members.includes(user.attributes.email)) {
-      // @ts-ignore
-      setChats((prev) => [...prev, receivedChat]);
-      setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail with the email of the sender
-      if (receivedChat.email) {
-        setShowJoinButton(true);
-      }
+const handleReceivedMessage = (receivedChat) => {
+  if (receivedChat.members.includes(user.attributes.email)) {
+    setChats((prevChats) => [...prevChats, receivedChat]); // Voeg het ontvangen bericht toe aan de lijst met chats
+    setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail met de email van de afzender
+    if (receivedChat.email !== user.attributes.email) { // Controleer of de ontvangen chat niet van de huidige gebruiker is
+      setShowJoinButton(true);
     }
-  };
+  }
+};
+
 // // Functions for make new Chat // //
   const handleStartNewChat = () => {
     setRecipientEmail(
@@ -101,8 +78,6 @@ const handleSendMessage = async (text) => {
     setShowConfirmedConnection(true); 
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
   };
-
-   
 
 return {
     chats,
