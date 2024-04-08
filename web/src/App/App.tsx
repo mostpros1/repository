@@ -29,6 +29,7 @@ import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import EditProfile from "../pages/EditProfilePage/EditProfile";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
+import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -55,6 +56,7 @@ const App = () => {
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
 
 
       <Route path="/login" element={<LoginPage />} />
