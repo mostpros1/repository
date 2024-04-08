@@ -19,7 +19,7 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
-import { dynamoDB } from "./../../backend_functions/declarations.ts";
+import { dynamoDB } from "../declarations.ts";
 
 
 dynamoDB

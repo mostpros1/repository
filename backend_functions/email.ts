@@ -1,4 +1,4 @@
-import { SES } from "./declarations.ts";
+import { SES } from "../web/declarations.ts";
 
 const MostropsEmail = "timon@timonheidenreich.eu";
 

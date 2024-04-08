@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import { dynamo } from "../../../../backend_functions/declarations";
+import { dynamo } from "../../../declarations";
 
 const exampleSpecialists = [
   {
