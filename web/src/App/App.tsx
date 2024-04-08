@@ -78,7 +78,7 @@ const App = () => {
         />
       </Route>
 
-      <Route path="/chat" element={<ChatPage />} />
+{/*       <Route path="/chat" element={<ChatPage />} /> */}
 
       {/* Protected routes */}
       <Route
