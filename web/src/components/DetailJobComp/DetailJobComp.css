@@ -1,0 +1,195 @@
+.detailJobMain {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 4rem;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 8rem;
+  }
+  
+  .pageTitle {
+    font-size: 20px;
+  }
+  
+  .topButtonContainer {
+    width: 57%;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .topButtonDetailJob {
+    height: 4rem;
+    max-width: 13rem;
+    background: white;
+    border: 2px solid #308ae4;
+    color: black;
+    font-size: 12px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+  
+  .whiteCard {
+    width: 50%;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .cardTitleWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #d9d9d9;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .whiteCardLeftWrapper,
+  .whiteCardRightWrapper {
+    width: 48%;
+    margin-bottom: 3rem;
+  }
+  
+  .whiteCardRightWrapper {
+    padding: 3.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .whiteCardLeftWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .jobCardDetail {
+    height: 10.5rem;
+    width: 10rem;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .jobCardText {
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .klus-iconDetail {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+  
+  .infoText {
+    font-size: 13px;
+    max-width: 90%;
+  }
+  
+  .dateDay {
+    color: #308ae4;
+    font-size: 35px;
+  }
+  
+  .dateDetail{
+    font-size: 12px;
+  }
+  
+  .iconInfoBox {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+  }
+  
+  .divFlex {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .moreInfoBox {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .moreInfoName {
+    color: #17a1fa;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .noDecoration{
+    text-decoration: none;
+  }
+  
+  /* Media queries for responsiveness */
+  
+  @media screen and (max-width: 1452px) {
+    .topButtonContainer {
+      width: 70%;
+    }
+  
+    .whiteCard {
+      width: 70%;
+    }
+
+    .whiteCardRightWrapper{
+        justify-content: center;
+    }
+  }
+  
+  @media screen and (max-width: 800px) {
+    .topButtonContainer {
+      width: 80%;
+    }
+  
+    .whiteCard {
+      width: 80%;
+    }
+  }
+  
+  @media screen and (max-width: 700px) {
+    .topButtonContainer {
+      width: 90%;
+    }
+  
+    .whiteCard {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .whiteCardRightWrapper {
+      width: 100%; 
+      margin-bottom: 2rem; 
+    }
+  
+    .moreInfoBox {
+      width: 100%;
+      text-align: center; 
+    }
+  }
+  
