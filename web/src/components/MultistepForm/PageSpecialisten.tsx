@@ -114,7 +114,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     }).promise()
       .then(data => {
 
-        const convertedItems = data.Items.map(item => ({
+        const convertedItems = data.Items?.map(item => ({
           id: item.id,
           name: item.name,
           email: item.email,
@@ -131,26 +131,26 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
                 console.log("Availability =", Availability);
         */
 
+        if (convertedItems) {
+          for (let i: number = 0; i < convertedItems.length; i++) {
+            if (convertedItems[i].availibility) {
+              const Availability = JSON.parse(convertedItems[i].availibility);
 
-        for (let i: number = 0; i < convertedItems.length; i++) {
-          if (convertedItems[i].availibility) {
-            const Availability = JSON.parse(convertedItems[i].availibility);
+              for (let x: number = 0; x < Availability.dates.length; x++) {
 
-            for (let x: number = 0; x < Availability.dates.length; x++) {
+                const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
 
-              const selected = JSON.stringify(updateDate).replace('T', '"').split('"')[3];
-
-              if (selected == Availability.dates[x]) {
-                professionals = [...professionals, convertedItems[i]];
-                break;
+                if (selected == Availability.dates[x]) {
+                  professionals = [...professionals, convertedItems[i]];
+                  break;
+                }
               }
             }
           }
-        }
         setSpecialists(/*convertedItems*/professionals);
 
 
-      }).catch(err => {
+      }}).catch(err => {
         console.log(err);
       });
   
