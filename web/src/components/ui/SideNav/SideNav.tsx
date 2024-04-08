@@ -1,9 +1,11 @@
 import "./SideNav.css";
 import React from "react";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 // Icons from Material UI
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import HandymanOutlinedIcon from '@mui/icons-material/HandymanOutlined';
+import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
 import MessageIcon from "@mui/icons-material/Message";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import PaymentIcon from "@mui/icons-material/Payment";
@@ -17,59 +19,112 @@ function SideNav() {
     <div className="sidebar">
       <ul className="sidebar-list">
         <li className="sidebar-item">
-          <Link to="/dashboard" className="sidebar-link">
+          <NavLink
+            to="/MijnKlussen"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <DashboardIcon />
             Dashboard
-          </Link>
+          </NavLink>
         </li>
+
         <li className="sidebar-item">
-          <Link to="/jobs" className="sidebar-link">
+          <NavLink
+            to="/Jobs"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <HandymanOutlinedIcon />
             Jobs
-          </Link>
+          </NavLink>
         </li>
+
         <li className="sidebar-item">
-          <Link to="/chats" className="sidebar-link">
+          <NavLink
+            to="/Message"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <MessageIcon />
-            Chats
-          </Link>
+            Message
+          </NavLink>
         </li>
+
         <li className="sidebar-item">
-          <Link to="/calendar" className="sidebar-link">
+          <NavLink
+            to="/Calendar"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <DateRangeIcon />
             Calendar
-          </Link>
+          </NavLink>
         </li>
+
         <li className="sidebar-item">
-          <Link to="/payments" className="sidebar-link">
+          <NavLink
+            to="/Payments"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <PaymentIcon />
             Payments
-          </Link>
+          </NavLink>
         </li>
+
         <li className="sidebar-item">
-          <Link to="/reviews" className="sidebar-link">
+          <NavLink
+            to="/Reviews"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             <StarOutlineIcon />
             Reviews
-          </Link>
+          </NavLink>
         </li>
+
         <div className="sidebar-bottom">
           <li className="sidebar-item">
-            <Link to="/profile" className="sidebar-link">
+            <NavLink
+              to="/Profile"
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
               <AccountCircleIcon />
               Profile
-            </Link>
+            </NavLink>
           </li>
+
           <li className="sidebar-item">
-            <Link to="/settings" className="sidebar-link">
+            <NavLink
+              to="/Settings"
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
               <SettingsIcon />
               Settings
-            </Link>
+            </NavLink>
           </li>
+
           <li className="sidebar-item">
-            <Link to="/helpdesk" className="sidebar-link">
+            <NavLink
+              to="/Helpdesk"
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
               <HelpOutlineIcon />
               Helpdesk
-            </Link>
+            </NavLink>
           </li>
         </div>
       </ul>

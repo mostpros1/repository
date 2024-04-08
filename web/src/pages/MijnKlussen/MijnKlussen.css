@@ -15,9 +15,9 @@ body {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 20px;
-  padding-top: 50px;
+  padding-top: 30px;
   justify-items: end;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   margin-bottom: 20px;
 }

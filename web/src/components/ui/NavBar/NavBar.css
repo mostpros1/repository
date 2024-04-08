@@ -75,14 +75,18 @@
   gap: 15px;
 }
 
-.apps-icon {
+.nav-rightside p {
+  font-size: 15px;
+}
+
+/* .apps-icon {
   display: flex;
   box-shadow: 0 0 5px #c7c7c7;
   border: 2px solid #c7c7c7;
   border-radius: 15px;
   padding: 5px 10px 5px 10px;
   transition: all 0.2s;
-}
+} */
 
 .apps-icon:hover {
   cursor: pointer;
@@ -98,6 +102,10 @@
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.nav-list svg {
+  font-size: 30px;
 }
 
 .nav-list li a {
@@ -137,13 +145,6 @@ li > .black-items {
 }
 
 .loginButton {
-  background: none;
-  border: 3px solid black;
-  border-radius: 15px;
-  display: flex;
-  gap: 5px;
-  justify-content: center;
-  align-items: center;
   padding: 5px 10px;
   color: black;
 }
@@ -154,7 +155,6 @@ li > .black-items {
 
 .loginButton svg {
   font-size: 30px;
-  font-weight: 500;
 }
 
 .dropdown-container {

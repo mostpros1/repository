@@ -1,19 +1,26 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .sidebar {
+  position: sticky;
   width: 200px;
   background-color: #333; /* Adjust the color to match your design */
   color: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 15px;
+}
+
+.sidebar-link.active {
+ color: #207cd8; /* or any highlight color */
+  border-radius: 10px;
 }
 
 .sidebar-list {
   list-style: none;
+  font-size: 17px;
   padding: 0;
   transition: all 0.3s ease-in-out;
 }
@@ -21,7 +28,7 @@
 .sidebar-item {
   margin-bottom: 5px;
   font-weight: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .sidebar-item svg {
@@ -41,5 +48,5 @@
 }
 
 .sidebar-link:hover {
-  color: #207CD8;
+  color: #207cd8;
 }
