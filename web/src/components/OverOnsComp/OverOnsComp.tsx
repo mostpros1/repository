@@ -16,25 +16,22 @@ function OverOnsComp() {
         <div id="contentContainer">
           <article id="textImageWrapper">
             <p id="aboutusText">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-              esse. Doloremque a tempore iure cumque. Ipsam error impedit autem a
-              iure nemo nam in ea id consequatur, quo, odio eveniet.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-              esse. Doloremque a tempore iure cumque. Ipsam error impedit autem a
-              iure nemo nam in ea id consequatur, quo, odio eveniet.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-              esse. Doloremque a tempore iure cumque.
+              Mostpros is een alles-in-1 home service app. Vind, onderzoek en
+              huur een gecertificeerde lokale vakspecialist als huiseigenaar
+              voor al uw klussen.
             </p>
             <p id="aboutusText">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-              esse. Doloremque a tempore iure cumque. Ipsam error impedit autem a
-              iure nemo nam in ea id consequatur, quo, odio eveniet.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-              esse. Doloremque a tempore iure cumque. Ipsam error impedit autem a
-              iure nemo nam in ea id consequatur, quo, odio eveniet.
+              Samen met ons groeiende netwerk bouwen we mee aan de huizen voor
+              de toekomst. Samen helpen we mensen groeien. We accepteren de home
+              service industrie niet zoals die is, samen willen we het
+              veranderen terwijl we plezier hebben.
             </p>
           </article>
-          <img src={groepsFoto} alt="groeps foto van de medewerkers Mostpros" id="groupImage" />
+          <img
+            src={groepsFoto}
+            alt="groeps foto van de medewerkers Mostpros"
+            id="groupImage"
+          />
         </div>
       </section>
     </main>
