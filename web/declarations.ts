@@ -1,5 +1,5 @@
-import aws from 'aws-sdk';
 
+import aws from "aws-sdk";
 export const cognitoIdentityServiceProvider = new aws.CognitoIdentityServiceProvider();
 
 export const SES = new aws.SES({

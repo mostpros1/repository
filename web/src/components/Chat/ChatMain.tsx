@@ -1,187 +1,163 @@
-import "@aws-amplify/ui-react/styles.css";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect } from "react";
-import * as mutations from "../../graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "../../graphql/queries";
-import intlFormatDistance from "date-fns/intlFormatDistance";
-import * as subscriptions from "../../graphql/subscriptions";
-import { useChatBackend } from "./ChatBackend";
-import "./chatbox.css";
+import React, { useState, useRef, useEffect } from 'react';
+import './ChatMain.css';
+import { FcAddImage } from "react-icons/fc";
+import { FcOldTimeCamera } from "react-icons/fc";
+import { IoSend } from "react-icons/io5";
+import { CiMoneyCheck1 } from "react-icons/ci";
+import PaymentLink from '../PaymentLink/PaymentLink';
 
-function ChatMain({ user, signOut }) {
-  const {
-    chats,
-    setChats,
-    recipientEmail,
-    recentMessageEmail,
-    showJoinButton,
-    setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
-    handleStartNewChat,
-    handleSendMessage,
-    handleAlertInputChange,
-    handleAlertConfirm,
-    handleAlertCancel,
-    handleJoinChat,
-    handleReceivedMessage,
-  } = useChatBackend(user, signOut);
+interface Message {
+  id: number;
+  text: string;
+  senderId: string;
+  receiverId: string;
+  timestamp: string;
+}
 
-  useEffect(() => {
-    async function fetchChats() {
-      const allChats = await API.graphql({
-        query: queries.listChats,
-        variables: {
-          filter: {
-            members: { contains: user.attributes.email },
-          },
-        },
-      });
-      // @ts-ignore
-      setChats(allChats.data.listChats.items);
+interface Person {
+  id: string;
+  name: string;
+  previewMessage: string;
+}
+
+function ChatMain() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputText, setInputText] = useState('');
+  const [selectedPerson, setSelectedPerson] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const currentUserId = 'currentUser';
+
+  const people: Person[] = [
+  { id: 'Jan Ja', name: 'Jan Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Bekir Se', name: 'Bekir Se', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Timon Ti', name: 'Timon Ti', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Matthew Ma', name: 'Matthew Ma', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Jasmeet Ja', name: 'Jasmeet Ja', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Stefan St', name: 'Stefan St', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Tarik Ta', name: 'Tarik Ta', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Abdel Ab', name: 'Abdel Ab', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Robert Ro', name: 'Robert Ro', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+  { id: 'Dani Da', name: 'Dani Da', previewMessage: 'Dit is een test bericht. Als je dit ziet, ben je niet blind.' },
+];
+
+const handleSendMessage = () => {
+  if (inputText.trim() !== '' && selectedPerson) {
+    const newMessage: Message = {
+      id: messages.length + 1,
+      text: inputText,
+      senderId: currentUserId,
+      receiverId: selectedPerson,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages([...messages, newMessage]);
+    setInputText('');
+  }
+};
+  
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSendMessage();
     }
-    fetchChats();
-  }, [user.attributes.email]);
+  };
 
   useEffect(() => {
-    console.log("Checking for new messages...");
-    const sub = API.graphql(
-      graphqlOperation(subscriptions.onCreateChat)
-      // @ts-ignore
-      ).subscribe({
-        next: ({ value }) => {
-          console.log("Received a new message:", value.data.onCreateChat);
-          handleReceivedMessage(value.data.onCreateChat);
-        },
-        error: (err) => console.log(err),
-      });
-      return () => sub.unsubscribe();
-    }, [user.attributes.email]);
-    
-    return (
-      <div>
-      {showConfirmedConnection && (
-        <div className="textjoined">
-          {/* Render a notification message */}
-          <p>{notificationMessage}</p>
-          {/* You can render a message or button to indicate that the user has joined the chat */}
-          <p>You have joined the chat</p>
-        </div>
-      )}
-      <div className="button_containerc">
-        <button type="button" className="buttonc" onClick={handleStartNewChat}>
-          Start New Chat
-        </button>
-        <button type="button" className="buttonc" onClick={() => signOut()}>
-          Sign Out
-        </button>
-      </div>
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
-      <div className="">
-        <div className="personlist">
-          
-        </div>
-        <div className="chat-box">
-          <div className="input-form">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  // @ts-ignore
-                  const messageText = e.target.value;
-                  if (messageText && recipientEmail) {
-                    await handleSendMessage(messageText);
-                    // @ts-ignore
-                    e.target.value = "";
-                  }
-                }
-              }}
-              className="inputchat"
-            />
-            <div className="chat-enter">
-              <kbd className="">Enter</kbd>
-            </div>
-          </div>
-          <div className="anderpersoon">
-          {showAlert && (
-            <div className="alert">
-              <input
-                type="text"
-                placeholder="Enter recipient's email"
-                value={recipientEmail}
-                onChange={handleAlertInputChange}
-              />
-              <button
-                onClick={() => {
-                  handleAlertConfirm();
-                  setShowJoinButton(true);
-                }}
-              >
-                Confirm
-              </button>
-              <button onClick={handleAlertCancel}>Cancel</button>
-            </div>
-          )}
-          </div>
-          {chats
-            // @ts-ignore
-            .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-            .map((chat) => (
-              <div
-                // @ts-ignore
-                key={chat.id}
-                className={`flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200 w-3/4 my-2 ${
-                  // @ts-ignore
-                  chat.email === user.attributes.email && "self-end bg-gray-200"
-                }`}
-              >
-                <div>
-                  <div className="">
-                    <div className="username">
-                      <span className="username-name">
-                        {
-                          // @ts-ignore
-                          chat.email.split("@")[0]
-                        }
-                      </span>{" "}
-                    </div>
-                    <time dateTime="2023-01-23T15:56" className="time">
-                      {
-                        // @ts-ignore
-                        intlFormatDistance(new Date(chat.createdAt), new Date())
-                      }
-                    </time>
-                  </div>
-                  <p className="text">
-                    {
-                      // @ts-ignore
-                      chat.text
-                    }
-                  </p>
-                </div>
-              </div>
-            ))}
-        </div>
-        <div>
-        </div>
-      </div>
+  const selectedPersonName = people.find(person => person.id === selectedPerson)?.name;
 
-      {showJoinButton &&
-        user.attributes.email !== recentMessageEmail &&
-        !showConfirmedConnection && (
-          <div className="button_containerc">
-            <button type="button" className="buttonc" onClick={handleJoinChat}>
-              Join Chat
-            </button>
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+
+      console.log(file);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+const filteredPeople = people.filter(person => person.name.toLowerCase().includes(searchTerm.toLowerCase()) || person.id.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+    const [subtotal, setSubtotal] = useState(0); // Dit zou je op een of andere manier moeten instellen, afhankelijk van je app's logica
+
+    const handlePaySendMessage = (text) => {
+        console.log(text); // Of een andere logica om berichten te versturen in je chat
+    };
+
+  return (
+    <div className="chat">
+
+    <div className='list-people'>
+      <input
+        type="text"
+        placeholder="Zoek gebruikers..."
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className='searchList'
+      />
+      {filteredPeople.map(person => (
+        <a key={person.id} className="people-block" onClick={() => setSelectedPerson(person.id)}>
+          <h2>{person.name}</h2>
+          <p>Message: "{person.previewMessage}"</p>
+        </a>
+      ))}
+    </div>
+      <div className="chat-main">
+        {selectedPerson && (
+          <div className="chat-header">
+            <h2>{selectedPersonName}</h2>
           </div>
         )}
-
+        <div className="messages">
+        {messages.filter(msg => (msg.senderId === selectedPerson && msg.receiverId === currentUserId) || (msg.senderId === currentUserId && msg.receiverId === selectedPerson)).map((msg) => (
+          <p key={msg.id} className={`message ${msg.senderId === currentUserId ? 'self' : 'other'}`}>
+            {msg.text}
+            <span className="message-timestamp">{msg.timestamp}</span>
+          </p>
+        ))}
+          <div ref={messagesEndRef} />
+        </div>
+        <div className="input">
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            ref={inputFileRef}
+            onChange={handleFileChange}
+          />
+          <button className='addImage' onClick={handleButtonClick}>
+            <FcAddImage size={50} />
+          </button>
+          <button onClick={() => setShowPaymentLink(true)} className='addImage'><CiMoneyCheck1 size={50} /></button>
+            {showPaymentLink && (
+                <PaymentLink
+                    subtotal={subtotal}
+                    handleSendMessage={handlePaySendMessage}
+                />
+            )}
+            
+          <input
+            type="text"
+            className="message-input"
+            placeholder="Type a message..."
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <button onClick={handleSendMessage} className='sendbutton'><IoSend /></button>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default withAuthenticator(ChatMain);
+export default ChatMain;

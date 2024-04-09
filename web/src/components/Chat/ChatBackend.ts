@@ -1,100 +1,68 @@
-import React, { useEffect } from "react";
-import { API, graphqlOperation } from "aws-amplify";
-import * as mutations from "../../graphql/mutations";
-import * as queries from "../../graphql/queries";
-import * as subscriptions from "../../graphql/subscriptions";
+import { useState, useEffect } from 'react';
 
-export function useChatBackend(user: any, signOut) {
-  const [chats, setChats] = React.useState<any[]>([]);
-  const [recipientEmail, setRecipientEmail] = React.useState("");
-  const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
-  const [showJoinButton, setShowJoinButton] = React.useState(false);
-  const [showConfirmedConnection, setShowConfirmedConnection] =
-    React.useState(false);
-  const [showAlert, setShowAlert] = React.useState(false);
-  const [notificationMessage, setNotificationMessage] = React.useState("");
+interface Message {
+  id: number;
+  text: string;
+  senderId: string;
+  receiverId: string;
+  timestamp: string;
+}
 
-// // sends messages ///
-const handleSendMessage = async (text) => {
-  const members = [user.attributes.email, recipientEmail];
-  await API.graphql({
-    query: mutations.createChat,
-    variables: {
-      input: {
-        text: text, // Correct gebruik van de 'text' variabele
-        email: user.attributes.email,
-        members,
-        sortKey: members.sort().join("#"), // Create a unique sortKey
-      },
-    },
-  });
-};
+interface Person {
+  id: string;
+  name: string;
+  previewMessage: string;
+}
 
-const handleReceivedMessage = (receivedChat) => {
-  if (receivedChat.members.includes(user.attributes.email)) {
-    setChats((prevChats) => [...prevChats, receivedChat]); // Voeg het ontvangen bericht toe aan de lijst met chats
-    setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail met de email van de afzender
-    if (receivedChat.email !== user.attributes.email) { // Controleer of de ontvangen chat niet van de huidige gebruiker is
-      setShowJoinButton(true);
-    }
-  }
-};
+export function useChatBackend() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isJoined, setIsJoined] = useState(false);
 
-// // Functions for make new Chat // //
-  const handleStartNewChat = () => {
-    setRecipientEmail(
-      // @ts-ignore
-      prompt("Enter the email of the person you want to chat with:")
-    );
-    setShowAlert(true);
-  };
-
-  const handleAlertInputChange = (e) => {
-    setRecipientEmail(e.target.value);
-  };
-
-  const handleAlertConfirm = () => {
-    if (recipientEmail) {
-      handleSendMessage("Hello, let's chat!");
-      setShowAlert(false);
-      setShowJoinButton(false);
-      setShowConfirmedConnection(true); 
-      setNotificationMessage(`${recentMessageEmail} joined the chat`);
+  // Functie om een bericht te versturen
+  const sendMessage = async (text: string) => {
+    try {
+      // Vervang dit door jouw logica om een bericht te versturen naar je backend
+      const response = await fetch('JOUW_BACKEND_ENDPOINT/berichten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Voeg hier eventuele vereiste headers toe, zoals een Authorization header
+        },
+        body: JSON.stringify({ text }), // Pas aan op jouw API
+      });
+      if (!response.ok) throw new Error('Netwerk response was niet ok');
+      const newMessage: Message = await response.json();
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    } catch (error) {
+      console.error('Fout bij het versturen van bericht:', error);
     }
   };
 
-  const handleAlertCancel = () => {
-    setShowAlert(false);
-    setRecipientEmail("");
+  // Functie om de chat te joinen
+  const joinChat = () => {
+    setIsJoined(true);
+    // Voeg hier jouw logica toe om aan de backend te laten weten dat de gebruiker de chat heeft gejoined.
+    console.log('Gebruiker heeft de chat gejoined.');
   };
 
-// // for recipientEmail to make connection to chat // //
-  const handleJoinChat = () => {
-    console.log("Joining chat with email:", recentMessageEmail);
-    const members = [user.attributes.email, recentMessageEmail];
-    setRecipientEmail(recentMessageEmail);
-    setRecentMessageEmail("");
-    setShowJoinButton(false); 
-    setShowConfirmedConnection(true); 
-    setNotificationMessage(`${recentMessageEmail} joined the chat`);
-  };
+  // Effect om berichten op te halen bij het initialiseren
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        // Vervang dit door jouw logica om berichten op te halen van je backend
+        const response = await fetch('JOUW_BACKEND_ENDPOINT/berichten');
+        if (!response.ok) throw new Error('Netwerk response was niet ok');
+        const fetchedMessages: Message[] = await response.json(); // Make sure this matches the Message interface
+        setMessages(fetchedMessages);
+      } catch (error) {
+        console.error('Fout bij het ophalen van berichten:', error);
+      }
+    };
 
-return {
-    chats,
-    setChats,
-    recipientEmail, 
-    showJoinButton, setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
-    handleStartNewChat,
-    handleSendMessage,
-    handleAlertInputChange,
-    handleAlertConfirm,
-    handleAlertCancel,
-    handleJoinChat,
-    recentMessageEmail,
-    handleReceivedMessage,
-    signOut,
-  };
+    if (isJoined) {
+      fetchMessages();
+    }
+  }, [isJoined]);
+
+  return { messages, sendMessage, joinChat, isJoined };
 }
