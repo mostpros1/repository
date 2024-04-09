@@ -87,16 +87,6 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     setPriceFrom(event.target.value);
   };*/
 
-  
-
-
-
-
-
-  //make a function to grab data behind the hashtag in the url and print it into the console
-
-
-
   //backend niet verwijderen
   useEffect(() => {
     let professionals: any[] = [];
