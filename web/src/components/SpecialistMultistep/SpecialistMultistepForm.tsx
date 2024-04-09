@@ -249,7 +249,7 @@ function SpecialistMultistepForm() {
               created_at: new Date().toISOString(),
               user_type: "PROFESSIONAL",
             },
-            TableName: "users",
+            TableName: "Users",
           })
           .promise()
           .then(data => console.log(data.Attributes))

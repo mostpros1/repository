@@ -44,7 +44,7 @@ export function deleteAccount(email, Token, userType) {
             .then(data =>
                 dynamo
                     .delete({
-                        TableName: "users",
+                        TableName: "Users",
                         Key: {
                             id: data.Items[0].id,
                         },

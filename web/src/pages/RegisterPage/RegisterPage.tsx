@@ -62,7 +62,7 @@ function RegisterPage() {
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
             },
-            TableName: "users",
+            TableName: "Users",
           })
           .promise()
           .then(data => console.log(data.Attributes))
