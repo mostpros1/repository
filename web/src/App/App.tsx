@@ -25,6 +25,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
 import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
+import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import EditProfile from "../pages/EditProfilePage/EditProfile";
@@ -58,6 +59,8 @@ const App = () => {
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
+      <Route path="/OverOns" element={<OverOns />} />
+
 
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
