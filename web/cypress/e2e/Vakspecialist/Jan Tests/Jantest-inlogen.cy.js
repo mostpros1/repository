@@ -1,9 +1,10 @@
 describe('Testing "inlogen"', () => {
+    
     it('test 1', () => {
-        cy.testinlog();
+        cy.testinlog();//testinlog verwijzd naar log in page "
 
         // Check 1 //Juiste Inlog gegevens //email // passwoord
-        cy.performInputCheck2('abdelrahmanfox22@yahoo.com','0123456789' );
+        cy.performInputCheck2('abdelrahmanfox22@yahoo.com','0123456789' );//l
 
         cy.testinlog();
     })

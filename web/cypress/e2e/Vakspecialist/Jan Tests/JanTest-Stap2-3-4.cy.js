@@ -1,6 +1,8 @@
 import faker from 'faker';
 describe('Testing "Register as specialist"' , () => {
-    it('type in input', () => {
+    for (let i = 1; i < 5; i++) 
+   //Stap 1
+   it(`type in input - test ${i}`, () => {
 
         cy.janTestBegin()
         faker.locale = 'nl'; // Zet de locale van faker op 'nl' voor Nederlandse gegevens 
@@ -8,16 +10,15 @@ describe('Testing "Register as specialist"' , () => {
         const dutchCity = faker.address.city(); // Genereert een Nederlandse plaatsnaam
 
         // TEST 2
-         cy.get('input').eq(0).type('Loodgieter')
-         cy.get('input[type="email"]').type(faker.internet.email());
+         cy.get('input').eq(0).type('Loodgieter')// "loodgieter" wordt in het eerste veld ingevuld.
+         cy.get('textarea').eq(0).type(faker.lorem.sentence());  //Rendom zinnen wordt in 2de veld (bio) ingevuld
+         cy.get('input[type="email"]').eq(0).type(faker.internet.email());//Rendom postcode wordt in 4de veld ingevuld
          cy.get('input[type="postcode"]').eq(0).type(dutchZipCode);// Nederlands rendom postcode
          //cy.get('input[type="postcode"]').eq(0).type(`${Math.floor(1000 + Math.random() * 9000)}${String.fromCharCode(Math.floor(Math.random() * 26) + 65)}${String.fromCharCode(Math.floor(Math.random() * 26) + 65)}`);//werld postcode
          // Typ de gegenereerde postcode in het inputveld
          cy.get('input[type="text"]').eq(1).type(dutchCity); // Typ de gegenereerde plaatsnaam in het inputveld
 
-
-
-        cy.goForward()
+         cy.goForward();
 
         // STAP 2-3-4
         

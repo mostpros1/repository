@@ -100,7 +100,9 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm setUserExists={undefined} {...registerData} updateFields={updateRegisterData} /*setError={setError}*/ error={error} />
+          <RegisterForm setError={function (error: string): void {
+            throw new Error('Function not implemented.');
+          } } setUserExists={undefined} {...registerData} updateFields={updateRegisterData} /*setError={setError}*/ error={error} />
           <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>

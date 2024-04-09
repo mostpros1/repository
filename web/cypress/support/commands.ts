@@ -56,6 +56,8 @@ declare namespace Cypress {
         uitloggen():void;
         performInputCheck2(value1, value2):void;
         performInputChecktestreg(value1, value2,value3,value4,value5,value6):void;
+        testAgain_new():void;
+        testlisaAgain():void;
         
     }
 }
@@ -87,6 +89,7 @@ Cypress.Commands.add('testAgain', () => {
     cy.visit("http://localhost:5173/");
     cy.get('.nav-blue-btn > .black-items').click();
     cy.get('input').eq(0).type('Loodgieter')
+    cy.get('textarea').eq(0).type('test bio abdel klussen')
     cy.get('input').eq(1).type('test@test.com')
     cy.get('input').eq(2).type('2020EB')
     cy.get('input').eq(3).type('Amsterdam')
@@ -94,6 +97,39 @@ Cypress.Commands.add('testAgain', () => {
         cy.goForward();
     }
 });
+
+Cypress.Commands.add('testlisaAgain', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/");
+    cy.get('.nav-blue-btn > .black-items').click();
+    cy.get('input').eq(0).type('Loodgieter')
+    cy.get('input').eq(2).type('2020EB')
+    cy.get('input').eq(3).type('Amsterdam')
+    cy.get('textarea').eq(0).type('test bio abdel klussen')
+    for (let r = 0; r < 4; r++) {
+        cy.goForward();
+    }
+});
+
+// Cypress.Commands.add('testAgain_new', () => {
+//     import faker from 'faker';
+//     cy.janTestBegin();
+//     faker.locale = 'nl';
+//     const dutchZipCode = `${faker.datatype.number({ min: 1000, max: 9999 })}${String.fromCharCode(faker.datatype.number({ min: 65, max: 90 }))}${String.fromCharCode(faker.datatype.number({ min: 65, max: 90 }))}`;
+//     const dutchCity = faker.address.city();
+  
+//     cy.get('input').eq(0).type('Loodgieter');
+//     cy.get('textarea').eq(0).type(faker.lorem.sentence());
+//     cy.get('input[type="email"]').eq(0).type(faker.internet.email());
+//     cy.get('input[type="postcode"]').eq(0).type(dutchZipCode);
+//     cy.get('input[type="text"]').eq(1).type(dutchCity);
+  
+//     for (let r = 0; r < 4; r++) {
+//       cy.goForward();
+//     }
+//   });
+  
+
 
 Cypress.Commands.add('goBack', () => {
     cy.get('[class="form-btn back"]').click();
