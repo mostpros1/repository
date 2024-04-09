@@ -223,6 +223,7 @@ function SpecialistMultistepForm() {
             Item: {
 
               id: Math.floor(Math.random() * 1000000000),
+              //oud
               first_name: stopXSS(firstName),
               last_name: stopXSS(lastName),
               email: stopXSS(email),
@@ -231,145 +232,158 @@ function SpecialistMultistepForm() {
               rating: 0,
               bio: stopXSS(data.bio),
               availibility: Datums,
+              /*
+              bio: stopXSS(data.bio),
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              region: stopXSS(data.questions.question1),
+              postcode: stopXSS(data.postcode),
+              profession: stopXSS(data.beroep),
+              task: stopXSS(data.task),
+              availibility: Datums,
+              rating: 0,
+              kvk: stopXSS(data.kvk),
+              */
             },
             TableName: "Professionals",
           })
           .promise()
-          .then(data => console.log(data.Attributes))
-          .catch(console.error)
+      .then(data => console.log(data.Attributes))
+      .catch(console.error)
 
-        dynamo
-          .put({
-            Item: {
-              id: Math.floor(Math.random() * 1000000000),
-              name: stopXSS(firstName),
-              family_name: stopXSS(lastName),
-              email: stopXSS(email),
-              phone_number: stopXSS(phoneNumber),
-              created_at: new Date().toISOString(),
-              user_type: "PROFESSIONAL",
-            },
-            TableName: "Users",
-          })
-          .promise()
-          .then(data => console.log(data.Attributes))
-          .catch(console.error)
+    dynamo
+      .put({
+        Item: {
+          id: Math.floor(Math.random() * 1000000000),
+          name: stopXSS(firstName),
+          family_name: stopXSS(lastName),
+          email: stopXSS(email),
+          phone_number: stopXSS(phoneNumber),
+          created_at: new Date().toISOString(),
+          user_type: "PROFESSIONAL",
+        },
+        TableName: "Users",
+      })
+      .promise()
+      .then(data => console.log(data.Attributes))
+      .catch(console.error)
 
 
-        /*const user = await Auth.signIn(email, password);
-        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
-        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
-        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
-      */
-        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
-      } catch (error: any) {
-        console.error('Error signing up:', error);
-        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-      }
-    };
+    /*const user = await Auth.signIn(email, password);
+    sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+    sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+    sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+  */
+    navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+  } catch (error: any) {
+    console.error('Error signing up:', error);
+    //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+  }
+};
 
-    signUpProf();
+signUpProf();
   }
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!isLastStep) {
-      return next()
-    } else {
-      console.log(data);
-      navigate("/specialist-resultaat");
-    }
-
-    const userData: RegisterData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim(),
-      dob: "" // Add the 'dob' property here
-    }
-    console.log(Datums);
-    /*try {
-      signUp(userData);
-    } catch (error) {
-      console.error('Error signing up:', error);
-      //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-    }*/
-
+async function onSubmit(e: FormEvent) {
+  e.preventDefault();
+  if (!isLastStep) {
+    return next()
+  } else {
+    console.log(data);
+    navigate("/specialist-resultaat");
   }
 
-  const stepWidth = 100 / steps.length;
-
-
-  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
-    console.log(availibility);
-
-
-    //availibility is als Datums opgeslagen
-
-    const params = {
-      TableName: "Professionals",
-      Item: {
-        id: Math.floor(Math.random() * 1000000),
-        name: name,
-        email: email,
-        profession: profession,
-        location: location,
-        price: price,
-        rating: rating,
-        bio: bio,
-        availibility: availibility,
-
-      },
-    };
-    try {
-      dynamo.put(params).promise();
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      //delete user
-    }
+  const userData: RegisterData = {
+    email: data.email.trim(),
+    password: data.password.trim(),
+    repeatPassword: data.repeatPassword.trim(),
+    firstName: data.firstName.trim(),
+    lastName: data.lastName.trim(),
+    phoneNumber: data.phoneNumber.trim(),
+    dob: "" // Add the 'dob' property here
   }
+  console.log(Datums);
+  /*try {
+    signUp(userData);
+  } catch (error) {
+    console.error('Error signing up:', error);
+    //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+  }*/
+
+}
+
+const stepWidth = 100 / steps.length;
 
 
-  return (
-    <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
-        <div className="progress-bar">
-          {steps.map((_, index) => (
-            <div
-              key={index}
-              className={`progress-step ${index <= currentStepIndex ? "active" : ""
-                }`}
-              style={{ width: `${stepWidth}%` }}
-            ></div>
-          ))}
-        </div>
+function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
+  console.log(availibility);
+
+
+  //availibility is als Datums opgeslagen
+
+  const params = {
+    TableName: "Professionals",
+    Item: {
+      id: Math.floor(Math.random() * 1000000),
+      name: name,
+      email: email,
+      profession: profession,
+      location: location,
+      price: price,
+      rating: rating,
+      bio: bio,
+      availibility: availibility,
+
+    },
+  };
+  try {
+    dynamo.put(params).promise();
+  } catch (error) {
+    console.error("Er is een fout opgetreden bij het opslaan: ", error);
+    //delete user
+  }
+}
+
+
+return (
+  <form onSubmit={onSubmit} className="form-con">
+    <div className="progress-con">
+      <h3>
+        Stap {currentStepIndex + 1} van {steps.length}
+      </h3>
+      <div className="progress-bar">
+        {steps.map((_, index) => (
+          <div
+            key={index}
+            className={`progress-step ${index <= currentStepIndex ? "active" : ""
+              }`}
+            style={{ width: `${stepWidth}%` }}
+          ></div>
+        ))}
       </div>
-      {showNoKvK ? <NoKvK /> : <>{step}</>}
-      <>
-        <div className="btn-wrapper">
-          <button
-            type="button"
-            onClick={() => {
-              showNoKvK ? setShowNoKvK(false) : back();
-            }}
-            className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
-            style={{ display: isFirstStep ? 'none' : 'inline-block' }}
-          >
-            Vorige
-          </button>
-          {showNoKvK ? <></> : <button type="submit" className="form-btn">
-            {isLastStep ? "Verstuur" : "Volgende"}
-          </button>}
+    </div>
+    {showNoKvK ? <NoKvK /> : <>{step}</>}
+    <>
+      <div className="btn-wrapper">
+        <button
+          type="button"
+          onClick={() => {
+            showNoKvK ? setShowNoKvK(false) : back();
+          }}
+          className={`form-btn back${showNoKvK ? " with-no-kvk" : ""}`}
+          style={{ display: isFirstStep ? 'none' : 'inline-block' }}
+        >
+          Vorige
+        </button>
+        {showNoKvK ? <></> : <button type="submit" className="form-btn">
+          {isLastStep ? "Verstuur" : "Volgende"}
+        </button>}
 
-        </div>
-      </>
-    </form>
-  );
+      </div>
+    </>
+  </form>
+);
 }
 
 export default SpecialistMultistepForm;
