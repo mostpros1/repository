@@ -62,7 +62,7 @@ function ChatMain({ user, signOut }) {
     
     return (
       <div className="chat-container">
-      <div className="sidebar">
+      <div className="sidebar" id="sidebar">
         {/* Sidebar content goes here */}
       </div>
     
@@ -113,13 +113,13 @@ function ChatMain({ user, signOut }) {
                   <span className="username-name">
                     {chat.email.split("@")[0]}
                   </span>
-                  <time dateTime={chat.createdAt} className="time">
-                    {intlFormatDistance(new Date(chat.createdAt), new Date())}
-                  </time>
                 </div>
                 <p className="text">
                   {chat.text}
                 </p>
+                  <time dateTime={chat.createdAt} className="time">
+                    {intlFormatDistance(new Date(chat.createdAt), new Date())}
+                  </time>
               </div>
             ))}
         </div>
