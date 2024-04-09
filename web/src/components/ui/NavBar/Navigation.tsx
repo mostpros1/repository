@@ -51,7 +51,6 @@ function Navigation() {
     <>
       <Link to="/login">Login</Link>
       <Link to="/registreer">Register</Link>
-      <Link to="/chat">Chat</Link>
     </>
   );
 
