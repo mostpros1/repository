@@ -32,6 +32,7 @@ import EditProfile from "../pages/EditProfilePage/EditProfile";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
+import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -60,6 +61,7 @@ const App = () => {
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
       <Route path="/OverOns" element={<OverOns />} />
+      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
 
 
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />

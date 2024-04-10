@@ -1,4 +1,4 @@
-.detailJobMainDetailJob {
+#mainConfirmDate{
     width: 100%;
     display: flex;
     align-items: center;
@@ -6,46 +6,25 @@
     flex-direction: column;
     gap: 3rem;
     margin-bottom: 8rem;
-  }
-  
-  .pageTitleDetailJob {
-    font-size: 20px;
-  }
-  
-  .topButtonContainerDetailJob {
-    width: 57%;
-    height: 15rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+    height: 100vh;
+    /* background: orange; */
+}
 
-  .dateCardDetailJob{
-    width: 8rem;
-    padding: 1rem;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 10%;
-  }
-  
-  .topButtonDetailJobDetailJob {
-    height: 4rem;
-    max-width: 13rem;
-    background: white;
-    border: 2px solid #308ae4;
-    color: black;
-    font-size: 12px;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-  }
-  
-  .whiteCardDetailJob {
+#topButtonContainerConfirmDate{
+        width: 57%;
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* background: green; */
+}
+
+#infoCardConfirmDate{
+    max-width: 45rem;
+    font-size: 15px;
+}
+
+.whiteCardDetailJob {
     width: 50%;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
     padding: 3rem;
@@ -55,23 +34,7 @@
     justify-content: center;
     gap: 2rem;
   }
-  
-  .cardTitleWrapperDetailJob {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #d9d9d9;
-    padding-bottom: 1rem;
-    margin-bottom: 3rem;
-  }
-  
-  .whiteCardLeftWrapperDetailJob,
-  .whiteCardRightWrapperDetailJob {
-    width: 48%;
-    margin-bottom: 3rem;
-  }
-  
+
   .whiteCardRightWrapperDetailJob {
     padding: 3.4rem;
     display: flex;
@@ -80,7 +43,6 @@
     justify-content: flex-start;
     gap: 3rem;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 4%;
   }
   
   .whiteCardLeftWrapperDetailJob {
@@ -153,12 +115,28 @@
     font-weight: 600;
   }
 
-  .noDecorationDetailJob{
-    text-decoration: none;
+  .buttonContainerConfirmDate {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  #buttonConfirmDate{
+    width: 16rem;
+    height: 5rem;
+    color: white;
+    background: #308AE4;
+    border-radius: 7%;
+    border: 0;
   }
   
-  /* Media queries for responsiveness */
-  
+  .buttonContainerConfirmDate button:hover {
+    cursor: pointer;
+  }
+
+
+
   @media screen and (max-width: 1452px) {
     .topButtonContainerDetailJob {
       width: 70%;
@@ -204,4 +182,3 @@
       text-align: center; 
     }
   }
-  

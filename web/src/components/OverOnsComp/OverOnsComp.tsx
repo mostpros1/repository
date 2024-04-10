@@ -1,5 +1,4 @@
 import "./OverOnsComp.css";
-import Banner from "../../assets/workbanner.png";
 import groepsFoto from "../../assets/groepsFoto.jpg";
 
 function OverOnsComp() {

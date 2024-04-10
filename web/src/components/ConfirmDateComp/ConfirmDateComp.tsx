@@ -1,13 +1,14 @@
-import "./DetailJobComp.css";
+import "./ConfirmDateComp.css";
 import EmailIcon from "@mui/icons-material/Email";
 import HouseIcon from "@mui/icons-material/House";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Icon from "../../assets/kraan.svg";
 
-function DetailJobComp() {
+
+function ConfirmDateComp() {
   return (
-    <main className="detailJobMainDetailJob">
-      <section className="topButtonContainerDetailJob">
+    <main id="mainConfirmDate">
+      <section id="topButtonContainerConfirmDate">
         <a
           className="topButtonDetailJobDetailJob"
           href=""
@@ -15,29 +16,12 @@ function DetailJobComp() {
         >
           Terug naar klussen
         </a>
-        <h2 className="pageTitleDetailJob">Uw huidige klus: Loodgieter werk</h2>
       </section>
       <section className="whiteCardDetailJob">
         <article className="cardTitleWrapperDetailJob">
           <h4>Details van de klus</h4>
         </article>
-        <article className="whiteCardLeftWrapperDetailJob">
-          <h5>Beschrijving</h5>
-          <h6>Opdrachtnummer: 234561</h6>
-          <h6>Type Klus:</h6>
-          <article className="jobCardDetailDetailJob">
-            <img src={Icon} alt="Klus Icon" className="klus-iconDetailDetailJob" />
-            <p className="jobCardTextDetailJob">Nieuwe leiding aanleggen</p>
-          </article>
-          <article>
-            <h6>Aanvullende Informatie:</h6>
-            <p className="infoTextDetailJob">
-              De leiding in de keuken, badkamer en in de tuin moeten aangelegd
-              worden. Er is geen schade in de keuken en badkamer. Er is wel
-              schade in de tuin waar de leiding momenteel is.
-            </p>
-          </article>
-        </article>
+        <p id="infoCardConfirmDate">Lisa Zoetlief heeft op 30 September de volgende datum in uw kalender gereserveerd: 4 Oktober 2023. Indien deze datum niet mogelijk is wijzig deze hier beneden.</p>
         <article className="whiteCardRightWrapperDetailJob">
           <article className="cardTitleWrapperDetailJob">
             <h4>Datum uitvoering</h4>
@@ -65,15 +49,16 @@ function DetailJobComp() {
           <div className="moreInfoBoxDetailJob">
             <a href=""
               rel="noopener noreferrer" className="noDecorationDetailJob">
-              <p className="moreInfoNameDetailJob">Meer info</p>
+              <p className="moreInfoNameDetailJob">Wijzig Datum</p>
             </a>
           </div>
         </article>
-        <a href=""
-          rel="noopener noreferrer" className="noDecorationDetailJob"><p className="moreInfoNameDetailJob">Klus beëindigen</p></a>
+        <div className="buttonContainerConfirmDate">
+          <button id="buttonConfirmDate">Datum Bevestigen</button>
+        </div>
       </section>
     </main>
   );
 }
 
-export default DetailJobComp;
+export default ConfirmDateComp;
