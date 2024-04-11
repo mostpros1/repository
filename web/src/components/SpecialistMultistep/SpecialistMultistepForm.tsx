@@ -48,6 +48,13 @@ interface RegisterData {
   password: string;
   repeatPassword: string;
   dob: string;
+  bio: string;
+  region: string;
+  postcode: string
+  profession: string
+  task: string
+  rating: 0,
+  kvk: number,
 
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
