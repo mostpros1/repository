@@ -2,6 +2,7 @@
 .chat-container {
   display: flex;
   font-family: 'Arial', sans-serif;
+  border-radius: 10px;
 }
 
 /* Sidebar Styles */
@@ -24,7 +25,7 @@
   margin-top: 150px;
   width: 300px;
   margin-right: 40px;
-  margin-left: 20px;
+  margin-left: 60px;
   border-radius: 20px;
 }
 
@@ -34,18 +35,23 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
   width: auto;
-  height: 100px;
+  height: 50px;
   border-radius: 20px;
   position: absolute;
+  left: 50px;
   top: 20px;
-  left: 40px;
 }
 
-.button_container button {
-  background-color: #007bff;
+.button-container{
+  display: flex;
   position: absolute;
   top: 40px;
-  right: 400px;
+  right: 250px;
+  gap: 20px;
+}
+
+.button-container .buttona {
+  background-color: #007bff;
   border-radius: 10px;
   color: white;
   border: 0;
@@ -60,6 +66,7 @@
   overflow-y: auto;
   background-color: #f9f9fb;
   padding: 20px;
+  border-radius: 10px;
 }
 
 /* Input Form */
@@ -78,7 +85,7 @@
 }
 
 .chat-enter kbd {
-  background-color: #30b980;
+  background-color: #007bff;
   color: white;
   padding: 6px 12px;
   border-radius: 4px;
@@ -100,36 +107,32 @@
   border-radius: 18px;
   margin-bottom: 8px;
   display: flex;
-  max-width: 80%;
+  max-width: 600px;
+  width: auto;
 }
 
 .self-message {
-  background-color: #007bff;
-  color: white;
+  background-color: #fff;
+  border: 1px solid #ccc;
   margin-left: auto;
   border-top-right-radius: 1;
-  width: 500px;
+  width: auto;
+  max-width: 600px;
 }
 
 /* Align messages from 'other' to the left */
 .other-message {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #8ac3ff84;
   margin-right: auto;
   border-top-left-radius: 1;
-  width: 500px;
-}
-
-/* Alert Box */
-.alert {
-  padding: 10px;
-  background-color: #f4f4f4;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  width: auto;
+  max-width: 600px;
 }
 
 .alert input {
-  margin-right: 5px;
+  border-radius: 10px;
+  height: 50px;
+  border: solid 2px black;
 }
 
 /* Time and Username */
@@ -137,7 +140,6 @@
   font-size: 12px;
   float: right;
   color: #888;
-  
 }
 
 .username-name {
@@ -164,4 +166,52 @@
 .text{
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.message-time {
+  font-size: 12px;
+  margin-right: 8px;
+  color: #666;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.self-message-container {
+  justify-content: flex-end;
+}
+
+.other-message-container {
+  justify-content: flex-start;
+  max-width: 600px;
+}
+
+.chatheader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background-color: #4545d7;
+  color: white;
+  height: 80px;
+  border-radius: 10px;
+}
+
+.name-and-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipient-name {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
