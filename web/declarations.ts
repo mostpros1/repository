@@ -19,3 +19,6 @@ export const dynamo = new aws.DynamoDB.DocumentClient({
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
 });
+
+
+export const MostropsEmail = "timon@timonheidenreich.eu";

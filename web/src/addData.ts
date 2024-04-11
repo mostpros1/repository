@@ -4,7 +4,7 @@ export function addUser(username: string, email: string, password: string, first
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
 
     const params = {
-        TableName: "users",
+        TableName: "Users",
         Item: {
             id: { N: "1" },
             username: { S: username },

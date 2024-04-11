@@ -10,7 +10,7 @@ export function addUser(email: string, phone_number: number, password: string, f
     const id: number = Math.floor(Math.random() * 1000000);
     console.log(typeof password);
     const params = {
-        TableName: "users",
+        TableName: "Users",
         Item: {
             id: { N: String(id) },
             email: { S: sanatiseInput(email) },
