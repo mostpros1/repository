@@ -1,0 +1,184 @@
+#mainConfirmDate{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 4rem;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 8rem;
+    height: 100vh;
+    /* background: orange; */
+}
+
+#topButtonContainerConfirmDate{
+        width: 57%;
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* background: green; */
+}
+
+#infoCardConfirmDate{
+    max-width: 45rem;
+    font-size: 15px;
+}
+
+.whiteCardDetailJob {
+    width: 50%;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .whiteCardRightWrapperDetailJob {
+    padding: 3.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .whiteCardLeftWrapperDetailJob {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .jobCardDetailDetailJob {
+    height: 10.5rem;
+    width: 10rem;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .jobCardTextDetailJob {
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .klus-iconDetailDetailJob {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+  
+  .infoTextDetailJob {
+    font-size: 13px;
+    max-width: 90%;
+  }
+  
+  .dateDayDetailJob {
+    color: #308ae4;
+    font-size: 35px;
+  }
+  
+  .dateDetailDetailJob{
+    font-size: 12px;
+  }
+  
+  .iconInfoBoxDetailJob {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+  }
+  
+  .divFlexDetailJob {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .moreInfoBoxDetailJob {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .moreInfoNameDetailJob {
+    color: #17a1fa;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .buttonContainerConfirmDate {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  #buttonConfirmDate{
+    width: 16rem;
+    height: 5rem;
+    color: white;
+    background: #308AE4;
+    border-radius: 7%;
+    border: 0;
+  }
+  
+  .buttonContainerConfirmDate button:hover {
+    cursor: pointer;
+  }
+
+
+
+  @media screen and (max-width: 1452px) {
+    .topButtonContainerDetailJob {
+      width: 70%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 70%;
+    }
+
+    .whiteCardRightWrapperDetailJob{
+        justify-content: center;
+    }
+  }
+  
+  @media screen and (max-width: 800px) {
+    .topButtonContainerDetailJob {
+      width: 80%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 80%;
+    }
+  }
+  
+  @media screen and (max-width: 700px) {
+    .topButtonContainerDetailJob {
+      width: 90%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .whiteCardRightWrapperDetailJob {
+      width: 100%; 
+      margin-bottom: 2rem; 
+    }
+  
+    .moreInfoBoxDetailJob {
+      width: 100%;
+      text-align: center; 
+    }
+  }
