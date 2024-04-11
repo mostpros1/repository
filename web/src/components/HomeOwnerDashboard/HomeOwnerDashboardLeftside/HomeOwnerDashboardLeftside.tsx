@@ -1,7 +1,7 @@
 import "./HomeOwnerDashboardLeftside.css"
 import { useUser } from "../../../context/UserContext";
 import EmailIcon from '@mui/icons-material/Email';
-import Chatbtn from "../../Chat/Chatbtn";
+import {ChatBtn} from "../../Chat/Chatbtn";
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import Bas from "../../../assets/Bas_R.png"
 
@@ -38,7 +38,7 @@ function HomeOwnerDashboardLeftside() {
         </div>
       </div>
       <div className="dashboard_btn_con">
-        <Chatbtn/>
+        <ChatBtn action={undefined} label={undefined}/>
       </div>
     </div>
   )

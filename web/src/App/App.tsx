@@ -16,7 +16,7 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
-import ChatPage from "../pages/ChatPage/ChatPage";
+// import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
@@ -25,10 +25,14 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
 import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
+import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import EditProfile from "../pages/EditProfilePage/EditProfile";
+import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
+import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
+import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -54,6 +58,12 @@ const App = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
+      <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
+      <Route path="/OverOns" element={<OverOns />} />
+      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
+
+
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
       <Route path="/login" element={<LoginPage />} />
@@ -73,7 +83,7 @@ const App = () => {
         />
       </Route>
 
-      <Route path="/chat" element={<ChatPage />} />
+{/*       <Route path="/chat" element={<ChatPage />} /> */}
 
       {/* Protected routes */}
       <Route

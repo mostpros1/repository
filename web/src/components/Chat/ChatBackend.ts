@@ -55,11 +55,9 @@ const handleReceivedMessage = (receivedChat) => {
 
   const handleAlertConfirm = () => {
     if (recipientEmail) {
-      handleSendMessage("Hello, let's chat!");
       setShowAlert(false);
       setShowJoinButton(false);
       setShowConfirmedConnection(true); 
-      setNotificationMessage(`${recentMessageEmail} joined the chat`);
     }
   };
 
