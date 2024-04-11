@@ -35,6 +35,7 @@ import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
+import ChatMain from "../components/Chat/ChatMain.tsx";
 
 const App = () => {
   return (
@@ -64,6 +65,8 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
 
 
+      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
+
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
       <Route path="/login" element={<LoginPage />} />
@@ -82,8 +85,6 @@ const App = () => {
           }
         />
       </Route>
-
-{/*       <Route path="/chat" element={<ChatPage />} /> */}
 
       {/* Protected routes */}
       <Route
