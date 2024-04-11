@@ -11,6 +11,7 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
+import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
@@ -116,17 +117,31 @@ function MultistepForm() {
     />
   ));
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
+
+  const { user, updateUser } = useUser();
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm(
+    user ? {
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-
-        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
-        <PageSpecialisten />
+        <PageSpecialisten updateDate={data.date}/>
       ],
       onStepChange: () => {}
-    });
+    } : {
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <>
+          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>
+          <PageSpecialisten updateDate={data.date}/>
+        </>
+      ],
+      onStepChange: () => {}
+    }
+  );
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()

@@ -61,8 +61,18 @@ function RegisterPage() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
+
+              /*
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              status: "PENDING",
+              user_role: "HOMEOWNER"
+              */
             },
-            TableName: "users",
+            TableName: "Users",
           })
           .promise()
           .then(data => console.log(data.Attributes))
