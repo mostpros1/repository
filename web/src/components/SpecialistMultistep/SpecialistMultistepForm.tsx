@@ -311,7 +311,7 @@ function SpecialistMultistepForm() {
       navigate("/specialist-resultaat");
     }
 
-    const userData: RegisterData = {
+    /*const userData: RegisterData = {
       email: data.email.trim(),
       password: data.password.trim(),
       repeatPassword: data.repeatPassword.trim(),
@@ -319,7 +319,7 @@ function SpecialistMultistepForm() {
       lastName: data.lastName.trim(),
       phoneNumber: data.phoneNumber.trim(),
       dob: "" // Add the 'dob' property here
-    }
+    }*/
     console.log(Datums);
     /*try {
       signUp(userData);
