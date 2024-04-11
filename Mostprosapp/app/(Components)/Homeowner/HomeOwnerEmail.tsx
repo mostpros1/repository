@@ -84,13 +84,13 @@ const HomeOwnerEmail = ({ navigation }) => {
       <View style={styles.bottomButtonsContainer}>
         <View style={styles.buttonsContainer}>
           <Pressable
-            testID="vorigeBtn"
+            testID="vorigeBtn-3"
             style={[styles.nextButton, styles.nextButtonColorOne]}
             onPress={() => navigation.goBack()}
           >
             <Text style={styles.nextButtonText}>Vorige</Text>
           </Pressable>
-          <Pressable testID="volgendeBtn" style={[styles.nextButton]} onPress={handleNext}>
+          <Pressable testID="volgendeBtn-5" style={[styles.nextButton]} onPress={handleNext}>
             <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
               Volgende
             </Text>

@@ -90,7 +90,7 @@ const HomeOwnerPostalCode = ({ navigation, route }) => {
                                 maxLength={2}
                             />
                         </View>
-                        <Pressable testID='volgendeBtn' style={styles.nextButton} onPress={handleNextPress}>
+                        <Pressable testID='volgendeBtn-1' style={styles.nextButton} onPress={handleNextPress}>
                             <Text style={styles.nextButtonText}>Volgende</Text>
                         </Pressable>
                     </SafeAreaView>

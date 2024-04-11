@@ -49,10 +49,10 @@ const HomeOwnerExtraInfo = ({ navigation }) => {
 
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.buttonsContainer}>
-                    <Pressable testID='vorigeBtn' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                    <Pressable testID='vorigeBtn-2' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable testID='volgendeBtn' style={[styles.nextButton]} onPress={() => navigation.navigate('DateAndTimePicker')}>
+                    <Pressable testID='volgendeBtn-3' style={[styles.nextButton]} onPress={() => navigation.navigate('DateAndTimePicker')}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>

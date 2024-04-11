@@ -111,10 +111,10 @@ const HomeOwnerAppAannemer = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <Pressable testID='vorigeBtn' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                    <Pressable testID='vorigeBtn-1' style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                         <Text style={styles.nextButtonText}>Vorige</Text>
                     </Pressable>
-                    <Pressable testID='volgendeBtn' style={[styles.nextButton]} onPress={handleNext}>
+                    <Pressable testID='volgendeBtn-2' style={[styles.nextButton]} onPress={handleNext}>
                         <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                     </Pressable>
                 </View>
