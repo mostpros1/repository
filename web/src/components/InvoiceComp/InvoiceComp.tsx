@@ -77,7 +77,7 @@ function InvoiceComp() {
           </div>
           <div className="invoicePriceDetailsOne">
             <p className="invoiceAdressInfoTwo">€ 500,00</p>
-            <p className="invoiceAdressInfoTwo">€ 35,22</p>
+            <p className="invoiceAdressInfoTwo">€ 35,23</p>
           </div>
         </section>
         <section className="invoicePriceDetailsOneWrapper bordertop">
