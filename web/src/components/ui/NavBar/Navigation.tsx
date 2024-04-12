@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
@@ -24,6 +24,19 @@ function Navigation() {
     setDropdownOpen(!dropdownOpen);
   };
 
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      updateUser(authenticatedUser);
+    } catch (error) {
+      updateUser(null);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await Auth.signOut();
@@ -38,7 +51,6 @@ function Navigation() {
     <>
       <Link to="/login">Login</Link>
       <Link to="/registreer">Register</Link>
-      <Link to="/chat">Chat</Link>
     </>
   );
 

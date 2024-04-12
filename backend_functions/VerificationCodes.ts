@@ -53,7 +53,7 @@ getVerificationCode(verifiedEmail, 123456)
             console.log("Verification code found: ", result);
             const id = queryUsers(verifiedEmail, "id");
             dynamo.update({
-                TableName: "users",
+                TableName: "Users",
                 Key: {
                     id: id,
                 },
