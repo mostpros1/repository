@@ -258,11 +258,45 @@
     width: 5rem;
     border-radius: 50%;
     position: absolute;
-    top: 50%; /* Center vertically */
-    right: -130px; /* Adjust this value to position the circle */
-    transform: translateY(-50%); /* Center vertically */
+    top: 50%;
+    right: -130px;
+    transform: translateY(-50%);
     cursor: pointer;
   }
+  
+  .circleBlue.animate {
+    animation: clickAnimation 0.2s linear forwards;
+  }
+  
+  @keyframes clickAnimation {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(calc(-50% + 2px)); /* Move circle down slightly */
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  .circleRed.animate {
+    animation: clickAnimation 0.2s linear forwards;
+  }
+  
+  @keyframes clickAnimation {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(calc(-50% + 2px)); /* Move circle down slightly */
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+  
+  
   
   .right-arrow {
     width: 0;
