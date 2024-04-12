@@ -1,5 +1,5 @@
 import './MultistepForm.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
@@ -15,6 +15,8 @@ import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
+import { userInfo } from 'os'
+import { dynamo } from '../../../declarations'
 
 type FormData = {
   postCode: string
@@ -29,12 +31,14 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  profession: string;
+  task: string;
 }
 
 function MultistepForm() {
   const navigate = useNavigate()
   const questionsData = useQuestionData();
-  
+
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -49,11 +53,13 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    profession: "",
+    task: "",
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -126,49 +132,69 @@ function MultistepForm() {
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-        <PageSpecialisten updateDate={data.date}/>
+        <PageSpecialisten updateDate={data.date} />
       ],
-      onStepChange: () => {}
+      onStepChange: () => { }
     } : {
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
         <>
-          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>
-          <PageSpecialisten updateDate={data.date}/>
+          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+          <PageSpecialisten updateDate={data.date} />
         </>
       ],
-      onStepChange: () => {}
+      onStepChange: () => { }
     }
   );
+  useEffect(() => {
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    const task = window.location.hash.replace("#", "").split("?")[1];
 
-    async function onSubmit(e: FormEvent) {
-      e.preventDefault()
-      console.log('Form Data:', data);
-      if (!isLastStep) return next()
 
-      const userData = {
-        email: data.email,
-        password: data.password,
-        repeatPassword: data.repeatPassword,
-        firstName: data.firstName.trim(),
-        lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber
-      }
-  
-      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-        await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/huiseigenaar-resultaat')
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-      }
-      else {
-        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-        await Auth.signUp({
+    updateFields({ profession, task });
+ }, []);
+ 
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+    if (!isLastStep) return next()
+
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber
+    }
+
+    if (user) {
+      console.log(user)
+      console.log('Timonnn:', data);
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+    
+      dynamo
+          .put({
+            Item: {
+              id: Math.floor(Math.random() * 1000000000),
+              user_email: currentAuthenticatedUser.attributes.email,
+              profession: data.profession,
+              task: data.task,
+              region: data.stad,
+                  
+            },
+            TableName: "Klussen",
+          })
+          .promise()
+          .catch(console.error)
+
+      navigate('/huiseigenaar-resultaat')
+    } else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
         username: userData.email,
         password: userData.password,
         attributes: {
@@ -178,20 +204,20 @@ function MultistepForm() {
           phone_number: userData.phoneNumber
         },
         autoSignIn: { enabled: true }
-        })
+      })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email } })
+          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email } })
+            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }
         })
-      }
     }
+  }
 
   const stepWidth = 100 / steps.length;
 

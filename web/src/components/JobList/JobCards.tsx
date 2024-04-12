@@ -46,7 +46,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
         console.log(err);
       });
 
-  }, [window.location.hash]);
+  }, []);
 
   if (!specialists || specialists.length === 0) {
     return <div>No jobs available.</div>;

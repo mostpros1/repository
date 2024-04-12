@@ -35,8 +35,10 @@ type FormData = {
   password: string;
   repeatPassword: string;
   bio: string;
+  task: string;
   questions: Record<string, string>;
   dateTimeSpans: DateTimeSpan[];
+  kvk: number;
 };
 
 
@@ -54,6 +56,7 @@ interface RegisterData {
   profession: string
   task: string
   rating: 0,
+  availibility: string[],
   kvk: number,
 
 }
@@ -210,7 +213,8 @@ function SpecialistMultistepForm() {
     });
 
   function signUp(registerData: RegisterData): void {
-    const { email, phoneNumber, password, firstName, lastName } = registerData;
+    const { firstName, lastName, email, phoneNumber, password, bio, region, postcode, profession, task, rating, availibility, kvk } = registerData;
+
 
     const signUpProf = async () => {
       try {
@@ -230,28 +234,17 @@ function SpecialistMultistepForm() {
             Item: {
 
               id: Math.floor(Math.random() * 1000000000),
-              //oud
-              first_name: stopXSS(firstName),
-              last_name: stopXSS(lastName),
-              email: stopXSS(email),
-              profession: stopXSS(data.beroep),
-              region: stopXSS(data.questions.question1),
-              rating: 0,
-              bio: stopXSS(data.bio),
-              availibility: Datums,
-              /*
-              bio: stopXSS(data.bio),
+              bio: stopXSS(bio),
               email: stopXSS(email),
               first_name: stopXSS(firstName),
               last_name: stopXSS(lastName),
-              region: stopXSS(data.questions.question1),
-              postcode: stopXSS(data.postcode),
-              profession: stopXSS(data.beroep),
-              task: stopXSS(data.task),
-              availibility: Datums,
-              rating: 0,
-              kvk: stopXSS(data.kvk),
-              */
+              region: stopXSS(region),
+              postcode: stopXSS(postcode),
+              profession: stopXSS(profession),
+              task: stopXSS(task),
+              availibility: availibility,
+              rating: rating,
+              kvk: kvk,
             },
             TableName: "Professionals",
           })
@@ -263,27 +256,19 @@ function SpecialistMultistepForm() {
           .put({
             Item: {
               id: Math.floor(Math.random() * 1000000000),
-              name: stopXSS(firstName),
-              family_name: stopXSS(lastName),
-              email: stopXSS(email),
-              phone_number: stopXSS(phoneNumber),
-              created_at: new Date().toISOString(),
-              user_type: "PROFESSIONAL",
 
-              /*
-                  email: stopXSS(email),
-                  first_name: stopXSS(firstName),
-                  last_name: stopXSS(lastName),
-                  created_at: new Date().toISOString(),
-                  updated_at: new Date().toISOString(),
-                  status: "PENDING",
-                  user_role: "PROFESSIONAL"
-                  */
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              status: "PENDING",
+              user_role: "PROFESSIONAL"
+
             },
             TableName: "Users",
           })
           .promise()
-          .then(data => console.log(data.Attributes))
           .catch(console.error)
 
 
@@ -311,56 +296,34 @@ function SpecialistMultistepForm() {
       navigate("/specialist-resultaat");
     }
 
-    /*const userData: RegisterData = {
+    const userData: RegisterData = {
       email: data.email.trim(),
       password: data.password.trim(),
       repeatPassword: data.repeatPassword.trim(),
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       phoneNumber: data.phoneNumber.trim(),
-      dob: "" // Add the 'dob' property here
-    }*/
+      dob: "", // Add the 'dob' property here
+      bio: data.bio,
+      region: data.questions.question1,
+      postcode: data.postCode,
+      profession: data.beroep,
+      task: data.task,
+      availibility: Datums,
+      kvk: data.kvk,
+      rating: 0
+    }
     console.log(Datums);
-    /*try {
+    try {
       signUp(userData);
     } catch (error) {
       console.error('Error signing up:', error);
       //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-    }*/
+    }
 
   }
 
   const stepWidth = 100 / steps.length;
-
-
-  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
-    console.log(availibility);
-
-
-    //availibility is als Datums opgeslagen
-
-    const params = {
-      TableName: "Professionals",
-      Item: {
-        id: Math.floor(Math.random() * 1000000),
-        name: name,
-        email: email,
-        profession: profession,
-        location: location,
-        price: price,
-        rating: rating,
-        bio: bio,
-        availibility: availibility,
-
-      },
-    };
-    try {
-      dynamo.put(params).promise();
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      //delete user
-    }
-  }
 
 
   return (
