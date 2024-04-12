@@ -26,8 +26,8 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
 
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
-    
-    dynamo.query({
+
+    /*dynamo.query({
       TableName: "clients",
       IndexName: "plaats",
       KeyConditionExpression: "plaats = :plaats",
@@ -44,7 +44,24 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       })
       .catch(err => {
         console.log(err);
-      });
+      });*/
+
+    dynamo
+      .scan({
+        TableName: "Klussen",
+      })
+      .promise()
+      .then(data => {
+        console.log(data.Items)
+        for (let i = 0; i < data.Items.length; i++) {
+          console.log(data.Items[i].profession);
+          console.log(data.Items[i].task);
+          console.log(data.Items[i].description);
+          console.log(data.Items[i].region);
+          console.log(data.Items[i].availability);
+        }
+      })
+      .catch(console.error)
 
   }, []);
 
@@ -53,6 +70,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
   }
 
   const jobCardsRender = jobs.map((job) => (
+
     <div key={job.id} className="job-item">
       <div className="user-detail">
         <h2>{job.name}</h2>
