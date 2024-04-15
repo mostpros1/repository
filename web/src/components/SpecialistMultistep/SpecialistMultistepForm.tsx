@@ -15,7 +15,7 @@ import Calendar from './Calendar';
 import { Auth } from 'aws-amplify';
 import { AccountForm } from "../MultistepForm/AccountForm";
 import { Datums } from "./Calendar.tsx";
-import { dynamo } from "./../../../../backend_functions/declarations.ts";
+import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 
 type DateTimeSpan = {

@@ -105,7 +105,7 @@ function SideNav() {
 
           <li className="sidebar-item">
             <NavLink
-              to="/Settings"
+              to="/HomeOwnerSettingsPage"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }

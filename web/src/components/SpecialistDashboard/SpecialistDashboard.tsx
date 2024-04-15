@@ -13,7 +13,7 @@ const SpecialistDashboard = () => {
   return (
     <div className="dashboard-container">
       {/* <!-- Profile Sidebar --> */}
-      <aside className="sidebar">
+      <aside className="sidebar-nav">
         <div className="profile-card">
           <img src={Donald} alt="Jan Schilder" className="profile-picture" />
           <h2>Jan Schilder</h2>

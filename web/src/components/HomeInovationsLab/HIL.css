@@ -5,6 +5,14 @@
   font-family: "Kanit", sans-serif;
 }
 
+#content {
+  display: flex;
+  margin: 30px auto;
+  align-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+
 .image-container {
   display: flex;
   position: relative;
@@ -41,7 +49,7 @@
 }
 
 .grid-con {
-margin: 0;
+  margin: 0;
   width: 75%; /* Set this to match the width of the image-container */
 }
 

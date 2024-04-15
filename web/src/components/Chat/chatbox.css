@@ -71,9 +71,10 @@
 }
 
 .personlist{
-  height: 350px;
-  width: 20%;
+  height: 650px;
+  width: 30%;
   background-color: grey;
   border-radius: 20px;
   position: absolute;
+  margin-left: 100px;
 }

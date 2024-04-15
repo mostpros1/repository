@@ -8,10 +8,7 @@ function HomeInovation() {
   return (
     <div>
       <NavBar />
-      <div id="content">
-        <SideNav />
-        <HIL />
-      </div>
+      <HIL />
       <Footer />
     </div>
   );

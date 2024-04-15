@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
-import JoinChat from "../../Chat/JoinChat";
+
+import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -17,22 +17,10 @@ function Navigation() {
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
   const navigate = useNavigate(); // Create a navigate function
 
-
   // Get the user's display name
   const getDisplayName = () => {
     return user.attributes.name || user.username;
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        updateUser(authenticatedUser);
-      } catch (error) {
-        updateUser(null);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
+  };
 
   const handleIconClick = () => {
     navigate("/HomeInovation"); // Use navigate function to redirect
@@ -45,7 +33,6 @@ function Navigation() {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
 
   // Logout function
   const handleLogout = async () => {
@@ -84,7 +71,6 @@ function Navigation() {
   }
 
   return (
-
     <div className="nav-container">
       <Link to="/">
         <div className="nav-leftside">
@@ -103,8 +89,6 @@ function Navigation() {
         </div> */}
         <div className="dropdown-container">
           <div className="loginButton" onClick={handleDropdownToggle}>
-          <button className="loginButton" onClick={handleDropdownToggle}>
-            <MoreVertOutlinedIcon /> {/* Changed icon here */}
             <PermIdentityIcon />
           </div>
           {dropdownOpen && (
@@ -114,7 +98,7 @@ function Navigation() {
         <p>
           Welcome <br />
           {/* Display the user's name if logged in */}
-          {user && <span>{getDisplayName()}</span>} 
+          {user && <span>{getDisplayName()}</span>}
         </p>
       </div>
     </div>
