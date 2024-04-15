@@ -53,12 +53,14 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       .promise()
       .then(data => {
         console.log(data.Items)
-        for (let i = 0; i < data.Items.length; i++) {
-          console.log(data.Items[i].profession);
-          console.log(data.Items[i].task);
-          console.log(data.Items[i].description);
-          console.log(data.Items[i].region);
-          console.log(data.Items[i].availability);
+        for (let i = 0; i < (data.Items ?? []).length; i++) {
+          if (data.Items) {
+            console.log(data.Items[i].profession);
+            console.log(data.Items[i].task);
+            console.log(data.Items[i].description);
+            console.log(data.Items[i].region);
+            console.log(data.Items[i].availability);
+          }
         }
       })
       .catch(console.error)
