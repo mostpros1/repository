@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import aws from 'aws-sdk';
 import { dynamo } from '../../../declarations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
@@ -328,7 +330,10 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Vorige maand"
             tabIndex={0}
           >
-            <img src={Prev} className='fotoinButtonL' alt="Vorige" />
+            <div className="prevIcon">
+              <ArrowBackIosNewIcon/>
+            </div>
+            {/* <img src={Prev} className='fotoinButtonL' alt="Vorige" /> */}
           </button>
           <button
             type="button"
@@ -347,7 +352,10 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Volgende maand"
             tabIndex={0}
           >
-            <img src={Next} className='fotoinButtonR' alt="Volgende" />
+            <div className='nextIcon'>
+              <ArrowForwardIosIcon/>
+            </div>
+            {/* <img src={Next} className='fotoinButtonR' alt="Volgende" /> */}
           </button>
         </div>
         <div className="week-days">
