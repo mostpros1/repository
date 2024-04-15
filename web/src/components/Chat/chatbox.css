@@ -1,52 +1,75 @@
-/* Chat Container */
 .chat-container {
   display: flex;
   font-family: 'Arial', sans-serif;
   border-radius: 10px;
 }
 
-/* Sidebar Styles */
 #sidebar {
-  width: 700px;
-  background-color: #4545d7;
+  width: 600px;
+  background-color: #4545d773;
   border-right: 1px solid #e6e6e6;
   overflow-y: auto;
-  height: 650px;
-  margin-top: 150px;
+  height: 500px;
+  margin-top: 100px;
   margin-left: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Main Chat Area */
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+#sidebar ul li {
+  cursor: pointer;
+  padding: 10px 0;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#sidebar ul li:hover {
+  background-color: #c1baff;
+}
+
+#sidebar ul li.active {
+  background-color: #c1baff;
+}
+
 .chat-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 650px;
-  margin-top: 150px;
+  height: 500px;
+  margin-top: 100px;
   width: 300px;
   margin-right: 40px;
   margin-left: 60px;
   border-radius: 20px;
 }
 
-/* Text Join */
 .textjoined {
   background-color: #e6f7e8;
-  padding: 10px;
   border-bottom: 1px solid #ddd;
-  width: auto;
-  height: 50px;
+  width: 200px;
+  height: 30px;
   border-radius: 20px;
   position: absolute;
   left: 50px;
-  top: 20px;
+  top: 40px;
+  font-size: 15px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .button-container{
   display: flex;
   position: absolute;
   top: 40px;
-  right: 250px;
+  right: 100px;
   gap: 20px;
 }
 
@@ -55,12 +78,12 @@
   border-radius: 10px;
   color: white;
   border: 0;
-  width: 180px;
-  height: 40px;
+  width: 120px;
+  height: 30px;
   cursor: pointer;
+  font-size: 14px;
 }
 
-/* Chat Box */
 .chat-box {
   flex: 1;
   overflow-y: auto;
@@ -69,7 +92,6 @@
   border-radius: 10px;
 }
 
-/* Input Form */
 .input-form {
   display: flex;
   padding: 10px;
@@ -82,6 +104,8 @@
   padding: 10px 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 15px;
+  height: 40px;
 }
 
 .chat-enter kbd {
@@ -90,18 +114,18 @@
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+  height: 40px;
 }
 
-/* Chat Enter */
 .chat-enter {
   background-color: #007bff;
-  padding: 10px;
   color: white;
   border: none;
   cursor: pointer;
+  height: 30px;
+  margin-top: 5px;
 }
 
-/* Message Bubble */
 .message-bubble {
   padding: 10px 15px;
   border-radius: 18px;
@@ -109,6 +133,8 @@
   display: flex;
   max-width: 600px;
   width: auto;
+  transition: all 0.5s ease;
+  font-size: 15px;
 }
 
 .self-message {
@@ -117,16 +143,15 @@
   margin-left: auto;
   border-top-right-radius: 1;
   width: auto;
-  max-width: 600px;
+  transition: all 0.5s ease;
 }
 
-/* Align messages from 'other' to the left */
 .other-message {
   background-color: #8ac3ff84;
   margin-right: auto;
   border-top-left-radius: 1;
   width: auto;
-  max-width: 600px;
+  transition: all 0.5s ease;
 }
 
 .alert input {
@@ -135,9 +160,8 @@
   border: solid 2px black;
 }
 
-/* Time and Username */
 .time {
-  font-size: 12px;
+  font-size: 10px;
   float: right;
   color: #888;
 }
@@ -146,7 +170,6 @@
   font-weight: bold;
 }
 
-/* Join Chat Button Container */
 .join-chat-button-container {
   padding: 10px;
   background-color: #fff;
@@ -169,7 +192,7 @@
 }
 
 .message-time {
-  font-size: 12px;
+  font-size: 10px;
   margin-right: 8px;
   color: #666;
   margin-bottom: 20px;
@@ -197,9 +220,9 @@
   align-items: center;
   text-align: center;
   padding: 10px;
-  background-color: #4545d7;
+  background-color: #4545d773;
   color: white;
-  height: 80px;
+  height: 60px;
   border-radius: 10px;
 }
 
