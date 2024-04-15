@@ -16,8 +16,9 @@ function ConfirmDateComp() {
   const [disableLeftCircle, setDisableLeftCircle] = useState(false);
   const [buttonText, setButtonText] = useState("Datum Bevestigen");
   const [buttonColor, setButtonColor] = useState("#308AE4");
+  const [buttonClicked, setButtonClicked] = useState<"left" | "right" | null>(null); // Updated type
 
-  const handleDatumWijzigenClick = (event) => {
+  const handleDatumWijzigenClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     setShowIcons(false);
     setShowArrows(true);
@@ -36,6 +37,8 @@ function ConfirmDateComp() {
     }
     setDisableLeftCircle(false); // Reset left arrow color
     setButtonColor("#308AE4");
+    setButtonClicked("right"); // Update button clicked state with direction
+    setTimeout(() => setButtonClicked(null), 300); // Reset button clicked state after 300ms
   };
 
   const handleLeftArrowClick = () => {
@@ -47,6 +50,8 @@ function ConfirmDateComp() {
     }
     setDisableRightCircle(false); // Reset right arrow color
     setButtonColor("#308AE4");
+    setButtonClicked("left"); // Update button clicked state with direction
+    setTimeout(() => setButtonClicked(null), 300); // Reset button clicked state after 300ms
   };
 
   const handleWijzigingenOpslaanClick = () => {
@@ -93,7 +98,7 @@ function ConfirmDateComp() {
           >
             <div className="arrowContainer" onClick={handleLeftArrowClick}>
               {showArrows && (
-                <div className={`circleRed ${disableLeftCircle ? "grayCircle" : ""}`}>
+                <div className={`circleRed ${disableLeftCircle ? "grayCircle" : ""} ${buttonClicked === "left" ? "animate" : ""}`}>
                   <span className="left-arrow"></span>
                 </div>
               )}
@@ -106,7 +111,7 @@ function ConfirmDateComp() {
               onClick={handleRightArrowClick}
             >
               {showArrows && (
-                <div className={`circleBlue ${disableRightCircle ? "grayCircle" : ""}`}>
+                <div className={`circleBlue ${disableRightCircle ? "grayCircle" : ""} ${buttonClicked === "right" ? "animate" : ""}`}>
                   <span className="right-arrow"></span>
                 </div>
               )}

@@ -1,0 +1,194 @@
+#InvoiceCompSection {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 4rem;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 8rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mainmain {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 4rem;
+}
+
+#topButtonContainer {
+  width: 66%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#topButton {
+  height: 4rem;
+  max-width: 13rem;
+  background: white;
+  border: 2px solid #308ae4;
+  color: black;
+  font-size: 12px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.invoiceWhiteCard {
+  height: 72.8rem;
+  width: 60.12rem;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 1%;
+}
+
+.invoiceWhiteCardInfoInvoiceWrapper,
+.invoiceWhiteCardInfoWrapper {
+  width: 100%;
+  height: 9rem;
+  padding-left: 3.1rem;
+  padding-right: 3.1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.InvoiceInfoWrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.invoiceWhiteCardImgInfoWrapper {
+  height: 12rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.invoiceLogoImg {
+  object-fit: contain;
+  width: 35%;
+}
+
+.invoiceAdressInfo {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.invoiceAdressInfoTwo {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.InvoiceCompProgressTitle {
+  font-size: 1.3rem;
+}
+
+.InvoiceCompProgressTitleTwo {
+  font-size: 1.5rem;
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+}
+
+.progressBlock {
+  width: 6.8rem;
+  height: 0.6rem;
+  background-color: #FFFFFF;
+  margin-right: 5px;
+}
+
+.progressBlock.filled {
+  background-color: #308AE4;
+}
+
+.invoiceWhiteCardDescriptionWrapper {
+  width: 100%;
+  padding-left: 3.1rem;
+  padding-right: 3.1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.InvoiceTitleWrapper {
+  width: 100%;
+  border-bottom: 0.2rem solid #D9D9D9;
+  border-radius: 2px;
+}
+
+.invoicePriceDetailsOneWrapper {
+  width: 89%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 3.1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.bordertopbottom {
+  border-bottom: 0.2rem solid #D9D9D9;
+  border-top: 0.2rem solid #D9D9D9;
+}
+
+.bordertop {
+  border-top: 0.2rem solid #D9D9D9;
+}
+
+.invoiceButtonContainer {
+  display: flex;
+  gap: 2rem;
+  margin-top: 8rem;
+}
+
+.invoiceButtonOne,
+.invoiceButtonTwo {
+  background: white;
+  width: 17rem;
+  border-radius: 20px;
+  border: 0.1rem solid #308AE4;
+  font-size: 1.2rem;
+  font-weight: 500;
+  height: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invoiceButtonTwo {
+  background: #308AE4;
+  border: 0.1rem solid white;
+  color: #FFFFFF;
+}
+
+.invoiceButtonOne,
+.invoiceButtonTwo {
+  cursor: pointer;
+}

@@ -33,6 +33,8 @@ import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
+import JobsPage from "../pages/JobsPage/JobsPage";
+import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatMain from "../components/Chat/ChatMain.tsx";
@@ -63,6 +65,8 @@ const App = () => {
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/Jobs" element={<JobsPage />} />
+      <Route path="/Invoice" element={<InvoicePage/>} />
 
 
       <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
