@@ -9,7 +9,7 @@ import { dynamo } from "../../../declarations.ts";
 
 function SpecialistCard() {
 
-  const [specialists, setSpecialists] = useState<any[] | undefined>();
+  const [specialists, setSpecialists] = useState<any[]>([]);
 
 
   let specialistsData = [
@@ -106,6 +106,7 @@ function SpecialistCard() {
 
                 if (selected == Availability.dates[x]) {
                   professionals = [...professionals, convertedItems[i]];
+                  console.log(professionals)
                   break;
                 }
               }
@@ -120,7 +121,7 @@ function SpecialistCard() {
 
   }, []);
 
-  let specialistCardRender = specialists.map((specialist) => {
+  let specialistCardRender = specialists?.map((specialist) => {
     return (
       <div key={specialist.id} className="specialist_card">
         <div className="specialist_card_detail">
@@ -148,7 +149,7 @@ function SpecialistCard() {
         </a>
       </div>
     );
-  });
+  }) || null;
 
   return <>{specialistCardRender}</>;
 }
