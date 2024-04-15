@@ -106,6 +106,7 @@
   border-radius: 4px;
   font-size: 15px;
   height: 40px;
+  margin-left: 10px;
 }
 
 .chat-enter kbd {
@@ -114,16 +115,14 @@
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
   height: 40px;
-}
-
-.chat-enter {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  height: 30px;
-  margin-top: 5px;
+  margin-left: 10px;
+  width: 50px;
 }
 
 .message-bubble {
@@ -237,4 +236,51 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+.addPay{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  margin-right: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.create-payment{
+  border: 0;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.betalingbedrag{
+  height: 40px;
+  width: 120px;
+  font-size: 14px;
+}
+
+.betalingbevestig{
+  height: 40px;
+  width: auto;
+  padding: 5px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
 }
