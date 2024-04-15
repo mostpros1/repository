@@ -111,7 +111,13 @@ function ChatMain({ user, signOut }) {
   const switchChat = (contact) => {
     setSelectedContact(contact);
     handleJoinChat(contact);
+    
   };
+
+  useEffect(() => {
+    const Email = window.location.hash.replace("#", "");
+    switchChat(Email);
+   }, []);
 
   const filteredChats = selectedContact
     ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
