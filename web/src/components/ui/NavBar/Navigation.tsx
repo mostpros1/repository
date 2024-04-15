@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuIcon from "@mui/icons-material/Menu";
-import JoinChat from "../../Chat/JoinChat";
+//import {ChatBtn} from "../../Chat/Chatbtn";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -22,6 +22,19 @@ function Navigation() {
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      updateUser(authenticatedUser);
+    } catch (error) {
+      updateUser(null);
+    }
   };
 
   const handleLogout = async () => {
@@ -55,6 +68,7 @@ function Navigation() {
         <p>{user.attributes.email}</p>
         {DashboardLink}
         <button onClick={handleLogout}>Uitloggen</button>
+        <Link to="/chat">Chat</Link>
       </>
     );
   }

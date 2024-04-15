@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
+import { sendMail } from "./../../../../backend_functions/email.ts"
 
 type PostConfig = {
     roleName: string
@@ -106,6 +107,7 @@ function BevestigEmailPage() {
         if (confirmationResult == 'SUCCESS') {
             setIsConfirmed(true)
             postConfig.onSuccess && postConfig.onSuccess()
+            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
         }
     }
 

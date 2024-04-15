@@ -48,6 +48,13 @@ interface RegisterData {
   password: string;
   repeatPassword: string;
   dob: string;
+  bio: string;
+  region: string;
+  postcode: string
+  profession: string
+  task: string
+  rating: 0,
+  kvk: number,
 
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -93,11 +100,12 @@ const questionsData: Question[] = [
     key: "question2",
     label: "Wat is uw specialisatie",
     options: [
-      "Web Development",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
+      "Loodgieter",
+      "Timmerman",
+      "Elektricien",
+      "Aannemer",
+      "Hovenier",
+      "Anders"
     ],
   },
   // ... voeg andere vragen toe zoals nodig
@@ -223,15 +231,30 @@ function SpecialistMultistepForm() {
             Item: {
 
               id: Math.floor(Math.random() * 1000000000),
-              name: stopXSS(firstName) + " " + stopXSS(lastName),
+              //oud
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
               email: stopXSS(email),
               profession: stopXSS(data.beroep),
-              location: stopXSS(data.questions.question1),
-              rating: "Unrated",
+              region: stopXSS(data.questions.question1),
+              rating: 0,
               bio: stopXSS(data.bio),
               availibility: Datums,
+              /*
+              bio: stopXSS(data.bio),
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              region: stopXSS(data.questions.question1),
+              postcode: stopXSS(data.postcode),
+              profession: stopXSS(data.beroep),
+              task: stopXSS(data.task),
+              availibility: Datums,
+              rating: 0,
+              kvk: stopXSS(data.kvk),
+              */
             },
-            TableName: "Specialists",
+            TableName: "Professionals",
           })
           .promise()
           .then(data => console.log(data.Attributes))
@@ -247,8 +270,18 @@ function SpecialistMultistepForm() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "PROFESSIONAL",
+
+              /*
+                  email: stopXSS(email),
+                  first_name: stopXSS(firstName),
+                  last_name: stopXSS(lastName),
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  status: "PENDING",
+                  user_role: "PROFESSIONAL"
+                  */
             },
-            TableName: "users",
+            TableName: "Users",
           })
           .promise()
           .then(data => console.log(data.Attributes))
@@ -279,7 +312,7 @@ function SpecialistMultistepForm() {
       navigate("/specialist-resultaat");
     }
 
-    const userData: RegisterData = {
+    /*const userData: RegisterData = {
       email: data.email.trim(),
       password: data.password.trim(),
       repeatPassword: data.repeatPassword.trim(),
@@ -287,7 +320,7 @@ function SpecialistMultistepForm() {
       lastName: data.lastName.trim(),
       phoneNumber: data.phoneNumber.trim(),
       dob: "" // Add the 'dob' property here
-    }
+    }*/
     console.log(Datums);
     /*try {
       signUp(userData);
@@ -308,7 +341,7 @@ function SpecialistMultistepForm() {
     //availibility is als Datums opgeslagen
 
     const params = {
-      TableName: "Specialists",
+      TableName: "Professionals",
       Item: {
         id: Math.floor(Math.random() * 1000000),
         name: name,

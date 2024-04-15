@@ -14,55 +14,105 @@ interface Person {
   previewMessage: string;
 }
 
-export function useChatBackend() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isJoined, setIsJoined] = useState(false);
+export function useChatBackend(user: any, signOut) {
+  const [chats, setChats] = React.useState<any[]>([]);
+  const [recipientEmail, setRecipientEmail] = React.useState("");
+  const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
+  const [showJoinButton, setShowJoinButton] = React.useState(false);
+  const [showConfirmedConnection, setShowConfirmedConnection] =
+    React.useState(false);
+  const [showAlert, setShowAlert] = React.useState(false);
+  const [notificationMessage, setNotificationMessage] = React.useState("");
 
-  // Functie om een bericht te versturen
-  const sendMessage = async (text: string) => {
-    try {
-      // Vervang dit door jouw logica om een bericht te versturen naar je backend
-      const response = await fetch('JOUW_BACKEND_ENDPOINT/berichten', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Voeg hier eventuele vereiste headers toe, zoals een Authorization header
+// // sends messages ///
+const handleSendMessage = async (text) => {
+  try {
+    await API.graphql({
+      query: mutations.createChat,
+      variables: {
+        input: {
+          text: text,
+          email: user.attributes.email,
+          members: [user.attributes.email, recipientEmail],
+          sortKey: [user.attributes.email, recipientEmail].sort().join("#"),
         },
-        body: JSON.stringify({ text }), // Pas aan op jouw API
-      });
-      if (!response.ok) throw new Error('Netwerk response was niet ok');
-      const newMessage: Message = await response.json();
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    } catch (error) {
-      console.error('Fout bij het versturen van bericht:', error);
+      },
+    });
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+};
+
+
+const handleReceivedMessage = (receivedChat) => {
+  if (receivedChat.members.includes(user.attributes.email)) {
+    setChats((prevChats) => [...prevChats, receivedChat]);
+    setRecentMessageEmail(receivedChat.email);
+    if (receivedChat.email !== user.attributes.email) {
+      setShowJoinButton(true);
+    }
+  }
+};
+
+  const handleStartNewChat = () => {
+    setRecipientEmail(
+      // @ts-ignore
+      prompt("Enter the email of the person you want to chat with:")
+    );
+    setShowAlert(true);
+  };
+
+  const handleAlertInputChange = (e) => {
+    setRecipientEmail(e.target.value);
+  };
+
+  const handleAlertConfirm = () => {
+    if (recipientEmail) {
+      setShowAlert(false);
+      setShowJoinButton(false);
+      setShowConfirmedConnection(true); 
     }
   };
 
-  // Functie om de chat te joinen
-  const joinChat = () => {
-    setIsJoined(true);
-    // Voeg hier jouw logica toe om aan de backend te laten weten dat de gebruiker de chat heeft gejoined.
-    console.log('Gebruiker heeft de chat gejoined.');
+  const handleAlertCancel = () => {
+    setShowAlert(false);
+    setRecipientEmail("");
   };
 
-  // Effect om berichten op te halen bij het initialiseren
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        // Vervang dit door jouw logica om berichten op te halen van je backend
-        const response = await fetch('JOUW_BACKEND_ENDPOINT/berichten');
-        if (!response.ok) throw new Error('Netwerk response was niet ok');
-        const fetchedMessages: Message[] = await response.json(); // Make sure this matches the Message interface
-        setMessages(fetchedMessages);
-      } catch (error) {
-        console.error('Fout bij het ophalen van berichten:', error);
-      }
-    };
+  const handleJoinChat = (email) => {
+    console.log("Joining chat with email:", email);
+    setRecipientEmail(email);
+    setRecentMessageEmail(email);
+    setShowJoinButton(false);
+    setShowConfirmedConnection(true);
+    setNotificationMessage(`${email} joined the chat`);
+  };
+  
 
-    if (isJoined) {
-      fetchMessages();
-    }
-  }, [isJoined]);
+  // const handleJoinChat = (email) => {
+  //   console.log("Joining chat with email:", email);
+  //   setRecipientEmail(email);
+  //   setShowJoinButton(false); 
+  //   setShowConfirmedConnection(true); 
+  //   setNotificationMessage(`${email} joined the chat`);
+  // }
 
-  return { messages, sendMessage, joinChat, isJoined };
+return {
+    chats,
+    setChats,
+    recipientEmail, 
+    showJoinButton, setShowJoinButton,
+    showConfirmedConnection,
+    showAlert,
+    notificationMessage,
+    handleStartNewChat,
+    handleSendMessage,
+    handleAlertInputChange,
+    handleAlertConfirm,
+    handleAlertCancel,
+    handleJoinChat,
+    recentMessageEmail,
+    handleReceivedMessage,
+    signOut,
+  };
 }

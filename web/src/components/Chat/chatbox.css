@@ -1,80 +1,240 @@
-.chat-box{
-  width: 55%;
-  height: 650px;
-  background-color: #3a72ff5c;
-  border-radius: 15px;
-  right: 40px;
-  position: absolute;
-}
-
-.input-form{
-  position: absolute;
-  bottom: 0;
+.chat-container {
   display: flex;
-  width: 100%;
-}
-
-.inputchat{
-  width: 100%;
-  height: 50px;
-  border: solid black 2px;
-}
-
-.chat-enter{
-  background-color: #3a72ffd4;
-  width: 100px;
-  height: 50px;
+  font-family: 'Arial', sans-serif;
   border-radius: 10px;
-  color: white;
+}
+
+#sidebar {
+  width: 600px;
+  background-color: #4545d773;
+  border-right: 1px solid #e6e6e6;
+  overflow-y: auto;
+  height: 500px;
+  margin-top: 100px;
+  margin-left: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+#sidebar ul li {
+  cursor: pointer;
+  padding: 10px 0;
+  transition: background-color 0.3s;
+  border-radius: 10px;
   text-align: center;
+}
+
+#sidebar ul li:hover {
+  background-color: #c1baff;
+}
+
+#sidebar ul li.active {
+  background-color: #c1baff;
+}
+
+.chat-main {
+  flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.5s ease;
+  flex-direction: column;
+  height: 500px;
+  margin-top: 100px;
+  width: 300px;
+  margin-right: 40px;
+  margin-left: 60px;
+  border-radius: 20px;
 }
 
-.chat-enter:hover{
-  background-color: #3a72ffd4;
-  border-radius: 15px;
-}
-
-.button_containerc{
-  display: block;
-  margin: 20px;
-  gap: 40px;
-  margin-left: 150px;
-}
-
-.buttonc{
-  border-radius: 10px;
-  background-color: #3a72ffd4;
-  color: white;
-  height: 50px;
-  width: 160px;
-  border: 0;
-  margin-left: 10px;
-  transition: all 0.5s ease;
-  cursor: pointer;
-}
-
-.buttonc:hover{
-  border-radius: 15px;
-  background-color: #3a72ff;
-}
-
-.anderpersoon{
-  width: 100%;
-  height: 140px;
-  background-color: #3a72ff;
-  border-radius: 15px;
-}
-
-.personlist{
-  height: 650px;
-  width: 30%;
-  background-color: grey;
+.textjoined {
+  background-color: #e6f7e8;
+  border-bottom: 1px solid #ddd;
+  width: 200px;
+  height: 30px;
   border-radius: 20px;
   position: absolute;
-  margin-left: 100px;
+  left: 50px;
+  top: 40px;
+  font-size: 15px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.button-container{
+  display: flex;
+  position: absolute;
+  top: 40px;
+  right: 100px;
+  gap: 20px;
+}
+
+.button-container .buttona {
+  background-color: #007bff;
+  border-radius: 10px;
+  color: white;
+  border: 0;
+  width: 120px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f9f9fb;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.input-form {
+  display: flex;
+  padding: 10px;
+  background-color: #f7f7f9;
+  border-top: 1px solid #ddd;
+}
+
+.inputchat {
+  flex-grow: 1;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  height: 40px;
+}
+
+.chat-enter kbd {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.chat-enter {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 30px;
+  margin-top: 5px;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  display: flex;
+  max-width: 600px;
+  width: auto;
+  transition: all 0.5s ease;
+  font-size: 15px;
+}
+
+.self-message {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-left: auto;
+  border-top-right-radius: 1;
+  width: auto;
+  transition: all 0.5s ease;
+}
+
+.other-message {
+  background-color: #8ac3ff84;
+  margin-right: auto;
+  border-top-left-radius: 1;
+  width: auto;
+  transition: all 0.5s ease;
+}
+
+.alert input {
+  border-radius: 10px;
+  height: 50px;
+  border: solid 2px black;
+}
+
+.time {
+  font-size: 10px;
+  float: right;
+  color: #888;
+}
+
+.username-name {
+  font-weight: bold;
+}
+
+.join-chat-button-container {
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  text-align: center;
+}
+
+.join-chat-button-container button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.text{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.message-time {
+  font-size: 10px;
+  margin-right: 8px;
+  color: #666;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.self-message-container {
+  justify-content: flex-end;
+}
+
+.other-message-container {
+  justify-content: flex-start;
+  max-width: 600px;
+}
+
+.chatheader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background-color: #4545d773;
+  color: white;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.name-and-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipient-name {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }

@@ -170,28 +170,6 @@
   font-weight: lighter;
 }
 
-.fotoinButtonL{
-  width: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-}
-
-.fotoinButtonR{
-  width: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-}
-
 .submitBeschikbaarheid{
 border-radius: 10px;
 background-color: #3a72ffd4;
@@ -289,4 +267,18 @@ margin-bottom: 10px;
 .timezone-select{
 margin-left: 10px;
 border-radius: 10px; 
+}
+
+.prevIcon svg{
+  font-size: 24px;
+  color: #3a72ffd4;
+  cursor: pointer;
+
+}
+
+.nextIcon svg{
+  font-size: 24px;
+  color: #3a72ffd4;
+  cursor: pointer;
+
 }
