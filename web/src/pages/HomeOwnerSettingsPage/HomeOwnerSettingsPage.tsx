@@ -16,7 +16,7 @@ function HomeOwnerSettingsPage() {
         <div id="main-con">
           <div id="sidebar-con">
             <div className="settings-upper">
-              <h3>Account Settingen</h3>
+              <h3>Account Instellingen</h3>
               <p>Verander hier je account gegevens</p>
             </div>
             <div className="navbar-con">

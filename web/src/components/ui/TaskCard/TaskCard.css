@@ -3,7 +3,7 @@
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  width: 500px;
   height: 700px;
   margin-bottom: 80px;
   flex-direction: column;
@@ -102,38 +102,4 @@
   width: 100%;
   text-align: center;
   border: none;
-}
-
-@media screen and (max-width: 768px) {
-  .task-card {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 40px;
-  }
-
-  .current-task-title {
-    margin-right: 0;
-    width: 100%;
-  }
-
-  .task-title {
-    font-size: 18px;
-    padding-bottom: 20px;
-  }
-
-  .type-klus {
-    width: 120px;
-    height: auto;
-  }
-
-  .klus-icon {
-    margin-bottom: 5px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .task-button {
-    padding-top: 20px;
-    font-size: 18px;
-  }
 }

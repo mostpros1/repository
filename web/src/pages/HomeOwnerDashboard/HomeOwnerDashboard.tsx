@@ -20,4 +20,4 @@ function HomeOwnerDashboard() {
     )
 }
 
-export default HomeOwnerDashboard
+export default HomeOwnerDashboard;

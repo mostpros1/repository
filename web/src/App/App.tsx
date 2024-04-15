@@ -31,12 +31,15 @@ import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile"
 import EditProfile from "../pages/EditProfilePage/EditProfile";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
+import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSettingsPage";
 import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
+import ChatPage from "../pages/ChatPage/ChatPage";
 import FAQPage from "../pages/FAQPage/FAQpage";
+import Jobspage from "../pages/JobsPage/JobsPage";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 
@@ -71,8 +74,11 @@ const App = () => {
       <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
       <Route path="/HomeOwnerDeactivation" element={<HomeOwnerDeactivation />} />
       <Route path="/FAQPage" element={<FAQPage />} />
+      <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
+      <Route path="/jobspage" element={<Jobspage />} />
 
 
+      <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />
@@ -91,7 +97,7 @@ const App = () => {
         />
       </Route>
 
-{/*       <Route path="/chat" element={<ChatPage />} /> */}
+      <Route path="/chat" element={<ChatPage />} />
 
       {/* Protected routes */}
       <Route

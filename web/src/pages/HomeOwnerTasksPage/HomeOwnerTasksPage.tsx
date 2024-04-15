@@ -12,4 +12,4 @@ function HomeOwnerTasksPage() {
     )
 }
 
-export default HomeOwnerTasksPage;
+export default HomeOwnerTasksPage

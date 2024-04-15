@@ -107,7 +107,7 @@ const filteredPeople = people.filter(person => person.name.toLowerCase().include
       {filteredPeople.map(person => (
         <a key={person.id} className="people-block" onClick={() => setSelectedPerson(person.id)}>
           <h2>{person.name}</h2>
-          <p>Message: "{person.previewMessage}"</p>
+          <p className='message-text'> Message: "{person.previewMessage}"</p>
         </a>
       ))}
     </div>

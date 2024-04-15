@@ -8,7 +8,7 @@ import "./HIL.css";
 
 function HIL() {
   return (
-    <div id="content">
+    <div>
       <div className="image-container">
         <img src={img} alt="dutch steamboat" />
         <div className="text-overlay">
