@@ -333,7 +333,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             <div className="prevIcon">
               <ArrowBackIosNewIcon/>
             </div>
-            {/* <img src={Prev} className='fotoinButtonL' alt="Vorige" /> */}
           </button>
           <button
             type="button"
@@ -355,7 +354,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             <div className='nextIcon'>
               <ArrowForwardIosIcon/>
             </div>
-            {/* <img src={Next} className='fotoinButtonR' alt="Volgende" /> */}
           </button>
         </div>
         <div className="week-days">
