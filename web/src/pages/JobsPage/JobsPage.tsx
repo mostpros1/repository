@@ -1,20 +1,29 @@
-import SideNav from "../../components/ui/SideNav/SideNav";
 import NavBar from "../../components/ui/NavBar/NavBar";
 import Footer from "../../components/ui/Footer/Footer";
-import JobsComp from "../../components/JobsComp/JobsComp";
+import Jobs from "../../components/JobsComp/Jobs";
+import SideNav from "../../components/ui/SideNav/SideNav";
 import "./JobsPage.css";
 
-function JobsPage() {
+const jobspage = () => {
   return (
     <div>
       <NavBar />
-      <div id="content">
-        <SideNav />
-        <JobsComp />
+      <div className="side-panel">
+        <div className="side-panel-right">
+          <Jobs
+            name={undefined}
+            function={undefined}
+            rating={undefined}
+            reviews={undefined}
+          />
+          <div className="side-panel-left">
+            <SideNav />
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
   );
-}
+};
 
-export default JobsPage;
+export default jobspage;

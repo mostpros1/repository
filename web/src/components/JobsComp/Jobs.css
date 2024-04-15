@@ -1,0 +1,64 @@
+.professionals-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap as needed */
+    padding: 16px;
+  }
+  
+  .card {
+    width: 250px; /* Adjust the width as needed */
+    border: 1px solid #ccc; /* Adjust color as needed */
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .card-header {
+    margin-bottom: 16px;
+  }
+  
+  .company-name {
+    font-weight: bold;
+    display: block;
+  }
+  
+  .function {
+    color: gray;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .card-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .stars {
+    color: gold;
+    margin-right: 8px;
+  }
+  
+  .rating {
+    color: gray;
+  }
+  
+  .message-btn {
+    background-color: blue; /* Adjust the color as needed */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  
+  .view-profile {
+    color: blue; /* Adjust the color as needed */
+    text-decoration: none;
+    font-size: smaller;
+  }
+  
+  /* Add any additional global styles, animations, or responsive adjustments as needed */
+  

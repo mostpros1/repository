@@ -1,0 +1,28 @@
+/* FAQPage.css */
+.content {
+  display: flex;
+}
+
+.nav-con {
+  /* Assuming your SideNav has its own width, we remove the flex styles here */
+  margin-top: 20px; /* Adjust as needed */
+}
+
+/* Add styles for FAQ component to take the remaining space */
+.faq-con {
+  flex-grow: 1; /* Takes the remaining space */
+  padding: 20px; /* Adds some padding around FAQ */
+  width: 0; /* Fixes flexbox bug with overflow content */
+}
+
+/* Add responsive behavior */
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .nav-con,
+  .faq-con {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
