@@ -325,3 +325,7 @@
   height: 40px;
   padding: 6px;
 }
+.selected-contact {
+  background-color: #f0f0f0; /* Light grey background for selected contact */
+  color: #333; /* Darker text color for better contrast */
+}
