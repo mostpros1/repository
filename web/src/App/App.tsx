@@ -37,7 +37,6 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
-import ChatPage from "../pages/ChatPage/ChatPage";
 import FAQPage from "../pages/FAQPage/FAQpage";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import JobsPage from "../pages/JobsPage/JobsPage";
@@ -45,7 +44,7 @@ import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
-import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import ChatMain from "../components/Chat/ChatMain";
 
 const App = () => {
   return (
@@ -104,7 +103,7 @@ const App = () => {
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
 
-      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
 
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
