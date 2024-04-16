@@ -191,8 +191,14 @@ function MultistepForm() {
         .promise()
         .catch(console.error)
 
-      navigate('/huiseigenaar-resultaat')
-    } else {
+        const profession = window.location.hash.replace("#", "").split("?")[0];
+        const task = window.location.hash.replace("#", "").split("?")[1];
+
+        const datum = new Date(data.date);
+        const date = datum.toISOString().split('T')[0];
+        navigate(`/HomeOwnerResultPage#${profession}?${task}!${date}`);
+    
+      } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
         username: userData.email,
