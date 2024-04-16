@@ -16,7 +16,6 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
-// import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
