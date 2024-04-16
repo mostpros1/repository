@@ -140,16 +140,20 @@ function ChatMain({ user, signOut }) {
         />
         <ul>
           {searchTerm === ""
-            ? contactList.map((contact) => (
-                <li key={contact} onClick={() => switchChat(contact)}>
-                  {contact}
-                </li>
-              ))
-            : filteredContactList.map((contact) => (
-                <li key={contact} onClick={() => switchChat(contact)}>
-                  {contact}
-                </li>
-              ))}
+          ? contactList.map((contact) => (
+            <li key={contact} 
+              onClick={() => switchChat(contact)}
+              className={selectedContact === contact ? 'selected-contact' : ''}>
+              {contact}
+            </li>
+          ))
+        : filteredContactList.map((contact) => (
+            <li key={contact} 
+              onClick={() => switchChat(contact)}
+              className={selectedContact === contact ? 'selected-contact' : ''}>
+              {contact}
+            </li>
+          ))}
         </ul>
       </div>
       
