@@ -60,7 +60,7 @@ function SpecialistCard() {
 
     const profession = window.location.hash.replace("#", "").split("?")[0];
 
-    const task = window.location.hash.replace("#", "").split("?")[1];
+    const task = window.location.hash.replace("#", "").split("?")[1].split("!")[0];
 
     const date = window.location.hash.replace("#", "").split("!")[1];
 
@@ -94,7 +94,8 @@ function SpecialistCard() {
                 '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
                 console.log("Availability =", Availability);
         */
-
+       console.log("task =", task);
+        console.log("convertedItems =", convertedItems);
         if (convertedItems) {
           for (let i: number = 0; i < convertedItems.length; i++) {
             if (convertedItems[i].availibility) {
@@ -106,16 +107,17 @@ function SpecialistCard() {
 
                 if (selected == Availability.dates[x]) {
                   professionals = [...professionals, convertedItems[i]];
-                  console.log(professionals)
+                  console.log(professionals);
                   break;
                 }
               }
             }
           }
-        setSpecialists(/*convertedItems*/professionals);
+          setSpecialists(/*convertedItems*/professionals);
 
 
-      }}).catch(err => {
+        }
+      }).catch(err => {
         console.log(err);
       });
 
