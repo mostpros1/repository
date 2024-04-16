@@ -55,9 +55,9 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         // Assuming data.Items contains the necessary fields for the Job interface
         const jobsFromData = data.Items.map((item) => ({
           id: item.id,
-          name: item.name,
+          name: item.profession,
           distance: item.distance,
-          title: item.title,
+          title: item.task,
           description: item.description,
           location: item.region,
           availability: item.availability,

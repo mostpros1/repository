@@ -5,8 +5,6 @@ function JobList() {
   return (
     <div className="job-con">
       <JobCards/>
-      <JobCards/>
-      <JobCards/>
     </div>
   );
 }
