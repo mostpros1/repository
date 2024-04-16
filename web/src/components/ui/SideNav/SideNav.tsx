@@ -44,7 +44,7 @@ function SideNav() {
 
         <li className="sidebar-item">
           <NavLink
-            to="/Message"
+            to="/chat"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
