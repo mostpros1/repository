@@ -16,7 +16,6 @@
 #sidebar {
   width: 500px;
   background-color: #4545d773;
-  border-right: 1px solid #e6e6e6;
   overflow-y: auto;
   height: 500px;
   margin-top: 100px;
@@ -106,8 +105,12 @@
 .input-form {
   display: flex;
   padding: 10px;
-  background-color: #f7f7f9;
-  border-top: 1px solid #ddd;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border-top: solid 2px rgba(0, 0, 0, 0.13);
+  border-left: solid 2px rgba(0, 0, 0, 0.041);
+  border-right: solid 2px rgba(0, 0, 0, 0.041);
+  border-bottom: solid 2px rgba(0, 0, 0, 0.041);
 }
 
 .inputchat {
@@ -117,7 +120,7 @@
   border-radius: 4px;
   font-size: 15px;
   height: 40px;
-  margin-left: 10px;
+  margin-left: 5px;
   width: auto;
 }
 
@@ -305,4 +308,20 @@
   border: 0;
   margin-bottom: 10px;
   font-size: 15px;
+}
+
+.addPhoto{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px;
 }

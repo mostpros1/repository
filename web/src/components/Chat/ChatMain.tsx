@@ -8,6 +8,7 @@ import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -210,10 +211,13 @@ function ChatMain({ user, signOut }) {
             className="betalingbedrag"
           />
 
+          <IoMdPhotos className="addPhoto" size={10}/>
+
           <input
             type="text"
             name="search"
             id="search"
+            placeholder="Stuur een bericht..."
             onKeyUp={async (e) => {
               if (e.key === "Enter") {
                 const messageText = (e.target as HTMLInputElement).value;
