@@ -56,260 +56,260 @@ const SpecialistResults = ({ navigation }) => {
             </View>
 
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
             <View style={styles.card}>
-                <View style={styles.titleKmWrapper}>
-                    <Text style={[styles.cardTitle]}>Mark van bomen</Text>
-                    <View style={styles.kmWrapper}>
-                        <Ionicons name="location" size={24} color="#308AE4" />
-                        <Text>1.0 KM</Text>
-                   </View>
+              <View style={styles.titleKmWrapper}>
+                <Text style={[styles.cardTitle]}>Mark van bomen</Text>
+                <View style={styles.kmWrapper}>
+                  <Ionicons name="location" size={24} color="#308AE4" />
+                  <Text>1.0 KM</Text>
                 </View>
-                <View style={styles.twoTextWrapper}>
-                    <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
-                    <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
+              </View>
+              <View style={styles.twoTextWrapper}>
+                <Text style={styles.textBold}>Kapotte leiding maken en lekkage verhelpen.</Text>
+                <Text style={styles.textLight}>De leiding is niet meer in  goede staat deze moet vervangen worden en....</Text>
 
-                </View>
+              </View>
 
-                <View style={styles.locationTimeInfoWrapper}>
+              <View style={styles.locationTimeInfoWrapper}>
                 <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Locatie: Amsterdam</Text>
-                   </Pressable>
-                   <Pressable style={styles.kmWrapper}>
-                        <Ionicons name="location" size={32} color="#308AE4" />
-                        <Text>Binnen een maand</Text>
-                   </Pressable>
-                </View>
-                <Pressable style={styles.moreInfo}>
-                    <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Locatie: Amsterdam</Text>
                 </Pressable>
+                <Pressable style={styles.kmWrapper}>
+                  <Ionicons name="location" size={32} color="#308AE4" />
+                  <Text>Binnen een maand</Text>
+                </Pressable>
+              </View>
+              <Pressable style={styles.moreInfo}>
+                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+              </Pressable>
             </View>
 
-              <View style={[styles.footerfix]}></View>
-            </View>
+            <View style={[styles.footerfix]}></View>
+          </View>
         </ScrollView>
         <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
@@ -317,91 +317,91 @@ const SpecialistResults = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-    card:{
-        width: windowWidth - 30,
-        borderRadius: 9,
-        marginBottom: 12,
-        paddingTop: 13,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 4, 
-        },
-        shadowOpacity: 0.3, 
-        shadowRadius: 6, 
-        elevation: 6,
-        backgroundColor: "white",
-    }, 
-
-    locationTimeInfoWrapper:{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        flexDirection: "row",
-        marginTop: 20,
+  card: {
+    width: windowWidth - 30,
+    borderRadius: 9,
+    marginBottom: 12,
+    paddingTop: 13,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+    backgroundColor: "white",
+  },
 
-    moreInfo:{
-        display: "flex",
-        alignItems: "center",
-        marginTop: 10,
-        marginBottom: 10,
-    },
+  locationTimeInfoWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    marginTop: 20,
+  },
 
-    twoTextWrapper:{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems:"center",
-        justifyContent: "center",
-        paddingLeft: 30,
-        paddingRight: 20,
-        gap: 10,
-        paddingTop: 10,
-    },
+  moreInfo: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
 
-    titleKmWrapper:{
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems:"center",
-        paddingLeft: 30,
-        paddingRight: 20,
-    },
+  twoTextWrapper: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 30,
+    paddingRight: 20,
+    gap: 10,
+    paddingTop: 10,
+  },
 
-    link:{
-        color: "#308AE4",
-    },
+  titleKmWrapper: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 30,
+    paddingRight: 20,
+  },
 
-    kmWrapper: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 2,
-      },
-    
-      cardTitle:{
-        fontSize: 18,
-      },
+  link: {
+    color: "#308AE4",
+  },
 
-      textBold:{
-        fontSize: 15,
-        fontWeight: "bold",
-        textAlign: "center",
-      },
+  kmWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+  },
 
-      textLight:{
-        fontSize: 15,
-        textAlign: "center",
-        color: "#8B8D96",
-      },
+  cardTitle: {
+    fontSize: 18,
+  },
 
-    footerfix: {
-      height: 60,
-      width: windowWidth,
-    },  
-      
+  textBold: {
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  textLight: {
+    fontSize: 15,
+    textAlign: "center",
+    color: "#8B8D96",
+  },
+
+  footerfix: {
+    height: 60,
+    width: windowWidth,
+  },
+
   view: {
     height: "100%",
     width: windowWidth,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  bigTitle:{
+  bigTitle: {
     color: "#303030",
     textAlign: "center",
     fontWeight: "bold",
@@ -425,10 +425,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingBottom: 15,
     flexDirection: "column",
-    borderBottomWidth: 6, 
-    borderBottomColor: "#f4f4f5", 
+    borderBottomWidth: 6,
+    borderBottomColor: "#f4f4f5",
   },
-  
+
   container: {
     flexDirection: "row",
     alignItems: "center",
