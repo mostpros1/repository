@@ -43,7 +43,7 @@ import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 
 import ChatContactList from "../components/Chat/ChatContactList";
-import ChatMain from "../components/Chat/ChatMain.tsx";
+import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 
 const App = () => {
   return (
@@ -86,15 +86,10 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
-
-
-      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
-
+      <Route path="/chat" element={<ChatPage />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
-
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />
-
       <Route path="/payments">
         <Route path="success" element={<>Betaling is gelukt!</>} />
         <Route path="canceled" element={<>Betaling is geannuleerd.</>} />
