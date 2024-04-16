@@ -1,4 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect } from "react";
+import { API, graphqlOperation } from "aws-amplify";
+import * as mutations from "../../graphql/mutations";
+import * as queries from "../../graphql/queries";
+import * as subscriptions from "../../graphql/subscriptions";
 
 interface Message {
   id: number;
@@ -43,7 +47,6 @@ const handleSendMessage = async (text) => {
   }
 };
 
-
 const handleReceivedMessage = (receivedChat) => {
   if (receivedChat.members.includes(user.attributes.email)) {
     setChats((prevChats) => [...prevChats, receivedChat]);
@@ -87,15 +90,6 @@ const handleReceivedMessage = (receivedChat) => {
     setShowConfirmedConnection(true);
     setNotificationMessage(`${email} joined the chat`);
   };
-  
-
-  // const handleJoinChat = (email) => {
-  //   console.log("Joining chat with email:", email);
-  //   setRecipientEmail(email);
-  //   setShowJoinButton(false); 
-  //   setShowConfirmedConnection(true); 
-  //   setNotificationMessage(`${email} joined the chat`);
-  // }
 
 return {
     chats,

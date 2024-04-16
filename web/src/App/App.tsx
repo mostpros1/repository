@@ -16,7 +16,7 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
-// // import ChatPage from "../pages/ChatPage/ChatPage";
+import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
@@ -37,14 +37,12 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
-import FAQPage from "../pages/FAQPage/FAQpage";
+//import FAQPage from "../pages/FAQPage/FAQpage";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import JobsPage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
-import ChatContactList from "../components/Chat/ChatContactList";
-import ChatMain from "../components/Chat/ChatMain";
 
 const App = () => {
   return (
@@ -88,7 +86,7 @@ const App = () => {
         path="/HomeOwnerDeactivation"
         element={<HomeOwnerDeactivation />}
       />
-      <Route path="/FAQPage" element={<FAQPage />} />
+      {/* <Route path="/FAQPage" element={<FAQPage />} /> */}
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
