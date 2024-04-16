@@ -58,7 +58,6 @@ cd ./App
 npm install
 ```
 
-
 To start the frontend locally:
 
 ```
