@@ -64,7 +64,7 @@ function SpecialistCard() {
 
     const url = window.location.href;
     const date = url.replace("?", "").split("!")[1];
-console.log(date);
+    console.log(date);
 
 
     dynamo.query({
@@ -106,7 +106,7 @@ console.log(date);
 
               for (let x: number = 0; x < Availability.dates.length; x++) {
 
-                const selected = JSON.stringify(date).replace('T', '"').split('"')[3];
+                const selected = date;
 
                 if (selected == Availability.dates[x]) {
                   professionals = [...professionals, convertedItems[i]];
