@@ -80,7 +80,7 @@ function SideNav() {
 
         <li className="sidebar-item">
           <NavLink
-            to="/Reviews"
+            to="/ReviewPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }

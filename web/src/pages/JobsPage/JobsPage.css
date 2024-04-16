@@ -1,4 +1,4 @@
-.side-panel {
+#side-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }

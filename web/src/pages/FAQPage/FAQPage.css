@@ -8,11 +8,26 @@
   margin-top: 20px; /* Adjust as needed */
 }
 
+.faq-header {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 700px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+
 /* Add styles for FAQ component to take the remaining space */
 .faq-con {
-  flex-grow: 1; /* Takes the remaining space */
-  padding: 20px; /* Adds some padding around FAQ */
-  width: 0; /* Fixes flexbox bug with overflow content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 20px;
+  width: 0;
+  flex-direction: column;
 }
 
 /* Add responsive behavior */

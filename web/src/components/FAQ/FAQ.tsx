@@ -1,6 +1,6 @@
 import React from "react";
 import Category from "./Category";
-import faqpic from "../../assets/FAQ.svg";
+
 import "./FAQ.css";
 
 const faqData = [
@@ -42,15 +42,13 @@ const faqData = [
 
 const FAQ = () => {
   return (
-    <div className="faq-grid">
-      <div className="faq-header">
-        <p>Veel gestelde vragen</p>
-        <img src={faqpic} alt="faq" />
+    <>
+      <div className="faq-grid">
+        {faqData.map((category) => (
+          <Category key={category.title} {...category} />
+        ))}
       </div>
-      {faqData.map((category) => (
-        <Category key={category.title} {...category} />
-      ))}
-    </div>
+    </>
   );
 };
 

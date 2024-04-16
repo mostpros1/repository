@@ -40,8 +40,8 @@ import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeac
 import ChatPage from "../pages/ChatPage/ChatPage";
 import FAQPage from "../pages/FAQPage/FAQpage";
 import Jobspage from "../pages/JobsPage/JobsPage";
-import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import JobsPage from "../pages/JobsPage/JobsPage";
+import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
@@ -70,27 +70,44 @@ const App = () => {
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
+      <Route
+        path="/MijnKlussenOverzicht"
+        element={<MijnKlussenOverzichtPage />}
+      />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/HomeOwnerSettingsPage" element={<HomeOwnerSettingsPage />} />
-      <Route path="/HomeOwnerNotification" element={<HomeOwnerNotification />} />
+      <Route
+        path="/HomeOwnerSettingsPage"
+        element={<HomeOwnerSettingsPage />}
+      />
+      <Route
+        path="/HomeOwnerNotification"
+        element={<HomeOwnerNotification />}
+      />
       <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
-      <Route path="/HomeOwnerDeactivation" element={<HomeOwnerDeactivation />} />
+      <Route
+        path="/HomeOwnerDeactivation"
+        element={<HomeOwnerDeactivation />}
+      />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
-
+      <Route path="/ReviewPage" element={<ReviewPage />} />
 
       <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
+      <Route
+        path="/MijnKlussenOverzicht"
+        element={<MijnKlussenOverzichtPage />}
+      />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
+      <Route path="/Invoice" element={<InvoicePage />} />
 
-
-      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
+      <Route
+        path="/chat"
+        element={<ChatMain user={undefined} signOut={undefined} />}
+      />
 
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 
