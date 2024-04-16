@@ -98,8 +98,12 @@ function ChatMain({ user, signOut }) {
   }, [chats, user.attributes.email]);
   
   const switchChat = (contact) => {
-    setSelectedContact(contact);
-    handleJoinChat(contact);
+    if (selectedContact === contact) {
+      setSelectedContact(null); // Deselect the contact
+    } else {
+      setSelectedContact(contact);
+      handleJoinChat(contact);
+    }
   };
 
   const email = window.location.hash.replace("/", "").split("#")[1];
