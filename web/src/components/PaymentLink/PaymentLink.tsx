@@ -19,8 +19,12 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         async function checkStripeAccountId() {
             try {
                 const user = await Auth.currentAuthenticatedUser();
-                setUserEmail(user.attributes.email);
+                console.log('Gebruikersattributen:', user.attributes);
+                const email = user.attributes.email;
+                setUserEmail(email);
                 const stripeAccountId = user.attributes['custom:stripeAccountId'] || '';
+                console.log('E-mail van de gebruiker:', email);
+                console.log('Stripe-account-ID van de gebruiker:', stripeAccountId);
                 setUserStripeAccountId(stripeAccountId);
             } catch (e) {
                 setError('Failed to authenticate user.');
@@ -30,8 +34,8 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     }, []);
 
     const createSession = async () => {
-        if (userStripeAccountId === '') {
-            setError('Stripe account ID is missing.');
+        if (userStripeAccountId === '' || userEmail === '') {
+            setError('Stripe account ID or user email is missing.');
             return;
         }
 
@@ -91,6 +95,5 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         </>
     );
 }
-
 
 export default PaymentLink;

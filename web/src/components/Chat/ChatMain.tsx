@@ -139,9 +139,8 @@ function ChatMain({ user, signOut }) {
   };
 
   const filteredChats = selectedContact
-    ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-    : chats;
-    
+  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+  : [];
 
   return (
     <div className="chat-container">
