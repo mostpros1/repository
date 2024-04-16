@@ -71,7 +71,6 @@ function Navigation() {
         <p>{user.attributes.email}</p>
         {DashboardLink}
         <button onClick={handleLogout}>Uitloggen</button>
-        <Link to="/chat">Chat</Link>
       </>
     );
   }

@@ -9,7 +9,6 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 
-
 function ChatMain({ user, signOut }) {
   const {
     chats,
@@ -42,23 +41,6 @@ function ChatMain({ user, signOut }) {
     );
     setFilteredContactList(filteredContacts);
   }, [searchTerm, contactList]);
-
-  const handleSendImage = async () => {
-    if (!image) return;
-    try {
-      await handleSendMessage(image);
-      setImage(null);
-    } catch (error) {
-      console.error("Error sending image:", error);
-    }
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
 
   useEffect(() => {
     async function fetchChats() {
