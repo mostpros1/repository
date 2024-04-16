@@ -45,7 +45,7 @@ import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
-import ChatMain from "../components/Chat/ChatMain.tsx";
+import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 
 const App = () => {
   return (
@@ -104,10 +104,7 @@ const App = () => {
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
 
-      <Route
-        path="/chat"
-        element={<ChatMain user={undefined} signOut={undefined} />}
-      />
+      <Route path="/chat" element={<ChatPage />} />
 
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
 

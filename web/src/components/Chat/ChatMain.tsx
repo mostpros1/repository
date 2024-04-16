@@ -1,13 +1,14 @@
-import "@aws-amplify/ui-react/styles.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useRef, useState } from "react";
-import * as mutations from "../../graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../../graphql/queries";
-import {intlFormatDistance} from "date-fns/intlFormatDistance";
 import * as subscriptions from "../../graphql/subscriptions";
+import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
+import PaymentLink from '../PaymentLink/PaymentLink';
+import { IoSend } from "react-icons/io5";
+import { MdOutlinePayment } from "react-icons/md";
+
 
 function ChatMain({ user, signOut }) {
   const {
@@ -29,23 +30,29 @@ function ChatMain({ user, signOut }) {
     handleReceivedMessage,
   } = useChatBackend(user, signOut);
 
-  const [contactList, setContactList] = useState([]);
+  const [contactList, setContactList] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState(null);
-  const [image, setImage] = useState(null); // Nieuwe staat voor de afbeelding
+  const [image, setImage] = useState(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
 
-  // Functie om afbeelding te verzenden
+  useEffect(() => {
+    const filteredContacts = contactList.filter((contact) =>
+      contact.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredContactList(filteredContacts);
+  }, [searchTerm, contactList]);
+
   const handleSendImage = async () => {
-    if (!image) return; // Afbeelding controleren
+    if (!image) return;
     try {
-      // Verstuur de afbeelding naar de backend
-      await handleSendMessage(image); // Verstuur de afbeelding met de bestaande handleSendMessage-functie
-      setImage(null); // Wis de afbeelding nadat deze is verzonden
+      await handleSendMessage(image);
+      setImage(null);
     } catch (error) {
       console.error("Error sending image:", error);
     }
   };
 
-  // Functie om afbeeldingsbestand te verwerken wanneer deze wordt geüpload
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -63,7 +70,7 @@ function ChatMain({ user, signOut }) {
           },
         },
       });
-      // @ts-ignore
+      //@ts-ignore
       setChats(allChats.data.listChats.items);
     }
     fetchChats();
@@ -72,7 +79,7 @@ function ChatMain({ user, signOut }) {
   useEffect(() => {
     const sub = API.graphql(
       graphqlOperation(subscriptions.onCreateChat)
-      // @ts-ignore
+      //@ts-ignore
     ).subscribe({
       next: ({ value }) => {
         handleReceivedMessage(value.data.onCreateChat);
@@ -96,7 +103,7 @@ function ChatMain({ user, signOut }) {
       chats.forEach(chat => {
         chat.members.forEach(member => {
           if (member !== user.attributes.email) {
-            contacts.add(member);
+            contacts.add(member.split("@")[0]);
           }
         });
       });
@@ -104,7 +111,7 @@ function ChatMain({ user, signOut }) {
     };
 
     const uniqueContacts = extractContacts();
-    // @ts-ignore
+    //@ts-ignore
     setContactList(uniqueContacts);
   }, [chats, user.attributes.email]);
   
@@ -113,27 +120,60 @@ function ChatMain({ user, signOut }) {
     handleJoinChat(contact);
   };
 
+  const email = window.location.hash.replace("/", "").split("#")[1];
+
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+  const [customSubtotal, setCustomSubtotal] = useState('');
+
+  const updateSubtotal = () => {
+    if (!customSubtotal || isNaN(Number(customSubtotal))) {
+      alert('Voer een geldig bedrag in.');
+      return;
+    }
+    setSubtotal(Number(customSubtotal));
+  };
+  
+  const handlePaySendMessage = (text) => {
+      console.log(text);
+  };
+
   const filteredChats = selectedContact
-    ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-    : chats;
+  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+  : [];
 
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
+      <input
+          type="text"
+          placeholder="Zoek gebruikers..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="searchList"
+        />
         <ul>
-          {contactList.map(contact => (
-            <li key={contact} onClick={() => switchChat(contact)}>
-              {contact}
-            </li>
-          ))}
+          {searchTerm === ""
+            ? contactList.map((contact) => (
+                <li key={contact} onClick={() => switchChat(contact)}>
+                  {contact}
+                </li>
+              ))
+            : filteredContactList.map((contact) => (
+                <li key={contact} onClick={() => switchChat(contact)}>
+                  {contact}
+                </li>
+              ))}
         </ul>
       </div>
-
+      
+      <div className="main-container">
+      {selectedContact && (
       <div className="chat-main">
         <div className="chatheader">
           <div className="chat-info">
             <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail}</h2>
+              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
             </div>
           </div>
         </div>
@@ -169,6 +209,21 @@ function ChatMain({ user, signOut }) {
         </div>
 
         <div className="input-form">
+          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
+            {showPaymentLink && (
+                <PaymentLink
+                    subtotal={subtotal}
+                    handleSendMessage={handlePaySendMessage}
+                />
+            )}
+            <input
+            type="number"
+            value={customSubtotal}
+            onChange={(e) => setCustomSubtotal(e.target.value)}
+            placeholder="Subtotaal"
+            className="betalingbedrag"
+          />
+
           <input
             type="text"
             name="search"
@@ -185,10 +240,11 @@ function ChatMain({ user, signOut }) {
             className="inputchat"
           />
           <div className="chat-enter">
-            <kbd>Enter</kbd>
+            <kbd><IoSend size={25} /></kbd>
           </div>
         </div>
       </div>
+      )}</div>
 
       {showJoinButton && user.attributes.email !== recentMessageEmail && !showConfirmedConnection && (
         <div className="join-chat-button-container">
