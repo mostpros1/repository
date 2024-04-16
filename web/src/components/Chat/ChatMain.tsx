@@ -35,6 +35,27 @@ function ChatMain({ user, signOut }) {
   const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
+  const [groupedMessages, setGroupedMessages] = useState({});
+
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((groups, message) => {
+      const date = new Date(message.createdAt).toLocaleDateString('nl-NL', {
+        month: 'short',
+        day: '2-digit',
+      });
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+  };
+
+  useEffect(() => {
+    const filteredChats = chats; // Dit zou je filtering logica zijn
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }, [chats]);
 
   useEffect(() => {
     const filteredContacts = contactList.filter((contact) =>
@@ -127,7 +148,7 @@ function ChatMain({ user, signOut }) {
 
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : [];
+  : [];  
 
   return (
     <div className="chat-container">
@@ -169,36 +190,38 @@ function ChatMain({ user, signOut }) {
           </div>
         </div>
 
-        <div className="chat-box scrollable-chatbox" ref={chatBoxRef}>
-          {filteredChats
-            .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-            .map((chat) => (
-              <div
-                key={chat.id}
-                className={`message-container ${
-                  chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
-                }`}
-              >
-                <div
-                  className={`message-bubble ${
-                  chat.email === user.attributes.email ? "self-message" : "other-message"
-                  }`}
-                >
-                <div className="username">
-    <span className="username-name">{chat.email.split("@")[0]}</span>
-  </div>
-  <p className="text">{chat.text}</p>
-  <time dateTime={chat.createdAt} className="message-time">
-    {new Intl.DateTimeFormat('nl-NL', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(new Date(chat.createdAt))}
-  </time>
-</div>
-
-              </div>
-            ))}
-        </div>
+        <div className="chat-box" ref={chatBoxRef}>
+              {Object.keys(groupedMessages).map((date) => (
+                <React.Fragment key={date}>
+                  <div className="date-separator">{date}</div>
+                  {groupedMessages[date].map((chat) => (
+                    <div
+                      key={chat.id}
+                      className={`message-container ${
+                        chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                      }`}
+                    >
+                      <div
+                        className={`message-bubble ${
+                          chat.email === user.attributes.email ? "self-message" : "other-message"
+                        }`}
+                      >
+                        <div className="username">
+                          <span className="username-name">{chat.email.split("@")[0]}</span>
+                        </div>
+                        <p className="text">{chat.text}</p>
+                        <time dateTime={chat.createdAt} className="message-time">
+                          {new Intl.DateTimeFormat('nl-NL', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          }).format(new Date(chat.createdAt))}
+                        </time>
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
 
         <div className="input-form">
           <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>

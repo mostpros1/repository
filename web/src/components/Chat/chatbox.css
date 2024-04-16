@@ -330,3 +330,12 @@
   background-color: #8ac3ffc7;
   color: rgb(255, 255, 255);
 }
+
+.date-separator {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
+}
