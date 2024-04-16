@@ -28,7 +28,7 @@ function BevestigEmailPage() {
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
-            nextPage: '/huiseigenaar-resultaat',
+            nextPage: '/dashboard-huiseigenaar',
             onSuccess: () => {
                 cognitoClient.adminAddUserToGroup({
                     UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -41,7 +41,7 @@ function BevestigEmailPage() {
         },
         'PROFESSIONAL': {
             roleName: "Professional",
-            nextPage: '/specialist-resultaat',
+            nextPage: '/dashboard-professional',
             
             onSuccess: () => {
             cognitoClient.adminAddUserToGroup({
