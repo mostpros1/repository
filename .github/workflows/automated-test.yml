@@ -3,7 +3,7 @@ name: Cypress Tests
 on: 
   push:
     branches:
-      - 'automated-test'
+      - 'automated-test-tarik'
 
 jobs:
   cypress-run:
@@ -17,6 +17,8 @@ jobs:
         run: |
           cd web
           npm ci --verbose
+
+      # Install Cypress
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
