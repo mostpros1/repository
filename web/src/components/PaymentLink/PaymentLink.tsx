@@ -22,10 +22,10 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                 console.log('Gebruikersattributen:', user.attributes);
                 const email = user.attributes.email;
                 setUserEmail(email);
-                const stripeAccountId = user.attributes['custom:stripeAccountId'] || '';
+                const userStripeAccountId = user.attributes['custom:stripeAccountId'] || '';
                 console.log('E-mail van de gebruiker:', email);
-                console.log('Stripe-account-ID van de gebruiker:', stripeAccountId);
-                setUserStripeAccountId(stripeAccountId);
+                console.log('Stripe-account-ID van de gebruiker:', userStripeAccountId);
+                setUserStripeAccountId(userStripeAccountId);
             } catch (e) {
                 setError('Failed to authenticate user.');
             }
