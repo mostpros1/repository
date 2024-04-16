@@ -7,7 +7,7 @@ function ChatPage() {
     return(
     <div id="root">
         <NavBar />
-        <ChatMain />
+        <ChatMain user={undefined} signOut={undefined} />
         <SideNav />
         <Footer />
     </div>
