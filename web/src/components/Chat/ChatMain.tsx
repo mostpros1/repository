@@ -1,13 +1,14 @@
 import "@aws-amplify/ui-react/styles.css";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useRef, useState } from "react";
-import * as mutations from "../../graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../../graphql/queries";
-import {intlFormatDistance} from "date-fns/intlFormatDistance";
 import * as subscriptions from "../../graphql/subscriptions";
+import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
+import PaymentLink from '../PaymentLink/PaymentLink';
+import { IoSend } from "react-icons/io5";
+import { MdOutlinePayment } from "react-icons/md";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -113,9 +114,33 @@ function ChatMain({ user, signOut }) {
     handleJoinChat(contact);
   };
 
+  const email = window.location.hash.replace("/", "").split("#")[1];
+
+  if (email) {
+    console.log(email);
+  }
+
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+  const [customSubtotal, setCustomSubtotal] = useState('');
+
+  // Functie om de subtotal te bij te werken
+  const updateSubtotal = () => {
+    if (!customSubtotal || isNaN(Number(customSubtotal))) {
+      alert('Voer een geldig bedrag in.');
+      return;
+    }
+    setSubtotal(Number(customSubtotal));
+  };
+  
+
+  const handlePaySendMessage = (text) => {
+      console.log(text);
+  };
+
   const filteredChats = selectedContact
-    ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-    : chats;
+  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+  : [];
 
   return (
     <div className="chat-container">
@@ -169,6 +194,21 @@ function ChatMain({ user, signOut }) {
         </div>
 
         <div className="input-form">
+          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
+            {showPaymentLink && (
+                <PaymentLink
+                    subtotal={subtotal}
+                    handleSendMessage={handlePaySendMessage}
+                />
+            )}
+            <input
+            type="number"
+            value={customSubtotal}
+            onChange={(e) => setCustomSubtotal(e.target.value)}
+            placeholder="Subtotaal"
+            className="betalingbedrag"
+          />
+
           <input
             type="text"
             name="search"
@@ -185,7 +225,7 @@ function ChatMain({ user, signOut }) {
             className="inputchat"
           />
           <div className="chat-enter">
-            <kbd>Enter</kbd>
+            <kbd><IoSend size={30} /></kbd>
           </div>
         </div>
       </div>
