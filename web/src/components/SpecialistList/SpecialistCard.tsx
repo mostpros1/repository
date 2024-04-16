@@ -62,7 +62,10 @@ function SpecialistCard() {
 
     const task = window.location.hash.replace("#", "").split("?")[1].split("!")[0];
 
-    const date = window.location.hash.replace("#", "").split("!")[1];
+    const url = window.location.href;
+    const date = url.replace("?", "").split("!")[1];
+console.log(date);
+
 
     dynamo.query({
       TableName: "Professionals",
@@ -94,7 +97,7 @@ function SpecialistCard() {
                 '{"dates":["2024-03-31","2024-04-01","2024-04-02"]}'
                 console.log("Availability =", Availability);
         */
-       console.log("task =", task);
+        console.log("task =", task);
         console.log("convertedItems =", convertedItems);
         if (convertedItems) {
           for (let i: number = 0; i < convertedItems.length; i++) {
