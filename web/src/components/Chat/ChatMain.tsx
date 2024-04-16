@@ -181,20 +181,21 @@ function ChatMain({ user, signOut }) {
               >
                 <div
                   className={`message-bubble ${
-                    chat.email === user.attributes.email ? "self-message" : "other-message"
+                  chat.email === user.attributes.email ? "self-message" : "other-message"
                   }`}
                 >
-                  <div className="username">
-                    <span className="username-name">{chat.email.split("@")[0]}</span>
-                  </div>
-                  <p className="text">{chat.text}</p>
-                </div>
-                <time dateTime={chat.createdAt} className="message-time">
-                  {new Intl.DateTimeFormat('nl-NL', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }).format(new Date(chat.createdAt))}
-                </time>
+                <div className="username">
+    <span className="username-name">{chat.email.split("@")[0]}</span>
+  </div>
+  <p className="text">{chat.text}</p>
+  <time dateTime={chat.createdAt} className="message-time">
+    {new Intl.DateTimeFormat('nl-NL', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(chat.createdAt))}
+  </time>
+</div>
+
               </div>
             ))}
         </div>

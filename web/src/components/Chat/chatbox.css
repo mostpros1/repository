@@ -18,7 +18,7 @@
   background-color: #4545d773;
   overflow-y: auto;
   height: 500px;
-  margin-top: 100px;
+  margin-top: 60px;
   margin-left: 20px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   height: 500px;
-  margin-top: 100px;
+  margin-top: 60px;
   width: 800px;
   margin-right: 40px;
   margin-left: 60px;
@@ -149,6 +149,7 @@
   width: auto;
   transition: all 0.5s ease;
   font-size: 15px;
+  align-items: center;
 }
 
 .self-message {
@@ -207,25 +208,24 @@
 
 .message-time {
   font-size: 10px;
-  margin-right: 8px;
+  margin-left: 8px;
   color: #666;
-  margin-bottom: 15px;
-  margin-left: 5px;
+  white-space: nowrap;
 }
 
 .message-container {
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   margin-bottom: 10px;
 }
 
 .self-message-container {
-  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .other-message-container {
-  justify-content: flex-start;
-  max-width: 600px;
+  align-items: flex-start;
 }
 
 .chatheader {
@@ -325,7 +325,8 @@
   height: 40px;
   padding: 6px;
 }
+
 .selected-contact {
-  background-color: #f0f0f0; /* Light grey background for selected contact */
-  color: #333; /* Darker text color for better contrast */
+  background-color: #8ac3ffc7;
+  color: rgb(255, 255, 255);
 }
