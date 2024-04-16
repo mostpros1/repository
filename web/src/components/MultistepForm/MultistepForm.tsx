@@ -154,8 +154,8 @@ function MultistepForm() {
 
 
     updateFields({ profession, task });
- }, []);
- 
+  }, []);
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     console.log('Form Data:', data);
@@ -175,21 +175,21 @@ function MultistepForm() {
       console.log(user)
       console.log('Timonnn:', data);
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
-    
+
       dynamo
-          .put({
-            Item: {
-              id: Math.floor(Math.random() * 1000000000),
-              user_email: currentAuthenticatedUser.attributes.email,
-              profession: data.profession,
-              task: data.task,
-              region: data.stad,
-                  
-            },
-            TableName: "Klussen",
-          })
-          .promise()
-          .catch(console.error)
+        .put({
+          Item: {
+            id: Math.floor(Math.random() * 1000000000),
+            user_email: currentAuthenticatedUser.attributes.email,
+            profession: data.profession,
+            task: data.task,
+            region: data.stad,
+
+          },
+          TableName: "Klussen",
+        })
+        .promise()
+        .catch(console.error)
 
       navigate('/huiseigenaar-resultaat')
     } else {
@@ -198,20 +198,29 @@ function MultistepForm() {
         username: userData.email,
         password: userData.password,
         attributes: {
+          phone_number: userData.phoneNumber,
           name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber
+          "custom:family_name": userData.lastName,
         },
-        autoSignIn: { enabled: true }
+        autoSignIn: { enabled: true },
       })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          const profession = window.location.hash.replace("#", "").split("?")[0];
+          const task = window.location.hash.replace("#", "").split("?")[1];
+
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+            const profession = window.location.hash.replace("#", "").split("?")[0];
+            const task = window.location.hash.replace("#", "").split("?")[1];
+
+            const datum = new Date(data.date);
+            const date = datum.toISOString().split('T')[0];
+            navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }
