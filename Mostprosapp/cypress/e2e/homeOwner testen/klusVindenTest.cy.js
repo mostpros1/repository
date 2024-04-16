@@ -3,7 +3,7 @@ describe('Home Owner Test: Klus Vinden Test', () => {
     beforeEach(() => {
         cy.viewport('iphone-x')
         cy.homeOwnerAppTestBegin()
-        cy.get('[data-testid="klusBtn"]').click()
+        // cy.get('[data-testid="nieuwKlusBtn"]').click()
     })
 
     context('Beroep', () => {

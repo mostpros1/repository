@@ -12,16 +12,16 @@ describe('Home Owner Test: Search Test', () => {
     })
 
     it('Search test 2: Ga door zonder een keuze', () => {
-        cy.get('[data-testid="forward"]').click()
-        cy.get('[data-testid="forward"]').should('exist')
+        cy.get('[data-testid="zoekBtn"]').click()
+        cy.get('[data-testid="zoekBtn"]').should('exist')
     })
 
     it('Search test 3: Random letters intypen', () => {
         const randomWord = faker.random.words();
 
         cy.get('[data-testid="searchbar"]').click().type(randomWord)
-        cy.get('[data-testid="forward"]').click()
-        cy.get('[data-testid="forward"]').should('exist')
+        cy.get('[data-testid="zoekBtn"]').click()
+        cy.get('[data-testid="zoekBtn"]').should('exist')
     })
 
     it('Search test 4: Random nummers intypen', () => {
@@ -30,18 +30,18 @@ describe('Home Owner Test: Search Test', () => {
         const randomInteger = faker.datatype.number({ min, max });
 
         cy.get('[data-testid="searchbar"]').click().type(randomInteger)
-        cy.get('[data-testid="forward"]').click()
-        cy.get('[data-testid="forward"]').should('exist')
+        cy.get('[data-testid="zoekBtn"]').click()
+        cy.get('[data-testid="zoekBtn"]').should('exist')
     })
 
-    // it('Search test 5: Probeer elke keuze', () => {
-    //     for (let i = 1; i < 40; i++) {
-    //         cy.get('[data-testid="searchbar"]').click()
-    //         cy.get(`[data-testid="option"] > :nth-child(1) > :nth-child(${i})`).click()
-    //         cy.get('[data-testid="forward"]').click()
-    //         // cy.wait(100);
-    //         cy.homeOwnerAppTestBegin()
-    //     }
-    // })
+    it('Search test 5: Probeer elke keuze', () => {
+        for (let i = 1; i < 40; i++) {
+            cy.get('[data-testid="searchbar"]').click()
+            cy.get(`[data-testid="options"] > :nth-child(1) > :nth-child(${i})`).click()
+            cy.get('[data-testid="zoekBtn"]').click()
+            // cy.wait(100);
+            cy.homeOwnerAppTestBegin()
+        }
+    })
 
 })
