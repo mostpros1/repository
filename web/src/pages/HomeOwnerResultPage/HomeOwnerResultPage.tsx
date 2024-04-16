@@ -20,4 +20,4 @@ function HomeOwnerResultPage() {
     )
 }
 
-export default HomeOwnerResultPage
+export default HomeOwnerResultPage;

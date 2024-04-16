@@ -1,0 +1,29 @@
+.question {
+  background-color: #f7f7f7;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect for questions */
+.question:hover {
+  background-color: #e7e7e7;
+}
+
+/* The active or 'open' state of the question, which might display more content */
+.question-active {
+  background-color: #e9ecef;
+}
+
+/* Question content that might be hidden by default and shown when active */
+.question-content {
+  display: block;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
