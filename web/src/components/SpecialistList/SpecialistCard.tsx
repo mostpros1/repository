@@ -10,6 +10,7 @@ function SpecialistCard() {
       name: "Jan Schilder",
       img: person,
       job: "Loodgieter",
+      email: "test@test.nl",
       desc: "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
       price: "€500",
     },
@@ -18,6 +19,7 @@ function SpecialistCard() {
       name: "Jan Schilder",
       img: person,
       job: "Loodgieter",
+      email: "test@test.nl",
       desc: "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
       price: "€500",
     },
@@ -26,6 +28,7 @@ function SpecialistCard() {
       name: "Jan Schilder",
       img: person,
       job: "Loodgieter",
+      email: "test@test.nl",  
       desc: "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
       price: "€500",
     },
@@ -34,6 +37,7 @@ function SpecialistCard() {
       name: "Jan Schilder",
       img: person,
       job: "Loodgieter",
+      email: "test@test.nl",
       desc: "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
       price: "€500",
     },
@@ -62,7 +66,7 @@ function SpecialistCard() {
           <p>{specialist.price}</p>
         </div>
         <p className="specialist_card_desc">{specialist.desc}</p>
-        <a className="mail_btn" href="mailto:teammostpros@gmail.com">Contact opnemen</a>
+        <a className="mail_btn" href={`/chat#${specialist.email}`}>Contact opnemen</a>
       </div>
     );
   });

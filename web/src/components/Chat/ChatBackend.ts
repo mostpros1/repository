@@ -1,8 +1,18 @@
-import React, { useEffect } from "react";
-import { API, graphqlOperation } from "aws-amplify";
-import * as mutations from "../../graphql/mutations";
-import * as queries from "../../graphql/queries";
-import * as subscriptions from "../../graphql/subscriptions";
+import { useState, useEffect } from 'react';
+
+interface Message {
+  id: number;
+  text: string;
+  senderId: string;
+  receiverId: string;
+  timestamp: string;
+}
+
+interface Person {
+  id: string;
+  name: string;
+  previewMessage: string;
+}
 
 export function useChatBackend(user: any, signOut) {
   const [chats, setChats] = React.useState<any[]>([]);
