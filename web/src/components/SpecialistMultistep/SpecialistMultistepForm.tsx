@@ -293,35 +293,33 @@ function SpecialistMultistepForm() {
     if (!isLastStep) {
       return next()
     } else {
-      console.log(data);
-      navigate("/specialist-resultaat");
-    }
 
-    const userData: RegisterData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim(),
-      dob: "", // Add the 'dob' property here
-      bio: data.bio,
-      region: data.questions.question1,
-      postcode: data.postCode,
-      profession: data.beroep,
-      task: data.task,
-      availibility: Datums,
-      kvk: data.kvk,
-      rating: 0
-    }
-    console.log(Datums);
-    try {
-      signUp(userData);
-    } catch (error) {
-      console.error('Error signing up:', error);
-      //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-    }
+      const userData: RegisterData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim(),
+        dob: "", // Add the 'dob' property here
+        bio: data.bio,
+        region: data.questions.question1,
+        postcode: data.postCode,
+        profession: data.beroep,
+        task: data.task,
+        availibility: Datums,
+        kvk: data.kvk,
+        rating: 0
+      }
+      console.log(Datums);
+      try {
+        signUp(userData);
+      } catch (error) {
+        console.error('Error signing up:', error);
+        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      }
 
+    }
   }
 
   const stepWidth = 100 / steps.length;
