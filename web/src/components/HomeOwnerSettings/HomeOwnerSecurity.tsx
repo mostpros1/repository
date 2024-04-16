@@ -5,7 +5,7 @@ const HomeOwnerSecurity = () => {
   const [password, setPassword] = useState("**********");
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = () => {
     // Hier zou je logica plaatsen om het wachtwoord te veranderen
   };
 
