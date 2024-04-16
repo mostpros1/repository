@@ -24,6 +24,7 @@
     font-size: 16px;
     gap: 10px;
     flex-wrap: wrap;
+    align-content: center;
 }
 
 .highlight_stars svg{

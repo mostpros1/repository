@@ -102,7 +102,7 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />
