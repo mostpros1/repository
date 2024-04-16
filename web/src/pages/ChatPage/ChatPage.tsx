@@ -1,9 +1,17 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import ChatMain from "../../components/Chat/ChatMain";
+import NavBar from "../../components/ui/NavBar/NavBar";
+import SideNav from "../../components/ui/SideNav/SideNav";
+import ChatMain from "../../components/Chat/ChatMain";
+import Footer from "../../components/ui/Footer/Footer";
 
-// function ChatPage() {
-//   <ChatMain />;
-// }
+function ChatPage() {
+    return(
+    <div id="root">
+        <NavBar />
+        <ChatMain />
+        <SideNav />
+        <Footer />
+    </div>
+    )
+}
 
-// export default ChatPage;
+export default ChatPage;
