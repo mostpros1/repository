@@ -97,7 +97,7 @@ function ChatMain({ user, signOut }) {
       chats.forEach(chat => {
         chat.members.forEach(member => {
           if (member !== user.attributes.email) {
-            contacts.add(member);
+            contacts.add(member.split("@")[0]);
           }
         });
       });
@@ -133,7 +133,6 @@ function ChatMain({ user, signOut }) {
     setSubtotal(Number(customSubtotal));
   };
   
-
   const handlePaySendMessage = (text) => {
       console.log(text);
   };
@@ -158,7 +157,7 @@ function ChatMain({ user, signOut }) {
         <div className="chatheader">
           <div className="chat-info">
             <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail}</h2>
+              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
             </div>
           </div>
         </div>
