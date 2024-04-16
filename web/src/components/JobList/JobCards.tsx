@@ -21,8 +21,8 @@ interface JobCardsProps {
   jobs?: Job[];
 }
 
-const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
-  const [specialists, setSpecialists] = useState<Job[]>([]);
+const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
+  const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
 
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
@@ -52,22 +52,25 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       })
       .promise()
       .then(data => {
-        console.log(data.Items)
-        for (let i = 0; i < (data.Items ?? []).length; i++) {
-          if (data.Items) {
-            console.log(data.Items[i].profession);
-            console.log(data.Items[i].task);
-            console.log(data.Items[i].description);
-            console.log(data.Items[i].region);
-            console.log(data.Items[i].availability);
-          }
-        }
+        // Assuming data.Items contains the necessary fields for the Job interface
+        const jobsFromData = data.Items.map((item) => ({
+          id: item.id,
+          name: item.name,
+          distance: item.distance,
+          title: item.title,
+          description: item.description,
+          location: item.region,
+          availability: item.availability,
+        }));
+
+        // Update the state with the jobs fetched from DynamoDB
+        setJobs(jobsFromData);
       })
       .catch(console.error)
 
   }, []);
 
-  if (!specialists || specialists.length === 0) {
+  if (!jobs || jobs.length === 0) {
     return <div>No jobs available.</div>;
   }
 
