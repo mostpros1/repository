@@ -72,4 +72,4 @@ To start the app locally:
 npm start
 ```
 
-You should now have everything set up locally. Open your browser and navigate to http://localhost:5173 (or the relevant port if it differs), to view the frontend of the application.
+You should now have everything set up locally. Open your browser and navigate to http://localhost:5173 (or the relevant port if it differs), to view the frontend of the application..
