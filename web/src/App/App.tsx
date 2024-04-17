@@ -45,6 +45,7 @@ import JobsPage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
+import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 
 const App = () => {
   return (
@@ -70,6 +71,7 @@ const App = () => {
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
+      <Route path="/IdealOptions" element={<IdealOptionsPage />} />
 
       <Route
         path="/MijnKlussenOverzicht"
