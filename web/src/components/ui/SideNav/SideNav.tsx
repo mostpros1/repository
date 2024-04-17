@@ -44,7 +44,7 @@ function SideNav() {
 
         <li className="sidebar-item">
           <NavLink
-            to="/Message"
+            to="/chat"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
@@ -80,7 +80,7 @@ function SideNav() {
 
         <li className="sidebar-item">
           <NavLink
-            to="/Reviews"
+            to="/ReviewPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
@@ -105,7 +105,7 @@ function SideNav() {
 
           <li className="sidebar-item">
             <NavLink
-              to="/Settings"
+              to="/HomeOwnerSettingsPage"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }

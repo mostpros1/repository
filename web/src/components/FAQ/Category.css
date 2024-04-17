@@ -1,0 +1,30 @@
+.category {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Adjust the minmax as needed */
+  gap: 20px; /* This adds space between the grid items */
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.category-title {
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.category h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 20px 0;
+}
+
+.category-container {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
