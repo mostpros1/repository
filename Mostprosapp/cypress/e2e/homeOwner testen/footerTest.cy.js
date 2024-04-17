@@ -17,7 +17,7 @@ describe('Home Owner Test: Footer Test', () => {
 
     })
 
-    it('Footer test 3: Profiel button test', () => {
+    it('Footer test 3: Profiel button test.', () => {
 
         cy.get('[data-testid="footer profileBtn"]').click()
 
