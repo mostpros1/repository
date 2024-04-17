@@ -16,10 +16,9 @@
 #sidebar {
   width: 500px;
   background-color: #4545d773;
-  border-right: 1px solid #e6e6e6;
   overflow-y: auto;
   height: 500px;
-  margin-top: 100px;
+  margin-top: 60px;
   margin-left: 20px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -53,7 +52,7 @@
   display: flex;
   flex-direction: column;
   height: 500px;
-  margin-top: 100px;
+  margin-top: 60px;
   width: 800px;
   margin-right: 40px;
   margin-left: 60px;
@@ -106,8 +105,12 @@
 .input-form {
   display: flex;
   padding: 10px;
-  background-color: #f7f7f9;
-  border-top: 1px solid #ddd;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border-top: solid 2px rgba(0, 0, 0, 0.13);
+  border-left: solid 2px rgba(0, 0, 0, 0.041);
+  border-right: solid 2px rgba(0, 0, 0, 0.041);
+  border-bottom: solid 2px rgba(0, 0, 0, 0.041);
 }
 
 .inputchat {
@@ -117,7 +120,7 @@
   border-radius: 4px;
   font-size: 15px;
   height: 40px;
-  margin-left: 10px;
+  margin-left: 5px;
   width: auto;
 }
 
@@ -146,6 +149,7 @@
   width: auto;
   transition: all 0.5s ease;
   font-size: 15px;
+  align-items: center;
 }
 
 .self-message {
@@ -204,25 +208,24 @@
 
 .message-time {
   font-size: 10px;
-  margin-right: 8px;
+  margin-left: 8px;
   color: #666;
-  margin-bottom: 15px;
-  margin-left: 5px;
+  white-space: nowrap;
 }
 
 .message-container {
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   margin-bottom: 10px;
 }
 
 .self-message-container {
-  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .other-message-container {
-  justify-content: flex-start;
-  max-width: 600px;
+  align-items: flex-start;
 }
 
 .chatheader {
@@ -305,4 +308,34 @@
   border: 0;
   margin-bottom: 10px;
   font-size: 15px;
+}
+
+.addPhoto{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px;
+}
+
+.selected-contact {
+  background-color: #8ac3ffc7;
+  color: rgb(255, 255, 255);
+}
+
+.date-separator {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
 }
