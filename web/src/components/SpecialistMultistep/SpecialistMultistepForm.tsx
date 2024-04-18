@@ -233,25 +233,24 @@ function SpecialistMultistepForm() {
         dynamo
           .put({
             Item: {
-
               id: Math.floor(Math.random() * 1000000000),
-              bio: stopXSS(bio),
-              email: stopXSS(email),
-              first_name: stopXSS(firstName),
-              last_name: stopXSS(lastName),
-              region: stopXSS(region),
-              postcode: stopXSS(postcode),
-              profession: stopXSS(profession),
-              task: stopXSS(task),
-              availibility: availibility,
-              rating: rating,
-              kvk: kvk,
+              bio: bio !== undefined ? stopXSS(bio) : "", // Check if bio is not undefined
+              email: email !== undefined ? stopXSS(email) : "", // Check if email is not undefined
+              first_name: firstName !== undefined ? stopXSS(firstName) : "", // Check if firstName is not undefined
+              last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
+              region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
+              postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
+              profession: profession !== undefined ? stopXSS(profession) : "", // Check if profession is not undefined
+              task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
+              availibility: availibility, // Assuming availibility is already checked elsewhere
+              rating: rating, // Assuming rating is already checked elsewhere
+              kvk: kvk, // Assuming kvk is already checked elsewhere
             },
             TableName: "Professionals",
           })
           .promise()
           .then(data => console.log(data.Attributes))
-          .catch(console.error)
+          .catch(console.error);
 
         dynamo
           .put({
