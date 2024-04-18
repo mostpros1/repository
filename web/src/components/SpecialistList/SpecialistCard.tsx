@@ -102,23 +102,20 @@ function SpecialistCard() {
         if (convertedItems) {
           for (let i: number = 0; i < convertedItems.length; i++) {
             if (convertedItems[i].availibility) {
-              const Availability = JSON.parse(convertedItems[i].availibility);
-
-              for (let x: number = 0; x < Availability.dates.length; x++) {
-
-                const selected = date;
-
-                if (selected == Availability.dates[x]) {
+        
+              for (let a = 0; a < convertedItems.length; a++) {
+  
+                if (date == convertedItems[i].availibility[a]) {
                   professionals = [...professionals, convertedItems[i]];
                   console.log(professionals);
                   break;
                 }
               }
+
+              
             }
           }
           setSpecialists(/*convertedItems*/professionals);
-
-
         }
       }).catch(err => {
         console.log(err);
