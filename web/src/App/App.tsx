@@ -24,6 +24,7 @@ import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDa
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MijnKlussen from "../pages/MijnKlussen/MijnKlussen";
+import PaymentOptionsPage from "../pages/PaymentOptionsPage/PaymentOptionsPage";
 import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
@@ -37,6 +38,7 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
+
 //import FAQPage from "../pages/FAQPage/FAQpage";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import JobsPage from "../pages/JobsPage/JobsPage";
@@ -68,6 +70,8 @@ const App = () => {
       <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
+
       <Route
         path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}

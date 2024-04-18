@@ -76,7 +76,7 @@
 .button-container {
   display: flex;
   position: absolute;
-  top: 40px;
+  top: 80px;
   right: 100px;
   gap: 20px;
 }
@@ -150,6 +150,9 @@
   width: auto;
   transition: all 0.5s ease;
   font-size: 15px;
+  align-items: center;
+  overflow-y: auto;
+  height: auto;
 }
 
 .self-message {
@@ -208,25 +211,24 @@
 
 .message-time {
   font-size: 10px;
-  margin-right: 8px;
+  margin-left: 8px;
   color: #666;
-  margin-bottom: 15px;
-  margin-left: 5px;
+  white-space: nowrap;
 }
 
 .message-container {
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   margin-bottom: 10px;
 }
 
 .self-message-container {
-  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .other-message-container {
-  justify-content: flex-start;
-  max-width: 600px;
+  align-items: flex-start;
 }
 
 .chatheader {
@@ -311,4 +313,41 @@
   border: 0;
   margin-bottom: 10px;
   font-size: 15px;
+}
+
+.addPhoto{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px;
+}
+
+.selected-contact {
+  background-color: #8ac3ffc7;
+  color: rgb(255, 255, 255);
+}
+
+.date-separator {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
