@@ -39,6 +39,7 @@ type FormData = {
   questions: Record<string, string>;
   dateTimeSpans: DateTimeSpan[];
   kvk: number;
+  bedrijf: string;
 };
 
 
@@ -52,12 +53,13 @@ interface RegisterData {
   dob: string;
   bio: string;
   region: string;
-  postcode: string
-  profession: string
-  task: string
-  rating: 0,
-  availibility: string[],
-  kvk: number,
+  postcode: string;
+  profession: string;
+  task: string;
+  rating: 0;
+  availibility: string[];
+  kvk: number;
+  bedrijf: string;
 
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -78,6 +80,9 @@ const INITIAL_DATA: FormData = {
     question2: "",
   },
   dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
+  task: '',
+  kvk: 0,
+  bedrijf: ''
 };
 
 type Question = {
@@ -206,7 +211,7 @@ function SpecialistMultistepForm() {
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
         />,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} updateFields={updateFields} />,
 
 
       ],
@@ -214,7 +219,7 @@ function SpecialistMultistepForm() {
     });
 
   function signUp(registerData: RegisterData): void {
-    const { firstName, lastName, email, phoneNumber, password, bio, region, postcode, profession, task, rating, availibility, kvk } = registerData;
+    const { firstName, lastName, email, phoneNumber, password, bio, region, postcode, profession, task, rating, availibility, kvk, bedrijf } = registerData;
 
 
     const signUpProf = async () => {
@@ -245,6 +250,7 @@ function SpecialistMultistepForm() {
               availibility: availibility, // Assuming availibility is already checked elsewhere
               rating: rating, // Assuming rating is already checked elsewhere
               kvk: kvk, // Assuming kvk is already checked elsewhere
+              bedrijf: bedrijf !== undefined ? stopXSS(bedrijf) : "", // Check if bedrijf is not undefined
             },
             TableName: "Professionals",
           })
@@ -273,7 +279,7 @@ function SpecialistMultistepForm() {
 
 
         navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
-      } catch (error: any) {
+        } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
       }
@@ -303,6 +309,7 @@ function SpecialistMultistepForm() {
         task: data.task,
         availibility: Datums,
         kvk: data.kvk,
+        bedrijf: data.bedrijf,
         rating: 0
       }
       console.log(Datums);
