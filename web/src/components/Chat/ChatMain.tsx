@@ -8,8 +8,6 @@ import "./chatbox.css";
 import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
-import { IoMdPhotos } from "react-icons/io";
-import { Storage } from 'aws-amplify';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -36,56 +34,6 @@ function ChatMain({ user, signOut }) {
   const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
-  const [groupedMessages, setGroupedMessages] = useState({});
-
-  const uploadImageToS3 = async (file) => {
-    try {
-      const filename = `${Date.now()}-${file.name}`;
-      await Storage.put(filename, file, {
-        contentType: file.type
-      });
-      return filename;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  };
-  
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-  
-    try {
-      const filename = await uploadImageToS3(file);
-      const imageUrl = `https://<chatsphotos>.s3.amazonaws.com/<filename>${filename}`;
-      await handleSendMessage(imageUrl);
-    } catch (error) {
-      
-    }
-  };
-
-  const groupMessagesByDate = (messages) => {
-    return messages.reduce((groups, message) => {
-      const createdAt = new Date(message.createdAt);
-      const date = createdAt.toLocaleDateString('nl-NL', {
-        month: 'short',
-        day: '2-digit',
-      });
-      if (!groups[date]) {
-        groups[date] = [];
-      }
-      groups[date].push({ ...message, createdAt });
-      groups[date].sort((a, b) => a.createdAt - b.createdAt);
-      return groups;
-    }, {});
-  };
-  
-  
-  useEffect(() => {
-    const filteredChats = chats;
-    const groupedMessages = groupMessagesByDate(filteredChats);
-    setGroupedMessages(groupedMessages);
-  }, [chats]);
 
   useEffect(() => {
     const filteredContacts = contactList.filter((contact) =>
@@ -151,27 +99,12 @@ function ChatMain({ user, signOut }) {
 
   const switchChat = (contact) => {
     if (selectedContact === contact) {
-      setSelectedContact(null);
+      setSelectedContact(null); // Deselect the contact
     } else {
       setSelectedContact(contact);
       handleJoinChat(contact);
     }
   };
-
-  const [isTyping, setIsTyping] = useState(false);
-
-  useEffect(() => {
-    const simulateRecipientTyping = () => {
-      setIsTyping(true);
-      setTimeout(() => {
-        setIsTyping(false);
-      }, 2000);
-    };
-
-    const typingTimer = setTimeout(simulateRecipientTyping, 5000);
-
-    return () => clearTimeout(typingTimer);
-  }, []);
 
   const email = window.location.hash.replace("/", "").split("#")[1];
 
@@ -192,109 +125,85 @@ function ChatMain({ user, signOut }) {
   };
 
   const filteredChats = selectedContact
-  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : []; 
-
-  
+    ? chats.filter(
+        (chat) =>
+          chat.members.includes(selectedContact) ||
+          chat.members.includes(user.attributes.email)
+      )
+    : [];
 
   return (
     <div className="chat-container">
-    <div className="sidebar" id="sidebar">
-      <input
-        type="text"
-        placeholder="Zoek gebruikers..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="searchList"
-      />
-      <ul>
-        {searchTerm === ""
-          ? contactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact}
-              </li>
-            ))
-          : filteredContactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact}
-              </li>
-            ))}
-      </ul>
-    </div>
+      <div className="sidebar" id="sidebar">
+        <input
+          type="text"
+          placeholder="Zoek gebruikers..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="searchList"
+        />
+        <ul>
+          {searchTerm === ""
+            ? contactList.map((contact) => (
+                <li key={contact} onClick={() => switchChat(contact)}>
+                  {contact}
+                </li>
+              ))
+            : filteredContactList.map((contact) => (
+                <li key={contact} onClick={() => switchChat(contact)}>
+                  {contact}
+                </li>
+              ))}
+        </ul>
+      </div>
 
-    <div className="button-container">
-      <button
-        type="button"
-        className="buttona"
-        onClick={handleStartNewChat}
-        disabled={!recipientEmail} // Disable the button if recipientEmail is empty
-      >
-        Start New Chat
-      </button>
-      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
-      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
-      {showAlert && (
-        <div className="alert">
-          <input
-            type="text"
-            placeholder="Enter recipient's email"
-            value={recipientEmail}
-            onChange={handleAlertInputChange}
-          />
-        </div>
-      )}
-    </div>
       <div className="main-container">
-      {selectedContact && (
-      <div className="chat-main">
-        <div className="chatheader">
-          <div className="chat-info">
-            <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-              {isTyping && <div id="typing-indicator">Typing...</div>}
+        {selectedContact && (
+          <div className="chat-main">
+            <div className="chatheader">
+              <div className="chat-info">
+                <div className="name-and-status">
+                  <h2 className="recipient-name">
+                    {recipientEmail.split("@")[0]}
+                  </h2>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="chat-box" ref={chatBoxRef}>
-              {Object.keys(groupedMessages).map((date) => (
-                <React.Fragment key={date}>
-                  <div className="date-separator">{date}</div>
-                  {groupedMessages[date].map((chat) => (
+            <div className="chat-box scrollable-chatbox" ref={chatBoxRef}>
+              {filteredChats
+                .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+                .map((chat) => (
+                  <div
+                    key={chat.id}
+                    className={`message-container ${
+                      chat.email === user.attributes.email
+                        ? "self-message-container"
+                        : "other-message-container"
+                    }`}
+                  >
                     <div
-                      key={chat.id}
-                      className={`message-container ${
-                        chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                      className={`message-bubble ${
+                        chat.email === user.attributes.email
+                          ? "self-message"
+                          : "other-message"
                       }`}
                     >
-                      <div
-                        className={`message-bubble ${
-                          chat.email === user.attributes.email ? "self-message" : "other-message"
-                        }`}
-                      >
-                        <div className="username">
-                          <span className="username-name">{chat.email.split("@")[0]}</span>
-                        </div>
-                        <p className="text">{chat.text}</p>
-                        <time dateTime={chat.createdAt} className="message-time">
-                          {new Intl.DateTimeFormat('nl-NL', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }).format(new Date(chat.createdAt))}
-                        </time>
+                      <div className="username">
+                        <span className="username-name">
+                          {chat.email.split("@")[0]}
+                        </span>
                       </div>
+                      <p className="text">{chat.text}</p>
                     </div>
-                  ))}
-                </React.Fragment>
-              ))}
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat("nl-NL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(chat.createdAt))}
+                    </time>
+                  </div>
+                ))}
             </div>
 
             <div className="input-form">
@@ -309,33 +218,36 @@ function ChatMain({ user, signOut }) {
                   subtotal={subtotal}
                   handleSendMessage={handlePaySendMessage}
                 />
-            )}
-            <input
-            type="number"
-            value={customSubtotal}
-            onChange={(e) => setCustomSubtotal(e.target.value)}
-            placeholder="Subtotaal"
-            className="betalingbedrag"
-          />
-          <IoMdPhotos size={25} className="addPhoto"/>
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="Stuur een bericht..."
-            onKeyUp={async (e) => {
-              if (e.key === "Enter") {
-                const messageText = (e.target as HTMLInputElement).value;
-                if (messageText && recipientEmail) {
-                  await handleSendMessage(messageText);
-                  (e.target as HTMLInputElement).value = "";
-                }
-              }
-            }}
-            className="inputchat"
-          />
-          <div className="chat-enter">
-            <kbd><IoSend size={25} /></kbd>
+              )}
+              <input
+                type="number"
+                value={customSubtotal}
+                onChange={(e) => setCustomSubtotal(e.target.value)}
+                placeholder="Subtotaal"
+                className="betalingbedrag"
+              />
+
+              <input
+                type="text"
+                name="search"
+                id="search"
+                onKeyUp={async (e) => {
+                  if (e.key === "Enter") {
+                    const messageText = (e.target as HTMLInputElement).value;
+                    if (messageText && recipientEmail) {
+                      await handleSendMessage(messageText);
+                      (e.target as HTMLInputElement).value = "";
+                    }
+                  }
+                }}
+                className="inputchat"
+              />
+              <div className="chat-enter">
+                <kbd>
+                  <IoSend size={25} />
+                </kbd>
+              </div>
+            </div>
           </div>
         )}
       </div>
