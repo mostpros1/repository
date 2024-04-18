@@ -15,6 +15,12 @@
   margin: 15px;
 }
 
+.review-date {
+  font-size: 15px;
+  color: #666;
+  margin-left: 25px;
+}
+
 .review-header {
   display: flex;
   align-items: center;

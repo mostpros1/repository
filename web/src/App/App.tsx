@@ -42,6 +42,7 @@ import Jobspage from "../pages/JobsPage/JobsPage";
 import JobsPage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
+import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
 
 const App = () => {
@@ -100,7 +101,7 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
+      <Route path="/chat" element={<ChatMain />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

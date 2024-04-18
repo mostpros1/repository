@@ -5,7 +5,7 @@ import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
-import PaymentLink from '../PaymentLink/PaymentLink';
+import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 
@@ -74,7 +74,7 @@ function ChatMain({ user, signOut }) {
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(chatBoxRef.current) {
+    if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
   }, [chats]);
@@ -82,8 +82,8 @@ function ChatMain({ user, signOut }) {
   useEffect(() => {
     const extractContacts = () => {
       const contacts = new Set();
-      chats.forEach(chat => {
-        chat.members.forEach(member => {
+      chats.forEach((chat) => {
+        chat.members.forEach((member) => {
           if (member !== user.attributes.email) {
             contacts.add(member.split("@")[0]);
           }
@@ -96,7 +96,7 @@ function ChatMain({ user, signOut }) {
     //@ts-ignore
     setContactList(uniqueContacts);
   }, [chats, user.attributes.email]);
-  
+
   const switchChat = (contact) => {
     if (selectedContact === contact) {
       setSelectedContact(null); // Deselect the contact
@@ -110,28 +110,32 @@ function ChatMain({ user, signOut }) {
 
   const [showPaymentLink, setShowPaymentLink] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
-  const [customSubtotal, setCustomSubtotal] = useState('');
+  const [customSubtotal, setCustomSubtotal] = useState("");
 
   const updateSubtotal = () => {
     if (!customSubtotal || isNaN(Number(customSubtotal))) {
-      alert('Voer een geldig bedrag in.');
+      alert("Voer een geldig bedrag in.");
       return;
     }
     setSubtotal(Number(customSubtotal));
   };
-  
+
   const handlePaySendMessage = (text) => {
-      console.log(text);
+    console.log(text);
   };
 
   const filteredChats = selectedContact
-  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : [];
+    ? chats.filter(
+        (chat) =>
+          chat.members.includes(selectedContact) ||
+          chat.members.includes(user.attributes.email)
+      )
+    : [];
 
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
-      <input
+        <input
           type="text"
           placeholder="Zoek gebruikers..."
           value={searchTerm}
@@ -152,93 +156,111 @@ function ChatMain({ user, signOut }) {
               ))}
         </ul>
       </div>
-      
+
       <div className="main-container">
-      {selectedContact && (
-      <div className="chat-main">
-        <div className="chatheader">
-          <div className="chat-info">
-            <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+        {selectedContact && (
+          <div className="chat-main">
+            <div className="chatheader">
+              <div className="chat-info">
+                <div className="name-and-status">
+                  <h2 className="recipient-name">
+                    {recipientEmail.split("@")[0]}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            <div className="chat-box scrollable-chatbox" ref={chatBoxRef}>
+              {filteredChats
+                .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+                .map((chat) => (
+                  <div
+                    key={chat.id}
+                    className={`message-container ${
+                      chat.email === user.attributes.email
+                        ? "self-message-container"
+                        : "other-message-container"
+                    }`}
+                  >
+                    <div
+                      className={`message-bubble ${
+                        chat.email === user.attributes.email
+                          ? "self-message"
+                          : "other-message"
+                      }`}
+                    >
+                      <div className="username">
+                        <span className="username-name">
+                          {chat.email.split("@")[0]}
+                        </span>
+                      </div>
+                      <p className="text">{chat.text}</p>
+                    </div>
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat("nl-NL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(chat.createdAt))}
+                    </time>
+                  </div>
+                ))}
+            </div>
+
+            <div className="input-form">
+              <button
+                onClick={() => setShowPaymentLink(true)}
+                className="addPay"
+              >
+                <MdOutlinePayment size={30} />
+              </button>
+              {showPaymentLink && (
+                <PaymentLink
+                  subtotal={subtotal}
+                  handleSendMessage={handlePaySendMessage}
+                />
+              )}
+              <input
+                type="number"
+                value={customSubtotal}
+                onChange={(e) => setCustomSubtotal(e.target.value)}
+                placeholder="Subtotaal"
+                className="betalingbedrag"
+              />
+
+              <input
+                type="text"
+                name="search"
+                id="search"
+                onKeyUp={async (e) => {
+                  if (e.key === "Enter") {
+                    const messageText = (e.target as HTMLInputElement).value;
+                    if (messageText && recipientEmail) {
+                      await handleSendMessage(messageText);
+                      (e.target as HTMLInputElement).value = "";
+                    }
+                  }
+                }}
+                className="inputchat"
+              />
+              <div className="chat-enter">
+                <kbd>
+                  <IoSend size={25} />
+                </kbd>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="chat-box scrollable-chatbox" ref={chatBoxRef}>
-          {filteredChats
-            .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-            .map((chat) => (
-              <div
-                key={chat.id}
-                className={`message-container ${
-                  chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
-                }`}
-              >
-                <div
-                  className={`message-bubble ${
-                    chat.email === user.attributes.email ? "self-message" : "other-message"
-                  }`}
-                >
-                  <div className="username">
-                    <span className="username-name">{chat.email.split("@")[0]}</span>
-                  </div>
-                  <p className="text">{chat.text}</p>
-                </div>
-                <time dateTime={chat.createdAt} className="message-time">
-                  {new Intl.DateTimeFormat('nl-NL', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }).format(new Date(chat.createdAt))}
-                </time>
-              </div>
-            ))}
-        </div>
-
-        <div className="input-form">
-          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
-            {showPaymentLink && (
-                <PaymentLink
-                    subtotal={subtotal}
-                    handleSendMessage={handlePaySendMessage}
-                />
-            )}
-            <input
-            type="number"
-            value={customSubtotal}
-            onChange={(e) => setCustomSubtotal(e.target.value)}
-            placeholder="Subtotaal"
-            className="betalingbedrag"
-          />
-
-          <input
-            type="text"
-            name="search"
-            id="search"
-            onKeyUp={async (e) => {
-              if (e.key === "Enter") {
-                const messageText = (e.target as HTMLInputElement).value;
-                if (messageText && recipientEmail) {
-                  await handleSendMessage(messageText);
-                  (e.target as HTMLInputElement).value = "";
-                }
-              }
-            }}
-            className="inputchat"
-          />
-          <div className="chat-enter">
-            <kbd><IoSend size={25} /></kbd>
-          </div>
-        </div>
+        )}
       </div>
-      )}</div>
 
-      {showJoinButton && user.attributes.email !== recentMessageEmail && !showConfirmedConnection && (
-        <div className="join-chat-button-container">
-          <button type="button" onClick={handleJoinChat}>
-            Join Chat
-          </button>
-        </div>
-      )}
+      {showJoinButton &&
+        user.attributes.email !== recentMessageEmail &&
+        !showConfirmedConnection && (
+          <div className="join-chat-button-container">
+            <button type="button" onClick={handleJoinChat}>
+              Join Chat
+            </button>
+          </div>
+        )}
     </div>
   );
 }
