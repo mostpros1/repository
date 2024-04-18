@@ -1,12 +1,15 @@
 import "./SearchChoreForm.css"
 import { useState } from 'react';
+import specialists from '../../../data/specialists';
 
 type SpecialistData = {
     email: string
     postCode: string
     stad: string
     beroep?: string
-    bio?: string    
+    bio?: string
+    task?: string
+    kvk?: number
 }
 
 type SearchChoreFormProps = SpecialistData & {
@@ -22,7 +25,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         const inputValueBeroep = e.target.value;
         const inputBeroepRegex = /^[A-Za-z\s]*$/; // Allow empty string
         const isValidBeroep = inputBeroepRegex.test(inputValueBeroep);
-
+        console.log('Input Value:', inputValueBeroep)
         setValidBeroep(isValidBeroep);
 
         if (isValidBeroep || inputValueBeroep === '') {
@@ -89,6 +92,46 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         }
     };
 
+    const [task, setTask] = useState('');
+
+    // Assuming you have a state for the displayed task name
+    const [displayedTaskName, setDisplayedTaskName] = useState('');
+
+
+    const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValueTask = e.target.value;
+
+        // Find the selected task object
+        let selectedTaskLink = '';
+        specialists.forEach(specialist => {
+            const foundTask = specialist.tasks.find(task => task.task === inputValueTask);
+            if (foundTask) {
+                selectedTaskLink = foundTask.link;
+                setDisplayedTaskName(inputValueTask);
+            }
+        });
+
+        // Remove the leading slash from the selectedTaskLink if it exists
+        selectedTaskLink = selectedTaskLink.replace(/^\//, '');
+        // Set the task state to the selectedTaskLink'
+        updateFields({ task: selectedTaskLink });
+        setTask(selectedTaskLink);
+    };
+
+    const isValidTask = (task: string): boolean => {
+        const allTasks = specialists.flatMap(specialist => specialist.tasks.map(task => task.task));
+        return allTasks.includes(task);
+    };
+
+    const getValidTasks = (beroep: string) => {
+        // Filter specialists based on the entered beroep
+        const filteredSpecialists = specialists.filter(specialist => specialist.name === beroep);
+
+        // Extract and filter tasks from the filtered specialists
+        const allTasks = filteredSpecialists.flatMap(specialist => specialist.tasks.map(task => task.task));
+        return [...new Set(allTasks)]; // Use Set to remove duplicates and then spread back into an array
+    };
+
     return (
         <>
             <div className="search_chore_text_con">
@@ -97,7 +140,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
 
             </div>
             <div className="search_chore_form">
-            <label>Uw hoofdberoep</label>
+                <label>Uw hoofdberoep</label>
                 <input
                     type="text"
                     required
@@ -109,6 +152,19 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                 />
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
+                )}
+                <label>Klus:</label>
+                <select
+                    value={displayedTaskName} // Use displayedTaskName here
+                    onChange={(e) => handleTaskChange(e)}
+                >
+                    <option value="">Selecteer een Klus</option>
+                    {getValidTasks(beroep || '').map((task, index) => (
+                        <option key={index} value={task}>{task}</option>
+                    ))}
+                </select>
+                {!isValidTask(displayedTaskName) && ( // Validate based on displayedTaskName
+                    <p className="error-message">Voer alstublieft een geldige opdracht in</p>
                 )}
                 <label>Uw Bio</label>
                 <textarea

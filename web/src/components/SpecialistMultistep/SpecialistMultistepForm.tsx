@@ -272,11 +272,6 @@ function SpecialistMultistepForm() {
           .catch(console.error)
 
 
-        /*const user = await Auth.signIn(email, password);
-        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
-        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
-        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
-      */
         navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
       } catch (error: any) {
         console.error('Error signing up:', error);
@@ -312,7 +307,9 @@ function SpecialistMultistepForm() {
       }
       console.log(Datums);
       try {
+        console.log("prof: ", userData)
         signUp(userData);
+
       } catch (error) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

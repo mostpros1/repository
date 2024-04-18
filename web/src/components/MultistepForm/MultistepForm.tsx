@@ -132,7 +132,6 @@ function MultistepForm() {
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-        <PageSpecialisten updateDate={data.date} />
       ],
       onStepChange: () => { }
     } : {
@@ -142,7 +141,6 @@ function MultistepForm() {
         <InfoForm {...data} updateFields={updateFields} />,
         <>
           <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
-          <PageSpecialisten updateDate={data.date} />
         </>
       ],
       onStepChange: () => { }
