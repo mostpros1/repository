@@ -1,8 +1,7 @@
 .chat-container {
   display: flex;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   border-radius: 10px;
-  justify-content: center;
   align-items: center;
   transition: all 1s ease;
 }
@@ -14,14 +13,15 @@
 }
 
 #sidebar {
-  width: 500px;
-  background-color: #4545d773;
+  width: 250px;
+  background-color: #308ae4;
+  border-right: 1px solid #e6e6e6;
   overflow-y: auto;
-  height: 500px;
-  margin-top: 60px;
-  margin-left: 20px;
+  height: 420px;
+  margin: 0px 0 0 10px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
 }
 
 #sidebar ul {
@@ -35,6 +35,7 @@
   transition: background-color 0.3s;
   border-radius: 10px;
   text-align: center;
+  text-transform: capitalize;
 }
 
 #sidebar ul li:hover {
@@ -48,15 +49,12 @@
 }
 
 .chat-main {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  height: 500px;
-  margin-top: 60px;
+  height: 450px;
   width: 800px;
-  margin-right: 40px;
-  margin-left: 60px;
+  margin: 0px 30px 0px;
   border-radius: 20px;
+  flex-direction: column;
 }
 
 .textjoined {
@@ -75,10 +73,10 @@
   display: flex;
 }
 
-.button-container{
+.button-container {
   display: flex;
   position: absolute;
-  top: 40px;
+  top: 80px;
   right: 100px;
   gap: 20px;
 }
@@ -99,18 +97,16 @@
   overflow-y: auto;
   background-color: #f9f9fb;
   padding: 20px;
-  border-radius: 10px;
+  transition: all 0.5s ease;
 }
 
 .input-form {
   display: flex;
   padding: 10px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  border-top: solid 2px rgba(0, 0, 0, 0.13);
-  border-left: solid 2px rgba(0, 0, 0, 0.041);
-  border-right: solid 2px rgba(0, 0, 0, 0.041);
-  border-bottom: solid 2px rgba(0, 0, 0, 0.041);
+  background-color: #f7f7f9;
+  border-top: 1px solid #ddd;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .inputchat {
@@ -120,8 +116,8 @@
   border-radius: 4px;
   font-size: 15px;
   height: 40px;
-  margin-left: 5px;
-  width: auto;
+  margin-left: 20px;
+  width: 300px;
 }
 
 .chat-enter kbd {
@@ -138,6 +134,11 @@
   height: 40px;
   margin-left: 10px;
   width: 50px;
+  transition: all 0.5s ease;
+}
+
+.chat-enter kbd:hover {
+  background-color: #0056b3;
 }
 
 .message-bubble {
@@ -150,6 +151,8 @@
   transition: all 0.5s ease;
   font-size: 15px;
   align-items: center;
+  overflow-y: auto;
+  height: auto;
 }
 
 .self-message {
@@ -201,7 +204,7 @@
   cursor: pointer;
 }
 
-.text{
+.text {
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -234,10 +237,12 @@
   align-items: center;
   text-align: center;
   padding: 10px;
-  background-color: #4545d773;
+  background-color: #308ae4;
   color: white;
   height: 60px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-transform: capitalize;
 }
 
 .name-and-status {
@@ -253,7 +258,7 @@
   align-items: center;
 }
 
-.addPay{
+.addPay {
   border-radius: 5px;
   width: 40px;
   background-color: #007bff;
@@ -268,7 +273,7 @@
   height: 40px;
 }
 
-.create-payment{
+.create-payment {
   border: 0;
   border-radius: 10px;
   background-color: #007bff;
@@ -283,14 +288,14 @@
   margin-right: 5px;
 }
 
-.betalingbedrag{
+.betalingbedrag {
   height: 40px;
   width: 120px;
   font-size: 14px;
   border: solid 2px rgba(0, 0, 0, 0.452);
 }
 
-.betalingbevestig{
+.betalingbevestig {
   height: 40px;
   width: auto;
   padding: 5px;
@@ -302,7 +307,7 @@
   border-radius: 10px;
 }
 
-.searchList{
+.searchList {
   width: 100%;
   height: 50px;
   border: 0;
@@ -338,4 +343,11 @@
   color: #666;
   font-size: 14px;
   font-weight: bold;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }

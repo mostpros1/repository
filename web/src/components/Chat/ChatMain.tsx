@@ -9,6 +9,7 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdPhotos } from "react-icons/io";
+import { Storage } from 'aws-amplify';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -37,22 +38,51 @@ function ChatMain({ user, signOut }) {
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
 
+  const uploadImageToS3 = async (file) => {
+    try {
+      const filename = `${Date.now()}-${file.name}`;
+      await Storage.put(filename, file, {
+        contentType: file.type
+      });
+      return filename;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
+  
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
+    try {
+      const filename = await uploadImageToS3(file);
+      const imageUrl = `https://<chatsphotos>.s3.amazonaws.com/<filename>${filename}`;
+      await handleSendMessage(imageUrl);
+    } catch (error) {
+      
+    }
+  };
+
   const groupMessagesByDate = (messages) => {
     return messages.reduce((groups, message) => {
-      const date = new Date(message.createdAt).toLocaleDateString('nl-NL', {
+      const createdAt = new Date(message.createdAt);
+      const date = createdAt.toLocaleDateString('nl-NL', {
         month: 'short',
         day: '2-digit',
       });
       if (!groups[date]) {
         groups[date] = [];
       }
-      groups[date].push(message);
+      groups[date].push({ ...message, createdAt });
+      groups[date].sort((a, b) => a.createdAt - b.createdAt);
       return groups;
     }, {});
   };
-
+  
+  
   useEffect(() => {
-    const filteredChats = chats; // Dit zou je filtering logica zijn
+    const filteredChats = chats;
     const groupedMessages = groupMessagesByDate(filteredChats);
     setGroupedMessages(groupedMessages);
   }, [chats]);
@@ -121,12 +151,27 @@ function ChatMain({ user, signOut }) {
   
   const switchChat = (contact) => {
     if (selectedContact === contact) {
-      setSelectedContact(null); // Deselect the contact
+      setSelectedContact(null);
     } else {
       setSelectedContact(contact);
       handleJoinChat(contact);
     }
   };
+
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    const simulateRecipientTyping = () => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 2000);
+    };
+
+    const typingTimer = setTimeout(simulateRecipientTyping, 5000);
+
+    return () => clearTimeout(typingTimer);
+  }, []);
 
   const email = window.location.hash.replace("/", "").split("#")[1];
 
@@ -148,37 +193,65 @@ function ChatMain({ user, signOut }) {
 
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : [];  
+  : []; 
+
+  
 
   return (
     <div className="chat-container">
-      <div className="sidebar" id="sidebar">
+    <div className="sidebar" id="sidebar">
       <input
-          type="text"
-          placeholder="Zoek gebruikers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchList"
-        />
-        <ul>
-          {searchTerm === ""
+        type="text"
+        placeholder="Zoek gebruikers..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="searchList"
+      />
+      <ul>
+        {searchTerm === ""
           ? contactList.map((contact) => (
-            <li key={contact} 
-              onClick={() => switchChat(contact)}
-              className={selectedContact === contact ? 'selected-contact' : ''}>
-              {contact}
-            </li>
-          ))
-        : filteredContactList.map((contact) => (
-            <li key={contact} 
-              onClick={() => switchChat(contact)}
-              className={selectedContact === contact ? 'selected-contact' : ''}>
-              {contact}
-            </li>
-          ))}
-        </ul>
-      </div>
-      
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))
+          : filteredContactList.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))}
+      </ul>
+    </div>
+
+    <div className="button-container">
+      <button
+        type="button"
+        className="buttona"
+        onClick={handleStartNewChat}
+        disabled={!recipientEmail} // Disable the button if recipientEmail is empty
+      >
+        Start New Chat
+      </button>
+      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
+      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
+      {showAlert && (
+        <div className="alert">
+          <input
+            type="text"
+            placeholder="Enter recipient's email"
+            value={recipientEmail}
+            onChange={handleAlertInputChange}
+          />
+        </div>
+      )}
+    </div>
       <div className="main-container">
       {selectedContact && (
       <div className="chat-main">
@@ -186,6 +259,7 @@ function ChatMain({ user, signOut }) {
           <div className="chat-info">
             <div className="name-and-status">
               <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+              {isTyping && <div id="typing-indicator">Typing...</div>}
             </div>
           </div>
         </div>
@@ -238,9 +312,7 @@ function ChatMain({ user, signOut }) {
             placeholder="Subtotaal"
             className="betalingbedrag"
           />
-
-          <IoMdPhotos className="addPhoto" size={10}/>
-
+          <IoMdPhotos size={25} className="addPhoto"/>
           <input
             type="text"
             name="search"

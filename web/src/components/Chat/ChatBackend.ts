@@ -74,7 +74,6 @@ const handleReceivedMessage = (receivedChat) => {
     setRecentMessageEmail(email);
     setShowJoinButton(false);
     setShowConfirmedConnection(true);
-    setNotificationMessage(`${email} joined the chat`);
   };
 
 return {
