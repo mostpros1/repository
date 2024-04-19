@@ -6,7 +6,7 @@ const dynamo = new aws.DynamoDB.DocumentClient();
 export function calHuiseigenaar(professionalsEmail: string) {
     //const professional_id: number = data[0].items;
 
-    function checkAvailibility(professional_id: number) {
+    /*function checkAvailibility(professional_id: number) {
         dynamo
             .query({
                 TableName: 'UserAvailability',
@@ -20,19 +20,19 @@ export function calHuiseigenaar(professionalsEmail: string) {
             .then(available => mark_availibility(available.Items))
             .catch(console.error);
 
-    }
+    }*/
 
     dynamo
         .query({
-            TableName: 'professionals',
-            IndexName: 'prof_emailIndex',
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
             KeyConditionExpression: 'email = :email',
             ExpressionAttributeValues: {
                 ':email': professionalsEmail,
             }
         })
         .promise()
-        .then(data => checkAvailibility(data.Items[0].id))
+        .then(data => mark_availibility(data.Items))
         .catch(console.error);
 
 
@@ -41,13 +41,17 @@ export function calHuiseigenaar(professionalsEmail: string) {
     function mark_availibility(output: any) {
         const availibility: any = [];
         for (let i = 0; i < output.length; i++) {
-            const date = output[i].date;
-            const time_from = output[i].time_from;
-            const time_to = output[i].time_to;
-            const date_time = date + " " + time_from + " - " + time_to;
+            let dates: string[] = [];
+            for (let j = 0; j < output[i].availibility.length; j++) {
+                dates = [...dates, output[i].availibility[j]];
+            }
+            const date = output[i].availibility[];
+            //const time_from = output[i].time_from;
+            //const time_to = output[i].time_to;
+            //const date_time = date + " " + time_from + " - " + time_to;
             if (output[i].status === "available") {
                 console.log(date, "is available");
-                availibility.push(date_time);
+                availibility.push(dates);
             }
 
         }
