@@ -5,8 +5,6 @@ const dynamo = new aws.DynamoDB.DocumentClient();
 export function addAvailibility(professionalsEmail: string, dates: any[]) {
 
 
-    const id: number = Math.random();
-
     dynamo
         .query({
             TableName: 'Professionals',
