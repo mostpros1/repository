@@ -8,6 +8,8 @@ import "./chatbox.css";
 import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";
+import { Storage } from 'aws-amplify';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -34,6 +36,56 @@ function ChatMain({ user, signOut }) {
   const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
+  const [groupedMessages, setGroupedMessages] = useState({});
+
+  const uploadImageToS3 = async (file) => {
+    try {
+      const filename = `${Date.now()}-${file.name}`;
+      await Storage.put(filename, file, {
+        contentType: file.type
+      });
+      return filename;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
+  
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
+    try {
+      const filename = await uploadImageToS3(file);
+      const imageUrl = `https://<chatsphotos>.s3.amazonaws.com/<filename>${filename}`;
+      await handleSendMessage(imageUrl);
+    } catch (error) {
+      
+    }
+  };
+
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((groups, message) => {
+      const createdAt = new Date(message.createdAt);
+      const date = createdAt.toLocaleDateString('nl-NL', {
+        month: 'short',
+        day: '2-digit',
+      });
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push({ ...message, createdAt });
+      groups[date].sort((a, b) => a.createdAt - b.createdAt);
+      return groups;
+    }, {});
+  };
+  
+  
+  useEffect(() => {
+    const filteredChats = chats;
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }, [chats]);
 
   useEffect(() => {
     const filteredContacts = contactList.filter((contact) =>
@@ -99,12 +151,27 @@ function ChatMain({ user, signOut }) {
 
   const switchChat = (contact) => {
     if (selectedContact === contact) {
-      setSelectedContact(null); // Deselect the contact
+      setSelectedContact(null);
     } else {
       setSelectedContact(contact);
       handleJoinChat(contact);
     }
   };
+
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    const simulateRecipientTyping = () => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 2000);
+    };
+
+    const typingTimer = setTimeout(simulateRecipientTyping, 5000);
+
+    return () => clearTimeout(typingTimer);
+  }, []);
 
   const email = window.location.hash.replace("/", "").split("#")[1];
 
@@ -125,12 +192,10 @@ function ChatMain({ user, signOut }) {
   };
 
   const filteredChats = selectedContact
-    ? chats.filter(
-        (chat) =>
-          chat.members.includes(selectedContact) ||
-          chat.members.includes(user.attributes.email)
-      )
-    : [];
+  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+  : []; 
+
+  
 
   return (
     <div className="chat-container">
