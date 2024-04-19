@@ -2,10 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "./chatbox.css"
 
-function Chatbtn() {
-  return (
-    <Link to="/chat" className='buttonc'>Chatbtn</Link>
-  )
+function ChatBtn({ action, label }) {
+  return <button onClick={action}>{label}</button>;
 }
 
-export default Chatbtn
+export { ChatBtn };

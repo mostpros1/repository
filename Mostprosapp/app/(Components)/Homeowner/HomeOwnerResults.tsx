@@ -14,48 +14,7 @@ import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
-import Footer from "../Footer";
-
-const professionals = {
-  professional: [
-    {
-      name: "Jan Schilder",
-      title: "Loodgieter",
-      description:
-        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
-      image: require("../../../assets/images/jan.png"),
-    },
-    {
-      name: "Jan Schilder",
-      title: "Loodgieter",
-      description:
-        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
-      image: require("../../../assets/images/jan.png"),
-    },
-    {
-      name: "Jan Schilder",
-      title: "Loodgieter",
-      description:
-        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
-      image: require("../../../assets/images/jan.png"),
-    },
-    {
-      name: "Jan Schilder",
-      title: "Loodgieter",
-      description:
-        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
-      image: require("../../../assets/images/jan.png"),
-    },
-    {
-      name: "Jan Schilder",
-      title: "Loodgieter",
-      description:
-        "Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.",
-      image: require("../../../assets/images/jan.png"),
-    },
-  ],
-};
-
+import { KeyboardAvoidingView } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 
 const HomeOwnerResults = ({ navigation }) => {
@@ -123,124 +82,53 @@ const HomeOwnerResults = ({ navigation }) => {
                         ]}
                       ></TouchableOpacity>
                     </View>
-                    <Text
-                      style={styles.lightTitle}
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
-                    >
-                      {professional.description}
-                    </Text>
-                  </View>
+                    <View style={[styles.yellow]}></View>
+                    <Text style={[styles.lightTitle]}>Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.</Text>
                 </View>
-              ))}
-              <Pressable
-                style={[
-                  styles.nextButton,
-                  selectedCount >= 1 ? styles.nextButtonColorOne : null,
-                ]}
-                onPress={() => {
-                  if (selectedCount >= 1) {
-                    navigation.goBack();
-                  } else if (selectedCount === 0) {
-                    Alert.alert("Selecteer minimaal één vakspecialist.");
-                  }
-                }}
-              >
-                <Text style={styles.whiteButtonText}>Bevestigen</Text>
-              </Pressable>
-              <View style={styles.footerfix}></View>
+              </View>
             </View>
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="ChatOverview" />
       </SafeAreaView>
     </PaperProvider>
   );
 };
 const styles = StyleSheet.create({
-  orange: {
-    flex: 1,
-    height: "100%",
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    paddingLeft: 10,
-  },
+    orange:{
+        flex: 1,
+        height: "100%",
+        // backgroundColor: "orange",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap:"wrap",
+        paddingLeft: 10,
+    },
 
-  nextButton: {
-    backgroundColor: "#B3B3B3",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    alignSelf: "center",
-    width: 170,
-    height: 60,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+    green:{
+        height: "60%",
+        width: "70%",
+        display: "flex",
+        justifyContent: "center",
+        // backgroundColor: "green",
+    },
 
-  nextButtonColorOne: {
-    backgroundColor: "#318ae5",
-  },
+    yellow:{
+        height: "60%",
+        width: "30%",
+        backgroundColor: "yellow",
+    },
 
-  nextButtonText: {
-    fontSize: 13,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
-  whiteButtonText: {
-    color: "#fff",
-  },
-
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderWidth: 1.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-    backgroundColor: "transparent",
-  },
-
-  selected: {
-    backgroundColor: "#308AE4",
-  },
-
-  footerfix: {
-    height: 80,
-    width: windowWidth,
-  },
-
-  green: {
-    height: "60%",
-    width: "70%",
-    display: "flex",
-    justifyContent: "center",
-  },
-
-  yellow: {
-    height: "60%",
-    width: "30%",
-    display: "flex",
-    alignItems: "center",
-    padding: 10,
-  },
-
-  middleContainerFirstSection: {
-    width: windowWidth,
-    height: 150,
-    display: "flex",
-    borderBottomWidth: 3,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 10,
-    borderColor: "#f1f1f0",
-  },
-
+    middleContainerFirstSection: {
+        width: windowWidth,
+        height: 150,
+        display: "flex",
+        backgroundColor: "#E9F4FF",
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 10,
+      },
+      
   view: {
     height: "100%",
     width: windowWidth,

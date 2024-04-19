@@ -7,13 +7,10 @@ import {
   Pressable,
   ScrollView,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider, Switch } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
-
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -159,7 +156,6 @@ const ProfileGeneralSettings = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
-        <Footer navigation={navigation} activePage="Profile" />
       </SafeAreaView>
     </PaperProvider>
   );
@@ -167,14 +163,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   view: {
-    ...Platform.select({
-      ios: {
-        height: windowHeight, // Adjust height for iOS
-      },
-      android: {
-        height: windowHeight * 1.1, // Adjust height for Android
-      },
-    }),
+    height: windowHeight,
     width: windowWidth,
     display: "flex",
     alignItems: "center",

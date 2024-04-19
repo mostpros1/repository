@@ -26,15 +26,20 @@ function DateForm({ updateDate, updateFields }) {
 
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
+        console.log("selected date is "+ selectedDate);
 
         const isValid = selectedDate >= currentDate;
+        console.log("is valid date "+ isValid);
         setIsValidDate(isValid);
 
         // Only update date and fields if the selected date is valid
         if (isValid) {
             const isoDateString = selectedDate.toISOString();
             setSelectedCard(index === selectedCard ? null : index);
+            console.log(isoDateString);
             updateDate(selectedDate);
+            //updateDate(isoDateString);
+            console.log("SELECTED:" + selectedDate);
             updateFields({ date: isoDateString });
         }
     };
@@ -64,7 +69,7 @@ function DateForm({ updateDate, updateFields }) {
         <div className="dateForm_wrapper">
             <h2>Wanneer moet de klus gedaan worden</h2>
             {showMoreDates ? (
-                <Calendar onDateSelect={handleCalendarDateSelect} />
+                <Calendar />
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (

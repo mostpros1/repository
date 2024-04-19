@@ -26,15 +26,15 @@ const HomeOwnerEmail = ({ navigation }) => {
     return regex.test(email);
   };
 
-  const handleNext = () => {
-    if (!email.trim()) {
-      Alert.alert("Email Ontbreekt", "Vul uw email in voor u doorgaat.");
-    } else if (!validateEmail(email)) {
-        Alert.alert('Ongeldige E-mail', 'Vul een geldig e-mailadres in.');
-    } else {
-      navigation.navigate("HomeOwnerResults");
-    }
-  };
+    const handleNext = () => {
+        if (!email.trim()) {
+            Alert.alert('Email Ontbreekt', 'Vul uw email in voor u doorgaat.');
+        } else if (!validateEmail(email)) {
+            Alert.alert('Ongeldige Email', 'Vul een geldig emailadres in.');
+        } else {
+            navigation.navigate('TestHome');
+        }
+    };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>

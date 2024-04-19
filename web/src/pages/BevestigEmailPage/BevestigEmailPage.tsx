@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
+import { sendMail } from "./../../../../backend_functions/email.ts"
 
 type PostConfig = {
     roleName: string
@@ -28,42 +29,59 @@ function BevestigEmailPage() {
         'HOMEOWNER': {
             roleName: "Homeowner",
             nextPage: '/huiseigenaar-resultaat',
-            onSuccess: () => setTimeout(() => navigate(postConfig.nextPage), 3000)
+            onSuccess: () => {
+                cognitoClient.adminAddUserToGroup({
+                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                    Username: userEmail,
+                    GroupName: 'Homeowner',
+                }).promise()
+                .then(() => setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000))
+                .catch(error => console.error(error))
+            }
         },
         'PROFESSIONAL': {
             roleName: "Professional",
             nextPage: '/specialist-resultaat',
+            
             onSuccess: () => {
+            cognitoClient.adminAddUserToGroup({
+                UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                Username: userEmail,
+                GroupName: 'Professional',
+            }).promise()
+            .then(() => {
                 stripeClient.accounts.create({
-                    type: 'standard',
-                    email: userEmail,
-                    country: 'NL',
+                type: 'standard',
+                email: userEmail,
+                country: 'NL',
                 })
                 .then(stripeAccount => {
-                    cognitoClient.adminUpdateUserAttributes({
-                        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                        Username: userEmail,
-                        UserAttributes: [{
-                            Name: 'custom:stripeAccountId',
-                            Value: stripeAccount.id
-                        }]
-                    }).promise()
-                    .then(() => {
-                        stripeClient.accountLinks.create({
-                            account: stripeAccount.id,
-                            type: 'account_onboarding',
-                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                            return_url: `${window.location.origin}${postConfig.nextPage}`
-                        })
-                        .then(result => window.location.href = result.url)
-                        .catch(err => console.error(err))
+                cognitoClient.adminUpdateUserAttributes({
+                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                    Username: userEmail,
+                    UserAttributes: [{
+                    Name: 'custom:stripeAccountId',
+                    Value: stripeAccount.id
+                    }]
+                }).promise()
+                .then(() => {
+                    stripeClient.accountLinks.create({
+                    account: stripeAccount.id,
+                    type: 'account_onboarding',
+                    refresh_url: `${window.location.origin}/payments/onboarding-failed`,
+                    return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
                     })
+                    .then(result => window.location.href = result.url)
                     .catch(err => console.error(err))
                 })
                 .catch(err => console.error(err))
+                })
+                .catch(err => console.error(err))
+            })
+            .catch(err => console.error(err))
             },
         }
-    }
+        }
     const postConfig = postConfigMap[postConfigId] || null
 
     async function confirmSignUp(code: string) {
@@ -72,7 +90,7 @@ function BevestigEmailPage() {
         .catch(error => {
             console.error(error)
             const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfig.nextPage), 3000) },
+                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
                 "CodeMismatchException": () => { },
                 "default": () => {}
             };
@@ -89,8 +107,10 @@ function BevestigEmailPage() {
         if (confirmationResult == 'SUCCESS') {
             setIsConfirmed(true)
             postConfig.onSuccess && postConfig.onSuccess()
+            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
         }
     }
+
 
     function onSubmit(e: FormEvent) {
         e.preventDefault()
@@ -105,7 +125,7 @@ function BevestigEmailPage() {
         .catch(error => {
             if (error.code == "InvalidParameterException") {
                 setUserExists(true)
-                setTimeout(() => navigate(postConfig.nextPage), 3000)
+                setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
             }
         })
     }

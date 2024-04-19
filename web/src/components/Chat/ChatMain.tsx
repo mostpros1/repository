@@ -1,16 +1,15 @@
-// // Chat2.tsx
-import "@aws-amplify/ui-react/styles.css";
-import NavBar from "../ui/NavBar/NavBar";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect, useState } from "react";
-import * as mutations from "../../graphql/mutations";
-import PaymentLink from "../PaymentLink/PaymentLink";
-import { API, graphqlOperation } from "aws-amplify";
+import React, { useEffect, useRef, useState } from "react";
 import * as queries from "../../graphql/queries";
-import intlFormatDistance from "date-fns/intlFormatDistance";
 import * as subscriptions from "../../graphql/subscriptions";
+import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
+import PaymentLink from '../PaymentLink/PaymentLink';
+import { IoSend } from "react-icons/io5";
+import { MdOutlinePayment } from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";
+import { Storage } from 'aws-amplify';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -32,19 +31,68 @@ function ChatMain({ user, signOut }) {
     handleReceivedMessage,
   } = useChatBackend(user, signOut);
 
-  const groups = user.signInUserSession.accessToken.payload['cognito:groups'];
+  const [contactList, setContactList] = useState<string[]>([]);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [image, setImage] = useState(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
+  const [groupedMessages, setGroupedMessages] = useState({});
 
-  const [subtotalInput, setSubtotalInput] = useState(""); // Voeg de staat toe voor de handmatige subtotal
-
-  const handleSubtotalChange = (e) => {
-    const sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
-
-    const isValidValue = sanitizedValue.split('.').length <= 2;
-
-    if (isValidValue) {
-      setSubtotalInput(sanitizedValue);
+  const uploadImageToS3 = async (file) => {
+    try {
+      const filename = `${Date.now()}-${file.name}`;
+      await Storage.put(filename, file, {
+        contentType: file.type
+      });
+      return filename;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
     }
   };
+  
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
+    try {
+      const filename = await uploadImageToS3(file);
+      const imageUrl = `https://<chatsphotos>.s3.amazonaws.com/<filename>${filename}`;
+      await handleSendMessage(imageUrl);
+    } catch (error) {
+      
+    }
+  };
+
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((groups, message) => {
+      const createdAt = new Date(message.createdAt);
+      const date = createdAt.toLocaleDateString('nl-NL', {
+        month: 'short',
+        day: '2-digit',
+      });
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push({ ...message, createdAt });
+      groups[date].sort((a, b) => a.createdAt - b.createdAt);
+      return groups;
+    }, {});
+  };
+  
+  
+  useEffect(() => {
+    const filteredChats = chats;
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }, [chats]);
+
+  useEffect(() => {
+    const filteredContacts = contactList.filter((contact) =>
+      contact.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredContactList(filteredContacts);
+  }, [searchTerm, contactList]);
 
   useEffect(() => {
     async function fetchChats() {
@@ -56,37 +104,18 @@ function ChatMain({ user, signOut }) {
           },
         },
       });
-      // @ts-ignore
+      //@ts-ignore
       setChats(allChats.data.listChats.items);
     }
     fetchChats();
   }, [user.attributes.email]);
 
   useEffect(() => {
-    // Scroll de chatbox naar beneden wanneer nieuwe berichten worden toegevoegd
-    const chatBox = document.getElementById('chat-box');
-    if (chatBox) {
-      // Controleer of de gebruiker naar boven heeft gescrold voordat nieuwe berichten worden toegevoegd
-      const isUserAtBottom = chatBox.scrollTop + chatBox.clientHeight === chatBox.scrollHeight;
-
-      // Voeg nieuwe berichten toe aan de chatbox
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      // Als de gebruiker eerder naar boven had gescrold, herstel dan de scrollpositie
-      if (!isUserAtBottom) {
-        chatBox.scrollTop -= 10; // Een kleine aanpassing om de scrollpositie te behouden zonder direct naar beneden te springen
-      }
-    }
-  }, [chats]);
-
-  useEffect(() => {
-    console.log("Checking for new messages...");
     const sub = API.graphql(
       graphqlOperation(subscriptions.onCreateChat)
-      // @ts-ignore
+      //@ts-ignore
     ).subscribe({
       next: ({ value }) => {
-        console.log("Received a new message:", value.data.onCreateChat);
         handleReceivedMessage(value.data.onCreateChat);
       },
       error: (err) => console.log(err),
@@ -94,401 +123,228 @@ function ChatMain({ user, signOut }) {
     return () => sub.unsubscribe();
   }, [user.attributes.email]);
 
-  const handleSendMessageOnEnter = async (e) => {
-    if (e.key === 'Enter') {
-      const messageText = e.target.value;
-      if (messageText && recipientEmail) {
-        await handleSendMessage(messageText);
-        e.target.value = ''; // Leeg het invoerveld na het verzenden van het bericht
-      }
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if(chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [chats]);
+
+  useEffect(() => {
+    const extractContacts = () => {
+      const contacts = new Set();
+      chats.forEach(chat => {
+        chat.members.forEach(member => {
+          if (member !== user.attributes.email) {
+            contacts.add(member.split("@")[0]);
+          }
+        });
+      });
+      return Array.from(contacts);
+    };
+
+    const uniqueContacts = extractContacts();
+    //@ts-ignore
+    setContactList(uniqueContacts);
+  }, [chats, user.attributes.email]);
+  
+  const switchChat = (contact) => {
+    if (selectedContact === contact) {
+      setSelectedContact(null);
+    } else {
+      setSelectedContact(contact);
+      handleJoinChat(contact);
     }
   };
 
-  let PaymentLinkComponent: JSX.Element | null = null;
-  if (groups && groups.includes('Professional')) {
-    PaymentLinkComponent = (
-      <>
-        <input
-          type="number"
-          step="0.01"
-          placeholder="Enter subtotal"
-          value={subtotalInput}
-          onChange={handleSubtotalChange}
-        />
-        <PaymentLink subtotal={parseFloat(subtotalInput) || 0} handleSendMessage={handleSendMessage} />
-      </>
-    );
-  }
+  const [isTyping, setIsTyping] = useState(false);
 
-  const handleSendMessageButtonClick = async () => {
-    const inputElement = document.getElementById('search') as HTMLInputElement;
+  useEffect(() => {
+    const simulateRecipientTyping = () => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 2000);
+    };
 
-    if (inputElement) {
-      const messageText = inputElement.value;
+    const typingTimer = setTimeout(simulateRecipientTyping, 5000);
 
-      if (messageText && recipientEmail) {
-        await handleSendMessage(messageText);
-        inputElement.value = ''; // Leeg het invoerveld na het verzenden van het bericht
-      }
+    return () => clearTimeout(typingTimer);
+  }, []);
+
+  const email = window.location.hash.replace("/", "").split("#")[1];
+
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+  const [customSubtotal, setCustomSubtotal] = useState('');
+
+  const updateSubtotal = () => {
+    if (!customSubtotal || isNaN(Number(customSubtotal))) {
+      alert('Voer een geldig bedrag in.');
+      return;
     }
+    setSubtotal(Number(customSubtotal));
+  };
+  
+  const handlePaySendMessage = (text) => {
+      console.log(text);
   };
 
+  const filteredChats = selectedContact
+  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+  : []; 
+
+  
 
   return (
-    <>
-      <NavBar />
-      <div className="chat_wrapper">
-        <div className="chat_con">
-          <div className="chat_leftside">
-            <div className="contact_list">
+    <div className="chat-container">
+    <div className="sidebar" id="sidebar">
+      <input
+        type="text"
+        placeholder="Zoek gebruikers..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="searchList"
+      />
+      <ul>
+        {searchTerm === ""
+          ? contactList.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))
+          : filteredContactList.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))}
+      </ul>
+    </div>
 
-            </div>
-            <div className="chat_btn_con">
-              <button type="button" className="buttonc" onClick={handleStartNewChat}>
-                Start New Chat
-              </button>
-              {PaymentLinkComponent}
-              <button type="button" className="buttonc" onClick={() => signOut()}>
-                Sign Out
-              </button>
-              {showAlert && (
-                <div className="alert">
-                  <input
-                    type="text"
-                    placeholder="Enter recipient's email"
-                    value={recipientEmail}
-                    onChange={handleAlertInputChange}
-                  />
-                  <button
-                    onClick={() => {
-                      handleAlertConfirm();
-                      setShowJoinButton(true);
-                    }}
-                  >
-                    Confirm
-                  </button>
-                  <button onClick={handleAlertCancel}>Cancel</button>
-                </div>
-              )}
-
-              {/* {showJoinButton &&
-                user.attributes.email !== recentMessageEmail &&
-                !showConfirmedConnection && (
-                  <div className="button_containerc">
-                    <button type="button" className="buttonc" onClick={handleJoinChat}>
-                      Join Chat
-                    </button>
-                  </div>
-                )} */}
-
-              {/* {showConfirmedConnection && (
-                <div> */}
-              {/* Render a notification message */}
-              {/* <p>{notificationMessage}</p> */}
-              {/* You can render a message or button to indicate that the user has joined the chat */}
-              {/* <p>You have joined the chat</p>
-                </div>
-              )} */}
-            </div>
-          </div>
-
-          <div className="chat_box_con">
-            <div id="chat-box" className="chat_box">
-              {chats
-                // @ts-ignore
-                .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-                .map((chat) => (
-                  <div
-                    // @ts-ignore
-                    key={chat.id}
-                    className={
-                      //@ts-ignore
-                      chat.email === user.attributes.email ? "self-end" : "other-end"}
-                  >
-
-                    <div className="chat_box_user_info">
-                      <div className="username">
-                        <span className="username-name">
-                          {
-                            // @ts-ignore
-                            chat.email}
-                        </span>{" "}
-                      </div>
-                      <time dateTime="2023-01-23T15:56" className="time">
-                        { // @ts-ignore
-                          intlFormatDistance(new Date(chat.createdAt), new Date())}
-                      </time>
-                    </div>
-                    <p className="text">
-
-                      { // @ts-ignore 
-                        chat.text}
-                    </p>
-                  </div>
-
-                ))}
-            </div>
-            <div className="input_form">
-              <input
-                type="text"
-                name="search"
-                id="search"
-                onKeyUp={handleSendMessageOnEnter}
-                className="inputchat"
-                placeholder="Bericht sturen..."
-              />
-              <div className="chat-enter" onClick={handleSendMessageButtonClick}>
-                <p className="">Enter</p>
-              </div>
+    <div className="button-container">
+      <button
+        type="button"
+        className="buttona"
+        onClick={handleStartNewChat}
+        disabled={!recipientEmail} // Disable the button if recipientEmail is empty
+      >
+        Start New Chat
+      </button>
+      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
+      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
+      {showAlert && (
+        <div className="alert">
+          <input
+            type="text"
+            placeholder="Enter recipient's email"
+            value={recipientEmail}
+            onChange={handleAlertInputChange}
+          />
+        </div>
+      )}
+    </div>
+      <div className="main-container">
+      {selectedContact && (
+      <div className="chat-main">
+        <div className="chatheader">
+          <div className="chat-info">
+            <div className="name-and-status">
+              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+              {isTyping && <div id="typing-indicator">Typing...</div>}
             </div>
           </div>
         </div>
+
+        <div className="chat-box" ref={chatBoxRef}>
+              {Object.keys(groupedMessages).map((date) => (
+                <React.Fragment key={date}>
+                  <div className="date-separator">{date}</div>
+                  {groupedMessages[date].map((chat) => (
+                    <div
+                      key={chat.id}
+                      className={`message-container ${
+                        chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                      }`}
+                    >
+                      <div
+                        className={`message-bubble ${
+                          chat.email === user.attributes.email ? "self-message" : "other-message"
+                        }`}
+                      >
+                        <div className="username">
+                          <span className="username-name">{chat.email.split("@")[0]}</span>
+                        </div>
+                        <p className="text">{chat.text}</p>
+                        <time dateTime={chat.createdAt} className="message-time">
+                          {new Intl.DateTimeFormat('nl-NL', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          }).format(new Date(chat.createdAt))}
+                        </time>
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+
+        <div className="input-form">
+          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
+            {showPaymentLink && (
+                <PaymentLink
+                    subtotal={subtotal}
+                    handleSendMessage={handlePaySendMessage}
+                />
+            )}
+            <input
+            type="number"
+            value={customSubtotal}
+            onChange={(e) => setCustomSubtotal(e.target.value)}
+            placeholder="Subtotaal"
+            className="betalingbedrag"
+          />
+          <IoMdPhotos size={25} className="addPhoto"/>
+          <input
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Stuur een bericht..."
+            onKeyUp={async (e) => {
+              if (e.key === "Enter") {
+                const messageText = (e.target as HTMLInputElement).value;
+                if (messageText && recipientEmail) {
+                  await handleSendMessage(messageText);
+                  (e.target as HTMLInputElement).value = "";
+                }
+              }
+            }}
+            className="inputchat"
+          />
+          <div className="chat-enter">
+            <kbd><IoSend size={25} /></kbd>
+          </div>
+        </div>
       </div>
-    </>
+      )}</div>
+
+      {showJoinButton && user.attributes.email !== recentMessageEmail && !showConfirmedConnection && (
+        <div className="join-chat-button-container">
+          <button type="button" onClick={handleJoinChat}>
+            Join Chat
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
 export default withAuthenticator(ChatMain);
-
-// //  -Test code for GraphQL- // //
-
-// user.attributes.email !== recentMessageEmail &&
-
-// import "@aws-amplify/ui-react/styles.css";
-// import { withAuthenticator } from "@aws-amplify/ui-react";
-// import React, { useEffect } from "react";
-// import * as mutations from "../../graphql/mutations";
-// import { API, graphqlOperation } from "aws-amplify";
-// import * as queries from "../../graphql/queries";
-// import intlFormatDistance from "date-fns/intlFormatDistance";
-// import * as subscriptions from "../../graphql/subscriptions";
-// import "./chatbox.css";
-
-// function ChatMain({ user, signOut }) {
-//   const [chats, setChats] = React.useState([]);
-//   const [recipientEmail, setRecipientEmail] = React.useState("");
-//   const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
-//   const [showJoinButton, setShowJoinButton] = React.useState(false);
-//   const [showConfirmedConnection, setShowConfirmedConnection] =
-//     React.useState(false);
-//   const [showAlert, setShowAlert] = React.useState(false);
-//   const [confirmedHost, setConfirmedHost] = React.useState("");
-//   const [notificationMessage, setNotificationMessage] = React.useState("");
-
-//   useEffect(() => {
-//     async function fetchChats() {
-//       const allChats = await API.graphql({
-//         query: queries.listChats,
-//         variables: {
-//           filter: {
-//             members: { contains: user.attributes.email },
-//           },
-//         },
-//       });
-//       // @ts-ignore
-//       setChats(allChats.data.listChats.items);
-//     }
-//     fetchChats();
-//   }, [user.attributes.email]);
-
-//   useEffect(() => {
-//     console.log("Checking for new messages...");
-//     const sub = API.graphql(
-//       graphqlOperation(subscriptions.onCreateChat)
-//       // @ts-ignore
-//     ).subscribe({
-//       next: ({ provider, value }) => {
-//         console.log("Received a new message:", value.data.onCreateChat);
-//         handleReceivedMessage(value.data.onCreateChat);
-//       },
-//       error: (err) => console.log(err),
-//     });
-//     return () => sub.unsubscribe();
-//   }, [user.attributes.email]);
-
-//   const handleSendMessage = async (text) => {
-//     const members = [user.attributes.email, recipientEmail]; // Include both users in the chat
-//     await API.graphql({
-//       query: mutations.createChat,
-//       variables: {
-//         input: {
-//           text,
-//           email: user.attributes.email,
-//           members,
-//           sortKey: members.sort().join("#"), // Create a unique sortKey
-//         },
-//       },
-//     });
-//   };
-
-//   const handleReceivedMessage = (receivedChat) => {
-//     if (receivedChat.members.includes(user.attributes.email)) {
-//       // @ts-ignore
-//       setChats((prev) => [...prev, receivedChat]);
-//       setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail with the email of the sender
-//       if (receivedChat.email !== confirmedHost) {
-//         setShowJoinButton(true);
-//       }
-//     }
-//   };
-
-//   const handleStartNewChat = () => {
-//     setRecipientEmail(
-//       // @ts-ignore
-//       prompt("Enter the email of the person you want to chat with:")
-//     );
-//     setShowAlert(true);
-//   };
-
-//   const handleAlertInputChange = (e) => {
-//     setRecipientEmail(e.target.value);
-//   };
-
-//   const handleAlertConfirm = () => {
-//     if (recipientEmail) {
-//       handleSendMessage("Hello, let's chat!");
-//       setShowAlert(false);
-//       setShowJoinButton(false);
-//       setConfirmedHost(user.attributes.email);
-//       setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
-//       setNotificationMessage(`${recentMessageEmail} joined the chat`);
-//     }
-//   };
-
-//   const handleAlertCancel = () => {
-//     setShowAlert(false);
-//     setRecipientEmail("");
-//   };
-
-//   const handleJoinChat = () => {
-//     console.log("Joining chat with email:", recentMessageEmail);
-//     const members = [user.attributes.email, recentMessageEmail];
-//     setRecipientEmail(recentMessageEmail);
-//     setRecentMessageEmail("");
-//     setShowJoinButton(false); // Hide the "Join Chat" button after clicking it
-//     setShowConfirmedConnection(true); // Show the button to indicate that the user has joined the chat
-//     setNotificationMessage(`${recentMessageEmail} joined the chat`);
-//   };
-
-//   return (
-//     <div>
-//       <div className="button_containerc">
-//         <button type="button" className="buttonc" onClick={handleStartNewChat}>
-//           Start New Chat
-//         </button>
-//       </div>
-
-//       <div className="">
-//         <div className="chat_box">
-//           {chats
-//             // @ts-ignore
-//             .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-//             .map((chat) => (
-//               <div
-//                 // @ts-ignore
-//                 key={chat.id}
-//                 className={`flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200 w-3/4 my-2 ${
-//                   // @ts-ignore
-//                   chat.email === user.attributes.email && "self-end bg-gray-200"
-//                 }`}
-//               >
-//                 <div>
-//                   <div className="">
-//                     <div className="username">
-//                       <span className="username-name">
-//                         {
-//                           // @ts-ignore
-//                           chat.email.split("@")[0]
-//                         }
-//                       </span>{" "}
-//                     </div>
-//                     <time dateTime="2023-01-23T15:56" className="time">
-//                       {
-//                         // @ts-ignore
-//                         intlFormatDistance(new Date(chat.createdAt), new Date())
-//                       }
-//                     </time>
-//                   </div>
-//                   <p className="text">
-//                     {
-//                       // @ts-ignore
-//                       chat.text
-//                     }
-//                   </p>
-//                 </div>
-//               </div>
-//             ))}
-//         </div>
-//         <div>
-//           <div className="input_form">
-//             <input
-//               type="text"
-//               name="search"
-//               id="search"
-//               onKeyUp={async (e) => {
-//                 if (e.key === "Enter") {
-//                   // @ts-ignore
-//                   const messageText = e.target.value;
-//                   if (messageText && recipientEmail) {
-//                     await handleSendMessage(messageText);
-//                     // @ts-ignore
-//                     e.target.value = "";
-//                   }
-//                 }
-//               }}
-//               className="inputchat"
-//             />
-//             <div className="chat-enter">
-//               <kbd className="">Enter</kbd>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="button_containerc">
-//         <button type="button" className="buttonc" onClick={() => signOut()}>
-//           Sign Out
-//         </button>
-//       </div>
-//       {showAlert && (
-//         <div className="alert">
-//           <input
-//             type="text"
-//             placeholder="Enter recipient's email"
-//             value={recipientEmail}
-//             onChange={handleAlertInputChange}
-//           />
-//           <button
-//             onClick={() => {
-//               handleAlertConfirm();
-//               setShowJoinButton(true);
-//             }}
-//           >
-//             Confirm
-//           </button>
-//           <button onClick={handleAlertCancel}>Cancel</button>
-//         </div>
-//       )}
-
-//       {showJoinButton &&
-//         user.attributes.email !== recentMessageEmail &&
-//         !showConfirmedConnection && (
-//           <div className="button_containerc">
-//             <button type="button" className="buttonc" onClick={handleJoinChat}>
-//               Join Chat
-//             </button>
-//           </div>
-//         )}
-
-//       {showConfirmedConnection && (
-//         <div>
-//           {/* Render a notification message */}
-//           <p>{notificationMessage}</p>
-//           {/* You can render a message or button to indicate that the user has joined the chat */}
-//           <p>You have joined the chat</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default withAuthenticator(ChatMain);

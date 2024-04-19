@@ -1,9 +1,8 @@
-import './MultistepForm.css'
-import { LocationForm } from './LocationForm'
-// import { CategoryForm } from './CategoryForm'
-import { FormEvent } from "react"
-import { useMultistepForm } from '../../hooks/useMultistepForm'
-import { useState } from 'react'
+import './MultistepForm.css';
+import { LocationForm } from './LocationForm';
+// import { CategoryForm } from './CategoryForm';
+import { FormEvent, useState } from "react";
+import { useMultistepForm } from '../../hooks/useMultistepForm';
 import { useNavigate } from 'react-router-dom';
 
 type FormData = {

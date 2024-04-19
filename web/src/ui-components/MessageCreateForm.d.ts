@@ -22,24 +22,18 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MessageCreateFormInputValues = {
-    author?: string;
-    body?: string;
-    createdAt?: string;
-    updatedAt?: string;
+    owner?: string;
+    message?: string;
 };
 export declare type MessageCreateFormValidationValues = {
-    author?: ValidationFunction<string>;
-    body?: ValidationFunction<string>;
-    createdAt?: ValidationFunction<string>;
-    updatedAt?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
+    message?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type MessageCreateFormOverridesProps = {
     MessageCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    author?: PrimitiveOverrideProps<TextFieldProps>;
-    body?: PrimitiveOverrideProps<TextFieldProps>;
-    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
-    updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
+    message?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type MessageCreateFormProps = React.PropsWithChildren<{
     overrides?: MessageCreateFormOverridesProps | undefined | null;

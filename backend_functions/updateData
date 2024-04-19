@@ -1,0 +1,20 @@
+import { dynamo } from './declarations.ts';
+import aws from "aws-sdk";
+
+
+export function updateData(tableName: string, key: string, updateExpression: string, expressionAttributeValues: aws.DynamoDB.DocumentClient.ExpressionAttributeValueMap){
+  dynamo
+  .update({
+    TableName: tableName,
+    Key: {
+      key,
+    },
+    UpdateExpression: updateExpression,
+    ExpressionAttributeValues: {
+      expressionAttributeValues,
+    },
+  })
+  .promise()
+  .then(data => console.log(data.Attributes))
+  .catch(console.error)
+}

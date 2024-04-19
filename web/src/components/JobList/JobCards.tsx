@@ -1,9 +1,11 @@
-import React from "react"; // Import React
-import "./JobCards.css"; // Import the CSS for styling
-import gasleiding from "../../assets/Gasleiding.svg"; // Import the image, if you're using it in the job cards
-import LocationOnIcon from "@mui/icons-material/LocationOn"; // Import icons
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-// Define the structure of a job object
+import React, { useEffect, useState } from 'react';
+import AWS from 'aws-sdk';
+import "./JobCards.css";
+import gasleiding from "../../assets/Gasleiding.svg";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { dynamo } from "../../../declarations";
+
 interface Job {
   id: number;
   name: string;
@@ -12,20 +14,44 @@ interface Job {
   description: string;
   location: string;
   availability: string;
-  // img: string; // Uncomment if you're using the image
+  // img: string;
 }
-// Define the props for the JobCards component
+
 interface JobCardsProps {
-  jobs?: Job[]; // Make jobs optional or provide a default prop value
+  jobs?: Job[];
 }
-// Define the JobCards component
+
 const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
-  // Provide a default empty array
-  // Check if jobs is defined and has length; if not, you can render a fallback UI or return null/empty fragment
-  if (!jobs || jobs.length === 0) {
-    return <></>; // or return <></> for nothing
+  const [specialists, setSpecialists] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const hashTag = window.location.hash.replace("#", "");
+    
+    dynamo.query({
+      TableName: "clients",
+      IndexName: "plaats",
+      KeyConditionExpression: "plaats = :plaats",
+      ExpressionAttributeValues: {
+        ":plaats": hashTag,
+      },
+    }).promise()
+      .then(data => {
+        if (data.Items && data.Items.length > 0) {
+          console.log(data.Items);
+        } else {
+          console.log('No items found');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }, [window.location.hash]);
+
+  if (!specialists || specialists.length === 0) {
+    return <div>No jobs available.</div>;
   }
-  // Map over the jobs array to create job cards
+
   const jobCardsRender = jobs.map((job) => (
     <div key={job.id} className="job-item">
       <div className="user-detail">

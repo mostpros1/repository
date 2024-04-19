@@ -1,12 +1,10 @@
 import { dynamoDB } from './main.tsx';
 
-
-
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
 
     const params = {
-        TableName: "users",
+        TableName: "Users",
         Item: {
             id: { N: "1" },
             username: { S: username },

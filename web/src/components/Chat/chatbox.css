@@ -1,160 +1,353 @@
-.chat_wrapper{
-  width: 100%;
-  height: 100vh;
-  padding: 150px 30px;
+.chat-container {
   display: flex;
-  justify-content: center;
+  font-family: "Arial", sans-serif;
+  border-radius: 10px;
+  align-items: center;
+  transition: all 1s ease;
+}
+
+.main-container {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.chat_con{
-  max-width: 1200px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+#sidebar {
+  width: 250px;
+  background-color: #308ae4;
+  border-right: 1px solid #e6e6e6;
+  overflow-y: auto;
+  height: 420px;
+  margin: 0px 0 0 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
 }
 
-.chat_leftside{
-  border: 2px solid #308AE4;
-  width: 20%;
+#sidebar ul {
+  list-style: none;
+  padding: 0;
 }
 
-.chat_btn_con{
+#sidebar ul li {
+  cursor: pointer;
+  padding: 10px 0;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+#sidebar ul li:hover {
+  background-color: #f0efff;
+  color: black;
+}
+
+#sidebar ul li.active {
+  background-color: #f0efff;
+  color: black;
+}
+
+.chat-main {
   display: flex;
-  height: 30%;
+  height: 450px;
+  width: 800px;
+  margin: 0px 30px 0px;
+  border-radius: 20px;
   flex-direction: column;
-  padding: 15px;
-  gap: 10px;
 }
 
-.buttonc {
-    background-color: #308AE4;
-    border-radius: 10px;
-    padding: 15px;
-    width: 100%;
-    border: none;
-    color: white;
-    margin: auto;
-    font-size: 15px;
-    &:hover {
-    background-color: #367fc8;
-    cursor: pointer;
-    }
+.textjoined {
+  background-color: #e6f7e8;
+  border-bottom: 1px solid #ddd;
+  width: 200px;
+  height: 30px;
+  border-radius: 20px;
+  position: absolute;
+  left: 50px;
+  top: 40px;
+  font-size: 15px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
-.username {
-  font-size: 18px;
+.button-container {
+  display: flex;
+  position: absolute;
+  top: 80px;
+  right: 100px;
+  gap: 20px;
+}
+
+.button-container .buttona {
+  background-color: #007bff;
+  border-radius: 10px;
+  color: white;
+  border: 0;
+  width: 120px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f9f9fb;
+  padding: 20px;
+  transition: all 0.5s ease;
+}
+
+.input-form {
+  display: flex;
+  padding: 10px;
+  background-color: #f7f7f9;
+  border-top: 1px solid #ddd;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.inputchat {
+  flex-grow: 1;
+  padding: 10px 20px;
+  border: solid 2px rgba(0, 0, 0, 0.452);
+  border-radius: 4px;
+  font-size: 15px;
+  height: 40px;
+  margin-left: 20px;
+  width: 300px;
+}
+
+.chat-enter kbd {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  height: 40px;
+  margin-left: 10px;
+  width: 50px;
+  transition: all 0.5s ease;
+}
+
+.chat-enter kbd:hover {
+  background-color: #0056b3;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  display: flex;
+  max-width: 600px;
+  width: auto;
+  transition: all 0.5s ease;
+  font-size: 15px;
+  align-items: center;
+  overflow-y: auto;
+  height: auto;
+}
+
+.self-message {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-left: auto;
+  border-top-right-radius: 1;
+  width: auto;
+  transition: all 0.5s ease;
+}
+
+.other-message {
+  background-color: #8ac3ff84;
+  margin-right: auto;
+  border-top-left-radius: 1;
+  width: auto;
+  transition: all 0.5s ease;
+}
+
+.alert input {
+  border-radius: 10px;
+  height: 50px;
+  border: solid 2px black;
 }
 
 .time {
-  font-size: small;
+  font-size: 10px;
+  float: right;
+  color: #888;
 }
 
-.contact_list{
-  height: 70%;
-  border-bottom: 2px solid #308AE4;
+.username-name {
+  font-weight: bold;
 }
 
-.chat_box_con{
-  width: 80%;
+.join-chat-button-container {
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  text-align: center;
 }
 
-.chat_box {
+.join-chat-button-container button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.text {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.message-time {
+  font-size: 10px;
+  margin-left: 8px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.message-container {
   display: flex;
-  flex-direction: column; /* Ondersteuning voor flex-direction om berichten van onder naar boven weer te geven */
-  width: 100%;
-  height: 500px;
-  gap: 40px;
-  overflow: auto;
-  padding: 15px;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 
-.chat_box_user_info{
+.self-message-container {
+  align-items: flex-end;
+}
+
+.other-message-container {
+  align-items: flex-start;
+}
+
+.chatheader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background-color: #308ae4;
+  color: white;
+  height: 60px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-transform: capitalize;
+}
+
+.name-and-status {
   display: flex;
   flex-direction: column;
 }
 
-.other-end{
-  background-color: #308AE4;
-  width: fit-content;
-  padding: 5px 15px;
-  border-radius: 10px;
-  max-width: 70%;
-}
-
-.other-end > div, .other-end > p{
-  color: white;
-  word-wrap: break-word;
-}
-
-.other-end > p {
+.recipient-name {
+  margin: 0;
   font-size: 18px;
-}
-
-.self-end {
-  align-self: flex-end;
-  background-color: rgb(236, 236, 236);
-  padding: 5px 15px;
-  border-radius: 10px;
-  max-width: 70%;
-}
-
-.self-end > div, .self-end > p{
-  word-wrap: break-word;
-}
-
-.self-end > p {
-  font-size: 18px;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #bdbcbc; 
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #9e9e9e; 
-}
-
-.input_form {
-  overflow: auto;
-  border: 2px solid #C0C0C8;
-  width: 100%;
-  outline: none;
-  display: flex;
-  flex-direction: row;
-}
-
-.inputchat{
-  width: 100%;
-  border: none;
-  outline: none;
-}
-
-.chat-enter{
-  display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
-  border-left: 2px solid #C0C0C8;
-  padding: 15px;
-  transition: all 0.3s;
-  font-family: inherit;
 }
 
-.chat-enter:hover{
-  cursor: pointer;
-  background-color: #308AE4;
+.addPay {
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
   color: white;
+  border: 0;
+  margin-right: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.create-payment {
+  border: 0;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.betalingbedrag {
+  height: 40px;
+  width: 120px;
+  font-size: 14px;
+  border: solid 2px rgba(0, 0, 0, 0.452);
+}
+
+.betalingbevestig {
+  height: 40px;
+  width: auto;
+  padding: 5px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.searchList {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.addPhoto{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px;
+}
+
+.selected-contact {
+  background-color: #8ac3ffc7;
+  color: rgb(255, 255, 255);
+}
+
+.date-separator {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }

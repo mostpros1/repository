@@ -11,6 +11,7 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { sendMail } from "../../backend_functions/email.ts";
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -18,12 +19,21 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
+import { dynamoDB } from "../declarations.ts";
+
+
+dynamoDB
+  .listTables()
+  .promise()
+  .then(data => console.log(data))
+  .catch((error: Error) => console.error(error));
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
 export const stripeClient = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
 
+//sendMail("timon@timonheidenreich.eu", "test", "test", "<p>test</p><br><p>test</p>");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -36,3 +46,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+export { dynamoDB };
