@@ -5,9 +5,9 @@ const Question = ({ text }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <article>
+    <article id="question-var">
       <div className="question" onClick={() => setIsOpen(!isOpen)}>{text}</div>
-      {isOpen && <p>// Answer content goes here...</p>}
+      {isOpen && <p>Je moet contact opnemen met klantenservice</p>}
     </article>
   );
 };
