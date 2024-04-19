@@ -1,5 +1,5 @@
 import './MultistepForm.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
@@ -11,10 +11,12 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
+import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
-import { useUser } from "../../context/UserContext";
+import { userInfo } from 'os'
+import { dynamo } from '../../../declarations'
 
 type FormData = {
   postCode: string
@@ -29,8 +31,6 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
-  formConfig: string
-  beroep: string
 }
 
 function MultistepForm() {
@@ -51,14 +51,11 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: "",
-    beroep: "",
-    formConfig: ""
+    repeatPassword: ""
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  const [isValidDatum, setValidDatum] = useState(true);
-
+  
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -122,47 +119,17 @@ function MultistepForm() {
     />
   ));
 
-  const { user, updateUser } = useUser();
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm(
-    user ? {
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-        <PageSpecialisten updateDate={data.date}/>
+
+        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
+        <PageSpecialisten />
       ],
       onStepChange: () => {}
-    } : {
-      steps: [
-        <LocationForm {...data} updateFields={updateFields} />,
-        <DateForm updateDate={updateDate} updateFields={updateFields} />,
-        <InfoForm {...data} updateFields={updateFields} />,
-        <>
-          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>
-          <PageSpecialisten updateDate={data.date}/>
-        </>
-      ],
-      onStepChange: () => {}
-    }
-  );
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    console.log('Form Data:', data);
-
-
-    if (!isLastStep) {
-      // Check if the data for the second step is filled
-      if (currentStepIndex === 1 && data.date.trim() === "") {
-        // Display an error or handle the case where the second step is not filled
-        setValidDatum(false);
-        return;
-      }
-      
-      setValidDatum(true);
-      return next();
-    }
-
+    });
 
     async function onSubmit(e: FormEvent) {
       e.preventDefault()
@@ -170,58 +137,47 @@ function MultistepForm() {
       if (!isLastStep) return next()
 
       const userData = {
-        email: data.email.trim(),
-        password: data.password.trim(),
-        repeatPassword: data.repeatPassword.trim(),
+        email: data.email,
+        password: data.password,
+        repeatPassword: data.repeatPassword,
         firstName: data.firstName.trim(),
         lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber.trim()
+        phoneNumber: data.phoneNumber
       }
-      setValidDatum(true);
-      return next();
-    }
-
-    const userData = {
-      email: data.email,
-      password: data.password,
-      repeatPassword: data.repeatPassword,
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber
-    }
-
-    if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-      await Auth.signIn(userData.email, userData.password)
+  
+      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
+        await Auth.signIn(userData.email, userData.password)
         .then(() => {
           navigate('/huiseigenaar-resultaat')
         })
         .catch((err) => {
           console.error(err)
-          if (err.code == 'UserNotConfirmedException') navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
-    }
-    else {
-      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-      await Auth.signUp({
+      }
+      else {
+        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+        await Auth.signUp({
         username: userData.email,
         password: userData.password,
         attributes: {
+          phone_number: userData.phoneNumber,
           name: userData.firstName,
           family_name: userData.lastName,
           email: userData.email,
-          phone_number: userData.phoneNumber,
-          "custom:group": "Homeowner"
+          phone_number: userData.phoneNumber
         },
         autoSignIn: { enabled: true }
-      })
+        })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          navigate('/bevestig-email', { state: { email: userData.email } })
         })
         .catch(async error => {
           console.error(error)
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+            navigate('/bevestig-email', { state: { email: userData.email } })
+          } else {
+            console.error("foutmelding:", error)
           }
         })
     }

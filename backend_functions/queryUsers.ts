@@ -3,7 +3,7 @@ import { dynamo } from './declarations.ts';
 export async function queryUsers(username: string,  output: string): Promise<string | null> {
     return new Promise((resolve, reject) => {
       const params = {
-        TableName: "users",
+        TableName: "Users",
         IndexName: 'username',
         KeyConditionExpression: 'email = :username',
         ExpressionAttributeValues: {

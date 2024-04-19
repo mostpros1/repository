@@ -1,0 +1,72 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+  width: 600px;
+  margin: 50px 0px 30px auto;
+  padding: 15px;
+}
+
+.settings-right-con {
+  padding: 25px;
+  border-end-start-radius: 15px;
+  border-end-end-radius: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.settings-header {
+  background-color: #e9f4ff;
+  width: 100%;
+  padding: 25px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.settings-header p {
+  margin-left: 15px;
+  font-weight: 600;
+}
+
+.inner-settings-con {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 15px;
+}
+
+.inner-settings-con ul li {
+  list-style: none;
+  flex-direction: column;
+}
+
+.col-row p {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.inner-settings-con input {
+  margin: 10px;
+  font-size: 15px;
+  border: none;
+  border-radius: 15px;
+  background-color: #f8f8f8;
+}
+
+.save-btn {
+  display: flex;
+  margin: 15px auto;
+  flex-direction: row-reverse;
+  padding-top: 25px;
+}
+
+.save-btn button {
+  background-color: #308ae4;
+  color: white;
+  font-size: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  margin: 10px;
+  cursor: pointer;
+}

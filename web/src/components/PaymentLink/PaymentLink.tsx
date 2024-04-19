@@ -2,64 +2,98 @@ import { useEffect, useState } from 'react';
 import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 
+
 type PaymentLinkProps = {
     subtotal: number;
-    handleSendMessage: (text: any) => void; // Of het nu een Promise<void> of een andere return type moet zijn, hangt af van je implementatie
+    handleSendMessage: (text: any) => void;
 };
 
 const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
-    const [paymentLink, setPaymentLink] = useState('')
-    const [currentUser, setCurrentUser] = useState<any>('')
-    const [userStripeAccountId, setUserStripeAccountId] = useState('')
-    const companyFee = subtotal * 0.02 // Mostpros takes 2% of the transaction.
+    const [paymentLink, setPaymentLink] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userStripeAccountId, setUserStripeAccountId] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         async function checkStripeAccountId() {
-            const user = await Auth.currentAuthenticatedUser()
-            setCurrentUser(user)
-            const stripeAccountId = user?.attributes['custom:stripeAccountId'] || []
-            setUserStripeAccountId(stripeAccountId)
+            try {
+                const user = await Auth.currentAuthenticatedUser();
+                console.log('Gebruikersattributen:', user.attributes);
+                const email = user.attributes.email;
+                setUserEmail(email);
+                const userStripeAccountId = user.attributes['custom:stripeAccountId'] || '';
+                console.log('E-mail van de gebruiker:', email);
+                console.log('Stripe-account-ID van de gebruiker:', userStripeAccountId);
+                setUserStripeAccountId(userStripeAccountId);
+            } catch (e) {
+                setError('Failed to authenticate user.');
+            }
         }
-        checkStripeAccountId()
-    }, [])
+        checkStripeAccountId();
+    }, []);
 
     const createSession = async () => {
-        if (userStripeAccountId == '') return;
+        if (userStripeAccountId === '' || userEmail === '') {
+            setError('Stripe account ID or user email is missing.');
+            return;
+        }
 
-        stripeClient.checkout.sessions.create({
-            currency: 'eur',
-            mode: 'payment',
-            customer_email: `${currentUser.attributes.email}`,
-            line_items: [{
-                price_data: {
-                    currency: 'eur',
-                    product_data: {
-                        name: "Betaling voor klus",
+        setLoading(true);
+        setError('');
+
+        try {
+            const result = await stripeClient.checkout.sessions.create({
+                currency: 'eur',
+                mode: 'payment',
+                customer_email: userEmail,
+                line_items: [{
+                    price_data: {
+                        currency: 'eur',
+                        product_data: {
+                            name: "Betaling voor klus",
+                        },
+                        unit_amount: subtotal
                     },
-                    unit_amount: subtotal
+                    quantity: 1
+                }],
+                payment_method_types: ['card', 'ideal'],
+                payment_intent_data: {
+                    application_fee_amount: Math.ceil(subtotal * 0.02),
+                    transfer_data: {
+                        destination: userStripeAccountId
+                    }
                 },
-                quantity: 1
-            }],
-            payment_method_types: ['card', 'ideal'],
-            payment_intent_data: {
-                application_fee_amount: Math.ceil(companyFee),
-                transfer_data: {
-                    destination: userStripeAccountId
-                }
-            },
-            success_url: `${window.location.origin}/payments/success`,
-            cancel_url: `${window.location.origin}/payments/canceled`,
-        }).then(result => {
-            setPaymentLink(result.url as string)
-            const paymentMessage = `Hier is de betalingslink: ${result.url}`;
-            handleSendMessage(paymentMessage);
-        })
-    }
+                success_url: `${window.location.origin}/payments/success`,
+                cancel_url: `${window.location.origin}/payments/canceled`,
+            });
 
-    return <>
-        <button onClick={createSession}>create payment</button>
-        <a href={paymentLink}>payment link</a>
-    </>
+            setPaymentLink(result.url as string);
+            handleSendMessage(`Hier is de betalingslink: ${result.url}`);
+            setError('');
+        } catch (e) {
+            setError('Failed to create payment session. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <>
+            {loading ? <p>Loading...</p> : (
+                <>
+                    <button onClick={createSession} className='create-payment'>Create payment</button>
+                    {paymentLink && (
+                        <>
+                            <p>Betalingslink is succesvol gemaakt:</p>
+                            <a href={paymentLink}>{paymentLink}</a>
+                        </>
+                    )}
+                </>
+            )}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+        </>
+    );
 }
 
-export default PaymentLink
+export default PaymentLink;

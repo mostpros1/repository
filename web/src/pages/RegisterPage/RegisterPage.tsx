@@ -5,7 +5,7 @@ import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
 import Footer from '../../components/ui/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
-import { dynamo } from "./../../../../backend_functions/declarations.ts";
+import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 
 
@@ -61,8 +61,18 @@ function RegisterPage() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
+
+              /*
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              status: "PENDING",
+              user_role: "HOMEOWNER"
+              */
             },
-            TableName: "users",
+            TableName: "Users",
           })
           .promise()
           .then(data => console.log(data.Attributes))
@@ -75,7 +85,7 @@ function RegisterPage() {
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
       */
         //const postConfig = postConfigMap['HOMEOWNER'];
-        navigate('/bevestig-email', { state: { email: email, postConfig: "HOMEOWNER" } })
+        navigate('/bevestig-email#dashboard-huiseigenaar', { state: { email: email, postConfig: "HOMEOWNER" } })
       } catch (error: any) {
         console.error('Error signing up:', error);
         setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
@@ -100,9 +110,10 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-          <RegisterForm setError={function (error: string): void {
-            throw new Error('Function not implemented.');
-          } } setUserExists={undefined} {...registerData} updateFields={updateRegisterData} /*setError={setError}*/ error={error} />
+
+          {/* <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/> */}
+
+          <RegisterForm setUserExists={undefined} {...registerData} updateFields={updateRegisterData} /*setError={setError}*/ error={error} />
           <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>

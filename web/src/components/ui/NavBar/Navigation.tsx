@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import MenuIcon from "@mui/icons-material/Menu";
+// import JoinChat from "../../Chat/JoinChat";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
-import JoinChat from "../../Chat/JoinChat";
+//import {ChatBtn} from "../../Chat/Chatbtn";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -16,20 +18,6 @@ function Navigation() {
   const { user, updateUser } = useUser(); // Assuming you have a useUser hook
   const navigate = useNavigate(); // Create a navigate function
 
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        updateUser(authenticatedUser);
-      } catch (error) {
-        updateUser(null);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
-
   const handleIconClick = () => {
     navigate("/HomeInovation"); // Use navigate function to redirect
   };
@@ -37,6 +25,20 @@ function Navigation() {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      updateUser(authenticatedUser);
+    } catch (error) {
+      updateUser(null);
+    }
+  };
+
 
   const handleLogout = async () => {
     try {
@@ -60,6 +62,7 @@ function Navigation() {
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes("Homeowner")) {
       DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
+      DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
       DashboardLink = <Link to="/dashboard-professional">Account</Link>;
     }
@@ -313,7 +316,7 @@ function Navigation() {
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
-            <MoreVertOutlinedIcon /> {/* Changed icon here */}
+            <MenuIcon />
             <PermIdentityIcon />
           </button>
           {dropdownOpen && (

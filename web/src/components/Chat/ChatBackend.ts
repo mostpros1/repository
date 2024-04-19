@@ -16,31 +16,33 @@ export function useChatBackend(user: any, signOut) {
 
 // // sends messages ///
 const handleSendMessage = async (text) => {
-  const members = [user.attributes.email, recipientEmail];
-  await API.graphql({
-    query: mutations.createChat,
-    variables: {
-      input: {
-        text: text, // Correct gebruik van de 'text' variabele
-        email: user.attributes.email,
-        members,
-        sortKey: members.sort().join("#"), // Create a unique sortKey
+  try {
+    await API.graphql({
+      query: mutations.createChat,
+      variables: {
+        input: {
+          text: text,
+          email: user.attributes.email,
+          members: [user.attributes.email, recipientEmail],
+          sortKey: [user.attributes.email, recipientEmail].sort().join("#"),
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
 };
 
 const handleReceivedMessage = (receivedChat) => {
   if (receivedChat.members.includes(user.attributes.email)) {
-    setChats((prevChats) => [...prevChats, receivedChat]); // Voeg het ontvangen bericht toe aan de lijst met chats
-    setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail met de email van de afzender
-    if (receivedChat.email !== user.attributes.email) { // Controleer of de ontvangen chat niet van de huidige gebruiker is
+    setChats((prevChats) => [...prevChats, receivedChat]);
+    setRecentMessageEmail(receivedChat.email);
+    if (receivedChat.email !== user.attributes.email) {
       setShowJoinButton(true);
     }
   }
 };
 
-// // Functions for make new Chat // //
   const handleStartNewChat = () => {
     setRecipientEmail(
       // @ts-ignore
@@ -55,11 +57,9 @@ const handleReceivedMessage = (receivedChat) => {
 
   const handleAlertConfirm = () => {
     if (recipientEmail) {
-      handleSendMessage("Hello, let's chat!");
       setShowAlert(false);
       setShowJoinButton(false);
       setShowConfirmedConnection(true); 
-      setNotificationMessage(`${recentMessageEmail} joined the chat`);
     }
   };
 
@@ -68,15 +68,12 @@ const handleReceivedMessage = (receivedChat) => {
     setRecipientEmail("");
   };
 
-// // for recipientEmail to make connection to chat // //
-  const handleJoinChat = () => {
-    console.log("Joining chat with email:", recentMessageEmail);
-    const members = [user.attributes.email, recentMessageEmail];
-    setRecipientEmail(recentMessageEmail);
-    setRecentMessageEmail("");
-    setShowJoinButton(false); 
-    setShowConfirmedConnection(true); 
-    setNotificationMessage(`${recentMessageEmail} joined the chat`);
+  const handleJoinChat = (email) => {
+    console.log("Joining chat with email:", email);
+    setRecipientEmail(email);
+    setRecentMessageEmail(email);
+    setShowJoinButton(false);
+    setShowConfirmedConnection(true);
   };
 
 return {

@@ -1,0 +1,11 @@
+#side-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.side-panel-right {
+    display: grid;
+}
+.side-panel-left {
+    display: grid;
+}
