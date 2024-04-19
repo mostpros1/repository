@@ -125,6 +125,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         key={day}
         className={`day ${isSelected ? 'selected' : ''} ${isPastDay ? 'past' : ''} ${weekDay === 0 || weekDay === 6 ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
         onClick={() => handleDateSelect(day, dayDate)}
+        data-testid={`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`}
         >
           {day}
         </div>
@@ -216,6 +217,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
             key={time}
             className={`time-slot ${selectedTimes.includes(time) ? 'selected' : ''}`}
             onClick={() => handleTimeSelect(time)}
+            data-testid={`time-slot-${time}`}
           >
             {time}
           </div>

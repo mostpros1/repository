@@ -58,6 +58,7 @@ declare namespace Cypress {
         performInputChecktestreg(value1, value2,value3,value4,value5,value6):void;
         testAgain_new():void;
         testlisaAgain():void;
+        signupbutton():void;
         
     }
 }
@@ -187,14 +188,27 @@ Cypress.Commands.add('performInputCheck2', (value1, value2) => {
 });
 
 Cypress.Commands.add('performInputChecktestreg', (value1, value2,value3,value4,value5,value6) => {
-    cy.get('input[type="text"]').eq(0).type(value1);
-    cy.get('input[type="text"]').eq(1).type(value2);
+    cy.get('input[type="text"]').eq(0).type(value1).should('not.have.value', '');
+    cy.get('input[type="text"]').eq(1).type(value2).should('not.have.value', '');
     cy.get('input[type="email"]').clear();
-    cy.get('input[type="email"]').type(value3);
-    cy.get('input[type="tel"]').type(value4);
-    cy.get('input[type="password"]').eq(0).type(value5);
-    cy.get('input[type="password"]').eq(1).type(value6);
+    cy.get('input[type="email"]').type(value3).should('not.have.value', '');
+    cy.get('input[type="tel"]').type(value4).should('not.have.value', '');
+    cy.get('input[type="password"]').eq(0).type(value5).should('not.have.value', '');
+    cy.get('input[type="password"]').eq(1).type(value6).should('not.have.value', '');
+
+    cy.get('input[type="email"]').invoke('val').then(emailValue => {
+        expect(emailValue).to.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Invalid email format.');
+    });
+    cy.get('input[type="tel"]').invoke('val').then(phoneValue => {
+        expect(phoneValue).to.match(/^\+31/, 'Phone number must start with +31.');
+    });
+
     cy.nextreg();
     cy.testreg();
 })
 
+
+Cypress.Commands.add('signupbutton', () => {
+    cy.get('[class="button-sign-up"]').click();
+    //cy.get('#308AE4').click();
+});
