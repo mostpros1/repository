@@ -98,7 +98,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
     const [displayedTaskName, setDisplayedTaskName] = useState('');
 
 
-    const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTaskChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const inputValueTask = e.target.value;
 
         // Find the selected task object
