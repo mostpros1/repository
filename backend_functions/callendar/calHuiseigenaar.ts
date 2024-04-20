@@ -1,27 +1,8 @@
-import aws from 'aws-sdk';
-
-const dynamo = new aws.DynamoDB.DocumentClient();
+import { dynamo } from "../../web/declarations.ts";
 
 
 export function calHuiseigenaar(professionalsEmail: string) {
-    //const professional_id: number = data[0].items;
-
-    /*function checkAvailibility(professional_id: number) {
-        dynamo
-            .query({
-                TableName: 'UserAvailability',
-                IndexName: "professional_idIndex",
-                KeyConditionExpression: 'professional_id = :professional_id',
-                ExpressionAttributeValues: {
-                    ':professional_id': professional_id,
-                }
-            })
-            .promise()
-            .then(available => mark_availibility(available.Items))
-            .catch(console.error);
-
-    }*/
-
+    
     dynamo
         .query({
             TableName: 'Professionals',
@@ -58,4 +39,4 @@ export function calHuiseigenaar(professionalsEmail: string) {
         return availibility;
     }
 }
-calHuiseigenaar("something");
+calHuiseigenaar("iemand@iemand.nl");
