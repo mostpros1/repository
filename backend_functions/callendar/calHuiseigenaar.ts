@@ -45,12 +45,12 @@ export function calHuiseigenaar(professionalsEmail: string) {
             for (let j = 0; j < output[i].availibility.length; j++) {
                 dates = [...dates, output[i].availibility[j]];
             }
-            const date = output[i].availibility[];
+            //const date = output[i].availibility[];
             //const time_from = output[i].time_from;
             //const time_to = output[i].time_to;
             //const date_time = date + " " + time_from + " - " + time_to;
             if (output[i].status === "available") {
-                console.log(date, "is available");
+                console.log(dates, "are available");
                 availibility.push(dates);
             }
 
