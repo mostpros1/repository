@@ -6,7 +6,7 @@ function SpecialistList() {
     <>
       <strong>Aanbevolen vakspecialisten</strong>
       <div className="specialist_card_con">
-       
+        
       </div>
     </>
   );

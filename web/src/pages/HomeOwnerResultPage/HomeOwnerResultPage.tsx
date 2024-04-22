@@ -10,8 +10,10 @@ function HomeOwnerResultPage() {
     <>
       <NavBar />
       <div className="HOresult-con">
-        <SideNav />
         <div className="HO_result">
+          <div className="sidenav-con-ts">
+            <SideNav />
+          </div>
           <div className="HO_wrapper">
             <FilterBar />
             <SpecialistList />

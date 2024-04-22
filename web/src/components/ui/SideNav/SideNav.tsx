@@ -49,7 +49,7 @@ function SideNav() {
         {isProfessional && (
           <li className="sidebar-item">
             <NavLink
-              to="/HomeOwnerResultPage"
+              to="/specialist-resultaat"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }

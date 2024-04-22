@@ -20,3 +20,7 @@
   flex-direction: row;
   align-items: flex-end;
 }
+
+.sidenav-con-ts {
+  margin-right: 15px;
+}
