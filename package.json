@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test": "jest --watchAll --verbose",
     "e2e": "cypress open"
+    
   },
   "dependencies": {
     "@aws-amplify/api": "^6.0.8",

@@ -59,6 +59,15 @@ declare namespace Cypress {
         testAgain_new():void;
         testlisaAgain():void;
         signupbutton():void;
+        MijnKlussendash():void;
+        Jobs():void;
+        chat():void;
+        Calendar():void;
+        Payments():void;
+        ReviewPage():void;
+        Profile():void;
+        HomeOwnerSettingsPage():void;
+        Helpdesk():void;
         
     }
 }
@@ -212,3 +221,60 @@ Cypress.Commands.add('signupbutton', () => {
     cy.get('[class="button-sign-up"]').click();
     //cy.get('#308AE4').click();
 });
+
+//Dashboard functie
+Cypress.Commands.add('MijnKlussendash', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/MijnKlussen")
+
+});
+
+Cypress.Commands.add('Jobs', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/Jobs")
+
+});
+
+Cypress.Commands.add('chat', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/chat")
+
+});
+
+Cypress.Commands.add('Calendar', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/Calendar")
+
+});
+
+Cypress.Commands.add('Payments', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/Payments")
+
+});
+
+Cypress.Commands.add('ReviewPage', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/ReviewPage")
+
+});
+
+Cypress.Commands.add('Profile', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/Profile")
+
+});
+
+Cypress.Commands.add('HomeOwnerSettingsPage', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/HomeOwnerSettingsPage")
+
+});
+
+Cypress.Commands.add('Helpdesk', () => {
+    cy.setDesktopViewport();
+    cy.visit("http://localhost:5173/Helpdesk")
+
+});
+
+//Eind dashboard functie testing

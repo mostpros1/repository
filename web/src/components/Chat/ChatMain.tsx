@@ -235,7 +235,7 @@ function ChatMain({ user, signOut }) {
         type="button"
         className="buttona"
         onClick={handleStartNewChat}
-        disabled={!recipientEmail} // Disable the button if recipientEmail is empty
+    // Disable the button if recipientEmail is empty
       >
         Start New Chat
       </button>

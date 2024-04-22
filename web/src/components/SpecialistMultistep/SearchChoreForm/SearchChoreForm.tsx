@@ -154,7 +154,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
                 )}
                 <label>Klus:</label>
-                <select
+                { /*<select
                     value={displayedTaskName} // Use displayedTaskName here
                     onChange={(e) => handleTaskChange(e)}
                 >
@@ -162,7 +162,31 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                     {getValidTasks(beroep || '').map((task, index) => (
                         <option key={index} value={task}>{task}</option>
                     ))}
+                </select>*/
+                
+                    // <select
+                    //     id="klus-select" // Voeg een id attribuut toe voor Cypress selectie
+                    //     value={displayedTaskName}
+                    //     onChange={(e) => handleTaskChange(e)}
+                    // >
+                    //     <option value="">Selecteer een Klus</option>
+                    //     {getValidTasks(beroep || '').map((task, index) => (
+                    //         <option key={index} value={task}>{task}</option>
+                    //     ))}
+                    // </select>
+
+                <select
+                    id="klus-select"
+                    value={displayedTaskName} // Use displayedTaskName here
+                    onChange={(e) => handleTaskChange(e)}
+                >
+                    <option className="selectie-npm" value="">Selecteer een Klus</option>
+                    {getValidTasks(beroep || '').map((task, index) => (
+                        <option key={index} id={`task-option-${index + 1}`} value={task}>{task}</option>
+                    ))}
                 </select>
+                }
+                
                 {!isValidTask(displayedTaskName) && ( // Validate based on displayedTaskName
                     <p className="error-message">Voer alstublieft een geldige opdracht in</p>
                 )}
