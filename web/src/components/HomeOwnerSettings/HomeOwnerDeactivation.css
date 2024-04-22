@@ -1,0 +1,50 @@
+.account-deletion {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 980px;
+}
+
+.header-con h2{
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.account-deletion p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.confirmation-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.confirmation-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.delete-account-button {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.delete-account-button:hover {
+  background-color: #c82333;
+}
+
+.delete-account-button:disabled {
+  background-color: #e2e3e5;
+  color: #ccc;
+  cursor: not-allowed;
+}

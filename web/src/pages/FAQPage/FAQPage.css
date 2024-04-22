@@ -1,0 +1,28 @@
+.faq-header {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 700px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.faq-con {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 500px;
+}
+
+
+/* Add responsive behavior */
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .nav-con,
+  .faq-con {
+    width: 100%; /* Full width on smaller screens */
+  }
+}

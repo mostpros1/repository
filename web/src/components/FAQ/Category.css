@@ -1,0 +1,32 @@
+.category {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 20px; /* This adds space between the grid items */
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.category-title {
+  font-size: 20px
+}
+
+.questions-con {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 20px;
+  margin: 25px;
+}
+
+.category h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 20px 0;
+}
+
+.category-container {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}

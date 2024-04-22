@@ -1,0 +1,39 @@
+#question-var .question {
+  padding: 25px;
+  text-align: center;
+  overflow: hidden;
+  font-size: 13px;
+  color: black;
+  font-weight: 600;
+}
+
+#question-var .question {
+  background-color: #e9f4ff;
+  border: none;
+  border-radius: 4px;
+  padding: 25px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  transition: all 0.5s ease;
+}
+
+#question-var p {
+  font-size: 15px;
+  display: block;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+
+/* Hover effect for questions */
+#question-var .question:hover {
+  background-color: #d4e9ff;
+}
+
+/* The active or 'open' state of the question, which might display more content */
+#question-var .question-active {
+  background-color: #e9ecef;
+}

@@ -1,0 +1,126 @@
+.notification-con {
+  display: flex;
+  width: 980px;
+  flex-direction: column;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-end-start-radius: 15px;
+  border-end-end-radius: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  margin: 0px 0px 15px 0px;
+}
+
+.notification-header {
+  background-color: #e9f4ff;
+  width: 100%;
+  padding: 25px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification-description {
+  color: #A6ACB2; /* Light grey text color, adjust as needed */
+  font-size: 0.9rem; /* Smaller text size */
+  margin: 10px 0 20px; /* Space above and below the description */
+  text-align: left;
+  width: 300px;
+}
+
+.notification-header p {
+  margin-left: 15px;
+  font-weight: 600;
+}
+
+.notification-settings {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.notification-settings article {
+border-right: 1px solid #DDDDDD;
+}
+
+.notification-card {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 48%; /* Splits the space between two cards */
+  box-sizing: border-box;
+}
+
+.notification-card h2 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.notification-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.notification-toggle span {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
