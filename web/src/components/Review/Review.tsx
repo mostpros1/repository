@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Review.css";
-import SittingCustomer from "../../assets/sittingcustomer.png";
+import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
 
 const reviews = [
