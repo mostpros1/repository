@@ -16,7 +16,6 @@ import AdminMain from "../pages/AdminHomePage/AdminMain";
 import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
-import ChatPage from "../pages/ChatPage/ChatPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
@@ -38,14 +37,16 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
-
-//import FAQPage from "../pages/FAQPage/FAQpage";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import JobsPage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
+import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
+import ChatContactList from "../components/Chat/ChatContactList";
+import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 
 const App = () => {
   return (
@@ -58,7 +59,7 @@ const App = () => {
       <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
       <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
       <Route path="/bevestig-email" element={<BevestigEmailPage />} />
-      <Route path="/huiseigenaar-resultaat" element={<DashboardPage />} />
+      <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
       <Route path="/specialist-resultaat" element={<ResultsPage />} />
       <Route path="/over-ons" element={<AboutUsPage />} />
@@ -92,7 +93,7 @@ const App = () => {
         path="/HomeOwnerDeactivation"
         element={<HomeOwnerDeactivation />}
       />
-      {/* <Route path="/FAQPage" element={<FAQPage />} /> */}
+      <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
@@ -105,8 +106,8 @@ const App = () => {
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/chat" element={<ChatMain />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />

@@ -8,17 +8,12 @@ const jobspage = () => {
   return (
     <div>
       <NavBar />
-      <div id="side-panel">
+      <div id="jobs-panel">
         <div className="side-panel-left">
           <SideNav />
         </div>
         <div className="side-panel-right">
-          <Jobs
-            name={undefined}
-            function={undefined}
-            rating={undefined}
-            reviews={undefined}
-          />
+          <Jobs />
         </div>
       </div>
       <Footer />

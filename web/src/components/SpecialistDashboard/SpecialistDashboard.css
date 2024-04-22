@@ -9,9 +9,7 @@
   grid-template-columns: 1fr 1fr 1fr; /* Adjust the column width as needed */
   gap: 25px;
   max-width: 1300px;
-  margin: 60px;
   align-items: flex-start;
-  justify-content: center;
   margin: 60px 0px 0px 70px;
 }
 
@@ -63,11 +61,11 @@
   color: #007bff;
 }
 
-.sidebar {
+.sp-sidebar {
   padding-right: 15px;
 }
 
-.sidebar-nav {
+.sp-sidebar-nav {
   padding-top: 30px;
   display: flex;
   flex-direction: column;
@@ -76,7 +74,7 @@
   text-align: center;
 }
 
-.sidebar-nav .nav-item {
+.sp-sidebar-nav .nav-item {
   display: flex;
   align-items: center; /* Align items vertically center */
   justify-content: flex-start; /* Align content to the start */
@@ -91,11 +89,11 @@
   box-sizing: border-box; /* Include padding and border in the element's width */
 }
 
-.sidebar-nav .nav-item:hover {
+.sp-sidebar-nav .nav-item:hover {
   background-color: #d0e2ff;
 }
 
-.sidebar-nav .nav-item svg {
+.sp-sidebar-nav .nav-item svg {
   display: inline-block;
   margin-right: 25px;
   font-size: 50px; /* Adjust the size as necessary */

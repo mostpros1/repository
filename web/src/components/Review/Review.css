@@ -1,10 +1,25 @@
 /* Review.css */
-
 .reviews-container {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns by default */
-  gap: 20px; /* Add gap between grid items */
+  grid-template-columns: 600px 600px;
+  gap: 40px; /* Add gap between grid items */
   margin-bottom: 20px;
+}
+.upper-review-con {
+  margin-left: 15px;
+}
+
+
+.grid-sect {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 20px;
+}
+
+.grid-sect img {
+  width: 350px;
+  margin-left: 400px;
+  margin-bottom: 25px;
 }
 
 .review {
@@ -13,6 +28,13 @@
   border-radius: 5px;
   background-color: #f9f9f9;
   margin: 15px;
+  max-width: 650px;
+}
+
+.review-date {
+  font-size: 15px;
+  color: #666;
+  margin-left: 25px;
 }
 
 .review-header {
@@ -33,13 +55,10 @@
 }
 
 .total-reviews {
-    margin: 10px;
-    border-left: 1px solid #ccc;
-    margin-left: 15px;
-    padding-left: 15px;
-  }
-
-.review-info {
+  margin: 10px;
+  border-left: 1px solid #ccc;
+  margin-left: 15px;
+  padding-left: 15px;
 }
 
 .review-body {
@@ -72,6 +91,59 @@
   background-color: #308ae4;
   color: white !important;
 }
+/* STAR RATING */
+
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  color: #ccc; /* Default empty star color */
+  font-size: 1.5em;
+  line-height: 1;
+  margin: 0 2px;
+  transition: color 0.2s; /* Smooth transition for color change */
+  cursor: default;
+}
+
+.star.filled {
+  color: #ffc107; /* Gold color for filled stars */
+}
+#review-main {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  max-height: 600px;
+  margin: 30px 0px 20px 0px;
+}
+
+#review-main input,
+textarea {
+  width: 100%;
+  max-height: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#review-main textarea {
+  resize: vertical;
+}
+
+#review-main button {
+  padding: 10px 20px;
+  background-color: #308ae4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+#review-main button:hover {
+  background-color: #007bff;
+}
 
 /* Responsive styles */
 @media (max-width: 768px) {
@@ -101,20 +173,4 @@
   .review-actions button {
     width: 100%; /* Full width buttons on very small screens */
   }
-}
-
-/* STAR RATING */
-.star-rating {
-  display: inline-block;
-}
-
-.star {
-  color: #ccc; /* Default empty star color */
-  font-size: 1.5em;
-  line-height: 1;
-  margin: 0 2px;
-}
-
-.star.filled {
-  color: #ffc107; /* Gold color for filled stars */
 }

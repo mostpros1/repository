@@ -2,16 +2,19 @@ import NavBar from "../../components/ui/NavBar/NavBar";
 import SideNav from "../../components/ui/SideNav/SideNav";
 import ChatMain from "../../components/Chat/ChatMain";
 import Footer from "../../components/ui/Footer/Footer";
+import "./ChatPage.css";
 
 function ChatPage() {
-    return(
+  return (
     <div id="root">
-        <NavBar />
-        <ChatMain user={undefined} signOut={undefined} />
+      <NavBar />
+      <div className="center-box">
         <SideNav />
-        <Footer />
+        <ChatMain user={undefined} signOut={undefined} />
+      </div>
+      <Footer />
     </div>
-    )
+  );
 }
 
 export default ChatPage;

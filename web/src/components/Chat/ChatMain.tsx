@@ -32,27 +32,28 @@ function ChatMain({ user, signOut }) {
 
   const [contactList, setContactList] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState(null);
-  const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
 
   const groupMessagesByDate = (messages) => {
     return messages.reduce((groups, message) => {
-      const date = new Date(message.createdAt).toLocaleDateString('nl-NL', {
+      const createdAt = new Date(message.createdAt);
+      const date = createdAt.toLocaleDateString('nl-NL', {
         month: 'short',
         day: '2-digit',
       });
       if (!groups[date]) {
         groups[date] = [];
       }
-      groups[date].push(message);
+      groups[date].push({ ...message, createdAt });
+      groups[date].sort((a, b) => a.createdAt - b.createdAt);
       return groups;
     }, {});
   };
-
+  
   useEffect(() => {
-    const filteredChats = chats; // Dit zou je filtering logica zijn
+    const filteredChats = chats;
     const groupedMessages = groupMessagesByDate(filteredChats);
     setGroupedMessages(groupedMessages);
   }, [chats]);
@@ -121,14 +122,12 @@ function ChatMain({ user, signOut }) {
   
   const switchChat = (contact) => {
     if (selectedContact === contact) {
-      setSelectedContact(null); // Deselect the contact
+      setSelectedContact(null);
     } else {
       setSelectedContact(contact);
       handleJoinChat(contact);
     }
   };
-
-  const email = window.location.hash.replace("/", "").split("#")[1];
 
   const [showPaymentLink, setShowPaymentLink] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
@@ -148,40 +147,65 @@ function ChatMain({ user, signOut }) {
 
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : [];  
+  : []; 
 
   return (
     <div className="chat-container">
-      <div className="sidebar" id="sidebar">
+    <div className="sidebar" id="sidebar">
       <input
-          type="text"
-          placeholder="Zoek gebruikers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchList"
-        />
-        <ul>
-          {searchTerm === ""
+        type="text"
+        placeholder="Zoek gebruikers..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="searchList"
+      />
+      <ul>
+        {searchTerm === ""
           ? contactList.map((contact) => (
-            <li key={contact} 
-              onClick={() => switchChat(contact)}
-              className={selectedContact === contact ? 'selected-contact' : ''}>
-              {contact}
-            </li>
-          ))
-        : filteredContactList.map((contact) => (
-            <li key={contact} 
-              onClick={() => switchChat(contact)}
-              className={selectedContact === contact ? 'selected-contact' : ''}>
-              {contact}
-            </li>
-          ))}
-        </ul>
-      </div>
-      
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))
+          : filteredContactList.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                {contact}
+              </li>
+            ))}
+      </ul>
+    </div>
+
+    <div className="button-container">
+      <button
+        type="button"
+        className="buttona"
+        onClick={handleStartNewChat}
+        >
+        Start New Chat
+      </button>
+      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
+      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
+      {showAlert && (
+        <div className="alert">
+          <input
+            type="text"
+            placeholder="Enter recipient's email"
+            value={recipientEmail}
+            onChange={handleAlertInputChange}
+          />
+        </div>
+      )}
+    </div>
       <div className="main-container">
       {selectedContact && (
-      <div className="chat-main">
+        <div className="chat-main">
         <div className="chatheader">
           <div className="chat-info">
             <div className="name-and-status">
@@ -194,18 +218,19 @@ function ChatMain({ user, signOut }) {
               {Object.keys(groupedMessages).map((date) => (
                 <React.Fragment key={date}>
                   <div className="date-separator">{date}</div>
+
                   {groupedMessages[date].map((chat) => (
                     <div
-                      key={chat.id}
-                      className={`message-container ${
-                        chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
-                      }`}
+                    key={chat.id}
+                    className={`message-container ${
+                      chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                    }`}
                     >
                       <div
                         className={`message-bubble ${
                           chat.email === user.attributes.email ? "self-message" : "other-message"
                         }`}
-                      >
+                        >
                         <div className="username">
                           <span className="username-name">{chat.email.split("@")[0]}</span>
                         </div>
@@ -226,7 +251,7 @@ function ChatMain({ user, signOut }) {
         <div className="input-form">
           <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
             {showPaymentLink && (
-                <PaymentLink
+              <PaymentLink
                     subtotal={subtotal}
                     handleSendMessage={handlePaySendMessage}
                 />
@@ -238,9 +263,7 @@ function ChatMain({ user, signOut }) {
             placeholder="Subtotaal"
             className="betalingbedrag"
           />
-
-          <IoMdPhotos className="addPhoto" size={10}/>
-
+          <IoMdPhotos size={25} className="addPhoto"/>
           <input
             type="text"
             name="search"

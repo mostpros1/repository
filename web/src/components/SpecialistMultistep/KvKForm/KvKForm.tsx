@@ -2,30 +2,49 @@ import "./KvKForm.css";
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 
-function KvKForm({ setShowNoKvK }) {
+type KvkData = {
+  kvk?: number;
+  bedrijf?: string;
+}
+
+
+type KvkChoreFormProps = KvkData & {
+  updateFields: (fields: Partial<KvkData>) => void,
+  setShowNoKvK: (show: boolean) => void
+}
+
+
+function KvKForm({ setShowNoKvK, updateFields }: KvkChoreFormProps) {
 
   const [isValidCompany, setValidCompany] = useState(true);
   const [isValidKvK, setValidKvK] = useState(true);
 
-  const handleCompanyChange = (e) => {
+  const handleCompanyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputRegex = /^[A-Za-z\s]+$/;
     const isValid = inputRegex.test(inputValue);
+
 
     setValidCompany(isValid);
 
     if (isValid || inputValue === '') {
       // Handle state or other logic for valid input
+      updateFields({ bedrijf: inputValue });
     }
   };
 
-  const handleKvKChange = (e) => {
+  const handleKvKChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputRegex = /^[0-9]{8}$/;
     const isValid = inputRegex.test(inputValue);
 
+
     setValidKvK(isValid);
 
+    if (isValid || inputValue === '') {
+      // Handle state or other logic for valid input
+      updateFields({ kvk: Number(inputValue) });
+    }
   };
 
   return (
