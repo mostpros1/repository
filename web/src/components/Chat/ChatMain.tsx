@@ -9,7 +9,6 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdPhotos } from "react-icons/io";
-import { Storage } from 'aws-amplify';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -33,36 +32,9 @@ function ChatMain({ user, signOut }) {
 
   const [contactList, setContactList] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState(null);
-  const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
-
-  const uploadImageToS3 = async (file) => {
-    try {
-      const filename = `${Date.now()}-${file.name}`;
-      await Storage.put(filename, file, {
-        contentType: file.type
-      });
-      return filename;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  };
-  
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-  
-    try {
-      const filename = await uploadImageToS3(file);
-      const imageUrl = `https://<chatsphotos>.s3.amazonaws.com/<filename>${filename}`;
-      await handleSendMessage(imageUrl);
-    } catch (error) {
-      
-    }
-  };
 
   const groupMessagesByDate = (messages) => {
     return messages.reduce((groups, message) => {
@@ -79,7 +51,6 @@ function ChatMain({ user, signOut }) {
       return groups;
     }, {});
   };
-  
   
   useEffect(() => {
     const filteredChats = chats;
@@ -158,23 +129,6 @@ function ChatMain({ user, signOut }) {
     }
   };
 
-  const [isTyping, setIsTyping] = useState(false);
-
-  useEffect(() => {
-    const simulateRecipientTyping = () => {
-      setIsTyping(true);
-      setTimeout(() => {
-        setIsTyping(false);
-      }, 2000);
-    };
-
-    const typingTimer = setTimeout(simulateRecipientTyping, 5000);
-
-    return () => clearTimeout(typingTimer);
-  }, []);
-
-  const email = window.location.hash.replace("/", "").split("#")[1];
-
   const [showPaymentLink, setShowPaymentLink] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
   const [customSubtotal, setCustomSubtotal] = useState('');
@@ -194,8 +148,6 @@ function ChatMain({ user, signOut }) {
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
   : []; 
-
-  
 
   return (
     <div className="chat-container">
@@ -235,7 +187,7 @@ function ChatMain({ user, signOut }) {
         type="button"
         className="buttona"
         onClick={handleStartNewChat}
-      >
+        >
         Start New Chat
       </button>
       <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
@@ -253,12 +205,11 @@ function ChatMain({ user, signOut }) {
     </div>
       <div className="main-container">
       {selectedContact && (
-      <div className="chat-main">
+        <div className="chat-main">
         <div className="chatheader">
           <div className="chat-info">
             <div className="name-and-status">
               <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-              {isTyping && <div id="typing-indicator">Typing...</div>}
             </div>
           </div>
         </div>
@@ -267,18 +218,19 @@ function ChatMain({ user, signOut }) {
               {Object.keys(groupedMessages).map((date) => (
                 <React.Fragment key={date}>
                   <div className="date-separator">{date}</div>
+
                   {groupedMessages[date].map((chat) => (
                     <div
-                      key={chat.id}
-                      className={`message-container ${
-                        chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
-                      }`}
+                    key={chat.id}
+                    className={`message-container ${
+                      chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                    }`}
                     >
                       <div
                         className={`message-bubble ${
                           chat.email === user.attributes.email ? "self-message" : "other-message"
                         }`}
-                      >
+                        >
                         <div className="username">
                           <span className="username-name">{chat.email.split("@")[0]}</span>
                         </div>
@@ -299,7 +251,7 @@ function ChatMain({ user, signOut }) {
         <div className="input-form">
           <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
             {showPaymentLink && (
-                <PaymentLink
+              <PaymentLink
                     subtotal={subtotal}
                     handleSendMessage={handlePaySendMessage}
                 />
