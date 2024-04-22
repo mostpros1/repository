@@ -34,8 +34,12 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     }, []);
 
     const createSession = async () => {
-        if (userStripeAccountId === '' || userEmail === '') {
-            setError('Stripe account ID or user email is missing.');
+        if (userStripeAccountId === '') {
+            setError('Stripe account ID is missing.');
+            return;
+        } 
+        if (userEmail === '') {
+            setError('user email is missing.');
             return;
         }
 
