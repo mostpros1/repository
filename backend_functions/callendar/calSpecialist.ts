@@ -1,39 +1,85 @@
-import { addAvailibility } from "../addData.ts";
-import * as aws from "aws-sdk";
+import { dynamo } from "../../web/declarations.ts";
 
-const dynamo = new aws.DynamoDB.DocumentClient();
+export function addAvailibility(professionalsEmail: string, dates: any[]) {
 
-export function calSpecialist(professional_id: number, job_description: string, date: Date, time_from: string, time_to: string) {
+
+    dynamo
+        .query({
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+                ':email': professionalsEmail,
+            }
+        })
+        .promise()
+        .then(data => {
+            if (data.Items && data.Items.length > 0) {
+                return dynamo
+                    .update({
+                        TableName: "Professionals",
+                        Key: {
+                            id: data.Items[0].id,
+                        },
+                        UpdateExpression: `set availibility = :availibility`,
+                        ExpressionAttributeValues: {
+                            ":availibility": [...data.Items[0].availibility, dates],
+                        },
+                    })
+                    .promise()
+                    .then(data => console.log(data.Attributes))
+                    .catch(console.error);
+            } else {
+                console.error('No items found in data.');
+            }
+        })
+        .catch(console.error);
+    /*if (console.error == "id not found") {
+        addAvailibility(id, professional_id, job_description, date, time_from, time_to);
+    }*/
+
+
+}
+
+export function changeAvailibility(professionalsEmail: string, dates: any[]) {
 
 
     const id: number = Math.random();
 
     dynamo
         .query({
-            TableName: 'availibility',
-            KeyConditionExpression: 'id = :id',
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
             ExpressionAttributeValues: {
-                ':id': id,
+                ':email': professionalsEmail,
             }
         })
         .promise()
-        .then(data => console.log(data.Items))
+        .then(data => {
+            if (data.Items && data.Items.length > 0) {
+                return dynamo
+                    .update({
+                        TableName: "Professionals",
+                        Key: {
+                            id: data.Items[0].id,
+                        },
+                        UpdateExpression: `set availibility = :availibility`,
+                        ExpressionAttributeValues: {
+                            ":availibility": [dates],
+                        },
+                    })
+                    .promise()
+                    .then(data => console.log(data.Attributes))
+                    .catch(console.error);
+            } else {
+                console.error('No items found in data.');
+            }
+        })
         .catch(console.error);
-
     /*if (console.error == "id not found") {
         addAvailibility(id, professional_id, job_description, date, time_from, time_to);
     }*/
+
+
 }
-/*dynamo
-    .query({
-        TableName: 'professionals',
-        KeyConditionExpression: 'id = :professional_id',
-        ExpressionAttributeValues: {
-            ':professional_id': professional_id,
-        }
-    })
-    .promise()
-    .then(prof => console.log(prof.Items))
-    .catch(console.error);*/
-
-
