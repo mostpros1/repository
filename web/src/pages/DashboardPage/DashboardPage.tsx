@@ -1,12 +1,12 @@
-import NavBar from "../../components/ui/NavBar/NavBar"
+import NavBar from "../../components/ui/NavBar/NavBar";
 
 const DashboardPage = () => {
-    return (
-        <>
-            <NavBar></NavBar>
-            <p>placeholder page</p>
-        </>
-    )
-}
+  return (
+    <>
+      <NavBar></NavBar>
+      
+    </>
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

@@ -53,7 +53,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
       .promise()
       .then(data => {
         // Assuming data.Items contains the necessary fields for the Job interface
-        const jobsFromData = data.Items.map((item) => ({
+        const jobsFromData = data.Items ? data.Items.map((item) => ({
           id: item.id,
           name: item.profession,
           distance: item.distance,
@@ -61,7 +61,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           description: item.description,
           location: item.region,
           availability: item.availability,
-        }));
+        })) : [];
 
         // Update the state with the jobs fetched from DynamoDB
         setJobs(jobsFromData);
