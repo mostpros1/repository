@@ -1,16 +1,22 @@
-.HO_result{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 150px 30px;
+.HO_result {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 150px 30px;
 }
 
-.HO_wrapper{
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 50px;
+.HO_wrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+}
+
+.HOresult-con {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
 }

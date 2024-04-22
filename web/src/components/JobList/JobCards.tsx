@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import AWS from 'aws-sdk';
+import React, { useEffect, useState } from "react";
+import AWS from "aws-sdk";
 import "./JobCards.css";
 import gasleiding from "../../assets/Gasleiding.svg";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
 
 interface Job {
@@ -51,9 +51,9 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         TableName: "Klussen",
       })
       .promise()
-      .then(data => {
+      .then((data) => {
         // Assuming data.Items contains the necessary fields for the Job interface
-        const jobsFromData = data.Items.map((item) => ({
+        const jobsFromData = (data.Items ?? []).map((item) => ({
           id: item.id,
           name: item.profession,
           distance: item.distance,
@@ -66,8 +66,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         // Update the state with the jobs fetched from DynamoDB
         setJobs(jobsFromData);
       })
-      .catch(console.error)
-
+      .catch(console.error);
   }, []);
 
   if (!jobs || jobs.length === 0) {
@@ -75,7 +74,6 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   }
 
   const jobCardsRender = jobs.map((job) => (
-
     <div key={job.id} className="job-item">
       <div className="user-detail">
         <h2>{job.name}</h2>
