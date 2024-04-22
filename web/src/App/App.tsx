@@ -44,6 +44,7 @@ import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
@@ -59,7 +60,7 @@ const App = () => {
       <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
       <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
       <Route path="/bevestig-email" element={<BevestigEmailPage />} />
-      <Route path="/huiseigenaar-resultaat" element={<DashboardPage />} />
+      <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
       <Route path="/specialist-resultaat" element={<ResultsPage />} />
       <Route path="/over-ons" element={<AboutUsPage />} />
@@ -92,7 +93,7 @@ const App = () => {
         path="/HomeOwnerDeactivation"
         element={<HomeOwnerDeactivation />}
       />
-      {/* <Route path="/FAQPage" element={<FAQPage />} /> */}
+      <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
@@ -105,7 +106,7 @@ const App = () => {
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
+      <Route path="/Invoice" element={<InvoicePage />} />
       <Route path="/chat" element={<ChatMain />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />

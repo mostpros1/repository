@@ -1,13 +1,3 @@
-/* FAQPage.css */
-.content {
-  display: flex;
-}
-
-.nav-con {
-  /* Assuming your SideNav has its own width, we remove the flex styles here */
-  margin-top: 20px; /* Adjust as needed */
-}
-
 .faq-header {
   display: flex;
   flex-direction: row-reverse;
@@ -17,18 +7,13 @@
   margin-bottom: 20px;
   align-items: center;
 }
-
-
-/* Add styles for FAQ component to take the remaining space */
 .faq-con {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  padding: 20px;
-  width: 0;
   flex-direction: column;
+  width: 50%;
+  margin-left: 500px;
 }
+
 
 /* Add responsive behavior */
 @media screen and (max-width: 768px) {

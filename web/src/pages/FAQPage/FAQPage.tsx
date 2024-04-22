@@ -9,13 +9,12 @@ function FAQPage() {
   return (
     <div>
       <NavBar />
-      <div className="content">
-        <div className="nav-con">{/* <SideNav /> */}</div>
-        <div className="faq-con">
+      <div>
           <div className="faq-header">
-          <img src={faqpic} alt="faq" />
+            <img src={faqpic} alt="faq" />
             <p>Veel gestelde vragen</p>
           </div>
+        <div className="faq-con">
           <FAQ />
         </div>
       </div>
