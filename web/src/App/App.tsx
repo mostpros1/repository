@@ -47,6 +47,8 @@ import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import Calender from "../pages/CalenderPage/CalenderPage.tsx";
+import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 
 const App = () => {
   return (
@@ -73,6 +75,7 @@ const App = () => {
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
+      <Route path="/CalenderPage" element={<CalenderPage />} />
 
       <Route
         path="/MijnKlussenOverzicht"

@@ -56,7 +56,7 @@ function SideNav() {
 
         <li className="sidebar-item">
           <NavLink
-            to="/Calendar"
+            to="/CalenderPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }

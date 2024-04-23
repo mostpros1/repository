@@ -129,6 +129,10 @@ function ChatMain({ user, signOut }) {
     }
   };
 
+  const handleStartCChat = () => {
+    window.location.href = `/chat?recipient=${user}`;
+  };
+
   const [showPaymentLink, setShowPaymentLink] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
   const [customSubtotal, setCustomSubtotal] = useState('');
@@ -147,7 +151,15 @@ function ChatMain({ user, signOut }) {
 
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : []; 
+  : [];
+
+  const [recipientId, setRecipientId] = useState(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const recipient = searchParams.get('recipient');
+    setRecipientId(recipientId);
+  }, [location.search]);
 
   return (
     <div className="chat-container">

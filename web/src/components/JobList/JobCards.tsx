@@ -19,14 +19,17 @@ interface Job {
 
 interface JobCardsProps {
   jobs?: Job[];
+  user?: string[];
 }
 
-const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
-  const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
 
+const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [], user }) => {
+  const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
+  
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
-
+    
+    
     /*dynamo.query({
       TableName: "clients",
       IndexName: "plaats",
@@ -35,22 +38,22 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         ":plaats": hashTag,
       },
     }).promise()
-      .then(data => {
-        if (data.Items && data.Items.length > 0) {
-          console.log(data.Items);
-        } else {
-          console.log('No items found');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });*/
-
+    .then(data => {
+      if (data.Items && data.Items.length > 0) {
+        console.log(data.Items);
+      } else {
+        console.log('No items found');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });*/
+    
     dynamo
-      .scan({
-        TableName: "Klussen",
-      })
-      .promise()
+    .scan({
+      TableName: "Klussen",
+    })
+    .promise()
       .then(data => {
         // Assuming data.Items contains the necessary fields for the Job interface
         const jobsFromData = data.Items ? data.Items.map((item) => ({
@@ -62,16 +65,19 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           location: item.region,
           availability: item.availability,
         })) : [];
-
+        
         // Update the state with the jobs fetched from DynamoDB
         setJobs(jobsFromData);
       })
       .catch(console.error)
-
-  }, []);
-
-  if (!jobs || jobs.length === 0) {
-    return <div>No jobs available.</div>;
+      
+    }, []);
+    
+    const handleStartCChat = () => {
+      window.location.href = `/chat?recipient=${user}`;
+    };
+    if (!jobs || jobs.length === 0) {
+      return <div>No jobs available.</div>;
   }
 
   const jobCardsRender = jobs.map((job) => (
@@ -98,9 +104,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p>Binnen {job.availability}</p>
         </div>
       </div>
-      <a className="mail_btn" href="mailto:teammostpros@gmail.com">
-        Contact opnemen
-      </a>
+      <button className='main_btn' onClick={handleStartCChat}>Start chat</button>
     </div>
   ));
   return <>{jobCardsRender}</>;
