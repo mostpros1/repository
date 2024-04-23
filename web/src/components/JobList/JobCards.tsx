@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import AWS from 'aws-sdk';
+import React, { useEffect, useState } from "react";
+import AWS from "aws-sdk";
 import "./JobCards.css";
 import gasleiding from "../../assets/Gasleiding.svg";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
-
 interface Job {
   id: number;
   name: string;
@@ -79,9 +78,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [], user }) => 
     if (!jobs || jobs.length === 0) {
       return <div>No jobs available.</div>;
   }
-
   const jobCardsRender = jobs.map((job) => (
-
     <div key={job.id} className="job-item">
       <div className="user-detail">
         <h2>{job.name}</h2>
