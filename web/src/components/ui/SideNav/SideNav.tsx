@@ -38,7 +38,7 @@ function SideNav() {
         console.log("User data is not fully available.");
         navigate("/login"); // Redirect to login or another appropriate page
       }
-    }, 50); // Delay in milliseconds (5000ms = 5s)
+    }, 500); // Delay in milliseconds (5000ms = 5s)
 
     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
   }, [user, navigate]); // Depend on user and navigate to ensure updates
