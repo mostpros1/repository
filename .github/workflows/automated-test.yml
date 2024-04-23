@@ -29,13 +29,6 @@ jobs:
         run: |
           timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:19006)" != "200" ]]; do sleep 5; done'
 
-      # Install Cypress
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: Mostprosapp
-          build: npm run build
-
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
