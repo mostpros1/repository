@@ -15,7 +15,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       - name: Install dependencies
         run: |
-          cd web
+          cd Mostprosapp
           npm ci --verbose
 
       # Start Expo Web server
