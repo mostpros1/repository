@@ -38,6 +38,7 @@ import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import "./App.css";
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatMain from "../components/Chat/ChatMain.tsx";
+import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 
 const App = () => {
   return (
@@ -67,6 +68,7 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
+      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
 
 
       <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
