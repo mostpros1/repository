@@ -46,6 +46,7 @@ import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 
 const App = () => {
   return (

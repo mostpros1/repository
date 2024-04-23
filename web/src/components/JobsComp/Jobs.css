@@ -7,10 +7,12 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  padding: 25px;
   max-width: 1200px;
-  max-height: 500px;
+  max-height: 900px;
   margin: 40px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
 }
 
 #search-wrapper {
@@ -59,6 +61,7 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
+
 #submit-button img {
   height: 100%;
   width: 100%;
@@ -75,45 +78,95 @@
 }
 
 .status-button.active {
-  border-bottom: 2px solid black; /* or any indication of active tab */
+  color: #007bff;
 }
 
 .job-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px; /* space between cards */
-  margin: 25px;
+  grid-template-columns: 500px 1fr;
+  grid-template-rows: auto;
+  gap: 40px;
+  justify-content: center;
+  margin: 20px 10px 20px 55px;
 }
 
 .job-entry {
   border: 1px solid #ccc; /* style as needed */
   padding: 20px;
+  width: 500px;
   border-radius: 8px;
   position: relative; /* for positioning view-job-button absolutely */
 }
 
 .job-description {
-  font-weight: bold;
+  font-size: 20px;
+  color: black;
 }
 
 .job-date {
-  color: #666;
+  color: black;
+}
+.job-view {
+  color: #007bff;
+  cursor: pointer;
 }
 
 .job-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-items: center;
   margin-top: 10px; /* spacing from description */
+  margin-bottom: 15px;
+}
+
+#job-view-prof-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 50px;
+  width: 200px;
+  height: 90px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #f4f4f4;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+#job-view-prof-con span {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+#job-view-prof-con img {
+  width: 30px;
 }
 
 .chat-indicator {
   display: flex;
-  margin-left: 50px;
+  flex-direction: column;
   align-items: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 200px;
+  height: 90px;
   padding: 25px;
-  font-size: 25px;
-  border: 2px solid #ccc;
+  background-color: #f4f4f4;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.chat-indicator span {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.chat-indicator img {
+  margin-top: 15px;
+  width: 30px;
 }
 
 .view-job-button {
