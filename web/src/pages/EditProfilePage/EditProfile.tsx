@@ -5,7 +5,7 @@ import "./EditProfile.css";
 
 function EditProfile() {
   return (
-    <div id="root">
+    <div>
       <NavBar />
       <div className="main-content">
         <EditProfileSection />

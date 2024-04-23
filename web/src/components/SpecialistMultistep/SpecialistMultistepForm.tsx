@@ -35,8 +35,11 @@ type FormData = {
   password: string;
   repeatPassword: string;
   bio: string;
+  task: string;
   questions: Record<string, string>;
   dateTimeSpans: DateTimeSpan[];
+  kvk: number;
+  bedrijf: string;
 };
 
 
@@ -50,11 +53,13 @@ interface RegisterData {
   dob: string;
   bio: string;
   region: string;
-  postcode: string
-  profession: string
-  task: string
-  rating: 0,
-  kvk: number,
+  postcode: string;
+  profession: string;
+  task: string;
+  rating: 0;
+  availibility: string[];
+  kvk: number;
+  bedrijf: string;
 
 }
 // const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -75,6 +80,9 @@ const INITIAL_DATA: FormData = {
     question2: "",
   },
   dateTimeSpans: [{ date: new Date(), startTime: "", endTime: "" }],
+  task: '',
+  kvk: 0,
+  bedrijf: ''
 };
 
 type Question = {
@@ -100,11 +108,12 @@ const questionsData: Question[] = [
     key: "question2",
     label: "Wat is uw specialisatie",
     options: [
-      "Web Development",
-      "Data Science",
-      "Design",
-      "Marketing",
-      "Anders",
+      "Loodgieter",
+      "Timmerman",
+      "Elektricien",
+      "Aannemer",
+      "Hovenier",
+      "Anders"
     ],
   },
   // ... voeg andere vragen toe zoals nodig
@@ -202,7 +211,7 @@ function SpecialistMultistepForm() {
           updateFields={(newFields) => setData((prev) => ({ ...prev, ...newFields }))}
         />,
         <AccountForm formConfig={"HOMEOWNER"} setError={() => { }} error={""} {...data} updateFields={updateFields} />,
-        <KvKForm setShowNoKvK={setShowNoKvK} />,
+        <KvKForm setShowNoKvK={setShowNoKvK} updateFields={updateFields} />,
 
 
       ],
@@ -210,7 +219,8 @@ function SpecialistMultistepForm() {
     });
 
   function signUp(registerData: RegisterData): void {
-    const { email, phoneNumber, password, firstName, lastName } = registerData;
+    const { firstName, lastName, email, phoneNumber, password, bio, region, postcode, profession, task, rating, availibility, kvk, bedrijf } = registerData;
+
 
     const signUpProf = async () => {
       try {
@@ -228,72 +238,48 @@ function SpecialistMultistepForm() {
         dynamo
           .put({
             Item: {
-
               id: Math.floor(Math.random() * 1000000000),
-              //oud
-              first_name: stopXSS(firstName),
-              last_name: stopXSS(lastName),
-              email: stopXSS(email),
-              profession: stopXSS(data.beroep),
-              region: stopXSS(data.questions.question1),
-              rating: 0,
-              bio: stopXSS(data.bio),
-              availibility: Datums,
-              /*
-              bio: stopXSS(data.bio),
-              email: stopXSS(email),
-              first_name: stopXSS(firstName),
-              last_name: stopXSS(lastName),
-              region: stopXSS(data.questions.question1),
-              postcode: stopXSS(data.postcode),
-              profession: stopXSS(data.beroep),
-              task: stopXSS(data.task),
-              availibility: Datums,
-              rating: 0,
-              kvk: stopXSS(data.kvk),
-              */
+              bio: bio !== undefined ? stopXSS(bio) : "", // Check if bio is not undefined
+              email: email !== undefined ? stopXSS(email) : "", // Check if email is not undefined
+              first_name: firstName !== undefined ? stopXSS(firstName) : "", // Check if firstName is not undefined
+              last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
+              region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
+              postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
+              profession: profession !== undefined ? stopXSS(profession) : "", // Check if profession is not undefined
+              task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
+              availibility: availibility, // Assuming availibility is already checked elsewhere
+              rating: rating, // Assuming rating is already checked elsewhere
+              kvk: kvk, // Assuming kvk is already checked elsewhere
+              bedrijf: bedrijf !== undefined ? stopXSS(bedrijf) : "", // Check if bedrijf is not undefined
             },
             TableName: "Professionals",
           })
           .promise()
           .then(data => console.log(data.Attributes))
-          .catch(console.error)
+          .catch(console.error);
 
         dynamo
           .put({
             Item: {
               id: Math.floor(Math.random() * 1000000000),
-              name: stopXSS(firstName),
-              family_name: stopXSS(lastName),
-              email: stopXSS(email),
-              phone_number: stopXSS(phoneNumber),
-              created_at: new Date().toISOString(),
-              user_type: "PROFESSIONAL",
 
-              /*
-                  email: stopXSS(email),
-                  first_name: stopXSS(firstName),
-                  last_name: stopXSS(lastName),
-                  created_at: new Date().toISOString(),
-                  updated_at: new Date().toISOString(),
-                  status: "PENDING",
-                  user_role: "PROFESSIONAL"
-                  */
+              email: stopXSS(email),
+              first_name: stopXSS(firstName),
+              last_name: stopXSS(lastName),
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              status: "PENDING",
+              user_role: "PROFESSIONAL"
+
             },
             TableName: "Users",
           })
           .promise()
-          .then(data => console.log(data.Attributes))
           .catch(console.error)
 
 
-        /*const user = await Auth.signIn(email, password);
-        sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
-        sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
-        sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
-      */
         navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
-      } catch (error: any) {
+        } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
       }
@@ -307,60 +293,39 @@ function SpecialistMultistepForm() {
     if (!isLastStep) {
       return next()
     } else {
-      console.log(data);
-      navigate("/specialist-resultaat");
+
+      const userData: RegisterData = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        repeatPassword: data.repeatPassword.trim(),
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        phoneNumber: data.phoneNumber.trim(),
+        dob: "", // Add the 'dob' property here
+        bio: data.bio,
+        region: data.questions.question1,
+        postcode: data.postCode,
+        profession: data.beroep,
+        task: data.task,
+        availibility: Datums,
+        kvk: data.kvk,
+        bedrijf: data.bedrijf,
+        rating: 0
+      }
+      console.log(Datums);
+      try {
+        console.log("prof: ", userData)
+        signUp(userData);
+
+      } catch (error) {
+        console.error('Error signing up:', error);
+        //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+      }
+
     }
-
-    /*const userData: RegisterData = {
-      email: data.email.trim(),
-      password: data.password.trim(),
-      repeatPassword: data.repeatPassword.trim(),
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      phoneNumber: data.phoneNumber.trim(),
-      dob: "" // Add the 'dob' property here
-    }*/
-    console.log(Datums);
-    /*try {
-      signUp(userData);
-    } catch (error) {
-      console.error('Error signing up:', error);
-      //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
-    }*/
-
   }
 
   const stepWidth = 100 / steps.length;
-
-
-  function addProfessional(name: string, email: string, profession: string, location: string, price: number, rating: number, bio: string, availibility: string[]) {
-    console.log(availibility);
-
-
-    //availibility is als Datums opgeslagen
-
-    const params = {
-      TableName: "Professionals",
-      Item: {
-        id: Math.floor(Math.random() * 1000000),
-        name: name,
-        email: email,
-        profession: profession,
-        location: location,
-        price: price,
-        rating: rating,
-        bio: bio,
-        availibility: availibility,
-
-      },
-    };
-    try {
-      dynamo.put(params).promise();
-    } catch (error) {
-      console.error("Er is een fout opgetreden bij het opslaan: ", error);
-      //delete user
-    }
-  }
 
 
   return (

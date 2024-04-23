@@ -21,10 +21,10 @@ const handleSendMessage = async (text) => {
     query: mutations.createChat,
     variables: {
       input: {
-        text: text, // Correct gebruik van de 'text' variabele
+        text: text,
         email: user.attributes.email,
         members,
-        sortKey: members.sort().join("#"), // Create a unique sortKey
+        sortKey: members.sort().join("#"),
       },
     },
   });
@@ -32,16 +32,16 @@ const handleSendMessage = async (text) => {
 
 const handleReceivedMessage = (receivedChat) => {
   if (receivedChat.members.includes(user.attributes.email)) {
-    setChats((prevChats) => [...prevChats, receivedChat]); // Voeg het ontvangen bericht toe aan de lijst met chats
-    setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail met de email van de afzender
-    if (receivedChat.email !== user.attributes.email) { // Controleer of de ontvangen chat niet van de huidige gebruiker is
+    setChats((prevChats) => [...prevChats, receivedChat]);
+    setRecentMessageEmail(receivedChat.email);
+    if (receivedChat.email !== user.attributes.email) {
       setShowJoinButton(true);
     }
   }
 };
 
-// // Functions for make new Chat // //
   const handleStartNewChat = () => {
+    setChats([]);
     setRecipientEmail(
       // @ts-ignore
       prompt("Enter the email of the person you want to chat with:")
@@ -66,8 +66,7 @@ const handleReceivedMessage = (receivedChat) => {
     setRecipientEmail("");
   };
 
-// // for recipientEmail to make connection to chat // //
-  const handleJoinChat = () => {
+  const handleJoinChat = (recentMessageEmail) => {
     console.log("Joining chat with email:", recentMessageEmail);
     const members = [user.attributes.email, recentMessageEmail];
     setRecipientEmail(recentMessageEmail);

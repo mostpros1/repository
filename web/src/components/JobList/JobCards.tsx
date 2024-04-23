@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import AWS from 'aws-sdk';
+import React, { useEffect, useState } from "react";
+import AWS from "aws-sdk";
 import "./JobCards.css";
 import gasleiding from "../../assets/Gasleiding.svg";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
-
 interface Job {
   id: number;
   name: string;
@@ -20,14 +19,11 @@ interface Job {
 interface JobCardsProps {
   jobs?: Job[];
 }
-
-const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
-  const [specialists, setSpecialists] = useState<Job[]>([]);
-
+const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
+  const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
-    
-    dynamo.query({
+    /*dynamo.query({
       TableName: "clients",
       IndexName: "plaats",
       KeyConditionExpression: "plaats = :plaats",
@@ -44,14 +40,32 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs = [] }) => {
       })
       .catch(err => {
         console.log(err);
-      });
+      });*/
+    dynamo
+      .scan({
+        TableName: "Klussen",
+      })
+      .promise()
+      .then((data) => {
+        // Assuming data.Items contains the necessary fields for the Job interface
+        const jobsFromData = data.Items ? data.Items.map((item) => ({
+          id: item.id,
+          name: item.profession,
+          distance: item.distance,
+          title: item.task,
+          description: item.description,
+          location: item.region,
+          availability: item.availability,
+        })) : [];
 
-  }, [window.location.hash]);
-
-  if (!specialists || specialists.length === 0) {
+        // Update the state with the jobs fetched from DynamoDB
+        setJobs(jobsFromData);
+      })
+      .catch(console.error);
+  }, []);
+  if (!jobs || jobs.length === 0) {
     return <div>No jobs available.</div>;
   }
-
   const jobCardsRender = jobs.map((job) => (
     <div key={job.id} className="job-item">
       <div className="user-detail">
