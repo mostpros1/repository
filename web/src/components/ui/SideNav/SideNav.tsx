@@ -1,9 +1,5 @@
-import "./SideNav.css";
-import React from "react";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-
-// Icons from Material UI
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
 import MessageIcon from "@mui/icons-material/Message";
@@ -13,23 +9,56 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { useUser } from "../../../context/UserContext";
+import "./SideNav.css";
 
 function SideNav() {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const [isProfessional, setIsProfessional] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (
+        user &&
+        user.signInUserSession &&
+        user.signInUserSession.accessToken &&
+        user.signInUserSession.accessToken.payload
+      ) {
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups && groups.includes("Homeowner")) {
+          alert("Jij hebt geen toegang tot deze pagina!");
+          navigate("/");
+        } else if (groups && groups.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        // Handle the case where the user data is not fully available
+        console.log("User data is not fully available.");
+        navigate("/login"); // Redirect to login or another appropriate page
+      }
+    }, 50); // Delay in milliseconds (5000ms = 5s)
+
+    return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
+  }, [user, navigate]); // Depend on user and navigate to ensure updates
+
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
-        <li className="sidebar-item">
-          <NavLink
-            to="/MijnKlussen"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <DashboardIcon />
-            Dashboard
-          </NavLink>
-        </li>
-
+        {isProfessional && (
+          <li className="sidebar-item">
+            <NavLink
+              to="/specialist-resultaat"
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
+              <DashboardIcon />
+              Dashboard
+            </NavLink>
+          </li>
+        )}
         <li className="sidebar-item">
           <NavLink
             to="/Jobs"
@@ -41,7 +70,6 @@ function SideNav() {
             Jobs
           </NavLink>
         </li>
-
         <li className="sidebar-item">
           <NavLink
             to="/chat"
@@ -53,7 +81,6 @@ function SideNav() {
             Message
           </NavLink>
         </li>
-
         <li className="sidebar-item">
           <NavLink
             to="/Calendar"
@@ -65,7 +92,6 @@ function SideNav() {
             Calendar
           </NavLink>
         </li>
-
         <li className="sidebar-item">
           <NavLink
             to="/Payments"
@@ -77,7 +103,6 @@ function SideNav() {
             Payments
           </NavLink>
         </li>
-
         <li className="sidebar-item">
           <NavLink
             to="/ReviewPage"
@@ -89,7 +114,6 @@ function SideNav() {
             Reviews
           </NavLink>
         </li>
-
         <div className="sidebar-bottom">
           <li className="sidebar-item">
             <NavLink
