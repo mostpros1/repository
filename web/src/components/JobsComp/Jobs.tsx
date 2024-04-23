@@ -3,9 +3,10 @@ import { Auth } from 'aws-amplify';
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
 import searchicon from "../../assets/searchicon.svg";
-import viewProfessionalsIcon from "../../assets/cropped-23107-9-tools-transparent-image 1.svg"; // Add the correct path and icon
+import viewProfessionalsIcon from "../../assets/view-prof.svg"; // Add the correct path and icon
 import chatIcon from "../../assets/chatIcon.svg"; // Add the correct path and icon
 import { dynamo } from "../../../declarations";
+import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -29,10 +30,24 @@ const Jobs = () => {
       isCurrent: true,
     },
     {
-      id: 1,
+      id: 2,
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
-      chats: 3,
+      chats: 1,
+      isCurrent: true,
+    },
+    {
+      id: 3,
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 1,
+      isCurrent: true,
+    },
+    {
+      id: 4,
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 1,
       isCurrent: true,
     },
     // Add more job entries...
@@ -171,25 +186,33 @@ const Jobs = () => {
             Finished jobs
           </button>
         </div>
-        <div className="job-list">
-          {jobEntries
-            .filter((job) =>
-              currentTab === "current" ? job.isCurrent : !job.isCurrent
-            )
-            .map((job) => (
-              <div className="job-entry" key={job.id}>
-                <p className="job-description">{job.description}</p>
-                <p className="job-date">{job.date}</p>
-                <div className="job-actions">
-                  <img src={viewProfessionalsIcon} alt="View Professionals" />
-                  <div className="chat-indicator">
-                    <img src={chatIcon} alt="Chat" />
-                    <span>{`(${job.chats})`}</span>
+        <div className="job-list-con">
+          <div className="job-list-vw">
+            {jobEntries
+              .filter((job) =>
+                currentTab === "current" ? job.isCurrent : !job.isCurrent
+              )
+              .map((job) => (
+                <div className="job-entry" key={job.id}>
+                  <p className="job-description">{job.description}</p>
+                  <p className="job-date">{job.date}</p>
+                  <div className="job-actions">
+                    <div id="job-view-prof-con">
+                      <img
+                        src={viewProfessionalsIcon}
+                        alt="View Professionals"
+                      />
+                      <span>View professionals</span>
+                    </div>
+                    <div className="chat-indicator">
+                      <img src={chatIcon} alt="Chat" />
+                      <span>Ongoing chats {`(${job.chats})`}</span>
+                    </div>
                   </div>
+                  <p className="job-view">View job</p>
                 </div>
-                <p>View job</p>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
     </div>

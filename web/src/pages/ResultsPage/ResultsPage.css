@@ -4,6 +4,10 @@
     padding: 150px 30px;
 }
 
+.sidenav-con {
+    margin-right: 25px;
+}
+
 .result-con{
     display: flex;
     width: 100%;
