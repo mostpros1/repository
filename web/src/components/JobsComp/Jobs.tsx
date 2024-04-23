@@ -39,7 +39,7 @@ const Jobs = () => {
   ];
 
   useEffect(() => {
-    const fetchUserEmailAndQueryDynamo = async () => {
+    const fetchProfEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
@@ -78,12 +78,53 @@ const Jobs = () => {
       }
     };
 
+    const fetchUserEmailAndQueryDynamo = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userEmail = user.attributes.email;
+
+        dynamo
+          .query({
+            TableName: 'Clients',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+              ':email': userEmail
+            }
+          })
+          .promise()
+          .then(data => {
+            if (data.Items && data.Items.length > 0) {
+              dynamo
+                .query({
+                  TableName: 'Projects',
+                  IndexName: 'client_idIndex',
+                  KeyConditionExpression: 'client_id = :client_id',
+                  ExpressionAttributeValues: {
+                    ':client_id': data.Items[0].id
+                  }
+                })
+                .promise()
+                .then(output => console.log(output.Items))
+                .catch(console.error);
+            } else {
+              console.error("No items found in Clients the first query");
+            }
+          })
+          .catch(console.error);
+      } catch (error) {
+        console.error("Error fetching user email or querying DynamoDB", error);
+      }
+    };
+
     const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Professional")) {
-          fetchUserEmailAndQueryDynamo();
+          fetchProfEmailAndQueryDynamo();
+        } else if (groups && groups.includes("Homeowner")){
+          fetchUserEmailAndQueryDynamo(); 
         }
       } catch (error) {
         console.error("Error checking user group", error);
