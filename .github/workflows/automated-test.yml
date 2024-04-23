@@ -21,8 +21,8 @@ jobs:
       # Start Expo Web server
       - name: Start Expo Web
         run: |
-          cd web
-          npm start --web
+          cd Mostprosapp
+          expo start --web
 
       # Wait for Expo Web server to be ready
       - name: Wait for Expo Web

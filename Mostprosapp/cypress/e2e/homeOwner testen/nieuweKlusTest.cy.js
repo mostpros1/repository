@@ -35,284 +35,284 @@ describe('Home Owner Test: Nieuwe Klus Test', () => {
     // IMPORTANT NOTE: Cypress is not able to click() on some text input fields, try using focus()
 
 
-    // context('Beroep', () => {
+    context('Beroep', () => {
 
-    //     beforeEach(() => {
-    //         cy.viewport('iphone-x')
-    //         cy.homeOwnerAppTestBegin()
-    //         cy.get('[data-testid="nieuwKlusBtn"]').click()
-    //     })
+        beforeEach(() => {
+            cy.viewport('iphone-x')
+            cy.homeOwnerAppTestBegin()
+            cy.get('[data-testid="nieuwKlusBtn"]').click()
+        })
 
-    //     it('Test 1: Klik op zoekveld en krijg de lijst', () => {
-    //         cy.get('[data-testid="beroepInput"]').focus()
+        it('Test 1: Klik op zoekveld en krijg de lijst', () => {
+            cy.get('[data-testid="beroepInput"]').focus()
 
-    //         // assertion
-    //         cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').should('be.visible')
-    //     })
+            // assertion
+            cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').should('be.visible')
+        })
 
-    //     it('Test 2: Geen keuze', () => {
-    //         cy.get('[data-testid="verderBtn"]').click()
+        it('Test 2: Geen keuze', () => {
+            cy.get('[data-testid="verderBtn"]').click()
 
-    //         // assertion
-    //         cy.get('[data-testid="beroepInput"]').should('be.visible')
-    //     })
+            // assertion
+            cy.get('[data-testid="beroepInput"]').should('be.visible')
+        })
 
-    //     it('Test 3: Typ random letters in en ga door', () => {
-    //         const randomString = faker.random.word();
-    //         cy.get('[data-testid="beroepInput"]').focus().type(randomString)
-    //         cy.get('[data-testid="verderBtn"]').click()
+        it('Test 3: Typ random letters in en ga door', () => {
+            const randomString = faker.random.word();
+            cy.get('[data-testid="beroepInput"]').focus().type(randomString)
+            cy.get('[data-testid="verderBtn"]').click()
 
-    //         // assertion
-    //         cy.get('[data-testid="beroepInput"]').should('be.visible')
-    //     })
+            // assertion
+            cy.get('[data-testid="beroepInput"]').should('be.visible')
+        })
 
-    //     it('Test 4: Typ random nummers in en ga door', () => {
-    //         cy.get('[data-testid="beroepInput"]').focus().type(randomInteger)
-    //         cy.get('[data-testid="verderBtn"]').click()
+        it('Test 4: Typ random nummers in en ga door', () => {
+            cy.get('[data-testid="beroepInput"]').focus().type(randomInteger)
+            cy.get('[data-testid="verderBtn"]').click()
 
-    //         // assertion
-    //         cy.get('[data-testid="beroepInput"]').should('be.visible')
-    //     })
+            // assertion
+            cy.get('[data-testid="beroepInput"]').should('be.visible')
+        })
 
-    //     for (let i = 1; i < 40; i++) {
-    //         it(`Test 5.${i}: Probeer elke keuze om door te gaan`, () => {
-    //             cy.get('[data-testid="beroepInput"]').focus()
-    //             cy.get(`[data-testid="options"] > :nth-child(1) > :nth-child(${i})`).click()
-    //             cy.get('[data-testid="verderBtn"]').click()
+        for (let i = 1; i < 40; i++) {
+            it(`Test 5.${i}: Probeer elke keuze om door te gaan`, () => {
+                cy.get('[data-testid="beroepInput"]').focus()
+                cy.get(`[data-testid="options"] > :nth-child(1) > :nth-child(${i})`).click()
+                cy.get('[data-testid="verderBtn"]').click()
 
-    //             // assertion
-    //             cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
+                // assertion
+                cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
 
-    //             // repeat
-    //             cy.viewport('iphone-x')
-    //             cy.homeOwnerAppTestBegin()
-    //         })
-    //     }
+                // repeat
+                cy.viewport('iphone-x')
+                cy.homeOwnerAppTestBegin()
+            })
+        }
 
-    // })
-
-
-    // context('Postcode', () => {
-
-    //     beforeEach(() => {
-    //         cy.viewport('iphone-x')
-    //         cy.homeOwnerAppTestBegin()
-    //         cy.get('[data-testid="nieuwKlusBtn"]').click()
-    //         cy.get('[data-testid="beroepInput"]').focus()
-    //         cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
-    //         cy.get('[data-testid="verderBtn"]').click()
-    //     })
+    })
 
 
-    //     it('Test 1: Andersom input', () => {
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomLetters, { force: true })
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomInteger, { force: true })
-    //         // Removing "{force: true}" prevents users from filling in the input fields, while including it compels users to take action.
-    //         cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
+    context('Postcode', () => {
 
-    //         // assertion
-    //         cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
-    //     })
+        beforeEach(() => {
+            cy.viewport('iphone-x')
+            cy.homeOwnerAppTestBegin()
+            cy.get('[data-testid="nieuwKlusBtn"]').click()
+            cy.get('[data-testid="beroepInput"]').focus()
+            cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
+            cy.get('[data-testid="verderBtn"]').click()
+        })
 
-    //     it('Test 2: Typ speciaal karakters in', () => {
-    //         // Generate random special characters using faker
-    //         const specialChars = '!@#$%^&*()_+{}:"<>?|[];\',./`~';
-    //         let randomSpecialChars = '';
-    //         for (let i = 0; i < 5; i++) {
-    //             const randomIndex = Math.floor(Math.random() * specialChars.length);
-    //             randomSpecialChars += specialChars[randomIndex];
-    //         }
-    //         // Type random special characters into the input field
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomSpecialChars, { force: true });
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomSpecialChars, { force: true });
-    //         cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
 
-    //         // assertion
-    //         cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
-    //     })
+        it('Test 1: Andersom input', () => {
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomLetters, { force: true })
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomInteger, { force: true })
+            // Removing "{force: true}" prevents users from filling in the input fields, while including it compels users to take action.
+            cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
 
-    //     it('Test 3: Typ een postcode in', () => {
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
-    //         cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
+            // assertion
+            cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
+        })
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-2"]')
-    //     })
+        it('Test 2: Typ speciaal karakters in', () => {
+            // Generate random special characters using faker
+            const specialChars = '!@#$%^&*()_+{}:"<>?|[];\',./`~';
+            let randomSpecialChars = '';
+            for (let i = 0; i < 5; i++) {
+                const randomIndex = Math.floor(Math.random() * specialChars.length);
+                randomSpecialChars += specialChars[randomIndex];
+            }
+            // Type random special characters into the input field
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomSpecialChars, { force: true });
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomSpecialChars, { force: true });
+            cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
 
-    // })
+            // assertion
+            cy.get('[data-testid="postcodeNummerInput"]').should('be.visible')
+        })
 
-    // context('Keuze Over Klus', () => {
+        it('Test 3: Typ een postcode in', () => {
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
+            cy.get('[data-testid="volgendeBtn-1"]').click({ force: true })
 
-    //     beforeEach(() => {
-    //         cy.viewport('iphone-x')
-    //         cy.homeOwnerAppTestBegin()
-    //         cy.get('[data-testid="nieuwKlusBtn"]').click()
-    //         cy.get('[data-testid="beroepInput"]').focus()
-    //         cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
-    //         cy.get('[data-testid="verderBtn"]').click()
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
-    //         cy.get('[data-testid="volgendeBtn-1"]').click()
-    //     })
+            // assertion
+            cy.get('[data-testid="volgendeBtn-2"]')
+        })
 
-    //     it('Test 1: Geen keuze', () => {
-    //         cy.get('[data-testid="volgendeBtn-2"]').click()
+    })
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-2"]').should('be.visible')
-    //     })
+    context('Keuze Over Klus', () => {
 
-    //     it('Test 2: Klik op elke keuze (mag alleen een keuze)', () => {
-    //         for (let i = 1; i < 7; i++) {
-    //             cy.get(`[data-testid="keuze${i}"]`).click()
-    //         }
-    //         cy.get('[data-testid="volgendeBtn-2"]').click()
+        beforeEach(() => {
+            cy.viewport('iphone-x')
+            cy.homeOwnerAppTestBegin()
+            cy.get('[data-testid="nieuwKlusBtn"]').click()
+            cy.get('[data-testid="beroepInput"]').focus()
+            cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
+            cy.get('[data-testid="verderBtn"]').click()
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
+            cy.get('[data-testid="volgendeBtn-1"]').click()
+        })
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-2"]').should('be.visible')
-    //     })
+        it('Test 1: Geen keuze', () => {
+            cy.get('[data-testid="volgendeBtn-2"]').click()
 
-    //     for (let i = 1; i < 7; i++) {
-    //         it(`Test 3.${i}: Probeer elke keuze`, () => {
-    //             cy.get(`[data-testid="keuze${i}"]`).click()
-    //             cy.get('[data-testid="volgendeBtn-2"]').click()
+            // assertion
+            cy.get('[data-testid="volgendeBtn-2"]').should('be.visible')
+        })
 
-    //             // assertion
-    //             cy.get('[data-testid="volgendeBtn-3"]').should('be.visible')
-    //         })
-    //     }
-    // })
+        it('Test 2: Klik op elke keuze (mag alleen een keuze)', () => {
+            for (let i = 1; i < 7; i++) {
+                cy.get(`[data-testid="keuze${i}"]`).click()
+            }
+            cy.get('[data-testid="volgendeBtn-2"]').click()
 
-    // context('Aanvullende Informatie', () => {
+            // assertion
+            cy.get('[data-testid="volgendeBtn-2"]').should('be.visible')
+        })
 
-    //     beforeEach(() => {
-    //         cy.viewport('iphone-x')
-    //         cy.homeOwnerAppTestBegin()
-    //         cy.get('[data-testid="nieuwKlusBtn"]').click()
-    //         cy.get('[data-testid="beroepInput"]').focus()
-    //         cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
-    //         cy.get('[data-testid="verderBtn"]').click()
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
-    //         cy.get('[data-testid="volgendeBtn-1"]').click()
-    //         cy.get('[data-testid="keuze1"]').click()
-    //         cy.get('[data-testid="volgendeBtn-2"]').click()
-    //     })
+        for (let i = 1; i < 7; i++) {
+            it(`Test 3.${i}: Probeer elke keuze`, () => {
+                cy.get(`[data-testid="keuze${i}"]`).click()
+                cy.get('[data-testid="volgendeBtn-2"]').click()
 
-    //     it('Test 1: Typ een zin in', () => {
-    //         const randomSentence = faker.lorem.sentence();
-    //         cy.get('[data-testid="infoInput"]').type(randomSentence);
-    //         cy.get('[data-testid="volgendeBtn-3"]').click()
+                // assertion
+                cy.get('[data-testid="volgendeBtn-3"]').should('be.visible')
+            })
+        }
+    })
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-4"]').should('be.visible')
-    //     })
+    context('Aanvullende Informatie', () => {
 
-    //     it('Test 2: Typ niks in', () => {
-    //         cy.get('[data-testid="volgendeBtn-3"]').click()
+        beforeEach(() => {
+            cy.viewport('iphone-x')
+            cy.homeOwnerAppTestBegin()
+            cy.get('[data-testid="nieuwKlusBtn"]').click()
+            cy.get('[data-testid="beroepInput"]').focus()
+            cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
+            cy.get('[data-testid="verderBtn"]').click()
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
+            cy.get('[data-testid="volgendeBtn-1"]').click()
+            cy.get('[data-testid="keuze1"]').click()
+            cy.get('[data-testid="volgendeBtn-2"]').click()
+        })
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-4"]').should('be.visible')
-    //     })
-    // })
+        it('Test 1: Typ een zin in', () => {
+            const randomSentence = faker.lorem.sentence();
+            cy.get('[data-testid="infoInput"]').type(randomSentence);
+            cy.get('[data-testid="volgendeBtn-3"]').click()
 
-    // context('Datum', () => {
+            // assertion
+            cy.get('[data-testid="volgendeBtn-4"]').should('be.visible')
+        })
 
-    //     // Date: 23/04/2024
-    //     // IMPORTANT ERROR: The calendar doesn't work properly. 
-    //     // The issue is that when clicking on a date, it selects the day before the intended one.
-    //     // This is why tests are different. This must be fixed in the future.
-    //     // Example test problem: Test 2: It clicks on the date 4 day before today and then checks if the 5 day before today is clicked. 
+        it('Test 2: Typ niks in', () => {
+            cy.get('[data-testid="volgendeBtn-3"]').click()
 
-    //     beforeEach(() => {
-    //         cy.viewport('iphone-x')
-    //         cy.homeOwnerAppTestBegin()
-    //         cy.get('[data-testid="nieuwKlusBtn"]').click()
-    //         cy.get('[data-testid="beroepInput"]').focus()
-    //         cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
-    //         cy.get('[data-testid="verderBtn"]').click()
-    //         cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
-    //         cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
-    //         cy.get('[data-testid="volgendeBtn-1"]').click()
-    //         cy.get('[data-testid="keuze1"]').click()
-    //         cy.get('[data-testid="volgendeBtn-2"]').click()
-    //         cy.get('[data-testid="volgendeBtn-3"]').click()
-    //     })
+            // assertion
+            cy.get('[data-testid="volgendeBtn-4"]').should('be.visible')
+        })
+    })
 
-    //     it('Test 1: Geen keuze', () => {
-    //         cy.get('[data-testid="volgendeBtn-4"]').click()
+    context('Datum', () => {
 
-    //         // assertion
-    //         cy.get('[data-testid="volgendeBtn-5"]').should('be.visible')
-    //     })
+        // Date: 23/04/2024
+        // IMPORTANT ERROR: The calendar doesn't work properly. 
+        // The issue is that when clicking on a date, it selects the day before the intended one.
+        // This is why tests are different. This must be fixed in the future.
+        // Example test problem: Test 2: It clicks on the date 4 day before today and then checks if the 5 day before today is clicked. 
 
-    //     it('Test 2: Kies een oudere datum', () => {
+        beforeEach(() => {
+            cy.viewport('iphone-x')
+            cy.homeOwnerAppTestBegin()
+            cy.get('[data-testid="nieuwKlusBtn"]').click()
+            cy.get('[data-testid="beroepInput"]').focus()
+            cy.get('[data-testid="options"] > :nth-child(1) > :nth-child(1)').click()
+            cy.get('[data-testid="verderBtn"]').click()
+            cy.get('[data-testid="postcodeNummerInput"]').type(randomInteger, { force: true });
+            cy.get('[data-testid="postcodeLetterInput"]').type(randomLetters, { force: true });
+            cy.get('[data-testid="volgendeBtn-1"]').click()
+            cy.get('[data-testid="keuze1"]').click()
+            cy.get('[data-testid="volgendeBtn-2"]').click()
+            cy.get('[data-testid="volgendeBtn-3"]').click()
+        })
 
-    //         // Calculate the date four days before today
-    //         const pastDate = new Date(currentYear, currentMonth - 1, currentDay - 4);
-    //         const pastDateFormatted = `${pastDate.getFullYear()}-${String(pastDate.getMonth() + 1).padStart(2, '0')}-${String(pastDate.getDate()).padStart(2, '0')}`;
+        it('Test 1: Geen keuze', () => {
+            cy.get('[data-testid="volgendeBtn-4"]').click()
 
-    //         const pastDate2 = new Date(currentYear, currentMonth - 1, currentDay - 5);
-    //         const pastDate2Formatted = `${pastDate2.getFullYear()}-${String(pastDate2.getMonth() + 1).padStart(2, '0')}-${String(pastDate2.getDate()).padStart(2, '0')}`;
+            // assertion
+            cy.get('[data-testid="volgendeBtn-5"]').should('be.visible')
+        })
 
-    //         // Click on the calculated past date
-    //         cy.get(`[data-testid="${pastDateFormatted}"]`).click();
+        it('Test 2: Kies een oudere datum', () => {
 
-    //         // assertion
-    //         cy.get(`[data-testid="${pastDate2Formatted}"]`).should('not.have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
-    //     })
+            // Calculate the date four days before today
+            const pastDate = new Date(currentYear, currentMonth - 1, currentDay - 4);
+            const pastDateFormatted = `${pastDate.getFullYear()}-${String(pastDate.getMonth() + 1).padStart(2, '0')}-${String(pastDate.getDate()).padStart(2, '0')}`;
 
-    //     it('Test 3: Kies een toekomstige datum', () => {
-    //         const futureDate = new Date(currentYear, currentMonth - 1, currentDay + 2);
-    //         const futureDateFormatted = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}-${String(futureDate.getDate()).padStart(2, '0')}`;
+            const pastDate2 = new Date(currentYear, currentMonth - 1, currentDay - 5);
+            const pastDate2Formatted = `${pastDate2.getFullYear()}-${String(pastDate2.getMonth() + 1).padStart(2, '0')}-${String(pastDate2.getDate()).padStart(2, '0')}`;
 
-    //         const tomorrow = new Date(currentYear, currentMonth - 1, currentDay + 1);
-    //         const tomorrowFormatted = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+            // Click on the calculated past date
+            cy.get(`[data-testid="${pastDateFormatted}"]`).click();
 
-    //         // Assert that the future date is not selected initially
-    //         cy.get(`[data-testid="${tomorrowFormatted}"]`).should('not.have.class', 'selectedDay');
+            // assertion
+            cy.get(`[data-testid="${pastDate2Formatted}"]`).should('not.have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
+        })
 
-    //         // Click on future date
-    //         cy.get(`[data-testid="${futureDateFormatted}"]`).click();
+        it('Test 3: Kies een toekomstige datum', () => {
+            const futureDate = new Date(currentYear, currentMonth - 1, currentDay + 2);
+            const futureDateFormatted = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}-${String(futureDate.getDate()).padStart(2, '0')}`;
 
-    //         // Assert that tomorrow's is selected after clicking
-    //         // Check the css background to see if the date is chosen or not
-    //         cy.get(`[data-testid="${tomorrowFormatted}"]`).should('have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
+            const tomorrow = new Date(currentYear, currentMonth - 1, currentDay + 1);
+            const tomorrowFormatted = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
 
-    //     })
+            // Assert that the future date is not selected initially
+            cy.get(`[data-testid="${tomorrowFormatted}"]`).should('not.have.class', 'selectedDay');
 
-    //     it('Test 4: Kies meerdere datums', () => {
-    //         for (let i = 1; i <= 4; i++) {
-    //             const futureDate = new Date(currentYear, currentMonth - 1, currentDay + i);
-    //             const futureDateFormatted = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}-${String(futureDate.getDate()).padStart(2, '0')}`;
-    //             cy.get(`[data-testid="${futureDateFormatted}"]`).click();
+            // Click on future date
+            cy.get(`[data-testid="${futureDateFormatted}"]`).click();
 
-    //             // assertion
-    //             const futureDate2 = new Date(currentYear, currentMonth - 1, currentDay - 1 + i);
-    //             const futureDate2Formatted = `${futureDate2.getFullYear()}-${String(futureDate2.getMonth() + 1).padStart(2, '0')}-${String(futureDate2.getDate()).padStart(2, '0')}`;
-    //             cy.get(`[data-testid="${futureDate2Formatted}"]`).should('have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
-    //         }
-    //     })
+            // Assert that tomorrow's is selected after clicking
+            // Check the css background to see if the date is chosen or not
+            cy.get(`[data-testid="${tomorrowFormatted}"]`).should('have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
 
-    //     it('Test 5: Klik op linkere pijltje', () => {
-    //         cy.get('[data-testid="arrowLinks"]').click()
+        })
 
-    //         // assertion
-    //         cy.getPreviousMonthName().then(previosMonthName => {
-    //             cy.get('body').should('contain', previosMonthName);
-    //         });
-    //     })
+        it('Test 4: Kies meerdere datums', () => {
+            for (let i = 1; i <= 4; i++) {
+                const futureDate = new Date(currentYear, currentMonth - 1, currentDay + i);
+                const futureDateFormatted = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}-${String(futureDate.getDate()).padStart(2, '0')}`;
+                cy.get(`[data-testid="${futureDateFormatted}"]`).click();
 
-    //     it('Test 6: Klik op rechtere pijltje', () => {
-    //         cy.get('[data-testid="arrowRechts"]').click()
+                // assertion
+                const futureDate2 = new Date(currentYear, currentMonth - 1, currentDay - 1 + i);
+                const futureDate2Formatted = `${futureDate2.getFullYear()}-${String(futureDate2.getMonth() + 1).padStart(2, '0')}-${String(futureDate2.getDate()).padStart(2, '0')}`;
+                cy.get(`[data-testid="${futureDate2Formatted}"]`).should('have.css', 'background-color', 'rgba(58, 114, 255, 0.83)')
+            }
+        })
 
-    //         // assertion
-    //         cy.getNextMonthName().then(nextMonthName => {
-    //             cy.get('body').should('contain', nextMonthName);
-    //         });
-    //     })
-    // })
+        it('Test 5: Klik op linkere pijltje', () => {
+            cy.get('[data-testid="arrowLinks"]').click()
+
+            // assertion
+            cy.getPreviousMonthName().then(previosMonthName => {
+                cy.get('body').should('contain', previosMonthName);
+            });
+        })
+
+        it('Test 6: Klik op rechtere pijltje', () => {
+            cy.get('[data-testid="arrowRechts"]').click()
+
+            // assertion
+            cy.getNextMonthName().then(nextMonthName => {
+                cy.get('body').should('contain', nextMonthName);
+            });
+        })
+    })
 
     context('Email Adres', () => {
 
