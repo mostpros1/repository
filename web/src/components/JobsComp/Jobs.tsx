@@ -78,8 +78,21 @@ const Jobs = () => {
       }
     };
 
-    fetchUserEmailAndQueryDynamo();
-  }, []);
+    const checkUserGroupAndFetch = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups && groups.includes("Professional")) {
+          fetchUserEmailAndQueryDynamo();
+        }
+      } catch (error) {
+        console.error("Error checking user group", error);
+      }
+    };
+
+    checkUserGroupAndFetch();
+  }, []); // Make sure to include any dependencies in this array
+
 
   return (
     <div id="job-main">
