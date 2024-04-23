@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Auth } from 'aws-amplify';
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
 import searchicon from "../../assets/searchicon.svg";
 import viewProfessionalsIcon from "../../assets/cropped-23107-9-tools-transparent-image 1.svg"; // Add the correct path and icon
 import chatIcon from "../../assets/chatIcon.svg"; // Add the correct path and icon
+import { dynamo } from "../../../declarations";
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -36,6 +38,49 @@ const Jobs = () => {
     // Add more job entries...
   ];
 
+  useEffect(() => {
+    const fetchUserEmailAndQueryDynamo = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userEmail = user.attributes.email;
+
+        dynamo
+          .query({
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+              ':email': userEmail
+            }
+          })
+          .promise()
+          .then(data => {
+            if (data.Items && data.Items.length > 0) {
+              dynamo
+                .query({
+                  TableName: 'Projects',
+                  IndexName: 'professional_idIndex',
+                  KeyConditionExpression: 'professional_id = :professional_id',
+                  ExpressionAttributeValues: {
+                    ':professional_id': data.Items[0].professional_id
+                  }
+                })
+                .promise()
+                .then(output => console.log(output.Items))
+                .catch(console.error);
+            } else {
+              console.error("No items found in the first query");
+            }
+          })
+          .catch(console.error);
+      } catch (error) {
+        console.error("Error fetching user email or querying DynamoDB", error);
+      }
+    };
+
+    fetchUserEmailAndQueryDynamo();
+  }, []);
+
   return (
     <div id="job-main">
       <p>Place a new job</p>
@@ -58,17 +103,15 @@ const Jobs = () => {
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${
-              currentTab === "current" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "current" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("current")}
           >
             Current jobs
           </button>
           <button
-            className={`status-button ${
-              currentTab === "finished" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "finished" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("finished")}
           >
             Finished jobs
