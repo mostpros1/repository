@@ -67,6 +67,14 @@
   width: 100%;
   object-fit: contain;
 }
+.job-status {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 0px;
+}
 
 .status-button {
   padding: 10px;
@@ -81,7 +89,7 @@
   color: #007bff;
 }
 
-.job-list {
+.job-list-vw {
   display: grid;
   grid-template-columns: 500px 1fr;
   grid-template-rows: auto;

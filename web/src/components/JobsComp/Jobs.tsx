@@ -4,6 +4,7 @@ import rightarrow from "../../assets/right-arrow.svg";
 import searchicon from "../../assets/searchicon.svg";
 import viewProfessionalsIcon from "../../assets/view-prof.svg"; // Add the correct path and icon
 import chatIcon from "../../assets/chatIcon.svg"; // Add the correct path and icon
+import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -68,6 +69,7 @@ const Jobs = () => {
           </button>
         </form>
       </div>
+
       <div className="jobs-con">
         <div className="job-status">
           <button
@@ -88,7 +90,7 @@ const Jobs = () => {
           </button>
         </div>
         <div className="job-list-con">
-          <div className="job-list">
+          <div className="job-list-vw">
             {jobEntries
               .filter((job) =>
                 currentTab === "current" ? job.isCurrent : !job.isCurrent

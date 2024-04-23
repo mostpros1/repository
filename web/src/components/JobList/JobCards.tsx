@@ -15,6 +15,7 @@ interface Job {
   availability: string;
   // img: string;
 }
+
 interface JobCardsProps {
   jobs?: Job[];
 }
