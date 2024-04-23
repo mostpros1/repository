@@ -8,8 +8,9 @@ const Footer = ({ navigation, activePage }) => {
     
     <View style={styles.footer}>
       <TouchableOpacity
+        testID="footer homeBtn"
         style={styles.footerImage}
-        onPress={() => navigation.navigate('TestHome')}
+        onPress={() => navigation.navigate('HomePageHomeOwner')}
       >
         <View style={styles.iconContainer}>
           <Image
@@ -20,6 +21,7 @@ const Footer = ({ navigation, activePage }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
+        testID="footer chatOverviewBtn"
         style={styles.footerImage}
         onPress={() => navigation.navigate('ChatOverview')}
       >
@@ -32,6 +34,7 @@ const Footer = ({ navigation, activePage }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
+        testID="footer profileBtn"
         style={styles.footerImage}
         onPress={() => navigation.navigate('ProfileSettingsOne')}
       >

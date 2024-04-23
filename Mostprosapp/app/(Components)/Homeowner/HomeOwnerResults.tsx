@@ -113,7 +113,7 @@ const HomeOwnerResults = ({ navigation }) => {
                         />
                       </View>
                     </View>
-                    <View style={styles.yellow}>
+                    <View testID={`testKeuze-${index}`} style={styles.yellow}>
                       <TouchableOpacity
                         onPress={() => toggleCheckbox(index)}
                         activeOpacity={1}

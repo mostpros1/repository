@@ -63,20 +63,20 @@ const HomeOwnerCreate = ({ navigation }) => {
 
                 <View style={styles.inputContainer}>
                     <TextInput
-                        testID='beroepBtn'
+                        testID='beroepInput'
                         placeholder="Bijvoorbeeld: Schilderwerk."
                         style={styles.input}
                         onChangeText={handleInputChange}
                         onFocus={handleInputFocus}
                         value={inputText}
                     />
-                    <Pressable style={styles.forwardButton} onPress={handleForwardButtonPress}>
+                    <Pressable testID='verderBtn' style={styles.forwardButton} onPress={handleForwardButtonPress}>
                         <Icon name="forward" size={25} color="white" />
                     </Pressable>
                 </View>
 
                 {showOptions && (
-                    <ScrollView style={styles.optionsContainer}>
+                    <ScrollView testID='options' style={styles.optionsContainer}>
                         {filteredOptions.map(option => (
                             <Pressable key={option.id} style={styles.option} onPress={() => handleOptionPress(option)}>
                                 <Text>{option.title}</Text>
