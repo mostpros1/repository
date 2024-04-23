@@ -10,12 +10,14 @@ function FAQPage() {
     <div>
       <NavBar />
       <div>
-          <div className="faq-header">
+        <div className="faq-header-con">
+          <section className="faq-header">
             <img src={faqpic} alt="faq" />
             <p>Veel gestelde vragen</p>
+          </section>
+          <div className="faq-con">
+            <FAQ />
           </div>
-        <div className="faq-con">
-          <FAQ />
         </div>
       </div>
       <Footer />
