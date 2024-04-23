@@ -98,9 +98,9 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
     const [displayedTaskName, setDisplayedTaskName] = useState('');
 
 
-    const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTaskChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const inputValueTask = e.target.value;
-
+    
         // Find the selected task object
         let selectedTaskLink = '';
         specialists.forEach(specialist => {
@@ -110,7 +110,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                 setDisplayedTaskName(inputValueTask);
             }
         });
-
+    
         // Remove the leading slash from the selectedTaskLink if it exists
         selectedTaskLink = selectedTaskLink.replace(/^\//, '');
         // Set the task state to the selectedTaskLink'

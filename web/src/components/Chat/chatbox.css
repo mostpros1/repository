@@ -1,7 +1,8 @@
 .chat-container {
   display: flex;
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   border-radius: 10px;
+  justify-content: center;
   align-items: center;
   transition: all 1s ease;
 }
@@ -13,15 +14,14 @@
 }
 
 #sidebar {
-  width: 250px;
-  background-color: #308ae4;
-  border-right: 1px solid #e6e6e6;
+  width: 350px;
+  background-color: #007bff;
   overflow-y: auto;
-  height: 420px;
-  margin: 0px 0 0 10px;
+  height: 500px;
+  margin-top: 40px;
+  margin-left: 20px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.5s ease;
 }
 
 #sidebar ul {
@@ -35,7 +35,6 @@
   transition: background-color 0.3s;
   border-radius: 10px;
   text-align: center;
-  text-transform: capitalize;
 }
 
 #sidebar ul li:hover {
@@ -49,12 +48,15 @@
 }
 
 .chat-main {
+  flex: 1;
   display: flex;
-  height: 450px;
-  width: 800px;
-  margin: 0px 30px 0px;
-  border-radius: 20px;
   flex-direction: column;
+  height: 550px;
+  margin-top: 40px;
+  width: 700px;
+  margin-right: 40px;
+  margin-left: 60px;
+  border-radius: 20px;
 }
 
 .textjoined {
@@ -73,10 +75,10 @@
   display: flex;
 }
 
-.button-container {
+.button-container{
   display: flex;
   position: absolute;
-  top: 80px;
+  top: 100px;
   right: 100px;
   gap: 20px;
 }
@@ -97,16 +99,18 @@
   overflow-y: auto;
   background-color: #f9f9fb;
   padding: 20px;
-  transition: all 0.5s ease;
+  border-radius: 10px;
 }
 
 .input-form {
   display: flex;
-  padding: 10px;
-  background-color: #f7f7f9;
-  border-top: 1px solid #ddd;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  padding: 5px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border-top: solid 2px rgba(0, 0, 0, 0.13);
+  border-left: solid 2px rgba(0, 0, 0, 0.041);
+  border-right: solid 2px rgba(0, 0, 0, 0.041);
+  border-bottom: solid 2px rgba(0, 0, 0, 0.041);
 }
 
 .inputchat {
@@ -116,8 +120,8 @@
   border-radius: 4px;
   font-size: 15px;
   height: 40px;
-  margin-left: 20px;
-  width: 300px;
+  margin-left: 5px;
+  width: auto;
 }
 
 .chat-enter kbd {
@@ -134,11 +138,6 @@
   height: 40px;
   margin-left: 10px;
   width: 50px;
-  transition: all 0.5s ease;
-}
-
-.chat-enter kbd:hover {
-  background-color: #0056b3;
 }
 
 .message-bubble {
@@ -151,8 +150,6 @@
   transition: all 0.5s ease;
   font-size: 15px;
   align-items: center;
-  overflow-y: auto;
-  height: auto;
 }
 
 .self-message {
@@ -204,7 +201,7 @@
   cursor: pointer;
 }
 
-.text {
+.text{
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -213,7 +210,7 @@
   font-size: 10px;
   margin-left: 8px;
   color: #666;
-  white-space: nowrap;
+  margin-top: 2px;
 }
 
 .message-container {
@@ -225,6 +222,8 @@
 
 .self-message-container {
   align-items: flex-end;
+  max-width: 100%;
+  overflow: auto;
 }
 
 .other-message-container {
@@ -237,12 +236,10 @@
   align-items: center;
   text-align: center;
   padding: 10px;
-  background-color: #308ae4;
+  background-color: #007bff;
   color: white;
-  height: 60px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  text-transform: capitalize;
+  height: 100px;
+  border-radius: 10px;
 }
 
 .name-and-status {
@@ -258,7 +255,7 @@
   align-items: center;
 }
 
-.addPay {
+.addPay{
   border-radius: 5px;
   width: 40px;
   background-color: #007bff;
@@ -273,7 +270,7 @@
   height: 40px;
 }
 
-.create-payment {
+.create-payment{
   border: 0;
   border-radius: 10px;
   background-color: #007bff;
@@ -288,14 +285,14 @@
   margin-right: 5px;
 }
 
-.betalingbedrag {
+.betalingbedrag{
   height: 40px;
   width: 120px;
   font-size: 14px;
   border: solid 2px rgba(0, 0, 0, 0.452);
 }
 
-.betalingbevestig {
+.betalingbevestig{
   height: 40px;
   width: auto;
   padding: 5px;
@@ -307,7 +304,7 @@
   border-radius: 10px;
 }
 
-.searchList {
+.searchList{
   width: 100%;
   height: 50px;
   border: 0;
