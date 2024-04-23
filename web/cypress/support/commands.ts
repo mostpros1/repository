@@ -273,7 +273,7 @@ Cypress.Commands.add('HomeOwnerSettingsPage', () => {
 
 Cypress.Commands.add('Helpdesk', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5174/Helpdesk")
+    cy.visit("http://localhost:5173/Helpdesk")
 
 });
 
