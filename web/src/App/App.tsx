@@ -45,7 +45,6 @@ import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
-import ChatMain from "../components/Chat/ChatMain.tsx";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
