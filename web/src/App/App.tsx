@@ -45,6 +45,7 @@ import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
+import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
@@ -84,6 +85,12 @@ const App = () => {
       />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/Jobs" element={<JobsPage />} />
+      <Route path="/Invoice" element={<InvoicePage/>} />
+      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
+
+
+      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
       <Route
         path="/HomeOwnerSettingsPage"
         element={<HomeOwnerSettingsPage />}

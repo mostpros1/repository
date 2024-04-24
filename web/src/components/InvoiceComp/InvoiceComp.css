@@ -222,3 +222,81 @@
 .invoiceButtonTwo {
   cursor: pointer;
 }
+
+
+@media only screen and (max-width: 800px) {
+  #topButtonContainer {
+    width: 90%;
+  }
+
+  .invoiceWhiteCard {
+    width: 90%;
+    height: auto;
+  }
+
+  .invoiceWhiteCardImgInfoWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+
+  .invoiceWhiteCardImgInfoWrapper > img {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .invoiceWhiteCardInfoInvoiceWrapper,
+  .invoiceWhiteCardInfoWrapper {
+    padding: 1rem;
+  }
+
+  .invoiceWhiteCardDescriptionWrapper {
+    padding: 1rem;
+  }
+
+  .invoicePriceDetailsOneWrapper {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .invoiceButtonContainer {
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  .invoiceButtonOne,
+  .invoiceButtonTwo {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .invoiceWhiteCard {
+    padding: 1rem;
+  }
+
+  .invoiceWhiteCardImgInfoWrapper > img {
+    width: 70%;
+    margin-bottom: 1rem;
+  }
+
+  .invoiceAdressInfo,
+  .invoiceAdressInfoTwo {
+    font-size: 0.8rem;
+  }
+
+  .InvoiceCompProgressTitleTwo {
+    font-size: 1rem;
+  }
+
+  .progressBlock {
+    width: 3rem;
+    height: 0.3rem;
+  }
+
+  .invoiceButtonOne,
+  .invoiceButtonTwo {
+    font-size: 0.8rem;
+    height: 3rem;
+  }
+}
