@@ -44,9 +44,10 @@ import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import ChatMain from "../pages/ChatPage/ChatPage";
 import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
-import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
+import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 
 const App = () => {
   return (
@@ -72,7 +73,10 @@ const App = () => {
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
+      <Route path="/DashboardPage" element={<DashboardPage />} />
+      <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
+      <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
 
       <Route
         path="/MijnKlussenOverzicht"
@@ -94,7 +98,7 @@ const App = () => {
         element={<HomeOwnerDeactivation />}
       />
       <Route path="/FAQPage" element={<FAQPage />} />
-      <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
+      
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
 

@@ -7,6 +7,12 @@
   font-weight: 600;
 }
 
+#question-var {
+  max-width: 350px;
+  max-height: 350px;
+  height: 80%;
+}
+
 #question-var .question {
   background-color: #e9f4ff;
   border: none;
@@ -22,11 +28,12 @@
 #question-var p {
   font-size: 15px;
   display: block;
+  text-align: center;
   padding: 0.75rem;
+  margin: 15px;
   border-top: 1px solid #dee2e6;
   border-bottom: 1px solid #dee2e6;
 }
-
 
 /* Hover effect for questions */
 #question-var .question:hover {
