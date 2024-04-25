@@ -77,7 +77,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = []}) => {
     const location = useLocation();
 
     const handleChatButtonClick = (recipientEmail: string) => {
-      const currentPath = location.pathname;
+      const currentPath = "/chat";
       const recipientQuery = `recipient=${recipientEmail}`;
       const newUrl = `${currentPath}?${recipientQuery}`;
       window.location.href = newUrl;
