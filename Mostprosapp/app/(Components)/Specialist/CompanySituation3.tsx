@@ -20,23 +20,23 @@ const CompanySituation3 = ({ navigation }) => {
     const [selectedItems, setSelectedItems] = useState([]);
 
     const toggleItemSelection = (index) => {
-      const updatedItems = [...selectedItems];
-      if (updatedItems.includes(index)) {
-        updatedItems.splice(updatedItems.indexOf(index), 1);
-      } else {
-        updatedItems.push(index);
-      }
-      setSelectedItems(updatedItems);
+        const updatedItems = [...selectedItems];
+        if (updatedItems.includes(index)) {
+            updatedItems.splice(updatedItems.indexOf(index), 1);
+        } else {
+            updatedItems.push(index);
+        }
+        setSelectedItems(updatedItems);
     };
-  
+
     const handleNext = () => {
-      if (selectedItems.length === 0) {
-        Alert.alert("Fout Melding", "Kies minimaal 1 situatie.", [
-          { text: "Begrepen" },
-        ]);
-      } else {
-        navigation.navigate("CompanySituation4");
-      }
+        if (selectedItems.length === 0) {
+            Alert.alert("Fout Melding", "Kies minimaal 1 situatie.", [
+                { text: "Begrepen" },
+            ]);
+        } else {
+            navigation.navigate("CompanySituation4");
+        }
     };
 
     return (
@@ -56,36 +56,35 @@ const CompanySituation3 = ({ navigation }) => {
                         <Text style={styles.title}>Wat is u huidige professionele situatie?</Text>
                     </View>
 
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
+                    <Pressable testID="situatie-3 Keuze-1" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
                         <Text>Ik heb mijn bedrijf ingeschreven{'\n'}en wacht op mijn KVK-nummer</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(1)}
                         />
                     </Pressable>
-
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
+                    <Pressable testID="situatie-3 Keuze-2" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
                         <Text>Mijn bedrijf bestaat minder dan 3 maanden</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
+                    <Pressable testID="situatie-3 Keuze-3" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
                         <Text>Mijn bedrijf bestaat 3 maanden tot 1 jaar</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
+                    <Pressable testID="situatie-3 Keuze-4" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
                         <Text>Mijn bedrijf bestaat al langer dan 1 jaar</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(4)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
+                    <Pressable testID="situatie-3 Keuze-5" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(5)}>
                         <Text>Ik heb geen bedrijf</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(5) && styles.checkboxSelected]}
@@ -94,14 +93,14 @@ const CompanySituation3 = ({ navigation }) => {
                     </Pressable>
 
                     <View style={styles.buttonsContainer}>
-                        <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                        <Pressable testID="vorigeBtn-5" style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={handleNext}>
-              <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
-                Volgende
-              </Text>
-            </Pressable>
+                        <Pressable testID="volgendeBtn-6" style={[styles.nextButton]} onPress={handleNext}>
+                            <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
+                                Volgende
+                            </Text>
+                        </Pressable>
                     </View>
 
                 </SafeAreaView>

@@ -101,9 +101,9 @@ export function LoginForm({
         <Pressable style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonTitle}>Inloggen</Text>
         </Pressable>
-        <Pressable style={styles.loginButton} onPress={() => navigation.navigate("PostalCodeSpecialist")}>
-  <Text style={styles.buttonTitle}>Tijdelijke Login Knop</Text>
-</Pressable>
+        <Pressable testID="tijdelijkeLoginBtn" style={styles.loginButton} onPress={() => navigation.navigate("PostalCodeSpecialist")}>
+          <Text style={styles.buttonTitle}>Tijdelijke Login Knop</Text>
+        </Pressable>
       </View>
     </>
   );

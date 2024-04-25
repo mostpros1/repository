@@ -61,6 +61,7 @@ const CompanyKvk = ({ navigation }) => {
             <Text style={styles.beroepTitle}>Bedrijf naam:</Text>
             <Pressable style={styles.containerInput}>
               <TextInput
+                testID="bedrijfInput"
                 placeholder="Bedrijf naam:"
                 style={styles.input}
                 value={companyName}
@@ -70,6 +71,7 @@ const CompanyKvk = ({ navigation }) => {
             <Text style={styles.beroepTitle}>KvK nummer: </Text>
             <Pressable style={styles.containerInput}>
               <TextInput
+                testID="kvkInput"
                 placeholder="Uw Kvk nummer:"
                 style={styles.input}
                 keyboardType="numeric"
@@ -81,6 +83,7 @@ const CompanyKvk = ({ navigation }) => {
             </Pressable>
 
             <Pressable
+              testID="geenKvk"
               style={styles.blueTitleContainer}
               onPress={() => navigation.navigate("NoKvKInfo")}
             >
@@ -90,12 +93,13 @@ const CompanyKvk = ({ navigation }) => {
 
           <View style={styles.buttonsContainer}>
             <Pressable
+              testID="vorigeBtn-7"
               style={[styles.nextButton, styles.nextButtonColorOne]}
               onPress={() => navigation.goBack()}
             >
               <Text style={styles.nextButtonText}>Vorige</Text>
             </Pressable>
-            <Pressable style={[styles.nextButton]} onPress={handleRegister}>
+            <Pressable testID="volgendeBtn-8" style={[styles.nextButton]} onPress={handleRegister}>
               <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
                 Inschrijven
               </Text>

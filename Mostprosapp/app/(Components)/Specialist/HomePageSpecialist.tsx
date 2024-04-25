@@ -158,6 +158,7 @@ const HomePageSpecialist = ({ navigation }) => {
                   </Pressable>
                 </View>
                 <Pressable
+                  testID="klusVindBtn"
                   style={[styles.searchBar]}
                   onPress={() => navigation.navigate("Login")}
                 >

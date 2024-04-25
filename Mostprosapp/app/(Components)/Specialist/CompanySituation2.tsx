@@ -20,23 +20,23 @@ const CompanySituation2 = ({ navigation }) => {
     const [selectedItems, setSelectedItems] = useState([]);
 
     const toggleItemSelection = (index) => {
-      const updatedItems = [...selectedItems];
-      if (updatedItems.includes(index)) {
-        updatedItems.splice(updatedItems.indexOf(index), 1);
-      } else {
-        updatedItems.push(index);
-      }
-      setSelectedItems(updatedItems);
+        const updatedItems = [...selectedItems];
+        if (updatedItems.includes(index)) {
+            updatedItems.splice(updatedItems.indexOf(index), 1);
+        } else {
+            updatedItems.push(index);
+        }
+        setSelectedItems(updatedItems);
     };
-  
+
     const handleNext = () => {
-      if (selectedItems.length === 0) {
-        Alert.alert("Fout Melding", "Kies minimaal 1 reden.", [
-          { text: "Begrepen" },
-        ]);
-      } else {
-        navigation.navigate("CompanySituation3");
-      }
+        if (selectedItems.length === 0) {
+            Alert.alert("Fout Melding", "Kies minimaal 1 reden.", [
+                { text: "Begrepen" },
+            ]);
+        } else {
+            navigation.navigate("CompanySituation3");
+        }
     };
 
     return (
@@ -56,7 +56,7 @@ const CompanySituation2 = ({ navigation }) => {
                         <Text style={styles.title}>Waarom ben je als startend bedrijf op zoek naar klussen op Mostpros?</Text>
                     </View>
 
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
+                    <Pressable testID="situatie-2 Keuze-1" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(1)}>
                         <Text>Gaten in mijn agenda opvullen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(1) && styles.checkboxSelected]}
@@ -64,21 +64,21 @@ const CompanySituation2 = ({ navigation }) => {
                         />
                     </Pressable>
 
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
+                    <Pressable testID="situatie-2 Keuze-2" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(2)}>
                         <Text>Mijn klantenbestand opbouwen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(2) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(2)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
+                    <Pressable testID="situatie-2 Keuze-3" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(3)}>
                         <Text>Mijn bedrijf laten groeien en opschalen{'\n'}om meer mensen in dienst te nemen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(3) && styles.checkboxSelected]}
                             onPress={() => toggleItemSelection(3)}
                         />
                     </Pressable>
-                    <Pressable style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
+                    <Pressable testID="situatie-2 Keuze-4" style={[styles.pressableContainer]} onPress={() => toggleItemSelection(4)}>
                         <Text>Ik wil een nieuwe manier van {'\n'} klanten vinden uitproberen</Text>
                         <TouchableOpacity
                             style={[styles.checkbox, selectedItems.includes(4) && styles.checkboxSelected]}
@@ -87,14 +87,14 @@ const CompanySituation2 = ({ navigation }) => {
                     </Pressable>
 
                     <View style={styles.buttonsContainer}>
-                        <Pressable style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
+                        <Pressable testID="vorigeBtn-4" style={[styles.nextButton, styles.nextButtonColorOne]} onPress={() => navigation.goBack()}>
                             <Text style={styles.nextButtonText}>Vorige</Text>
                         </Pressable>
-                        <Pressable style={[styles.nextButton]} onPress={handleNext}>
-              <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
-                Volgende
-              </Text>
-            </Pressable>
+                        <Pressable testID="volgendeBtn-5" style={[styles.nextButton]} onPress={handleNext}>
+                            <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
+                                Volgende
+                            </Text>
+                        </Pressable>
                     </View>
 
                 </SafeAreaView>

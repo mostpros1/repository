@@ -14,7 +14,7 @@ const KeuzePage = ({ navigation }) => {
           <Pressable testID="homeOwnerBtn" style={styles.button} onPress={() => navigation.navigate('HowItWorksOneHomeowner')}>
             <Text style={styles.text}>Ik ben een huiseigenaar</Text>
           </Pressable>
-          <Pressable style={styles.buttonTwo} onPress={() => navigation.navigate('HowItWorksOneSpecialist')}>
+          <Pressable testID="homeProBtn" style={styles.buttonTwo} onPress={() => navigation.navigate('HowItWorksOneSpecialist')}>
             <Text style={styles.textTwo}>Ik ben een professional</Text>
           </Pressable>
         </View>

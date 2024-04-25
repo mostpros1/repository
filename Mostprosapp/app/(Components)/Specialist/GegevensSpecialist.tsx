@@ -139,6 +139,7 @@ const validatePhone = () => {
               ) : null}
               <Pressable style={styles.containerInput}>
                 <TextInput
+                  testID="voornaamInput"
                   placeholder="Voornaam:"
                   style={styles.input}
                   onChangeText={(text) => setInputText(text)}
@@ -150,6 +151,7 @@ const validatePhone = () => {
               ) : null}
               <Pressable style={styles.containerInput}>
                 <TextInput
+                  testID="achternaamInput"
                   placeholder="Achternaam:"
                   style={styles.input}
                   onChangeText={(text) => setInputText(text)}
@@ -164,6 +166,7 @@ const validatePhone = () => {
                   />
                 </View>
                 <TextInput
+                  testID="telInput"
                   placeholder="Telefoonnummer:"
                   style={styles.input}
                   keyboardType="phone-pad"
@@ -174,6 +177,7 @@ const validatePhone = () => {
               <Text style={styles.beroepTitle}>Wachtwoord:</Text>
               <Pressable style={styles.containerInput}>
                 <TextInput
+                  testID="wachtwoordInput"
                   placeholder="Wachtwoord:"
                   style={styles.input}
                   secureTextEntry={true}
@@ -184,6 +188,7 @@ const validatePhone = () => {
               <Text style={styles.beroepTitle}>Bevestig Wachtwoord:</Text>
               <Pressable style={styles.containerInput}>
                 <TextInput
+                  testID="wachtwoordBevestigInput"
                   placeholder="Herhaal Wachtwoord:"
                   style={styles.input}
                   secureTextEntry={true}
@@ -197,12 +202,14 @@ const validatePhone = () => {
             </View>
             <View style={styles.buttonsContainer}>
               <Pressable
+                testID="vorigeBtn-1"
                 style={[styles.nextButton, styles.nextButtonColorOne]}
                 onPress={() => navigation.goBack()}
               >
                 <Text style={styles.nextButtonText}>Vorige</Text>
               </Pressable>
               <Pressable
+                testID="volgendeBtn-2"
                 style={[styles.nextButton]}
                 onPress={handleForwardButtonPress}
               >

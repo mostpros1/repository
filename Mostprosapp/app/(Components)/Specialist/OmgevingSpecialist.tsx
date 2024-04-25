@@ -54,6 +54,7 @@ const OmgevingSpecialist = ({ navigation }) => {
           </View>
 
           <Pressable
+            testID="omgevingKeuze-1"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(1)}
           >
@@ -68,6 +69,7 @@ const OmgevingSpecialist = ({ navigation }) => {
           </Pressable>
 
           <Pressable
+            testID="omgevingKeuze-2"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(2)}
           >
@@ -81,6 +83,7 @@ const OmgevingSpecialist = ({ navigation }) => {
             />
           </Pressable>
           <Pressable
+            testID="omgevingKeuze-3"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(3)}
           >
@@ -94,6 +97,7 @@ const OmgevingSpecialist = ({ navigation }) => {
             />
           </Pressable>
           <Pressable
+            testID="omgevingKeuze-4"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(4)}
           >
@@ -107,6 +111,7 @@ const OmgevingSpecialist = ({ navigation }) => {
             />
           </Pressable>
           <Pressable
+            testID="omgevingKeuze-5"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(5)}
           >
@@ -120,6 +125,7 @@ const OmgevingSpecialist = ({ navigation }) => {
             />
           </Pressable>
           <Pressable
+            testID="omgevingKeuze-6"
             style={[styles.pressableContainer]}
             onPress={() => toggleItemSelection(6)}
           >
@@ -135,12 +141,13 @@ const OmgevingSpecialist = ({ navigation }) => {
 
           <View style={styles.buttonsContainer}>
             <Pressable
+              testID="vorigeBtn-2"
               style={[styles.nextButton, styles.nextButtonColorOne]}
               onPress={() => navigation.goBack()}
             >
               <Text style={styles.nextButtonText}>Vorige</Text>
             </Pressable>
-            <Pressable style={[styles.nextButton]} onPress={handleNext}>
+            <Pressable testID="volgendeBtn-3" style={[styles.nextButton]} onPress={handleNext}>
               <Text style={[styles.nextButtonText, styles.whiteButtonText]}>
                 Volgende
               </Text>

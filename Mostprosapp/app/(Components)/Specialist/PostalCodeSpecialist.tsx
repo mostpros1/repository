@@ -157,7 +157,7 @@ const PostalCodeSpecialist = ({ navigation }) => {
                         </View>
                         <View style={styles.bottomButtonsContainer}>
                             <View style={styles.buttonsContainer}>
-                                <Pressable testID="volgendeBtn" style={[styles.nextButton]} onPress={handleForwardButtonPress}>
+                                <Pressable testID="volgendeBtn-1" style={[styles.nextButton]} onPress={handleForwardButtonPress}>
                                     <Text style={[styles.nextButtonText, styles.whiteButtonText]}>Volgende</Text>
                                 </Pressable>
                             </View>
