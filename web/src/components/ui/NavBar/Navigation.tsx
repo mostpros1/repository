@@ -61,10 +61,10 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
-      DashboardLink = <Link to="/chat">Chat</Link>;
+      DashboardLink = <Link to="/Jobs">Account</Link>;
+      //DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/dashboard-professional">Account</Link>;
+      DashboardLink = <Link to="/specialist-resultaat">Account</Link>;
     }
 
     authButtons = (

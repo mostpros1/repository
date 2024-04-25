@@ -93,7 +93,7 @@ const EditProfileSection = () => {
         <p>Foto's en Video's</p>
         <div className="img-upload">
           <div className="upload-dot-layout">
-            <button>
+            <button type="">
               <AddRoundedIcon />
             </button>
             <p>Video uploaden</p>
