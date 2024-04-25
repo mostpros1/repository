@@ -21,6 +21,7 @@ const ReviewComponent: React.FC = () => {
   const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
   const [sortType, setSortType] = useState<string>("");
 
+
   // Sorting function
   const handleSort = (type: string) => {
     const sorted: Review[] = [...reviews]; // Create a copy of reviews
@@ -166,8 +167,8 @@ const ReviewComponent: React.FC = () => {
             </div>
             <div className="review-footer">
               <div className="review-actions">
-                <button>Public Comment</button>
-                <button>Direct Message</button>
+                <button>Public Comment.</button>
+                <button>Direct Message.</button>
               </div>
             </div>
           </div>
