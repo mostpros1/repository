@@ -22,12 +22,12 @@ const ReviewComponent: React.FC = () => {
 
   // Sorting function
   const handleSort = (type: string) => {
-    let sorted: Review[] = [...reviews]; // Create a copy of reviews
+    const sorted: Review[] = [...reviews]; // Create a copy of reviews
     if (type === "date") {
       sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    } else if (type === "totalReviews") {
+    } /*else if (type === "totalReviews") {
       sorted.sort((a, b) => b.totalReviews - a.totalReviews);
-    }
+    }*/
     setSortedReviews([...sorted]); // Update sortedReviews state
     setSortType(type); // Update sortType state
   };
