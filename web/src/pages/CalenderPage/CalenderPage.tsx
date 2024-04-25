@@ -8,8 +8,8 @@ const CalenderPage = () => {
   return (
     <>
       <NavBar />
-      <div className="calendar-grid-con">
-        <div className="calendar-sidenav-con">
+      <div className="calendar-panel">
+        <div className="side-panel-left-calendar">
           <SideNav />
         </div>
         <Calender />
