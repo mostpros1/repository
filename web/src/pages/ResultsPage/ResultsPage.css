@@ -1,7 +1,11 @@
 .resultpage{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     padding: 150px 30px;
+}
+
+.sidenav-con {
+    margin-right: 25px;
 }
 
 .result-con{

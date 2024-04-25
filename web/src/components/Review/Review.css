@@ -2,18 +2,16 @@
 .reviews-container {
   display: grid;
   grid-template-columns: 600px 600px;
-  gap: 40px; /* Add gap between grid items */
+  gap: 20px;
   margin-bottom: 20px;
 }
 .upper-review-con {
   margin-left: 15px;
 }
 
-
 .grid-sect {
   display: grid;
   grid-template-columns: 450px 1fr;
-  gap: 20px;
 }
 
 .grid-sect img {
