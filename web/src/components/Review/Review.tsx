@@ -56,20 +56,17 @@ const reviews = [
 
 
 const Review = () => {
-  const [Review, setReview] = useState()
-  const [sortedReviews, setSortedReviews] = useState(Review);
+  const [reviews, setReviews] = useState([]);
+  const [sortedReviews, setSortedReviews] = useState([]);
   const [sortType, setSortType] = useState("");
-  
 
   // Sorting function
   const handleSort = (type) => {
     let sorted = [...reviews];
     if (type === "date") {
-      sorted = sorted.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+      sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else if (type === "totalReviews") {
-      sorted = sorted.sort((a, b) => b.totalReviews - a.totalReviews);
+      sorted.sort((a, b) => b.totalReviews - a.totalReviews);
     }
     setSortedReviews(sorted);
     setSortType(type);
@@ -77,34 +74,26 @@ const Review = () => {
 
   useEffect(() => {
     function getReviews() {
-      dynamo.scan({
-        TableName: "my-table",
-      })
+      dynamo.scan({ TableName: "my-table" })
         .promise()
         .then(data => {
           if (data.Items) {
-            console.log(data.Items);
-            for (let i = 0; i < data.Items.length; i++){
-              const mappedArray = data.Items.map(item => ({
-                id: item.id,
-                professional_id: item.professional_id,
-                rating: item.rating,
-                description: item.description
-              }));
-              
-              console.log(mappedArray);
-              setReview([...Review, mappedArray])
-            }
-            
+            const mappedArray = data.Items.map(item => ({
+              id: item.id,
+              professional_id: item.professional_id,
+              rating: item.rating,
+              description: item.description
+            }));
+            setReviews(mappedArray as never[]);
+            // Initially set sortedReviews to the same as reviews
+            setSortedReviews(mappedArray as never[]);
           }
         })
         .catch(console.error);
-
-
     }
-    getReviews()
-    
-  }), [];
+
+    getReviews();
+  }, []);
 
   //Star rating component
   const StarRating = ({ rating, setRating, interactive = false }) => {
