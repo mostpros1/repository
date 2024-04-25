@@ -40,14 +40,14 @@ const handleReceivedMessage = (receivedChat) => {
   }
 };
 
-  const handleStartNewChat = () => {
-    setChats([]);
-    setRecipientEmail(
-      // @ts-ignore
-      prompt("Enter the email of the person you want to chat with:")
-    );
-    setShowAlert(true);
-  };
+const handleStartNewChat = () => {
+  const recipientEmail = prompt("Enter the email of the person you want to chat with:");
+  if (recipientEmail) {
+    const url = `/chat?recipient=${recipientEmail}`;
+    window.location.href = url;
+  }
+};
+
 
   const handleAlertInputChange = (e) => {
     setRecipientEmail(e.target.value);

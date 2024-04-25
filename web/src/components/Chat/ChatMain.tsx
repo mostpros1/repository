@@ -14,7 +14,7 @@ function ChatMain({ user, signOut }) {
   const {
     chats,
     setChats,
-    recipientEmail,
+
     recentMessageEmail,
     showJoinButton,
     setShowJoinButton,
@@ -125,8 +125,12 @@ function ChatMain({ user, signOut }) {
       setSelectedContact(null);
     } else {
       setSelectedContact(contact);
-      handleJoinChat(contact);
     }
+  };
+  
+
+  const handleStartCChat = () => {
+    window.location.href = `/chat?recipient=${user}`;
   };
 
   const [showPaymentLink, setShowPaymentLink] = useState(false);
@@ -147,11 +151,27 @@ function ChatMain({ user, signOut }) {
 
   const filteredChats = selectedContact
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : []; 
+  : [];
+
+  const [recipientEmail, setRecipientEmail] = React.useState(""); // Corrected typo
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const recipient = searchParams.get('recipient');
+    if (recipient) {
+      setRecipientEmail(recipient);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (recipientEmail) {
+      handleJoinChat(recipientEmail);
+    }
+  }, [recipientEmail]);
 
   return (
     <div className="chat-container">
-    <div className="sidebar" id="sidebar">
+    {/* <div className="sidebar" id="sidebar">
       <input
         type="text"
         placeholder="Zoek gebruikers..."
@@ -180,7 +200,7 @@ function ChatMain({ user, signOut }) {
               </li>
             ))}
       </ul>
-    </div>
+    </div> */}
 
     <div className="button-container">
       <button
@@ -204,8 +224,8 @@ function ChatMain({ user, signOut }) {
       )}
     </div>
       <div className="main-container">
-      {selectedContact && (
         <div className="chat-main">
+          
         <div className="chatheader">
           <div className="chat-info">
             <div className="name-and-status">
@@ -213,8 +233,8 @@ function ChatMain({ user, signOut }) {
             </div>
           </div>
         </div>
-
         <div className="chat-box" ref={chatBoxRef}>
+          
               {Object.keys(groupedMessages).map((date) => (
                 <React.Fragment key={date}>
                   <div className="date-separator">{date}</div>
@@ -285,7 +305,8 @@ function ChatMain({ user, signOut }) {
           </div>
         </div>
       </div>
-      )}</div>
+      
+      </div>
 
       {showJoinButton && user.attributes.email !== recentMessageEmail && !showConfirmedConnection && (
         <div className="join-chat-button-container">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Review.css";
 import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
@@ -51,6 +51,9 @@ const reviews = [
   // ... add more review objects
 ];
 
+
+
+
 const Review = () => {
   const [sortedReviews, setSortedReviews] = useState(reviews);
   const [sortType, setSortType] = useState("");
@@ -69,6 +72,35 @@ const Review = () => {
     setSortType(type);
   };
 
+  useEffect(() => {
+    function getReviews() {
+      dynamo.scan({
+        TableName: "my-table",
+      })
+        .promise()
+        .then(data => {
+          if (data.Items) {
+            console.log(data.Items);
+            for (let i = 0; i < data.Items.length; i++){
+              const mappedArray = data.Items.map(item => ({
+                id: item.id,
+                professional_id: item.professional_id,
+                rating: item.rating,
+                description: item.description
+              }));
+              
+              console.log(mappedArray);
+            }
+            
+          }
+        })
+        .catch(console.error)
+
+
+    }
+
+  }), [];
+
   //Star rating component
   const StarRating = ({ rating, setRating, interactive = false }) => {
     return (
@@ -76,9 +108,8 @@ const Review = () => {
         {Array.from({ length: 5 }, (_, index) => (
           <span
             key={index}
-            className={`${index < rating ? "star filled" : "star"} ${
-              interactive ? "interactive-star" : ""
-            }`}
+            className={`${index < rating ? "star filled" : "star"} ${interactive ? "interactive-star" : ""
+              }`}
             onClick={() => interactive && setRating(index + 1)}
           >
             ★
