@@ -1,17 +1,17 @@
-.chat-panel {
+.calendar-panel {
   display: grid;
   grid-template-columns: 200px 1fr;
   margin: 35px 0px 15px 10px;
 }
 
-.side-panel-left-chat {
+.side-panel-left-calendar {
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
 }
 
-.side-panel-right-chat {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.side-panel-right-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

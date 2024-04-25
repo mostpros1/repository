@@ -94,7 +94,7 @@ function SideNav() {
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/Payments"
+            to="/PaymentPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
