@@ -15,6 +15,7 @@ interface Job {
   description: string;
   location: string;
   availability: string;
+  userEmail: string;
   // img: string;
 }
 
@@ -61,6 +62,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           id: item.id,
           name: item.profession,
           distance: item.distance,
+          userEmail: item.user_email,
           title: item.task,
           description: item.description,
           location: item.region,
@@ -109,7 +111,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p>Binnen {job.availability}</p>
         </div>
       </div>
-      <button className='main_btn' onClick={() => handleChatButtonClick(job.name)}>Contact opnemen</button>
+      <button className='main_btn' onClick={() => handleChatButtonClick(job.userEmail)}>Contact opnemen</button>
     </div>
   ));
   return <>{jobCardsRender}</>;
