@@ -8,9 +8,10 @@ import { dynamo } from "../../../declarations";
 interface Review {
   id: number;
   author: string;
-  homeownerName: string;
+  Specialist: string;
   date: string;
   content: string;
+  //totalReviews: number;
   authorImageUrl: string;
   rating: number;
 }
@@ -24,9 +25,7 @@ const ReviewComponent: React.FC = () => {
   const handleSort = (type: string) => {
     const sorted: Review[] = [...reviews]; // Create a copy of reviews
     if (type === "date") {
-      sorted.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+      sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } /*else if (type === "totalReviews") {
       sorted.sort((a, b) => b.totalReviews - a.totalReviews);
     }*/
@@ -39,17 +38,15 @@ const ReviewComponent: React.FC = () => {
       try {
         const response = await dynamo.scan({ TableName: "Reviews" }).promise();
         if (response && response.Items) {
-          const mappedReviews: Review[] = response.Items.map((item) => ({
+          const mappedReviews: Review[] = response.Items.map(item => ({
             id: item.id,
-            author: item.professional_name,
-            homeownerName: item.homeownerName,
+            Specialist: item.professional_name,
+            author: item.homeownerName,
             date: item.date,
             content: item.description,
-            //totalReviews: item.totalReviews,
-            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-              Math.random() * 100
-            )}.jpg`, //item.authorImageUrl,
-            rating: item.rating,
+           //totalReviews: item.totalReviews,
+            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`, //item.authorImageUrl,
+            rating: item.rating
           }));
           setReviews(mappedReviews);
           setSortedReviews(mappedReviews);
@@ -85,14 +82,12 @@ const ReviewComponent: React.FC = () => {
       const newReview: Review = {
         id: sortedReviews.length + 1,
         author: name,
+        Specialist: "Specialist Name",
         date: currentDate,
         content: content,
         //totalReviews: 1,
-        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-          Math.random() * 100
-        )}.jpg`,
-        rating: rating,
-        homeownerName: "",
+        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`,
+        rating: rating
       };
 
       setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
@@ -110,7 +105,7 @@ const ReviewComponent: React.FC = () => {
     };
 
     return (
-      <form id="review-form" onSubmit={handleSubmit}>
+      <form className="review-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={name}
@@ -131,7 +126,7 @@ const ReviewComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="review-container">
       <div className="upper-review-con">
         <h1>Reviews</h1>
         <div>
@@ -154,10 +149,10 @@ const ReviewComponent: React.FC = () => {
             <div className="review-header">
               <img src={review.authorImageUrl} alt={review.author} />
               <div>
-                <div className="author-name">{review.homeownerName}</div>
+                <div className="author-name">{review.author}</div>
                 <div className="review-info">
                   <span className="total-reviews">
-                    Specialist: {review.author}
+                    Specialist: {review.Specialist}
                     <span className="review-date">{review.date}</span>
                   </span>
                   <div className="star-rating">

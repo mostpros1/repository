@@ -51,8 +51,6 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
-import PaymentPage from "../pages/PaymentPage/PaymentPage.tsx";
-import PaymentList from "../components/PaymentsList/PaymentList.tsx";
 const App = () => {
   return (
     <Routes>
@@ -82,8 +80,6 @@ const App = () => {
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
       <Route path="/CalenderPage" element={<CalenderPage />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
-      <Route path="/PaymentPage" element={<PaymentPage />} />
-      <Route path="/PaymentList" element={<PaymentList />} />
       <Route
         path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
@@ -91,13 +87,9 @@ const App = () => {
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage />} />
-      <Route path="/ProfPayment" element={<HomeProPaymentsPage />} />
-
-      <Route
-        path="/chat"
-        element={<ChatMain user={undefined} signOut={undefined} />}
-      />
+      <Route path="/Invoice" element={<InvoicePage/>} />
+      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
+      <Route path="/chat" element={<ChatMain />} />
       <Route
         path="/HomeOwnerSettingsPage"
         element={<HomeOwnerSettingsPage />}
@@ -112,7 +104,6 @@ const App = () => {
         element={<HomeOwnerDeactivation />}
       />
       <Route path="/FAQPage" element={<FAQPage />} />
-
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
