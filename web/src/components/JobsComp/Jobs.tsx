@@ -6,7 +6,7 @@ import searchicon from "../../assets/searchicon.svg";
 import viewProfessionalsIcon from "../../assets/view-prof.svg"; // Add the correct path and icon
 import chatIcon from "../../assets/chatIcon.svg"; // Add the correct path and icon
 import { dynamo } from "../../../declarations";
-import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
+//import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -66,11 +66,13 @@ const Jobs = () => {
     isCurrent: boolean;
   }
 
-  const [jobEntries, setJobEntries] = useState<JobEntry[]>([]); useEffect(() => {
+  const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
+   useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
+        console.log("User email: ", userEmail);
         dynamo
           .query({
             TableName: 'Professionals',
@@ -89,7 +91,7 @@ const Jobs = () => {
                   IndexName: 'professional_idIndex',
                   KeyConditionExpression: 'professional_id = :professional_id',
                   ExpressionAttributeValues: {
-                    ':professional_id': data.Items[0].professional_id
+                    ':professional_id': data.Items[0].id
                   }
                 })
                 .promise()
@@ -156,7 +158,7 @@ const Jobs = () => {
                   }
                 })
                 .promise()
-                .then(output => console.log(output.Items))
+                .then(output => console.log("output ", output.Items))
                 .catch(console.error);
             } else {
               console.error("No items found in Clients the first query");
