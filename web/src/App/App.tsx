@@ -53,7 +53,6 @@ import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import PaymentPage from "../pages/PaymentPage/PaymentPage.tsx";
 import PaymentList from "../components/PaymentsList/PaymentList.tsx";
-
 const App = () => {
   return (
     <Routes>
@@ -85,7 +84,6 @@ const App = () => {
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route path="/PaymentPage" element={<PaymentPage />} />
       <Route path="/PaymentList" element={<PaymentList />} />
-
       <Route
         path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
@@ -117,7 +115,6 @@ const App = () => {
 
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
-
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -144,7 +141,6 @@ const App = () => {
           }
         />
       </Route>
-
       {/* Protected routes */}
       <Route
         path="/admin-paneel"
@@ -159,7 +155,6 @@ const App = () => {
         <Route index element={<AdminMain />} />
         <Route path="manage-users" element={<ManageUser />} />
       </Route>
-
       <Route
         path="/dashboard-huiseigenaar"
         element={
@@ -183,5 +178,4 @@ const App = () => {
     </Routes>
   );
 };
-
 export default App;

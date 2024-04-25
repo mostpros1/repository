@@ -23,6 +23,8 @@ const ReviewComponent: React.FC = () => {
   // Sorting function
   const handleSort = (type: string) => {
     const sorted: Review[] = [...reviews]; // Create a copy of reviews
+  const handleSort = (type: string) => {
+    const sorted: Review[] = [...reviews]; // Create a copy of reviews
     if (type === "date") {
       sorted.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -64,9 +66,12 @@ const ReviewComponent: React.FC = () => {
 
   // Star rating component
   const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
+  // Star rating component
+  const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
     return (
       <div className="star-rating">
         {Array.from({ length: 5 }, (_, index) => (
+          <Star key={index} className={index < rating ? "filled" : ""} />
           <Star key={index} className={index < rating ? "filled" : ""} />
         ))}
       </div>
@@ -75,12 +80,17 @@ const ReviewComponent: React.FC = () => {
 
   // Review form component
   const ReviewForm: React.FC = () => {
+  // Review form component
+  const ReviewForm: React.FC = () => {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      const currentDate = new Date().toLocaleDateString();
+      const newReview: Review = {
       const currentDate = new Date().toLocaleDateString();
       const newReview: Review = {
         id: sortedReviews.length + 1,
@@ -96,9 +106,19 @@ const ReviewComponent: React.FC = () => {
       };
 
       setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
+
+      setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
       setName("");
       setContent("");
       setRating(0);
+
+      // Perform DynamoDB update or post request to add the new review
+      try {
+        // Example: await dynamo.put({...}).promise();
+        console.log("Review submitted:", newReview);
+      } catch (error) {
+        console.error("Error submitting review:", error);
+      }
 
       // Perform DynamoDB update or post request to add the new review
       try {
@@ -125,29 +145,33 @@ const ReviewComponent: React.FC = () => {
           required
         />
         <StarRating rating={rating} />
+        <StarRating rating={rating} />
         <button type="submit">Submit Review</button>
       </form>
     );
   };
 
   return (
-    <div>
+    <div className="review-container">
       <div className="upper-review-con">
         <h1>Reviews</h1>
         <div>
           Sort by:
           <select onChange={(e) => handleSort(e.target.value)}>
             <option value="">Relevance</option>
+            <option value="">Relevance</option>
             <option value="date">Date</option>
             <option value="totalReviews">Total Reviews</option>
           </select>
         </div>
+        <p>Reviews are sourced from customers like you.</p>
         <p>Reviews are sourced from customers like you.</p>
         <div className="grid-sect">
           <ReviewForm />
           <img src={SittingCustomer} alt="sitting-customer" />
         </div>
       </div>
+      <div className="reviews-list">
       <div className="reviews-list">
         {sortedReviews.map((review) => (
           <div key={review.id} className="review">
@@ -160,6 +184,9 @@ const ReviewComponent: React.FC = () => {
                     Specialist: {review.author}
                     <span className="review-date">{review.date}</span>
                   </span>
+                  <div className="star-rating">
+                    <StarRating rating={review.rating} />
+                  </div>
                   <div className="star-rating">
                     <StarRating rating={review.rating} />
                   </div>
