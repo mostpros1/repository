@@ -23,7 +23,6 @@ function ChatMain({ user, signOut }) {
     notificationMessage,
     handleStartNewChat,
     handleSendMessage,
-    handleAlertInputChange,
     handleAlertConfirm,
     handleAlertCancel,
     handleJoinChat,
@@ -31,10 +30,11 @@ function ChatMain({ user, signOut }) {
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContact, setSelectedContact] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
+  const [recipientEmail, setRecipientEmail] = useState(""); // State om de ontvanger bij te houden
 
   const groupMessagesByDate = (messages) => {
     return messages.reduce((groups, message) => {
@@ -47,17 +47,34 @@ function ChatMain({ user, signOut }) {
         groups[date] = [];
       }
       groups[date].push({ ...message, createdAt });
-      groups[date].sort((a, b) => a.createdAt - b.createdAt);
       return groups;
     }, {});
   };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const recipient = searchParams.get('recipient');
+    if (recipient) {
+      setRecipientEmail(recipient);
+      setSelectedContact(recipient);
+    }
+  }, []);
   
   useEffect(() => {
-    const filteredChats = chats;
+    if (!selectedContact) return;
+  
+    const filteredChats = chats.filter(chat => {
+      return chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email);
+    });
+  
     const groupedMessages = groupMessagesByDate(filteredChats);
+    for (const date in groupedMessages) {
+      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
+  
     setGroupedMessages(groupedMessages);
-  }, [chats]);
-
+  }, [chats, selectedContact, user.attributes.email]);
+  
   useEffect(() => {
     const filteredContacts = contactList.filter((contact) =>
       contact.toLowerCase().includes(searchTerm.toLowerCase())
@@ -108,7 +125,7 @@ function ChatMain({ user, signOut }) {
       chats.forEach(chat => {
         chat.members.forEach(member => {
           if (member !== user.attributes.email) {
-            contacts.add(member.split("@")[0]);
+            contacts.add(member);
           }
         });
       });
@@ -123,14 +140,19 @@ function ChatMain({ user, signOut }) {
   const switchChat = (contact) => {
     if (selectedContact === contact) {
       setSelectedContact(null);
+      setGroupedMessages({});
     } else {
       setSelectedContact(contact);
+      const members = [user.attributes.email, contact].sort().join("#");
+      const existingChat = chats.find(chat => chat.sortKey === members);
+      if (existingChat) {
+        setChats([existingChat]);
+      } else {
+        setChats([]);
+      }
+      const url = `/chat?recipient=${contact}`;
+      window.location.href = url;
     }
-  };
-  
-
-  const handleStartCChat = () => {
-    window.location.href = `/chat?recipient=${user}`;
   };
 
   const [showPaymentLink, setShowPaymentLink] = useState(false);
@@ -153,13 +175,12 @@ function ChatMain({ user, signOut }) {
   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
   : [];
 
-  const [recipientEmail, setRecipientEmail] = React.useState(""); // Corrected typo
-
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const recipient = searchParams.get('recipient');
     if (recipient) {
       setRecipientEmail(recipient);
+      setSelectedContact(recipient);
     }
   }, []);
 
@@ -171,7 +192,7 @@ function ChatMain({ user, signOut }) {
 
   return (
     <div className="chat-container">
-    {/* <div className="sidebar" id="sidebar">
+        <div className="sidebar" id="sidebar">
       <input
         type="text"
         placeholder="Zoek gebruikers..."
@@ -200,7 +221,7 @@ function ChatMain({ user, signOut }) {
               </li>
             ))}
       </ul>
-    </div> */}
+    </div>
 
     <div className="button-container">
       <button
@@ -212,7 +233,7 @@ function ChatMain({ user, signOut }) {
       </button>
       <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
       <button onClick={handleAlertCancel} className="buttona">Cancel</button>
-      {showAlert && (
+      {/* {showAlert && (
         <div className="alert">
           <input
             type="text"
@@ -221,7 +242,7 @@ function ChatMain({ user, signOut }) {
             onChange={handleAlertInputChange}
           />
         </div>
-      )}
+      )} */}
     </div>
       <div className="main-container">
         <div className="chat-main">
