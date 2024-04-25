@@ -82,6 +82,7 @@ const ReviewComponent: React.FC = () => {
       const newReview: Review = {
         id: sortedReviews.length + 1,
         author: name,
+        Specialist: "Specialist Name",
         date: currentDate,
         content: content,
         //totalReviews: 1,
