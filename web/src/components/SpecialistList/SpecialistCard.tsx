@@ -146,7 +146,7 @@ function SpecialistCard() {
           <p>{specialist.price}</p>
         </div>
         <p className="specialist_card_desc">{specialist.desc}</p>
-        <a className="mail_btn" href={`/chat#${specialist.email}`}>
+        <a className="mail_btn" href={`/chat?recipient=${specialist.email}`}>
           Contact opnemen
         </a>
       </div>
