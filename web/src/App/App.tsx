@@ -93,7 +93,7 @@ const App = () => {
       <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
 
 
-      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
+      <Route path="/chat" element={<ChatMain />} />
       <Route
         path="/HomeOwnerSettingsPage"
         element={<HomeOwnerSettingsPage />}
