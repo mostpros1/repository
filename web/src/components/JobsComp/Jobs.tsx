@@ -21,9 +21,10 @@ const Jobs = () => {
     console.log("Job Description Submitted:", jobDescription);
   };
 
-  const jobEntries = [
+  const jobEnt = [
     {
       id: 1,
+      name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 3,
@@ -31,6 +32,7 @@ const Jobs = () => {
     },
     {
       id: 2,
+      name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 1,
@@ -38,6 +40,7 @@ const Jobs = () => {
     },
     {
       id: 3,
+      name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 1,
@@ -45,6 +48,7 @@ const Jobs = () => {
     },
     {
       id: 4,
+      name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 1,
@@ -53,12 +57,20 @@ const Jobs = () => {
     // Add more job entries...
   ];
 
-  useEffect(() => {
+  interface JobEntry {
+    id: number;
+    name: string;
+    description: string;
+    date: string;
+    chats: number;
+    isCurrent: boolean;
+  }
+
+  const [jobEntries, setJobEntries] = useState<JobEntry[]>([]); useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
-
         dynamo
           .query({
             TableName: 'Professionals',
@@ -81,7 +93,32 @@ const Jobs = () => {
                   }
                 })
                 .promise()
-                .then(output => console.log(output.Items))
+                .then(output => {
+                  if (output.Items) {
+                    
+                    // Create a temporary array to accumulate new job entries
+                    const newJobEntries: JobEntry[] = [];
+                    for (let i = 0; i < output.Items.length; i++) {
+                      console.log(output.Items[i]);
+                      newJobEntries.push({
+                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                        name: output.Items[i].name,
+                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                        chats: output.Items[i].chats,
+                        isCurrent: true,
+                      });
+                    }
+                    // Update the state once with the accumulated array
+                    if (output.Items.length === 0){
+                      setJobEntries(jobEnt);
+                    }else {
+                    setJobEntries([...jobEntries, ...newJobEntries]);
+                 }
+                 } else {
+                    console.log("No items found in the query");
+                  }
+                })
                 .catch(console.error);
             } else {
               console.error("No items found in the first query");
@@ -92,7 +129,6 @@ const Jobs = () => {
         console.error("Error fetching user email or querying DynamoDB", error);
       }
     };
-
     const fetchUserEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
@@ -138,8 +174,8 @@ const Jobs = () => {
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Professional")) {
           fetchProfEmailAndQueryDynamo();
-        } else if (groups && groups.includes("Homeowner")){
-          fetchUserEmailAndQueryDynamo(); 
+        } else if (groups && groups.includes("Homeowner")) {
+          fetchUserEmailAndQueryDynamo();
         }
       } catch (error) {
         console.error("Error checking user group", error);
