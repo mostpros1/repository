@@ -14,7 +14,7 @@ export function useChatBackend(user: any, signOut) {
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
 
-// // sends messages ///
+// sends messages
 const handleSendMessage = async (text) => {
   const members = [user.attributes.email, recipientEmail];
   await API.graphql({
@@ -48,33 +48,30 @@ const handleStartNewChat = () => {
   }
 };
 
-
-  const handleAlertInputChange = (e) => {
-    setRecipientEmail(e.target.value);
-  };
-
-  const handleAlertConfirm = () => {
-    if (recipientEmail) {
-      setShowAlert(false);
-      setShowJoinButton(false);
-      setShowConfirmedConnection(true); 
-    }
-  };
-
-  const handleAlertCancel = () => {
+const handleAlertConfirm = () => {
+  if (recipientEmail) {
     setShowAlert(false);
-    setRecipientEmail("");
-  };
-
-  const handleJoinChat = (recentMessageEmail) => {
-    console.log("Joining chat with email:", recentMessageEmail);
-    const members = [user.attributes.email, recentMessageEmail];
-    setRecipientEmail(recentMessageEmail);
-    setRecentMessageEmail("");
-    setShowJoinButton(false); 
+    setShowJoinButton(false);
     setShowConfirmedConnection(true); 
-    setNotificationMessage(`${recentMessageEmail} joined the chat`);
-  };
+  }
+};
+
+const handleAlertCancel = () => {
+  setShowAlert(false);
+  setRecipientEmail("");
+};
+
+const handleJoinChat = (recentMessageEmail) => {
+  const members = [user.attributes.email, recentMessageEmail];
+  setRecipientEmail(recentMessageEmail);
+  setRecentMessageEmail("");
+  setShowJoinButton(false); 
+  setShowConfirmedConnection(true); 
+  setNotificationMessage(`${recentMessageEmail} joined the chat`);
+};
+
+// Rest of the code remains the same
+
 
 return {
     chats,
@@ -86,7 +83,6 @@ return {
     notificationMessage,
     handleStartNewChat,
     handleSendMessage,
-    handleAlertInputChange,
     handleAlertConfirm,
     handleAlertCancel,
     handleJoinChat,
