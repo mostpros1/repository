@@ -48,6 +48,7 @@ import ChatContactList from "../components/Chat/ChatContactList";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+import ViewProfessionalsList from "../pages/ViewProfessionalsList/ViewProfessionalsList";
 
 const App = () => {
   return (
@@ -76,6 +77,7 @@ const App = () => {
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
+      <Route path="/ViewProfessionalsList" element={<ViewProfessionalsList />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
 
       <Route
