@@ -5,6 +5,8 @@ import gasleiding from "../../assets/Gasleiding.svg";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
+import { useLocation }  from "react-router-dom";
+
 interface Job {
   id: number;
   name: string;
@@ -22,7 +24,7 @@ interface JobCardsProps {
 }
 
 
-const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [], user }) => {
+const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = []}) => {
   const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
   
   useEffect(() => {
@@ -71,10 +73,16 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [], user }) => 
       .catch(console.error)
       
     }, []);
-    
-    const handleStartCChat = () => {
-      window.location.href = `/chat?recipient=${user}`;
+
+    const location = useLocation();
+
+    const handleChatButtonClick = (recipientEmail: string) => {
+      const currentPath = location.pathname;
+      const recipientQuery = `recipient=${recipientEmail}`;
+      const newUrl = `${currentPath}?${recipientQuery}`;
+      window.location.href = newUrl;
     };
+
     if (!jobs || jobs.length === 0) {
       return <div>No jobs available.</div>;
   }
@@ -101,7 +109,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [], user }) => 
           <p>Binnen {job.availability}</p>
         </div>
       </div>
-      <button className='main_btn' onClick={handleStartCChat}>Start chat</button>
+      <button className='main_btn' onClick={() => handleChatButtonClick(job.name)}>Contact opnemen</button>
     </div>
   ));
   return <>{jobCardsRender}</>;
