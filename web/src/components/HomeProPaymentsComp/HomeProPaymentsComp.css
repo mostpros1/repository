@@ -1,37 +1,37 @@
 body {
   background-color: #F5F5F5;
-  /* Set the desired background color */
 }
+
+.ProPayments {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  gap: 1rem;
+}
+
 
 .ProPaymentsMain {
-  width: 60vw;
+  width: 90%;
   margin: 0 auto;
-  margin-left: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background: white;
-}
-
-.ProPaymentsText {
-  font-size: 1.6rem;
-}
-
-.ProPaymentsInfo {
-  font-size: 1.4rem;
-  text-align: left; /* Align text inside .ProPaymentsInfo class to the left */
-}
-
-.ProPaymentsButton {
-  width: 18.1rem;
-  height: 4rem;
-  color: white;
-  font-size: 1.4rem;
-  background: #207CD7;
-  border-width: 0;
-  border-radius: 0.7rem;
-  display: flex;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+}
+
+.ProPaymentsSearchWrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.ProPaymentInfoBold{
+  font-weight: bold;
 }
 
 .textred {
@@ -49,102 +49,41 @@ body {
   text-align: left;
 }
 
-.ProPaymentsSearchWrapper {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  padding: 5rem;
-  gap: 2rem;
-}
-
-.ProPaymentssearchBar {
-  background-color: #ddd;
-  border-radius: 0.3rem;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 4.6rem;
-}
-
-.ProPaymentssearchInput {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  color: #ddd;
-}
-
-.ProPaymentssearchIcon {
-  margin-right: 0.1rem;
-}
-
-.ProPayments {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  gap: 1rem;
-  text-align: left;
-  
-}
-
 .ProPaymentsStroke2 {
   display: flex;
-  width: 100%;
+  flex-wrap: wrap; /* Allow items to wrap */
+  width: 100%; /* Ensure articles take up full width */
+  padding: 1rem 0; /* Add padding between articles */
   font-size: 1.6rem;
-  align-items: center;
-  justify-content: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.2);
-  text-align: left;
-  gap: 10rem;
-  flex-wrap: wrap;
-  height: 7rem;
 
 }
 
 .divContainerPro {
-  height: 100%;
-  width: 12rem;
+  flex: 1; /* Allow items to grow and shrink */
+  padding: 0.5rem; /* Adjust padding as needed */
+  min-width: 0; /* Allow items to shrink beyond their content */
   display: flex;
   align-items: center;
   justify-content: flex-start; 
-  padding-left: 0.1rem; 
-  
 }
 
-.ProPaymentInfoBold{
-  font-weight: bold;
+.ProPaymentsText {
+  font-size: 1.6rem;
 }
 
-.ProPaymentsInfoBar {
-  background: transparent;
-  box-shadow: none;
+.ProPaymentsButton {
+  width: 18.1rem;
+  height: 4rem;
+  color: white;
   font-size: 1.4rem;
-  font-weight: bold;
-  background: white;
-  width: 100%;
-  padding-left: 8rem;
-  text-align: left;
-}
-
-@media screen and (max-width: 1766px){
-  .ProPaymentsStroke2{
-    display: flex;
-    width: 100%;
-    font-size: 1.6rem;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.2);
-    text-align: left;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+  background: #207CD7;
+  border-width: 0;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1167px) {
