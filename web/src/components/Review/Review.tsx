@@ -25,7 +25,8 @@ const Review = () => {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await dynamo.scan({ TableName: "my-table" }).promise();
+        const response = await dynamo.scan({ TableName: "Reviews" }).promise();
+        console.log("Response ", response);
         if (response && response.Items) {
           const mappedReviews = response.Items.map(item => ({
             id: item.id,
