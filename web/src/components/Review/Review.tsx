@@ -10,7 +10,7 @@ interface Review {
   author: string;
   date: string;
   content: string;
-  totalReviews: number;
+  //totalReviews: number;
   authorImageUrl: string;
   rating: number;
 }
@@ -35,15 +35,15 @@ const ReviewComponent: React.FC = () => {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await dynamo.scan({ TableName: "my-table" }).promise();
+        const response = await dynamo.scan({ TableName: "Reviews" }).promise();
         if (response && response.Items) {
           const mappedReviews: Review[] = response.Items.map(item => ({
             id: item.id,
-            author: item.professional_id,
+            author: item.professional_name,
             date: item.date,
             content: item.description,
-            totalReviews: item.totalReviews,
-            authorImageUrl: item.authorImageUrl,
+           //totalReviews: item.totalReviews,
+            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`, //item.authorImageUrl,
             rating: item.rating
           }));
           setReviews(mappedReviews);
@@ -82,7 +82,7 @@ const ReviewComponent: React.FC = () => {
         author: name,
         date: currentDate,
         content: content,
-        totalReviews: 1,
+        //totalReviews: 1,
         authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`,
         rating: rating
       };
