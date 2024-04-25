@@ -47,6 +47,8 @@ import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import Calender from "../pages/CalenderPage/CalenderPage.tsx";
+import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 
@@ -77,6 +79,7 @@ const App = () => {
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
+      <Route path="/CalenderPage" element={<CalenderPage />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
 
       <Route
