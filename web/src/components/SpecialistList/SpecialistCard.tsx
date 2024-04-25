@@ -55,6 +55,13 @@ function SpecialistCard() {
     },
   ];
 
+  const handleChatButtonClick = (email: string) => {
+    const currentPath = "/chat";
+    const recipientQuery = `recipient=${email}`;
+    const newUrl = `${currentPath}?${recipientQuery}`;
+    window.location.href = newUrl;
+  };
+
   useEffect(() => {
     let professionals: any[] = [];
 
@@ -146,9 +153,7 @@ function SpecialistCard() {
           <p>{specialist.price}</p>
         </div>
         <p className="specialist_card_desc">{specialist.desc}</p>
-        <a className="mail_btn" href={`/chat?recipient=${specialist.email}`}>
-          Contact opnemen
-        </a>
+        <button className='main_btn' onClick={() => handleChatButtonClick(specialist.email)}>Contact opnemen</button>
       </div>
     );
   }) || null;

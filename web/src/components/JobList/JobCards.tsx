@@ -78,12 +78,12 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
 
   //const location = useLocation();
 
-  const handleChatButtonClick = (recipientEmail: string) => {
-    const currentPath = "/chat";
-    const recipientQuery = `recipient=${recipientEmail}`;
-    const newUrl = `${currentPath}?${recipientQuery}`;
-    window.location.href = newUrl;
-  };
+    const handleChatButtonClick = (recipientEmail: string) => {
+      const currentPath = "/chat";
+      const recipientQuery = `recipient=${recipientEmail}`;
+      const newUrl = `${currentPath}?${recipientQuery}`;
+      window.location.href = newUrl;
+    };
 
   if (!jobs || jobs.length === 0) {
     return <div>No jobs available.</div>;
