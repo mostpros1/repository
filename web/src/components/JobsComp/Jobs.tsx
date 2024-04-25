@@ -158,7 +158,32 @@ const Jobs = () => {
                   }
                 })
                 .promise()
-                .then(output => console.log("output ", output.Items))
+                .then(output => {
+                  if (output.Items) {
+                    
+                    // Create a temporary array to accumulate new job entries
+                    const newJobEntries: JobEntry[] = [];
+                    for (let i = 0; i < output.Items.length; i++) {
+                      console.log(output.Items[i]);
+                      newJobEntries.push({
+                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                        name: output.Items[i].name,
+                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                        chats: output.Items[i].chats,
+                        isCurrent: true,
+                      });
+                    }
+                    // Update the state once with the accumulated array
+                    if (output.Items.length === 0){
+                      setJobEntries(jobEnt);
+                    }else {
+                    setJobEntries([...jobEntries, ...newJobEntries]);
+                 }
+                 } else {
+                    console.log("No items found in the query");
+                  }
+                })
                 .catch(console.error);
             } else {
               console.error("No items found in Clients the first query");
