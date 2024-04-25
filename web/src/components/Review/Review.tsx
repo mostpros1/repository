@@ -22,6 +22,7 @@ const ReviewComponent: React.FC = () => {
   const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
   const [sortType, setSortType] = useState<string>("");
 
+
   // Sorting function
   const handleSort = (type: string) => {
     const sorted: Review[] = [...reviews]; // Create a copy of reviews
