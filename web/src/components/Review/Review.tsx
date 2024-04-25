@@ -44,7 +44,7 @@ const ReviewComponent: React.FC = () => {
             author: item.homeownerName,
             date: item.date,
             content: item.description,
-           //totalReviews: item.totalReviews,
+            //totalReviews: item.totalReviews,
             authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`, //item.authorImageUrl,
             rating: item.rating
           }));
