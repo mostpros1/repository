@@ -4,153 +4,99 @@ import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
 import { dynamo } from "../../../declarations";
 
-const reviews = [
-  {
-    id: 1,
-    author: "Toos Huisman",
-    date: "11-10-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 20,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/3.jpg",
-    rating: 5,
-    // ... add any other necessary fields
-  },
-  {
-    id: 2,
-    author: "Mitchell Rhodes",
-    date: "04-12-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 100,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/4.jpg",
-    rating: 5,
-    // ... add any other necessary fields
-  },
-  {
-    id: 3,
-    author: "Regina Abdullah",
-    date: "08-11-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 4,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/6.jpg",
-    rating: 4,
-    // ... add any other necessary fields
-  },
-  {
-    id: 4,
-    author: "Andrew Rahman",
-    date: "24-11-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 14,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
-    rating: 2,
-    // ... add any other necessary fields
-  },
-  // ... add more review objects
-];
-
-
-
-
 const Review = () => {
-  const [reviews, setReviews] = useState([]);
-  const [sortedReviews, setSortedReviews] = useState([]);
-  const [sortType, setSortType] = useState("");
+  const [reviews, setReviews] = useState<{ id: unknown; author: unknown; date: unknown; content: unknown; totalReviews: unknown; authorImageUrl: unknown; rating: unknown; }[]>([]);
+  const [sortedReviews, setSortedReviews] = useState<{ id: unknown; author: unknown; date: unknown; content: unknown; totalReviews: unknown; authorImageUrl: unknown; rating: unknown; }[]>([]);
+  const [sortType, setSortType] = useState<string>(""); // Example type for sortType (replace with appropriate type)
+
 
   // Sorting function
   const handleSort = (type) => {
-    let sorted = [...reviews];
+    let sorted = [...reviews]; // Create a copy of reviews
     if (type === "date") {
       sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else if (type === "totalReviews") {
       sorted.sort((a, b) => b.totalReviews - a.totalReviews);
     }
-    setSortedReviews(sorted);
-    setSortType(type);
+    setSortedReviews([...sorted]); // Update sortedReviews state
+    setSortType(type); // Update sortType state
   };
 
   useEffect(() => {
-    function getReviews() {
-      dynamo.scan({ TableName: "my-table" })
-        .promise()
-        .then(data => {
-          if (data.Items) {
-            const mappedArray = data.Items.map(item => ({
-              id: item.id,
-              professional_id: item.professional_id,
-              rating: item.rating,
-              description: item.description
-            }));
-            setReviews(mappedArray as never[]);
-            // Initially set sortedReviews to the same as reviews
-            setSortedReviews(mappedArray as never[]);
-          }
-        })
-        .catch(console.error);
+    async function fetchReviews() {
+      try {
+        const response = await dynamo.scan({ TableName: "my-table" }).promise();
+        if (response && response.Items) {
+          const mappedReviews = response.Items.map(item => ({
+            id: item.id,
+            author: item.professional_id, // Assuming professional_id is the author
+            date: item.date,
+            content: item.description,
+            totalReviews: item.totalReviews,
+            authorImageUrl: item.authorImageUrl,
+            rating: item.rating
+          }));
+          setReviews(mappedReviews); // Set reviews state
+          setSortedReviews(mappedReviews); // Set sortedReviews state initially
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
     }
 
-    getReviews();
-  }, []);
+    fetchReviews(); // Call fetchReviews when component mounts
+  }, []); // Empty dependency array ensures this runs only once after mount
 
-  //Star rating component
-  const StarRating = ({ rating, setRating, interactive = false }) => {
+  // Star rating component
+  const StarRating = ({ rating }) => {
     return (
       <div className="star-rating">
         {Array.from({ length: 5 }, (_, index) => (
-          <span
-            key={index}
-            className={`${index < rating ? "star filled" : "star"} ${interactive ? "interactive-star" : ""
-              }`}
-            onClick={() => interactive && setRating(index + 1)}
-          >
-            ★
-          </span>
+          <Star key={index} className={index < rating ? "filled" : ""} />
         ))}
       </div>
     );
   };
 
-  //Review form component
+  // Review form component
   const ReviewForm = () => {
-    const [name, setName] = useState("");
+    const [author, setAuthor] = useState("");
     const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
       event.preventDefault();
-      console.log("Submitting with rating:", rating); // This will confirm the final rating being submitted
-      const currentDate = new Date();
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const year = currentDate.getFullYear();
-      const formattedDate = `${day}-${month}-${year}`;
-
+      const currentDate = new Date().toLocaleDateString();
       const newReview = {
         id: sortedReviews.length + 1,
-        author: name,
-        date: formattedDate,
+        author: author,
+        date: currentDate,
         content: content,
         totalReviews: 1,
-        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-          Math.random() * 100
-        )}.jpg`,
-        rating: rating,
+        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`,
+        rating: rating
       };
-      setSortedReviews((prevReviews) => [...prevReviews, newReview]);
-      setName("");
+
+      setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
+      setAuthor("");
       setContent("");
       setRating(0);
+
+      // Perform DynamoDB update or post request to add the new review
+      try {
+        // Example: await dynamo.put({...}).promise();
+        console.log("Review submitted:", newReview);
+      } catch (error) {
+        console.error("Error submitting review:", error);
+      }
     };
 
     return (
-      <form id="review-main" onSubmit={handleSubmit}>
+      <form className="review-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
           placeholder="Your name"
           required
         />
@@ -160,34 +106,31 @@ const Review = () => {
           placeholder="Your review"
           required
         />
-        <StarRating rating={rating} setRating={setRating} interactive={true} />
+        <StarRating rating={rating} />
         <button type="submit">Submit Review</button>
       </form>
     );
   };
 
   return (
-    <div>
+    <div className="review-container">
       <div className="upper-review-con">
         <h1>Reviews</h1>
         <div>
           Sort by:
           <select onChange={(e) => handleSort(e.target.value)}>
-            <option value="">Relevante</option>
+            <option value="">Relevance</option>
             <option value="date">Date</option>
             <option value="totalReviews">Total Reviews</option>
           </select>
         </div>
-        <p>
-          De recensies op MostPros zijn afkomstig van huiseigenaren net zoals
-          jij.
-        </p>
+        <p>Reviews are sourced from customers like you.</p>
         <div className="grid-sect">
           <ReviewForm />
           <img src={SittingCustomer} alt="sitting-customer" />
         </div>
       </div>
-      <div className="reviews-container">
+      <div className="reviews-list">
         {sortedReviews.map((review) => (
           <div key={review.id} className="review">
             <div className="review-header">
@@ -195,18 +138,13 @@ const Review = () => {
               <div>
                 <div className="author-name">{review.author}</div>
                 <div className="review-info">
-                  <span className="total-spend">Loodgieter</span>
                   <span className="total-reviews">
                     Total Reviews: {review.totalReviews}
                     <span className="review-date">{review.date}</span>
-                    <div id="star-rating">
-                      <StarRating
-                        rating={review.rating}
-                        interactive={false}
-                        setRating={undefined}
-                      />
-                    </div>
                   </span>
+                  <div className="star-rating">
+                    <StarRating rating={review.rating} />
+                  </div>
                 </div>
               </div>
             </div>
