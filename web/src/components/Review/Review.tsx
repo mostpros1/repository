@@ -8,6 +8,7 @@ import { dynamo } from "../../../declarations";
 interface Review {
   id: number;
   author: string;
+  Specialist: string;
   date: string;
   content: string;
   //totalReviews: number;
@@ -39,7 +40,8 @@ const ReviewComponent: React.FC = () => {
         if (response && response.Items) {
           const mappedReviews: Review[] = response.Items.map(item => ({
             id: item.id,
-            author: item.professional_name,
+            Specialist: item.professional_name,
+            author: item.homeownerName,
             date: item.date,
             content: item.description,
            //totalReviews: item.totalReviews,
@@ -149,7 +151,7 @@ const ReviewComponent: React.FC = () => {
                 <div className="author-name">{review.author}</div>
                 <div className="review-info">
                   <span className="total-reviews">
-                    Total Reviews: {review.totalReviews}
+                    Specialist: {review.Specialist}
                     <span className="review-date">{review.date}</span>
                   </span>
                   <div className="star-rating">
