@@ -4,15 +4,25 @@ import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
 import { dynamo } from "../../../declarations";
 
-const Review = () => {
-  const [reviews, setReviews] = useState<{ id: unknown; author: unknown; date: unknown; content: unknown; totalReviews: unknown; authorImageUrl: unknown; rating: unknown; }[]>([]);
-  const [sortedReviews, setSortedReviews] = useState<{ id: unknown; author: unknown; date: unknown; content: unknown; totalReviews: unknown; authorImageUrl: unknown; rating: unknown; }[]>([]);
-  const [sortType, setSortType] = useState<string>(""); // Example type for sortType (replace with appropriate type)
+// Define a specific type for review objects
+interface Review {
+  id: number;
+  author: string;
+  date: string;
+  content: string;
+  totalReviews: number;
+  authorImageUrl: string;
+  rating: number;
+}
 
+const ReviewComponent: React.FC = () => {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
+  const [sortType, setSortType] = useState<string>("");
 
   // Sorting function
-  const handleSort = (type) => {
-    let sorted = [...reviews]; // Create a copy of reviews
+  const handleSort = (type: string) => {
+    let sorted: Review[] = [...reviews]; // Create a copy of reviews
     if (type === "date") {
       sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else if (type === "totalReviews") {
@@ -25,31 +35,30 @@ const Review = () => {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await dynamo.scan({ TableName: "Reviews" }).promise();
-        console.log("Response ", response);
+        const response = await dynamo.scan({ TableName: "my-table" }).promise();
         if (response && response.Items) {
-          const mappedReviews = response.Items.map(item => ({
+          const mappedReviews: Review[] = response.Items.map(item => ({
             id: item.id,
-            author: item.professional_id, // Assuming professional_id is the author
+            author: item.professional_id,
             date: item.date,
             content: item.description,
             totalReviews: item.totalReviews,
             authorImageUrl: item.authorImageUrl,
             rating: item.rating
           }));
-          setReviews(mappedReviews); // Set reviews state
-          setSortedReviews(mappedReviews); // Set sortedReviews state initially
+          setReviews(mappedReviews);
+          setSortedReviews(mappedReviews);
         }
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
     }
 
-    fetchReviews(); // Call fetchReviews when component mounts
-  }, []); // Empty dependency array ensures this runs only once after mount
+    fetchReviews();
+  }, []);
 
   // Star rating component
-  const StarRating = ({ rating }) => {
+  const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
     return (
       <div className="star-rating">
         {Array.from({ length: 5 }, (_, index) => (
@@ -60,17 +69,17 @@ const Review = () => {
   };
 
   // Review form component
-  const ReviewForm = () => {
-    const [author, setAuthor] = useState("");
+  const ReviewForm: React.FC = () => {
+    const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const currentDate = new Date().toLocaleDateString();
-      const newReview = {
+      const newReview: Review = {
         id: sortedReviews.length + 1,
-        author: author,
+        author: name,
         date: currentDate,
         content: content,
         totalReviews: 1,
@@ -79,7 +88,7 @@ const Review = () => {
       };
 
       setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
-      setAuthor("");
+      setName("");
       setContent("");
       setRating(0);
 
@@ -96,8 +105,8 @@ const Review = () => {
       <form className="review-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Your name"
           required
         />
@@ -165,4 +174,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default ReviewComponent;
