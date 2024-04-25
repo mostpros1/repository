@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Review.css";
 import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
+import { dynamo } from "../../../declarations";
 
 const reviews = [
   {
@@ -55,8 +56,10 @@ const reviews = [
 
 
 const Review = () => {
-  const [sortedReviews, setSortedReviews] = useState(reviews);
+  const [Review, setReview] = useState()
+  const [sortedReviews, setSortedReviews] = useState(Review);
   const [sortType, setSortType] = useState("");
+  
 
   // Sorting function
   const handleSort = (type) => {
@@ -90,15 +93,17 @@ const Review = () => {
               }));
               
               console.log(mappedArray);
+              setReview([...Review, mappedArray])
             }
             
           }
         })
-        .catch(console.error)
+        .catch(console.error);
 
 
     }
-
+    getReviews()
+    
   }), [];
 
   //Star rating component
