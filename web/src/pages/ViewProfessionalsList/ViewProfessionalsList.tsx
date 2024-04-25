@@ -8,8 +8,10 @@ function ViewProfessionalsList() {
   return (
     <div>
       <NavBar />
-      <div id="sidenav-prof">
-        <SideNav />
+      <div id="grid-prof">
+        <div id="sidenav-prof">
+          <SideNav />
+        </div>
         <ViewProfessionals />
       </div>
       <Footer />

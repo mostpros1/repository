@@ -1,6 +1,19 @@
-#sidenav-prof {
+#grid-prof {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 10px;
-  
+  justify-items: center;
+  align-items: start;
+}
+
+#sidenav-prof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  max-width: 1200px;
+  max-height: 900px;
+  margin: 20px;
 }

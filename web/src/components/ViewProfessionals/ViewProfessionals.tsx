@@ -21,6 +21,7 @@ const ViewProfessionals = () => {
       reviews: 20,
       Description:
         "Ik ben een professionele elektricien met 10 jaar ervaring. Ik heb aan verschillende projecten gewerkt en heb een goede staat van dienst in het afleveren van kwaliteitswerk.",
+      profilePicture: "https://randomuser.me/api/portraits/men/1.jpg", // Add the profile picture path
     },
     {
       id: 2,
@@ -30,6 +31,7 @@ const ViewProfessionals = () => {
       reviews: 2,
       Description:
         "Ik ben een professionele elektricien met 10 jaar ervaring. Ik heb aan verschillende projecten gewerkt en heb een goede staat van dienst in het afleveren van kwaliteitswerk.",
+      profilePicture: "michael-smith.jpg", // Add the profile picture path
     },
     {
       id: 3,
@@ -39,6 +41,7 @@ const ViewProfessionals = () => {
       reviews: 5,
       Description:
         "Ik ben een professionele elektricien met 10 jaar ervaring. Ik heb aan verschillende projecten gewerkt en heb een goede staat van dienst in het afleveren van kwaliteitswerk.",
+      profilePicture: "john-doe.jpg", // Add the profile picture path
     },
     {
       id: 4,
@@ -48,6 +51,7 @@ const ViewProfessionals = () => {
       reviews: 10,
       Description:
         "Ik ben een ervaren hovenier met meer dan 15 jaar ervaring in tuindesign, aanleg en onderhoud. Mijn focus ligt op het creëren van prachtige en functionele buitenruimtes die de waarde van uw eigendom verhogen.",
+      profilePicture: "john-doe.jpg", // Add the profile picture path
     },
   ];
 
@@ -69,6 +73,9 @@ const ViewProfessionals = () => {
           {professionals.map((professional) => (
             <div key={professional.id} className="professional">
               <div className="professional-info">
+                <img
+                  src={professional.profilePicture}
+                  alt={professional.name}></img>
                 <h3>{professional.name}</h3>
                 <p>{professional.profession}</p>
                 <p>
