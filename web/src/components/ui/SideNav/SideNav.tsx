@@ -16,6 +16,7 @@ function SideNav() {
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
   const [IsHomeOwner, setIsHomeOwner] = useState(false);
+  const [IsHomeOwner, setIsHomeOwner] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (
@@ -37,6 +38,7 @@ function SideNav() {
         navigate("/login"); // Redirect to login or another appropriate page
       }
     }, 500); // Delay in milliseconds (5000ms = 5s)
+
     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
   }, [user, navigate]); // Depend on user and navigate to ensure updates
   return (
