@@ -16,6 +16,7 @@ function SideNav() {
   const { user } = useUser();
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
+  const [isHomeowner, setIsHomeowner] = useState(false);
 
    useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,8 +29,7 @@ function SideNav() {
          const groups =
            user.signInUserSession.accessToken.payload["cognito:groups"];
          if (groups && groups.includes("Homeowner")) {
-           alert("Jij hebt geen toegang tot deze pagina!");
-           navigate("/");
+          setIsHomeowner(true)
          } else if (groups && groups.includes("Professional")) {
            setIsProfessional(true);
          }
