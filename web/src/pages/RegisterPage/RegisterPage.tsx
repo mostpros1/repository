@@ -85,7 +85,7 @@ function RegisterPage() {
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
       */
         //const postConfig = postConfigMap['HOMEOWNER'];
-        navigate('/bevestig-email#dashboard-huiseigenaar', { state: { email: email, postConfig: "HOMEOWNER" } })
+        navigate('/bevestig-email#Jobs', { state: { email: email, postConfig: "HOMEOWNER" } })
       } catch (error: any) {
         console.error('Error signing up:', error);
         setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
