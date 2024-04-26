@@ -12,7 +12,7 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider, Switch } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -49,6 +49,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
             <View style={styles.firstMiddleContainerWrapper}>
               <View style={styles.middleContainerFirstSection}>
                 <Pressable
+                  testID="taalBtn"
                   style={[
                     styles.linkTwoTop,
                     styles.topRadius,
@@ -75,10 +76,11 @@ const ProfileGeneralSettings = ({ navigation }) => {
                     color="black"
                   />
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                    Tekstvertalen                  
+                    Tekstvertalen
                   </Text>
                   <View style={[styles.button, styles.arrowButton]}>
                     <Switch
+                      testID="tekstvertalenSwitch"
                       value={isSwitchOn1}
                       onValueChange={onToggleSwitch1}
                       ios_backgroundColor="#606160"
@@ -87,12 +89,13 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   </View>
                 </View>
                 <Pressable
+                  testID="lettergrootteBtn"
                   style={[styles.linkTwoTop, styles.agendaButton]}
                   onPress={() => navigation.navigate("")}
                 >
                   <Icon name="title" size={windowWidth * 0.05} color="black" />
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                  Lettergrootte
+                    Lettergrootte
                   </Text>
                   <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                     <Text style={[styles.arrow]}>&gt;</Text>
@@ -106,9 +109,10 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   ]}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                  Donkere modus
+                    Donkere modus
                   </Text>
                   <Switch
+                    testID="donkereModusBtn"
                     value={isSwitchOn2}
                     onValueChange={onToggleSwitch2}
                     ios_backgroundColor="#606160"
@@ -121,6 +125,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
             <View style={styles.secondMiddleContainerWrapper}>
               <View style={styles.middleContainerFirstSection}>
                 <Pressable
+                  testID="opslagbeheerBtn"
                   style={[
                     styles.linkTwoDelete,
                     styles.topRadius,
@@ -129,7 +134,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   onPress={() => navigation.navigate("")}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                  Opslagbeheer
+                    Opslagbeheer
                   </Text>
                   <View style={styles.textButtonWrapper}>
                     <Text style={[styles.lightTitle]}>Beheer Cache</Text>
@@ -139,6 +144,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   </View>
                 </Pressable>
                 <Pressable
+                  testID="chatVerwijderBtn"
                   style={[
                     styles.linkTwoBottom,
                     styles.bottomRadius,
@@ -147,7 +153,7 @@ const ProfileGeneralSettings = ({ navigation }) => {
                   onPress={() => navigation.navigate("")}
                 >
                   <Text style={[styles.text, styles.textButtonBlack]}>
-                  Chatberichten verwijderen
+                    Chatberichten verwijderen
                   </Text>
                   <View style={styles.textButtonWrapper}>
                     <TouchableOpacity style={styles.button}>
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
 
   textButtonBlack: {
     color: "black",
-},
+  },
 
   topContainer: {
     width: 700,
@@ -194,24 +200,24 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderBottomEndRadius: 250,
     borderBottomStartRadius: 250,
-},
-    topButtonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '60%',
-        paddingHorizontal: 20,
-        position: 'absolute',
-        top: -25,
-    },
+  },
+  topButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    paddingHorizontal: 20,
+    position: 'absolute',
+    top: -25,
+  },
 
-    linkOne: {
-      borderRadius: 10,
-      backgroundColor: "#308AE4",
-      width: 250,
-      textAlign: "center",
-      padding: 10,
-      bottom: -60,
-      alignItems: "center",
+  linkOne: {
+    borderRadius: 10,
+    backgroundColor: "#308AE4",
+    width: 250,
+    textAlign: "center",
+    padding: 10,
+    bottom: -60,
+    alignItems: "center",
   },
 
   returnButton: {
@@ -223,29 +229,29 @@ const styles = StyleSheet.create({
   smallCircle: {
     width: 40,
     height: 40,
-    borderRadius: 25, 
+    borderRadius: 25,
     backgroundColor: 'white',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-},
+  },
 
-topContainerSecondSectionTwo: {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginTop: 54,
-  gap: 2,
-},
-name: {
-  color: 'white',
-},
+  topContainerSecondSectionTwo: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 54,
+    gap: 2,
+  },
+  name: {
+    color: 'white',
+  },
 
-textBold: {
-  fontSize: windowWidth * 0.042,
-  lineHeight: windowHeight * 0.053,
-  fontWeight: "bold",
-},
+  textBold: {
+    fontSize: windowWidth * 0.042,
+    lineHeight: windowHeight * 0.053,
+    fontWeight: "bold",
+  },
 
   circleContainer: {
     marginTop: windowHeight * 0.07,

@@ -18,7 +18,7 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -32,6 +32,7 @@ const ProfileSettingsOne = ({ navigation }) => {
             <View style={styles.topContainer}>
               <View style={styles.topButtonsContainer}>
                 <Pressable
+                  testID="terugBtn-1"
                   style={[styles.linkOne, styles.returnButton]}
                   onPress={() => navigation.navigate("")}
                 >
@@ -53,7 +54,7 @@ const ProfileSettingsOne = ({ navigation }) => {
                 <Text style={styles.title}>Lisa Zoetlief</Text>
                 <TouchableOpacity>
                   <Pressable>
-                    <Text style={styles.clickableText} onPress={() => navigation.navigate("EditProfile")}>Profiel Bijwerken</Text>
+                    <Text testID="profileBijwerkenBtn" style={styles.clickableText} onPress={() => navigation.navigate("EditProfile")}>Profiel Bijwerken</Text>
                   </Pressable>
                 </TouchableOpacity>
               </View>
@@ -61,6 +62,7 @@ const ProfileSettingsOne = ({ navigation }) => {
 
             <View style={styles.middleContainerFirstSection}>
               <Pressable
+                testID="membershipBtn"
                 style={[styles.linkTwoTop, styles.agendaButton]}
                 onPress={() => navigation.navigate("")}
               >
@@ -73,6 +75,7 @@ const ProfileSettingsOne = ({ navigation }) => {
                 </TouchableOpacity>
               </Pressable>
               <Pressable
+                testID="mijnKlussenBtn"
                 style={[styles.linkTwo, styles.agendaButton]}
                 onPress={() => navigation.navigate("")}
               >
@@ -85,6 +88,7 @@ const ProfileSettingsOne = ({ navigation }) => {
                 </TouchableOpacity>
               </Pressable>
               <Pressable
+                testID="betaalmethodeBtn"
                 style={[styles.linkTwo, styles.agendaButton]}
                 onPress={() => navigation.navigate("")}
               >
@@ -97,6 +101,7 @@ const ProfileSettingsOne = ({ navigation }) => {
                 </TouchableOpacity>
               </Pressable>
               <Pressable
+                testID="klantenServiceBtn"
                 style={[styles.linkTwo, styles.agendaButton]}
                 onPress={() => navigation.navigate("")}
               >
@@ -109,14 +114,15 @@ const ProfileSettingsOne = ({ navigation }) => {
                 </TouchableOpacity>
               </Pressable>
               <Pressable
+                testID="settingsBtn"
                 style={[styles.linkTwoBottom, styles.agendaButton]}
                 onPress={() => navigation.navigate("ProfileSettingsTwo")}
               >
                 <Icon name="settings" size={23} color="black" />
-                
-                  <Text style={[styles.text, styles.textButtonBlack]}>
-                    Settings
-                  </Text>
+
+                <Text style={[styles.text, styles.textButtonBlack]}>
+                  Settings
+                </Text>
                 <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                   <Text style={[styles.arrow]}>&gt;</Text>
                 </TouchableOpacity>

@@ -17,7 +17,7 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -28,57 +28,57 @@ const ProfileSettingsTwo = ({ navigation }) => {
             <SafeAreaView style={styles.container}>
                 <ScrollView>
                     <View style={styles.view}>
-                    <View style={styles.topContainer}>
+                        <View style={styles.topContainer}>
                             <View style={styles.topButtonsContainer}>
-                                <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
+                                <Pressable testID="terugBtn-2" style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
                                     <View style={styles.smallCircle}>
-                                    <Icon name="arrow-back" size={28} color="#308AE4" />
+                                        <Icon name="arrow-back" size={28} color="#308AE4" />
                                     </View>
                                 </Pressable>
                             </View>
                             <View style={styles.topContainerSecondSectionTwo}>
                                 <Text style={[styles.name, styles.textBold]}>
-                                Instellingen
+                                    Instellingen
                                 </Text>
                             </View>
                         </View>
 
                         <View style={styles.firstMiddleContainerWrapper}>
                             <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                            Profieloverzicht
+                                Profieloverzicht
                             </Text>
 
                             <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="settings" size={23} color="black"/>
+                                <Pressable testID="mijnKlussenBtn" style={[styles.linkTwoTop, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="settings" size={23} color="black" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Mijn klussen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="notifications" size={23} color="black"/>
+                                <Pressable testID="notificationsBtn" style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="notifications" size={23} color="black" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Notificaties</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('ProfilePrivacy')}>
-                                    <Icon name="lock" size={23} color="black"/>
+                                <Pressable testID="privacyBtn" style={[styles.linkTwo, styles.agendaButton]} onPress={() => navigation.navigate('ProfilePrivacy')}>
+                                    <Icon name="lock" size={23} color="black" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Privacy</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
-                                    <Icon name="settings" size={23} color="black"/>
+                                <Pressable testID="algemeenBtn" style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('ProfileGeneralSettings')}>
+                                    <Icon name="settings" size={23} color="black" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Algemeen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="payments" size={23} color="black"/>
+                                <Pressable testID="betalingenBtn" style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="payments" size={23} color="black" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Betalingen</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
@@ -89,19 +89,19 @@ const ProfileSettingsTwo = ({ navigation }) => {
 
                         <View style={styles.secondMiddleContainerWrapper}>
                             <Text style={[styles.textButtonBlack, styles.smallTitle]}>
-                            Applicatie-instellingen
+                                Applicatie-instellingen
                             </Text>
 
                             <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="help" size={23} color="gray"/>
+                                <Pressable testID="hulpBtn" style={[styles.linkTwoDelete, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="help" size={23} color="gray" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Hulp en feedback</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
                                     </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
-                                    <Icon name="info" size={23} color="#308AE4"/>
+                                <Pressable testID="infoBtn" style={[styles.linkTwoBottom, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                    <Icon name="info" size={23} color="#308AE4" />
                                     <Text style={[styles.text, styles.textButtonBlack, styles.pressableText]}>Info</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
                                         <Text style={[styles.arrow]}>&gt;</Text>
@@ -111,7 +111,7 @@ const ProfileSettingsTwo = ({ navigation }) => {
                         </View>
                     </View>
                 </ScrollView>
-        <Footer navigation={navigation} activePage="Profile" />
+                <Footer navigation={navigation} activePage="Profile" />
             </SafeAreaView>
         </PaperProvider>
     );
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     smallCircle: {
         width: 40,
         height: 40,
-        borderRadius: 25, 
+        borderRadius: 25,
         backgroundColor: 'white',
         display: "flex",
         alignItems: "center",

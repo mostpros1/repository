@@ -18,7 +18,7 @@ import {
 import { Dimensions } from "react-native";
 import { Provider as PaperProvider, Switch } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 
 
@@ -26,11 +26,11 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const ProfilePrivacy = ({ navigation }) => {
-  const [isSwitchOn1, setIsSwitchOn1] = useState(false);
-  const [isSwitchOn2, setIsSwitchOn2] = useState(false);
+    const [isSwitchOn1, setIsSwitchOn1] = useState(false);
+    const [isSwitchOn2, setIsSwitchOn2] = useState(false);
 
-  const onToggleSwitch1 = () => setIsSwitchOn1(!isSwitchOn1);
-  const onToggleSwitch2 = () => setIsSwitchOn2(!isSwitchOn2);
+    const onToggleSwitch1 = () => setIsSwitchOn1(!isSwitchOn1);
+    const onToggleSwitch2 = () => setIsSwitchOn2(!isSwitchOn2);
 
     return (
         <PaperProvider>
@@ -42,7 +42,7 @@ const ProfilePrivacy = ({ navigation }) => {
                             <View style={styles.topButtonsContainer}>
                                 <Pressable style={[styles.linkOne, styles.returnButton]} onPress={() => navigation.navigate('')}>
                                     <View style={styles.smallCircle}>
-                                    <Icon name="arrow-back" size={28} color="#308AE4" />
+                                        <Icon name="arrow-back" size={28} color="#308AE4" />
                                     </View>
                                 </Pressable>
                             </View>
@@ -55,24 +55,24 @@ const ProfilePrivacy = ({ navigation }) => {
 
                         <View style={styles.firstMiddleContainerWrapper}>
                             <View style={styles.middleContainerFirstSection}>
-                            <Pressable style={[styles.linkTwoTop, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                <Pressable testID="systeempermissieBtn" style={[styles.linkTwoTop, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Systeempermissie</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
-                                <Pressable style={[styles.linkTwo, styles.bottomRadius, styles.bottomRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                                <Pressable testID="persoonlijkeInfoBtn" style={[styles.linkTwo, styles.bottomRadius, styles.bottomRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Persoonlijke informatie</Text>
                                     <TouchableOpacity style={[styles.button, styles.arrowButton]}>
-                                            <Text style={[styles.arrow]}>&gt;</Text>
-                                        </TouchableOpacity>
+                                        <Text style={[styles.arrow]}>&gt;</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                             </View>
                         </View>
 
                         <View style={styles.secondMiddleContainerWrapper}>
-                                <View style={styles.middleContainerFirstSection}>
-                                <Pressable style={[styles.linkTwoBottom, styles.bottomRadius, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
+                            <View style={styles.middleContainerFirstSection}>
+                                <Pressable testID="privacybeleidBtn" style={[styles.linkTwoBottom, styles.bottomRadius, styles.topRadius, styles.agendaButton]} onPress={() => navigation.navigate('')}>
                                     <Text style={[styles.text, styles.textButtonBlack]}>Privacybeleid</Text>
                                     <View style={styles.textButtonWrapper}>
                                         <TouchableOpacity style={styles.button}>
@@ -81,10 +81,10 @@ const ProfilePrivacy = ({ navigation }) => {
                                     </View>
                                 </Pressable>
                             </View>
-                        </View>                        
+                        </View>
                     </View>
                 </ScrollView>
-        <Footer navigation={navigation} activePage="Profile" />
+                <Footer navigation={navigation} activePage="Profile" />
 
             </SafeAreaView>
         </PaperProvider>
@@ -92,21 +92,21 @@ const ProfilePrivacy = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    
+
     view: {
-        
+
         width: windowWidth,
         display: "flex",
         alignItems: "center",
         backgroundColor: "white",
         ...Platform.select({
             ios: {
-              height: windowHeight, // Adjust height for iOS
+                height: windowHeight, // Adjust height for iOS
             },
             android: {
-              height: windowHeight * 1.1, // Adjust height for Android
+                height: windowHeight * 1.1, // Adjust height for Android
             },
-          }),
+        }),
     },
     topContainer: {
         width: 700,
@@ -217,15 +217,15 @@ const styles = StyleSheet.create({
         bottom: -20,
         alignItems: "flex-start",
     },
-    topRadius:{
-      borderTopRightRadius: 10,
-      borderTopLeftRadius: 10,
+    topRadius: {
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
 
     },
 
-    bottomRadius:{
-      borderBottomRightRadius: 10,
-      borderBottomLeftRadius: 10,
+    bottomRadius: {
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
 
     },
     linkTwoBottom: {
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "flex-end",
     },
-    
+
     title: {
         fontSize: 20,
         fontWeight: "bold",
@@ -282,24 +282,24 @@ const styles = StyleSheet.create({
     smallCircle: {
         width: 40,
         height: 40,
-        borderRadius: 25, 
+        borderRadius: 25,
         backgroundColor: 'white',
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
     },
     lightTitle: {
-      fontSize: 13,
-      color: "#B7BEC5",
-      lineHeight: 24,
-  },
-  textButtonWrapper: {
-    display: "flex",
-    alignItems: "flex-end",
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 20,
-},
+        fontSize: 13,
+        color: "#B7BEC5",
+        lineHeight: 24,
+    },
+    textButtonWrapper: {
+        display: "flex",
+        alignItems: "flex-end",
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: 20,
+    },
 });
 
 export default ProfilePrivacy;

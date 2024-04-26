@@ -17,7 +17,7 @@ import { Dimensions } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { KeyboardAvoidingView } from 'react-native';
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -59,6 +59,7 @@ const ChatOverview = ({ navigation }) => {
             </View>
             <View style={styles.topContainerSecondSection}>
               <Pressable
+                testID="notificatiesBtn"
                 style={styles.linkOne}
                 onPress={() => navigation.navigate("")}
               >
@@ -67,6 +68,7 @@ const ChatOverview = ({ navigation }) => {
                 </Text>
               </Pressable>
               <Pressable
+                testID="berichtenBtn"
                 style={[styles.linkOne, styles.selected]}
                 onPress={() => navigation.navigate("")}
               >
@@ -75,6 +77,7 @@ const ChatOverview = ({ navigation }) => {
                 </Text>
               </Pressable>
               <Pressable
+                testID="communityBtn"
                 style={styles.linkOne}
                 onPress={() => navigation.navigate("")}
               >
@@ -86,6 +89,7 @@ const ChatOverview = ({ navigation }) => {
             <View style={styles.container}>
               <Icon name="search" size={28} color="gray" />
               <TextInput
+                testID="zoekChatInput"
                 placeholder="Zoeken"
                 style={styles.input}
                 onChangeText={(text) => {
@@ -95,52 +99,52 @@ const ChatOverview = ({ navigation }) => {
             </View>
 
             <View style={styles.middleContainer}>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+              <View testID="chatTest-1" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
                 <View style={styles.size}>
                   <View style={styles.textWrapperTop}>
                     <Text style={[styles.text, styles.textButtonBlack,]}>Jan Schilder</Text>
                     <Text style={styles.lightTitle}>13:40pm</Text>
                   </View>
                   <View style={styles.textWrapperBottom}>
-                  <Text style={styles.lightTitle}>
-                    Ja, ik ben beschikbaar volgende week {'\n'}
-                    woensdag.
-                  </Text>
-                  <View style={styles.notification}>
-                    <Text style={styles.textButtonWhite}>1</Text>
-                  </View>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-              
-              
-              <View style={[styles.middleContainerFirstSection]}>
-              <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
+
+
+              <View testID="chatTest-2" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
                 <View style={styles.size}>
                   <View style={styles.textWrapperTop}>
                     <Text style={[styles.text, styles.textButtonBlack,]}>Beste klussers B.V</Text>
                     <Text style={styles.lightTitle}>13:40pm</Text>
                   </View>
                   <View style={styles.textWrapperBottom}>
-                  <Text style={styles.lightTitle}>
-                    Ja, ik ben beschikbaar volgende week {'\n'}
-                    woensdag.
-                  </Text>
-                  <View style={styles.notification}>
-                    <Text style={styles.textButtonWhite}>1</Text>
-                  </View>
+                    <Text style={styles.lightTitle}>
+                      Ja, ik ben beschikbaar volgende week {'\n'}
+                      woensdag.
+                    </Text>
+                    <View style={styles.notification}>
+                      <Text style={styles.textButtonWhite}>1</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
-                  <View style={styles.size}>
-                    <View style={styles.textWrapperTop}>
-                      <Text style={[styles.text, styles.textButtonBlack,]}>Lina</Text>
-                      <Text style={styles.lightTitle}>13:40pm</Text>
-                    </View>
-                    <View style={styles.textWrapperBottom}>
+              <View testID="chatTest-3" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Lina</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
                     <Text style={styles.lightTitle}>
                       Ja, ik ben beschikbaar volgende week {'\n'}
                       woensdag.
@@ -148,17 +152,17 @@ const ChatOverview = ({ navigation }) => {
                     <View style={styles.notification}>
                       <Text style={styles.textButtonWhite}>1</Text>
                     </View>
-                    </View>
                   </View>
+                </View>
               </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
-                  <View style={styles.size}>
-                    <View style={styles.textWrapperTop}>
-                      <Text style={[styles.text, styles.textButtonBlack,]}>Tim Klus</Text>
-                      <Text style={styles.lightTitle}>13:40pm</Text>
-                    </View>
-                    <View style={styles.textWrapperBottom}>
+              <View testID="chatTest-4" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Tim Klus</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
                     <Text style={styles.lightTitle}>
                       Ja, ik ben beschikbaar volgende week {'\n'}
                       woensdag.
@@ -166,17 +170,17 @@ const ChatOverview = ({ navigation }) => {
                     <View style={styles.notification}>
                       <Text style={styles.textButtonWhite}>1</Text>
                     </View>
-                    </View>
                   </View>
+                </View>
               </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
-                  <View style={styles.size}>
-                    <View style={styles.textWrapperTop}>
-                      <Text style={[styles.text, styles.textButtonBlack,]}>Ricardo van Dorp</Text>
-                      <Text style={styles.lightTitle}>13:40pm</Text>
-                    </View>
-                    <View style={styles.textWrapperBottom}>
+              <View testID="chatTest-5" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Ricardo van Dorp</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
                     <Text style={styles.lightTitle}>
                       Ja, ik ben beschikbaar volgende week {'\n'}
                       woensdag.
@@ -184,17 +188,17 @@ const ChatOverview = ({ navigation }) => {
                     <View style={styles.notification}>
                       <Text style={styles.textButtonWhite}>1</Text>
                     </View>
-                    </View>
                   </View>
+                </View>
               </View>
-              <View style={[styles.middleContainerFirstSection]}>
-                <Image style={styles.image} source={require("../../../assets/images/jan.png")}/>
-                  <View style={styles.size}>
-                    <View style={styles.textWrapperTop}>
-                      <Text style={[styles.text, styles.textButtonBlack,]}>Nora Kikker</Text>
-                      <Text style={styles.lightTitle}>13:40pm</Text>
-                    </View>
-                    <View style={styles.textWrapperBottom}>
+              <View testID="chatTest-6" style={[styles.middleContainerFirstSection]}>
+                <Image style={styles.image} source={require("../../../assets/images/jan.png")} />
+                <View style={styles.size}>
+                  <View style={styles.textWrapperTop}>
+                    <Text style={[styles.text, styles.textButtonBlack,]}>Nora Kikker</Text>
+                    <Text style={styles.lightTitle}>13:40pm</Text>
+                  </View>
+                  <View style={styles.textWrapperBottom}>
                     <Text style={styles.lightTitle}>
                       Ja, ik ben beschikbaar volgende week {'\n'}
                       woensdag.
@@ -202,8 +206,8 @@ const ChatOverview = ({ navigation }) => {
                     <View style={styles.notification}>
                       <Text style={styles.textButtonWhite}>1</Text>
                     </View>
-                    </View>
                   </View>
+                </View>
               </View>
               <View style={[styles.footerfix]}></View>
             </View>
@@ -235,9 +239,9 @@ const styles = StyleSheet.create({
     width: windowWidth,
   },
 
-  notification:{
+  notification: {
     width: 25,
-    aspectRatio: 1/1,
+    aspectRatio: 1 / 1,
     borderRadius: 50,
     backgroundColor: "#318ae5",
     display: "flex",
@@ -271,10 +275,10 @@ const styles = StyleSheet.create({
   lightTitle: {
     fontSize: 12,
     color: "#B7BEC5",
-},
+  },
 
   textWrapperTop: {
-    flex: 1, 
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -283,8 +287,8 @@ const styles = StyleSheet.create({
   },
 
   textWrapperBottom: {
-    flex: 1, 
-    padding: 10, 
+    flex: 1,
+    padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 14,

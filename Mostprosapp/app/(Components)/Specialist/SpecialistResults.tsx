@@ -80,7 +80,7 @@ const SpecialistResults = ({ navigation }) => {
                 </Pressable>
               </View>
               <Pressable style={styles.moreInfo}>
-                <Text style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
+                <Text testID="klusInfoBtn" style={styles.link} onPress={() => navigation.navigate('MyWork')}>Meer info</Text>
               </Pressable>
             </View>
             <View style={styles.card}>
