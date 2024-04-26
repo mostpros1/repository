@@ -6,8 +6,8 @@ describe('Home Owner Test: Offertestraat Test', () => {
 
     const min = 1000;
     const max = 9999;
-    const randomInteger = faker.datatype.number({ min, max })
-    const randomLetters = faker.random.alpha({ count: 2 }).toUpperCase()
+    const randomInteger = faker.number.int({ min, max })
+    const randomLetters = faker.string.alpha({ count: 2 }).toUpperCase()
 
     // Ontvang de huidige datum
     const today = new Date();
@@ -57,7 +57,7 @@ describe('Home Owner Test: Offertestraat Test', () => {
         })
 
         it('Test 3: Typ random letters in en ga door', () => {
-            const randomString = faker.random.word();
+            const randomString = faker.word.words(1);
             cy.get('[data-testid="searchbar"]').type(randomString)
             cy.get('[data-testid="zoekBtn"]').click()
 
