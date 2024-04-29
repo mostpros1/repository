@@ -1,19 +1,19 @@
-import { Auth } from "aws-amplify";
-import { LoginForm } from "./LoginForm";
-import { RegisterForm } from "./RegisterForm";
-import { useEffect, useState } from "react";
+import { Auth } from "aws-amplify"
+import { LoginForm } from "./LoginForm"
+import { RegisterForm } from "./RegisterForm"
+import { useEffect, useState } from "react"
 
-interface AccountFormData {
-    postCode: string;
-    stad: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    password: string;
-    repeatPassword: string;
-    beroep?: string;
-    formConfig?: "HOMEOWNER";
+type AccountFormData = {
+    postCode: string
+    stad: string
+    email: string
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    password: string
+    repeatPassword: string
+    beroep?: string
+    formConfig?: "HOMEOWNER"
 }
 
 interface AccountFormProps extends AccountFormData {
@@ -28,12 +28,32 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false);
     const [userExists, setUserExists] = useState<boolean>(false);
 
-    const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword };
+    const data = { email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword }
+
+
+    const { updateUser } = useUser();
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+
+    const handleLogin = async () => {
+        try {
+          const authenticatedUser = await Auth.signIn(data.email, data.password);
+          updateUser(authenticatedUser);
+          navigate('/');
+          console.log('Logged in user:', authenticatedUser);
+        } catch (error: any) {
+          console.error('Login failed:', error);
+          setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+        }
+      };
 
     const formConfig = {
-        loginForm: <LoginForm handleLogin={() => { }} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        loginForm: <LoginForm handleLogin={() => { handleLogin}} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
         registerForm: <RegisterForm /*setError={() => { }}*/ error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
+   
+
+
 
     useEffect(() => {
         Auth.confirmSignUp(email, '000000', { forceAliasCreation: false })

@@ -28,7 +28,7 @@ function SideNav() {
          const groups =
            user.signInUserSession.accessToken.payload["cognito:groups"];
          if (groups && groups.includes("Homeowner")) {
-          setIsHomeowner(true);
+          setIsHomeowner(true)
          } else if (groups && groups.includes("Professional")) {
            setIsProfessional(true);
          }
