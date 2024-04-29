@@ -51,11 +51,19 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+
+import i18n from '../i18n.ts'
+
 const App = () => {
+  /*useEffect(() => {
+    i18n.changeLanguage('nl');
+  }, []);*/
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/mijn-klussen" element={<MyTaskPage />} />
+      <Route path="/mijn-klussen" element={<KlussenPage />} />
+      {/* Add other Route components for your pages */}
       <Route path="/klussen" element={<KlussenPage />} />
       <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
       <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
@@ -169,4 +177,5 @@ const App = () => {
     </Routes>
   );
 };
+
 export default App;
