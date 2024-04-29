@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import HomePage from "../pages/HomePage/HomePage";
@@ -51,18 +51,23 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+import { useTranslation } from "react-i18next";
 
-import i18n from '../i18n.ts'
 
-const App = () => {
-  /*useEffect(() => {
-    i18n.changeLanguage('nl');
-  }, []);*/
+const LanguageAwareRoutes = () => {
 
+  const { lang } = useParams();
+  const { t } = useTranslation();
+
+  // Function to prepend language to the given path
+  const addLanguagePrefix = (path) => {
+    return `/${lang}${path}`;
+  };
+  
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/mijn-klussen" element={<KlussenPage />} />
+      <Route path={addLanguagePrefix("/mijn-klussen")} element={<KlussenPage />} />
       {/* Add other Route components for your pages */}
       <Route path="/klussen" element={<KlussenPage />} />
       <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
@@ -95,8 +100,8 @@ const App = () => {
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
+      <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/ProfPayment" element={<HomeProPaymentsPage />} />
       <Route path="/chat" element={<ChatMain />} />
       <Route
         path="/HomeOwnerSettingsPage"
@@ -174,6 +179,30 @@ const App = () => {
           />
         }
       />
+    </Routes>
+  );
+};
+
+
+const App = () => {
+  const { lang } = useParams();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    // Set the language based on the lang parameter
+    if (lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, i18n]);
+
+
+
+  return (
+    <Routes>
+      {/* Wildcard route to capture the language part of the URL */}
+      <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
+      {/* Fallback route if no language is specified */}
+      <Route path="/nl/*" element={<LanguageAwareRoutes />} />
     </Routes>
   );
 };
