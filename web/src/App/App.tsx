@@ -64,7 +64,7 @@ const App = () => {
       <Route path="/bevestig-email" element={<BevestigEmailPage />} />
       <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-      <Route path="/specialist-resultaat" element={<ResultsPage />} />
+      <Route path="/nl/homeowner-dashboard" element={<ResultsPage />} />
       <Route path="/nl/about" element={<AboutUsPage />} />
       <Route path="/nl/how-it-works" element={<HowItWorksPage />} />
       <Route path="/nl/contact" element={<ContactPage />} />

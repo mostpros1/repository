@@ -49,7 +49,7 @@ function SideNav() {
         {isProfessional && (
           <li className="sidebar-item">
             <NavLink
-              to="/specialist-resultaat"
+              to="/nl/homeowner-dashboard"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
@@ -67,7 +67,7 @@ function SideNav() {
             }
           >
             <HandymanOutlinedIcon />
-            Jobs
+            Klussen
           </NavLink>
         </li>
         <li className="sidebar-item">
@@ -78,7 +78,7 @@ function SideNav() {
             }
           >
             <MessageIcon />
-            Message
+            Berichten
           </NavLink>
         </li>
         <li className="sidebar-item">
@@ -89,7 +89,7 @@ function SideNav() {
             }
           >
             <DateRangeIcon />
-            Calendar
+            Kalendar
           </NavLink>
         </li>
         <li className="sidebar-item">
@@ -100,7 +100,7 @@ function SideNav() {
             }
           >
             <PaymentIcon />
-            Payments
+            Betalingen
           </NavLink>
         </li>
         <li className="sidebar-item">
@@ -123,7 +123,7 @@ function SideNav() {
               }
             >
               <AccountCircleIcon />
-              Profile
+              Profiel
             </NavLink>
           </li>
 
@@ -147,7 +147,7 @@ function SideNav() {
               }
             >
               <HelpOutlineIcon />
-              Helpdesk
+              Help
             </NavLink>
           </li>
         </div>
