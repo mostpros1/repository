@@ -38,7 +38,7 @@ function SideNav() {
          console.log("User data is not fully available.");
          navigate("/login"); // Redirect to login or another appropriate page
        }
-     }, 500); // Delay in milliseconds (5000ms = 5s)
+     }, 500000); // Delay in milliseconds (5000ms = 5s)
 
      return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
    }, [user, navigate]); // Depend on user and navigate to ensure updates
@@ -49,7 +49,7 @@ function SideNav() {
         {isProfessional && (
           <li className="sidebar-item">
             <NavLink
-              to="/specialist-resultaat"
+              to="/nl/homeowner-dashboard"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
@@ -61,51 +61,51 @@ function SideNav() {
         )}
         <li className="sidebar-item">
           <NavLink
-            to="/Jobs"
+            to="/nl/homeowner-dashboard/jobs"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <HandymanOutlinedIcon />
-            Jobs
+            Klussen
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/chat"
+            to="/nl/homeowner-dashboard/chat"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <MessageIcon />
-            Message
+            Berichten
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/CalenderPage"
+            to="/nl/homeowner-dashboard/calender"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <DateRangeIcon />
-            Calendar
+            Kalendar
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/Payments"
+            to="/nl/homeowner-dashboard/payments"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <PaymentIcon />
-            Payments
+            Betalingen
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/ReviewPage"
+            to="/nl/homeowner-dashboard/reviews"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
@@ -117,19 +117,19 @@ function SideNav() {
         <div className="sidebar-bottom">
           <li className="sidebar-item">
             <NavLink
-              to="/Profile"
+              to="/nl/homeowner-dashboard/profile"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
               <AccountCircleIcon />
-              Profile
+              Profiel
             </NavLink>
           </li>
 
           <li className="sidebar-item">
             <NavLink
-              to="/HomeOwnerSettingsPage"
+              to="/nl/homeowner-dashboard/settings"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
@@ -141,13 +141,13 @@ function SideNav() {
 
           <li className="sidebar-item">
             <NavLink
-              to="/Helpdesk"
+              to="/nl/homeowner-dashboard/help"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
               <HelpOutlineIcon />
-              Helpdesk
+              Help
             </NavLink>
           </li>
         </div>

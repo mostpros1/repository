@@ -55,8 +55,8 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/mijn-klussen" element={<MyTaskPage />} />
-      <Route path="/klussen" element={<KlussenPage />} />
+      <Route path="/nl/jobs-mostpros" element={<MyTaskPage />} />
+      <Route path="/nl/jobs" element={<KlussenPage />} />
       <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
       <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
       <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
@@ -64,21 +64,21 @@ const App = () => {
       <Route path="/bevestig-email" element={<BevestigEmailPage />} />
       <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-      <Route path="/specialist-resultaat" element={<ResultsPage />} />
-      <Route path="/over-ons" element={<AboutUsPage />} />
-      <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/nl/homeowner-dashboard" element={<ResultsPage />} />
+      <Route path="/nl/about" element={<AboutUsPage />} />
+      <Route path="/nl/how-it-works" element={<HowItWorksPage />} />
+      <Route path="/nl/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
-      <Route path="/HomeInovation" element={<HomeInovation />} />
+      <Route path="/nl/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
+      <Route path="/nl/homeowner-dashboard/profile" element={<SpecialistProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
-      <Route path="/CalenderPage" element={<CalenderPage />} />
+      <Route path="/nl/homeowner-dashboard/calender" element={<CalenderPage />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -86,12 +86,12 @@ const App = () => {
       />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/Jobs" element={<JobsPage />} />
+      <Route path="/nl/homeowner-dashboard/jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
       <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
-      <Route path="/chat" element={<ChatMain />} />
+      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route
-        path="/HomeOwnerSettingsPage"
+        path="/nl/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
       <Route
@@ -105,7 +105,7 @@ const App = () => {
       />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
-      <Route path="/ReviewPage" element={<ReviewPage />} />
+      <Route path="/nl/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -113,9 +113,9 @@ const App = () => {
       />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/Jobs" element={<JobsPage />} />
+      <Route path="nl/homeowner-dashboard/jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
-      <Route path="/chat" element={<ChatMain />} />
+      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registreer" element={<RegisterPage />} />
