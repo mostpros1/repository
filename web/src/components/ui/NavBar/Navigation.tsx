@@ -58,9 +58,9 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: React.ReactNode = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="/Jobs">{t("Account")}</Link>; {/* Translate account link */}
+      DashboardLink = <Link to="/Jobs">{t("Account")}</Link>; {/* Translate account link */ }
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/specialist-resultaat">{t("Account")}</Link>; {/* Translate account link */}
+      DashboardLink = <Link to="/specialist-resultaat">{t("Account")}</Link>; {/* Translate account link */ }
     }
 
     authButtons = (
@@ -89,7 +89,155 @@ function Navigation() {
             {/* Translate mega menu items */}
             <div className="mega-box">
               <div className="mega-content">
-                {/* Mega menu content */}
+                <div className="mega-row">
+                  <header>{t("Interieur")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Interieur adviseur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Loodgieter")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Elektricien<")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Timmerman")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Schoonmaker")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Interieur schilder")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Behanger")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Keukenmonteur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Tegelzetter")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Badkamerspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Stukadoor")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Verwarmingsinstallateur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Stoffeerder")}</Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>{t("Exterieur")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Aannemer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Exterieur schilder")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Dakdekker")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Gevelspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Isolatiespecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Metselaar")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Glaszetter")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Kozijnspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Schoorsteenveger")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Laadpaalspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Zonnepaneelspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Beveiligingsspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Toegangsspecialist")}</Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>{t("Tuin")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Tuinontwerper")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Hovenier")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Stratenmaker")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Tuintechnicus")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Zwembadinstallateur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Smart garden adviseur")}</Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>{t("Meer")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Moderne klusser")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Verhuizer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Slotenmaker")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Verduurzamingsadviseur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Ongediertebestrijder")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Voertuig monteur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Domotica specialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Smart home specialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("AI home specialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Drone piloot")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Robot adviseur")}</Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </li>
@@ -100,32 +248,77 @@ function Navigation() {
             {/* Translate dropdown menu items */}
             <div className="mega-box">
               <div className="mega-content">
-                {/* Dropdown menu content */}
+                <div className="mega-row">
+                  <header>{t("Waarom MP kiezen")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Klantenervaring")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Groeiend netwerk")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Toegang talentenpools")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Automatiseer workflows")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Open infrastructuur")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("500+ diensten")}</Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mega-row">
+                  <header>{t("Per gebruiker")}</header>
+                  <ul className="mega-links">
+                    <li>
+                      <Link to="/">{t("Huiseigenaar")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Vakspecialist")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("VvE / Stichting")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Startup / Bedrijf")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Developer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/">{t("Marketeer / Verkoper")}</Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </li>
-          <li className="nav-blue-btn">
-            <Link to="/inschrijven-als-specialist" className="black-items">
-              {t("Inschrijven als vakspecialist")} {/* Translate button */}
-            </Link>
-          </li>
-        </ul>
-        {/* Apps icon */}
-        <div className="apps-icon" onClick={handleIconClick}>
-          <AppsRoundedIcon />
-        </div>
-        {/* Dropdown */}
-        <div className="dropdown-container">
-          <button className="loginButton" onClick={handleDropdownToggle}>
-            <MenuIcon />
-            <PermIdentityIcon />
-          </button>
-          {dropdownOpen && (
-            <div className="dropdown-content">{authButtons}</div>
-          )}
-        </div>
+        </li>
+        <li className="nav-blue-btn">
+          <Link to="/inschrijven-als-specialist" className="black-items">
+            {t("Inschrijven als vakspecialist")} {/* Translate button */}
+          </Link>
+        </li>
+      </ul>
+      {/* Apps icon */}
+      <div className="apps-icon" onClick={handleIconClick}>
+        <AppsRoundedIcon />
+      </div>
+      {/* Dropdown */}
+      <div className="dropdown-container">
+        <button className="loginButton" onClick={handleDropdownToggle}>
+          <MenuIcon />
+          <PermIdentityIcon />
+        </button>
+        {dropdownOpen && (
+          <div className="dropdown-content">{authButtons}</div>
+        )}
       </div>
     </div>
+    </div >
   );
 }
 
