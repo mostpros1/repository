@@ -9,6 +9,7 @@ interface Review {
   id: number;
   author: string;
   Specialist: string;
+  SpecialistEmail: string;
   date: string;
   content: string;
   //totalReviews: number;
@@ -42,10 +43,11 @@ const ReviewComponent: React.FC = () => {
           const mappedReviews: Review[] = response.Items.map(item => ({
             id: item.id,
             Specialist: item.professional_name,
+            SpecialistEmail: item.professional_email,
             author: item.homeownerName,
             date: item.date,
             content: item.description,
-           //totalReviews: item.totalReviews,
+            //totalReviews: item.totalReviews,
             authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`, //item.authorImageUrl,
             rating: item.rating
           }));
@@ -84,6 +86,7 @@ const ReviewComponent: React.FC = () => {
         id: sortedReviews.length + 1,
         author: name,
         Specialist: "Specialist Name",
+        SpecialistEmail: "Specialist Email",
         date: currentDate,
         content: content,
         //totalReviews: 1,
@@ -124,6 +127,13 @@ const ReviewComponent: React.FC = () => {
         <button type="submit">Submit Review</button>
       </form>
     );
+  };
+
+  const handleChatButtonClick = (recipientEmail: string) => {
+    const currentPath = "/chat";
+    const recipientQuery = `recipient=${recipientEmail}`;
+    const newUrl = `${currentPath}?${recipientQuery}`;
+    window.location.href = newUrl;
   };
 
   return (
@@ -167,8 +177,8 @@ const ReviewComponent: React.FC = () => {
             </div>
             <div className="review-footer">
               <div className="review-actions">
-                <button>Public Comment.</button>
-                <button>Direct Message.</button>
+                <button>Public Comment</button>
+                <button onClick={() => handleChatButtonClick(review.SpecialistEmail)}>Direct Message</button>
               </div>
             </div>
           </div>
