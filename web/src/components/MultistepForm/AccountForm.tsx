@@ -2,6 +2,8 @@ import { Auth } from "aws-amplify"
 import { LoginForm } from "./LoginForm"
 import { RegisterForm } from "./RegisterForm"
 import { useEffect, useState } from "react"
+import { useUser } from "../../context/UserContext"
+import { useNavigate } from "react-router-dom"
 
 type AccountFormData = {
     postCode: string
@@ -22,7 +24,7 @@ interface AccountFormProps extends AccountFormData {
     error: string;
 }
 
-export function AccountForm({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, setError, error }: AccountFormProps) {
+export function AccountForm({ email, postCode, stad, firstName, lastName, phoneNumber, password, repeatPassword, updateFields, /*setError*/ }: AccountFormProps) {
 
     const [fetched, setFetched] = useState<boolean>(false);
     const [limitExceeded, setLimitExceeded] = useState<boolean>(false);
