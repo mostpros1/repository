@@ -47,9 +47,10 @@ import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
+import Calender from "../pages/CalenderPage/CalenderPage.tsx";
+import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
-
 const App = () => {
   return (
     <Routes>
@@ -77,8 +78,8 @@ const App = () => {
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
+      <Route path="/CalenderPage" element={<CalenderPage />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
-
       <Route
         path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
@@ -88,9 +89,7 @@ const App = () => {
       <Route path="/Jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
       <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
-
-
-      <Route path="/chat" element={<ChatMain user={undefined} signOut={undefined} />} />
+      <Route path="/chat" element={<ChatMain />} />
       <Route
         path="/HomeOwnerSettingsPage"
         element={<HomeOwnerSettingsPage />}
@@ -105,10 +104,8 @@ const App = () => {
         element={<HomeOwnerDeactivation />}
       />
       <Route path="/FAQPage" element={<FAQPage />} />
-      
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/ReviewPage" element={<ReviewPage />} />
-
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -135,7 +132,6 @@ const App = () => {
           }
         />
       </Route>
-
       {/* Protected routes */}
       <Route
         path="/admin-paneel"
@@ -150,7 +146,6 @@ const App = () => {
         <Route index element={<AdminMain />} />
         <Route path="manage-users" element={<ManageUser />} />
       </Route>
-
       <Route
         path="/dashboard-huiseigenaar"
         element={
@@ -174,5 +169,4 @@ const App = () => {
     </Routes>
   );
 };
-
 export default App;

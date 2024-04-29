@@ -15,31 +15,33 @@ function SideNav() {
   const { user } = useUser();
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
-  const [IsHomeOwner, setIsHomeOwner] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (
-        user &&
-        user.signInUserSession &&
-        user.signInUserSession.accessToken &&
-        user.signInUserSession.accessToken.payload
-      ) {
-        const groups =
-          user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups && groups.includes("Homeowner")) {
-          setIsHomeOwner(true);
-        } else if (groups && groups.includes("Professional")) {
-          setIsProfessional(true);
-        }
-      } else {
-        // Handle the case where the user data is not fully available
-        console.log("User data is not fully available.");
-        navigate("/login"); // Redirect to login or another appropriate page
-      }
-    }, 500); // Delay in milliseconds (5000ms = 5s)
 
-    return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
-  }, [user, navigate]); // Depend on user and navigate to ensure updates
+   useEffect(() => {
+    const timer = setTimeout(() => {
+       if (
+         user &&
+         user.signInUserSession &&
+         user.signInUserSession.accessToken &&
+         user.signInUserSession.accessToken.payload
+       ) {
+         const groups =
+           user.signInUserSession.accessToken.payload["cognito:groups"];
+         if (groups && groups.includes("Homeowner")) {
+           alert("Jij hebt geen toegang tot deze pagina!");
+           navigate("/");
+         } else if (groups && groups.includes("Professional")) {
+           setIsProfessional(true);
+         }
+       } else {
+         // Handle the case where the user data is not fully available
+         console.log("User data is not fully available.");
+         navigate("/login"); // Redirect to login or another appropriate page
+       }
+     }, 500); // Delay in milliseconds (5000ms = 5s)
+
+     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
+   }, [user, navigate]); // Depend on user and navigate to ensure updates
+
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
@@ -80,7 +82,7 @@ function SideNav() {
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/Calendar"
+            to="/CalenderPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }

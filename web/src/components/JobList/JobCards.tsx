@@ -5,6 +5,8 @@ import gasleiding from "../../assets/Gasleiding.svg";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
+import { useLocation } from "react-router-dom";
+
 interface Job {
   id: number;
   name: string;
@@ -13,16 +15,23 @@ interface Job {
   description: string;
   location: string;
   availability: string;
+  userEmail: string;
   // img: string;
 }
 
 interface JobCardsProps {
   jobs?: Job[];
+  user?: string[];
 }
+
+
 const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   const [jobs, setJobs] = useState<Job[]>(initialJobs); // Renamed from specialists to jobs
+
   useEffect(() => {
     const hashTag = window.location.hash.replace("#", "");
+
+
     /*dynamo.query({
       TableName: "clients",
       IndexName: "plaats",
@@ -31,27 +40,29 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         ":plaats": hashTag,
       },
     }).promise()
-      .then(data => {
-        if (data.Items && data.Items.length > 0) {
-          console.log(data.Items);
-        } else {
-          console.log('No items found');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });*/
+    .then(data => {
+      if (data.Items && data.Items.length > 0) {
+        console.log(data.Items);
+      } else {
+        console.log('No items found');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });*/
+
     dynamo
       .scan({
         TableName: "Klussen",
       })
       .promise()
-      .then((data) => {
+      .then(data => {
         // Assuming data.Items contains the necessary fields for the Job interface
         const jobsFromData = data.Items ? data.Items.map((item) => ({
           id: item.id,
           name: item.profession,
           distance: item.distance,
+          userEmail: item.user_email,
           title: item.task,
           description: item.description,
           location: item.region,
@@ -61,8 +72,19 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         // Update the state with the jobs fetched from DynamoDB
         setJobs(jobsFromData);
       })
-      .catch(console.error);
+      .catch(console.error)
+
   }, []);
+
+  //const location = useLocation();
+
+    const handleChatButtonClick = (recipientEmail: string) => {
+      const currentPath = "/chat";
+      const recipientQuery = `recipient=${recipientEmail}`;
+      const newUrl = `${currentPath}?${recipientQuery}`;
+      window.location.href = newUrl;
+    };
+
   if (!jobs || jobs.length === 0) {
     return <div>No jobs available.</div>;
   }
@@ -89,9 +111,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p>Binnen {job.availability}</p>
         </div>
       </div>
-      <a className="mail_btn" href="mailto:teammostpros@gmail.com">
-        Contact opnemen
-      </a>
+      <button className='main_btn' onClick={() => handleChatButtonClick(job.userEmail)}>Contact opnemen</button>
     </div>
   ));
   return <>{jobCardsRender}</>;
