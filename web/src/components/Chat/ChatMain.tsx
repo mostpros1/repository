@@ -283,6 +283,7 @@ function ChatMain({ user, signOut }) {
           <div className="chat-enter">
             <kbd><IoSend size={25} /></kbd>
           </div>
+
         </div>
       </div>
       )}</div>

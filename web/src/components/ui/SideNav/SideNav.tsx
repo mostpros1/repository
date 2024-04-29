@@ -16,7 +16,6 @@ function SideNav() {
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
   const [IsHomeOwner, setIsHomeOwner] = useState(false);
-  const [IsHomeOwner, setIsHomeOwner] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (
