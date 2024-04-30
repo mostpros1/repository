@@ -18,7 +18,7 @@ i18n
         translation: translationNL, // Populate the 'nl' language with translations from your Dutch JSON file
       },
     },
-    lng: "nl", // Set the default language to Dutch
+    //lng: "nl", // Set the default language to Dutch
     fallbackLng: "nl", // Fallback to Dutch if language detection fails
     interpolation: {
       escapeValue: false,
