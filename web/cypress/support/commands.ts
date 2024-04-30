@@ -69,6 +69,7 @@ declare namespace Cypress {
         HomeOwnerSettingsPage():void;
         Helpdesk():void;
         dshchat(value1,value2):void;
+        dshreview(value1,value2):void;
         
     }
 }
@@ -289,5 +290,16 @@ Cypress.Commands.add('dshchat', (value1, value2) => {
     cy.inlogmenu();
      cy.get('.dropdown-content > a').click();
      cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();
+
+});
+
+Cypress.Commands.add('dshreview', (value1, value2) => {
+    cy.get('input[type="email"]').eq(0).type(value1);
+    cy.get('input[type="password"]').type(value2);
+    cy.nextinlog();
+    cy.wait(6000);
+    cy.inlogmenu();
+     cy.get('.dropdown-content > a').click();
+     cy.get(':nth-child(5) > .sidebar-link').click();
 
 });
