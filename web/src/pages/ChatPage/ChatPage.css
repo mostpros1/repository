@@ -1,7 +1,17 @@
-.center-box {
+.chat-panel {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  align-items: center;
-  margin-left: 90px;
-  margin-top: 40px;
+  grid-template-columns: 200px 1fr;
+  margin: 35px 0px 15px 10px;
+}
+
+.side-panel-left-chat {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.side-panel-right-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -51,6 +51,7 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+
 const App = () => {
   return (
     <Routes>
@@ -71,7 +72,7 @@ const App = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/nl/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/nl/homeowner-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/nl/homeowner-dashboard/profile" element={<EditProfile />} />
       <Route path="/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
@@ -88,7 +89,7 @@ const App = () => {
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/nl/homeowner-dashboard/jobs" element={<JobsPage />} />
       <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
+      <Route path="nl/homeowner-dashboard/payments" element={<HomeProPaymentsPage/>} />
       <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route
         path="/nl/homeowner-dashboard/settings"
