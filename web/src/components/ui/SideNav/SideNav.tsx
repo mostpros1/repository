@@ -117,7 +117,7 @@ function SideNav() {
         <div className="sidebar-bottom">
           <li className="sidebar-item">
             <NavLink
-              to="/Profile"
+              to="/EditProfile"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }

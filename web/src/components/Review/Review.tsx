@@ -149,7 +149,7 @@ const ReviewComponent: React.FC = () => {
           <img src={SittingCustomer} alt="sitting-customer" />
         </div>
       </div>
-      <div className="reviews-list">
+      <div className="reviews-container">
         {sortedReviews.map((review) => (
           <div key={review.id} className="review">
             <div className="review-header">
