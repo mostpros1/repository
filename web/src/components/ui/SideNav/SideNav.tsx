@@ -16,7 +16,6 @@ function SideNav() {
   const { user } = useUser();
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
-  const [isHomeowner, setIsHomeowner] = useState(false);
 
    useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,7 +28,8 @@ function SideNav() {
          const groups =
            user.signInUserSession.accessToken.payload["cognito:groups"];
          if (groups && groups.includes("Homeowner")) {
-          setIsHomeowner(true)
+           alert("Jij hebt geen toegang tot deze pagina!");
+           navigate("/");
          } else if (groups && groups.includes("Professional")) {
            setIsProfessional(true);
          }
@@ -38,7 +38,7 @@ function SideNav() {
          console.log("User data is not fully available.");
          navigate("/login"); // Redirect to login or another appropriate page
        }
-     }, 500000); // Delay in milliseconds (5000ms = 5s)
+     }, 500); // Delay in milliseconds (5000ms = 5s)
 
      return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
    }, [user, navigate]); // Depend on user and navigate to ensure updates
@@ -49,7 +49,7 @@ function SideNav() {
         {isProfessional && (
           <li className="sidebar-item">
             <NavLink
-              to="/nl/homeowner-dashboard"
+              to="/specialist-resultaat"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
@@ -61,51 +61,51 @@ function SideNav() {
         )}
         <li className="sidebar-item">
           <NavLink
-            to="/nl/homeowner-dashboard/jobs"
+            to="/Jobs"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <HandymanOutlinedIcon />
-            Klussen
+            Jobs
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/nl/homeowner-dashboard/chat"
+            to="/chat"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <MessageIcon />
-            Berichten
+            Message
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/nl/homeowner-dashboard/calender"
+            to="/CalenderPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <DateRangeIcon />
-            Kalendar
+            Calendar
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/nl/homeowner-dashboard/payments"
+            to="/PaymentPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
           >
             <PaymentIcon />
-            Betalingen
+            Payments
           </NavLink>
         </li>
         <li className="sidebar-item">
           <NavLink
-            to="/nl/homeowner-dashboard/reviews"
+            to="/ReviewPage"
             className={({ isActive }) =>
               isActive ? "sidebar-link active" : "sidebar-link"
             }
@@ -117,35 +117,37 @@ function SideNav() {
         <div className="sidebar-bottom">
           <li className="sidebar-item">
             <NavLink
-              to="/Profile"
+              to="/EditProfile"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
               <AccountCircleIcon />
-              Profiel
+              Profile
             </NavLink>
           </li>
+
           <li className="sidebar-item">
             <NavLink
-              to="/nl/homeowner-dashboard/settings"
+              to="/HomeOwnerSettingsPage"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
-              <SettingsIcon/>
+              <SettingsIcon />
               Settings
             </NavLink>
           </li>
+
           <li className="sidebar-item">
             <NavLink
-              to="/nl/homeowner-dashboard/help"
+              to="/Helpdesk"
               className={({ isActive }) =>
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
               <HelpOutlineIcon />
-              Help
+              Helpdesk
             </NavLink>
           </li>
         </div>

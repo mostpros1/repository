@@ -1,3 +1,7 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 #job-main {
   display: flex;
   flex-direction: column;

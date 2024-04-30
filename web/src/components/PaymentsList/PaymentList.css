@@ -1,0 +1,14 @@
+#btn-stripe {
+  background-color: #6772e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.payment-stripe-text {
+    width: 600px;
+}

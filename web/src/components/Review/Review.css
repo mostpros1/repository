@@ -52,12 +52,6 @@
   font-weight: bold;
 }
 
-.total-reviews {
-  margin: 10px;
-  border-left: 1px solid #ccc;
-  margin-left: 15px;
-  padding-left: 15px;
-}
 
 .review-body {
   margin-top: 10px;
@@ -95,7 +89,7 @@
   display: inline-block;
 }
 
-.star {
+.star-rating {
   color: #ccc; /* Default empty star color */
   font-size: 1.5em;
   line-height: 1;
@@ -107,7 +101,8 @@
 .star.filled {
   color: #ffc107; /* Gold color for filled stars */
 }
-#review-main {
+
+#review-form {
   display: flex;
   flex-direction: column;
   max-width: 600px;
@@ -115,7 +110,7 @@
   margin: 30px 0px 20px 0px;
 }
 
-#review-main input,
+#review-form input,
 textarea {
   width: 100%;
   max-height: 100%;
@@ -125,11 +120,11 @@ textarea {
   border-radius: 5px;
 }
 
-#review-main textarea {
+#review-form textarea {
   resize: vertical;
 }
 
-#review-main button {
+#review-form button {
   padding: 10px 20px;
   background-color: #308ae4;
   color: white;
@@ -139,7 +134,7 @@ textarea {
   margin-top: 30px;
 }
 
-#review-main button:hover {
+#review-form button:hover {
   background-color: #007bff;
 }
 

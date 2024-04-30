@@ -1,15 +1,16 @@
-#review-panel {
+.Payment-panel {
   display: grid;
   grid-template-columns: 200px 1fr;
   margin: 35px 0px 15px 10px;
 }
-#side-panel-left-review {
+.side-panel-right-payment {
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
+  margin-left: 25px;
 }
 
-#side-panel-right-review {
+.side-panel-right-payment {
   display: flex;
   flex-direction: column;
   gap: 20px;

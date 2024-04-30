@@ -19,7 +19,7 @@ function Navigation() {
   const navigate = useNavigate(); // Create a navigate function
 
   const handleIconClick = () => {
-    navigate("/nl/home-innovation"); // Use navigate function to redirect
+    navigate("/HomeInovation"); // Use navigate function to redirect
   };
 
   const handleDropdownToggle = () => {
@@ -61,7 +61,7 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="nl/homeowner-dashboard/jobs">Account</Link>;
+      DashboardLink = <Link to="/Jobs">Account</Link>;
       //DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
       DashboardLink = <Link to="/specialist-resultaat">Account</Link>;
@@ -87,7 +87,7 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/nl/jobs-mostpros" className="black-items">
+            <Link to="/mijn-klussen" className="black-items">
               Klussen <ExpandMoreIcon />
             </Link>
             <div className="mega-box">
