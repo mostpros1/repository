@@ -2,8 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import translationEN from "./translation.en.json"; // Import your English translation JSON file
-import translationNL from "./translation.nl.json"; // Import your Dutch translation JSON file
+import translationEN from "./translations/translation.en.json"; // Import your English translation JSON file
+import translationNL from "./translations/translation.nl.json"; // Import your Dutch translation JSON file
 
 i18n
   .use(Backend)
@@ -27,7 +27,7 @@ i18n
       wait: true,
     },
     backend: {
-      loadPath: "/translation.{{lng}}.json", // Update the loadPath to point to translation.json in the root directory
+      loadPath: "/translations/translation.{{lng}}.json", // Update the loadPath to point to translation.json in the root directory
     },
     detection: {
       order: ["path"], // Configure language detection order
