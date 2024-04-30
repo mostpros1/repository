@@ -93,7 +93,7 @@ function Navigation() {
                   <header>{t("Interieur")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to="/">{t("Interieur adviseur")}</Link>
+                      <Link to="/">{t("InterieurAdviseur")}</Link>
                     </li>
                     <li>
                       <Link to="/">{t("Loodgieter")}</Link>
