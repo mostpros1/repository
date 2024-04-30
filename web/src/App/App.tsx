@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import HomePage from "../pages/HomePage/HomePage";
@@ -201,7 +201,7 @@ const App = () => {
       {/* Wildcard route to capture the language part of the URL */}
       <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
       {/* Fallback route if no language is specified */}
-      <Route path="/nl/*" element={<LanguageAwareRoutes />} />
+      <Route path="/*" element={<Navigate to="/nl/" replace />} />
     </Routes>
   );
 };
