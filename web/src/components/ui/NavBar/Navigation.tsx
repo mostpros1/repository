@@ -17,7 +17,7 @@ function Navigation() {
   const navigate = useNavigate();
 
   const handleIconClick = () => {
-    navigate("/HomeInovation");
+    navigate("/nl/home-innovation"); // Use navigate function to redirect
   };
 
   const handleDropdownToggle = () => {
@@ -58,7 +58,7 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: React.ReactNode = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="/Jobs">{t("Account")}</Link>; {/* Translate account link */ }
+      DashboardLink = <Link to="nl/homeowner-dashboard/jobs">{t("Account")}</Link>; {/* Translate account link */ }
     } else if (groups && groups.includes("Professional")) {
       DashboardLink = <Link to="/specialist-resultaat">{t("Account")}</Link>; {/* Translate account link */ }
     }
@@ -83,7 +83,7 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className="black-items">
+            <Link to="/nl/jobs-mostpros" className="black-items">
               {t("Klussen")} <ExpandMoreIcon />
             </Link>
             {/* Translate mega menu items */}
