@@ -9,6 +9,7 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdPhotos } from "react-icons/io";
+import axios from 'axios';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -34,61 +35,41 @@ function ChatMain({ user, signOut }) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
-  const [recipientEmail, setRecipientEmail] = useState(""); // State om de ontvanger bij te houden
+  const [recipientEmail, setRecipientEmail] = useState("");
 
   const groupMessagesByDate = (messages) => {
-    return messages.reduce((groups, message) => {
+    const groupedMessages = {};
+    messages.forEach((message) => {
       const createdAt = new Date(message.createdAt);
-      const date = createdAt.toLocaleDateString('nl-NL', {
-        month: 'short',
-        day: '2-digit',
-      });
-      if (!groups[date]) {
-        groups[date] = [];
+      const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
+      if (!groupedMessages[dateKey]) {
+        groupedMessages[dateKey] = [];
       }
-      groups[date].push({ ...message, createdAt });
-      return groups;
-    }, {});
-  };
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const recipient = searchParams.get('recipient');
-    if (recipient) {
-      setRecipientEmail(recipient);
-      setSelectedContact(recipient);
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (!selectedContact) return;
-  
-    const filteredChats = chats.filter(chat => {
-      return chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email);
+      groupedMessages[dateKey].push(message);
     });
+    return groupedMessages;
+  };
   
-    const groupedMessages = groupMessagesByDate(filteredChats);
-    for (const date in groupedMessages) {
-      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-    }
   
-    setGroupedMessages(groupedMessages);
-  }, [chats, selectedContact, user.attributes.email]);
+    const filteredChats = selectedContact
+      ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+      : [];
   
-  useEffect(() => {
-    const filteredContacts = contactList.filter((contact) =>
-      contact.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredContactList(filteredContacts);
-  }, [searchTerm, contactList]);
+    useEffect(() => {
+      const groupedMessages = groupMessagesByDate(filteredChats);
+      for (const date in groupedMessages) {
+        groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      }
+      setGroupedMessages(groupedMessages);
+    }, [filteredChats]);
 
-  useEffect(() => {
-    async function fetchChats() {
-      const allChats = await API.graphql({
-        query: queries.listChats,
-        variables: {
-          filter: {
-            members: { contains: user.attributes.email },
+useEffect(() => {
+  async function fetchChats() {
+    const allChats = await API.graphql({
+      query: queries.listChats,
+      variables: {
+        filter: {
+          members: { contains: user.attributes.email },
           },
         },
       });
@@ -97,7 +78,16 @@ function ChatMain({ user, signOut }) {
     }
     fetchChats();
   }, [user.attributes.email]);
-
+  
+    useEffect(() => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const recipient = searchParams.get('recipient');
+      if (recipient) {
+        setRecipientEmail(recipient);
+        setSelectedContact(recipient);
+      }
+    }, []);
+  
   useEffect(() => {
     const sub = API.graphql(
       graphqlOperation(subscriptions.onCreateChat)
@@ -114,8 +104,12 @@ function ChatMain({ user, signOut }) {
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    if (chatBoxRef.current && chats.length > 0) {
+      setTimeout(() => {
+        if (chatBoxRef.current) {
+          chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+        }
+      }, 0);
     }
   }, [chats]);
 
@@ -150,7 +144,7 @@ function ChatMain({ user, signOut }) {
       } else {
         setChats([]);
       }
-      const url = `/chat?recipient=${contact}`;
+      const url = `/nl/homeowner-dashboard/chat?recipient=${contact}`;
       window.location.href = url;
     }
   };
@@ -171,10 +165,6 @@ function ChatMain({ user, signOut }) {
       console.log(text);
   };
 
-  const filteredChats = selectedContact
-  ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-  : [];
-
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const recipient = searchParams.get('recipient');
@@ -189,6 +179,46 @@ function ChatMain({ user, signOut }) {
       handleJoinChat(recipientEmail);
     }
   }, [recipientEmail]);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    try {
+      if (!selectedFile) {
+        console.error('No file selected');
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('photo', selectedFile);
+  
+      const response = await axios.post('https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      console.log(response.data);
+      setUploadedPhotoUrl(response.data);
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+    }
+  };
+  
+  const handleDownload = async () => {
+    try {
+      const response = await axios.get('<https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/?key=<KEY_VAN_DE_FOTO>');
+      
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error downloading photo:', error);
+    }
+  };
 
   return (
     <div className="chat-container">
@@ -233,16 +263,6 @@ function ChatMain({ user, signOut }) {
       </button>
       <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
       <button onClick={handleAlertCancel} className="buttona">Cancel</button>
-      {/* {showAlert && (
-        <div className="alert">
-          <input
-            type="text"
-            placeholder="Enter recipient's email"
-            value={recipientEmail}
-            onChange={handleAlertInputChange}
-          />
-        </div>
-      )} */}
     </div>
       <div className="main-container">
         <div className="chat-main">
@@ -304,7 +324,21 @@ function ChatMain({ user, signOut }) {
             placeholder="Subtotaal"
             className="betalingbedrag"
           />
-          <IoMdPhotos size={25} className="addPhoto"/>
+          <div>
+            <IoMdPhotos size={25} className="addPhoto" />
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+            />
+        </div>
+            <button onClick={handleUpload}>Upload Foto</button>
+            {uploadedPhotoUrl && (
+              <div>
+                <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
+              </div>
+            )}
+          </div>
           <input
             type="text"
             name="search"
@@ -326,19 +360,8 @@ function ChatMain({ user, signOut }) {
           </div>
 
         </div>
-      </div>
-      
-      </div>
-
-      {showJoinButton && user.attributes.email !== recentMessageEmail && !showConfirmedConnection && (
-        <div className="join-chat-button-container">
-          <button type="button" onClick={handleJoinChat}>
-            Join Chat
-          </button>
-        </div>
-      )}
+      </div>    
     </div>
-  );
+  )
 }
-
 export default withAuthenticator(ChatMain);
