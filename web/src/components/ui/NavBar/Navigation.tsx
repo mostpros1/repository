@@ -10,6 +10,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
+export const taal = window.location.pathname.split('/')[1];
+console.log("test ", taal);
+
 function Navigation() {
   const { t } = useTranslation(); // Use useTranslation hook to access translation functions
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -17,7 +20,7 @@ function Navigation() {
   const navigate = useNavigate();
 
   const handleIconClick = () => {
-    navigate("/nl/home-innovation"); // Use navigate function to redirect
+    navigate(`/${taal}/home-innovation`); // Use navigate function to redirect
   };
 
   const handleDropdownToggle = () => {
@@ -46,11 +49,10 @@ function Navigation() {
       console.error("Logout failed:", error);
     }
   };
-
   let authButtons = (
     <>
-      <Link to="/login">{t("Login")}</Link> {/* Translate login button */}
-      <Link to="/registreer">{t("Register")}</Link> {/* Translate register button */}
+      <Link to={`/${taal}/login`}>{t("Login")}</Link> {/* Translate login button */}
+      <Link to={`/${taal}/registreer`}>{t("Register")}</Link> {/* Translate register button */}
     </>
   );
 
@@ -58,9 +60,9 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: React.ReactNode = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="nl/homeowner-dashboard/jobs">{t("Account")}</Link>; {/* Translate account link */ }
+      DashboardLink = <Link to={`/${taal}/homeowner-dashboard/jobs`}>{t("Account")}</Link>; {/* Translate account link */ }
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/specialist-resultaat">{t("Account")}</Link>; {/* Translate account link */ }
+      DashboardLink = <Link to={`/${taal}/specialist-resultaat`}>{t("Account")}</Link>; {/* Translate account link */ }
     }
 
     authButtons = (
@@ -83,7 +85,7 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/nl/jobs-mostpros" className="black-items">
+            <Link to={`/${taal}/jobs-mostpros`} className="black-items">
               {t("Klussen")} <ExpandMoreIcon />
             </Link>
             {/* Translate mega menu items */}
@@ -296,28 +298,28 @@ function Navigation() {
                 </div>
               </div>
             </div>
-        </li>
-        <li className="nav-blue-btn">
-          <Link to="/inschrijven-als-specialist" className="black-items">
-            {t("Inschrijven als vakspecialist")} {/* Translate button */}
-          </Link>
-        </li>
-      </ul>
-      {/* Apps icon */}
-      <div className="apps-icon" onClick={handleIconClick}>
-        <AppsRoundedIcon />
+          </li>
+          <li className="nav-blue-btn">
+            <Link to={`/${taal}/inschrijven-als-specialist`} className="black-items">
+              {t("Inschrijven als vakspecialist")} {/* Translate button */}
+            </Link>
+          </li>
+        </ul>
+        {/* Apps icon */}
+        <div className="apps-icon" onClick={handleIconClick}>
+          <AppsRoundedIcon />
+        </div>
+        {/* Dropdown */}
+        <div className="dropdown-container">
+          <button className="loginButton" onClick={handleDropdownToggle}>
+            <MenuIcon />
+            <PermIdentityIcon />
+          </button>
+          {dropdownOpen && (
+            <div className="dropdown-content">{authButtons}</div>
+          )}
+        </div>
       </div>
-      {/* Dropdown */}
-      <div className="dropdown-container">
-        <button className="loginButton" onClick={handleDropdownToggle}>
-          <MenuIcon />
-          <PermIdentityIcon />
-        </button>
-        {dropdownOpen && (
-          <div className="dropdown-content">{authButtons}</div>
-        )}
-      </div>
-    </div>
     </div >
   );
 }

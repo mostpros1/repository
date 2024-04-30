@@ -37,4 +37,3 @@ i18n
   } as any);
 
 export default i18n;
-

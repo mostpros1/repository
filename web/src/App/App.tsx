@@ -1,4 +1,4 @@
-import { Routes, Route, useParams, Navigate } from "react-router-dom";
+import { Routes, Route, useParams, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import HomePage from "../pages/HomePage/HomePage";
@@ -63,7 +63,7 @@ const LanguageAwareRoutes = () => {
   const addLanguagePrefix = (path) => {
     return `/${lang}${path}`;
   };
-  
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
@@ -99,8 +99,8 @@ const LanguageAwareRoutes = () => {
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/nl/homeowner-dashboard/jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
+      <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/ProfPayment" element={<HomeProPaymentsPage />} />
       <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route
         path="/nl/homeowner-dashboard/settings"
@@ -117,7 +117,7 @@ const LanguageAwareRoutes = () => {
       />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
-      <Route path="/nl/homeowner-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -183,18 +183,21 @@ const LanguageAwareRoutes = () => {
 };
 
 
+
 const App = () => {
   const { lang } = useParams();
   const { i18n } = useTranslation();
-
+  const [language, setLanguage] = useState("");
+  //const navigate = useNavigate();
+  
   useEffect(() => {
     // Set the language based on the lang parameter
     if (lang) {
       i18n.changeLanguage(lang);
+      setLanguage(lang);
+      
     }
   }, [lang, i18n]);
-
-
 
   return (
     <Routes>
