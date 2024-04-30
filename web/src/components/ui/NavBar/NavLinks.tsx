@@ -1,22 +1,24 @@
 import { Link } from 'react-router-dom';
 
+import taal from "./MobileNav";
+
 function NavLinks() {
     const navItems = [
         {
             name: 'Klussen',
-            link: '/mijn-klussen'
+            link: `/${taal}/mijn-klussen`
         },
         {
             name: 'Hoe werkt het',
-            link: '/hoe-werkt-het'
+            link: `/${taal}/hoe-werkt-het`
         },
         {
             name: 'Inschrijven als vakspecialist',
-            link: '/inschrijven-als-specialist'
+            link: `/${taal}/inschrijven-als-specialist`
         },
         {
         name: 'HIL',
-        link: '/home-inovations-lab'
+        link: `/${taal}/home-inovations-lab`
     }
     ]
 
