@@ -133,7 +133,7 @@ function SideNav() {
                 isActive ? "sidebar-link active" : "sidebar-link"
               }
             >
-              <SettingsIcon />
+              <SettingsIcon/>
               Settings
             </NavLink>
           </li>
