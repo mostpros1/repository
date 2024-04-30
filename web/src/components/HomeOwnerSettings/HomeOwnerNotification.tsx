@@ -81,7 +81,7 @@ function HomeOwnerNotification() {
     <div>
       <div className="notification-con">
         <div className="notification-header">
-          <p>Notification</p>
+          <p>Algemene Info</p>
         </div>
         <div className="notification-settings">
           <NotificationCard

@@ -7,7 +7,7 @@ function SpecialistProfile() {
     <div id="root">
       <NavBar />
       <div className="main-content">
-        
+        <SpecialistProfile />
       </div>
       <Footer />
     </div>
