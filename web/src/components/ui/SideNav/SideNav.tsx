@@ -126,7 +126,6 @@ function SideNav() {
               Profiel
             </NavLink>
           </li>
-
           <li className="sidebar-item">
             <NavLink
               to="/nl/homeowner-dashboard/settings"
@@ -138,7 +137,6 @@ function SideNav() {
               Settings
             </NavLink>
           </li>
-
           <li className="sidebar-item">
             <NavLink
               to="/nl/homeowner-dashboard/help"
