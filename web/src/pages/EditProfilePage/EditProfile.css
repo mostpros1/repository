@@ -1,0 +1,17 @@
+#profile-panel {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  margin: 35px 0px 15px 10px;
+}
+
+#side-panel-right-profile {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+#side-panel-left-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
