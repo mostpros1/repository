@@ -61,5 +61,23 @@
     "Startup / Bedrijf": "Startup / Bedrijf",
     "Developer": "Developer",
     "Marketeer / Verkoper": "Marketeer / Verkoper",
-    "Inschijven als vakspecialist": "Inschijven als vakspecialist"
+    "Inschijven als vakspecialist": "Inschijven als vakspecialist",
+
+
+    "Login om vakspecialist te vinden": "Login om vakspecialist te vinden",
+    "Email": "Email",
+    "Wachtwoord": "Wachtwoord",
+    "Wachtwoord vergeten?": "Wachtwoord vergeten?",
+    "Login": "Login",
+    "Nog geen account?": "Nog geen account?",
+    "Account aanmaken": "Account aanmaken",
+    "Of login met onderstaande opties": "Of login met onderstaande opties",
+
+    "Maak een nieuw account aan": "Maak een nieuw account aan",
+    "Voornaam:": "Voornaam:",
+    "Achternaam:": "Achternaam:",
+    "Telefoonnummer:": "Telefoonnummer:",
+    "Herhaal wachtwoord:": "Herhaal wachtwoord:",
+    "Al een account?": "Al een account?",
+    "Inloggen": "Inloggen"
 }
