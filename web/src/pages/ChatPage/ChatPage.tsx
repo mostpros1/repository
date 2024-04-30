@@ -8,9 +8,13 @@ function ChatPage() {
   return (
     <div id="root">
       <NavBar />
-      <div className="center-box">
-        <SideNav />
-        <ChatMain user={undefined} signOut={undefined} />
+      <div className="chat-panel">
+        <div className="side-panel-left-chat">
+          <SideNav />
+        </div>
+        <div className="side-panel-right-chat">
+          <ChatMain user={undefined} signOut={undefined} />
+        </div>
       </div>
       <Footer />
     </div>

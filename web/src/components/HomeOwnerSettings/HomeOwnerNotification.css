@@ -48,6 +48,7 @@ border-right: 1px solid #DDDDDD;
   border-radius: 8px;
   width: 48%; /* Splits the space between two cards */
   box-sizing: border-box;
+  padding: 25px;
 }
 
 .notification-card h2 {
