@@ -100,7 +100,7 @@ function SideNav() {
                 }
               >
                 <DateRangeIcon />
-                Kalendar
+                Kalender
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -180,7 +180,7 @@ function SideNav() {
                 }
               >
                 <DateRangeIcon />
-                Kalendar
+                Kalender
               </NavLink>
             </li>
             <li className="sidebar-item">
