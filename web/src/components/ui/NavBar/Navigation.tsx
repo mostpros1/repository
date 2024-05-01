@@ -53,7 +53,7 @@ function Navigation() {
   let authButtons = (
     <>
       <Link to="/nl/login">Login</Link>
-      <Link to="/nl/registreer">Register</Link>
+      <Link to="/nl/register">Register</Link>
     </>
   );
 
@@ -64,7 +64,7 @@ function Navigation() {
       DashboardLink = <Link to="/nl/homeowner-dashboard/jobs">Account</Link>;
       //DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/nl/professional-dashboard/jobs">Account</Link>;
+      DashboardLink = <Link to="/nl/pro-dashboard/jobs">Account</Link>;
     }
 
     authButtons = (

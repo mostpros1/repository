@@ -278,7 +278,7 @@ function SpecialistMultistepForm() {
           .catch(console.error)
 
 
-        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+        navigate('/nl/confirm-mail', { state: { email: email, postConfig: "PROFESSIONAL" } })
         } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

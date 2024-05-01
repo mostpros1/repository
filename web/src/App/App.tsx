@@ -131,7 +131,7 @@ const App = () => {
       <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/nl/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/nl/login" element={<LoginPage />} />
-      <Route path="/nl/registreer" element={<RegisterPage />} />
+      <Route path="/nl/register" element={<RegisterPage />} />
       <Route path="/nl/payments">
         <Route path="success" element={<>Betaling is gelukt!</>} />
         <Route path="canceled" element={<>Betaling is geannuleerd.</>} />
