@@ -136,27 +136,45 @@ function MultistepForm() {
       console.log('Form Data:', data);
       if (!isLastStep) return next()
 
-      const userData = {
-        email: data.email,
-        password: data.password,
-        repeatPassword: data.repeatPassword,
-        firstName: data.firstName.trim(),
-        lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber
-      }
-  
-      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-        await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/huiseigenaar-resultaat')
+    const userData = {
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber
+    }
+
+    if (user) {
+      console.log(user)
+      console.log('Timonnn:', data);
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+
+      dynamo
+        .put({
+          Item: {
+            id: Math.floor(Math.random() * 1000000000),
+            user_email: currentAuthenticatedUser.attributes.email,
+            profession: data.profession,
+            task: data.task,
+            region: data.stad,
+
+          },
+          TableName: "Klussen",
         })
-        .catch((err) => {
-          console.error(err)
-        })
-      }
-      else {
-        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-        await Auth.signUp({
+        .promise()
+        .catch(console.error)
+
+        const profession = window.location.hash.replace("#", "").split("?")[0];
+        const task = window.location.hash.replace("#", "").split("?")[1];
+
+        const datum = new Date(data.date);
+        const date = datum.toISOString().split('T')[0];
+        navigate(`/HomeOwnerResultPage#${profession}?${task}!${date}`);
+    
+      } else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
         username: userData.email,
         password: userData.password,
         attributes: {
@@ -169,13 +187,23 @@ function MultistepForm() {
         autoSignIn: { enabled: true }
         })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email } })
+          const profession = window.location.hash.replace("#", "").split("?")[0];
+          const task = window.location.hash.replace("#", "").split("?")[1];
+
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
           console.error(error)
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email } })
+            const profession = window.location.hash.replace("#", "").split("?")[0];
+            const task = window.location.hash.replace("#", "").split("?")[1];
+
+            const datum = new Date(data.date);
+            const date = datum.toISOString().split('T')[0];
+            navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }

@@ -18,30 +18,29 @@ function SideNav() {
   const [isHomeowner, setIsHomeowner] = useState(false);
 
   useEffect(() => {
-    if (
-      user &&
-      user.signInUserSession &&
-      user.signInUserSession.accessToken &&
-      user.signInUserSession.accessToken.payload
-    ) {
-      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups) {
-        if (groups.includes("Homeowner")) {
-          setIsProfessional(false);
-        } else if (groups.includes("Professional")) {
-          setIsProfessional(true);
-        }
-      } else {
-        // Handle the case where the user is not assigned to any group
-        console.log("User is not assigned to any group.");
-        navigate("/"); // Redirect to appropriate page
-      }
-    } else {
-      // Handle the case where the user data is not fully available
-      console.log("User data is not fully available.");
-      navigate("/nl/login"); // Redirect to login or another appropriate page
-    }
-  }, [user, navigate]);
+    const timer = setTimeout(() => {
+       if (
+         user &&
+         user.signInUserSession &&
+         user.signInUserSession.accessToken &&
+         user.signInUserSession.accessToken.payload
+       ) {
+         const groups =
+           user.signInUserSession.accessToken.payload["cognito:groups"];
+         if (groups && groups.includes("Homeowner")) {
+          setIsHomeowner(true)
+         } else if (groups && groups.includes("Professional")) {
+           setIsProfessional(true);
+         }
+       } else {
+         // Handle the case where the user data is not fully available
+         console.log("User data is not fully available.");
+         navigate("/login"); // Redirect to login or another appropriate page
+       }
+     }, 500000); // Delay in milliseconds (5000ms = 5s)
+
+     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
+   }, [user, navigate]); 
 
   return (
     <div className="sidebar">
@@ -67,7 +66,7 @@ function SideNav() {
                 }
               >
                 <MessageIcon />
-                Chat
+                Berichten
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -89,7 +88,7 @@ function SideNav() {
                 }
               >
                 <HandymanOutlinedIcon />
-                Jobs
+                Klussen
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -100,7 +99,7 @@ function SideNav() {
                 }
               >
                 <DateRangeIcon />
-                Calendar
+                Kalender
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -122,7 +121,7 @@ function SideNav() {
                 }
               >
                 <SettingsIcon />
-                Settings
+                Instellingen
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -180,7 +179,7 @@ function SideNav() {
                 }
               >
                 <DateRangeIcon />
-                Kalendar
+                Kalender
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -226,7 +225,7 @@ function SideNav() {
                   }
                 >
                   <SettingsIcon />
-                  Settings
+                  Instellingen
                 </NavLink>
               </li>
 
