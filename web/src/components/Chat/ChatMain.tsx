@@ -15,7 +15,6 @@ function ChatMain({ user, signOut }) {
   const {
     chats,
     setChats,
-
     recentMessageEmail,
     showJoinButton,
     setShowJoinButton,
@@ -49,19 +48,17 @@ function ChatMain({ user, signOut }) {
     });
     return groupedMessages;
   };
-  
-  
+
+  useEffect(() => {
+    // Filtered chats based on selected contact
     const filteredChats = selectedContact
-      ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+      ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
       : [];
-  
-    useEffect(() => {
-      const groupedMessages = groupMessagesByDate(filteredChats);
-      for (const date in groupedMessages) {
-        groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-      }
-      setGroupedMessages(groupedMessages);
-    }, [filteredChats]);
+    
+    // Group and set messages
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }, [chats, selectedContact, user.attributes.email]);
 
 useEffect(() => {
   async function fetchChats() {
