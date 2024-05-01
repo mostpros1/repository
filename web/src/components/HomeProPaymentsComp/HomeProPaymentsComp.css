@@ -1,6 +1,5 @@
 body {
-  background-color: #F5F5F5;
-  /* Set the desired background color */
+  background-color: #f5f5f5;
 }
 
 .ProPaymentsMain {
@@ -25,7 +24,7 @@ body {
   height: 4rem;
   color: white;
   font-size: 1.4rem;
-  background: #207CD7;
+  background: #207cd7;
   border-width: 0;
   border-radius: 0.7rem;
   display: flex;
@@ -91,7 +90,6 @@ body {
   padding-right: 3rem;
   gap: 1rem;
   text-align: left;
-  
 }
 
 .ProPaymentsStroke2 {
@@ -105,7 +103,6 @@ body {
   gap: 10rem;
   flex-wrap: wrap;
   height: 7rem;
-
 }
 
 .divContainerPro {
@@ -113,12 +110,11 @@ body {
   width: 12rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start; 
-  padding-left: 0.1rem; 
-  
+  justify-content: flex-start;
+  padding-left: 0.1rem;
 }
 
-.ProPaymentInfoBold{
+.ProPaymentInfoBold {
   font-weight: bold;
 }
 
@@ -133,8 +129,8 @@ body {
   text-align: left;
 }
 
-@media screen and (max-width: 1766px){
-  .ProPaymentsStroke2{
+@media screen and (max-width: 1766px) {
+  .ProPaymentsStroke2 {
     display: flex;
     width: 100%;
     font-size: 1.6rem;

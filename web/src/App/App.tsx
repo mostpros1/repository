@@ -49,6 +49,7 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 
+
 const App = () => {
   const { user } = useUser();
 
