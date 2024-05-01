@@ -167,7 +167,7 @@ Cypress.Commands.add('nextreg', () => {
 //
 Cypress.Commands.add('testinlog', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/login") // Go to website 
+    cy.visit("http://localhost:5173/nl/login") // Go to website 
 });
 
 Cypress.Commands.add('nextinlog', () => {
@@ -300,6 +300,6 @@ Cypress.Commands.add('dshreview', (value1, value2) => {
     cy.wait(6000);
     cy.inlogmenu();
      cy.get('.dropdown-content > a').click();
-     cy.get(':nth-child(5) > .sidebar-link').click();
+     cy.get(':nth-child(6) > .sidebar-link').click();
 
 });

@@ -24,7 +24,7 @@ context('Review functionality test uitvoeren"', () => {
           //tot nu wordt geen date opgeslagd in datebase 
           cy.get('input[type="text"]').eq(0).type(faker.name.firstName());
           cy.get('textarea').eq(0).type(faker.lorem.sentence());
-          cy.get('.review-form > button').click();;
+          cy.get('#review-form > button').click();;
 
       });
     }
@@ -45,7 +45,7 @@ context('reviews-list functionality testen "', () => {
           //tot nu wordt geen date opgeslagd in datebase 
           cy.get('input[type="text"]').eq(0).type(faker.name.firstName()); //voorname 
           cy.get('textarea').eq(0).type(faker.lorem.sentence()); //bio
-          cy.get('.review-form > button').click(); //submit
+          cy.get('#review-form > button').click(); //submit
           // review stars moet toepast zijn maar is nog niet getest
           //reviews list fn testen
           cy.get(':nth-child(1) > .review-footer > .review-actions > :nth-child(1)').click(); //public comment 
