@@ -66,6 +66,7 @@ const App = () => {
       <Route path="/nl/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/nl/pro-onboarding" element={<SpecialistPage />} />
       <Route path="/nl/homeowner-dashboard" element={<ResultsPage />} />
+      <Route path="/nl/pro-dashboard" element={<ResultsPage />} />
       <Route path="/nl/about" element={<AboutUsPage />} />
       <Route path="/nl/how-it-works" element={<HowItWorksPage />} />
       <Route path="/nl/contact" element={<ContactPage />} />
@@ -73,6 +74,7 @@ const App = () => {
       <Route path="/nl/home-innovation" element={<HomeInovation />} />
       <Route path="/nl/VSDashboard" element={<VSDashboard />} />
       <Route path="/nl/homeowner-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/nl/pro-dashboard/profile" element={<SpecialistProfile />} />
       <Route path="/nl/EditProfileSection" element={<EditProfile />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
@@ -80,6 +82,7 @@ const App = () => {
       <Route path="/nl/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
       <Route path="/nl/homeowner-dashboard/calender" element={<Calender />} />
+      <Route path="/nl/pro-dashboard/calender" element={<Calender />} />
       <Route path="/nl/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
         path="/nl/MijnKlussenOverzicht"
@@ -111,6 +114,7 @@ const App = () => {
       <Route path="/nl/FAQPage" element={<FAQPage />} />
       <Route path="/nl/jobspage" element={<Jobspage />} />
       <Route path="/nl/homeowner-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/nl/pro-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/nl/DetailJob" element={<DetailJobPage />} />
       <Route
         path="/nl/MijnKlussenOverzicht"
@@ -119,8 +123,10 @@ const App = () => {
       <Route path="/nl/OverOns" element={<OverOns />} />
       <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/nl/Invoice" element={<InvoicePage />} />
       <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/nl/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/nl/login" element={<LoginPage />} />
       <Route path="/nl/registreer" element={<RegisterPage />} />
