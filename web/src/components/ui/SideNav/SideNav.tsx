@@ -68,7 +68,7 @@ function SideNav() {
                 }
               >
                 <MessageIcon />
-                Chat
+                Berichten
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -90,7 +90,7 @@ function SideNav() {
                 }
               >
                 <HandymanOutlinedIcon />
-                Jobs
+                Klussen
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -101,7 +101,7 @@ function SideNav() {
                 }
               >
                 <DateRangeIcon />
-                Calendar
+                Kalendar
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -123,7 +123,7 @@ function SideNav() {
                 }
               >
                 <SettingsIcon />
-                Settings
+                Instellingen
               </NavLink>
             </li>
             <li className="sidebar-item">
@@ -227,7 +227,7 @@ function SideNav() {
                   }
                 >
                   <SettingsIcon />
-                  Settings
+                  Instellingen
                 </NavLink>
               </li>
 
