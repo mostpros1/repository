@@ -91,9 +91,11 @@ const App = () => {
       <Route path="/nl/OverOns" element={<OverOns />} />
       <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/nl/Invoice" element={<InvoicePage />} />
       <Route path="/nl/ProfPayment" element={<HomeProPaymentsPage />} />
       <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
       <Route
         path="/nl/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
