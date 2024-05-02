@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useTranslation } from "react-i18next";
-import i18n from "../../i18n";
+
 
 type RegisterData = {
   firstName: string;
@@ -33,7 +32,6 @@ export function RegisterForm({
   setUserExists,
   error,
 }) {
-  const { t } = useTranslation();
 
   const [isValidFirstName, setValidFirstName] = useState(true);
 
@@ -62,8 +60,7 @@ export function RegisterForm({
       updateFields({ lastName: inputValueLastName });
     }
   };
-  console.log(i18n.getResourceBundle('nl', 'translation'));
-  console.log("Hello ", t("Voornaam:"));
+
   return (
     <>
       <div className="register-container">
@@ -72,60 +69,57 @@ export function RegisterForm({
             <p className="error-message">{error}</p>
           </div>
         )}
-        <h2>{t("Maak een nieuw account aan")}</h2>
+        <h2>Maak een nieuw account aan</h2>
         <div className="register-form-container">
           <div className="register-form-input">
-            <label htmlFor="firstName">{t("Voornaam:")}</label>
+            <label htmlFor="">Voornaam:</label>
             <input
               pattern="[A-Za-z\s]+"
               required
               type="text"
-              id="firstName"
               placeholder="Voornaam"
               value={firstName}
               onChange={handleFirstNameChange}
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="lastName">{t("Achternaam:")}</label>
+            <label htmlFor="">Achternaam:</label>
             <input
               pattern="[A-Za-z\s]+"
               required
               type="text"
-              id="lastName"
               placeholder="Achternaam"
               value={lastName}
               onChange={handleLastNameChange}
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="email">{t("Email:")}</label>
+            <label htmlFor="">Email:</label>
             <input
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               required
               type="email"
-              id="email"
               placeholder="Email"
               value={email}
               onChange={(e) => updateFields({ email: e.target.value })}
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="phoneNumber">{t("Telefoonnummer:")}</label>
+            <label htmlFor="">Telefoonnummer:</label>
             <PhoneInput
               pattern="\+[0-9 ]{10,}"
               maxlength="14"
               defaultCountry="NL"
               placeholder="+31658349021"
-              value={phoneNumber}
+              value={phoneNumber} // Gebruik direct de waarde uit RegisterData
               onChange={(value) => {
                 console.log("Telefoonnummer gewijzigd:", value);
-                updateFields({ phoneNumber: value || "" });
+                updateFields({ phoneNumber: value || "" }); // Update de phoneNumber in RegisterData
               }}
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="password">{t("Wachtwoord:")}</label>
+            <label htmlFor="">Wachtwoord:</label>
             <input
               pattern=".{8,}"
               required
@@ -137,7 +131,7 @@ export function RegisterForm({
             />
           </div>
           <div className="register-form-input password">
-            <label htmlFor="confirmPassword">{t("Herhaal wachtwoord:")}</label>
+            <label htmlFor="">Herhaal wachtwoord:</label>
             <input
               pattern=".{8,}"
               required
@@ -150,13 +144,12 @@ export function RegisterForm({
           </div>
         </div>
         <div className="register-link">
-          {t("Al een account?")}{" "}
+          Al een account?{" "}
           <a href="#" onClick={() => setUserExists && setUserExists(true)}>
-            {t("Inloggen")}
+            Inloggen
           </a>
         </div>
       </div>
     </>
   );
-
 }
