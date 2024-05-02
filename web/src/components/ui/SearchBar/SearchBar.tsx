@@ -32,7 +32,7 @@ function Searchbar() {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/klussen${link}`);
+    navigate(`/nl/jobs${link}`);
   };
 
 
@@ -99,7 +99,7 @@ function Searchbar() {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/klussen#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
+      to={`/nl/jobs#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""
@@ -116,7 +116,7 @@ function Searchbar() {
 
   // Helper function to navigate to the selected result
   const navigateToResult = (link: string) => {
-    navigate(`/klussen${link}`);
+    navigate(`/nl/jobs${link}`);
   };
 
   return (

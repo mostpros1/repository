@@ -300,7 +300,7 @@ function Navigation() {
             </div>
           </li>
           <li className="nav-blue-btn">
-            <Link to={`/${taal}/inschrijven-als-specialist`} className="black-items">
+            <Link to={`/${taal}/pro-onboarding`} className="black-items">
               {t("Inschrijven als vakspecialist")} {/* Translate button */}
             </Link>
           </li>
