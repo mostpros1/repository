@@ -194,19 +194,19 @@ const App = () => {
   const { lang } = useParams();
   const { i18n } = useTranslation();
   const [language, setLanguage] = useState("");
-  //const navigate = useNavigate();
+
   const navigate = useNavigate();
 
  useEffect(() => {
-    // Check if the current path does not start with '/nl'
+
     if (!window.location.pathname.startsWith('/nl')) {
-      // Redirect to '/nl/'
+
       navigate('/nl/');
     }
  }, [navigate]);
 
   useEffect(() => {
-    // Set the language based on the lang parameter
+
     if (lang) {
       i18n.changeLanguage(lang);
       setLanguage(lang);
