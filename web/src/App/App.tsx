@@ -66,6 +66,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path= "/home-owner-results" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
       <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
