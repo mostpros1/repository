@@ -53,8 +53,8 @@ import { useTranslation } from "react-i18next";
 
 
 const LanguageAwareRoutes = () => {
-  const { user } = useUser(); 
-  
+  const { user } = useUser();
+
   const { lang } = useParams();
   const { t } = useTranslation();
 
@@ -66,7 +66,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path= "/home-owner-results" element={<HomeOwnerResultPage />} />
+      <Route path="/home-owner-results" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
       <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
@@ -86,7 +86,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<SpecialistProfile />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-      
+
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -199,20 +199,27 @@ const App = () => {
 
   const navigate = useNavigate();
 
- useEffect(() => {
+  useEffect(() => {
+    const pathName = window.location.pathname;
+    const hash = window.location.hash;
 
-    if (!window.location.pathname.startsWith('/nl') || !window.location.pathname.startsWith('/en')) {
-
-      navigate('/nl/');
+    if (!window.location.pathname.startsWith('/nl')) {
+      if (!window.location.pathname.startsWith('/en')) {
+        if (pathName === '/') {
+          navigate('/nl/');
+        } else {
+          navigate('/nl' + pathName + hash);
+        }
+      }
     }
- }, [navigate]);
+  }, [navigate]);
 
   useEffect(() => {
 
     if (lang) {
       i18n.changeLanguage(lang);
       setLanguage(lang);
-      
+
     }
   }, [lang, i18n]);
 

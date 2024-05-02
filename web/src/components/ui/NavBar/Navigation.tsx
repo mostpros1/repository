@@ -19,20 +19,8 @@ function Navigation() {
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
 
-  const pathParts = window.location.pathname.split('/');
-    const firstPart = pathParts[1]; // Assuming the first part after the initial slash is what you're checking
+  // Assuming navigate is obtained from useNavigate
 
-    let urlPath;
-    if (firstPart === 'en' || firstPart === 'nl') {
-      // If the first part is 'en' or 'nl', remove it from the path parts array
-      pathParts.splice(1, 1);
-      // Join the remaining parts to form the new path
-      urlPath = pathParts.join('/');
-    } else {
-      // If the first part is not 'en' or 'nl', the entire pathname is considered the urlPath
-      urlPath = window.location.pathname;
-    }
-    navigate(`${urlPath}`);
 
   const handleIconClick = () => {
     navigate(`/${taal}/home-innovation`); // Use navigate function to redirect
