@@ -43,6 +43,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  white-space: nowrap;
+}
+
+#topButton a {
+  margin: 25px;
 }
 
 .invoiceWhiteCard {
