@@ -34,13 +34,12 @@ function SideNav() {
            setIsProfessional(true);
          }
        } else {
-         // Handle the case where the user data is not fully available
          console.log("User data is not fully available.");
-         navigate("/login"); // Redirect to login or another appropriate page
+         navigate("/nl/login");
        }
-     }, 500000); // Delay in milliseconds (5000ms = 5s)
+     }, 500000);
 
-     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
+     return () => clearTimeout(timer);
    }, [user, navigate]); 
 
   return (
@@ -94,7 +93,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/calendar"
+                to="/nl/pro-dashboard/calender"
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -139,17 +138,6 @@ function SideNav() {
           </>
         ) : (
           <>
-            <li className="sidebar-item">
-              <NavLink
-                to="/nl/homeowner-dashboard"
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <DashboardIcon />
-                Dashboard
-              </NavLink>
-            </li>
             <li className="sidebar-item">
               <NavLink
                 to="/nl/homeowner-dashboard/jobs"

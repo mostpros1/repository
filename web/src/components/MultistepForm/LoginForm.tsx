@@ -19,6 +19,11 @@ type LoginFormProps = LoginData & {
 
 export function LoginForm({ email, password, updateFields, setUserExists, handleLogin, error }: LoginFormProps) {
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
+  };
 
   return (
     <>
@@ -38,6 +43,7 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               placeholder='Bijv. joe@hotmail.com'
               value={email}
               onChange={e => updateFields({ email: e.target.value })}
+              onKeyPress={handleKeyPress}
             />
             <label>Wachtwoord</label>
             <input
@@ -46,10 +52,11 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               placeholder='Wachtwoord'
               value={password}
               onChange={e => updateFields({ password: e.target.value })}
+              onKeyPress={handleKeyPress}
             />
           </div>
-          <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
-          <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
+          <p className='login-link'>Nog geen account? <a href="/nl/register" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
+          <Link className='login-link' to="/nl/forgot-password">Wachtwoord vergeten?</Link>
           <button type="button" onClick={handleLogin}>
             Login
           </button>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuIcon from "@mui/icons-material/Menu";
-// import JoinChat from "../../Chat/JoinChat";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined"; // Changed icon here
-//import {ChatBtn} from "../../Chat/Chatbtn";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
@@ -15,11 +13,11 @@ import { Apps } from "@mui/icons-material";
 
 function Navigation() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { user, updateUser } = useUser(); // Assuming you have a useUser hook
-  const navigate = useNavigate(); // Create a navigate function
+  const { user, updateUser } = useUser();
+  const navigate = useNavigate();
 
   const handleIconClick = () => {
-    navigate("/nl/home-innovation"); // Use navigate function to redirect
+    navigate("/nl/home-innovation");
   };
 
   const handleDropdownToggle = () => {
@@ -43,8 +41,8 @@ function Navigation() {
   const handleLogout = async () => {
     try {
       await Auth.signOut();
-      updateUser(null); // Update the user context after logout
-      console.log("Logout successful"); // Update the user context after logout
+      updateUser(null);
+      console.log("Logout successful");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -62,9 +60,8 @@ function Navigation() {
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes("Homeowner")) {
       DashboardLink = <Link to="/nl/homeowner-dashboard/jobs">Account</Link>;
-      //DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/nl/pro-dashboard/jobs">Account</Link>;
+      DashboardLink = <Link to="/nl/pro-dashboard">Account</Link>;
     }
 
     authButtons = (
