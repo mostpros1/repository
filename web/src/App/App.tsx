@@ -53,7 +53,8 @@ import { useTranslation } from "react-i18next";
 
 
 const LanguageAwareRoutes = () => {
-
+  const { user } = useUser(); 
+  
   const { lang } = useParams();
   const { t } = useTranslation();
 
