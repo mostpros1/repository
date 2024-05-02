@@ -194,7 +194,7 @@ function MultistepForm() {
 
         const datum = new Date(data.date);
         const date = datum.toISOString().split('T')[0];
-        navigate(`/nl/HomeOwnerResultPage#${profession}?${task}!${date}`);
+        navigate(`/HomeOwnerResultPage#${profession}?${task}!${date}`);
     
       } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")

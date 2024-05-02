@@ -62,9 +62,7 @@ export function RegisterForm({
       updateFields({ lastName: inputValueLastName });
     }
   };
-  console.log(i18n.getResourceBundle('nl', 'translation'));
-  const test = t("Voornaam:")
-  console.log("Hello ", test);
+  
   return (
     <>
       <div className="register-container">
