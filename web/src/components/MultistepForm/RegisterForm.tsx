@@ -112,7 +112,7 @@ export function RegisterForm({
             />
           </div>
           <div className="register-form-input">
-            <label htmlFor="phoneNumber">Telefoonnummer:</label>
+            <label htmlFor="phoneNumber">{t("Telefoonnummer:")}</label>
             <PhoneInput
               pattern="\+[0-9 ]{10,}"
               maxlength="14"
