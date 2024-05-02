@@ -29,7 +29,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import EditProfile from "../pages/EditProfilePage/EditProfile";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";

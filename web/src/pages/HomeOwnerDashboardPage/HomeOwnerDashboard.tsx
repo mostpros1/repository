@@ -2,9 +2,9 @@ import NavBar from "../../components/ui/NavBar/NavBar";
 import Footer from "../../components/ui/Footer/Footer";
 import EditProfileSection from "../../components/EditProfile/EditProfileSection";
 import SideNav from "../../components/ui/SideNav/SideNav";
-import "./EditProfile.css";
+import "./HomeOwnerDashboard.css";
 
-function EditProfile() {
+function HomeOwnerDashboard() {
   return (
     <div>
       <NavBar />
@@ -21,4 +21,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default HomeOwnerDashboard;
