@@ -15,7 +15,6 @@ function ChatMain({ user, signOut }) {
   const {
     chats,
     setChats,
-
     recentMessageEmail,
     showJoinButton,
     setShowJoinButton,
@@ -49,19 +48,17 @@ function ChatMain({ user, signOut }) {
     });
     return groupedMessages;
   };
-  
-  
+
+  useEffect(() => {
+    // Filtered chats based on selected contact
     const filteredChats = selectedContact
-      ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+      ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
       : [];
-  
-    useEffect(() => {
-      const groupedMessages = groupMessagesByDate(filteredChats);
-      for (const date in groupedMessages) {
-        groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-      }
-      setGroupedMessages(groupedMessages);
-    }, [filteredChats]);
+    
+    // Group and set messages
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }, [chats, selectedContact, user.attributes.email]);
 
 useEffect(() => {
   async function fetchChats() {
@@ -207,16 +204,7 @@ useEffect(() => {
       setUploadedPhotoUrl(response.data);
     } catch (error) {
       console.error('Error uploading photo:', error);
-    }
-  };
-  
-  const handleDownload = async () => {
-    try {
-      const response = await axios.get('<https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/?key=<KEY_VAN_DE_FOTO>');
-      
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error downloading photo:', error);
+      alert('Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.');
     }
   };
 
@@ -324,7 +312,7 @@ useEffect(() => {
             placeholder="Subtotaal"
             className="betalingbedrag"
           />
-          <div>
+          {/* <div>
             <IoMdPhotos size={25} className="addPhoto" />
             <input
                 type="file"
@@ -338,7 +326,7 @@ useEffect(() => {
                 <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
               </div>
             )}
-          </div>
+          </div> */}
           <input
             type="text"
             name="search"
@@ -359,8 +347,10 @@ useEffect(() => {
             <kbd><IoSend size={25} /></kbd>
           </div>
         </div>
-      </div>    
-    </div>
-  )
-}
+      </div>
+      
+      </div>
+</div>
+)}
+
 export default withAuthenticator(ChatMain);
