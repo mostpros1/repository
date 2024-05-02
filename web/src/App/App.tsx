@@ -201,7 +201,7 @@ const App = () => {
 
  useEffect(() => {
 
-    if (!window.location.pathname.startsWith('/nl')) {
+    if (!window.location.pathname.startsWith('/nl') || !window.location.pathname.startsWith('/en')) {
 
       navigate('/nl/');
     }
