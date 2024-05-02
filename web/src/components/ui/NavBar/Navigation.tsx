@@ -52,7 +52,7 @@ function Navigation() {
   let authButtons = (
     <>
       <Link to={`/${taal}/login`}>{t("Login")}</Link> {/* Translate login button */}
-      <Link to={`/${taal}/registreer`}>{t("Register")}</Link> {/* Translate register button */}
+      <Link to={`/${taal}/register`}>{t("Register")}</Link> {/* Translate register button */}
     </>
   );
 

@@ -14,7 +14,7 @@ function NavLinks() {
         },
         {
             name: 'Inschrijven als vakspecialist',
-            link: `/${taal}/inschrijven-als-specialist`
+            link: `/${taal}/pro-onboarding`
         },
         {
         name: 'HIL',
