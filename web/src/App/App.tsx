@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import React from "react";
 import HomePage from "../pages/HomePage/HomePage";
 import KlussenPage from "../pages/KlussenPage/KlussenPage";
 import SpecialistPage from "../pages/Offertestraat-specialist/SpecialistPage";
@@ -28,7 +28,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import EditProfile from "../pages/EditProfilePage/EditProfile";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
@@ -38,88 +38,101 @@ import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNoti
 import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
 import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
 import Jobspage from "../pages/JobsPage/JobsPage";
-import JobsPage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
 import ChatMain from "../pages/ChatPage/ChatPage";
-import "./App.css";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
-import CalenderPage from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+
+
 const App = () => {
+  const { user } = useUser();
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/mijn-klussen" element={<MyTaskPage />} />
-      <Route path="/klussen" element={<KlussenPage />} />
-      <Route path="/klussen/lekkages-repareren" element={<KlussenPage />} />
-      <Route path="/klussen/sanitair-installeren" element={<KlussenPage />} />
-      <Route path="/klussen/tuinontwerp-maken" element={<KlussenPage />} />
-      <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
-      <Route path="/bevestig-email" element={<BevestigEmailPage />} />
-      <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
-      <Route path="/inschrijven-als-specialist" element={<SpecialistPage />} />
-      <Route path="/specialist-resultaat" element={<ResultsPage />} />
-      <Route path="/over-ons" element={<AboutUsPage />} />
-      <Route path="/hoe-werkt-het" element={<HowItWorksPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/nl/jobs-mostpros" element={<MyTaskPage />} />
+      <Route path="/nl/jobs" element={<KlussenPage />} />
+      <Route path="/nl/jobs/lekkages-repareren" element={<KlussenPage />} />
+      <Route path="/nl/jobs/sanitair-installeren" element={<KlussenPage />} />
+      <Route path="/nl/jobs/tuinontwerp-maken" element={<KlussenPage />} />
+      <Route path="/nl/forgot-password" element={<WachtwoordVergetenPage />} />
+      <Route path="/nl/confirm-mail" element={<BevestigEmailPage />} />
+      <Route path="/nl/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
+      <Route path="/nl/pro-onboarding" element={<SpecialistPage />} />
+      <Route path="/nl/homeowner-dashboard" element={<ResultsPage />} />
+      <Route path="/nl/pro-dashboard" element={<ResultsPage />} />
+      <Route path="/nl/about" element={<AboutUsPage />} />
+      <Route path="/nl/how-it-works" element={<HowItWorksPage />} />
+      <Route path="/nl/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
-      <Route path="/HomeInovation" element={<HomeInovation />} />
+      <Route path="/nl/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/SpecialistProfile" element={<SpecialistProfile />} />
-      <Route path="/EditProfileSection" element={<EditProfile />} />
+      <Route path="/nl/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
+      <Route path="/nl/pro-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/EditProfileSection" element={<HomeOwnerDashboardPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
-      <Route path="/DashboardPage" element={<DashboardPage />} />
-      <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
+      <Route path="/nl/DashboardPage" element={<DashboardPage />} />
+      <Route path="/nl/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
-      <Route path="/CalenderPage" element={<CalenderPage />} />
-      <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
+      <Route path="/nl/homeowner-dashboard/calender" element={<Calender />} />
+      <Route path="/nl/pro-dashboard/calender" element={<Calender />} />
+      <Route path="/nl/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
-        path="/MijnKlussenOverzicht"
+        path="/nl/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
       />
-      <Route path="/OverOns" element={<OverOns />} />
-      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage/>} />
-      <Route path="/ProfPayment" element={<HomeProPaymentsPage/>} />
-      <Route path="/chat" element={<ChatMain />} />
+      <Route path="/nl/OverOns" element={<OverOns />} />
+      <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/Invoice" element={<InvoicePage />} />
+      <Route path="/nl/ProfPayment" element={<HomeProPaymentsPage />} />
+      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
       <Route
-        path="/HomeOwnerSettingsPage"
+        path="/nl/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
       <Route
-        path="/HomeOwnerNotification"
+        path="/nl/pro-dashboard/settings"
+        element={<HomeOwnerSettingsPage />}
+      />
+      <Route
+        path="/nl/HomeOwnerNotification"
         element={<HomeOwnerNotification />}
       />
-      <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
+      <Route path="/nl/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
       <Route
-        path="/HomeOwnerDeactivation"
+        path="/nl/HomeOwnerDeactivation"
         element={<HomeOwnerDeactivation />}
       />
-      <Route path="/FAQPage" element={<FAQPage />} />
-      <Route path="/jobspage" element={<Jobspage />} />
-      <Route path="/ReviewPage" element={<ReviewPage />} />
-      <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/nl/FAQPage" element={<FAQPage />} />
+      <Route path="/nl/jobspage" element={<Jobspage />} />
+      <Route path="/nl/homeowner-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/nl/pro-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/nl/DetailJob" element={<DetailJobPage />} />
       <Route
-        path="/MijnKlussenOverzicht"
+        path="/nl/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
       />
-      <Route path="/OverOns" element={<OverOns />} />
-      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/Jobs" element={<JobsPage />} />
-      <Route path="/Invoice" element={<InvoicePage />} />
-      <Route path="/chat" element={<ChatMain />} />
-      <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/registreer" element={<RegisterPage />} />
-      <Route path="/payments">
+      <Route path="/nl/OverOns" element={<OverOns />} />
+      <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/nl/Invoice" element={<InvoicePage />} />
+      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/nl/VSMijnklussen" element={<VSMijnklussen />} />
+      <Route path="/nl/login" element={<LoginPage />} />
+      <Route path="/nl/register" element={<RegisterPage />} />
+      <Route path="/nl/payments">
         <Route path="success" element={<>Betaling is gelukt!</>} />
         <Route path="canceled" element={<>Betaling is geannuleerd.</>} />
         <Route
@@ -132,41 +145,37 @@ const App = () => {
           }
         />
       </Route>
-      {/* Protected routes */}
       <Route
-        path="/admin-paneel"
+        path="/nl/admin-paneel"
         element={
-          <ProtectedRoute
-            allowedRoles={["Admin"]}
-            page={<AdminSideBar />}
-            redirectTo="/"
-          />
+          user && user.role === "Admin" ? <AdminSideBar /> : <Navigate to="/" />
         }
       >
         <Route index element={<AdminMain />} />
         <Route path="manage-users" element={<ManageUser />} />
       </Route>
       <Route
-        path="/dashboard-huiseigenaar"
+        path="/nl/dashboard-huiseigenaar"
         element={
-          <ProtectedRoute
-            allowedRoles={["Homeowner"]}
-            page={<HomeOwnerDashboard />}
-            redirectTo="/"
-          />
+          user && user.role === "Homeowner" ? (
+            <HomeOwnerDashboard />
+          ) : (
+            <Navigate to="/" />
+          )
         }
       />
       <Route
-        path="/dashboard-professional"
+        path="/nl/dashboard-professional"
         element={
-          <ProtectedRoute
-            allowedRoles={["Professional"]}
-            page={<ProfessionalDashboard />}
-            redirectTo="/"
-          />
+          user && user.role === "Professional" ? (
+            <ProfessionalDashboard />
+          ) : (
+            <Navigate to="/" />
+          )
         }
       />
     </Routes>
   );
 };
+
 export default App;

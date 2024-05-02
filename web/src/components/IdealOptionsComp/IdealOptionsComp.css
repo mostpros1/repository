@@ -13,7 +13,6 @@
   justify-content: flex-start; /* Align items to the fully left */
   gap: 3rem;
   margin-bottom: 5rem;
-  background: orange;
 }
 
 .paymentOptionsCard {

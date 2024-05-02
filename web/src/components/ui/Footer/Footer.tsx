@@ -10,12 +10,12 @@ function Footer() {
       <div className="footer_container">
         <div className="footerSection">
           <h4>Bedrijf</h4>
-          <Link to="/hoe-werkt-het">Hoe werkt het</Link>
+          <Link to="/nl/how-it-works">Hoe werkt het</Link>
           <a href="">Waarom mostpros</a>
-          <Link to="/over-ons">Over</Link>
-          <Link to="/over-ons">Jobs</Link>
-          <Link to="/over-ons">Product updates</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/nl/OverOns">Over</Link>
+          <Link to="/nl/jobs">Jobs</Link>
+          <Link to="/nl/OverOns">Product updates</Link>
+          <Link to="/nl/contact">Contact</Link>
         </div>
         <div className="footerSection">
           <h4>Huiseigenaar</h4>
@@ -24,7 +24,7 @@ function Footer() {
         </div>
         <div className="footerSection">
           <h4>Vakspecialist</h4>
-          <Link to="/inschrijven-als-specialist">Inschrijven als vakspecialist</Link>
+          <Link to="/nl/pro-onboarding">Inschrijven als vakspecialist</Link>
           <p>Pro bedrijven centrum</p>
           <p>Help voor professionals</p>
         </div>
