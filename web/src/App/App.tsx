@@ -85,7 +85,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<SpecialistProfile />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/EditProfileSection" element={<EditProfile />} />
+      
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -186,6 +186,7 @@ const LanguageAwareRoutes = () => {
       />
     </Routes>
   );
+  //<Route path="/EditProfileSection" element={<EditProfile />} />
 };
 
 
