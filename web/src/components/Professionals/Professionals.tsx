@@ -94,7 +94,7 @@ function Professionals() {
           
         </div>
         <div className="button_container">
-          <Link to="/klussen">
+          <Link to="/nl/jobs">
             <button className="button">Nieuwe klus plaatsen</button>
           </Link>
         </div>

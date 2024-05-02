@@ -14,17 +14,17 @@ export function useChatBackend(user: any, signOut) {
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
 
-// // sends messages ///
+// sends messages
 const handleSendMessage = async (text) => {
   const members = [user.attributes.email, recipientEmail];
   await API.graphql({
     query: mutations.createChat,
     variables: {
       input: {
-        text: text, // Correct gebruik van de 'text' variabele
+        text: text,
         email: user.attributes.email,
         members,
-        sortKey: members.sort().join("#"), // Create a unique sortKey
+        sortKey: members.sort().join("#"),
       },
     },
   });
@@ -32,52 +32,46 @@ const handleSendMessage = async (text) => {
 
 const handleReceivedMessage = (receivedChat) => {
   if (receivedChat.members.includes(user.attributes.email)) {
-    setChats((prevChats) => [...prevChats, receivedChat]); // Voeg het ontvangen bericht toe aan de lijst met chats
-    setRecentMessageEmail(receivedChat.email); // Update recentMessageEmail met de email van de afzender
-    if (receivedChat.email !== user.attributes.email) { // Controleer of de ontvangen chat niet van de huidige gebruiker is
+    setChats((prevChats) => [...prevChats, receivedChat]);
+    setRecentMessageEmail(receivedChat.email);
+    if (receivedChat.email !== user.attributes.email) {
       setShowJoinButton(true);
     }
   }
 };
 
-// // Functions for make new Chat // //
-  const handleStartNewChat = () => {
-    setRecipientEmail(
-      // @ts-ignore
-      prompt("Enter the email of the person you want to chat with:")
-    );
-    setShowAlert(true);
-  };
+const handleStartNewChat = () => {
+  const recipientEmail = prompt("Enter the email of the person you want to chat with:");
+  if (recipientEmail) {
+    const url = `/chat?recipient=${recipientEmail}`;
+    window.location.href = url;
+  }
+};
 
-  const handleAlertInputChange = (e) => {
-    setRecipientEmail(e.target.value);
-  };
-
-  const handleAlertConfirm = () => {
-    if (recipientEmail) {
-      handleSendMessage("Hello, let's chat!");
-      setShowAlert(false);
-      setShowJoinButton(false);
-      setShowConfirmedConnection(true); 
-      setNotificationMessage(`${recentMessageEmail} joined the chat`);
-    }
-  };
-
-  const handleAlertCancel = () => {
+const handleAlertConfirm = () => {
+  if (recipientEmail) {
     setShowAlert(false);
-    setRecipientEmail("");
-  };
-
-// // for recipientEmail to make connection to chat // //
-  const handleJoinChat = () => {
-    console.log("Joining chat with email:", recentMessageEmail);
-    const members = [user.attributes.email, recentMessageEmail];
-    setRecipientEmail(recentMessageEmail);
-    setRecentMessageEmail("");
-    setShowJoinButton(false); 
+    setShowJoinButton(false);
     setShowConfirmedConnection(true); 
-    setNotificationMessage(`${recentMessageEmail} joined the chat`);
-  };
+  }
+};
+
+const handleAlertCancel = () => {
+  setShowAlert(false);
+  setRecipientEmail("");
+};
+
+const handleJoinChat = (recentMessageEmail) => {
+  const members = [user.attributes.email, recentMessageEmail];
+  setRecipientEmail(recentMessageEmail);
+  setRecentMessageEmail("");
+  setShowJoinButton(false); 
+  setShowConfirmedConnection(true); 
+  setNotificationMessage(`${recentMessageEmail} joined the chat`);
+};
+
+// Rest of the code remains the same
+
 
 return {
     chats,
@@ -89,7 +83,6 @@ return {
     notificationMessage,
     handleStartNewChat,
     handleSendMessage,
-    handleAlertInputChange,
     handleAlertConfirm,
     handleAlertCancel,
     handleJoinChat,

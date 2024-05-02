@@ -3,6 +3,7 @@ import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 type LoginData = {
   email: string
@@ -18,7 +19,7 @@ type LoginFormProps = LoginData & {
 }
 
 export function LoginForm({ email, password, updateFields, setUserExists, handleLogin, error }: LoginFormProps) {
-
+  const { t } = useTranslation();
 
   return (
     <>
@@ -28,10 +29,10 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
             <p className="error-message">{error}</p>
           </div>
         )}
-        <h2>Login om vakspecialist te vinden</h2>
+        <h2>{t("Login om vakspecialist te vinden")}</h2>
         <div className='login-form-con'>
           <div className='login-form'>
-            <label>Email</label>
+            <label>{t("Email")}</label>
             <input
               required
               type="email"
@@ -39,7 +40,7 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               value={email}
               onChange={e => updateFields({ email: e.target.value })}
             />
-            <label>Wachtwoord</label>
+            <label>{t("Wachtwoord")}</label>
             <input
               required
               type="password"
@@ -48,14 +49,14 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               onChange={e => updateFields({ password: e.target.value })}
             />
           </div>
-          <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
-          <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
+          <p className='login-link'>{t("Nog geen account?")} <a href="#" onClick={() => setUserExists(false)}>{t("Account aanmaken")}</a></p>
+          <Link className='login-link' to="/wachtwoord-vergeten">{t("Wachtwoord vergeten?")}</Link>
           <button type="button" onClick={handleLogin}>
-            Login
+            {t("Login")}
           </button>
         </div>
         <div className='social-con'>
-          <div>Of login met onderstaande opties</div>
+          <div>{t("Of login met onderstaande opties")}</div>
           <div className='social-btn'><img src={facebook} alt="" />Facebook</div>
           <div className='social-btn'><img src={google} alt="" />Gmail</div>
           <div className='social-btn'><img src={instagram} alt="" />Instagram</div>

@@ -1,4 +1,4 @@
-import { dynamo } from './declerations.ts';
+import { dynamo } from './declarations.ts';
 
 export function deleteData(tableName: string, key: string, value: string) {
   dynamo

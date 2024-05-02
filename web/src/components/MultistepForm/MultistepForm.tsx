@@ -1,5 +1,5 @@
 import './MultistepForm.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
@@ -11,9 +11,12 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
+import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
+import { userInfo } from 'os'
+import { dynamo } from '../../../declarations'
 
 type FormData = {
   postCode: string
@@ -28,8 +31,8 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
-  formConfig: string
-  beroep: string
+  profession: string;
+  task: string;
 }
 
 function MultistepForm() {
@@ -51,24 +54,15 @@ function MultistepForm() {
     phoneNumber: "",
     password: "",
     repeatPassword: "",
-    beroep: "",
-    formConfig: ""
+    profession: "",
+    task: "",
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  const [isValidDatum, setValidDatum] = useState(true);
-
-
-  /*const updateDate = (newDate) => {
-      setDate(newDate);
-  };*/
-
 
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
-
-  const [date, setDate] = useState<string | null>(null);
 
   const updateDate = (selectedDate: Date) => {
     const year = selectedDate.getFullYear();
@@ -76,7 +70,6 @@ function MultistepForm() {
     const day = String(selectedDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
     updateFields({ date: formattedDate });
-    setDate(formattedDate);
   };
 
   function updateQuestionAnswers(questionKey: string, answer: string) {
@@ -131,25 +124,118 @@ function MultistepForm() {
   ));
 
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
-    steps: [
-      <>
+  const { user, updateUser } = useUser();
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm(
+    user ? {
+      steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
+      ],
+      onStepChange: () => { }
+    } : {
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <>
+          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+        </>
+      ],
+      onStepChange: () => { }
+    }
+  );
+  useEffect(() => {
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    const task = window.location.hash.replace("#", "").split("?")[1];
 
-        <PageSpecialisten date={date} />
-      </>
-    ],
-    onStepChange: () => { }
-  });
-  console.log(updateDate);
-  //<Calendar />,
-  //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />,
+
+    updateFields({ profession, task });
+  }, []);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+    if (!isLastStep) return next()
+
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber
+    }
+
+    if (user) {
+      console.log(user)
+      console.log('Timonnn:', data);
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+
+      dynamo
+        .put({
+          Item: {
+            id: Math.floor(Math.random() * 1000000000),
+            user_email: currentAuthenticatedUser.attributes.email,
+            profession: data.profession,
+            task: data.task,
+            region: data.stad,
+
+          },
+          TableName: "Klussen",
+        })
+        .promise()
+        .catch(console.error)
+
+        const profession = window.location.hash.replace("#", "").split("?")[0];
+        const task = window.location.hash.replace("#", "").split("?")[1];
+
+        const datum = new Date(data.date);
+        const date = datum.toISOString().split('T')[0];
+        navigate(`/nl/HomeOwnerResultPage#${profession}?${task}!${date}`);
+    
+      } else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
+        username: userData.email,
+        password: userData.password,
+        attributes: {
+          phone_number: userData.phoneNumber,
+          name: userData.firstName,
+          "custom:family_name": userData.lastName,
+        },
+        autoSignIn: { enabled: true },
+      })
+        .then(() => {
+          const profession = window.location.hash.replace("#", "").split("?")[0];
+          const task = window.location.hash.replace("#", "").split("?")[1];
+
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+        })
+        .catch(async error => {
+          if (error.code == 'UsernameExistsException') {
+            await Auth.resendSignUp(userData.email)
+            const profession = window.location.hash.replace("#", "").split("?")[0];
+            const task = window.location.hash.replace("#", "").split("?")[1];
+
+            const datum = new Date(data.date);
+            const date = datum.toISOString().split('T')[0];
+            navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          } else {
+            console.error("foutmelding:", error)
+          }
+        })
+    }
+  }
+
   const stepWidth = 100 / steps.length;
 
   return (
-    <form onSubmit={onsubmit} className='form-con'>
+    <form onSubmit={onSubmit} className='form-con'>
       <div className='progress-con'>
         <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
@@ -173,4 +259,4 @@ function MultistepForm() {
   )
 }
 
-export default MultistepForm;
+export default MultistepForm

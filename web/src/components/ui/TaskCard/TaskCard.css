@@ -1,0 +1,105 @@
+.task-card {
+  display: flex;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  height: 700px;
+  margin-bottom: 80px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.task-card p {
+  font-size: 15px;
+  max-height: 300px; /* Limit the height of the text */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds an ellipsis to indicate text has been cut off */
+}
+
+.current-task-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-right: 175px;
+  margin-bottom: 20px;
+  width: 40%;
+}
+
+
+.task-title {
+  font-size: 19px; /* Match font size to design */
+  color: #333;
+  font-weight: bold; /* Make it bold */
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px groove #d9d9d9;
+  padding-bottom: 30px; /* Add space between text and bottom border */
+  white-space: nowrap;
+}
+
+.task-detail h4 {
+  font-size: 25px; /* Increase font size */
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.task-detail p {
+  padding-bottom: 20px;
+}
+
+.task-detail span {
+  font-weight: 550;
+  font-size: 17px;
+}
+
+.task-detail h5 {
+  font-size: 18px; /* Increase font size */
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.type-klus {
+  display: flex;
+  flex-direction: column; /* Change the flex direction to column */
+  align-items: center; /* Center the items horizontally */
+  justify-content: center; /* Center the items vertically */
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 150px; /* Make the width fit its content */
+  height: auto; /* Make the height fit its content */
+}
+
+.type-klus span {
+  font-size: 14px; /* Font size for the text */
+  color: #333;
+  text-align: center;
+}
+
+.klus-icon {
+  margin-bottom: 10px; /* Space between icon and text */
+  width: 50px; /* Icon size */
+  height: 50px; /* Icon size, make it square */
+}
+
+.task-button {
+  margin: 0;
+  background: none;
+  color: #17a1fa;
+  padding-top: 30px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  border: none;
+}

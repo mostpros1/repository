@@ -1,0 +1,337 @@
+#mainConfirmDate{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 4rem;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 8rem;
+    height: 100vh;
+    /* background: orange; */
+}
+
+#topButtonContainerConfirmDate{
+        width: 57%;
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* background: green; */
+}
+
+#infoCardConfirmDate{
+    max-width: 45rem;
+    font-size: 15px;
+}
+
+.whiteCardDetailJob {
+    width: 50%;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .whiteCardRightWrapperDetailJob {
+    padding: 3.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .whiteCardRightWrapperDetailJob.centered {
+    padding: 3.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .whiteCardLeftWrapperDetailJob {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .jobCardDetailDetailJob {
+    height: 10.5rem;
+    width: 10rem;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .jobCardTextDetailJob {
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .klus-iconDetailDetailJob {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+  
+  .infoTextDetailJob {
+    font-size: 13px;
+    max-width: 90%;
+  }
+  
+  .dateDayDetailJob {
+    color: #308ae4;
+    font-size: 35px;
+  }
+  
+  .dateDetailDetailJob{
+    font-size: 12px;
+  }
+  
+  .iconInfoBoxDetailJob {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+  }
+  
+  .divFlexDetailJob {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .moreInfoBoxDetailJob {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .moreInfoNameDetailJob {
+    color: #17a1fa;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .buttonContainerConfirmDate {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  #buttonConfirmDate{
+    width: 16rem;
+    height: 5rem;
+    color: white;
+    background: #308AE4;
+    border-radius: 7%;
+    border: 0;
+  }
+  
+  .buttonContainerConfirmDate button:hover {
+    cursor: pointer;
+  }
+
+
+
+  @media screen and (max-width: 1452px) {
+    .topButtonContainerDetailJob {
+      width: 70%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 70%;
+    }
+
+    .whiteCardRightWrapperDetailJob{
+        justify-content: center;
+    }
+  }
+  
+  @media screen and (max-width: 800px) {
+    .topButtonContainerDetailJob {
+      width: 80%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 80%;
+    }
+  }
+  
+  @media screen and (max-width: 700px) {
+    .topButtonContainerDetailJob {
+      width: 90%;
+    }
+  
+    .whiteCardDetailJob {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .whiteCardRightWrapperDetailJob {
+      width: 100%; 
+      margin-bottom: 2rem; 
+    }
+  
+    .moreInfoBoxDetailJob {
+      width: 100%;
+      text-align: center; 
+    }
+  }
+
+
+  .dateCardDetailJob.centered {
+    text-align: center;
+    margin-top: auto; 
+  }
+  
+  .arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .whiteCardRightWrapperDetailJob {
+    position: relative;
+  }
+  
+  .arrowContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .left-arrow,
+  .right-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    cursor: pointer;
+  }
+  
+  .left-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 15px 10px 0;
+    border-color: transparent white transparent transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 43%;
+  }
+  
+  .circleRed {
+    background: #308AE4;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: -130px; /* Adjust this value to position the circle */
+    transform: translateY(-50%); /* Center vertically */
+    cursor: pointer;
+  }
+  
+  
+  .circleBlue {
+    background: #308AE4;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: -130px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .circleBlue.animate {
+    animation: clickAnimation 0.2s linear forwards;
+  }
+  
+  @keyframes clickAnimation {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(calc(-50% + 2px)); /* Move circle down slightly */
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  .circleRed.animate {
+    animation: clickAnimation 0.2s linear forwards;
+  }
+  
+  @keyframes clickAnimation {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(calc(-50% + 2px)); /* Move circle down slightly */
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+  
+  
+  
+  .right-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 15px;
+    border-color: transparent transparent transparent white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(50%); /* Center the arrow horizontally */
+    right: 43%; /* Position the arrow at the center horizontally */
+  }
+  
+  .disabledCircle {
+    cursor: not-allowed;
+  }
+  
+  .grayCircle {
+    background: gray;
+  }
+  
+  @media screen and (max-width: 620px) {
+    .right-arrow {
+      border-width: 9px 0 9px 9px;
+      
+    }
+
+    .left-arrow{
+      border-width: 9px 9px 9px 0;
+    }
+  
+    .circleRed,
+    .circleBlue {
+      height: 3rem;
+      width: 3rem;
+    }
+  }
+  

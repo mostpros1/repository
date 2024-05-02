@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import aws from 'aws-sdk';
-import { dynamo } from '../../../../backend_functions/declerations.ts';
+import { dynamo } from '../../../declarations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
 
 
@@ -201,7 +203,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
   };
 
   const submitDates = async () => {
-    
+
     /*const item = {
       userId: "test1", // Dit zou iets unieks moeten zijn, zoals een gebruikers-ID
       dates: selectedDates, // Dit is de lijst van geselecteerde datums
@@ -225,12 +227,12 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
       alert("Fout bij het opslaan van beschikbaarheid.");
     }*/
 
-    
+    Datums = [];
     for (let i = 0; i < selectedDates.length; i++) {
       Datums = [...Datums, selectedDates[i]];
-      
-      
-      const params = {
+
+
+      /*const params = {
         TableName: "UserAvailability",
         Item: {
           id: Math.floor(Math.random() * 1000000),
@@ -247,6 +249,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
         console.error("Er is een fout opgetreden bij het opslaan: ", error);
         alert("Fout bij het opslaan van beschikbaarheid.");
       }
+    */
     }
   };
 
@@ -327,7 +330,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Vorige maand"
             tabIndex={0}
           >
-            <img src={Prev} className='fotoinButtonL' alt="Vorige" />
+            <div className="prevIcon">
+              <ArrowBackIosNewIcon/>
+            </div>
           </button>
           <button
             type="button"
@@ -346,7 +351,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Volgende maand"
             tabIndex={0}
           >
-            <img src={Next} className='fotoinButtonR' alt="Volgende" />
+            <div className='nextIcon'>
+              <ArrowForwardIosIcon/>
+            </div>
           </button>
         </div>
         <div className="week-days">
