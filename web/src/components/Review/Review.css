@@ -93,12 +93,12 @@
   font-size: 1.5em;
   line-height: 1;
   margin: 0 2px;
-  transition: color 0.2s; /* Smooth transition for color change */
+  transition: color 0.2s;
   cursor: default;
 }
 
 .star.filled {
-  color: #ffc107; /* Gold color for filled stars */
+  color: #ffc107;
 }
 
 #review-form {
@@ -140,11 +140,11 @@ textarea {
 /* Responsive styles */
 @media (max-width: 768px) {
   .reviews-container {
-    grid-template-columns: 1fr; /* One column on smaller screens */
+    grid-template-columns: 1fr; 
   }
 
   .review-actions {
-    grid-template-columns: 1fr; /* Stack buttons vertically on smaller screens */
+    grid-template-columns: 1fr; 
   }
 }
 
@@ -163,6 +163,6 @@ textarea {
   }
 
   .review-actions button {
-    width: 100%; /* Full width buttons on very small screens */
+    width: 100%; 
   }
 }
