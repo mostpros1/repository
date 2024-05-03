@@ -70,6 +70,7 @@ declare namespace Cypress {
         Helpdesk():void;
         dshchat(value1,value2):void;
         dshreview(value1,value2):void;
+        dshsettings(value1,value2):void;
         
     }
 }
@@ -158,7 +159,7 @@ Cypress.Commands.add('goForward', () => {
 //
 Cypress.Commands.add('testreg', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/registreer") // Go to website 
+    cy.visit("http://localhost:5173/nl/register") // Go to website 
 });
 Cypress.Commands.add('nextreg', () => {
     cy.get('[class="registerForm_wrapper"]').click();
@@ -233,49 +234,49 @@ Cypress.Commands.add('MijnKlussendash', () => {
 
 Cypress.Commands.add('Jobs', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/Jobs")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/jobs")
 
 });
 
 Cypress.Commands.add('chat', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/chat")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/chat")
 
 });
 
 Cypress.Commands.add('Calendar', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/Calendar")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/calender")
 
 });
 
 Cypress.Commands.add('Payments', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/Payments")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/payments")
 
 });
 
 Cypress.Commands.add('ReviewPage', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/ReviewPage")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/reviews")
 
 });
 
 Cypress.Commands.add('Profile', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/Profile")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/profile")
 
 });
 
 Cypress.Commands.add('HomeOwnerSettingsPage', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/HomeOwnerSettingsPage")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/settings")
 
 });
 
 Cypress.Commands.add('Helpdesk', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/Helpdesk")
+    cy.visit("http://localhost:5173/nl/homeowner-dashboard/help")
 
 });
 
@@ -289,7 +290,7 @@ Cypress.Commands.add('dshchat', (value1, value2) => {
     cy.wait(6000);
     cy.inlogmenu();
      cy.get('.dropdown-content > a').click();
-     cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();
+     cy.get('.sidebar-list > :nth-child(3) > .sidebar-link').click();
 
 });
 
@@ -301,5 +302,16 @@ Cypress.Commands.add('dshreview', (value1, value2) => {
     cy.inlogmenu();
      cy.get('.dropdown-content > a').click();
      cy.get(':nth-child(6) > .sidebar-link').click();
+
+});
+
+Cypress.Commands.add('dshsettings', (value1, value2) => {
+    cy.get('input[type="email"]').eq(0).type(value1);
+    cy.get('input[type="password"]').type(value2);
+    cy.nextinlog();
+    cy.wait(6000);
+    cy.inlogmenu();
+     cy.get('.dropdown-content > a').click();
+     cy.get('.sidebar-bottom > :nth-child(2) > .sidebar-link').click();
 
 });
