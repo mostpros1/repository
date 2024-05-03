@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import taal from "./MobileNav";
+import { taal } from "./MobileNav";
 
 function NavLinks() {
     const navItems = [

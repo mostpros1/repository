@@ -8,7 +8,7 @@ import { LoginForm } from '../../components/MultistepForm/LoginForm';
 import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
-import lang from "../../components/ui/NavBar/Navigation";
+import { taal } from "../../components/ui/NavBar/Navigation";
 
 
 function LoginPage() {
