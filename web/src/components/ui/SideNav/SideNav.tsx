@@ -190,7 +190,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to={`/${taal}/ProfPayment`}
+                to={`/${taal}/homeowner-dashboard/payments`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
