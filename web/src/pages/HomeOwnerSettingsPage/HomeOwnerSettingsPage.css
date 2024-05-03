@@ -1,20 +1,32 @@
-#main-con {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0px;
-  padding: 20px;
-  max-width: 1300px;
-}
-
 #main-center {
   display: flex;
   justify-content: center;
 }
 
+#main-con {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 3rem;
+  margin: 0px auto 0 150px;
+}
+
+.settings-upper {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  width: auto;
+  font-size: 18px;
+  margin-left: 150px;
+  transition: al 0.3s ease;
+}
+
+
 #content-con {
   display: flex;
   width: 1000px;
-  padding: 60px 0px 10px;
+  padding: 0px 0px 10px;
   flex-direction: column;
   align-items: flex-end;
 }
@@ -23,11 +35,7 @@
   display: flex;
   flex-direction: column;
   width: 1000px;
-  padding: 30px 0px 10px;
-}
-
-#sidebar-con {
-  padding: 20px;
+  margin: 3px 0px 10px;
 }
 
 .navbar-con {
@@ -35,21 +43,14 @@
   margin-top: 20px;
 }
 
-.settings-upper {
-  z-index: 0;
-  display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-  width: 200px;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
 
 /* Ensure that each section fills the column and is not wider than the content area */
 section {
   padding: 20px;
-  border-radius: 8px; /* Rounded corners for the sections */
-  margin-bottom: 20px; /* Space between sections */
+  border-radius: 8px;
+  /* Rounded corners for the sections */
+  margin-bottom: 20px;
+  /* Space between sections */
 }
 
 /* Make sure the button takes the full width of its container */
