@@ -150,7 +150,7 @@ export function RegisterForm({
         </div>
         <div className="register-link">
           {t("Al een account?")}{" "}
-          <a href="#" onClick={() => setUserExists && setUserExists(true)}>
+          <a /*href="#"*/ onClick={() => setUserExists && setUserExists(true)}>
             {t("Inloggen")}
           </a>
         </div>
