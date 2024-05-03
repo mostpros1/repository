@@ -62,9 +62,7 @@ export function RegisterForm({
       updateFields({ lastName: inputValueLastName });
     }
   };
-  console.log(i18n.getResourceBundle('nl', 'translation'));
-  const test = t("Voornaam:")
-  console.log("Hello ", test);
+  
   return (
     <>
       <div className="register-container">
@@ -152,7 +150,7 @@ export function RegisterForm({
         </div>
         <div className="register-link">
           {t("Al een account?")}{" "}
-          <a href="#" onClick={() => setUserExists && setUserExists(true)}>
+          <a /*href="#"*/ onClick={() => setUserExists && setUserExists(true)}>
             {t("Inloggen")}
           </a>
         </div>

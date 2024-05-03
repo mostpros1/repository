@@ -8,6 +8,8 @@ import { LoginForm } from '../../components/MultistepForm/LoginForm';
 import Footer from '../../components/ui/Footer/Footer';
 
 import './LoginPage.css';
+import { taal } from "../../components/ui/NavBar/Navigation";
+
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ function LoginPage() {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       updateUser(authenticatedUser);
-      navigate('/');
+      navigate(`/${lang}/`);
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);

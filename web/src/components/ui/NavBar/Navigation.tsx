@@ -19,6 +19,9 @@ function Navigation() {
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
 
+  // Assuming navigate is obtained from useNavigate
+
+
   const handleIconClick = () => {
     navigate(`/${taal}/home-innovation`); // Use navigate function to redirect
   };
@@ -62,7 +65,7 @@ function Navigation() {
     if (groups && groups.includes("Homeowner")) {
       DashboardLink = <Link to={`/${taal}/homeowner-dashboard/jobs`}>{t("Account")}</Link>; {/* Translate account link */ }
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to={`/${taal}/specialist-resultaat`}>{t("Account")}</Link>; {/* Translate account link */ }
+      DashboardLink = <Link to={`/${taal}/pro-dashboard`}>{t("Account")}</Link>; {/* Translate account link */ }
     }
 
     authButtons = (

@@ -18,6 +18,8 @@ type LoginFormProps = LoginData & {
   error: string;
 }
 
+
+
 export function LoginForm({ email, password, updateFields, setUserExists, handleLogin, error }: LoginFormProps) {
   const { t } = useTranslation();
 

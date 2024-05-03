@@ -29,7 +29,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import EditProfile from "../pages/EditProfilePage/EditProfile";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
@@ -53,8 +53,8 @@ import { useTranslation } from "react-i18next";
 
 
 const LanguageAwareRoutes = () => {
-  const { user } = useUser(); 
-  
+  const { user } = useUser();
+
   const { lang } = useParams();
   const { t } = useTranslation();
 
@@ -66,6 +66,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
       <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
@@ -83,9 +84,9 @@ const LanguageAwareRoutes = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/homeowner-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/EditProfileSection" element={<EditProfile />} />
+
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -186,6 +187,7 @@ const LanguageAwareRoutes = () => {
       />
     </Routes>
   );
+  //<Route path="/EditProfileSection" element={<EditProfile />} />
 };
 
 
@@ -194,14 +196,30 @@ const App = () => {
   const { lang } = useParams();
   const { i18n } = useTranslation();
   const [language, setLanguage] = useState("");
-  //const navigate = useNavigate();
-  
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // Set the language based on the lang parameter
+    const pathName = window.location.pathname;
+    const hash = window.location.hash;
+
+    if (!window.location.pathname.startsWith('/nl')) {
+      if (!window.location.pathname.startsWith('/en')) {
+        if (pathName === '/') {
+          navigate('/nl/');
+        } else {
+          navigate('/nl' + pathName + hash);
+        }
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+
     if (lang) {
       i18n.changeLanguage(lang);
       setLanguage(lang);
-      
+
     }
   }, [lang, i18n]);
 

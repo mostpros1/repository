@@ -7,7 +7,7 @@ import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
 
-import taal from "../../components/ui/NavBar/Navigation.tsx";
+const taal = window.location.pathname.split('/')[1];
 
 type PostConfig = {
     roleName: string
