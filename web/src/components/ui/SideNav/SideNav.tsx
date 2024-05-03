@@ -53,6 +53,7 @@ function SideNav() {
                 to="/nl/pro-dashboard"
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
+                
                 }
               >
                 <DashboardIcon />
