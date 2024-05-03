@@ -20,28 +20,28 @@ function SideNav() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-       if (
-         user &&
-         user.signInUserSession &&
-         user.signInUserSession.accessToken &&
-         user.signInUserSession.accessToken.payload
-       ) {
-         const groups =
-           user.signInUserSession.accessToken.payload["cognito:groups"];
-         if (groups && groups.includes("Homeowner")) {
+      if (
+        user &&
+        user.signInUserSession &&
+        user.signInUserSession.accessToken &&
+        user.signInUserSession.accessToken.payload
+      ) {
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups && groups.includes("Homeowner")) {
           setIsHomeowner(true)
-         } else if (groups && groups.includes("Professional")) {
-           setIsProfessional(true);
-         }
-       } else {
-         // Handle the case where the user data is not fully available
-         console.log("User data is not fully available.");
-         navigate("/login"); // Redirect to login or another appropriate page
-       }
-     }, 500000); // Delay in milliseconds (5000ms = 5s)
+        } else if (groups && groups.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        // Handle the case where the user data is not fully available
+        console.log("User data is not fully available.");
+        navigate("/login"); // Redirect to login or another appropriate page
+      }
+    }, 500000); // Delay in milliseconds (5000ms = 5s)
 
-     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
-   }, [user, navigate]); 
+    return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
+  }, [user, navigate]);
 
   return (
     <div className="sidebar">
