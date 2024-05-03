@@ -17,6 +17,8 @@ import { AccountForm } from "../MultistepForm/AccountForm";
 import { Datums } from "./Calendar.tsx";
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
+import { taal } from "../ui/NavBar/Navigation";
+
 
 type DateTimeSpan = {
   date: Date;
@@ -278,7 +280,7 @@ function SpecialistMultistepForm() {
           .catch(console.error)
 
 
-        navigate('/nl/confirm-mail', { state: { email: email, postConfig: "PROFESSIONAL" } })
+        navigate(`/${taal}/confirm-mail`, { state: { email: email, postConfig: "PROFESSIONAL" } })
         } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

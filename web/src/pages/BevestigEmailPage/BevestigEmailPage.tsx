@@ -20,9 +20,11 @@ function BevestigEmailPage() {
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [userExists, setUserExists] = useState(false)
 
-    const location = useLocation()
-    const navigate = useNavigate()
-    const inputRef = useRef([])
+    const location = useLocation();
+    const navigate = useNavigate();
+    const inputRef = useRef([]);
+
+    console.log("Received state:", location.state);
 
     const url = window.location.href;
 

@@ -39,7 +39,7 @@ function LoginPage() {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       updateUser(authenticatedUser);
-      navigate(`/${lang}/`);
+      navigate(`/${taal}/`);
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);
