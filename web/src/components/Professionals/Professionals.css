@@ -1,5 +1,7 @@
 .prof_price {
   font-size: 16px;
+.prof_price {
+  font-size: 16px;
 }
 
 .button-professional {
@@ -14,6 +16,7 @@
   transition: all 0.3s ease;
 }
 
+
 .button-professional:hover {
   background-color: #1f6fb2;
 }
@@ -23,3 +26,4 @@
   justify-content: space-between;
   margin-top: 10px;
 }
+

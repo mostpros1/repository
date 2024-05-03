@@ -1,9 +1,9 @@
 .HO_result {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 150px 30px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 10rem;
+  margin: 25px auto 0 150px;
 }
 
 .HO_wrapper {
