@@ -12,6 +12,8 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
 
+import lang from ../NavBar/Navigation.tsx;
+
 function SideNav() {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -50,7 +52,7 @@ function SideNav() {
           <>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard"
+                to={`/${lang}/pro-dashboard`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -61,7 +63,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/chat"
+                to={`/${lang}/pro-dashboard/chat`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -72,7 +74,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/reporting"
+                to={`/${lang}/pro-dashboard/reporting`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -83,7 +85,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/jobs"
+                to={`/${lang}/pro-dashboard/jobs`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -94,7 +96,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/calendar"
+                to={`/${lang}/pro-dashboard/calendar`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -105,7 +107,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/reviews"
+                to={`/${lang}/pro-dashboard/reviews`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -116,7 +118,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/settings"
+                to={`/${lang}/pro-dashboard/settings`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -127,7 +129,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/pro-dashboard/setup"
+                to={`/${lang}/pro-dashboard/setup`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -141,7 +143,7 @@ function SideNav() {
           <>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard"
+                to={`/${lang}/homeowner-dashboard`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -152,7 +154,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard/jobs"
+                to={`/${lang}/homeowner-dashboard/jobs`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -163,7 +165,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard/chat"
+                to={`/${lang}/homeowner-dashboard/chat`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -174,7 +176,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard/calender"
+                to={`/${lang}/homeowner-dashboard/calender"`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -185,7 +187,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard/payments"
+                to={`/${lang}/ProfPayment`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -196,7 +198,7 @@ function SideNav() {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to="/nl/homeowner-dashboard/reviews"
+                to={`/${lang}/homeowner-dashboard/reviews`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -208,7 +210,7 @@ function SideNav() {
             <div className="sidebar-bottom">
               <li className="sidebar-item">
                 <NavLink
-                  to="/nl/homeowner-dashboard/profile"
+                  to={`/${lang}/homeowner-dashboard/profile`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }
@@ -220,7 +222,7 @@ function SideNav() {
 
               <li className="sidebar-item">
                 <NavLink
-                  to="/nl/homeowner-dashboard/settings"
+                  to={`/${lang}/homeowner-dashboard/settings`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }
@@ -232,7 +234,7 @@ function SideNav() {
 
               <li className="sidebar-item">
                 <NavLink
-                  to="/nl/homeowner-dashboard/help"
+                  to={`/${lang}/homeowner-dashboard/help`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }
