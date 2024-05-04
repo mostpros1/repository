@@ -20,15 +20,15 @@ function SideNav() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-       if (
-         user &&
-         user.signInUserSession &&
-         user.signInUserSession.accessToken &&
-         user.signInUserSession.accessToken.payload
-       ) {
-         const groups =
-           user.signInUserSession.accessToken.payload["cognito:groups"];
-         if (groups && groups.includes("Homeowner")) {
+      if (
+        user &&
+        user.signInUserSession &&
+        user.signInUserSession.accessToken &&
+        user.signInUserSession.accessToken.payload
+      ) {
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups && groups.includes("Homeowner")) {
           setIsHomeowner(true)
          } else if (groups && groups.includes("Professional")) {
            setIsProfessional(true);
@@ -52,6 +52,7 @@ function SideNav() {
                 to="/nl/pro-dashboard"
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
+                
                 }
               >
                 <DashboardIcon />

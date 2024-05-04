@@ -28,7 +28,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import EditProfile from "../pages/EditProfilePage/EditProfile";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
@@ -72,10 +72,10 @@ const App = () => {
       <Route path="/nl/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/nl/home-innovation" element={<HomeInovation />} />
-      <Route path="/nl/VSDashboard" element={<VSDashboard />} />
-      <Route path="/nl/homeowner-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/VSDashboard" element={<VSDashboard />} />
+      <Route path="/nl/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
       <Route path="/nl/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/nl/EditProfileSection" element={<EditProfile />} />
+      <Route path="/EditProfileSection" element={<HomeOwnerDashboardPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/nl/DashboardPage" element={<DashboardPage />} />
@@ -93,7 +93,7 @@ const App = () => {
       <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
       <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/nl/Invoice" element={<InvoicePage />} />
-      <Route path="/nl/ProfPayment" element={<HomeProPaymentsPage />} />
+      <Route path="/nl/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
       <Route

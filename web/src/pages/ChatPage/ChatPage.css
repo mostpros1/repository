@@ -1,7 +1,9 @@
 .chat-panel {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  margin: 35px 0px 15px 10px;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0rem;
+  margin: 25px auto 0 150px;
 }
 
 .side-panel-left-chat {
@@ -13,5 +15,4 @@
 .side-panel-right-chat {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }

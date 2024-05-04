@@ -16,7 +16,7 @@ body {
 
 .ProPaymentsInfo {
   font-size: 1.4rem;
-  text-align: left; /* Align text inside .ProPaymentsInfo class to the left */
+  text-align: left;
 }
 
 .ProPaymentsButton {
