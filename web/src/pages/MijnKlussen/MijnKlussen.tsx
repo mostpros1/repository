@@ -8,7 +8,7 @@ function KlussenPage() {
   return (
     <div id="klussenpage">
       <NavBar />
-      <div className="main-content">
+      <div className="main-content-klussen">
         <SideNav />
         <JobDisc />
       </div>

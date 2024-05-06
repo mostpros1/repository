@@ -19,7 +19,7 @@ function Navigation() {
   const navigate = useNavigate(); // Create a navigate function
 
   const handleIconClick = () => {
-    navigate("/HomeInovation"); // Use navigate function to redirect
+    navigate("/nl/home-innovation"); // Use navigate function to redirect
   };
 
   const handleDropdownToggle = () => {
@@ -52,8 +52,8 @@ function Navigation() {
 
   let authButtons = (
     <>
-      <Link to="/login">Login</Link>
-      <Link to="/registreer">Register</Link>
+      <Link to="/nl/login">Login</Link>
+      <Link to="/nl/register">Register</Link>
     </>
   );
 
@@ -61,10 +61,10 @@ function Navigation() {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     let DashboardLink: JSX.Element | null = null;
     if (groups && groups.includes("Homeowner")) {
-      DashboardLink = <Link to="/dashboard-huiseigenaar">Account</Link>;
-      DashboardLink = <Link to="/chat">Chat</Link>;
+      DashboardLink = <Link to="/nl/homeowner-dashboard/jobs">Account</Link>;
+      //DashboardLink = <Link to="/chat">Chat</Link>;
     } else if (groups && groups.includes("Professional")) {
-      DashboardLink = <Link to="/dashboard-professional">Account</Link>;
+      DashboardLink = <Link to="/nl/pro-dashboard/jobs">Account</Link>;
     }
 
     authButtons = (
@@ -87,7 +87,7 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to="/mijn-klussen" className="black-items">
+            <Link to="/" className="black-items">
               Klussen <ExpandMoreIcon />
             </Link>
             <div className="mega-box">
@@ -305,7 +305,7 @@ function Navigation() {
             </div>
           </li>
           <li className="nav-blue-btn">
-            <Link to="/inschrijven-als-specialist" className="black-items">
+            <Link to="/nl/pro-onboarding" className="black-items">
               Inschrijven als vakspecialist
             </Link>
           </li>

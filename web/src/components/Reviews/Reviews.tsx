@@ -37,13 +37,14 @@ function Reviews() {
               <p className="review_title">Toiletrenovatie</p>
               <p className="review_name">Riek groen</p>
               <p className="review_comment">
-                Mevrouw Beisterveld heeft ons jaren60toilet een totale make over
-                gegeven. We zaten eventueel Fortnite te grinden toen zagen we
-                dat mevrouw geen enkel probleem had voor enkele problemen!!
-                Alles heeft ze superstrak gezet wanden ook helemaal verbeterd en
-                na dit allemaal gingen we een potje Fortnite playen ze is niet
-                alleen goed met het renoveren maar ze bleek ook een pro te zijn
-                op Fortnite. We zijn super blij met het resultaat.
+                Mevrouw Beisterveld heeft ons jaren '60 toilet een totale
+                make-over gegeven. Terwijl we even pauze namen, merkten we op
+                dat mevrouw geen enkel probleem had met enkele uitdagingen. Ze
+                heeft alles perfect afgewerkt; de wanden zijn ook volledig
+                verbeterd. Na al het harde werk namen we even de tijd om te
+                ontspannen, en ze bleek niet alleen een expert te zijn in
+                renovaties, maar ook in andere activiteiten. We zijn erg blij
+                met het resultaat.
               </p>
             </div>
           </div>
@@ -97,7 +98,7 @@ function Reviews() {
         </div>
         <div className="button_container">
           <Link to="/klussen">
-            <button className="button">Nieuwe klus plaatsen</button>
+            <button className="button-task">Nieuwe klus plaatsen</button>
           </Link>
         </div>
       </div>

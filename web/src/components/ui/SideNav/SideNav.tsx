@@ -16,6 +16,7 @@ function SideNav() {
   const { user } = useUser();
   const navigate = useNavigate();
   const [isProfessional, setIsProfessional] = useState(false);
+  const [isHomeowner, setIsHomeowner] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,8 +29,7 @@ function SideNav() {
         const groups =
           user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Homeowner")) {
-          alert("Jij hebt geen toegang tot deze pagina!");
-          navigate("/");
+          setIsHomeowner(true)
         } else if (groups && groups.includes("Professional")) {
           setIsProfessional(true);
         }
@@ -38,119 +38,213 @@ function SideNav() {
         console.log("User data is not fully available.");
         navigate("/login"); // Redirect to login or another appropriate page
       }
-    }, 50); // Delay in milliseconds (5000ms = 5s)
+    }, 500000); // Delay in milliseconds (5000ms = 5s)
 
     return () => clearTimeout(timer); // Clear the timeout if the component unmounts before the timeout is called
-  }, [user, navigate]); // Depend on user and navigate to ensure updates
+  }, [user, navigate]);
 
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
-        {isProfessional && (
-          <li className="sidebar-item">
-            <NavLink
-              to="/specialist-resultaat"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <DashboardIcon />
-              Dashboard
-            </NavLink>
-          </li>
+        {isProfessional ? (
+          <>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                
+                }
+              >
+                <DashboardIcon />
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/chat"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <MessageIcon />
+                Berichten
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/reporting"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <StarOutlineIcon />
+                Reporting
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/jobs"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HandymanOutlinedIcon />
+                Klussen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/calendar"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <DateRangeIcon />
+                Kalender
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/reviews"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <StarOutlineIcon />
+                Reviews
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/settings"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <SettingsIcon />
+                Instellingen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/pro-dashboard/setup"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <SettingsIcon />
+                Setup
+              </NavLink>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <DashboardIcon />
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard/jobs"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HandymanOutlinedIcon />
+                Klussen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard/chat"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <MessageIcon />
+                Berichten
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard/calender"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <DateRangeIcon />
+                Kalender
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard/payments"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <PaymentIcon />
+                Betalingen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/nl/homeowner-dashboard/reviews"
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <StarOutlineIcon />
+                Reviews
+              </NavLink>
+            </li>
+            <div className="sidebar-bottom">
+              <li className="sidebar-item">
+                <NavLink
+                  to="/nl/homeowner-dashboard/profile"
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <AccountCircleIcon />
+                  Profiel
+                </NavLink>
+              </li>
+
+              <li className="sidebar-item">
+                <NavLink
+                  to="/nl/homeowner-dashboard/settings"
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <SettingsIcon />
+                  Instellingen
+                </NavLink>
+              </li>
+
+              <li className="sidebar-item">
+                <NavLink
+                  to="/nl/homeowner-dashboard/help"
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <HelpOutlineIcon />
+                  Help
+                </NavLink>
+              </li>
+            </div>
+          </>
         )}
-        <li className="sidebar-item">
-          <NavLink
-            to="/Jobs"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <HandymanOutlinedIcon />
-            Jobs
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/chat"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <MessageIcon />
-            Message
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/Calendar"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <DateRangeIcon />
-            Calendar
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/Payments"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <PaymentIcon />
-            Payments
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/ReviewPage"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <StarOutlineIcon />
-            Reviews
-          </NavLink>
-        </li>
-        <div className="sidebar-bottom">
-          <li className="sidebar-item">
-            <NavLink
-              to="/Profile"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <AccountCircleIcon />
-              Profile
-            </NavLink>
-          </li>
-
-          <li className="sidebar-item">
-            <NavLink
-              to="/HomeOwnerSettingsPage"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <SettingsIcon />
-              Settings
-            </NavLink>
-          </li>
-
-          <li className="sidebar-item">
-            <NavLink
-              to="/Helpdesk"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <HelpOutlineIcon />
-              Helpdesk
-            </NavLink>
-          </li>
-        </div>
       </ul>
     </div>
   );

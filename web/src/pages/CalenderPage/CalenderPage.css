@@ -1,4 +1,4 @@
-.chat-panel {
+.calendar-panel {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: start;
@@ -6,13 +6,14 @@
   margin: 25px auto 0 150px;
 }
 
-.side-panel-left-chat {
+.side-panel-left-calendar {
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
 }
 
-.side-panel-right-chat {
+.side-panel-right-calendar {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }

@@ -1,127 +1,116 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Review.css";
 import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
+import { dynamo } from "../../../declarations";
 
-const reviews = [
-  {
-    id: 1,
-    author: "Toos Huisman",
-    date: "11-10-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 20,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/3.jpg",
-    rating: 5,
-    // ... add any other necessary fields
-  },
-  {
-    id: 2,
-    author: "Mitchell Rhodes",
-    date: "04-12-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 100,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/4.jpg",
-    rating: 5,
-    // ... add any other necessary fields
-  },
-  {
-    id: 3,
-    author: "Regina Abdullah",
-    date: "08-11-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 4,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/6.jpg",
-    rating: 4,
-    // ... add any other necessary fields
-  },
-  {
-    id: 4,
-    author: "Andrew Rahman",
-    date: "24-11-2024",
-    content:
-      "Snelle reactie, met spoed zelfs komen kijken/helpen! Vriendelijke en duidelijke mensen.",
-    totalReviews: 14,
-    authorImageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
-    rating: 2,
-    // ... add any other necessary fields
-  },
-  // ... add more review objects
-];
+// Define a specific type for review objects
+interface Review {
+  id: number;
+  author: string;
+  homeownerName: string;
+  date: string;
+  content: string;
+  authorImageUrl: string;
+  rating: number;
+}
 
-const Review = () => {
-  const [sortedReviews, setSortedReviews] = useState(reviews);
-  const [sortType, setSortType] = useState("");
+const ReviewComponent: React.FC = () => {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
+  const [sortType, setSortType] = useState<string>("");
 
   // Sorting function
-  const handleSort = (type) => {
-    let sorted = [...reviews];
+  const handleSort = (type: string) => {
+    const sorted: Review[] = [...reviews]; // Create a copy of reviews
     if (type === "date") {
-      sorted = sorted.sort(
+      sorted.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
-    } else if (type === "totalReviews") {
-      sorted = sorted.sort((a, b) => b.totalReviews - a.totalReviews);
-    }
-    setSortedReviews(sorted);
-    setSortType(type);
+    } /*else if (type === "totalReviews") {
+      sorted.sort((a, b) => b.totalReviews - a.totalReviews);
+    }*/
+    setSortedReviews([...sorted]); // Update sortedReviews state
+    setSortType(type); // Update sortType state
   };
 
-  //Star rating component
-  const StarRating = ({ rating, setRating, interactive = false }) => {
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const response = await dynamo.scan({ TableName: "Reviews" }).promise();
+        if (response && response.Items) {
+          const mappedReviews: Review[] = response.Items.map((item) => ({
+            id: item.id,
+            author: item.professional_name,
+            homeownerName: item.homeownerName,
+            date: item.date,
+            content: item.description,
+            //totalReviews: item.totalReviews,
+            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+              Math.random() * 100
+            )}.jpg`, //item.authorImageUrl,
+            rating: item.rating,
+          }));
+          setReviews(mappedReviews);
+          setSortedReviews(mappedReviews);
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    }
+
+    fetchReviews();
+  }, []);
+
+  // Star rating component
+  const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
     return (
       <div className="star-rating">
         {Array.from({ length: 5 }, (_, index) => (
-          <span
-            key={index}
-            className={`${index < rating ? "star filled" : "star"} ${
-              interactive ? "interactive-star" : ""
-            }`}
-            onClick={() => interactive && setRating(index + 1)}
-          >
-            ★
-          </span>
+          <Star key={index} className={index < rating ? "filled" : ""} />
         ))}
       </div>
     );
   };
 
-  //Review form component
-  const ReviewForm = () => {
+  // Review form component
+  const ReviewForm: React.FC = () => {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log("Submitting with rating:", rating); // This will confirm the final rating being submitted
-      const currentDate = new Date();
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const year = currentDate.getFullYear();
-      const formattedDate = `${day}-${month}-${year}`;
-
-      const newReview = {
+      const currentDate = new Date().toLocaleDateString();
+      const newReview: Review = {
         id: sortedReviews.length + 1,
         author: name,
-        date: formattedDate,
+        date: currentDate,
         content: content,
-        totalReviews: 1,
+        //totalReviews: 1,
         authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
           Math.random() * 100
         )}.jpg`,
         rating: rating,
+        homeownerName: "",
       };
-      setSortedReviews((prevReviews) => [...prevReviews, newReview]);
+
+      setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
       setName("");
       setContent("");
       setRating(0);
+
+      // Perform DynamoDB update or post request to add the new review
+      try {
+        // Example: await dynamo.put({...}).promise();
+        console.log("Review submitted:", newReview);
+      } catch (error) {
+        console.error("Error submitting review:", error);
+      }
     };
 
     return (
-      <form id="review-main" onSubmit={handleSubmit}>
+      <form id="review-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={name}
@@ -135,7 +124,7 @@ const Review = () => {
           placeholder="Your review"
           required
         />
-        <StarRating rating={rating} setRating={setRating} interactive={true} />
+        <StarRating rating={rating} />
         <button type="submit">Submit Review</button>
       </form>
     );
@@ -148,15 +137,12 @@ const Review = () => {
         <div>
           Sort by:
           <select onChange={(e) => handleSort(e.target.value)}>
-            <option value="">Relevante</option>
+            <option value="">Relevance</option>
             <option value="date">Date</option>
             <option value="totalReviews">Total Reviews</option>
           </select>
         </div>
-        <p>
-          De recensies op MostPros zijn afkomstig van huiseigenaren net zoals
-          jij.
-        </p>
+        <p>Reviews are sourced from customers like you.</p>
         <div className="grid-sect">
           <ReviewForm />
           <img src={SittingCustomer} alt="sitting-customer" />
@@ -168,20 +154,15 @@ const Review = () => {
             <div className="review-header">
               <img src={review.authorImageUrl} alt={review.author} />
               <div>
-                <div className="author-name">{review.author}</div>
+                <div className="author-name">{review.homeownerName}</div>
                 <div className="review-info">
-                  <span className="total-spend">Loodgieter</span>
                   <span className="total-reviews">
-                    Total Reviews: {review.totalReviews}
+                    Specialist: {review.author}
                     <span className="review-date">{review.date}</span>
-                    <div id="star-rating">
-                      <StarRating
-                        rating={review.rating}
-                        interactive={false}
-                        setRating={undefined}
-                      />
-                    </div>
                   </span>
+                  <div className="star-rating">
+                    <StarRating rating={review.rating} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -190,8 +171,8 @@ const Review = () => {
             </div>
             <div className="review-footer">
               <div className="review-actions">
-                <button>Public Comment</button>
-                <button>Direct Message</button>
+                <button>Public Comment.</button>
+                <button>Direct Message.</button>
               </div>
             </div>
           </div>
@@ -201,4 +182,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default ReviewComponent;

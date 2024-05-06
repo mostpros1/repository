@@ -1,13 +1,13 @@
 import NavBar from "../../components/ui/NavBar/NavBar";
 import Footer from "../../components/ui/Footer/Footer";
-import './SpecialistProfile.css';
+import "./SpecialistProfile.css";
+import SpecialistPage from "../Offertestraat-specialist/SpecialistPage";
 
 function SpecialistProfile() {
   return (
     <div id="root">
       <NavBar />
-      <div className="main-content">
-        <SpecialistProfile />
+      <div id="main-content-specialist">
       </div>
       <Footer />
     </div>

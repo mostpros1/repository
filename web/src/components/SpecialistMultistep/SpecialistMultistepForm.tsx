@@ -245,7 +245,7 @@ function SpecialistMultistepForm() {
               last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
               region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
               postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
-              profession: profession !== undefined ? stopXSS(profession) : "", // Check if profession is not undefined
+              profession: profession !== undefined ? stopXSS(profession).toLowerCase() : "", // Check if profession is not undefined
               task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
               availibility: availibility, // Assuming availibility is already checked elsewhere
               rating: rating, // Assuming rating is already checked elsewhere
@@ -278,7 +278,7 @@ function SpecialistMultistepForm() {
           .catch(console.error)
 
 
-        navigate('/bevestig-email', { state: { email: email, postConfig: "PROFESSIONAL" } })
+        navigate('/nl/confirm-mail', { state: { email: email, postConfig: "PROFESSIONAL" } })
         } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
