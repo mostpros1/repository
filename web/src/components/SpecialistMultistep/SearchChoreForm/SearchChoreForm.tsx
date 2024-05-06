@@ -33,7 +33,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         }
     };
 
-    const [isValidBio, setValidBio] = useState(true);
+    /*const [isValidBio, setValidBio] = useState(true);
 
     const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const inputValueBio = e.target.value;
@@ -45,7 +45,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         if (isValidBio || inputValueBio === '') {
             updateFields({ bio: inputValueBio });
         }
-    };
+    };*/
 
     const [isValidEmail, setValidEmail] = useState(true);
 
@@ -92,7 +92,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         }
     };
 
-    const [task, setTask] = useState('');
+   /* const [task, setTask] = useState('');
 
     // Assuming you have a state for the displayed task name
     const [displayedTaskName, setDisplayedTaskName] = useState('');
@@ -116,7 +116,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         // Set the task state to the selectedTaskLink'
         updateFields({ task: selectedTaskLink });
         setTask(selectedTaskLink);
-    };
+    };*/
 
     const isValidTask = (task: string): boolean => {
         const allTasks = specialists.flatMap(specialist => specialist.tasks.map(task => task.task));
@@ -152,29 +152,6 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                 />
                 {!isValidBeroep && (
                     <p className="error-message">Voer alstublieft een geldige beroep in</p>
-                )}
-                <label>Klus:</label>
-                <select
-                    value={displayedTaskName} // Use displayedTaskName here
-                    onChange={(e) => handleTaskChange(e)}
-                >
-                    <option value="">Selecteer een Klus</option>
-                    {getValidTasks(beroep || '').map((task, index) => (
-                        <option key={index} value={task}>{task}</option>
-                    ))}
-                </select>
-                {!isValidTask(displayedTaskName) && ( // Validate based on displayedTaskName
-                    <p className="error-message">Voer alstublieft een geldige opdracht in</p>
-                )}
-                <label>Uw Bio</label>
-                <textarea
-                    required={true}
-                    placeholder="Uw Bio"
-                    value={bio}
-                    onChange={handleBioChange}
-                />
-                {!isValidBio && (
-                    <p className="error-message">Voer alstublieft een geldige Bio in</p>
                 )}
                 <label>Email:</label>
                 <input
