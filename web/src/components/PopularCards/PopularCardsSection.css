@@ -1,19 +1,18 @@
 .popular-section{
     background-color: #E9F4FF;
-    padding: 100px 30px;
+    padding: 10rem 3rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 5rem;
 }
 
 .popular-container{
     width: 100%;
-    max-width: 1000px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 50px;
+    gap: 5rem;
 }

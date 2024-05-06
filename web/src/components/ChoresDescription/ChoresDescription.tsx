@@ -7,37 +7,37 @@ import { Link } from "react-router-dom";
 function ChoresDescription() {
   return (
     <>
-      <div className="chores_con">
-        <div className="title_container">
+      <main className="chores_con">
+        <article className="title_container">
           <h2>Vind vakmensen voor elke klus</h2>
-        </div>
-        <div className="choresCard_con">
-            <div className="choreCard">
-              <div className="choreImg_con">
+        </article>
+        <article className="choresCard_con">
+            <article className="choreCard">
+              <article className="choreImg_con">
                 <img src={handyman} alt="" />
-              </div>
-              <div className="chore_description">
+              </article>
+              <article className="chore_description">
                 <h4>Loodgieterswerk</h4>
-              </div>
-            </div>
-            <div className="choreCard">
-              <div className="choreImg_con">
+              </article>
+            </article>
+            <article className="choreCard">
+              <article className="choreImg_con">
                 <img src={painter} alt="" />
-              </div>
-              <div className="chore_description">
+              </article>
+              <article className="chore_description">
                 <h4>Schilderen</h4>
-              </div>
-            </div>      
-            <div className="choreCard">
-              <div className="choreImg_con">
+              </article>
+            </article>      
+            <article className="choreCard">
+              <article className="choreImg_con">
                 <img src={floors} alt="" />
-              </div>
-              <div className="chore_description">
+              </article>
+              <article className="chore_description">
                 <h4>Vloeren en tegels</h4>
-              </div>
-            </div>
-        </div>
-      </div>
+              </article>
+            </article>
+        </article>
+      </main>
     </>
   );
 }

@@ -6,16 +6,19 @@
 
 .popularCard-container{
     display: flex;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: orange;
+    gap: 2.5rem;
     flex-wrap: wrap;
-    justify-content: flex-start;
 }
 
 
 .popularcard{
     background-color: white;
     display: flex;
-    gap: 20px;
+    gap: 2rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -23,9 +26,10 @@
     font-size: 20px;
     justify-content: center;
     align-items: center;
-    padding: 60px 50px;
-    width: 165px;
+    padding: 6rem;
+    width: 20rem;
     border-radius: 1.5rem;
+    cursor: pointer;
 }
 
 .popularcard:hover {

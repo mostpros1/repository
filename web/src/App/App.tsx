@@ -75,9 +75,9 @@ const App = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/nl/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
       <Route path="/nl/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/EditProfileSection" element={<HomeOwnerDashboardPage />} />
-      <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
+      <Route path="/nl/EditProfileSection" element={<HomeOwnerDashboardPage />} />
+      <Route path="/nl/DetailJob" element={<DetailJobPage />} />
+      <Route path="/nl/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/nl/DashboardPage" element={<DashboardPage />} />
       <Route path="/nl/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
