@@ -1,0 +1,17 @@
+.career-con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50rem;
+    background-color: #f5f5f5;
+    margin-bottom: 15rem;
+    margin-top: 10rem;
+}
+
+.career-con p {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #333;
+    width: 50rem;
+    text-align: left;
+}

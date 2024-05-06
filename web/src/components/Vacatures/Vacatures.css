@@ -1,0 +1,20 @@
+.vacature-list {
+    display: flex;
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.vacature-list-item {
+    list-style: none;
+    cursor: pointer;
+}
+
+.vacature-list-item h3 {
+    background-color: #E9F4FF;
+    width: 120rem;
+    margin: 2rem;
+    padding: 25px;
+    font-size: 2rem;
+    color: #529de8;
+}
