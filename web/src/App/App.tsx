@@ -51,6 +51,8 @@ import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import { useTranslation } from "react-i18next";
 
+import ProCal from "../components/Agenda/ProCal.tsx";
+import Agenda from "../components/Agenda/agenda.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -59,12 +61,14 @@ const LanguageAwareRoutes = () => {
   const { t } = useTranslation();
 
   // Function to prepend language to the given path
-  const addLanguagePrefix = (path) => {
+  /*const addLanguagePrefix = (path) => {
     return `/${lang}${path}`;
-  };
+  };*/
 
   return (
     <Routes>
+      <Route path="/test" element={<ProCal />} />
+      <Route path="test/calendar" element={<Agenda passedProp={undefined} />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
