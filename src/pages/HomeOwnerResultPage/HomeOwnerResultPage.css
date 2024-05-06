@@ -1,0 +1,26 @@
+.HO_result {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 10rem;
+  margin: 25px auto 0 150px;
+}
+
+.HO_wrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+}
+
+.HOresult-con {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.sidenav-con-ts {
+  margin-right: 15px;
+}

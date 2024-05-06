@@ -1,0 +1,29 @@
+.prof_price {
+  font-size: 16px;
+.prof_price {
+  font-size: 16px;
+}
+
+.button-professional {
+  height: 65px;
+  width: 200px;
+  background-color: #308ae4;
+  border-radius: 1.5rem;
+  border: none;
+  color: #fff;
+  margin: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.button-professional:hover {
+  background-color: #1f6fb2;
+}
+
+.button_container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+

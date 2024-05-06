@@ -1,0 +1,18 @@
+#review-panel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0rem;
+  margin: 25px auto 0 150px;
+}
+#side-panel-left-review {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+#side-panel-right-review {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

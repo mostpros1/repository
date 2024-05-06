@@ -1,0 +1,22 @@
+.resultpage{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0rem;
+    margin: 25px auto 0 150px;
+}
+
+.sidenav-con {
+    margin-right: 25px;
+}
+
+.result-con{
+    display: flex;
+    width: 100%;
+    max-width: 1500px;
+    flex-direction: column;
+    gap: 100px;
+}
+
+
+

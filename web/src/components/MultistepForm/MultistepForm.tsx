@@ -31,6 +31,8 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  profession: string;
+  task: string;
 }
 
 function MultistepForm() {
@@ -51,11 +53,13 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    profession: "",
+    task: "",
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -119,22 +123,42 @@ function MultistepForm() {
     />
   ));
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
+
+  const { user, updateUser } = useUser();
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm(
+    user ? {
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-
-        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
-        <PageSpecialisten />
       ],
-      onStepChange: () => {}
-    });
+      onStepChange: () => { }
+    } : {
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <>
+          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+        </>
+      ],
+      onStepChange: () => { }
+    }
+  );
+  useEffect(() => {
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    const task = window.location.hash.replace("#", "").split("?")[1];
 
-    async function onSubmit(e: FormEvent) {
-      e.preventDefault()
-      console.log('Form Data:', data);
-      if (!isLastStep) return next()
+
+    updateFields({ profession, task });
+  }, []);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+    if (!isLastStep) return next()
+
 
     const userData = {
       email: data.email,
@@ -180,22 +204,19 @@ function MultistepForm() {
         attributes: {
           phone_number: userData.phoneNumber,
           name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber
+          "custom:family_name": userData.lastName,
         },
-        autoSignIn: { enabled: true }
-        })
+        autoSignIn: { enabled: true },
+      })
         .then(() => {
           const profession = window.location.hash.replace("#", "").split("?")[0];
           const task = window.location.hash.replace("#", "").split("?")[1];
 
           const datum = new Date(data.date);
           const date = datum.toISOString().split('T')[0];
-          navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
-          console.error(error)
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
             const profession = window.location.hash.replace("#", "").split("?")[0];
@@ -203,7 +224,7 @@ function MultistepForm() {
 
             const datum = new Date(data.date);
             const date = datum.toISOString().split('T')[0];
-            navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+            navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }
@@ -237,4 +258,5 @@ function MultistepForm() {
     </form>
   )
 }
+
 export default MultistepForm
