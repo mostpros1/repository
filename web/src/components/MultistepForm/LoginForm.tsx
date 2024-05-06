@@ -71,6 +71,7 @@ import facebook from '../../assets/facebook_.svg';
 import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type LoginData = {
   email: string;
@@ -83,22 +84,12 @@ type LoginFormProps = LoginData & {
   handleLogin: () => void;
   setError: (error: string) => void;
   error: string;
-};
+}
 
-export function LoginForm({
-  email,
-  password,
-  updateFields,
-  setUserExists,
-  handleLogin,
-  error,
-}: LoginFormProps) {
-  // Functie om toetsaanslagen te verwerken
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleLogin();
-    }
-  };
+
+
+export function LoginForm({ email, password, updateFields, setUserExists, handleLogin, error }: LoginFormProps) {
+
 
   return (
     <>
@@ -117,7 +108,6 @@ export function LoginForm({
               type="email"
               placeholder='Bijv. joe@hotmail.com'
               value={email}
-              onKeyDown={handleKeyDown} // Voeg de onKeyDown toe
               onChange={e => updateFields({ email: e.target.value })}
             />
             <label>Wachtwoord</label>
@@ -126,23 +116,22 @@ export function LoginForm({
               type="password"
               placeholder='Wachtwoord'
               value={password}
-              onKeyDown={handleKeyDown} // Voeg de onKeyDown toe
               onChange={e => updateFields({ password: e.target.value })}
             />
-            <button className='Button-login' type="button" onClick={handleLogin}>
-              Login
-            </button>
           </div>
-          <p className='login-link'>Nog geen account? <Link to="/registreer" onClick={() => setUserExists(false)}>Account aanmaken</Link></p>
+          <p className='login-link'>Nog geen account? <a href="#" onClick={() => setUserExists(false)}>Account aanmaken</a></p>
           <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
+          <button type="button" onClick={handleLogin}>
+            Login
+          </button>
         </div>
         <div className='social-con'>
           <div>Of login met onderstaande opties</div>
-          <div className='social-btn'><img src={facebook} alt="Facebook" />Facebook</div>
-          <div className='social-btn'><img src={google} alt="Google" />Gmail</div>
-          <div className='social-btn'><img src={instagram} alt="Instagram" />Instagram</div>
+          <div className='social-btn'><img src={facebook} alt="" />Facebook</div>
+          <div className='social-btn'><img src={google} alt="" />Gmail</div>
+          <div className='social-btn'><img src={instagram} alt="" />Instagram</div>
         </div>
       </div>
     </>
-  );
+  )
 }

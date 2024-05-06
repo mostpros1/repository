@@ -41,7 +41,7 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
         try {
           const authenticatedUser = await Auth.signIn(data.email, data.password);
           updateUser(authenticatedUser);
-          navigate('/');
+          //navigate('/nl/');
           console.log('Logged in user:', authenticatedUser);
         } catch (error: any) {
           console.error('Login failed:', error);
@@ -50,7 +50,7 @@ export function AccountForm({ email, postCode, stad, firstName, lastName, phoneN
       };
 
     const formConfig = {
-        loginForm: <LoginForm handleLogin={() => { handleLogin}} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
+        loginForm: <LoginForm handleLogin={() => handleLogin()} setError={() => { }} error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />,
         registerForm: <RegisterForm /*setError={() => { }}*/ error={""} {...data} updateFields={updateFields} setUserExists={setUserExists} />
     }
    

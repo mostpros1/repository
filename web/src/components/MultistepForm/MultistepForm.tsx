@@ -170,7 +170,7 @@ function MultistepForm() {
 
         const datum = new Date(data.date);
         const date = datum.toISOString().split('T')[0];
-        navigate(`/HomeOwnerResultPage#${profession}?${task}!${date}`);
+        navigate(`/home-owner-result#${profession}?${task}!${date}`);
     
       } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
@@ -192,7 +192,7 @@ function MultistepForm() {
 
           const datum = new Date(data.date);
           const date = datum.toISOString().split('T')[0];
-          navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+          navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
           console.error(error)
@@ -203,7 +203,7 @@ function MultistepForm() {
 
             const datum = new Date(data.date);
             const date = datum.toISOString().split('T')[0];
-            navigate(`/bevestig-email#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
+            navigate(`/nl/confirm-mail#HomeOwnerResultPage#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }
