@@ -133,7 +133,7 @@ export function LoginForm({
               Login
             </button>
           </div>
-          <p className='login-link'>Nog geen account? <Link to="http://localhost:5173/registreer" onClick={() => setUserExists(false)}>Account aanmaken</Link></p>
+          <p className='login-link'>Nog geen account? <Link to="/registreer" onClick={() => setUserExists(false)}>Account aanmaken</Link></p>
           <Link className='login-link' to="/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
         </div>
         <div className='social-con'>
