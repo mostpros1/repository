@@ -8,6 +8,7 @@ import Characteristics from "../../components/Characteristics/Characteristics";
 import Reviews from "../../components/Reviews/Reviews";
 import Professionals from "../../components/Professionals/Professionals";
 import Footer from "../../components/ui/Footer/Footer";
+import "./HomePage.css";
 
 function HomePage() {
   return (
