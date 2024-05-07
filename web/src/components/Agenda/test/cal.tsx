@@ -62,8 +62,6 @@ const NavButton = styled.button<NavButtonProps>`
      background-size: cover;
    `;
 
-
-
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -112,6 +110,10 @@ const Cal = () => {
         setCurrentMonth(addMonths(currentMonth, 1));
     };
 
+    const goToCurrentMonth = () => {
+        setCurrentMonth(new Date());
+    };
+
     return (
         <div>
             <ButtonContainer>
@@ -121,6 +123,7 @@ const Cal = () => {
             </ButtonContainer>
             {renderDaysOfWeek()}
             {renderCalendarDays()}
+            <button onClick={goToCurrentMonth}>Ga naar huidige maand</button>
         </div>
     );
 };
