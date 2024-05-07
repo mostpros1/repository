@@ -49,6 +49,7 @@ import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+import CareerPage from "../pages/CareerPage/CareerPage";
 import { useTranslation } from "react-i18next";
 
 
@@ -107,6 +108,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/careerpage" element={<CareerPage />} />
       <Route
         path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
