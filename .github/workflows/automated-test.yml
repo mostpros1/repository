@@ -1,74 +1,3 @@
-#old one
-# name: Cypress Tests
-
-# on: 
-#   push:
-#     branches:
-#       - 'abdel_test_branch-'
-
-# jobs:
-#   cypress-run:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#   # Install NPM dependencies, cache them correctly
-
-#       - name: Install dependencies
-#         run: |
-#           cd web
-#           npm ci --verbose
-
-#       - name: Cypress install
-#         uses: cypress-io/github-action@v6
-#         with:
-#           working-directory: web
-#           runTests: false
-
-#       # and run all Cypress tests
-      
-#       - name: Cypress run
-#         uses: cypress-io/github-action@v6
-#         with:
-#           working-directory: web
-#           build: npm run build
-#           start: npx vite --host
-
-# New one 
-# name: Cypress Tests
-
-# on: 
-#   push:
-#     branches:
-#       - 'abdel_test_branch'
-
-# jobs:
-#   cypress-run:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-
-#       - name: Install dependencies
-#         run: |
-#           cd web
-#           npm ci --verbose
-
-#       - name: Cypress install
-#         uses: cypress-io/github-action@v6
-#         with:
-#           working-directory: web
-#           runTests: false
-
-#       # Run all Cypress tests
-#       - name: Cypress run specific test
-#         uses: cypress-io/github-action@v6
-#         with:
-#           working-directory: web
-#           build: npm run build
-#           start: npx vite --host
-#           command: npx cypress run --spec "web/cypress/e2e/Homeowner/lisa-test-new/lisaTestnew-stap1.cy.js"
-#update one
 name: Cypress Tests
 
 on: 
@@ -102,6 +31,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: web/cypress
+          working-directory: web
           build: npm run build
           start: npx vite --host
