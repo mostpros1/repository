@@ -33,7 +33,7 @@ context('Profile page testing uitvoeren', () => {
         cy.get('.change-btn').click();
 
         //cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();  //Job pagina
-     // cy.get('.sidebar-bottom > :nth-child(1) > .sidebar-link').click(); //profile pagina  
+     // cy.get('.sidebar-bottom > :nth-child(1) > .sidebar-link').click(); //profile paginaa 
 
     });
 });
