@@ -1,0 +1,11 @@
+/* Callendar.css */
+/* Callendar.css */
+.flex-container {
+    display: flex;
+    margin: 50px; /* Adjust the margin as needed */
+}
+
+.flex-item {
+    flex: 1;
+    margin-left: 50px; /* Adds a margin to the left of the Cal component */
+}

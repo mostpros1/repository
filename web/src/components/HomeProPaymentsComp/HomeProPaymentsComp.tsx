@@ -1,15 +1,55 @@
 import React from 'react';
 import './HomeProPaymentsComp.css';
 import { FaSearch } from 'react-icons/fa';
+import { Auth } from 'aws-amplify';
+import { cognitoClient, stripeClient } from '../../main';
+//import taal from "../ui/NavBar/Navigation";
+
 
 const HomeProPaymentsComp: React.FC = () => {
+
+  async function stripeSignUp() {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+
+      // Extract the user's email from the attributes
+      const userEmail = user.attributes.email;
+
+      const stripeAccount = await stripeClient.accounts.create({
+        type: 'standard',
+        email: userEmail,
+        country: 'NL',
+      });
+
+      await cognitoClient.adminUpdateUserAttributes({
+        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+        Username: userEmail,
+        UserAttributes: [{
+          Name: 'custom:stripeAccountId',
+          Value: stripeAccount.id
+        }]
+      }).promise();
+
+      const result = await stripeClient.accountLinks.create({
+        account: stripeAccount.id,
+        type: 'account_onboarding',
+        refresh_url: `${window.location.origin}/nl/payments/onboarding-failed`,
+        return_url: `${window.location.origin}/nl/homeowner-dashboard/payments`
+      });
+
+      window.location.href = result.url;
+    } catch (err) {
+      console.error(err);
+      // Handle the error more gracefully here, e.g., show a user-friendly message
+    }
+  }
   return (
     <main className="ProPaymentsMain">
       <section className="ProPaymentsSearchWrapper">
         <p className="ProPaymentsText">
           Payments are going through stripe. Stripe is a safe payment service. It looks like you haven’t connected to stripe yet. Click the button below to connect to stripe and get paid for your services.
         </p>
-        <button type="button" className="ProPaymentsButton">
+        <button type="button" className="ProPaymentsButton" onClick={stripeSignUp}>
           Connect to Stripe
         </button>
       </section>

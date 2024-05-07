@@ -131,7 +131,7 @@ const ReviewComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <section>
       <div className="upper-review-con">
         <h1>Reviews</h1>
         <div>
@@ -148,37 +148,37 @@ const ReviewComponent: React.FC = () => {
           <img src={SittingCustomer} alt="sitting-customer" />
         </div>
       </div>
-      <div className="reviews-container">
+      <article className="reviews-container">
         {sortedReviews.map((review) => (
-          <div key={review.id} className="review">
-            <div className="review-header">
+          <section key={review.id} className="review">
+            <section className="review-header">
               <img src={review.authorImageUrl} alt={review.author} />
-              <div>
+              <section>
                 <div className="author-name">{review.homeownerName}</div>
-                <div className="review-info">
+                <article className="review-info">
                   <span className="total-reviews">
                     Specialist: {review.author}
                     <span className="review-date">{review.date}</span>
                   </span>
-                  <div className="star-rating">
+                  <article className="star-rating">
                     <StarRating rating={review.rating} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="review-body">
+                  </article>
+                </article>
+              </section>
+            </section>
+            <article className="review-body">
               <p>{review.content}</p>
-            </div>
-            <div className="review-footer">
-              <div className="review-actions">
+            </article>
+            <article className="review-footer">
+              <article className="review-actions">
                 <button>Public Comment.</button>
                 <button>Direct Message.</button>
-              </div>
-            </div>
-          </div>
+              </article>
+            </article>
+          </section>
         ))}
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 
