@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
-import { addDays, addWeeks, addMonths } from 'date-fns';
+import { addDays, addWeeks, addMonths, format } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns';
 import returner from "./images/icons/return-icon.png";
 
 /**
@@ -46,8 +47,8 @@ function Agenda({passedProp}) {
 
   const asyncSetDate = async () => {
     const body = {
-        StartDate: dateRange[0].startDate.toISOString(),
-        EndDate: dateRange[0].endDate.toISOString(),
+        StartDate: format(dateRange[0].startDate.toISOString(), "yyyy-MM-dd'T'HH:mm:ss"),
+        EndDate: format(dateRange[0].startDate.toISOString(), "yyyy-MM-dd'T'HH:mm:ss"),
         ID: passedProp.ID
     }
       setIsLoading(true);
@@ -87,14 +88,19 @@ function Agenda({passedProp}) {
     if (rangeType === 'nextWeek') {
       startDate = new Date();
       endDate = addWeeks(startDate, 1);
+      
     } else if (rangeType === 'nextMonth') {
       startDate = new Date();
       endDate = addMonths(startDate, 1);
     }
 
     setDateRange([{ startDate, endDate, key: 'selection' }]);
-  };
+ };
 
+
+useEffect(() => {
+    console.log("Date range changed:", dateRange);
+}, [dateRange]);
   return (
       <div>
           <DateRangePicker

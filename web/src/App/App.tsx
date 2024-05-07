@@ -53,6 +53,7 @@ import { useTranslation } from "react-i18next";
 
 import ProCal from "../components/Agenda/ProCal.tsx";
 import Agenda from "../components/Agenda/agenda.tsx";
+import Cal from "../components/Agenda/test/cal.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -68,8 +69,8 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/test" element={<ProCal />} />
-      <Route path="test/calendar" element={<Agenda passedProp={undefined} />} />
-      <Route path="/" element={<HomePage />} />
+      <Route path="/test/agenda" element={<Cal />} />
+      <Route path="test/calendar" element={<Agenda passedProp={{StartDate: "08-05-2024", EndDate : "10-05-2004"}} />} />      <Route path="/" element={<HomePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
