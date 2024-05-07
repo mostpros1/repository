@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function ChoresDescription() {
   return (
     <>
-      <main className="chores_con">
+      <article className="chores_con">
         <article className="title_container">
           <h2>Vind vakmensen voor elke klus</h2>
         </article>
@@ -37,7 +37,7 @@ function ChoresDescription() {
               </article>
             </article>
         </article>
-      </main>
+      </article>
     </>
   );
 }
