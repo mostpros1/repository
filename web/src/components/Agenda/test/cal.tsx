@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, addMonths, Locale } from 'date-fns';
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, addMonths } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import styled from 'styled-components';
 import arrowL from './arrowL.png'; // Pas het pad aan naar nodig
@@ -17,13 +17,28 @@ interface DayProps {
     isCurrentMonth: boolean;
     isPreviousMonth: boolean; // Toegevoegd
     isNextMonth: boolean; // Toegevoegd
+    onClick: () => void; // Add this line
+    hasEntries: boolean; // Add this line to indicate if there are entries
 }
 
-const Day = styled.div<DayProps>`
+const Day = styled.button<DayProps>`
  padding: 20px; // Verhoog de padding om de dagvakken groter te maken
  background-color: ${props => props.isCurrentMonth ? 'white' : '#e0e0e0'};
  border: 1px solid #e0e0e0;
  color: ${props => props.isCurrentMonth ? 'black' : 'gray'};
+ cursor: pointer; // Make the cursor change to a pointer when hovering over a day
+ position: relative; // Allow positioning of child elements
+ &::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 50%;
+     transform: translateX(-50%);
+     width: 10px;
+     height: 10px;
+     border-radius: 50%;
+     background-color: ${props => props.hasEntries ? 'red' : 'transparent'}; // Change color as needed
+ }
 `;
 
 const DaysOfWeek = styled.div`
@@ -64,6 +79,25 @@ const NavButton = styled.button<NavButtonProps>`
 
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [entries, setEntries] = useState<{ [date: string]: { text: string, color: string }[] }>({});
+
+    const handleDayClick = (date: Date) => {
+        setSelectedDate(date);
+    };
+
+    const addEntry = (entry: string, color: string) => {
+        if (selectedDate === null) {
+            // Handle the case where selectedDate is null, e.g., by logging an error or setting a default date
+            console.error("Selected date is null. Cannot add entry.");
+            return;
+        }
+        const dateKey = format(selectedDate, 'yyyy-MM-dd');
+        setEntries(prev => ({
+            ...prev,
+            [dateKey]: [...(prev[dateKey] || []), { text: entry, color: color }]
+        }));
+    };
 
     const renderDaysOfWeek = () => {
         const date = new Date(1970, 0, 4); // 4 januari 1970, zondag
@@ -91,9 +125,11 @@ const Cal = () => {
             const isCurrentMonth = d.getMonth() === currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isPreviousMonth = d.getMonth() < currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isNextMonth = d.getMonth() > currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
+            const dateKey = format(d, 'yyyy-MM-dd');
+            const hasEntries = !!entries[dateKey]?.length;
 
             days.push(
-                <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth}>
+                <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries}>
                     {format(d, 'd')}
                 </Day>
             );
@@ -124,6 +160,35 @@ const Cal = () => {
             {renderDaysOfWeek()}
             {renderCalendarDays()}
             <button onClick={goToCurrentMonth}>Ga naar huidige maand</button>
+            {selectedDate && (
+                <div>
+                    <h3>Entries for {format(selectedDate, 'yyyy-MM-dd')}</h3>
+                    <ul>
+                        {entries[format(selectedDate, 'yyyy-MM-dd')]?.map((entry, index) => (
+                            <li key={index}>
+                                <div style={{ backgroundColor: entry.color, opacity: 0.5, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>{entry.text}</div>
+                            </li>
+                        ))}
+                    </ul>
+                    <form onSubmit={e => {
+                        e.preventDefault();
+                        const entry = (e.target as HTMLFormElement).elements.namedItem('entry') as HTMLInputElement;
+                        const color = (e.target as HTMLFormElement).elements.namedItem('color') as HTMLSelectElement;
+                        addEntry(entry.value, color.value);
+                        entry.value = '';
+                    }}>
+                        <input type="text" name="entry" placeholder="Add an entry" />
+                        <select name="color">
+                            <option value="rgba(0,0,0,0.5)">Zwart</option>
+                            <option value="rgba(255,0,0,0.5)">Rood</option>
+                            <option value="rgba(0,255,0,0.5)">Groen</option>
+                            <option value="rgb(52, 143, 255)">Blauw</option>
+                            {/* Add more colors as needed */}
+                        </select>
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };
