@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, addMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, addMonths, Locale } from 'date-fns';
+import { nl } from 'date-fns/locale';
 import styled from 'styled-components';
-import arrowL from './arrowL.png'; // Adjust the path as necessary
-import arrowR from './arrowR.png'; // Adjust the path as necessary
+import arrowL from './arrowL.png'; // Pas het pad aan naar nodig
+import arrowR from './arrowR.png'; // Pas het pad aan naar nodig
 
 const CalendarContainer = styled.div`
  display: grid;
  grid-template-columns: repeat(7, 1fr);
  gap: 1px;
  background-color: #f5f5f5;
- width: 100%; // Ensure the calendar spans the full width
+ width: 100%; // Zorg ervoor dat de kalender de volledige breedte beslaat
 `;
 
 interface DayProps {
     isCurrentMonth: boolean;
-    isPreviousMonth: boolean; // Added
-    isNextMonth: boolean; // Added
+    isPreviousMonth: boolean; // Toegevoegd
+    isNextMonth: boolean; // Toegevoegd
 }
 
 const Day = styled.div<DayProps>`
- padding: 20px; // Increase padding to make the day boxes bigger
+ padding: 20px; // Verhoog de padding om de dagvakken groter te maken
  background-color: ${props => props.isCurrentMonth ? 'white' : '#e0e0e0'};
  border: 1px solid #e0e0e0;
  color: ${props => props.isCurrentMonth ? 'black' : 'gray'};
@@ -67,12 +68,12 @@ const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
     const renderDaysOfWeek = () => {
-        const date = new Date(1970, 0, 4); // January 4th 1970, Sunday
+        const date = new Date(1970, 0, 4); // 4 januari 1970, zondag
         const days: React.ReactElement[] = [];
     
         for (let i = 0; i < 7; i++) {
             days.push(
-                <div key={i}>{format(addDays(date, i), 'E')}</div>
+                <div key={i}>{format(addDays(date, i), 'eeee', { locale: nl })}</div>
             );
         }
     
@@ -115,7 +116,7 @@ const Cal = () => {
         <div>
             <ButtonContainer>
                 <NavButton image={arrowL} onClick={navigateToPreviousMonth} />
-                <MonthYearDisplay>{format(currentMonth, 'MMMM yyyy')}</MonthYearDisplay>
+                <MonthYearDisplay>{format(currentMonth, 'MMMM yyyy', { locale: nl })}</MonthYearDisplay>
                 <NavButton image={arrowR} onClick={navigateToNextMonth} />
             </ButtonContainer>
             {renderDaysOfWeek()}
