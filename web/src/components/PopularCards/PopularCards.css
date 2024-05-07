@@ -9,7 +9,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    background: orange;
     gap: 2.5rem;
     flex-wrap: wrap;
 }
