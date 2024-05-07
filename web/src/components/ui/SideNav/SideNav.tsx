@@ -42,7 +42,7 @@ function SideNav() {
      return () => clearTimeout(timer);
    }, [user, navigate]); 
 
-  return (
+  return (   
     <div className="sidebar">
       <ul className="sidebar-list">
         {isProfessional ? (
