@@ -10,7 +10,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
-export const taal = window.location.pathname.split('/')[1];
+export let taal = "nl";
+
+taal = window.location.pathname.split('/')[1];
 
 console.log("test ", taal);
 
