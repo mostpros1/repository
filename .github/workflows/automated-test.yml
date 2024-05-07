@@ -82,34 +82,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-  
-      # Install NPM dependencies, cache them correctly
+  # Install NPM dependencies, cache them correctly
+
       - name: Install dependencies
         run: |
           cd web
           npm ci --verbose
 
-      # Start Expo Web server
-      - name: Start Expo Web
-        run: |
-          cd web
-          npm start --web
-
-      # Wait for Expo Web server to be ready
-      - name: Wait for Expo Web
-        run: |
-          timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:19006)" != "200" ]]; do sleep 5; done'
-
       # Install Cypress
+
       - name: Cypress install
         uses: cypress-io/github-action@v6
         with:
-          working-directory: Mostprosapp
-          build: npm run build
+          working-directory: web
+          runTests: false
 
       # and run all Cypress tests
+      
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: Mostprosapp
-          start: npx cypress run
+          working-directory: web
+          build: npm run build
+          start: npx vite --host
