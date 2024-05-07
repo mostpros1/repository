@@ -12,7 +12,6 @@
     "preview": "vite preview",
     "test": "jest --watchAll --verbose",
     "e2e": "cypress open"
-    
   },
   "dependencies": {
     "@aws-amplify/api": "^6.0.8",
@@ -36,6 +35,7 @@
     "cors": "^2.8.5",
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
+    "expo": "^50.0.17",
     "fs": "^0.0.1-security",
     "nodemailer": "^6.9.10",
     "react": "^18.2.0",
