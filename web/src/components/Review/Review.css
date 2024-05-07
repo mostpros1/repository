@@ -11,12 +11,13 @@
 
 .grid-sect {
   display: grid;
-  grid-template-columns: 450px 1fr;
+  grid-template-columns: 300px 1fr;
+  max-width: 30rem;
 }
 
 .grid-sect img {
   width: 350px;
-  margin-left: 400px;
+  margin-left: 300px;
   margin-bottom: 25px;
 }
 
