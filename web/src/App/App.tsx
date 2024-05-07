@@ -52,7 +52,6 @@ import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals
 import CareerPage from "../pages/CareerPage/CareerPage";
 import { useTranslation } from "react-i18next";
 
-import Callender from "../components/Agenda/Callendar.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -67,7 +66,7 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
-      
+      <Route path="/" element={<HomePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
@@ -94,7 +93,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
-      <Route path="/homeowner-dashboard/calender" element={<Callender />} />
+      <Route path="/homeowner-dashboard/calender" element={<Calender />} />
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
