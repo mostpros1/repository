@@ -102,6 +102,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: web
+          working-directory: web/cypress
           build: npm run build
           start: npx vite --host
