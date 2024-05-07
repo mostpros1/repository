@@ -3,15 +3,15 @@ import "./PopularCardsSection.css"
 
 function PopularCardsSection() {
   return (
-    <div className="popular-section">
-      <div className="title_container">
+    <article className="popular-section">
+      <section className="title_container">
         <h2>Populaire klussen</h2>
-      </div>
-      <div className="popular-container">
+      </section>
+      <section className="popular-container">
         <PopularCards />
-      </div>
+      </section>
 
-    </div>
+    </article>
   )
 }
 
