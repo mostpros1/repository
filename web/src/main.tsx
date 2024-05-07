@@ -30,8 +30,8 @@ dynamoDB
   .listTables()
   .promise()
   .then(data => console.log(data))
-  //.catch((error: Error) => console.error(error));
-  .catch((error: Error) => {});
+  .catch((error: Error) => console.error('Error listing DynamoDB tables:', error));
+
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);

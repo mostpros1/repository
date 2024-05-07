@@ -1,15 +1,11 @@
 import "./SearchChoreForm.css"
 import { useState } from 'react';
-import specialists from '../../../data/specialists';
 
 type SpecialistData = {
     email: string
     postCode: string
     stad: string
     beroep?: string
-    bio?: string
-    task?: string
-    kvk?: number
 }
 
 type SearchChoreFormProps = SpecialistData & {
@@ -17,7 +13,7 @@ type SearchChoreFormProps = SpecialistData & {
 }
 
 
-export default function SearchChoreForm({ beroep, bio, email, postCode, stad, updateFields }: SearchChoreFormProps) {
+export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
     const [isValidBeroep, setValidBeroep] = useState(true);
 
@@ -25,27 +21,13 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         const inputValueBeroep = e.target.value;
         const inputBeroepRegex = /^[A-Za-z\s]*$/; // Allow empty string
         const isValidBeroep = inputBeroepRegex.test(inputValueBeroep);
-        console.log('Input Value:', inputValueBeroep)
+
         setValidBeroep(isValidBeroep);
 
         if (isValidBeroep || inputValueBeroep === '') {
             updateFields({ beroep: inputValueBeroep });
         }
     };
-
-    /*const [isValidBio, setValidBio] = useState(true);
-
-    const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const inputValueBio = e.target.value;
-        const inputBioRegex = /^[A-Za-z0-9\s]*$/; // Allow empty string
-        const isValidBio = inputBioRegex.test(inputValueBio);
-
-        setValidBio(isValidBio);
-
-        if (isValidBio || inputValueBio === '') {
-            updateFields({ bio: inputValueBio });
-        }
-    };*/
 
     const [isValidEmail, setValidEmail] = useState(true);
 
@@ -92,54 +74,15 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
         }
     };
 
-   /* const [task, setTask] = useState('');
-
-    // Assuming you have a state for the displayed task name
-    const [displayedTaskName, setDisplayedTaskName] = useState('');
-
-
-    const handleTaskChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const inputValueTask = e.target.value;
-    
-        // Find the selected task object
-        let selectedTaskLink = '';
-        specialists.forEach(specialist => {
-            const foundTask = specialist.tasks.find(task => task.task === inputValueTask);
-            if (foundTask) {
-                selectedTaskLink = foundTask.link;
-                setDisplayedTaskName(inputValueTask);
-            }
-        });
-    
-        // Remove the leading slash from the selectedTaskLink if it exists
-        selectedTaskLink = selectedTaskLink.replace(/^\//, '');
-        // Set the task state to the selectedTaskLink'
-        updateFields({ task: selectedTaskLink });
-        setTask(selectedTaskLink);
-    };*/
-
-    const isValidTask = (task: string): boolean => {
-        const allTasks = specialists.flatMap(specialist => specialist.tasks.map(task => task.task));
-        return allTasks.includes(task);
-    };
-
-    const getValidTasks = (beroep: string) => {
-        // Filter specialists based on the entered beroep
-        const filteredSpecialists = specialists.filter(specialist => specialist.name === beroep);
-
-        // Extract and filter tasks from the filtered specialists
-        const allTasks = filteredSpecialists.flatMap(specialist => specialist.tasks.map(task => task.task));
-        return [...new Set(allTasks)]; // Use Set to remove duplicates and then spread back into an array
-    };
-
     return (
         <>
             <div className="search_chore_text_con">
                 <h1>Zoek uw klus</h1>
-                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar je wilt werken, en we assisteren je bij het vinden van passende klussen.</p>
-
+                <p>Klussen worden gezocht in alle sectoren en door heel Nederland. Laat ons weten waar u wilt werken, dan helpen wij u bij het vinden van passende klussen.<br />
+                    Als u een eenmansbedrijf hebt, voer uw eigen gegevens in. Als u meer mensen hebt die bij uw bedrijf werken, voer de gegevens van het contactpersoon in (bedrijfseigenaar of een filiaalmanager).</p>
             </div>
             <div className="search_chore_form">
+
                 <label>Uw hoofdberoep</label>
                 <input
                     type="text"
@@ -194,7 +137,7 @@ export default function SearchChoreForm({ beroep, bio, email, postCode, stad, up
                 {!isValidStad && (
                     <p className="error-message">Voer alstublieft een geldige stad in (bijv. Amsterdam)</p>
                 )}
-                <p className="form_login">Al een account? <a href="#">Inloggen</a></p>
+                <p className="form_login">Al een account? <a href="/login">Inloggen</a></p>
             </div>
         </>
     )
