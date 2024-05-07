@@ -17,6 +17,8 @@ import { AccountForm } from "../MultistepForm/AccountForm";
 import { Datums } from "./Calendar.tsx";
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
+import { taal } from "../ui/NavBar/Navigation";
+
 
 type DateTimeSpan = {
   date: Date;
@@ -102,18 +104,6 @@ const questionsData: Question[] = [
       "Groningen",
       "Utrecht",
       "Eindhoven",
-    ],
-  },
-  {
-    key: "question2",
-    label: "Wat is uw specialisatie",
-    options: [
-      "Loodgieter",
-      "Timmerman",
-      "Elektricien",
-      "Aannemer",
-      "Hovenier",
-      "Anders"
     ],
   },
   // ... voeg andere vragen toe zoals nodig
@@ -219,7 +209,7 @@ function SpecialistMultistepForm() {
     });
 
   function signUp(registerData: RegisterData): void {
-    const { firstName, lastName, email, phoneNumber, password, bio, region, postcode, profession, task, rating, availibility, kvk, bedrijf } = registerData;
+    const { firstName, lastName, email, phoneNumber, password, /*bio,*/ region, postcode, profession, /*task, */rating, availibility, kvk, bedrijf } = registerData;
 
 
     const signUpProf = async () => {
@@ -239,14 +229,14 @@ function SpecialistMultistepForm() {
           .put({
             Item: {
               id: Math.floor(Math.random() * 1000000000),
-              bio: bio !== undefined ? stopXSS(bio) : "", // Check if bio is not undefined
+              //bio: bio !== undefined ? stopXSS(bio) : "", // Check if bio is not undefined
               email: email !== undefined ? stopXSS(email) : "", // Check if email is not undefined
               first_name: firstName !== undefined ? stopXSS(firstName) : "", // Check if firstName is not undefined
               last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
               region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
               postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
               profession: profession !== undefined ? stopXSS(profession).toLowerCase() : "", // Check if profession is not undefined
-              task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
+              //task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
               availibility: availibility, // Assuming availibility is already checked elsewhere
               rating: rating, // Assuming rating is already checked elsewhere
               kvk: kvk, // Assuming kvk is already checked elsewhere
@@ -278,7 +268,7 @@ function SpecialistMultistepForm() {
           .catch(console.error)
 
 
-        navigate('/nl/confirm-mail', { state: { email: email, postConfig: "PROFESSIONAL" } })
+        navigate(`/${taal}/confirm-mail`, { state: { email: email, postConfig: "PROFESSIONAL" } })
         } catch (error: any) {
         console.error('Error signing up:', error);
         //setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useParams, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import React from "react";
 import HomePage from "../pages/HomePage/HomePage";
@@ -48,91 +49,103 @@ import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
+import CareerPage from "../pages/CareerPage/CareerPage";
+import { useTranslation } from "react-i18next";
 
 
-const App = () => {
+const LanguageAwareRoutes = () => {
   const { user } = useUser();
+
+  const { lang } = useParams();
+  const { t } = useTranslation();
+
+  // Function to prepend language to the given path
+  const addLanguagePrefix = (path) => {
+    return `/${lang}${path}`;
+  };
 
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/nl/jobs-mostpros" element={<MyTaskPage />} />
-      <Route path="/nl/jobs" element={<KlussenPage />} />
-      <Route path="/nl/jobs/lekkages-repareren" element={<KlussenPage />} />
-      <Route path="/nl/jobs/sanitair-installeren" element={<KlussenPage />} />
-      <Route path="/nl/jobs/tuinontwerp-maken" element={<KlussenPage />} />
-      <Route path="/nl/forgot-password" element={<WachtwoordVergetenPage />} />
-      <Route path="/nl/confirm-mail" element={<BevestigEmailPage />} />
-      <Route path="/nl/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
-      <Route path="/nl/pro-onboarding" element={<SpecialistPage />} />
-      <Route path="/nl/homeowner-dashboard" element={<ResultsPage />} />
-      <Route path="/nl/pro-dashboard" element={<ResultsPage />} />
-      <Route path="/nl/about" element={<AboutUsPage />} />
-      <Route path="/nl/how-it-works" element={<HowItWorksPage />} />
-      <Route path="/nl/contact" element={<ContactPage />} />
+      <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
+      <Route path="/jobs-mostpros" element={<MyTaskPage />} />
+      <Route path="/jobs" element={<KlussenPage />} />
+      <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
+      <Route path="/jobs/sanitair-installeren" element={<KlussenPage />} />
+      <Route path="/jobs/tuinontwerp-maken" element={<KlussenPage />} />
+      <Route path="/forgot-password" element={<WachtwoordVergetenPage />} />
+      <Route path="/confirm-mail" element={<BevestigEmailPage />} />
+      <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
+      <Route path="/pro-onboarding" element={<SpecialistPage />} />
+      <Route path="/homeowner-dashboard" element={<ResultsPage />} />
+      <Route path="/pro-dashboard" element={<ResultsPage />} />
+      <Route path="/about" element={<AboutUsPage />} />
+      <Route path="/how-it-works" element={<HowItWorksPage />} />
+      <Route path="/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
-      <Route path="/nl/home-innovation" element={<HomeInovation />} />
+      <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/nl/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
-      <Route path="/nl/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/EditProfileSection" element={<HomeOwnerDashboardPage />} />
+      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
+      <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
-      <Route path="/nl/DashboardPage" element={<DashboardPage />} />
-      <Route path="/nl/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
+      <Route path="/DashboardPage" element={<DashboardPage />} />
+      <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
-      <Route path="/nl/homeowner-dashboard/calender" element={<Calender />} />
-      <Route path="/nl/pro-dashboard/calender" element={<Calender />} />
-      <Route path="/nl/ViewProfessionals" element={<ViewProfessionals />} />
+      <Route path="/homeowner-dashboard/calender" element={<Calender />} />
+      <Route path="/pro-dashboard/calender" element={<Calender />} />
+      <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
-        path="/nl/MijnKlussenOverzicht"
+        path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
       />
-      <Route path="/nl/OverOns" element={<OverOns />} />
-      <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/nl/Invoice" element={<InvoicePage />} />
-      <Route path="/nl/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
-      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
-      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/OverOns" element={<OverOns />} />
+      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
+      <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/careerpage" element={<CareerPage />} />
       <Route
-        path="/nl/homeowner-dashboard/settings"
+        path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
       <Route
-        path="/nl/pro-dashboard/settings"
+        path="/pro-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
       <Route
-        path="/nl/HomeOwnerNotification"
+        path="/HomeOwnerNotification"
         element={<HomeOwnerNotification />}
       />
-      <Route path="/nl/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
+      <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
       <Route
-        path="/nl/HomeOwnerDeactivation"
+        path="/HomeOwnerDeactivation"
         element={<HomeOwnerDeactivation />}
       />
-      <Route path="/nl/FAQPage" element={<FAQPage />} />
-      <Route path="/nl/jobspage" element={<Jobspage />} />
-      <Route path="/nl/homeowner-dashboard/reviews" element={<ReviewPage />} />
-      <Route path="/nl/pro-dashboard/reviews" element={<ReviewPage />} />
-      <Route path="/nl/DetailJob" element={<DetailJobPage />} />
+      <Route path="/FAQPage" element={<FAQPage />} />
+      <Route path="/jobspage" element={<Jobspage />} />
+      <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
+      <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route
-        path="/nl/MijnKlussenOverzicht"
+        path="/MijnKlussenOverzicht"
         element={<MijnKlussenOverzichtPage />}
       />
-      <Route path="/nl/OverOns" element={<OverOns />} />
-      <Route path="/nl/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/nl/homeowner-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/nl/pro-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/nl/Invoice" element={<InvoicePage />} />
-      <Route path="/nl/homeowner-dashboard/chat" element={<ChatMain />} />
-      <Route path="/nl/pro-dashboard/chat" element={<ChatMain />} />
-      <Route path="/nl/VSMijnklussen" element={<VSMijnklussen />} />
-      <Route path="/nl/login" element={<LoginPage />} />
-      <Route path="/nl/register" element={<RegisterPage />} />
-      <Route path="/nl/payments">
+      <Route path="/OverOns" element={<OverOns />} />
+      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
+      <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
+      <Route path="/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/payments">
         <Route path="success" element={<>Betaling is gelukt!</>} />
         <Route path="canceled" element={<>Betaling is geannuleerd.</>} />
         <Route
@@ -146,7 +159,7 @@ const App = () => {
         />
       </Route>
       <Route
-        path="/nl/admin-paneel"
+        path="/admin-paneel"
         element={
           user && user.role === "Admin" ? <AdminSideBar /> : <Navigate to="/" />
         }
@@ -155,7 +168,7 @@ const App = () => {
         <Route path="manage-users" element={<ManageUser />} />
       </Route>
       <Route
-        path="/nl/dashboard-huiseigenaar"
+        path="/dashboard-huiseigenaar"
         element={
           user && user.role === "Homeowner" ? (
             <HomeOwnerDashboard />
@@ -165,7 +178,7 @@ const App = () => {
         }
       />
       <Route
-        path="/nl/dashboard-professional"
+        path="/dashboard-professional"
         element={
           user && user.role === "Professional" ? (
             <ProfessionalDashboard />
@@ -174,6 +187,50 @@ const App = () => {
           )
         }
       />
+    </Routes>
+  );
+  //<Route path="/EditProfileSection" element={<EditProfile />} />
+};
+
+
+
+const App = () => {
+  const { lang } = useParams();
+  const { i18n } = useTranslation();
+  const [language, setLanguage] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const pathName = window.location.pathname;
+    const hash = window.location.hash;
+
+    if (!window.location.pathname.startsWith('/nl')) {
+      if (!window.location.pathname.startsWith('/en')) {
+        if (pathName === '/') {
+          navigate('/nl/');
+        } else {
+          navigate('/nl' + pathName + hash);
+        }
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+
+    if (lang) {
+      i18n.changeLanguage(lang);
+      setLanguage(lang);
+
+    }
+  }, [lang, i18n]);
+
+  return (
+    <Routes>
+      {/* Wildcard route to capture the language part of the URL */}
+      <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
+      {/* Fallback route if no language is specified */}
+      <Route path="/*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

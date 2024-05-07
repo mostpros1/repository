@@ -122,7 +122,7 @@ function Searchbar() {
   return (
     <>
       <div className={showList ? "search-container_open" : "search-container"}>
-        <label>Wat is je klus?</label>
+        <label className="searchBarSearchText">Wat is je klus?</label>
         <input
           type="text"
           value={value}
