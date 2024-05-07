@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
+import { taal } from '../../components/ui/NavBar/Navigation.tsx';
 
 
 function RegisterPage() {
@@ -85,7 +86,8 @@ function RegisterPage() {
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
       */
         //const postConfig = postConfigMap['HOMEOWNER'];
-        navigate('/bevestig-email#Jobs', { state: { email: email, postConfig: "HOMEOWNER" } })
+        console.log("Navigating with state:", { email: email, postConfig: "HOMEOWNER" });
+        navigate(`/${taal}/confirm-mail#Jobs`, { state: { email: email, postConfig: "HOMEOWNER" } });
       } catch (error: any) {
         console.error('Error signing up:', error);
         setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
