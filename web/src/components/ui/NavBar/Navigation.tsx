@@ -12,8 +12,9 @@ import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
 export let taal = "nl";
 
+if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en"){
 taal = window.location.pathname.split('/')[1];
-
+}
 console.log("test ", taal);
 
 function Navigation() {
