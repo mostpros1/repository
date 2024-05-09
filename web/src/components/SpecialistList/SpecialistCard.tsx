@@ -78,10 +78,9 @@ function SpecialistCard() {
       TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
-      FilterExpression: "task = :task",
+      FilterExpression: "profession = :profession",
       ExpressionAttributeValues: {
         ":profession": profession,
-        ":task": task,
       },
     }).promise()
       .then(data => {
