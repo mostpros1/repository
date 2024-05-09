@@ -35,7 +35,7 @@
     "cors": "^2.8.5",
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
-    "expo": "^50.0.17",
+    "expo": "^51.0.1",
     "fs": "^0.0.1-security",
     "nodemailer": "^6.9.10",
     "react": "^18.2.0",
@@ -47,6 +47,8 @@
     "stripe": "^14.23.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "Faker": "^0.7.2",
     "typescript": "^5.3.3"
   }
 }
