@@ -4,6 +4,8 @@ import { nl } from 'date-fns/locale';
 import styled from 'styled-components';
 import arrowL from './arrowL.png'; // Pas het pad aan naar nodig
 import arrowR from './arrowR.png'; // Pas het pad aan naar nodig
+import { Auth } from 'aws-amplify';
+import { dynamo } from '../../../declarations';
 
 const CalendarContainer = styled.div`
  display: grid;
@@ -149,7 +151,7 @@ const Cal = () => {
         setCurrentMonth(new Date());
     };
 
-    const addAvailibility = (date: string, time: string, color: string) => {
+    const addAvailibility = async (date: string, time: string, color: string) => {
         if (selectedDate === null) {
             // Handle the case where selectedDate is null, e.g., by logging an error or setting a default date
             console.error("Selected date is null. Cannot add entry.");
@@ -158,8 +160,57 @@ const Cal = () => {
         const dateKey = format(selectedDate, 'yyyy-MM-dd');
         setEntries(prev => ({
             ...prev,
-            [dateKey]: [...(prev[dateKey] || []), { text: date, time, color: color}]
+            [dateKey]: [...(prev[dateKey] || []), { text: date, time, color: color }]
         }));
+        console.log(entries);
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+        console.log(email);
+        console.log(date);
+        console.log(time);
+        dynamo.query({
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email
+            }
+        }).promise().then((data) => {
+            if (data.Items && data.Items.length > 0) {
+                dynamo
+                    .update({
+                        TableName: "Professionals",
+                        Key: {
+                            id: data.Items[0].id,
+                        },
+                        UpdateExpression: `set availability = :availability`,
+                        ExpressionAttributeValues: {
+                            ":availability": data.Items[0].availability.push({ date: date, time: time }),
+                        },
+                    })
+                    .promise()
+                    .then(data => console.log(data.Attributes))
+                    .catch(console.error)
+            } else {
+                console.error("No items found in the query result.");
+            }
+            dynamo
+                .update({
+                    TableName: "Professionals",
+                    Key: {
+                        id: data.id,
+                    },
+                    UpdateExpression: `set availibility = :availibility`,
+                    ExpressionAttributeValues: {
+                        ":availibility": data.availibility.push({ date: date, time: time }),
+                    },
+                })
+                .promise()
+                .then(data => console.log(data.Attributes))
+                .catch(console.error)
+        }).catch((err) => {
+            console.error(err);
+        });
     };
 
     return (
