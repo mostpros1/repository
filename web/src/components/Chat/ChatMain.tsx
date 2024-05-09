@@ -8,8 +8,10 @@ import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
-import { IoMdPhotos } from "react-icons/io";
 import axios from 'axios';
+import { FaPaperclip } from "react-icons/fa6";
+import JanSchilder from "../../assets/JanSchilder.jpg";
+import { BorderAllRounded } from "@mui/icons-material";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -35,30 +37,46 @@ function ChatMain({ user, signOut }) {
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [isDropUpOpen, setIsDropUpOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const groupMessagesByDate = (messages) => {
     const groupedMessages = {};
     messages.forEach((message) => {
-      const createdAt = new Date(message.createdAt);
-      const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
-      if (!groupedMessages[dateKey]) {
-        groupedMessages[dateKey] = [];
-      }
-      groupedMessages[dateKey].push(message);
+       const createdAt = new Date(message.createdAt);
+       const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
+       if (!groupedMessages[dateKey]) {
+          groupedMessages[dateKey] = [];
+       }
+       groupedMessages[dateKey].push(message);
     });
-    return groupedMessages;
-  };
+ 
+    Object.keys(groupedMessages).forEach((date) => {
+      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    });
 
-  useEffect(() => {
-    // Filtered chats based on selected contact
-    const filteredChats = selectedContact
-      ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
-      : [];
+    const sortedDates = Object.keys(groupedMessages).sort((a, b) => {
+      const dateA = new Date(a).getTime();
+      const dateB = new Date(b).getTime();
+      return dateA - dateB;
+    });
     
-    // Group and set messages
+    const sortedGroupedMessages = {};
+    sortedDates.forEach(date => {
+      sortedGroupedMessages[date] = groupedMessages[date];
+    });
+
+    return sortedGroupedMessages;
+ };
+ 
+  useEffect(() => {
+    const filteredChats = selectedContact
+   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
+   : [];
     const groupedMessages = groupMessagesByDate(filteredChats);
     setGroupedMessages(groupedMessages);
   }, [chats, selectedContact, user.attributes.email]);
+
 
 useEffect(() => {
   async function fetchChats() {
@@ -146,22 +164,6 @@ useEffect(() => {
     }
   };
 
-  const [showPaymentLink, setShowPaymentLink] = useState(false);
-  const [subtotal, setSubtotal] = useState(0);
-  const [customSubtotal, setCustomSubtotal] = useState('');
-
-  const updateSubtotal = () => {
-    if (!customSubtotal || isNaN(Number(customSubtotal))) {
-      alert('Voer een geldig bedrag in.');
-      return;
-    }
-    setSubtotal(Number(customSubtotal));
-  };
-  
-  const handlePaySendMessage = (text) => {
-      console.log(text);
-  };
-
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const recipient = searchParams.get('recipient');
@@ -207,126 +209,85 @@ useEffect(() => {
       alert('Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.');
     }
   };
+  
 
   return (
     <div className="chat-container">
         <div className="sidebar" id="sidebar">
-      <input
-        type="text"
-        placeholder="Zoek gebruikers..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="searchList"
-      />
-      <ul>
-        {searchTerm === ""
-          ? contactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact}
-              </li>
-            ))
-          : filteredContactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact}
-              </li>
-            ))}
-      </ul>
-    </div>
-
-    <div className="button-container">
-      <button
-        type="button"
-        className="buttona"
-        onClick={handleStartNewChat}
-        >
-        Start New Chat
-      </button>
-      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
-      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
-    </div>
+          <input
+            type="text"
+            placeholder="Zoek gebruikers..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="searchList"
+          />
+          <ul>
+            {searchTerm === ""
+              ? contactList.map((contact) => (
+                  <li
+                    key={contact}
+                    onClick={() => switchChat(contact)}
+                    className={selectedContact === contact ? 'selected-contact' : ''}
+                  >
+                    {contact.split("@")[0]}
+                  </li>
+                ))
+              : filteredContactList.map((contact) => (
+                  <li
+                    key={contact}
+                    onClick={() => switchChat(contact)}
+                    className={selectedContact === contact ? 'selected-contact' : ''}
+                  >
+                    {contact.split("@")[0]}
+                  </li>
+                ))}
+          </ul>
+        </div>
       <div className="main-container">
         <div className="chat-main">
-          
-        <div className="chatheader">
-          <div className="chat-info">
-            <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+          <div className="chatheader">
+            <div className="chat-info">
+                <img src={JanSchilder} className="profile-ava"/>
+              <div className="name-and-status">
+                <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+                <h5 className="last-seen">Last seen:</h5>
+              </div>
             </div>
           </div>
-        </div>
         <div className="chat-box" ref={chatBoxRef}>
-          
-              {Object.keys(groupedMessages).map((date) => (
-                <React.Fragment key={date}>
-                  <div className="date-separator">{date}</div>
+          {Object.keys(groupedMessages).map((date) => (
+            <React.Fragment key={date}>
+              <div className="date-separator">{date}</div>
 
-                  {groupedMessages[date].map((chat) => (
-                    <div
-                    key={chat.id}
-                    className={`message-container ${
-                      chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+              {groupedMessages[date].map((chat) => (
+                <div
+                key={chat.id}
+                className={`message-container ${
+                  chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
+                }`}
+                >
+                  <div
+                    className={`message-bubble ${
+                      chat.email === user.attributes.email ? "self-message" : "other-message"
                     }`}
                     >
-                      <div
-                        className={`message-bubble ${
-                          chat.email === user.attributes.email ? "self-message" : "other-message"
-                        }`}
-                        >
-                        <div className="username">
-                          <span className="username-name">{chat.email.split("@")[0]}</span>
-                        </div>
-                        <p className="text">{chat.text}</p>
-                        <time dateTime={chat.createdAt} className="message-time">
-                          {new Intl.DateTimeFormat('nl-NL', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }).format(new Date(chat.createdAt))}
-                        </time>
-                      </div>
+                    <div className="username">
+                      <span className="username-name">{chat.email.split("@")[0]}</span>
                     </div>
-                  ))}
-                </React.Fragment>
+                    <p className="text">{chat.text}</p>
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }).format(new Date(chat.createdAt))}
+                    </time>
+                  </div>
+                </div>
               ))}
-            </div>
-
-        <div className="input-form">
-          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
-            {showPaymentLink && (
-              <PaymentLink
-                    subtotal={subtotal}
-                    handleSendMessage={handlePaySendMessage}
-                />
-            )}
-            <input
-            type="number"
-            value={customSubtotal}
-            onChange={(e) => setCustomSubtotal(e.target.value)}
-            placeholder="Subtotaal"
-            className="betalingbedrag"
-          />
-          {/* <div>
-            <IoMdPhotos size={25} className="addPhoto" />
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-            />
+            </React.Fragment>
+          ))}
         </div>
-            <button onClick={handleUpload}>Upload Foto</button>
-            {uploadedPhotoUrl && (
-              <div>
-                <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
-              </div>
-            )}
-          </div> */}
+        <div className="input-form">
           <input
             type="text"
             name="search"
@@ -343,6 +304,28 @@ useEffect(() => {
             }}
             className="inputchat"
           />
+          <div className="dropup" onClick={() => setIsDropUpOpen(!isDropUpOpen)}>
+            <FaPaperclip className="paperclip" size={25} />
+            {isDropUpOpen && (
+              <div className="dropup-content">
+                <button className="dropup-option" onClick={() => inputRef.current?.click()}>Verstuur afbeelding</button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                  ref={inputRef}
+                />
+                {uploadedPhotoUrl && (
+                  <div>
+                    <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
+                  </div>
+                )}
+                <button className="dropup-option">Maak betaalverzoek</button>
+              </div>
+            )}
+          </div>
+
           <div className="chat-enter">
             <kbd><IoSend size={25} /></kbd>
           </div>
