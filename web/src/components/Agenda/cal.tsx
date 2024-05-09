@@ -149,7 +149,7 @@ const Cal = () => {
         setCurrentMonth(new Date());
     };
 
-    const addAvailibility = (date: string, time: string) => {
+    const addAvailibility = (date: string, time: string, color: string) => {
         if (selectedDate === null) {
             // Handle the case where selectedDate is null, e.g., by logging an error or setting a default date
             console.error("Selected date is null. Cannot add entry.");
@@ -158,7 +158,7 @@ const Cal = () => {
         const dateKey = format(selectedDate, 'yyyy-MM-dd');
         setEntries(prev => ({
             ...prev,
-            [dateKey]: [...(prev[dateKey] || []), { text: date, time }]
+            [dateKey]: [...(prev[dateKey] || []), { text: date, time, color: color}]
         }));
     };
 
@@ -209,7 +209,7 @@ const Cal = () => {
                         e.preventDefault();
                         const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
                         const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                        addAvailibility(date.value, time.value);
+                        addAvailibility(date.value, time.value, "");
                         date.value = '';
                         time.value = '';
                     }}>
