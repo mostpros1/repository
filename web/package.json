@@ -26,7 +26,8 @@
     "@mui/x-date-pickers": "^6.19.0",
     "aws-amplify": "^5.3.15",
     "aws-sdk": "^2.1590.0",
-    "date-fns": "^3.1.0",
+    "date-fns": "^3.6.0",
+    "date-fns-tz": "^3.1.3",
     "dotenv": "^16.4.4",
     "fs": "^0.0.1-security",
     "i18next": "^23.11.3",
@@ -34,6 +35,7 @@
     "i18next-http-backend": "^2.5.1",
     "nodemailer": "^6.9.10",
     "react": "^18.2.0",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-fakers": "^1.0.3-rc1",
     "react-i18next": "^14.1.1",
@@ -42,7 +44,8 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
-    "stripe": "^14.13.0",
+    "stripe": "^14.21.0",
+    "styled-components": "^6.1.9",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

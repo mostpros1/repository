@@ -76,7 +76,7 @@
   display: flex;
 }
 
-.button-container{
+.button-container {
   display: flex;
   position: absolute;
   top: 100px;
@@ -158,6 +158,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -192,10 +193,6 @@
   color: #888;
 }
 
-.username-name {
-  font-weight: bold;
-}
-
 .join-chat-button-container {
   padding: 10px;
   background-color: #fff;
@@ -212,7 +209,7 @@
   cursor: pointer;
 }
 
-.text{
+.text {
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -266,7 +263,7 @@
   align-items: center;
 }
 
-.addPay{
+.addPay {
   border-radius: 5px;
   width: 40px;
   background-color: #007bff;
@@ -281,7 +278,7 @@
   height: 40px;
 }
 
-.create-payment{
+.create-payment {
   border: 0;
   border-radius: 10px;
   background-color: #007bff;
@@ -296,14 +293,14 @@
   margin-right: 5px;
 }
 
-.betalingbedrag{
+.betalingbedrag {
   height: 40px;
   width: 120px;
   font-size: 14px;
   border: solid 2px rgba(0, 0, 0, 0.452);
 }
 
-.betalingbevestig{
+.betalingbevestig {
   height: 40px;
   width: auto;
   padding: 5px;
@@ -315,7 +312,7 @@
   border-radius: 10px;
 }
 
-.searchList{
+.searchList {
   width: 100%;
   height: 50px;
   border: 0;
@@ -323,7 +320,7 @@
   font-size: 15px;
 }
 
-.addPhoto{
+.addPhoto {
   border-radius: 5px;
   width: 40px;
   background-color: #007bff;
