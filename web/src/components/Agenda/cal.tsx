@@ -83,9 +83,32 @@ const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
+
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
     };
+
+
+    async function getEntriesFromDB() {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+        dynamo.query({
+            TableName: "Calendar",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email // Use the email variable here
+            },
+        }).promise().then((data) => {
+            if (data.Items && data.Items.length > 0) {
+                setEntries(data.Items[0].availibility);
+                console.log(data);
+            } else {
+                console.log("No items found in the query result.");
+            }
+        });
+    }
+    getEntriesFromDB();
 
     const addEntry = (entry: string, time: string, color: string) => {
         if (selectedDate === null) {
@@ -180,7 +203,7 @@ const Cal = () => {
                 console.log(data.Items[0]);
 
                 const newItem = { date: date, time: time };
-                const availibilityArray = Array.isArray(data.Items[0].availability)? data.Items[0].availability : [data.Items[0].availability];
+                const availibilityArray = Array.isArray(data.Items[0].availability) ? data.Items[0].availability : [data.Items[0].availability];
                 const updatedAvailability = [...availibilityArray, newItem];
 
                 dynamo.update({
@@ -212,7 +235,7 @@ const Cal = () => {
             </ButtonContainer>
             {renderDaysOfWeek()}
             {renderCalendarDays()}
-            <button onClick={goToCurrentMonth}>Ga naar huidige maand</button>
+            < button onClick={goToCurrentMonth} > Ga naar huidige maand</button >
             {selectedDate && (
                 <div>
                     <h3>Entries for {format(selectedDate, 'yyyy-MM-dd')}</h3>
@@ -261,7 +284,7 @@ const Cal = () => {
                     </form>
                 </div>
             )}
-        </div>
+        </div >
     );
 };
 
