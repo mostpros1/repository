@@ -64,12 +64,6 @@ export function LoginForm({ email, password, updateFields, setUserExists, handle
               {t("Login")}
             </button>
           </div>
-          <div className='social-con'>
-            <div>{t("Of login met onderstaande opties")}</div>
-            <div className='social-btn'><img src={facebook} alt="" />Facebook</div>
-            <div className='social-btn'><img src={google} alt="" />Gmail</div>
-            <div className='social-btn'><img src={instagram} alt="" />Instagram</div>
-          </div>
         </div>
       </>
     )

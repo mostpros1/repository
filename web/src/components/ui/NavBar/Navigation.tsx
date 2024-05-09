@@ -11,9 +11,11 @@ import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
 export const taal = window.location.pathname.split('/')[1];
+
 console.log("test ", taal);
 
 function Navigation() {
+
   const { t } = useTranslation(); // Use useTranslation hook to access translation functions
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser();
@@ -52,12 +54,14 @@ function Navigation() {
       console.error("Logout failed:", error);
     }
   };
+
   let authButtons = (
     <>
       <Link to={`/${taal}/login`}>{t("Login")}</Link> {/* Translate login button */}
       <Link to={`/${taal}/register`}>{t("Register")}</Link> {/* Translate register button */}
     </>
   );
+
 
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
@@ -318,7 +322,7 @@ function Navigation() {
             <MenuIcon />
             <PermIdentityIcon />
           </button>
-          {dropdownOpen && (
+          {taal && dropdownOpen && (
             <div className="dropdown-content">{authButtons}</div>
           )}
         </div>
@@ -326,5 +330,7 @@ function Navigation() {
     </div >
   );
 }
+
+
 
 export default Navigation;

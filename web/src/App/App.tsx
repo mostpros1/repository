@@ -60,9 +60,9 @@ const LanguageAwareRoutes = () => {
   const { t } = useTranslation();
 
   // Function to prepend language to the given path
-  const addLanguagePrefix = (path) => {
+  /*const addLanguagePrefix = (path) => {
     return `/${lang}${path}`;
-  };
+  };*/
 
   return (
     <Routes>
