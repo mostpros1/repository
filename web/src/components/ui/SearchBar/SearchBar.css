@@ -55,6 +55,11 @@
     flex-direction: column;
 }
 
+.searchBarSearchText{
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
 .search_dropdown_item {
     padding: 25px 40px;
     text-decoration: none;

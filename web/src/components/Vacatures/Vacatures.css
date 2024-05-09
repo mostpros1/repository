@@ -1,0 +1,34 @@
+.vacature-list {
+    display: flex;
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.vacature-list-item {
+    list-style: none;
+}
+
+.vacature-list-item h3 {
+    background-color: #E9F4FF;
+    width: 120rem;
+    margin-top: 2rem;
+    padding: 25px;
+    font-size: 2rem;
+    color: #529de8;
+    cursor: pointer;
+}
+
+.tech-list,
+.vacature-list-item p {
+    padding: 2rem;
+    font-size: 15px;
+    max-width: 110rem;
+    margin-left: 2.5rem;
+    padding-bottom: 15px;
+    list-style: none;
+}
+
+#Vacature-desc-title {
+    font-weight: 600;
+}

@@ -1,17 +1,7 @@
 #jobs-panel {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  margin: 35px 0px 15px 10px;
-}
-
-.side-panel-right {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
-}
-
-.side-panel-left {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0rem;
+  margin: 25px auto 0 140px;
 }

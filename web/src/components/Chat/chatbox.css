@@ -14,11 +14,10 @@
 }
 
 #sidebar {
-  width: 350px;
-  background: linear-gradient(to bottom, #007bff, #4e95ff);
+  width: 300px;
+  background: linear-gradient(to bottom, #575cd9, #4e95ff);
   overflow-y: auto;
-  height: 500px;
-  margin-top: 40px;
+  height: 560px;
   margin-left: 20px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,15 +51,13 @@
   display: flex;
   flex-direction: column;
   background: linear-gradient(to bottom, #f9f9fb, #ffffff);
-  height: 550px;
-  margin-top: 40px;
-  width: 700px;
+  height: 560px;
+  width: 740px;
   margin-right: 40px;
-  margin-left: 60px;
-  border-radius: 20px;
+  border-top-right-radius: 0px;
 }
 
-.textjoined {
+/* .textjoined {
   background-color: #e6f7e8;
   border-bottom: 1px solid #ddd;
   width: 200px;
@@ -76,7 +73,7 @@
   display: flex;
 }
 
-.button-container{
+.button-container {
   display: flex;
   position: absolute;
   top: 100px;
@@ -93,7 +90,7 @@
   height: 30px;
   cursor: pointer;
   font-size: 14px;
-}
+} */
 
 .chat-box {
   flex: 1;
@@ -126,8 +123,8 @@
 }
 
 .chat-enter kbd {
-  background-color: #007bff;
-  color: white;
+  background-color: #ffffff;
+  color: #007bff;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
@@ -139,6 +136,7 @@
   height: 40px;
   margin-left: 10px;
   width: 50px;
+  margin-right: 5px;
 }
 
 .message-bubble {
@@ -158,6 +156,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -192,10 +191,6 @@
   color: #888;
 }
 
-.username-name {
-  font-weight: bold;
-}
-
 .join-chat-button-container {
   padding: 10px;
   background-color: #fff;
@@ -212,7 +207,7 @@
   cursor: pointer;
 }
 
-.text{
+.text {
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -243,19 +238,17 @@
 
 .chatheader {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   padding: 10px;
-  background-color: #007bff;
+  background: linear-gradient(to bottom, #575cd9, #4e95ff);
   color: white;
-  height: 100px;
+  height: 80px;
   border-radius: 10px;
 }
 
 .name-and-status {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  align-items: center;
+  margin-top: 5px;
 }
 
 .recipient-name {
@@ -264,6 +257,11 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+.last-seen{
+  font-size: 17px;
+  margin-top: 10px;
 }
 
 .addPay{
@@ -281,7 +279,7 @@
   height: 40px;
 }
 
-.create-payment{
+.create-payment {
   border: 0;
   border-radius: 10px;
   background-color: #007bff;
@@ -296,14 +294,14 @@
   margin-right: 5px;
 }
 
-.betalingbedrag{
+.betalingbedrag {
   height: 40px;
   width: 120px;
   font-size: 14px;
   border: solid 2px rgba(0, 0, 0, 0.452);
 }
 
-.betalingbevestig{
+.betalingbevestig {
   height: 40px;
   width: auto;
   padding: 5px;
@@ -315,28 +313,12 @@
   border-radius: 10px;
 }
 
-.searchList{
+.searchList {
   width: 100%;
   height: 50px;
   border: 0;
   margin-bottom: 10px;
   font-size: 15px;
-}
-
-.addPhoto{
-  border-radius: 5px;
-  width: 40px;
-  background-color: #007bff;
-  color: white;
-  border: 0;
-  margin-left: 10px;
-  cursor: pointer;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 6px;
 }
 
 .selected-contact {
@@ -353,9 +335,92 @@
   font-weight: bold;
 }
 
-.profile-picture {
-  width: 50px;
-  height: 50px;
+.chat-info{
+  display: flex;
+
+}
+
+.profile-ava{
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.last-message {
+  font-size: 12px;
+  color: #777;
+  margin-top: 2px;
+}
+
+.paperclip{
+  border-radius: 5px;
+  width: 40px;
+  background-color: #ffffff;
+  color: #007bff;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  padding: 8px 0;
+  z-index: 1;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropup-content button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.dropup-content button:hover {
+  background-color: #ddd;
+}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropup-option{
+  border-radius: 5px;
+  text-align: center;
 }

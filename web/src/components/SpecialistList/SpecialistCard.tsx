@@ -78,10 +78,9 @@ function SpecialistCard() {
       TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
-      FilterExpression: "task = :task",
+      FilterExpression: "profession = :profession",
       ExpressionAttributeValues: {
         ":profession": profession,
-        ":task": task,
       },
     }).promise()
       .then(data => {
@@ -95,7 +94,7 @@ function SpecialistCard() {
           price: item.price,
           rating: item.rating,
           bio: item.bio,
-          availibility: item.availibility,
+          availability: item.availability,
 
 
         }));
@@ -108,11 +107,11 @@ function SpecialistCard() {
         console.log("convertedItems =", convertedItems);
         if (convertedItems) {
           for (let i: number = 0; i < convertedItems.length; i++) {
-            if (convertedItems[i].availibility) {
+            if (convertedItems[i].availability) {
         
               for (let a = 0; a < convertedItems.length; a++) {
   
-                if (date == convertedItems[i].availibility[a]) {
+                if (date == convertedItems[i].availability[a].date) {
                   professionals = [...professionals, convertedItems[i]];
                   console.log(professionals);
                   break;

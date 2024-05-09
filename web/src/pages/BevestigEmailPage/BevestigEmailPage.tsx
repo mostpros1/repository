@@ -7,6 +7,8 @@ import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
 
+const taal = window.location.pathname.split('/')[1];
+
 type PostConfig = {
     roleName: string
     nextPage: string
@@ -18,9 +20,11 @@ function BevestigEmailPage() {
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [userExists, setUserExists] = useState(false)
 
-    const location = useLocation()
-    const navigate = useNavigate()
-    const inputRef = useRef([])
+    const location = useLocation();
+    const navigate = useNavigate();
+    const inputRef = useRef([]);
+
+    console.log("Received state:", location.state);
 
     const url = window.location.href;
 
@@ -36,7 +40,7 @@ function BevestigEmailPage() {
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
-            nextPage: '/' + everythingAfterFirstHash,
+            nextPage: `/${taal}/` + everythingAfterFirstHash,
             onSuccess: () => {
                 cognitoClient.adminAddUserToGroup({
                     UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -49,7 +53,7 @@ function BevestigEmailPage() {
         },
         'PROFESSIONAL': {
             roleName: "Professional",
-            nextPage: '/dashboard-professional',
+            nextPage: `/${taal}/dashboard-professional`,
 
             onSuccess: () => {
                 cognitoClient.adminAddUserToGroup({
@@ -57,35 +61,6 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Professional',
                 }).promise()
-                    .then(() => {
-                        stripeClient.accounts.create({
-                            type: 'standard',
-                            email: userEmail,
-                            country: 'NL',
-                        })
-                            .then(stripeAccount => {
-                                cognitoClient.adminUpdateUserAttributes({
-                                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                                    Username: userEmail,
-                                    UserAttributes: [{
-                                        Name: 'custom:stripeAccountId',
-                                        Value: stripeAccount.id
-                                    }]
-                                }).promise()
-                                    .then(() => {
-                                        stripeClient.accountLinks.create({
-                                            account: stripeAccount.id,
-                                            type: 'account_onboarding',
-                                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                                            return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
-                                        })
-                                            .then(result => window.location.href = result.url)
-                                            .catch(err => console.error(err))
-                                    })
-                                    .catch(err => console.error(err))
-                            })
-                            .catch(err => console.error(err))
-                    })
                     .catch(err => console.error(err))
             },
         }
