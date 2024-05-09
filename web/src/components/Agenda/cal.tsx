@@ -80,13 +80,12 @@ const NavButton = styled.button<NavButtonProps>`
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [entries, setEntries] = useState<{ [date: string]: { text: string, color: string }[] }>({});
-
+    const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
     };
 
-    const addEntry = (entry: string, color: string) => {
+    const addEntry = (entry: string, time: string, color: string) => {
         if (selectedDate === null) {
             // Handle the case where selectedDate is null, e.g., by logging an error or setting a default date
             console.error("Selected date is null. Cannot add entry.");
@@ -95,20 +94,20 @@ const Cal = () => {
         const dateKey = format(selectedDate, 'yyyy-MM-dd');
         setEntries(prev => ({
             ...prev,
-            [dateKey]: [...(prev[dateKey] || []), { text: entry, color: color }]
+            [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
         }));
     };
 
     const renderDaysOfWeek = () => {
         const date = new Date(1970, 0, 4); // 4 januari 1970, zondag
         const days: React.ReactElement[] = [];
-    
+
         for (let i = 0; i < 7; i++) {
             days.push(
                 <div key={i}>{format(addDays(date, i), 'eeee', { locale: nl })}</div>
             );
         }
-    
+
         return <DaysOfWeek>{days}</DaysOfWeek>;
     };
 
@@ -150,6 +149,19 @@ const Cal = () => {
         setCurrentMonth(new Date());
     };
 
+    const addAvailibility = (date: string, time: string) => {
+        if (selectedDate === null) {
+            // Handle the case where selectedDate is null, e.g., by logging an error or setting a default date
+            console.error("Selected date is null. Cannot add entry.");
+            return;
+        }
+        const dateKey = format(selectedDate, 'yyyy-MM-dd');
+        setEntries(prev => ({
+            ...prev,
+            [dateKey]: [...(prev[dateKey] || []), { text: date, time }]
+        }));
+    };
+
     return (
         <div>
             <ButtonContainer>
@@ -166,7 +178,13 @@ const Cal = () => {
                     <ul>
                         {entries[format(selectedDate, 'yyyy-MM-dd')]?.map((entry, index) => (
                             <li key={index}>
-                                <div style={{ backgroundColor: entry.color, opacity: 0.5, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>{entry.text}</div>
+                                <div style={{ backgroundColor: entry.color, opacity: 0.5, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
+                                    <>
+                                        {entry.text}
+                                        {" "}
+                                        {entry.time}
+                                    </>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -174,7 +192,7 @@ const Cal = () => {
                         e.preventDefault();
                         const entry = (e.target as HTMLFormElement).elements.namedItem('entry') as HTMLInputElement;
                         const color = (e.target as HTMLFormElement).elements.namedItem('color') as HTMLSelectElement;
-                        addEntry(entry.value, color.value);
+                        addEntry(entry.value, "", color.value);
                         entry.value = '';
                     }}>
                         <input type="text" name="entry" placeholder="Add an entry" />
@@ -185,6 +203,19 @@ const Cal = () => {
                             <option value="rgb(52, 143, 255)">Blauw</option>
                             {/* Add more colors as needed */}
                         </select>
+                        <button type="submit">Add</button>
+                    </form>
+                    <form onSubmit={e => {
+                        e.preventDefault();
+                        const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                        const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+                        addAvailibility(date.value, time.value);
+                        date.value = '';
+                        time.value = '';
+                    }}>
+                        <b>Voeg beschikbaarheid toe</b><br></br>
+                        <input type="date" name="date" />
+                        <input type="time" name="time" />
                         <button type="submit">Add</button>
                     </form>
                 </div>
