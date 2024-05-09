@@ -177,37 +177,27 @@ const Cal = () => {
             }
         }).promise().then((data) => {
             if (data.Items && data.Items.length > 0) {
-                dynamo
-                    .update({
-                        TableName: "Professionals",
-                        Key: {
-                            id: data.Items[0].id,
-                        },
-                        UpdateExpression: `set availability = :availability`,
-                        ExpressionAttributeValues: {
-                            ":availability": data.Items[0].availability.push({ date: date, time: time }),
-                        },
-                    })
-                    .promise()
-                    .then(data => console.log(data.Attributes))
-                    .catch(console.error)
+                console.log(data.Items[0]);
+
+                const newItem = { date: date, time: time };
+                const availibilityArray = Array.isArray(data.Items[0].availability)? data.Items[0].availability : [data.Items[0].availability];
+                const updatedAvailability = [...availibilityArray, newItem];
+
+                dynamo.update({
+                    TableName: "Professionals",
+                    Key: {
+                        id: data.Items[0].id,
+                    },
+                    UpdateExpression: `set availability = :availability`,
+                    ExpressionAttributeValues: {
+                        ":availability": updatedAvailability,
+                    },
+                }).promise()
+                    .then(output => console.log(output.Attributes))
+                    .catch(console.error);
             } else {
                 console.error("No items found in the query result.");
             }
-            dynamo
-                .update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: data.id,
-                    },
-                    UpdateExpression: `set availibility = :availibility`,
-                    ExpressionAttributeValues: {
-                        ":availibility": data.availibility.push({ date: date, time: time }),
-                    },
-                })
-                .promise()
-                .then(data => console.log(data.Attributes))
-                .catch(console.error)
         }).catch((err) => {
             console.error(err);
         });
