@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, addMonths } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import styled from 'styled-components';
@@ -17,10 +17,10 @@ const CalendarContainer = styled.div`
 
 interface DayProps {
     isCurrentMonth: boolean;
-    isPreviousMonth: boolean; 
-    isNextMonth: boolean; 
-    onClick: () => void; 
-    hasEntries: boolean; 
+    isPreviousMonth: boolean;
+    isNextMonth: boolean;
+    onClick: () => void;
+    hasEntries: boolean;
     hasAvailability: boolean;
 }
 
@@ -116,10 +116,16 @@ const NavButton = styled.button<NavButtonProps>`
     background-size: cover;
 `;
 
+interface Availability {
+    date: string;
+    time: string;
+}
+
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
+    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
 
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
@@ -133,16 +139,22 @@ const Cal = () => {
             IndexName: "emailIndex",
             KeyConditionExpression: "email = :email",
             ExpressionAttributeValues: {
-                ":email": email 
+                ":email": email
             },
         }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                setEntries(data.Items[0].availibility);
+            if (data && data.Items && data.Items.length > 0) {
+                const dateKey = format(data.Items[0].enrtys.date, 'yyyy-MM-dd');
+                setEntries(prev => ({
+                    ...prev,
+                    [dateKey]: [...(prev[dateKey] || []), ...(data.Items ? [{ text: data.Items[0].entrys.text, time: "", color: data.Items[0].entrys.color }] : [])]
+                }));
+                setEntries(data.Items[0].availability);
                 console.log(data);
             } else {
                 console.log("No items found in the query result.");
             }
         });
+
     }
     getEntriesFromDB();
 
@@ -171,33 +183,75 @@ const Cal = () => {
         return <DaysOfWeek>{days}</DaysOfWeek>;
     };
 
+
+    async function getAvailabilityFromDB() {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+        dynamo.query({
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email
+            }
+        }).promise().then((data) => {
+            if (data.Items) {
+                console.log(data.Items[0]);
+                const output = data.Items[0];
+                const beschikbaarheid: Availability[] = []
+                for (let i = 0; i < data.Items[0].availability.length; i++) {
+
+                    console.log(output.availability[i].date);
+                    beschikbaarheid.push({ date: output.availability[i].date, time: output.availability[i].time });
+                    console.log(beschikbaarheid);
+
+                }
+                setAvailability(beschikbaarheid);
+            } else {
+                console.error("No items found in the query result.");
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
+
+    useEffect(() => {
+        getAvailabilityFromDB();
+    }, []);
+
+
     const renderCalendarDays = () => {
         const monthStart = startOfMonth(currentMonth);
         const monthEnd = endOfMonth(currentMonth);
-    
+
         const startDate = startOfWeek(monthStart);
         const endDate = endOfWeek(monthEnd);
-    
+
         const days: React.ReactElement[] = [];
-    
+
+        console.log(availability);
+
         for (let d = startDate; d <= endDate; d = addDays(d, 1)) {
             const isCurrentMonth = d.getMonth() === currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isPreviousMonth = d.getMonth() < currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isNextMonth = d.getMonth() > currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const dateKey = format(d, 'yyyy-MM-dd');
-            const hasAvailability = true;
+
+            
+            const hasAvailability = availability.some(availabilityItem => availabilityItem.date === dateKey);
             const hasEntries = !!entries[dateKey]?.length;
-    
+
+
             // Conditionally render the form based on whether the day has entries
-            const form = hasAvailability? (
+            const form = hasAvailability ? (
                 <div className="dropdown">
                     <Form>
                         <CheckboxLabel>
-                            <Checkbox type="checkbox" name="option1" onChange={() => {}} />
+                            <Checkbox type="checkbox" name="option1" onChange={() => { }} />
                             Option 1
                         </CheckboxLabel>
                         <CheckboxLabel>
-                            <Checkbox type="checkbox" name="option2" onChange={() => {}} />
+                            <Checkbox type="checkbox" name="option2" onChange={() => { }} />
                             Option 2
                         </CheckboxLabel>
                         {/* Add more checkboxes as needed */}
@@ -205,7 +259,7 @@ const Cal = () => {
                     </Form>
                 </div>
             ) : null;
-    
+
             days.push(
                 <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries} hasAvailability={hasAvailability}>
                     {format(d, 'd')}
@@ -213,7 +267,7 @@ const Cal = () => {
                 </Day>
             );
         }
-    
+
         return <CalendarContainer>{days}</CalendarContainer>;
     };
 
