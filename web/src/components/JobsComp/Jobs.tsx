@@ -23,15 +23,6 @@ const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [currentTab, setCurrentTab] = useState("current"); // 'current' or 'finished'
 
-  const handleInputChange = (event) => {
-    setJobDescription(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Job Description Submitted:", jobDescription);
-  };
-
   const jobEnt = [
     {
       id: 1,
@@ -229,6 +220,15 @@ const Jobs = () => {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Job Description Submitted:", jobDescription);
+  };
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
