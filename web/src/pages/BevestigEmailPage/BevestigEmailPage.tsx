@@ -61,35 +61,6 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Professional',
                 }).promise()
-                    .then(() => {
-                        stripeClient.accounts.create({
-                            type: 'standard',
-                            email: userEmail,
-                            country: 'NL',
-                        })
-                            .then(stripeAccount => {
-                                cognitoClient.adminUpdateUserAttributes({
-                                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                                    Username: userEmail,
-                                    UserAttributes: [{
-                                        Name: 'custom:stripeAccountId',
-                                        Value: stripeAccount.id
-                                    }]
-                                }).promise()
-                                    .then(() => {
-                                        stripeClient.accountLinks.create({
-                                            account: stripeAccount.id,
-                                            type: 'account_onboarding',
-                                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                                            return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
-                                        })
-                                            .then(result => window.location.href = result.url)
-                                            .catch(err => console.error(err))
-                                    })
-                                    .catch(err => console.error(err))
-                            })
-                            .catch(err => console.error(err))
-                    })
                     .catch(err => console.error(err))
             },
         }

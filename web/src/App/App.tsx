@@ -60,9 +60,9 @@ const LanguageAwareRoutes = () => {
   const { t } = useTranslation();
 
   // Function to prepend language to the given path
-  const addLanguagePrefix = (path) => {
+  /*const addLanguagePrefix = (path) => {
     return `/${lang}${path}`;
-  };
+  };*/
 
   return (
     <Routes>
@@ -108,7 +108,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
-      <Route path="/careerpage" element={<CareerPage />} />
+      <Route path="/career" element={<CareerPage />} />
       <Route
         path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}

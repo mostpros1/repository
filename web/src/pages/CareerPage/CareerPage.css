@@ -2,16 +2,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50rem;
     background-color: #f5f5f5;
-    margin-bottom: 15rem;
-    margin-top: 10rem;
+    margin: 10rem 25rem 1rem 35rem;
 }
 
 .career-con p {
     font-size: 2rem;
     font-weight: 500;
     color: #333;
-    width: 50rem;
+    width: fit-content;
     text-align: left;
+}
+
+@media (max-width: 900px) {
+    .career-con {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0 1rem 0;
+        align-items: center;
+    }
+    .career-con p {
+        font-size: 2rem; /* Larger font size for readability on bigger screens */
+        text-align: left;
+    }
+    .career-con img {
+        width: 50rem;
+        margin-right: 20rem;
+    }
+}
+
+@media (min-width: 900px) {
+    .career-con {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        margin: 10rem 25rem 1rem 35rem;
+    }
+    .career-con p {
+        font-size: 2rem; /* Larger font size for readability on bigger screens */
+        text-align: left;
+    }
+    .career-con img {
+        width: 50rem;
+        margin-right: 20rem;
+    }
 }

@@ -43,7 +43,8 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
-    "stripe": "^14.23.0"
+    "stripe": "^14.23.0",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
