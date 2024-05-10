@@ -126,7 +126,7 @@ const Cal = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
     const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
-    const [selectedOptions, setSelectedOptions] = useState("");
+    //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
 
@@ -268,7 +268,11 @@ const Cal = () => {
                         ":availability": itemsForDb,
                     },
                 }).promise()
-                    .then(output => console.log(output.Attributes))
+                    .then(output => {
+                        getAvailabilityFromDB();
+                        getEntriesFromDB()
+                        console.log(output.Attributes)
+                    })
                     .catch(console.error);
             }
         }).catch((err) => {
@@ -323,7 +327,7 @@ const Cal = () => {
             const form = hasAvailability ? (
                 <div className="dropdown">
                     <Form onSubmit={handleSubmit}>
-                        Verwijder Beschikbaarheid
+                        Verwijder Beschikbaarheid<br></br>
                         {availability
                             .filter(availabilityItem => availabilityItem.date === dateKey)
                             .map((filteredAvailabilityItem, index) => (
@@ -365,16 +369,12 @@ const Cal = () => {
         setCurrentMonth(new Date());
     };
 
-    const addAvailibility = async (date: string, time: string, color: string) => {
+    const addAvailibility = async (date: string, time: string) => {
         if (selectedDate === null) {
             console.error("Selected date is null. Cannot add entry.");
             return;
         }
-        const dateKey = format(selectedDate, 'yyyy-MM-dd');
-        setEntries(prev => ({
-            ...prev,
-            [dateKey]: [...(prev[dateKey] || []), { text: date, time, color: color }]
-        }));
+        
         console.log(entries);
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
@@ -406,7 +406,11 @@ const Cal = () => {
                         ":availability": updatedAvailability,
                     },
                 }).promise()
-                    .then(output => console.log(output.Attributes))
+                    .then(output => {
+                        getAvailabilityFromDB();
+                        getEntriesFromDB();
+                        console.log(output.Attributes)
+                    })
                     .catch(console.error);
             } else {
                 console.error("No items found in the query result.");
