@@ -19,9 +19,11 @@ interface Specialist {
 }
 
 
+
+
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
-  const [currentTab, setCurrentTab] = useState("current"); // 'current' or 'finished'
+  const [currentTab, setCurrentTab] = useState("pending"); // Default to showing pending jobs
 
   const handleInputChange = (event) => {
     setJobDescription(event.target.value);
@@ -354,18 +356,22 @@ const Jobs = () => {
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${currentTab === "current" ? "active" : ""
-              }`}
-            onClick={() => setCurrentTab("current")}
+            className={`status-button ${currentTab === "pending" ? "active" : ""}`}
+            onClick={() => setCurrentTab("pending")}
           >
-            Current jobs
+            Pending Jobs
           </button>
           <button
-            className={`status-button ${currentTab === "finished" ? "active" : ""
-              }`}
+            className={`status-button ${currentTab === "current" ? "active" : ""}`}
+            onClick={() => setCurrentTab("current")}
+          >
+            Current Jobs
+          </button>
+          <button
+            className={`status-button ${currentTab === "finished" ? "active" : ""}`}
             onClick={() => setCurrentTab("finished")}
           >
-            Finished jobs
+            Finished Jobs
           </button>
         </div>
         <div className="job-list-con">
