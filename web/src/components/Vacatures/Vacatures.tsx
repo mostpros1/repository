@@ -13,55 +13,74 @@ const Vacatures = () => {
     };
 
     return (
-        <>
-            <div className="vacature-list">
-                <ul className='vacature-list-col'>
-                    {Object.entries(jobsDescriptions).map(([key, job]) => (
-                        <li className='vacature-list-item'>
-                            <h3 key={key} onClick={() => toggleText(key)}>{job.title}</h3>
-                            {showText[key] && <div className='vacature-list-bg'>
+        <div className="vacature-list">
+            <ul className='vacature-list-col'>
+                {Object.entries(jobsDescriptions).map(([key, job]) => (
+                    <li className='vacature-list-item' key={key}>
+                        <h3 onClick={() => toggleText(key)}>{job.title}</h3>
+                        {showText[key] && (
+                            <div className='vacature-list-bg'>
                                 <p id='Vacature-desc-title'>Job Description</p>
-                                <p id={key}>{job.description}</p>
-                                <p id='Vacature-desc-title'>What are you going to do?</p>
-                                <p id={key}>{job.trial}</p>
-                                <p id='Vacature-desc-title'>Technologies</p>
-                                <ul className='tech-list'>
-                                    {job.technologies.map((tech, index) => (
-                                        <li key={index}>{tech}</li>
-                                    ))}
-                                </ul>
-                                <p id='Vacature-desc-title'>Pre if you have experience with:</p>
-                                <ul className='tech-list'>
-                                    {job.requirements.map((tech, index) => (
-                                        <li key={index}>{tech}</li>
-                                    ))}
-                                </ul>
-                                <p id='Vacature-desc-title'>What we offer</p>
-                                <ul className='tech-list'>
-                                    {job.offer.map((tech, index) => (
-                                        <li key={index}>{tech}</li>
-                                    ))}
-                                </ul>
-                                <p id='Vacature-desc-title'>What we ask</p>
-                                <ul className='tech-list'>
-                                    {job.whatweask.map((tech, index) => (
-                                        <li key={index}>{tech}</li>
-                                    ))}
-                                </ul>
+                                {job.description && <p>{job.description}</p>}
+                                {job.trial && <p>{job.trial}</p>}
+                                {job.technologies.length > 0 && (
+                                    <>
+                                        <p id='Vacature-desc-title'>Technologies</p>
+                                        <ul className='tech-list'>
+                                            {job.technologies.map((tech, index) => (
+                                                <li key={index}>{tech}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                                {job.requirements.length > 0 && (
+                                    <>
+                                        <p id='Vacature-desc-title'>Requirements</p>
+                                        <ul className='tech-list'>
+                                            {job.requirements.map((tech, index) => (
+                                                <li key={index}>{tech}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                                {job.offer.length > 0 && (
+                                    <>
+                                        <p id='Vacature-desc-title'>What we offer</p>
+                                        <ul className='tech-list'>
+                                            {job.offer.map((tech, index) => (
+                                                <li key={index}>{tech}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                                {job.whatweask.length > 0 && (
+                                    <>
+                                        <p id='Vacature-desc-title'>What we ask</p>
+                                        <ul className='tech-list'>
+                                            {job.whatweask.map((tech, index) => (
+                                                <li key={index}>{tech}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
                                 <p id='Vacature-desc-title'>Apply</p>
-                                <p id={key}>{job.apply}</p>
-                                <p id='Vacature-desc-title'>Extra information</p>
-                                <ul className='tech-list'>
-                                    {job.extrainfo.map((tech, index) => (
-                                        <li key={index}>{tech}</li>
-                                    ))}
-                                </ul>
-                            </div>}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
+                                {job.apply && <p>{job.apply}</p>}
+                                {job.extrainfo.length > 0 && (
+                                    <>
+                                        <p id='Vacature-desc-title'>Extra information</p>
+                                        <ul className='tech-list'>
+                                            {job.extrainfo.map((tech, index) => (
+                                                <li key={index}>{tech}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
 
