@@ -21,15 +21,17 @@ interface DayProps {
     isNextMonth: boolean; 
     onClick: () => void; 
     hasEntries: boolean; 
+    hasAvailability: boolean;
 }
 
 const Day = styled.button<DayProps>`
     position: relative;
     padding: 20px;
     background-color: ${props => props.isCurrentMonth ? 'white' : '#e0e0e0'};
-    border: 1px solid #e0e0e0;
+    border: 5px solid ${props => props.hasAvailability ? 'green' : 'red'};
     color: ${props => props.isCurrentMonth ? 'black' : 'gray'};
     cursor: pointer;
+
     &::after {
         content: '';
         position: absolute;
@@ -41,6 +43,7 @@ const Day = styled.button<DayProps>`
         border-radius: 50%;
         background-color: ${props => props.hasEntries ? 'red' : 'transparent'};
     }
+
     .dropdown {
         display: none;
         position: absolute;
@@ -59,6 +62,8 @@ const Day = styled.button<DayProps>`
         display: block;
     }
 `;
+
+
 
 
 const Form = styled.form`
@@ -202,7 +207,7 @@ const Cal = () => {
             ) : null;
     
             days.push(
-                <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries}>
+                <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries} hasAvailability={hasAvailability}>
                     {format(d, 'd')}
                     {form} {/* Render the form if it exists */}
                 </Day>
