@@ -28,7 +28,7 @@ const Day = styled.button<DayProps>`
     position: relative;
     padding: 20px;
     background-color: ${props => props.isCurrentMonth ? 'white' : '#e0e0e0'};
-    border: 5px solid ${props => props.hasAvailability ? 'green' : 'red'};
+    border: 5px solid ${props => props.hasAvailability ? 'green' : '939395'};
     color: ${props => props.isCurrentMonth ? 'black' : 'gray'};
     cursor: pointer;
 
