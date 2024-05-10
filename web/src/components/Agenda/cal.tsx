@@ -126,6 +126,10 @@ const Cal = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
     const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
+    const [selectedOptions, setSelectedOptions] = useState("");
+    const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
+    const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
+
 
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
@@ -220,6 +224,56 @@ const Cal = () => {
     }, []);
 
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Remove unchecked items from checkedItems array
+        const filteredCheckedItems = checkedItems.filter(checkedItem =>
+            !uncheckedItems.some(uncheckedItem =>
+                uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
+            )
+        );
+        // Submit remaining checked items
+        console.log("Selected options:", filteredCheckedItems);
+        // Your submission logic here
+    };
+
+    function dropdownContent() {
+        const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, item: { date: string; time: string; }) => {
+            const isChecked = e.target.checked;
+            if (isChecked) {
+                // Checkbox is checked, add item to checkedItems array and remove from uncheckedItems array if exists
+                setCheckedItems(prev => [...prev, item]);
+                setUncheckedItems(prev => prev.filter(uncheckedItem => uncheckedItem.date !== item.date || uncheckedItem.time !== item.time));
+            } else {
+                // Checkbox is unchecked, add item to uncheckedItems array and remove from checkedItems array if exists
+                setUncheckedItems(prev => [...prev, item]);
+                setCheckedItems(prev => prev.filter(checkedItem => checkedItem.date !== item.date || checkedItem.time !== item.time));
+            }
+        };
+
+
+        return (
+            <>
+                {availability.map((item, index) => (
+                    <CheckboxLabel key={index}>
+                        <Checkbox
+                            type="checkbox"
+                            name={`option${index + 1}`}
+                            onChange={(e) => handleCheckboxChange(e, item)}
+                        />
+                        {`${item.date}, ${item.time}`}
+                    </CheckboxLabel>
+                ))}
+                <input
+                    type="hidden"
+                    name="selectedOptions"
+                    value={selectedOptions} // Ensure this is correctly set to the selectedOptions state
+                />
+            </>
+        );
+
+    }
+
     const renderCalendarDays = () => {
         const monthStart = startOfMonth(currentMonth);
         const monthEnd = endOfMonth(currentMonth);
@@ -237,24 +291,18 @@ const Cal = () => {
             const isNextMonth = d.getMonth() > currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const dateKey = format(d, 'yyyy-MM-dd');
 
-            
+
             const hasAvailability = availability.some(availabilityItem => availabilityItem.date === dateKey);
             const hasEntries = !!entries[dateKey]?.length;
+
+
 
 
             // Conditionally render the form based on whether the day has entries
             const form = hasAvailability ? (
                 <div className="dropdown">
-                    <Form>
-                        <CheckboxLabel>
-                            <Checkbox type="checkbox" name="option1" onChange={() => { }} />
-                            Option 1
-                        </CheckboxLabel>
-                        <CheckboxLabel>
-                            <Checkbox type="checkbox" name="option2" onChange={() => { }} />
-                            Option 2
-                        </CheckboxLabel>
-                        {/* Add more checkboxes as needed */}
+                    <Form onSubmit={handleSubmit}>
+                        {dropdownContent()}
                         <button type="submit">Submit</button>
                     </Form>
                 </div>
