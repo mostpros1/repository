@@ -10,7 +10,7 @@
     font-size: 2rem;
     font-weight: 500;
     color: #333;
-    width: 50rem;
+    width: fit-content;
     text-align: left;
 }
 
