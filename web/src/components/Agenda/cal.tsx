@@ -224,7 +224,7 @@ const Cal = () => {
     }, []);
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Remove unchecked items from checkedItems array
         const filteredCheckedItems = checkedItems.filter(checkedItem =>
@@ -232,9 +232,50 @@ const Cal = () => {
                 uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
             )
         );
+
+
         // Submit remaining checked items
         console.log("Selected options:", filteredCheckedItems);
         // Your submission logic here
+
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+
+        dynamo.query({
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email
+            }
+        }).promise().then((data) => {
+            if (data.Items && data.Items.length > 0) {
+                console.log(data.Items[0]);
+
+                const itemsForDb = data.Items[0].availability.filter(checkedItem =>
+                    !filteredCheckedItems.some(uncheckedItem =>
+                        uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
+                    )
+                );
+
+                dynamo.update({
+                    TableName: "Professionals",
+                    Key: {
+                        id: data.Items[0].id,
+                    },
+                    UpdateExpression: `set availability = :availability`,
+                    ExpressionAttributeValues: {
+                        ":availability": itemsForDb,
+                    },
+                }).promise()
+                    .then(output => console.log(output.Attributes))
+                    .catch(console.error);
+            }
+        }).catch((err) => {
+            console.error(err);
+        }
+        );
+
     };
 
     function dropdownContent() {
