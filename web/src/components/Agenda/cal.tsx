@@ -44,18 +44,22 @@ const Day = styled.button<DayProps>`
     .dropdown {
         display: none;
         position: absolute;
-        top: calc(100% + 5px);
+        top: calc(100% - 1px);
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, 0);
         background-color: white;
         border: 1px solid #ccc;
         padding: 10px;
-        z-index: 1;
+        z-index: 1000;
+        height: 200px;
+        overflow-y: auto;
     }
+    
     &:hover .dropdown {
         display: block;
     }
 `;
+
 
 const Form = styled.form`
     display: flex;
@@ -165,40 +169,46 @@ const Cal = () => {
     const renderCalendarDays = () => {
         const monthStart = startOfMonth(currentMonth);
         const monthEnd = endOfMonth(currentMonth);
-
+    
         const startDate = startOfWeek(monthStart);
         const endDate = endOfWeek(monthEnd);
-
+    
         const days: React.ReactElement[] = [];
-
+    
         for (let d = startDate; d <= endDate; d = addDays(d, 1)) {
             const isCurrentMonth = d.getMonth() === currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isPreviousMonth = d.getMonth() < currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const isNextMonth = d.getMonth() > currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
             const dateKey = format(d, 'yyyy-MM-dd');
+            const hasAvailability = true;
             const hasEntries = !!entries[dateKey]?.length;
-
+    
+            // Conditionally render the form based on whether the day has entries
+            const form = hasAvailability? (
+                <div className="dropdown">
+                    <Form>
+                        <CheckboxLabel>
+                            <Checkbox type="checkbox" name="option1" onChange={() => {}} />
+                            Option 1
+                        </CheckboxLabel>
+                        <CheckboxLabel>
+                            <Checkbox type="checkbox" name="option2" onChange={() => {}} />
+                            Option 2
+                        </CheckboxLabel>
+                        {/* Add more checkboxes as needed */}
+                        <button type="submit">Submit</button>
+                    </Form>
+                </div>
+            ) : null;
+    
             days.push(
                 <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries}>
                     {format(d, 'd')}
-                    <div className="dropdown">
-                        <Form>
-                            <CheckboxLabel>
-                                <Checkbox type="checkbox" name="option1" onChange={() => {}} />
-                                Option 1
-                            </CheckboxLabel>
-                            <CheckboxLabel>
-                                <Checkbox type="checkbox" name="option2" onChange={() => {}} />
-                                Option 2
-                            </CheckboxLabel>
-                            {/* Add more checkboxes as needed */}
-                            <button type="submit">Submit</button>
-                        </Form>
-                    </div>
+                    {form} {/* Render the form if it exists */}
                 </Day>
             );
         }
-
+    
         return <CalendarContainer>{days}</CalendarContainer>;
     };
 
