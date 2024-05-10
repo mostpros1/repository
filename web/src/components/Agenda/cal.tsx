@@ -72,9 +72,6 @@ const Form = styled.form`
     align-items: flex-start;
 `;
 
-const CheckboxLabel = styled.label`
-    margin-bottom: 5px;
-`;
 
 const Checkbox = styled.input`
     margin-right: 5px;
@@ -469,7 +466,7 @@ const Cal = () => {
                             e.preventDefault();
                             const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
                             const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                            addAvailibility(date.value, time.value, '');
+                            addAvailibility(date.value, time.value);
                             date.value = '';
                             time.value = '';
                         }}
