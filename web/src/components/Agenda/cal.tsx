@@ -278,7 +278,21 @@ const Cal = () => {
 
     };
 
-    function dropdownContent() {
+
+    const renderCalendarDays = () => {
+        const monthStart = startOfMonth(currentMonth);
+        const monthEnd = endOfMonth(currentMonth);
+
+        const startDate = startOfWeek(monthStart);
+        const endDate = endOfWeek(monthEnd);
+
+        const days: React.ReactElement[] = [];
+
+        console.log(availability);
+
+
+
+
         const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, item: { date: string; time: string; }) => {
             const isChecked = e.target.checked;
             if (isChecked) {
@@ -291,40 +305,6 @@ const Cal = () => {
                 setCheckedItems(prev => prev.filter(checkedItem => checkedItem.date !== item.date || checkedItem.time !== item.time));
             }
         };
-
-
-        return (
-            <>
-                {availability.map((item, index) => (
-                    <CheckboxLabel key={index}>
-                        <Checkbox
-                            type="checkbox"
-                            name={`option${index + 1}`}
-                            onChange={(e) => handleCheckboxChange(e, item)}
-                        />
-                        {`${item.date}, ${item.time}`}
-                    </CheckboxLabel>
-                ))}
-                <input
-                    type="hidden"
-                    name="selectedOptions"
-                    value={selectedOptions} // Ensure this is correctly set to the selectedOptions state
-                />
-            </>
-        );
-
-    }
-
-    const renderCalendarDays = () => {
-        const monthStart = startOfMonth(currentMonth);
-        const monthEnd = endOfMonth(currentMonth);
-
-        const startDate = startOfWeek(monthStart);
-        const endDate = endOfWeek(monthEnd);
-
-        const days: React.ReactElement[] = [];
-
-        console.log(availability);
 
         for (let d = startDate; d <= endDate; d = addDays(d, 1)) {
             const isCurrentMonth = d.getMonth() === currentMonth.getMonth() && d.getFullYear() === currentMonth.getFullYear();
@@ -343,11 +323,24 @@ const Cal = () => {
             const form = hasAvailability ? (
                 <div className="dropdown">
                     <Form onSubmit={handleSubmit}>
-                        {dropdownContent()}
+                        Verwijder Beschikbaarheid
+                        {availability
+                            .filter(availabilityItem => availabilityItem.date === dateKey)
+                            .map((filteredAvailabilityItem, index) => (
+                                <div key={index}>
+                                    <Checkbox
+                                        type="checkbox"
+                                        name={`option${index + 1}`}
+                                        onChange={(e) => handleCheckboxChange(e, filteredAvailabilityItem)}
+                                    />
+                                    {`${filteredAvailabilityItem.date}, ${filteredAvailabilityItem.time}`}
+                                </div>
+                            ))}
                         <button type="submit">Submit</button>
                     </Form>
                 </div>
             ) : null;
+
 
             days.push(
                 <Day key={d.getTime()} isCurrentMonth={isCurrentMonth} isPreviousMonth={isPreviousMonth} isNextMonth={isNextMonth} onClick={() => handleDayClick(d)} hasEntries={hasEntries} hasAvailability={hasAvailability}>
