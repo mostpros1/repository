@@ -19,8 +19,6 @@ interface Specialist {
 }
 
 
-
-
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [currentTab, setCurrentTab] = useState("pending"); // Default to showing pending jobs
