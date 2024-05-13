@@ -33,15 +33,6 @@ const Jobs = () => {
   const [userGroup, setUserGroup] = useState(""); // State to store user group
   const navigate = useNavigate();
 
-  const handleInputChange = (event) => {
-    setJobDescription(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Job Description Submitted:", jobDescription);
-  };
-
   useEffect(() => {
     const checkUserGroupAndFetchData = async () => {
       try {
@@ -120,7 +111,10 @@ const Jobs = () => {
 
   const handleInputChange = (event) => {
     setValue(event.target.value);
+    setJobDescription(event.target.value);
   };
+
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
