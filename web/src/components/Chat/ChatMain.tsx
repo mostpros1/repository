@@ -256,6 +256,11 @@ useEffect(() => {
     }
   };
   
+  const [showPaymentLink, setShowPaymentLink] = useState(false);
+
+  const handleCreatePayment = () => {
+      setShowPaymentLink(true);
+  };
 
   return (
     <div className="chat-container">
@@ -378,10 +383,11 @@ useEffect(() => {
                     <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
                   </div>
                 )}
-                <button className="dropup-option"><BsCreditCard size={25} color="blue"/></button>
+
+                {showPaymentLink && <PaymentLink subtotal={50} handleSendMessage={handleSendMessage} />}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
           <div className="chat-enter">
             <kbd><IoSend size={25} /></kbd>
