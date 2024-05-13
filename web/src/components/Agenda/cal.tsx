@@ -196,16 +196,14 @@ const Cal = () => {
                 ":email": email
             }
         }).promise().then((data) => {
-            if (data.Items) {
+            if (data.Items && data.Items.length > 0) {
                 console.log(data.Items[0]);
                 const output = data.Items[0];
                 const beschikbaarheid: Availability[] = []
-                for (let i = 0; i < data.Items[0].availability.length; i++) {
-
+                for (let i = 0; i < output.availability.length; i++) {
                     console.log(output.availability[i].date);
                     beschikbaarheid.push({ date: output.availability[i].date, time: output.availability[i].time });
                     console.log(beschikbaarheid);
-
                 }
                 setAvailability(beschikbaarheid);
             } else {
