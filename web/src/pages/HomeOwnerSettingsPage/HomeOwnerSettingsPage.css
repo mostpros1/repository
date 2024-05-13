@@ -45,13 +45,11 @@
 
 
 /* Ensure that each section fills the column and is not wider than the content area */
-section {
+/* section {
   padding: 20px;
   border-radius: 8px;
-  /* Rounded corners for the sections */
   margin-bottom: 20px;
-  /* Space between sections */
-}
+} */
 
 /* Make sure the button takes the full width of its container */
 .user-info-form button,
