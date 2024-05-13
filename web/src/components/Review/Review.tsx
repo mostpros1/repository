@@ -63,11 +63,19 @@ const ReviewComponent: React.FC = () => {
   }, []);
 
   // Star rating component
-  const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
+  const StarRating: React.FC<{ rating: number, onRatingChange?: (rating: number) => void }> = ({ rating, onRatingChange }) => {
     return (
-      <div className="star-rating">
+      <div style={{ display: 'inline-flex', cursor: 'pointer' }}>
         {Array.from({ length: 5 }, (_, index) => (
-          <Star key={index} className={index < rating ? "filled" : ""} />
+          <Star
+            key={index}
+            onClick={() => onRatingChange && onRatingChange(index + 1)}
+            style={{
+              color: index < rating ? '#ffc107' : '#ccc', // Gold for filled, gray for unfilled
+              transition: 'color 0.3s', // Smooth transition for color change
+              fontSize: '2rem' // Larger size for better visibility
+            }}
+          />
         ))}
       </div>
     );
@@ -124,7 +132,7 @@ const ReviewComponent: React.FC = () => {
           placeholder="Your review"
           required
         />
-        <StarRating rating={rating} />
+        <StarRating rating={rating}  onRatingChange={setRating} />
         <button type="submit">Submit Review</button>
       </form>
     );

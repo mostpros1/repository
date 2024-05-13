@@ -12,7 +12,8 @@
 }
 
 #side-panel-right-review {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-left: 3rem;
+  gap: 2rem;
 }
