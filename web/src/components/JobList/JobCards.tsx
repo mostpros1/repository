@@ -50,40 +50,56 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
     .catch(err => {
       console.log(err);
     });*/
+    dynamo.query({
+      TableName: "Professionals",
+      IndexName: "emailIndex",
+      KeyConditionExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": "timon.heidenreich@icloud.com",
+      },
+    }).promise().then(data => {
+      if (data.Items && data.Items.length > 0) {
+        dynamo
+          .query({
+            TableName: "Klussen",
+            IndexName: "professionIndex",
+            KeyConditionExpression: "profession = :profession",
+            ExpressionAttributeValues: {
+              ":profession": data.Items[0].profession,
+            }
+          })
+          .promise()
+          .then(output => {
+            // Assuming data.Items contains the necessary fields for the Job interface
+            const jobsFromData = output.Items ? output.Items.map((item) => ({
+              id: item.id,
+              name: item.profession,
+              distance: item.distance,
+              userEmail: item.user_email,
+              title: item.task,
+              description: item.description,
+              location: item.region,
+              availability: item.availability,
+            })) : [];
+  
+            // Update the state with the jobs fetched from DynamoDB
+            setJobs(jobsFromData);
+          })
+          .catch(console.error)
+      }
+    }).catch(console.error);
 
-    dynamo
-      .scan({
-        TableName: "Klussen",
-      })
-      .promise()
-      .then(data => {
-        // Assuming data.Items contains the necessary fields for the Job interface
-        const jobsFromData = data.Items ? data.Items.map((item) => ({
-          id: item.id,
-          name: item.profession,
-          distance: item.distance,
-          userEmail: item.user_email,
-          title: item.task,
-          description: item.description,
-          location: item.region,
-          availability: item.availability,
-        })) : [];
-
-        // Update the state with the jobs fetched from DynamoDB
-        setJobs(jobsFromData);
-      })
-      .catch(console.error)
-
+    
   }, []);
 
   //const location = useLocation();
 
-    const handleChatButtonClick = (recipientEmail: string) => {
-      const currentPath = "/chat";
-      const recipientQuery = `recipient=${recipientEmail}`;
-      const newUrl = `${currentPath}?${recipientQuery}`;
-      window.location.href = newUrl;
-    };
+  const handleChatButtonClick = (recipientEmail: string) => {
+    const currentPath = "/chat";
+    const recipientQuery = `recipient=${recipientEmail}`;
+    const newUrl = `${currentPath}?${recipientQuery}`;
+    window.location.href = newUrl;
+  };
 
   if (!jobs || jobs.length === 0) {
     return <div>No jobs available.</div>;
