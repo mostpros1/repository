@@ -9,9 +9,11 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import axios from 'axios';
-import { FaPaperclip } from "react-icons/fa6";
+import { BsPaperclip } from "react-icons/bs";
 import JanSchilder from "../../assets/JanSchilder.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
+import { MdDriveFileMove } from "react-icons/md";
+import { BsCreditCard } from "react-icons/bs";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -40,34 +42,57 @@ function ChatMain({ user, signOut }) {
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [lastMessages, setLastMessages] = useState({});
+
+  // Update last messages on receiving new messages
+  useEffect(() => {
+    const updatedLastMessages = {};
+    chats.forEach(chat => {
+      const contact = chat.members.find(member => member !== user.attributes.email);
+      if (contact) {
+        if (!updatedLastMessages[contact] || updatedLastMessages[contact].createdAt < chat.createdAt) {
+          updatedLastMessages[contact] = {
+            text: chat.text,
+            createdAt: chat.createdAt
+          };
+        }
+      }
+    });
+    setLastMessages(updatedLastMessages);
+  }, [chats, user.attributes.email]);
+
   const groupMessagesByDate = (messages) => {
     const groupedMessages = {};
+  
     messages.forEach((message) => {
-       const createdAt = new Date(message.createdAt);
-       const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
-       if (!groupedMessages[dateKey]) {
-          groupedMessages[dateKey] = [];
-       }
-       groupedMessages[dateKey].push(message);
+      const createdAt = new Date(message.createdAt);
+      const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
+  
+      if (!groupedMessages[dateKey]) {
+        groupedMessages[dateKey] = [];
+      }
+  
+      groupedMessages[dateKey].push(message);
     });
- 
-    Object.keys(groupedMessages).forEach((date) => {
-      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-    });
-
+  
+    // Sort the keys (dates) as Date objects
     const sortedDates = Object.keys(groupedMessages).sort((a, b) => {
       const dateA = new Date(a).getTime();
       const dateB = new Date(b).getTime();
       return dateA - dateB;
     });
-    
+  
     const sortedGroupedMessages = {};
+  
     sortedDates.forEach(date => {
+      // Sort messages within each date group
+      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
       sortedGroupedMessages[date] = groupedMessages[date];
     });
-
+  
     return sortedGroupedMessages;
- };
+  };
+  
  
  useEffect(() => {
   const filteredChats = selectedContact
@@ -77,6 +102,13 @@ function ChatMain({ user, signOut }) {
   setGroupedMessages(groupedMessages);
 }, [chats, selectedContact, user.attributes.email]);
 
+useEffect(() => {
+  if (selectedContact) {
+    const filteredChats = chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email));
+    const groupedMessages = groupMessagesByDate(filteredChats);
+    setGroupedMessages(groupedMessages);
+  }
+}, [selectedContact]);
 
 useEffect(() => {
   async function fetchChats() {
@@ -222,26 +254,36 @@ useEffect(() => {
             className="searchList"
           />
           <ul>
-            {searchTerm === ""
-              ? contactList.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                  </li>
-                ))
-              : filteredContactList.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                  </li>
-                ))}
-          </ul>
+          {searchTerm === ""
+            ? contactList.map((contact) => (
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? 'selected-contact' : ''}
+                >
+                  {contact.split("@")[0]}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                </li>
+              ))
+            : filteredContactList.map((contact) => (
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? 'selected-contact' : ''}
+                >
+                  {contact.split("@")[0]}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                </li>
+              ))}
+        </ul>
         </div>
       <div className="main-container">
         <div className="chat-main">
@@ -305,10 +347,10 @@ useEffect(() => {
             className="inputchat"
           />
           <div className="dropup" onClick={() => setIsDropUpOpen(!isDropUpOpen)}>
-            <FaPaperclip className="paperclip" size={25} />
+            <BsPaperclip className="paperclip" size={25} />
             {isDropUpOpen && (
               <div className="dropup-content">
-                <button className="dropup-option" onClick={() => inputRef.current?.click()}>Verstuur afbeelding</button>
+                <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue"/></button>
                 <input
                   type="file"
                   accept="image/*"
@@ -321,7 +363,7 @@ useEffect(() => {
                     <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
                   </div>
                 )}
-                <button className="dropup-option">Maak betaalverzoek</button>
+                <button className="dropup-option"><BsCreditCard size={25} color="blue"/></button>
               </div>
             )}
           </div>
@@ -331,8 +373,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      
-      </div>
+    </div>
 </div>
 )}
 
