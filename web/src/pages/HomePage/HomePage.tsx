@@ -22,7 +22,6 @@ function HomePage() {
       {/* How does Mostpros work? */}
       <MostprosDesc />
       {/* Popular Jobs */}
-      <PopularCardsSection />
       {/* Find specialist for every job */}
       <ChoresDescription />
       {/* Why Mostpros */}
