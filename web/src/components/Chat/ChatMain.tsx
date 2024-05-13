@@ -42,9 +42,17 @@ function ChatMain({ user, signOut }) {
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const updateLastSeen = () => {
+    const lastSeenTime = new Date().toISOString();
+    // Sla de last seen time op in de database of opslagruimte
+  };
+
+  useEffect(() => {
+    updateLastSeen();
+  }, []);
+
   const [lastMessages, setLastMessages] = useState({});
 
-  // Update last messages on receiving new messages
   useEffect(() => {
     const updatedLastMessages = {};
     chats.forEach(chat => {
@@ -75,7 +83,6 @@ function ChatMain({ user, signOut }) {
       groupedMessages[dateKey].push(message);
     });
   
-    // Sort the keys (dates) as Date objects
     const sortedDates = Object.keys(groupedMessages).sort((a, b) => {
       const dateA = new Date(a).getTime();
       const dateB = new Date(b).getTime();
@@ -85,7 +92,6 @@ function ChatMain({ user, signOut }) {
     const sortedGroupedMessages = {};
   
     sortedDates.forEach(date => {
-      // Sort messages within each date group
       groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
       sortedGroupedMessages[date] = groupedMessages[date];
     });
@@ -292,7 +298,7 @@ useEffect(() => {
                 <img src={JanSchilder} className="profile-ava"/>
               <div className="name-and-status">
                 <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-                <h5 className="last-seen">Last seen:</h5>
+                <h5 className="last-seen">Last seen: </h5>
               </div>
             </div>
           </div>
