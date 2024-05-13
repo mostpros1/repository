@@ -34,33 +34,36 @@ const ReviewComponent: React.FC = () => {
     setSortType(type); // Update sortType state
   };
 
-  useEffect(() => {
-    async function fetchReviews() {
-      try {
-        const response = await dynamo.scan({ TableName: "Reviews" }).promise();
-        if (response && response.Items) {
-          const mappedReviews: Review[] = response.Items.map((item) => ({
-            id: item.id,
-            author: item.professional_name,
-            homeownerName: item.homeownerName,
-            date: item.date,
-            content: item.description,
-            //totalReviews: item.totalReviews,
-            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-              Math.random() * 100
-            )}.jpg`, //item.authorImageUrl,
-            rating: item.rating,
-          }));
-          setReviews(mappedReviews);
-          setSortedReviews(mappedReviews);
-        }
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
+// Declare the fetchReviews function outside of useEffect
+async function fetchReviews() {
+  try {
+    const response = await dynamo.scan({ TableName: "Reviews" }).promise();
+    if (response && response.Items) {
+      const mappedReviews: Review[] = response.Items.map((item) => ({
+        id: item.id,
+        author: item.professional_name,
+        homeownerName: item.homeownerName,
+        date: item.date,
+        content: item.description,
+        //totalReviews: item.totalReviews,
+        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+          Math.random() * 100
+        )}.jpg`, //item.authorImageUrl,
+        rating: item.rating,
+      }));
+      setReviews(mappedReviews);
+      setSortedReviews(mappedReviews);
     }
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+  }
+}
 
-    fetchReviews();
-  }, []);
+// Call fetchReviews from within useEffect
+useEffect(() => {
+  fetchReviews();
+}, []);
+
 
   // Star rating component
   const StarRating: React.FC<{ rating: number, onRatingChange?: (rating: number) => void }> = ({ rating, onRatingChange }) => {
@@ -110,8 +113,21 @@ const ReviewComponent: React.FC = () => {
 
       // Perform DynamoDB update or post request to add the new review
       try {
+        await dynamo.put({
+          TableName: "Reviews",
+          Item: {
+            id: Math.floor(Math.random() * 1000),
+            professional_name: name,
+            homeownerName: "Dora The Explorer",/*newReview.homeownerName,*/
+            date: newReview.date,
+            description: newReview.content,
+            //totalReviews: newReview.totalReviews,
+            rating: String(newReview.rating),
+          },
+        }).promise();
         // Example: await dynamo.put({...}).promise();
         console.log("Review submitted:", newReview);
+        fetchReviews();
       } catch (error) {
         console.error("Error submitting review:", error);
       }
@@ -123,7 +139,7 @@ const ReviewComponent: React.FC = () => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Your name"
+          placeholder="Specialist name"
           required
         />
         <textarea
@@ -132,7 +148,7 @@ const ReviewComponent: React.FC = () => {
           placeholder="Your review"
           required
         />
-        <StarRating rating={rating}  onRatingChange={setRating} />
+        <StarRating rating={rating} onRatingChange={setRating} />
         <button type="submit">Submit Review</button>
       </form>
     );
