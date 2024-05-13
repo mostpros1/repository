@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
+import { BsCreditCard } from "react-icons/bs";
 
 
 type PaymentLinkProps = {
@@ -86,7 +87,9 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         <>
             {loading ? <p>Loading...</p> : (
                 <>
-                    <button onClick={createSession} className='create-payment'>Create payment</button>
+                    <button onClick={createSession} className="dropup-option">
+                        <BsCreditCard size={25} color="blue"/>
+                    </button>
                     {paymentLink && (
                         <>
                             <p>Betalingslink is succesvol gemaakt:</p>
