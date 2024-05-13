@@ -159,6 +159,33 @@ const Cal = () => {
     }
     getEntriesFromDB();
 
+
+    async function addEntrysToDb(date: string, text: string, time: string, color: string) {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+    
+        try {
+            await dynamo.put({
+                Item: {
+                    id: Math.floor(Math.random() * 1000000),
+                    email: email,
+                    enrtys: {
+                        date: date, // Use computed property name to dynamically set the date as the key
+                        text: text,
+                        time: time,
+                        color: color
+                    }
+                },
+                TableName: "Calendar",
+            }).promise();
+    
+            console.log("Entry added successfully.");
+        } catch (err) {
+            console.error("Error adding entry:", err);
+        }
+    }
+
+
     const addEntry = (entry: string, time: string, color: string) => {
         if (selectedDate === null) {
             console.error("Selected date is null. Cannot add entry.");
@@ -169,6 +196,7 @@ const Cal = () => {
             ...prev,
             [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
         }));
+        addEntrysToDb(dateKey, entry, time, color);
     };
 
     const renderDaysOfWeek = () => {
