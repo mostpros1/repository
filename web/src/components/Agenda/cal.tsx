@@ -369,7 +369,7 @@ const Cal = () => {
             console.error("Selected date is null. Cannot add entry.");
             return;
         }
-        
+
         console.log(entries);
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
@@ -459,24 +459,24 @@ const Cal = () => {
                         </select>
                         <button type="submit">Add</button>
                     </form>
-                    <form
-                        onSubmit={e => {
-                            e.preventDefault();
-                            const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-                            const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                            addAvailibility(date.value, time.value);
-                            date.value = '';
-                            time.value = '';
-                        }}
-                    >
-                        <b>Add availability</b>
-                        <br></br>
-                        <input type="date" name="date" />
-                        <input type="time" name="time" />
-                        <button type="submit">Add</button>
-                    </form>
                 </div>
             )}
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                    const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+                    addAvailibility(date.value, time.value);
+                    date.value = '';
+                    time.value = '';
+                }}
+            >
+                <b>Add availability</b>
+                <br></br>
+                <input type="date" name="date" />
+                <input type="time" name="time" />
+                <button type="submit">Add</button>
+            </form>
         </div >
     );
 };
