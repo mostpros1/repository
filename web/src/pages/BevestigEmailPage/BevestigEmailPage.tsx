@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { cognitoClient, stripeClient } from '../../main'
+import { cognitoClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
