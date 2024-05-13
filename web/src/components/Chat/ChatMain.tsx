@@ -9,9 +9,12 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import axios from 'axios';
-import { FaPaperclip } from "react-icons/fa6";
+import { BsPaperclip } from "react-icons/bs";
 import JanSchilder from "../../assets/JanSchilder.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
+import { MdDriveFileMove } from "react-icons/md";
+import { BsCreditCard } from "react-icons/bs";
+import { IoCheckmarkDone } from "react-icons/io5";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -40,43 +43,99 @@ function ChatMain({ user, signOut }) {
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const groupMessagesByDate = (messages) => {
-    const groupedMessages = {};
-    messages.forEach((message) => {
-       const createdAt = new Date(message.createdAt);
-       const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
-       if (!groupedMessages[dateKey]) {
-          groupedMessages[dateKey] = [];
-       }
-       groupedMessages[dateKey].push(message);
-    });
- 
-    Object.keys(groupedMessages).forEach((date) => {
-      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  useEffect(() => {
+    const handleNewMessageNotification = (message) => {
+      if (message.email !== user.attributes.email) {
+        if (Notification.permission === "granted") {
+          new Notification("Nieuw bericht ontvangen", {
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+          });
+        }
+      }
+    };
+
+    const sub = API.graphql(
+      graphqlOperation(subscriptions.onCreateChat)
+      //@ts-ignore
+    ).subscribe({
+      next: ({ value }) => {
+        handleReceivedMessage(value.data.onCreateChat);
+        handleNewMessageNotification(value.data.onCreateChat);
+      },
+      error: (err) => console.log(err),
     });
 
+    return () => sub.unsubscribe();
+  }, [user.attributes.email]);
+
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
+  const [lastMessages, setLastMessages] = useState({});
+
+  useEffect(() => {
+    const updatedLastMessages = {};
+    chats.forEach(chat => {
+      const contact = chat.members.find(member => member !== user.attributes.email);
+      if (contact) {
+        if (!updatedLastMessages[contact] || updatedLastMessages[contact].createdAt < chat.createdAt) {
+          updatedLastMessages[contact] = {
+            text: chat.text,
+            createdAt: chat.createdAt
+          };
+        }
+      }
+    });
+    setLastMessages(updatedLastMessages);
+  }, [chats, user.attributes.email]);
+
+  const groupMessagesByDate = (messages) => {
+    const groupedMessages = {};
+  
+    messages.forEach((message) => {
+      const createdAt = new Date(message.createdAt);
+      const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
+  
+      if (!groupedMessages[dateKey]) {
+        groupedMessages[dateKey] = [];
+      }
+  
+      groupedMessages[dateKey].push(message);
+    });
+  
     const sortedDates = Object.keys(groupedMessages).sort((a, b) => {
       const dateA = new Date(a).getTime();
       const dateB = new Date(b).getTime();
       return dateA - dateB;
     });
-    
+  
     const sortedGroupedMessages = {};
+  
     sortedDates.forEach(date => {
+      groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
       sortedGroupedMessages[date] = groupedMessages[date];
     });
-
+  
     return sortedGroupedMessages;
- };
+  };
+  
  
-  useEffect(() => {
-    const filteredChats = selectedContact
-   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-   : [];
+ useEffect(() => {
+  const filteredChats = selectedContact
+    ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
+    : [];
+  const groupedMessages = groupMessagesByDate(filteredChats);
+  setGroupedMessages(groupedMessages);
+}, [chats, selectedContact, user.attributes.email]);
+
+useEffect(() => {
+  if (selectedContact) {
+    const filteredChats = chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email));
     const groupedMessages = groupMessagesByDate(filteredChats);
     setGroupedMessages(groupedMessages);
-  }, [chats, selectedContact, user.attributes.email]);
-
+  }
+}, [selectedContact]);
 
 useEffect(() => {
   async function fetchChats() {
@@ -102,19 +161,6 @@ useEffect(() => {
         setSelectedContact(recipient);
       }
     }, []);
-  
-  useEffect(() => {
-    const sub = API.graphql(
-      graphqlOperation(subscriptions.onCreateChat)
-      //@ts-ignore
-    ).subscribe({
-      next: ({ value }) => {
-        handleReceivedMessage(value.data.onCreateChat);
-      },
-      error: (err) => console.log(err),
-    });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
@@ -222,26 +268,36 @@ useEffect(() => {
             className="searchList"
           />
           <ul>
-            {searchTerm === ""
-              ? contactList.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                  </li>
-                ))
-              : filteredContactList.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                  </li>
-                ))}
-          </ul>
+          {searchTerm === ""
+            ? contactList.map((contact) => (
+              <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? 'selected-contact' : ''}
+                >
+                  {contact.split("@")[0]}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                </li>
+              ))
+            : filteredContactList.map((contact) => (
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? 'selected-contact' : ''}
+                >
+                  {contact.split("@")[0]}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                </li>
+              ))}
+        </ul>
         </div>
       <div className="main-container">
         <div className="chat-main">
@@ -250,7 +306,7 @@ useEffect(() => {
                 <img src={JanSchilder} className="profile-ava"/>
               <div className="name-and-status">
                 <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-                <h5 className="last-seen">Last seen:</h5>
+                {/* <h5 className="last-seen">Last seen: </h5> */}
               </div>
             </div>
           </div>
@@ -275,6 +331,7 @@ useEffect(() => {
                       <span className="username-name">{chat.email.split("@")[0]}</span>
                     </div>
                     <p className="text">{chat.text}</p>
+                    <IoCheckmarkDone size={13} className="checkmarks" />
                     <time dateTime={chat.createdAt} className="message-time">
                       {new Intl.DateTimeFormat('nl-NL', {
                         hour: '2-digit',
@@ -305,10 +362,10 @@ useEffect(() => {
             className="inputchat"
           />
           <div className="dropup" onClick={() => setIsDropUpOpen(!isDropUpOpen)}>
-            <FaPaperclip className="paperclip" size={25} />
+            <BsPaperclip className="paperclip" size={25} />
             {isDropUpOpen && (
               <div className="dropup-content">
-                <button className="dropup-option" onClick={() => inputRef.current?.click()}>Verstuur afbeelding</button>
+                <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue"/></button>
                 <input
                   type="file"
                   accept="image/*"
@@ -321,7 +378,7 @@ useEffect(() => {
                     <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
                   </div>
                 )}
-                <button className="dropup-option">Maak betaalverzoek</button>
+                <button className="dropup-option"><BsCreditCard size={25} color="blue"/></button>
               </div>
             )}
           </div>
@@ -331,8 +388,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      
-      </div>
+    </div>
 </div>
 )}
 
