@@ -69,13 +69,13 @@ function ChatMain({ user, signOut }) {
     return sortedGroupedMessages;
  };
  
-  useEffect(() => {
-    const filteredChats = selectedContact
-   ? chats.filter(chat => chat.members.includes(selectedContact) || chat.members.includes(user.attributes.email))
-   : [];
-    const groupedMessages = groupMessagesByDate(filteredChats);
-    setGroupedMessages(groupedMessages);
-  }, [chats, selectedContact, user.attributes.email]);
+ useEffect(() => {
+  const filteredChats = selectedContact
+    ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
+    : [];
+  const groupedMessages = groupMessagesByDate(filteredChats);
+  setGroupedMessages(groupedMessages);
+}, [chats, selectedContact, user.attributes.email]);
 
 
 useEffect(() => {
