@@ -12,7 +12,7 @@ function SpecialistCard() {
   const [specialists, setSpecialists] = useState<any[]>([]);
 
 
-  let specialistsData = [
+  const specialistsData = [
     {
       id: 1,
       name: "Jan Schilder",
@@ -70,7 +70,7 @@ function SpecialistCard() {
     const task = window.location.hash.replace("#", "").split("?")[1].split("!")[0];
 
     const url = window.location.href;
-    const date = url.replace("?", "").split("!")[1];
+    const date = url.split("!")[1];
     console.log(date);
 
 
@@ -129,7 +129,7 @@ function SpecialistCard() {
 
   }, []);
 
-  let specialistCardRender = specialists?.map((specialist) => {
+  const specialistCardRender = specialists?.map((specialist) => {
     return (
       <div key={specialist.id} className="specialist_card">
         <div className="specialist_card_detail">

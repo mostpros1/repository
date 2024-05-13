@@ -7,6 +7,7 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import RoofingIcon from '@mui/icons-material/Roofing';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { taal } from '../ui/NavBar/Navigation.tsx';
 
 const PopularCardsData = [
   {
@@ -36,6 +37,7 @@ const PopularCardsData = [
   },
 ];
 
+
 function Hero() {
   return (
     <div className="hero">
@@ -44,7 +46,7 @@ function Hero() {
         <SearchBar />
         <article className="populairjobsHero">
           {PopularCardsData.map((card) => (
-            <Link key={card.id} to={`/job/${card.name}`} className="populairjobsHeroCard">
+            <Link key={card.id} to={`/${taal}/jobs#${card.name.toLowerCase()}`} className="populairjobsHeroCard">
               {card.icon}
               <span>{card.name}</span>
             </Link>
