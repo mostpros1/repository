@@ -14,6 +14,7 @@ import JanSchilder from "../../assets/JanSchilder.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
+import { IoCheckmarkDone } from "react-icons/io5";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -42,13 +43,33 @@ function ChatMain({ user, signOut }) {
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const updateLastSeen = () => {
-    const lastSeenTime = new Date().toISOString();
-    // Sla de last seen time op in de database of opslagruimte
-  };
+  useEffect(() => {
+    const handleNewMessageNotification = (message) => {
+      if (message.email !== user.attributes.email) {
+        if (Notification.permission === "granted") {
+          new Notification("Nieuw bericht ontvangen", {
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+          });
+        }
+      }
+    };
+
+    const sub = API.graphql(
+      graphqlOperation(subscriptions.onCreateChat)
+      //@ts-ignore
+    ).subscribe({
+      next: ({ value }) => {
+        handleReceivedMessage(value.data.onCreateChat);
+        handleNewMessageNotification(value.data.onCreateChat);
+      },
+      error: (err) => console.log(err),
+    });
+
+    return () => sub.unsubscribe();
+  }, [user.attributes.email]);
 
   useEffect(() => {
-    updateLastSeen();
+    Notification.requestPermission();
   }, []);
 
   const [lastMessages, setLastMessages] = useState({});
@@ -140,19 +161,6 @@ useEffect(() => {
         setSelectedContact(recipient);
       }
     }, []);
-  
-  useEffect(() => {
-    const sub = API.graphql(
-      graphqlOperation(subscriptions.onCreateChat)
-      //@ts-ignore
-    ).subscribe({
-      next: ({ value }) => {
-        handleReceivedMessage(value.data.onCreateChat);
-      },
-      error: (err) => console.log(err),
-    });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
@@ -323,6 +331,7 @@ useEffect(() => {
                       <span className="username-name">{chat.email.split("@")[0]}</span>
                     </div>
                     <p className="text">{chat.text}</p>
+                    <IoCheckmarkDone size={13} className="checkmarks" />
                     <time dateTime={chat.createdAt} className="message-time">
                       {new Intl.DateTimeFormat('nl-NL', {
                         hour: '2-digit',
