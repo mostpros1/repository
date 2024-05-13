@@ -270,7 +270,7 @@ useEffect(() => {
           <ul>
           {searchTerm === ""
             ? contactList.map((contact) => (
-                <li
+              <li
                   key={contact}
                   onClick={() => switchChat(contact)}
                   className={selectedContact === contact ? 'selected-contact' : ''}
@@ -306,7 +306,7 @@ useEffect(() => {
                 <img src={JanSchilder} className="profile-ava"/>
               <div className="name-and-status">
                 <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-                <h5 className="last-seen">Last seen: </h5>
+                {/* <h5 className="last-seen">Last seen: </h5> */}
               </div>
             </div>
           </div>

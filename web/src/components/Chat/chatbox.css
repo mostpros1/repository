@@ -30,22 +30,19 @@
 
 #sidebar ul li {
   cursor: pointer;
-  padding: 10px 0;
-  transition: background-color 0.5s;
+  padding: 10px 20px;
   border-radius: 10px;
-  text-align: center;
   height: 90px;
-  font-size: 22px;
+  font-size: 18px;
   margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+  background: linear-gradient(to bottom, #0008ff19, #4e95ff);
 }
 
-#sidebar ul li:hover {
-  background-color: #f0efff;
-  color: black;
-}
-
+#sidebar ul li:hover,
 #sidebar ul li.active {
-  background-color: #f0efff;
+  background: linear-gradient(to bottom, #4e95ff, #0008ff19);
   color: black;
 }
 
@@ -57,6 +54,8 @@
   max-width: 300px;
   max-height: 35px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
 }
 
 .chat-main {
@@ -352,13 +351,18 @@
 
 .chat-info{
   display: flex;
-
 }
 
 .profile-ava{
   border-radius: 50%;
   margin-right: 20px;
   margin-left: 10px;
+}
+
+.profile-ava-box{
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }
 
 .paperclip{
