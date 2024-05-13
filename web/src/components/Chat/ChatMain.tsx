@@ -14,6 +14,7 @@ import JanSchilder from "../../assets/JanSchilder.jpg";
 import { BorderAllRounded } from "@mui/icons-material";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
+import { IoCheckmarkDone } from "react-icons/io5";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -42,9 +43,37 @@ function ChatMain({ user, signOut }) {
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const handleNewMessageNotification = (message) => {
+      if (message.email !== user.attributes.email) {
+        if (Notification.permission === "granted") {
+          new Notification("Nieuw bericht ontvangen", {
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+          });
+        }
+      }
+    };
+
+    const sub = API.graphql(
+      graphqlOperation(subscriptions.onCreateChat)
+      //@ts-ignore
+    ).subscribe({
+      next: ({ value }) => {
+        handleReceivedMessage(value.data.onCreateChat);
+        handleNewMessageNotification(value.data.onCreateChat);
+      },
+      error: (err) => console.log(err),
+    });
+
+    return () => sub.unsubscribe();
+  }, [user.attributes.email]);
+
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
   const [lastMessages, setLastMessages] = useState({});
 
-  // Update last messages on receiving new messages
   useEffect(() => {
     const updatedLastMessages = {};
     chats.forEach(chat => {
@@ -75,7 +104,6 @@ function ChatMain({ user, signOut }) {
       groupedMessages[dateKey].push(message);
     });
   
-    // Sort the keys (dates) as Date objects
     const sortedDates = Object.keys(groupedMessages).sort((a, b) => {
       const dateA = new Date(a).getTime();
       const dateB = new Date(b).getTime();
@@ -85,7 +113,6 @@ function ChatMain({ user, signOut }) {
     const sortedGroupedMessages = {};
   
     sortedDates.forEach(date => {
-      // Sort messages within each date group
       groupedMessages[date].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
       sortedGroupedMessages[date] = groupedMessages[date];
     });
@@ -134,19 +161,6 @@ useEffect(() => {
         setSelectedContact(recipient);
       }
     }, []);
-  
-  useEffect(() => {
-    const sub = API.graphql(
-      graphqlOperation(subscriptions.onCreateChat)
-      //@ts-ignore
-    ).subscribe({
-      next: ({ value }) => {
-        handleReceivedMessage(value.data.onCreateChat);
-      },
-      error: (err) => console.log(err),
-    });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
@@ -256,7 +270,7 @@ useEffect(() => {
           <ul>
           {searchTerm === ""
             ? contactList.map((contact) => (
-                <li
+              <li
                   key={contact}
                   onClick={() => switchChat(contact)}
                   className={selectedContact === contact ? 'selected-contact' : ''}
@@ -292,7 +306,7 @@ useEffect(() => {
                 <img src={JanSchilder} className="profile-ava"/>
               <div className="name-and-status">
                 <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-                <h5 className="last-seen">Last seen:</h5>
+                {/* <h5 className="last-seen">Last seen: </h5> */}
               </div>
             </div>
           </div>
@@ -317,6 +331,7 @@ useEffect(() => {
                       <span className="username-name">{chat.email.split("@")[0]}</span>
                     </div>
                     <p className="text">{chat.text}</p>
+                    <IoCheckmarkDone size={13} className="checkmarks" />
                     <time dateTime={chat.createdAt} className="message-time">
                       {new Intl.DateTimeFormat('nl-NL', {
                         hour: '2-digit',
