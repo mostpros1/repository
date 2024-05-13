@@ -30,22 +30,20 @@
 
 #sidebar ul li {
   cursor: pointer;
-  padding: 10px 0;
-  transition: background-color 0.5s;
+  padding: 10px 20px;
   border-radius: 10px;
-  text-align: center;
-  height: 80px;
-  font-size: 22px;
+  height: 90px;
+  font-size: 18px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+  background: linear-gradient(to bottom, #0008ff19, #4e95ff);
 }
 
-#sidebar ul li:hover {
-  background-color: #f0efff;
-  color: black;
-}
-
+#sidebar ul li:hover,
 #sidebar ul li.active {
-  background-color: #f0efff;
-  color: black;
+  background: rgba(186, 196, 255, 0.286);
+  color: rgb(255, 255, 255);
 }
 
 .last-message {
@@ -53,6 +51,11 @@
   color: #ffffffc7;
   display: block;
   margin-top: 10px;
+  max-width: 300px;
+  max-height: 35px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
 }
 
 .chat-main {
@@ -143,9 +146,7 @@
   text-align: center;
   border-radius: 10px;
   height: 40px;
-  margin-left: 10px;
   width: 50px;
-  margin-right: 5px;
 }
 
 .message-bubble {
@@ -217,13 +218,17 @@
 }
 
 .text {
-  margin-left: 20px;
+  margin-left: 10px;
   margin-right: 20px;
+}
+
+.username-name{
+  font-weight: bold;
 }
 
 .message-time {
   font-size: 10px;
-  margin-left: 8px;
+  margin-left: 2px;
   color: #666;
   margin-top: 2px;
 }
@@ -346,13 +351,18 @@
 
 .chat-info{
   display: flex;
-
 }
 
 .profile-ava{
   border-radius: 50%;
   margin-right: 20px;
   margin-left: 10px;
+}
+
+.profile-ava-box{
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }
 
 .paperclip{
@@ -409,9 +419,9 @@
 
 .dropup:hover .dropup-content {
   display: block;
-  bottom: 100%; /* Plaats het menu boven het element */
-  top: auto; /* Laat de bovenkant van het menu automatisch bepalen */
-  animation: fadeIn 0.3s ease; /* Voeg de fade-in animatie toe */
+  bottom: 100%;
+  top: auto;
+  animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -432,4 +442,13 @@
   height: 60px;
   color: #007bff;
   background-color: #007bff;
+}
+
+.dropup-option-leeg {
+  border-radius: 5px;
+  text-align: center;
+  width: 60px;
+  height: 0px;
+  color: #ffffff;
+  background-color: #ffffff;
 }

@@ -18,7 +18,9 @@ const CareerPage = () => {
                     de All-in 1 Home Service App.</p>
                 <img src={careertemp} alt="career" />
             </div>
-            <Vacatures />
+            <div className="vacature-con">
+                <Vacatures />
+            </div>
             <Footer />
         </div>
     );

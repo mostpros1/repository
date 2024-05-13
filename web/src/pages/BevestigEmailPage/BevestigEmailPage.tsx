@@ -1,13 +1,18 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { cognitoClient, stripeClient } from '../../main'
+import { cognitoClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
 
-const taal = window.location.pathname.split('/')[1];
+let taal = "nl";
+
+if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en"){
+taal = window.location.pathname.split('/')[1];
+}
+
 
 type PostConfig = {
     roleName: string

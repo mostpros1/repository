@@ -1,59 +1,18 @@
-#main-center {
-  display: flex;
-  justify-content: center;
-}
-
-#main-con {
+#settings-panel {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: start;
-  gap: 3rem;
-  margin: 0px auto 0 150px;
+  gap: 2rem;
+  margin: 2.5rem auto 0 14rem;
 }
 
-.settings-upper {
-  z-index: 0;
+.setting-side-panel-left {
   display: flex;
   flex-direction: column;
-  white-space: nowrap;
-  width: auto;
-  font-size: 18px;
-  margin-left: 150px;
-  transition: al 0.3s ease;
+  margin-bottom: 2.5rem;
 }
 
-
-#content-con {
+.setting-side-panel-right {
   display: flex;
-  width: 1000px;
-  padding: 0px 0px 10px;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-#settings-con {
-  display: flex;
-  flex-direction: column;
-  width: 1000px;
-  margin: 3px 0px 10px;
-}
-
-.navbar-con {
-  display: flex;
-  margin-top: 20px;
-}
-
-
-/* Ensure that each section fills the column and is not wider than the content area */
-/* section {
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-} */
-
-/* Make sure the button takes the full width of its container */
-.user-info-form button,
-.home-owner-settings button {
   width: 100%;
-  /* ... other button styles */
 }

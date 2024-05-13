@@ -35,9 +35,6 @@ import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlus
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSettingsPage";
-import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
-import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
-import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
@@ -120,15 +117,6 @@ const LanguageAwareRoutes = () => {
       <Route
         path="/pro-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
-      />
-      <Route
-        path="/HomeOwnerNotification"
-        element={<HomeOwnerNotification />}
-      />
-      <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
-      <Route
-        path="/HomeOwnerDeactivation"
-        element={<HomeOwnerDeactivation />}
       />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />

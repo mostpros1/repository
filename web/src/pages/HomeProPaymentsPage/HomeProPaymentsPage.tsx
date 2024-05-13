@@ -13,6 +13,7 @@ function HomeProPaymentsPage() {
         <SideNav />
         <HomeProPaymentsComp />
       </div>
+      <Footer />
     </div>
   );
 }
