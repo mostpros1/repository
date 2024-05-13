@@ -42,8 +42,8 @@
 
 #sidebar ul li:hover,
 #sidebar ul li.active {
-  background: linear-gradient(to bottom, #4e95ff, #0008ff19);
-  color: black;
+  background: rgba(186, 196, 255, 0.286);
+  color: rgb(255, 255, 255);
 }
 
 .last-message {
