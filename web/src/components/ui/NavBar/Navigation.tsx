@@ -12,8 +12,8 @@ import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
 export let taal = "nl";
 
-if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en"){
-taal = window.location.pathname.split('/')[1];
+if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en") {
+  taal = window.location.pathname.split('/')[1];
 }
 console.log("test ", taal);
 
@@ -105,43 +105,43 @@ function Navigation() {
                   <header>{t("Interieur")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("InterieurAdviseur")}</Link>
+                      <Link to={`/${taal}/jobs#interieuradviseur`}>{t("InterieurAdviseur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Loodgieter")}</Link>
+                      <Link to={`/${taal}/jobs#loodgieter`}>{t("Loodgieter")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Elektricien<")}</Link>
+                      <Link to={`/${taal}/jobs#elektricien`}>{t("Elektricien")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Timmerman")}</Link>
+                      <Link to={`/${taal}/jobs#timmerman`}>{t("Timmerman")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Schoonmaker")}</Link>
+                      <Link to={`/${taal}/jobs#schoonmaker`}>{t("Schoonmaker")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Interieur schilder")}</Link>
+                      <Link to={`/${taal}/jobs#interieurschilder`}>{t("Interieur schilder")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Behanger")}</Link>
+                      <Link to={`/${taal}/jobs#behanger`}>{t("Behanger")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Keukenmonteur")}</Link>
+                      <Link to={`/${taal}/jobs#keukenmonteur`}>{t("Keukenmonteur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Tegelzetter")}</Link>
+                      <Link to={`/${taal}/jobs#tegelzetter`}>{t("Tegelzetter")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Badkamerspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#badkamerspecialist`}>{t("Badkamerspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Stukadoor")}</Link>
+                      <Link to={`/${taal}/jobs#stukadoor`}>{t("Stukadoor")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Verwarmingsinstallateur")}</Link>
+                      <Link to={`/${taal}/jobs#verwarmingsinstallateur`}>{t("Verwarmingsinstallateur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Stoffeerder")}</Link>
+                      <Link to={`/${taal}/jobs#stoffeerder`}>{t("Stoffeerder")}</Link>
                     </li>
                   </ul>
                 </div>
@@ -149,43 +149,43 @@ function Navigation() {
                   <header>{t("Exterieur")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("Aannemer")}</Link>
+                      <Link to={`/${taal}/jobs#aannemer`}>{t("Aannemer")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Exterieur schilder")}</Link>
+                      <Link to={`/${taal}/jobs#exterieurschilder`}>{t("Exterieur schilder")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Dakdekker")}</Link>
+                      <Link to={`/${taal}/jobs#dakdekker`}>{t("Dakdekker")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Gevelspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#gevelspecialist`}>{t("Gevelspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Isolatiespecialist")}</Link>
+                      <Link to={`/${taal}/jobs#isolatiespecialist`}>{t("Isolatiespecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Metselaar")}</Link>
+                      <Link to={`/${taal}/jobs#metselaar`}>{t("Metselaar")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Glaszetter")}</Link>
+                      <Link to={`/${taal}/jobs#glaszetter`}>{t("Glaszetter")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Kozijnspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#kozijspecialist`}>{t("Kozijnspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Schoorsteenveger")}</Link>
+                      <Link to={`/${taal}/jobs#schoorsteenveger`}>{t("Schoorsteenveger")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Laadpaalspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#laadpaalspecialist`}>{t("Laadpaalspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Zonnepaneelspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#zonnepaneelspecialist`}>{t("Zonnepaneelspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Beveiligingsspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#beveiligingsspecialist`}>{t("Beveiligingsspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Toegangsspecialist")}</Link>
+                      <Link to={`/${taal}/jobs#toegangsspecialist`}>{t("Toegangsspecialist")}</Link>
                     </li>
                   </ul>
                 </div>
@@ -193,22 +193,22 @@ function Navigation() {
                   <header>{t("Tuin")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("Tuinontwerper")}</Link>
+                      <Link to={`/${taal}/jobs#tuinontwerper`}>{t("Tuinontwerper")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Hovenier")}</Link>
+                      <Link to={`/${taal}/jobs#hovenier`}>{t("Hovenier")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Stratenmaker")}</Link>
+                      <Link to={`/${taal}/jobs#stratenmaker`}>{t("Stratenmaker")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Tuintechnicus")}</Link>
+                      <Link to={`/${taal}/jobs#tuintechnicus`}>{t("Tuintechnicus")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Zwembadinstallateur")}</Link>
+                      <Link to={`/${taal}/jobs#zwembadinstallateur`}>{t("Zwembadinstallateur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Smart garden adviseur")}</Link>
+                      <Link to={`/${taal}/jobs#smartgardenadviseur`}>{t("Smart garden adviseur")}</Link>
                     </li>
                   </ul>
                 </div>
@@ -216,37 +216,37 @@ function Navigation() {
                   <header>{t("Meer")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("Moderne klusser")}</Link>
+                      <Link to={`/${taal}/jobs#moderneklusser`}>{t("Moderne klusser")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Verhuizer")}</Link>
+                      <Link to={`/${taal}/jobs#verhuizer`}>{t("Verhuizer")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Slotenmaker")}</Link>
+                      <Link to={`/${taal}/jobs#slotenmaker`}>{t("Slotenmaker")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Verduurzamingsadviseur")}</Link>
+                      <Link to={`/${taal}/jobs#verduurzamingsadviseur`}>{t("Verduurzamingsadviseur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Ongediertebestrijder")}</Link>
+                      <Link to={`/${taal}/jobs#ongediertebestrijder`}>{t("Ongediertebestrijder")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Voertuig monteur")}</Link>
+                      <Link to={`/${taal}/jobs#voertuigmonteur`}>{t("Voertuig monteur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Domotica specialist")}</Link>
+                      <Link to={`/${taal}/jobs#domoticaspecialist`}>{t("Domotica specialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Smart home specialist")}</Link>
+                      <Link to={`/${taal}/jobs#smarthomespecialist`}>{t("Smart home specialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("AI home specialist")}</Link>
+                      <Link to={`/${taal}/jobs#aihomespecialist`}>{t("AI home specialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Drone piloot")}</Link>
+                      <Link to={`/${taal}/jobs#dronepiloot`}>{t("Drone piloot")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Robot adviseur")}</Link>
+                      <Link to={`/${taal}/jobs#robotadviseur`}>{t("Robot adviseur")}</Link>
                     </li>
                   </ul>
                 </div>
