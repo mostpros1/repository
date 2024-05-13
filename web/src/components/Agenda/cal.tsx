@@ -159,6 +159,33 @@ const Cal = () => {
     }
     getEntriesFromDB();
 
+
+    async function addEntrysToDb(date: string, text: string, time: string, color: string) {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+    
+        try {
+            await dynamo.put({
+                Item: {
+                    id: Math.floor(Math.random() * 1000000),
+                    email: email,
+                    enrtys: {
+                        date: date, // Use computed property name to dynamically set the date as the key
+                        text: text,
+                        time: time,
+                        color: color
+                    }
+                },
+                TableName: "Calendar",
+            }).promise();
+    
+            console.log("Entry added successfully.");
+        } catch (err) {
+            console.error("Error adding entry:", err);
+        }
+    }
+
+
     const addEntry = (entry: string, time: string, color: string) => {
         if (selectedDate === null) {
             console.error("Selected date is null. Cannot add entry.");
@@ -169,6 +196,7 @@ const Cal = () => {
             ...prev,
             [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
         }));
+        addEntrysToDb(dateKey, entry, time, color);
     };
 
     const renderDaysOfWeek = () => {
@@ -369,7 +397,7 @@ const Cal = () => {
             console.error("Selected date is null. Cannot add entry.");
             return;
         }
-        
+
         console.log(entries);
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
@@ -459,24 +487,24 @@ const Cal = () => {
                         </select>
                         <button type="submit">Add</button>
                     </form>
-                    <form
-                        onSubmit={e => {
-                            e.preventDefault();
-                            const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-                            const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                            addAvailibility(date.value, time.value);
-                            date.value = '';
-                            time.value = '';
-                        }}
-                    >
-                        <b>Add availability</b>
-                        <br></br>
-                        <input type="date" name="date" />
-                        <input type="time" name="time" />
-                        <button type="submit">Add</button>
-                    </form>
                 </div>
             )}
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                    const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+                    addAvailibility(date.value, time.value);
+                    date.value = '';
+                    time.value = '';
+                }}
+            >
+                <b>Add availability</b>
+                <br></br>
+                <input type="date" name="date" />
+                <input type="time" name="time" />
+                <button type="submit">Add</button>
+            </form>
         </div >
     );
 };
