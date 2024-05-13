@@ -443,3 +443,12 @@
   color: #007bff;
   background-color: #007bff;
 }
+
+.dropup-option-leeg {
+  border-radius: 5px;
+  text-align: center;
+  width: 60px;
+  height: 0px;
+  color: #ffffff;
+  background-color: #ffffff;
+}

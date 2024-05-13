@@ -384,8 +384,7 @@ useEffect(() => {
                   </div>
                 )}
 
-                <button onClick={handleCreatePayment} className="dropup-option">
-                    <BsCreditCard size={25} color="blue"/>
+                <button onClick={handleCreatePayment} className="dropup-option-leeg">
                 </button>
 
                 {showPaymentLink && <PaymentLink subtotal={50} handleSendMessage={handleSendMessage} />}
