@@ -84,7 +84,7 @@ const Jobs = () => {
     const fetchUserGroup = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const groups = user.signInUserSession.accessToken.payload['cognito:groups'] 
+        const groups = user.signInUserSession.accessToken.payload['cognito:groups']
 
         if (groups.includes("Professional")) {
           setUserGroup("Professional");
@@ -211,18 +211,19 @@ const Jobs = () => {
       .promise().then((data) => {
         if (data.Items && data.Items.length > 0) {
           for (let i = 0; i < data.Items.length; i++) {
-          if (data.Items[i].email == email){
-            const newJobEntries = data.Items[i].map(item => ({
-              id: item.id,
-              name: item.name,
-              description: item.description,
-              date: item.date,
-              chats: item.chats,
-              isCurrent: item.status === 'current',
-              status: item.status
-            }));
-            setJobEntries([...jobEntries,...newJobEntries]);          }
-        }
+            if (data.Items[i].email == email) {
+              const newJobEntries = data.Items[i].map(item => ({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                date: item.date,
+                chats: item.chats,
+                isCurrent: item.status === 'current',
+                status: item.status
+              }));
+              setJobEntries([...jobEntries, ...newJobEntries]);
+            }
+          }
         }
       }).catch((error) => {
         console.error("Error fetching pending jobs:", error);
@@ -252,6 +253,29 @@ const Jobs = () => {
     </Link>
   ));
 
+  const renderJobEntries = () => {
+    const filteredJobs = jobEntries.filter((job) => job.status === currentTab);
+    return filteredJobs.map((job) => (
+      <div className="job-entry" key={job.id}>
+        <div className="job-description">{job.description}</div>
+        <div className="job-date">{job.date}</div>
+        <div className="job-actions">
+          <div id="job-view-prof-con">
+            <span>View professionals</span>
+            <img src={viewProfessionalsIcon} alt="view professionals" />
+          </div>
+          <div className="chat-indicator">
+            <span>Ongoing chats ({job.chats})</span>
+            <img src={chatIcon} alt="chat" />
+          </div>
+        </div>
+        <Link to={`/nl/jobs/${job.id}`} className="job-view">
+          View job
+        </Link>
+      </div>
+    ));
+  };
+
   return (
     <div id="job-main">
       <div id="search-wrapper">
@@ -269,6 +293,7 @@ const Jobs = () => {
           />
           <div className={showList ? "search_dropdown open" : "search_dropdown"}>
             {/* results render */}
+            {resultsRender}
           </div>
           <button type="submit" id="submit-button">
             <img src={rightarrow} alt="submit" />
@@ -292,9 +317,9 @@ const Jobs = () => {
       </div>
       <div className="job-list-con">
         {/* Render job entries based on the selected tab */}
+        {renderJobEntries()}
       </div>
     </div>
   );
-};
-
+}
 export default Jobs;
