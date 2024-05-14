@@ -3,6 +3,7 @@ import "./Review.css";
 import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
 import { dynamo } from "../../../declarations";
+import { Auth } from "aws-amplify";
 
 // Define a specific type for review objects
 interface Review {
@@ -34,35 +35,35 @@ const ReviewComponent: React.FC = () => {
     setSortType(type); // Update sortType state
   };
 
-// Declare the fetchReviews function outside of useEffect
-async function fetchReviews() {
-  try {
-    const response = await dynamo.scan({ TableName: "Reviews" }).promise();
-    if (response && response.Items) {
-      const mappedReviews: Review[] = response.Items.map((item) => ({
-        id: item.id,
-        author: item.professional_name,
-        homeownerName: item.homeownerName,
-        date: item.date,
-        content: item.description,
-        //totalReviews: item.totalReviews,
-        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-          Math.random() * 100
-        )}.jpg`, //item.authorImageUrl,
-        rating: item.rating,
-      }));
-      setReviews(mappedReviews);
-      setSortedReviews(mappedReviews);
+  // Declare the fetchReviews function outside of useEffect
+  async function fetchReviews() {
+    try {
+      const response = await dynamo.scan({ TableName: "Reviews" }).promise();
+      if (response && response.Items) {
+        const mappedReviews: Review[] = response.Items.map((item) => ({
+          id: item.id,
+          author: item.professional_name,
+          homeownerName: item.homeownerName,
+          date: item.date,
+          content: item.description,
+          //totalReviews: item.totalReviews,
+          authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+            Math.random() * 100
+          )}.jpg`, //item.authorImageUrl,
+          rating: item.rating,
+        }));
+        setReviews(mappedReviews);
+        setSortedReviews(mappedReviews);
+      }
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
     }
-  } catch (error) {
-    console.error("Error fetching reviews:", error);
   }
-}
 
-// Call fetchReviews from within useEffect
-useEffect(() => {
-  fetchReviews();
-}, []);
+  // Call fetchReviews from within useEffect
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
 
   // Star rating component
@@ -90,6 +91,31 @@ useEffect(() => {
     const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
+
+    async function getUUID() {
+      const user = await Auth.currentAuthenticatedUser();
+      const email = user.attributes.email;
+    
+      return dynamo.query({
+        TableName: "ChatUsernames",
+        IndexName: "emailIndex",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": email,
+        },
+      }).promise()
+       .then((data) => {
+          if (data.Items && data.Items.length > 0) {
+            return data.Items[0].Uuid;
+          }
+        })
+       .catch((error) => {
+          console.error("Error getting UUID:", error);
+          // Return "something" in case of an error
+          return "Mike";
+        });
+    }
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const currentDate = new Date().toLocaleDateString();
@@ -113,19 +139,19 @@ useEffect(() => {
 
       // Perform DynamoDB update or post request to add the new review
       try {
+        const uuid = await getUUID(); // Wait for the UUID to be resolved
         await dynamo.put({
           TableName: "Reviews",
           Item: {
             id: Math.floor(Math.random() * 1000),
             professional_name: name,
-            homeownerName: "Dora The Explorer",/*newReview.homeownerName,*/
+            homeownerName: uuid, // Use the resolved UUID here
             date: newReview.date,
             description: newReview.content,
             //totalReviews: newReview.totalReviews,
             rating: String(newReview.rating),
           },
         }).promise();
-        // Example: await dynamo.put({...}).promise();
         console.log("Review submitted:", newReview);
         fetchReviews();
       } catch (error) {

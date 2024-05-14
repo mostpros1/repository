@@ -84,9 +84,7 @@ const Jobs = () => {
     const fetchUserGroup = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        console.log(user);  // Debugging: See all user details in the console
-        const groups = user.signInUserSession.accessToken.payload['cognito:groups'] || [];
-        console.log("User Groups: ", groups);  // Debugging: Specifically see the group details
+        const groups = user.signInUserSession.accessToken.payload['cognito:groups'] 
 
         if (groups.includes("Professional")) {
           setUserGroup("Professional");
@@ -114,7 +112,7 @@ const Jobs = () => {
     setJobDescription(event.target.value);
   };
 
-  
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -196,6 +194,45 @@ const Jobs = () => {
 
     return [...taskResults, ...specialistResults];
   };
+
+
+  async function getPendingJobs() {
+    const user = await Auth.currentAuthenticatedUser();
+    const email = user.attributes.email;
+    dynamo
+      .query({
+        TableName: "Klussen",
+        IndexName: "emailIndex",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": email,
+        }
+      })
+      .promise().then((data) => {
+        if (data.Items && data.Items.length > 0) {
+          for (let i = 0; i < data.Items.length; i++) {
+          if (data.Items[i].email == email){
+            const newJobEntries = data.Items[i].map(item => ({
+              id: item.id,
+              name: item.name,
+              description: item.description,
+              date: item.date,
+              chats: item.chats,
+              isCurrent: item.status === 'current',
+              status: item.status
+            }));
+            setJobEntries([...jobEntries,...newJobEntries]);          }
+        }
+        }
+      }).catch((error) => {
+        console.error("Error fetching pending jobs:", error);
+      });
+  }
+  useEffect(() => {
+    if (currentTab === "pending" || currentTab === "request") {
+      getPendingJobs();
+    }
+  }, [currentTab]);
 
   const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
 
