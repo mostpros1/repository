@@ -255,11 +255,6 @@ const Jobs = () => {
       </div>
       <div className="job-list-con">
         {/* Render job entries based on the selected tab */}
-        {jobEntries.filter(job => job.status === currentTab).map((job, index) => (
-          <div className="job-entry" key={index}>
-            {/* Job details rendering */}
-          </div>
-        ))}
       </div>
     </div>
   );
