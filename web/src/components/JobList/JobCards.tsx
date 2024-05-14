@@ -6,7 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
 import { useLocation } from "react-router-dom";
-
+import taal from "../ui/NavBar/Navigation.tsx";
 interface Job {
   id: number;
   name: string;
@@ -95,7 +95,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   //const location = useLocation();
 
   const handleChatButtonClick = (recipientEmail: string) => {
-    const currentPath = "/chat";
+    const currentPath = `/${taal}/chat`;
     const recipientQuery = `recipient=${recipientEmail}`;
     const newUrl = `${currentPath}?${recipientQuery}`;
     window.location.href = newUrl;

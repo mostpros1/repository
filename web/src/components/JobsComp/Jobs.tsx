@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Auth } from 'aws-amplify';
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
@@ -196,43 +196,52 @@ const Jobs = () => {
   };
 
 
-  async function getPendingJobs() {
-    const user = await Auth.currentAuthenticatedUser();
-    const email = user.attributes.email;
-    dynamo
-      .query({
+  const getPendingJobs = useCallback(async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const email = user.attributes.email; // Use the authenticated user's email
+      console.log("email: ", email);
+      dynamo.query({
         TableName: "Klussen",
-        IndexName: "emailIndex",
-        KeyConditionExpression: "email = :email",
+        IndexName: "user_emailIndex",
+        KeyConditionExpression: "user_email = :email",
+        FilterExpression: "currentStatus = :currentStatus",
         ExpressionAttributeValues: {
           ":email": email,
+          ":currentStatus": currentTab//"pending"
         }
-      })
-      .promise().then((data) => {
+      }).promise().then((data) => {
+        console.log(data);
+        console.log("Current tab: ", currentTab);
         if (data.Items && data.Items.length > 0) {
-          for (let i = 0; i < data.Items.length; i++) {
-            if (data.Items[i].email == email) {
-              const newJobEntries = data.Items[i].map(item => ({
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                date: item.date,
-                chats: item.chats,
-                isCurrent: item.status === 'current',
-                status: item.status
-              }));
-              setJobEntries([...jobEntries, ...newJobEntries]);
-            }
-          }
+          console.log("data.Items: ", data.Items);
+          const newJobEntries = data.Items.map(item => ({
+            status: item.currentStatus,
+            id: item.id,
+            name: item.profession,
+            region: item.region,
+            description: item.task,
+            user_email: item.user_email,
+            date: "Aangemaakt op: " + item.date, // Provide a default date or derive it from item
+            chats: item.chats, // Provide a default number of chats or derive it from item
+            isCurrent: item.isCurrent, // Provide a default boolean value or derive it from item
+          }));
+          setJobEntries(newJobEntries); // Assuming jobEntries is initialized as an array
         }
       }).catch((error) => {
         console.error("Error fetching pending jobs:", error);
       });
-  }
+    } catch (error) {
+      console.error("Error fetching pending jobs:", error);
+    }
+  }, [currentTab]); // Add currentTab as a dependency if it's used inside getPendingJobs
+
   useEffect(() => {
     if (currentTab === "pending" || currentTab === "request") {
       getPendingJobs();
     }
+    console.log("jobEntries: ", jobEntries);
+    console.log("Current tab changed to: ", currentTab);
   }, [currentTab]);
 
   const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
@@ -257,6 +266,7 @@ const Jobs = () => {
     const filteredJobs = jobEntries.filter((job) => job.status === currentTab);
     return filteredJobs.map((job) => (
       <div className="job-entry" key={job.id}>
+        <div className="job-description"><b>{job.name.charAt(0).toUpperCase() + job.name.slice(1)}</b></div>
         <div className="job-description">{job.description}</div>
         <div className="job-date">{job.date}</div>
         <div className="job-actions">
