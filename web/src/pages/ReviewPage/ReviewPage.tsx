@@ -8,13 +8,9 @@ const ReviewPage = () => {
   return (
     <div>
       <NavBar />
-      <div id="review-panel">
-        <div id="side-panel-left-review">
-          <SideNav />
-        </div>
-        <div id="side-panel-right-review">
-          <Review />
-        </div>
+      <div id="flexbox-panel">
+        <SideNav />
+        <Review />
       </div>
       <Footer />
     </div>

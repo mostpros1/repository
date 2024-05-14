@@ -8,13 +8,9 @@ const jobspage = () => {
   return (
     <div>
       <NavBar />
-      <div id="jobs-panel">
-        <div className="side-panel-left">
-          <SideNav />
-        </div>
-        <div className="side-panel-right">
-          <Jobs />
-        </div>
+      <div id="flexbox-panel">
+        <SideNav />
+        <Jobs />
       </div>
       <Footer />
     </div>

@@ -8,13 +8,9 @@ function HomeOwnerDashboard() {
   return (
     <div>
       <NavBar />
-      <div id="profile-panel">
-        <div id="side-panel-left-profile">
-          <SideNav />
-        </div>
-        <div id="side-panel-right-profile">
-          <EditProfileSection />
-        </div>
+      <div id="flexbox-panel">
+        <SideNav />
+        <EditProfileSection />
       </div>
       <Footer />
     </div>

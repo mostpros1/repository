@@ -236,7 +236,7 @@ function SideNav() {
 
               <li className="sidebar-item">
                 <NavLink
-                  to={`/${taal}/homeowner-dashboard/help`}
+                  to={`/${taal}/homeowner-dashboard/FAQPage`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }

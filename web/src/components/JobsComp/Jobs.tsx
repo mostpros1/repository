@@ -118,15 +118,6 @@ const Jobs = () => {
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const handleInputChange = (event) => {
-    setValue(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Job Description Submitted:", jobDescription);
-  };
-
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       !e.relatedTarget ||

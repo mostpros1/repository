@@ -4,7 +4,7 @@ import "./CalenderPage.css";
 const CalenderPage = () => {
   return (
     <>
-        <Callendar />
+      <Callendar />
     </>
   );
 };

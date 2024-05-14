@@ -1,46 +1,62 @@
+/* Code Template for adding the SideNav to a Webpage */
+#flexbox-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 5rem;
+  margin-top: 2.0rem;
+  margin-left: 2.0rem;
+}
 
+/* ^_^ */
 
 .sidebar {
-  position: sticky;
-  width: 200px;
-  background-color: #333; /* Adjust the color to match your design */
+  width: 100%;
+  max-width: 20rem;
+  min-width: 20rem;
+  background-color: #333;
+  /* Adjust the color to match your design */
   color: white;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
 }
 
 .sidebar-link.active {
- color: #207cd8; /* or any highlight color */
-  border-radius: 10px;
+  color: #207cd8;
+  /* or any highlight color */
+  border-radius: 1.0rem;
 }
 
 .sidebar-list {
   list-style: none;
-  font-size: 17px;
+  font-size: 1.7rem;
   padding: 0;
   transition: all 0.3s ease-in-out;
 }
 
 .sidebar-item {
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   font-weight: 0;
   font-family: "Poppins", sans-serif;
 }
 
 .sidebar-item svg {
-  margin-right: 10px; /* Adjust the space between icon and text */
-  font-size: 20px;
+  margin-right: 1.0rem;
+  /* Adjust the space between icon and text */
+  font-size: 2.0rem;
 }
 
 .sidebar-bottom {
-  padding-top: 35px;
+  padding-top: 3.5rem;
 }
 
 .sidebar-link {
   text-decoration: none;
-  color: white; /* Or any other color as per your design */
+  color: white;
+  /* Or any other color as per your design */
   display: block;
-  padding: 5px; /* Adjust padding as needed */
+  padding: 0.5rem;
+  /* Adjust padding as needed */
 }
 
 .sidebar-link:hover {

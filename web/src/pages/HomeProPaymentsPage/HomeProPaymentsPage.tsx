@@ -9,7 +9,7 @@ function HomeProPaymentsPage() {
   return (
     <div>
       <NavBar />
-      <div id="content">
+      <div id="flexbox-panel">
         <SideNav />
         <HomeProPaymentsComp />
       </div>

@@ -9,13 +9,9 @@ function HomeOwnerSettingsPage() {
   return (
     <div>
       <NavBar />
-      <div id="settings-panel">
-        <div className="setting-side-panel-left">
-          <SideNav />
-        </div>
-        <div className="setting-side-panel-right">
-          <HomeOwnerSettings />
-        </div>
+      <div id="flexbox-panel">
+        <SideNav />
+        <HomeOwnerSettings />
       </div>
       <Footer />
     </div>

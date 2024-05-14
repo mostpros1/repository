@@ -9,10 +9,8 @@ function ResultsPage() {
   return (
     <>
       <NavBar />
-      <div className="resultpage">
-        <div className="sidenav-con">
-          <SideNav />
-        </div>
+      <div id="flexbox-panel">
+        <SideNav />
         <div className="result-con">
           <FilterBar />
           <JobList />

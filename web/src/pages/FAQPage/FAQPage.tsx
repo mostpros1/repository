@@ -9,7 +9,8 @@ function FAQPage() {
   return (
     <div>
       <NavBar />
-      <div>
+      <div id="flexbox-panel">
+        <SideNav />
         <div className="faq-header-con">
           <section className="faq-header">
             <img src={faqpic} alt="faq" />

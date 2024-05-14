@@ -20,7 +20,7 @@ const HomeProPaymentsComp: React.FC = () => {
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Paid", amount: 1250 },
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Cancelled", amount: 1250 },
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Awaiting", amount: 1250 },
-      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Pending", amount: 1250 },
+      { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Pending", amount: 1250 },
       // Add more transactions as needed
     ]);
   }, []);
