@@ -96,16 +96,17 @@ Cypress.Commands.add('lisaTestBegin', () => {
 
 Cypress.Commands.add('janTestBegin', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/") // Go to website
+    cy.visit("http://localhost:5173/nl/") // Go to website
     cy.get('.nav-blue-btn a.black-items').click() // Click on "Register as specialist" button
 });
 
 Cypress.Commands.add('testAgain', () => {
     cy.setDesktopViewport();
-    cy.visit("http://localhost:5173/");
-    cy.get('.nav-blue-btn > .black-items').click();
+    cy.visit("http://localhost:5173/nl/");
+    cy.get('.nav-blue-btn a.black-items').click();
+    // cy.get('.nav-blue-btn > .black-items').click();
     cy.get('input').eq(0).type('Loodgieter')
-    cy.get('textarea').eq(0).type('test bio abdel klussen')
+    //cy.get('textarea').eq(0).type('test bio abdel klussen')
     cy.get('input').eq(1).type('test@test.com')
     cy.get('input').eq(2).type('2020EB')
     cy.get('input').eq(3).type('Amsterdam')
@@ -183,7 +184,8 @@ Cypress.Commands.add('inlogmenu', () => {
     //cy.get('#308AE4').click();
 });
 Cypress.Commands.add('uitloggen', () => {
-    cy.get('[class="logoutButton"]').click();
+    //cy.get('[class="logoutButton"]').click();
+    cy.get('.dropdown-content > button').click();
     //cy.get('#308AE4').click();
 });
 

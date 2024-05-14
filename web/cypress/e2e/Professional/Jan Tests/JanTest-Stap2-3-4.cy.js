@@ -11,7 +11,7 @@ describe('Testing "Register as specialist"' , () => {
 
         // TEST 2
          cy.get('input').eq(0).type('Loodgieter')// "loodgieter" wordt in het eerste veld ingevuld.
-         cy.get('textarea').eq(0).type(faker.lorem.sentence());  //Rendom zinnen wordt in 2de veld (bio) ingevuld
+         //cy.get('textarea').eq(0).type(faker.lorem.sentence());  //Rendom zinnen wordt in 2de veld (bio) ingevuld
          cy.get('input[type="email"]').eq(0).type(faker.internet.email());//Rendom postcode wordt in 4de veld ingevuld
          cy.get('input[type="postcode"]').eq(0).type(dutchZipCode);// Nederlands rendom postcode
          //cy.get('input[type="postcode"]').eq(0).type(`${Math.floor(1000 + Math.random() * 9000)}${String.fromCharCode(Math.floor(Math.random() * 26) + 65)}${String.fromCharCode(Math.floor(Math.random() * 26) + 65)}`);//werld postcode
