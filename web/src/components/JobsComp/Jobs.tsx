@@ -237,9 +237,7 @@ const Jobs = () => {
   }, [currentTab]); // Add currentTab as a dependency if it's used inside getPendingJobs
 
   useEffect(() => {
-    if (currentTab === "pending" || currentTab === "request") {
-      getPendingJobs();
-    }
+    getPendingJobs();
     console.log("jobEntries: ", jobEntries);
     console.log("Current tab changed to: ", currentTab);
   }, [currentTab]);
