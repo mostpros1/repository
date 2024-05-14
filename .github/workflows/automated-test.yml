@@ -25,6 +25,11 @@ jobs:
         with:
           working-directory: web
           runTests: false
+            if [ ! -f web/src/aws-exports.js ]; then
+              echo "aws-exports.js does not exist"
+              exit 1
+            fi
+          
 
       # and run all Cypress tests
       
