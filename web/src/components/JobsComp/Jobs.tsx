@@ -33,15 +33,6 @@ const Jobs = () => {
   const [userGroup, setUserGroup] = useState(""); // State to store user group
   const navigate = useNavigate();
 
-  const handleInputChange = (event) => {
-    setJobDescription(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Job Description Submitted:", jobDescription);
-  };
-
   useEffect(() => {
     const checkUserGroupAndFetchData = async () => {
       try {
@@ -117,6 +108,18 @@ const Jobs = () => {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value);
+    setJobDescription(event.target.value);
+  };
+
+  
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Job Description Submitted:", jobDescription);
+  };
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
@@ -252,11 +255,6 @@ const Jobs = () => {
       </div>
       <div className="job-list-con">
         {/* Render job entries based on the selected tab */}
-        {jobEntries.filter(job => job.status === currentTab).map((job, index) => (
-          <div className="job-entry" key={index}>
-            {/* Job details rendering */}
-          </div>
-        ))}
       </div>
     </div>
   );

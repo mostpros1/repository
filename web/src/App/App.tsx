@@ -47,6 +47,9 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
+
+
+import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
 
 
@@ -64,6 +67,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
