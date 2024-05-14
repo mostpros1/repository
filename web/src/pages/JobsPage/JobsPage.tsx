@@ -6,12 +6,9 @@ import "./JobsPage.css";
 
 const jobspage = () => {
   return (
-    <div>
+    <div id="root">
       <NavBar />
-      <div id="flexbox-panel">
-        <SideNav />
-        <Jobs />
-      </div>
+      <Jobs />
       <Footer />
     </div>
   );

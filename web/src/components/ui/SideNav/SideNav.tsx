@@ -11,7 +11,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
-
 import { taal } from "../NavBar/Navigation.tsx";
 
 console.log(taal);
@@ -34,19 +33,19 @@ function SideNav() {
           user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Homeowner")) {
           setIsHomeowner(true)
-         } else if (groups && groups.includes("Professional")) {
-           setIsProfessional(true);
-         }
-       } else {
-         console.log("User data is not fully available.");
-         navigate("/nl/login");
-       }
-     }, 500000);
+        } else if (groups && groups.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        console.log("User data is not fully available.");
+        navigate("/nl/login");
+      }
+    }, 500000);
 
-     return () => clearTimeout(timer);
-   }, [user, navigate]); 
+    return () => clearTimeout(timer);
+  }, [user, navigate]);
 
-  return (   
+  return (
     <div className="sidebar">
       <ul className="sidebar-list">
         {isProfessional ? (
@@ -56,7 +55,7 @@ function SideNav() {
                 to={`/${taal}/pro-dashboard`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
-                
+
                 }
               >
                 <DashboardIcon />
@@ -233,7 +232,6 @@ function SideNav() {
                   Instellingen
                 </NavLink>
               </li>
-
               <li className="sidebar-item">
                 <NavLink
                   to={`/${taal}/homeowner-dashboard/FAQPage`}

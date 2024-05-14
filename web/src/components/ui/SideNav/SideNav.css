@@ -11,14 +11,15 @@
 /* ^_^ */
 
 .sidebar {
-  width: 100%;
-  max-width: 20rem;
-  min-width: 20rem;
-  background-color: #333;
-  /* Adjust the color to match your design */
-  color: white;
-  padding: 1.5rem;
-  border-radius: 1.5rem;
+  height: 45%;
+  width: 18.5rem;
+  /* <- aanpassen naar % wanneer er content inzit */
+  background: #222;
+  border-radius: 8px;
+  /* bij borderradius mag pixels wel gebruikt worden!*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-link.active {
@@ -61,4 +62,16 @@
 
 .sidebar-link:hover {
   color: #207cd8;
+}
+
+@media (max-width: 1444px) {
+  .sidebar {
+    height: 50%;
+    width: 18.5rem;
+    background: #222;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -1,4 +1,35 @@
 #job-main {
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem;
+  padding-top: 5rem;
+  display: flex;
+}
+
+.leftside-Section {
+  width: 20%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.rightside-Section {
+  width: 80%;
+  height: 100vh;
+}
+
+.sideNav {
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#job-main-con {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -6,23 +37,42 @@
   padding: 25px;
   max-width: 1200px;
   max-height: 900px;
-  margin: 40px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
 }
 
+.search-con {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  max-width: 100rem;
+}
+
 #search-wrapper {
-  position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.search-input-container {
+  width: 100%;
+  position: relative;
+  /* Add this */
 }
 
 #search-icon {
-  margin-top: 10px;
+  position: absolute;
+  left: 20px;
+  /* Adjust as necessary */
+  top: 50%;
+  transform: translateY(-20%);
+  z-index: 10;
 }
 
 #job-input-field {
-  flex-grow: 1;
+  width: 115rem;
   border-radius: 25px;
   background-color: #f4f4f4;
   padding: 12px 40px 12px 50px;
@@ -32,14 +82,6 @@
   font-size: 16px;
   margin-top: 15px;
   transition: all 0.3s ease;
-  width: 1150px;
-}
-
-#search-icon {
-  position: absolute;
-  left: 15px;
-  /* Adjust as necessary */
-  z-index: 10;
 }
 
 #job-input-field:focus {
@@ -48,16 +90,14 @@
 
 #submit-button {
   position: absolute;
-  right: 10px;
+  right: 20px;
+  /* Adjust as necessary */
   top: 50%;
-  transform: translateY(-25%);
+  transform: translateY(-50%);
   height: 20px;
   width: 20px;
   background-color: transparent;
   border: none;
-  background-image: url("path-to-your-arrow-icon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
   cursor: pointer;
 }
 
@@ -84,17 +124,10 @@
   cursor: pointer;
   margin-right: 20px;
   /* or any spacing you prefer */
-  transition: all 0.3s ease;
 }
 
 .status-button.active {
-  color: white;
-  background-color: #007bff;
-  border-radius: 10px;
-}
-
-.status-button:hover {
-  color: #035ec1;
+  color: #007bff;
 }
 
 .job-list-vw {
@@ -201,4 +234,39 @@
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
+}
+
+@media (max-width: 1044px) {
+  .leftside-Section {
+    display: none;
+  }
+
+  #job-input-field {
+    width: 70rem;
+  }
+
+  .job-list-vw {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 40px;
+    justify-content: center;
+    margin: 20px 10px 20px 55px;
+  }
+
+  .rightside-Section {
+    justify-content: center;
+    align-items: center;
+    margin-left: 10rem;
+  }
+
+  #job-main-con {
+    align-items: center;
+  }
+
+  .job-main {
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
+  }
+
 }
