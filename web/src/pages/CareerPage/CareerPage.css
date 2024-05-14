@@ -2,16 +2,91 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50rem;
     background-color: #f5f5f5;
-    margin-bottom: 10rem;
-    margin-top: 10rem;
+    margin: 10rem 25rem 1rem 35rem;
 }
 
 .career-con p {
     font-size: 2rem;
     font-weight: 500;
     color: #333;
-    width: 50rem;
+    width: fit-content;
     text-align: left;
+}
+
+@media (min-width: 980px) {
+    .career-con {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        margin: 10rem 25rem 1rem 35rem;
+    }
+
+    .career-con p {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #333;
+        width: 50rem;
+        text-align: left;
+    }
+
+    .career-con img {
+        width: 60rem;
+    }
+}
+
+
+@media (max-width: 980px) {
+    .career-con {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        margin-top: 5rem;
+        margin-left: 10rem;
+    }
+
+    .career-con p {
+        font-size: 2rem;
+        /* Larger font size for readability on bigger screens */
+        text-align: left;
+        width: 500px;
+    }
+
+    .career-con img {
+        width: 30rem;
+        margin-right: 20rem;
+    }
+
+    .vacature-con h3 {
+        width: 80rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .career-con {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 0 0 0;
+    }
+
+    .career-con p {
+        font-size: 2rem;
+        text-align: left;
+        width: 30rem;
+    }
+
+    .career-con img {
+        width: 30rem;
+        align-items: flex-start;
+    }
+
+    .vacature-con h3 {
+        font-size: 1.5rem;
+        width: 40rem;
+    }
 }

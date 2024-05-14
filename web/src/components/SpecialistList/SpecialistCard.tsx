@@ -12,7 +12,7 @@ function SpecialistCard() {
   const [specialists, setSpecialists] = useState<any[]>([]);
 
 
-  let specialistsData = [
+  const specialistsData = [
     {
       id: 1,
       name: "Jan Schilder",
@@ -70,7 +70,7 @@ function SpecialistCard() {
     const task = window.location.hash.replace("#", "").split("?")[1].split("!")[0];
 
     const url = window.location.href;
-    const date = url.replace("?", "").split("!")[1];
+    const date = url.split("!")[1];
     console.log(date);
 
 
@@ -78,10 +78,9 @@ function SpecialistCard() {
       TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
-      FilterExpression: "task = :task",
+      FilterExpression: "profession = :profession",
       ExpressionAttributeValues: {
         ":profession": profession,
-        ":task": task,
       },
     }).promise()
       .then(data => {
@@ -95,7 +94,7 @@ function SpecialistCard() {
           price: item.price,
           rating: item.rating,
           bio: item.bio,
-          availibility: item.availibility,
+          availability: item.availability,
 
 
         }));
@@ -108,11 +107,11 @@ function SpecialistCard() {
         console.log("convertedItems =", convertedItems);
         if (convertedItems) {
           for (let i: number = 0; i < convertedItems.length; i++) {
-            if (convertedItems[i].availibility) {
+            if (convertedItems[i].availability) {
         
               for (let a = 0; a < convertedItems.length; a++) {
   
-                if (date == convertedItems[i].availibility[a]) {
+                if (date == convertedItems[i].availability[a].date) {
                   professionals = [...professionals, convertedItems[i]];
                   console.log(professionals);
                   break;
@@ -130,7 +129,7 @@ function SpecialistCard() {
 
   }, []);
 
-  let specialistCardRender = specialists?.map((specialist) => {
+  const specialistCardRender = specialists?.map((specialist) => {
     return (
       <div key={specialist.id} className="specialist_card">
         <div className="specialist_card_detail">

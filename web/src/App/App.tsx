@@ -35,9 +35,6 @@ import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlus
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
 import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSettingsPage";
-import HomeOwnerNotification from "../components/HomeOwnerSettings/HomeOwnerNotification";
-import HomeOwnerSecurity from "../components/HomeOwnerSettings/HomeOwnerSecurity";
-import HomeOwnerDeactivation from "../components/HomeOwnerSettings/HomeOwnerDeactivation";
 import Jobspage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
@@ -50,6 +47,9 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
+
+
+import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
 
 
@@ -67,6 +67,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
@@ -108,7 +109,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
-      <Route path="/careerpage" element={<CareerPage />} />
+      <Route path="/career" element={<CareerPage />} />
       <Route
         path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
@@ -116,15 +117,6 @@ const LanguageAwareRoutes = () => {
       <Route
         path="/pro-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
-      />
-      <Route
-        path="/HomeOwnerNotification"
-        element={<HomeOwnerNotification />}
-      />
-      <Route path="/HomeOwnerSecurity" element={<HomeOwnerSecurity />} />
-      <Route
-        path="/HomeOwnerDeactivation"
-        element={<HomeOwnerDeactivation />}
       />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
