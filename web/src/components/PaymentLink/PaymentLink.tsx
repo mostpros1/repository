@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
@@ -6,11 +7,12 @@ import { BsCreditCard } from "react-icons/bs";
 type PaymentLinkProps = {
     handleSendMessage: (text: string) => void;
     subtotal: number;
-  };
+};
 
-  const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
+const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
     const [amount, setAmount] = useState<number>(subtotal);
     const [paymentLink, setPaymentLink] = useState('');
+    const [shortPaymentLink, setShortPaymentLink] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userStripeAccountId, setUserStripeAccountId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -74,8 +76,25 @@ type PaymentLinkProps = {
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
 
-            setPaymentLink(session.url as string);
-            handleSendMessage(`Hier is de betalingslink: ${session.url}`);
+            const paymentLink = session.url as string;
+            setPaymentLink(paymentLink);
+
+            // Verkort de URL met Bitly API
+            const BITLY_API_URL = 'https://api-ssl.bitly.com/v4/shorten';
+            const BITLY_API_KEY = process.env.REACT_APP_BITLY_API_KEY;
+
+            const response = await axios.post(BITLY_API_URL, {
+                long_url: paymentLink,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${BITLY_API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const shortLink = response.data.link;
+            setShortPaymentLink(shortLink);
+            handleSendMessage(`Hier is de betalingslink: ${shortLink}`);
         } catch (e) {
             setError('Failed to create payment session. Please try again later.');
         } finally {
@@ -89,10 +108,10 @@ type PaymentLinkProps = {
                 <BsCreditCard size={25} color="blue" />
             </button>
             {loading && <p>Loading...</p>}
-            {paymentLink && (
+            {shortPaymentLink && (
                 <>
                     <p>Betalingslink is succesvol gemaakt:</p>
-                    <a href={paymentLink} target="_blank" rel="noopener noreferrer">{paymentLink}</a>
+                    <a href={shortPaymentLink} target="_blank" rel="noopener noreferrer">{shortPaymentLink}</a>
                 </>
             )}
             {error && <p style={{ color: 'red' }}>{error}</p>}
