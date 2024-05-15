@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "faker": "^5.5.3",
     "Faker": "^0.7.2",
     "typescript": "^5.3.3"
   }
