@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
-
+import axios from 'axios';
 
 type PaymentLinkProps = {
     subtotal: number;
@@ -73,13 +73,39 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
 
-            setPaymentLink(result.url as string);
-            handleSendMessage(`Hier is de betalingslink: ${result.url}`);
+            const paymentUrl = result.url as string;
+
+            // Shorten the payment URL using Bitly API
+            const shortenedUrl = await shortenUrl(paymentUrl);
+
+            setPaymentLink(shortenedUrl);
+            handleSendMessage(`Hier is de betalingslink: <a href="${shortenedUrl}">${shortenedUrl}</a>`);
             setError('');
         } catch (e) {
             setError('Failed to create payment session. Please try again later.');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const shortenUrl = async (url: string) => {
+        const bitlyToken = process.env.REACT_APP_BITLY_API_KEY;  // Get the API key from the environment variable
+
+        try {
+            const response = await axios.post(
+                'https://api-ssl.bitly.com/v4/shorten',
+                { long_url: url },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${bitlyToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.link;
+        } catch (error) {
+            setError('Failed to shorten URL.');
+            return url; // Return original URL if shortening fails
         }
     };
 
@@ -93,7 +119,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                     {paymentLink && (
                         <>
                             <p>Betalingslink is succesvol gemaakt:</p>
-                            <a href={paymentLink}>{paymentLink}</a>
+                            <a href={paymentLink} target="_blank" rel="noopener noreferrer">{paymentLink}</a>
                         </>
                     )}
                 </>
