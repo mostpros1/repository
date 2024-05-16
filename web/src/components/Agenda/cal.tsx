@@ -198,6 +198,7 @@ const Cal = () => {
             [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
         }));
         addEntrysToDb(dateKey, entry, time, color);
+        getEntriesFromDB();
     };
 
     const renderDaysOfWeek = () => {
@@ -248,12 +249,17 @@ const Cal = () => {
     }, []);
 
 
-    async function addmultipleDays(startDate: HTMLInputElement, amountOfDays: number, time: string) {
+    async function addMultipleDays(startDate: HTMLInputElement, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
 
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
+
+        // Calculate the total number of days in the month
+        const year = startDateValue.getFullYear();
+        const month = startDateValue.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         dynamo.query({
             TableName: "Professionals",
@@ -266,11 +272,36 @@ const Cal = () => {
             if (data.Items && data.Items.length > 0) {
                 console.log(data.Items[0]);
                 const userId = data.Items[0].id;
-                const baseDate = startDateValue; // Now baseDate is a Date object
+                let baseDate = startDateValue; // Now baseDate is a Date object
 
-                for (let a = 0; a < amountOfDays; a++) {
+                // Determine the starting point based on the pattern
+                switch (pattern) {
+                    case 'weekday':
+                        while (baseDate.getDay() !== 1) { // Find the first Monday
+                            baseDate.setDate(baseDate.getDate() + 1);
+                        }
+                        break;
+                    case 'weekend':
+                        while (baseDate.getDay() !== 6) { // Find the first Saturday
+                            baseDate.setDate(baseDate.getDate() + 1);
+                        }
+                        break;
+                    case 'daily':
+                        // No change needed for daily pattern
+                        break;
+                    default:
+                        throw new Error("Invalid pattern");
+                }
+
+                for (let a = 0; a < daysInMonth; a++) {
                     const currentDate = new Date(baseDate);
                     currentDate.setDate(baseDate.getDate() + a);
+
+                    // Skip weekends for 'weekday' pattern
+                    if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
+
+                    // Skip weekdays for 'weekend' pattern
+                    if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
 
                     // Assuming 'availability' is an array of objects with 'date' and 'time'
                     // You need to construct the 'itemsForDb' based on your requirements
@@ -307,7 +338,6 @@ const Cal = () => {
             console.error(err);
         });
     }
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -355,7 +385,6 @@ const Cal = () => {
                 }).promise()
                     .then(output => {
                         getAvailabilityFromDB();
-                        getEntriesFromDB()
                         console.log(output.Attributes)
                     })
                     .catch(console.error);
@@ -497,7 +526,7 @@ const Cal = () => {
                         console.log(output.Attributes)
                     })
                     .catch(console.error);
-                    window.alert("Datum toegevoegt.");
+                window.alert("Datum toegevoegt.");
             } else {
                 console.error("No items found in the query result.");
             }
@@ -572,16 +601,14 @@ const Cal = () => {
             <form
                 onSubmit={e => {
                     e.preventDefault();
-                    const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                    const ammount = (e.target as HTMLFormElement).elements.namedItem('ammount') as HTMLInputElement;
-
-
                     const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-                    console.log(selectedDate)
-                    // Convert ammount.value to a number before passing it to addWeek
-                    const amountOfDays = parseInt(ammount.value, 10); // Using parseInt
+                    const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
 
-                    addmultipleDays(selectedDate, amountOfDays, time.value); // Now passing a Date object
+                    // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
+                    const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
+
+                    // Now pass the asserted patternValue to addMultipleDays
+                    addMultipleDays(selectedDate, "heele dag", patternValue);
                 }}
             >
                 <div>
@@ -591,11 +618,12 @@ const Cal = () => {
                     <label>Datum</label>
                     <input type="date" name="date" />
                     <br></br>
-                    <label>Tijd</label>
-                    <input type="time" name="time" />
-                    <br></br>
-                    <label>aantal dagen</label>
-                    <input type="number" name="ammount" />
+                    <label>Select Pattern:</label>
+                    <select name="pattern">
+                        <option value="weekday">Door de weeks</option>
+                        <option value="weekend">Weekend</option>
+                        <option value="daily">Elke Dag</option>
+                    </select>
                     <br></br>
                     <button type="submit">meerdere dagen</button>
                 </div>
