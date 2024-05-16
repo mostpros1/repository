@@ -272,7 +272,7 @@ const Cal = () => {
             if (data.Items && data.Items.length > 0) {
                 console.log(data.Items[0]);
                 const userId = data.Items[0].id;
-                let baseDate = startDateValue; // Now baseDate is a Date object
+                const baseDate = startDateValue; // Now baseDate is a Date object
 
                 // Determine the starting point based on the pattern
                 switch (pattern) {
