@@ -77,7 +77,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
             handleSendMessage(`Hier is de betalingslink: <a href="${paymentUrl}">${paymentUrl}</a>`);
             setError('');
         } catch (e) {
-            setError('Failed to create payment session. Please try again later.');
+            setError('Failed to create payment session. Please try again later. ' + e);
         } finally {
             setLoading(false);
         }
@@ -93,7 +93,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                     {paymentLink && (
                         <>
                             <p>Betalingslink is succesvol gemaakt:</p>
-                            <a href={paymentLink} target="_blank" rel="noopener noreferrer">{paymentLink}</a>
+                            <p>{paymentLink}</p>
                         </>
                     )}
                 </>
