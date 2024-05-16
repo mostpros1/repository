@@ -24,7 +24,7 @@ async function UUID() {
           Item: {
             id: Math.random().toString(36).substring(2),
             email: email,
-            identifyingName: user.attributes.name,
+            identifyingName: Math.random().toString(36).substring(2, 15)
           },
         }).promise();
         return user.attributes.name;

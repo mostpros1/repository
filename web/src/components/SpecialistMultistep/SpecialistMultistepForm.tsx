@@ -272,7 +272,7 @@ function SpecialistMultistepForm() {
             Item: {
               id: Math.random().toString(36).substring(2),
               email: stopXSS(email),
-              identifyingName: stopXSS(firstName),
+              identifyingName: Math.random().toString(36).substring(2, 15)
             },
           }).promise();
 
