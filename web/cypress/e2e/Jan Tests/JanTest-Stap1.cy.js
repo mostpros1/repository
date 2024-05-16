@@ -30,7 +30,7 @@ describe('Testing "Register as specialist"', () => {
         // Perform the checks with testData
         performChecksStap1(testDataStap1);
 
-        // Empty check
+        // Empty check.
         cy.goForward();
 
     })
