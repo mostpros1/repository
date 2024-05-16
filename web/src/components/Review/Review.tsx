@@ -92,7 +92,7 @@ const ReviewComponent: React.FC = () => {
     const [rating, setRating] = useState(0);
 
 
-    async function getUUID() {
+    async function UUID() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const email = user.attributes.email;
@@ -109,6 +109,14 @@ const ReviewComponent: React.FC = () => {
         if (data.Items && data.Items.length > 0) {
           return data.Items[0].uuid;
         } else {
+          dynamo.put({
+            TableName: "Uuids",
+            Item: {
+              id: Math.random().toString(36).substring(2),
+              email: email,
+              uuid: user.attributes.name,
+            },
+          }).promise();
           return user.attributes.name;
           //throw new Error("No items found");
         }
@@ -140,7 +148,7 @@ const ReviewComponent: React.FC = () => {
 
         // Perform DynamoDB update or post request to add the new review
         try {
-          const uuid = await getUUID(); // Wait for the UUID to be resolved
+          const uuid = await UUID(); // Wait for the UUID to be resolved
           await dynamo.put({
             TableName: "Reviews",
             Item: {
