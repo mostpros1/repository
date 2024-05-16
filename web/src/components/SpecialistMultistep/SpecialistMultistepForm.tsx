@@ -266,7 +266,15 @@ function SpecialistMultistepForm() {
           })
           .promise()
           .catch(console.error)
-
+          
+          dynamo.put({
+            TableName: "Uuids",
+            Item: {
+              id: Math.random().toString(36).substring(2),
+              email: stopXSS(email),
+              identifyingName: stopXSS(firstName),
+            },
+          }).promise();
 
         navigate(`/${taal}/confirm-mail`, { state: { email: email, postConfig: "PROFESSIONAL" } })
         } catch (error: any) {

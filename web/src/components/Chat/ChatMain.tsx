@@ -2,7 +2,7 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useRef, useState } from "react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
@@ -15,6 +15,7 @@ import { BorderAllRounded } from "@mui/icons-material";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
 import { IoCheckmarkDone } from "react-icons/io5";
+import { dynamo } from "../../../declarations";
 
 function ChatMain({ user, signOut }) {
   const {
@@ -288,6 +289,30 @@ function ChatMain({ user, signOut }) {
       }).format(date);
     }
   };
+
+  async function getEmailFromUUID(uuid: string) {
+    try {
+      //const user = await Auth.currentAuthenticatedUser();
+      //const email = user.attributes.email;
+
+      const data = await dynamo.query({
+        TableName: "Uuids",
+        IndexName: "uuidIndex",
+        KeyConditionExpression: "identifyingName = :uuid",
+        ExpressionAttributeValues: {
+          ":uuid": uuid,
+        },
+      }).promise();
+
+      if (data.Items && data.Items.length > 0) {
+        return data.Items[0].email;
+      }
+    } catch (error) {
+      console.error("Error getting UUID:", error);
+    }
+  }
+
+  getEmailFromUUID("@TimHei123").then(email => console.log(email));
 
   return (
     <div className="chat-container">

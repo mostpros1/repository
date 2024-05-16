@@ -17,14 +17,14 @@ async function UUID() {
       }).promise();
 
       if (data.Items && data.Items.length > 0) {
-        return data.Items[0].uuid;
+        return data.Items[0].identifyingName;
       } else {
         dynamo.put({
           TableName: "Uuids",
           Item: {
             id: Math.random().toString(36).substring(2),
             email: email,
-            uuid: user.attributes.name,
+            identifyingName: user.attributes.name,
           },
         }).promise();
         return user.attributes.name;
@@ -36,7 +36,7 @@ async function UUID() {
   }
 
   
-  async function changeUuid(UUID: string) {
+  async function changeUuid(newUUID: string) {
     try {
       const user = await Auth.currentAuthenticatedUser();
       const email = user.attributes.email;
@@ -56,9 +56,9 @@ async function UUID() {
           Key: {
             id: data.Items[0].id,
           },
-          UpdateExpression: "set uuid = :uuid",
+          UpdateExpression: "set identifyingName = :uuid",
           ExpressionAttributeValues: {
-            ":uuid": UUID,
+            ":uuid": newUUID,
           },
         }).promise();
         
