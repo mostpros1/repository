@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
 
+
 type PaymentLinkProps = {
-    handleSendMessage: (text: string) => void;
     subtotal: number;
+    handleSendMessage: (text: any) => void;
 };
 
-const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
-    const [amount, setAmount] = useState<number>(subtotal);
+const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     const [paymentLink, setPaymentLink] = useState('');
-    const [shortPaymentLink, setShortPaymentLink] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userStripeAccountId, setUserStripeAccountId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,9 +20,12 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
         async function checkStripeAccountId() {
             try {
                 const user = await Auth.currentAuthenticatedUser();
+                console.log('Gebruikersattributen:', user.attributes);
                 const email = user.attributes.email;
                 setUserEmail(email);
                 const userStripeAccountId = user.attributes['custom:stripeAccountId'] || '';
+                console.log('E-mail van de gebruiker:', email);
+                console.log('Stripe-account-ID van de gebruiker:', userStripeAccountId);
                 setUserStripeAccountId(userStripeAccountId);
             } catch (e) {
                 setError('Failed to authenticate user.');
@@ -37,13 +38,9 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
         if (userStripeAccountId === '') {
             setError('Stripe account ID is missing.');
             return;
-        }
+        } 
         if (userEmail === '') {
-            setError('User email is missing.');
-            return;
-        }
-        if (amount <= 0) {
-            setError('Please enter a valid amount.');
+            setError('user email is missing.');
             return;
         }
 
@@ -51,7 +48,7 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
         setError('');
 
         try {
-            const session = await stripeClient.checkout.sessions.create({
+            const result = await stripeClient.checkout.sessions.create({
                 currency: 'eur',
                 mode: 'payment',
                 customer_email: userEmail,
@@ -61,13 +58,13 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
                         product_data: {
                             name: "Betaling voor klus",
                         },
-                        unit_amount: Math.round(amount * 100), // Convert to cents
+                        unit_amount: subtotal
                     },
                     quantity: 1
                 }],
                 payment_method_types: ['card', 'ideal'],
                 payment_intent_data: {
-                    application_fee_amount: Math.ceil(amount * 2), // 2% of amount in cents
+                    application_fee_amount: Math.ceil(subtotal * 0.02),
                     transfer_data: {
                         destination: userStripeAccountId
                     }
@@ -76,25 +73,9 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
 
-            const paymentLink = session.url as string;
-            setPaymentLink(paymentLink);
-
-            // Verkort de URL met Bitly API
-            const BITLY_API_URL = 'https://api-ssl.bitly.com/v4/shorten';
-            const BITLY_API_KEY = process.env.REACT_APP_BITLY_API_KEY;
-
-            const response = await axios.post(BITLY_API_URL, {
-                long_url: paymentLink,
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${BITLY_API_KEY}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const shortLink = response.data.link;
-            setShortPaymentLink(shortLink);
-            handleSendMessage(`Hier is de betalingslink: ${shortLink}`);
+            setPaymentLink(result.url as string);
+            handleSendMessage(`Hier is de betalingslink: ${result.url}`);
+            setError('');
         } catch (e) {
             setError('Failed to create payment session. Please try again later.');
         } finally {
@@ -104,19 +85,22 @@ const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
 
     return (
         <>
-            <button onClick={createSession} className="dropup-option">
-                <BsCreditCard size={25} color="blue" />
-            </button>
-            {loading && <p>Loading...</p>}
-            {shortPaymentLink && (
+            {loading ? <p>Loading...</p> : (
                 <>
-                    <p>Betalingslink is succesvol gemaakt:</p>
-                    <a href={shortPaymentLink} target="_blank" rel="noopener noreferrer">{shortPaymentLink}</a>
+                    <button onClick={createSession} className="dropup-option">
+                        <BsCreditCard size={25} color="blue"/>
+                    </button>
+                    {paymentLink && (
+                        <>
+                            <p>Betalingslink is succesvol gemaakt:</p>
+                            <a href={paymentLink}>{paymentLink}</a>
+                        </>
+                    )}
                 </>
             )}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </>
     );
-};
+}
 
 export default PaymentLink;
