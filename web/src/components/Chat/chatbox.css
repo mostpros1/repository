@@ -451,7 +451,32 @@
   display: none; /* Hide empty option */
 }
 
-.amount-input{
+.amount-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.amount-input-wrapper::before {
+  content: '€';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #333;
+}
+
+.amount-input {
   width: 150px;
-  padding: 10px;
+  padding: 10px 10px 10px 25px; /* left padding to make space for the euro sign */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.amount-input:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
