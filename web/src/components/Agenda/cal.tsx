@@ -6,7 +6,7 @@ import arrowL from './arrowL.png'; // Adjust the path as needed
 import arrowR from './arrowR.png'; // Adjust the path as needed
 import { Auth } from 'aws-amplify';
 import { dynamo } from '../../../declarations';
-import { BorderAll } from '@mui/icons-material';
+//import { BorderAll } from '@mui/icons-material';
 
 const CalendarContainer = styled.div`
     display: grid;
