@@ -13,6 +13,8 @@ import { BsPaperclip } from "react-icons/bs";
 import JanSchilder from "../../assets/JanSchilder.jpg";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
+import { stopXSS } from "../../../../backend_functions/stopXSS";
+import ReactDOMServer from 'react-dom/server';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -318,6 +320,24 @@ function ChatMain({ user, signOut }) {
     return dateB - dateA;
   });
 
+  const parseLinks = (text: string) => {
+  const linkRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(linkRegex);
+  const jsxElements = parts.flatMap((part, index) => {
+    if (index % 2!== 0) {
+      // This is a URL part, wrap it in an <a> tag
+      return <a href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+    } else {
+      // This is a text part, return it as is
+      return part;
+    }
+  });
+
+  // Convert JSX elements to an HTML string
+  const htmlString = ReactDOMServer.renderToStaticMarkup(<>{jsxElements}</>);
+  return htmlString;
+};
+  console.log(parseLinks("https://www.portaalvoortalent.nl/")); // Should log an array of JSX elements or a single JSX element
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
@@ -404,7 +424,7 @@ function ChatMain({ user, signOut }) {
                       <div className="username">
                         <span className="username-name">{chat.email.split("@")[0]}</span>
                       </div>
-                      <p className="text">{chat.text}</p>
+                      <div className="text" dangerouslySetInnerHTML={{ __html: chat.text }} />
                       <time dateTime={chat.createdAt} className="message-time">
                         {new Intl.DateTimeFormat('nl-NL', {
                           hour: '2-digit',
@@ -427,7 +447,7 @@ function ChatMain({ user, signOut }) {
                 if (e.key === "Enter") {
                   const messageText = (e.target as HTMLInputElement).value;
                   if (messageText && recipientEmail) {
-                    await handleSendMessage(messageText);
+                    await handleSendMessage(stopXSS(messageText));
                     (e.target as HTMLInputElement).value = "";
                   }
                 }
