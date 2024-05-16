@@ -6,6 +6,7 @@ import arrowL from './arrowL.png'; // Adjust the path as needed
 import arrowR from './arrowR.png'; // Adjust the path as needed
 import { Auth } from 'aws-amplify';
 import { dynamo } from '../../../declarations';
+import { BorderAll } from '@mui/icons-material';
 
 const CalendarContainer = styled.div`
     display: grid;
@@ -163,7 +164,7 @@ const Cal = () => {
     async function addEntrysToDb(date: string, text: string, time: string, color: string) {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
-    
+
         try {
             await dynamo.put({
                 Item: {
@@ -178,7 +179,7 @@ const Cal = () => {
                 },
                 TableName: "Calendar",
             }).promise();
-    
+
             console.log("Entry added successfully.");
         } catch (err) {
             console.error("Error adding entry:", err);
@@ -197,6 +198,7 @@ const Cal = () => {
             [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
         }));
         addEntrysToDb(dateKey, entry, time, color);
+        getEntriesFromDB();
     };
 
     const renderDaysOfWeek = () => {
@@ -247,6 +249,96 @@ const Cal = () => {
     }, []);
 
 
+    async function addMultipleDays(startDate: HTMLInputElement, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+
+        // Convert startDate.value to a Date object
+        const startDateValue = new Date(startDate.value);
+
+        // Calculate the total number of days in the month
+        const year = startDateValue.getFullYear();
+        const month = startDateValue.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        dynamo.query({
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email
+            }
+        }).promise().then(async (data) => {
+            if (data.Items && data.Items.length > 0) {
+                console.log(data.Items[0]);
+                const userId = data.Items[0].id;
+                let baseDate = startDateValue; // Now baseDate is a Date object
+
+                // Determine the starting point based on the pattern
+                switch (pattern) {
+                    case 'weekday':
+                        while (baseDate.getDay() !== 1) { // Find the first Monday
+                            baseDate.setDate(baseDate.getDate() + 1);
+                        }
+                        break;
+                    case 'weekend':
+                        while (baseDate.getDay() !== 6) { // Find the first Saturday
+                            baseDate.setDate(baseDate.getDate() + 1);
+                        }
+                        break;
+                    case 'daily':
+                        // No change needed for daily pattern
+                        break;
+                    default:
+                        throw new Error("Invalid pattern");
+                }
+
+                for (let a = 0; a < daysInMonth; a++) {
+                    const currentDate = new Date(baseDate);
+                    currentDate.setDate(baseDate.getDate() + a);
+
+                    // Skip weekends for 'weekday' pattern
+                    if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
+
+                    // Skip weekdays for 'weekend' pattern
+                    if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
+
+                    // Assuming 'availability' is an array of objects with 'date' and 'time'
+                    // You need to construct the 'itemsForDb' based on your requirements
+                    // For demonstration, we'll just create a dummy object
+                    const itemsForDb = [{
+                        date: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                        time: time // Example time, replace with actual time or logic to determine time
+                    }];
+
+                    await dynamo.update({
+                        TableName: "Professionals",
+                        Key: {
+                            id: userId,
+                        },
+                        UpdateExpression: `set availability = list_append(if_not_exists(availability, :emptyList), :newItem)`,
+                        ExpressionAttributeValues: {
+                            ":emptyList": [],
+                            ":newItem": itemsForDb,
+                        },
+                    }).promise()
+                        .then(output => {
+                            getAvailabilityFromDB();
+                            console.log(output.Attributes);
+                        })
+                        .catch(console.error);
+                }
+
+                // Show an alert once all dates have been added
+                window.alert("Datums zijn toegevoegt.");
+            } else {
+                console.error("No user found with the provided email.");
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Remove unchecked items from checkedItems array
@@ -293,7 +385,6 @@ const Cal = () => {
                 }).promise()
                     .then(output => {
                         getAvailabilityFromDB();
-                        getEntriesFromDB()
                         console.log(output.Attributes)
                     })
                     .catch(console.error);
@@ -435,6 +526,7 @@ const Cal = () => {
                         console.log(output.Attributes)
                     })
                     .catch(console.error);
+                window.alert("Datum toegevoegt.");
             } else {
                 console.error("No items found in the query result.");
             }
@@ -487,6 +579,7 @@ const Cal = () => {
                         </select>
                         <button type="submit">Add</button>
                     </form>
+
                 </div>
             )}
             <form
@@ -505,6 +598,37 @@ const Cal = () => {
                 <input type="time" name="time" />
                 <button type="submit">Add</button>
             </form>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                    const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
+
+                    // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
+                    const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
+
+                    // Now pass the asserted patternValue to addMultipleDays
+                    addMultipleDays(selectedDate, "heele dag", patternValue);
+                }}
+            >
+                <div>
+                    <br></br>
+                    <b>Meerdere dagen</b>
+                    <br></br>
+                    <label>Datum</label>
+                    <input type="date" name="date" />
+                    <br></br>
+                    <label>Select Pattern:</label>
+                    <select name="pattern">
+                        <option value="weekday">Door de weeks</option>
+                        <option value="weekend">Weekend</option>
+                        <option value="daily">Elke Dag</option>
+                    </select>
+                    <br></br>
+                    <button type="submit">meerdere dagen</button>
+                </div>
+            </form>
+
         </div >
     );
 };
