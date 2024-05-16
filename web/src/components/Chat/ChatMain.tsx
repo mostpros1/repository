@@ -290,6 +290,13 @@ function ChatMain({ user, signOut }) {
     return newUUID;
   };
 
+  // Sort contacts by the last message date
+  const sortedContacts = contactList.sort((a, b) => {
+    const dateA = lastMessages[a] ? new Date(lastMessages[a].createdAt).getTime() : 0;
+    const dateB = lastMessages[b] ? new Date(lastMessages[b].createdAt).getTime() : 0;
+    return dateB - dateA;
+  });
+
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
@@ -302,7 +309,7 @@ function ChatMain({ user, signOut }) {
         />
         <ul>
           {searchTerm === ""
-            ? contactList.map((contact) => (
+            ? sortedContacts.map((contact) => (
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
