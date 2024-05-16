@@ -16,7 +16,7 @@ describe('Testing "Register as specialist"', () => {
                 cy.get('input[type="password"]').eq(0).type(password);//Rendom wachtwoord wordt in 3de veld ingevuld
                 cy.get('input[type="password"]').eq(1).type(password);//Rendom wachtwoord wordt in 3de veld ingevuld
                 cy.goForward();
-                cy.testAgain(); // Aannemend dat dit een custom command is dat je opnieuw wilt uitvoeren
+                cy.testAgain(); /// Aannemend dat dit een custom command is dat je opnieuw wilt uitvoeren
             }
 
             // Voer inputcheck uit met willekeurige waarden
