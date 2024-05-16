@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Auth } from 'aws-amplify';
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
@@ -201,11 +201,14 @@ const Jobs = () => {
     const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups && groups.includes("Professional")) {
-          fetchProfEmailAndQueryDynamo();
-        } else if (groups && groups.includes("Homeowner")) {
-          fetchUserEmailAndQueryDynamo();
+        const groups = user.signInUserSession.accessToken.payload['cognito:groups']
+
+        if (groups.includes("Professional")) {
+          setUserGroup("Professional");
+        } else if (groups.includes("HomeOwner")) {
+          setUserGroup("HomeOwner");
+        } else {
+          setUserGroup("NoGroup");  // Handling users with no group
         }
       } catch (error) {
         console.error("Error checking user group", error);
@@ -225,6 +228,8 @@ const Jobs = () => {
   const handleInputChange = (event) => {
     setValue(event.target.value);
   };
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -308,6 +313,53 @@ const Jobs = () => {
     return [...taskResults, ...specialistResults];
   };
 
+
+  const getPendingJobs = useCallback(async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const email = user.attributes.email; // Use the authenticated user's email
+      console.log("email: ", email);
+      dynamo.query({
+        TableName: "Klussen",
+        IndexName: "user_emailIndex",
+        KeyConditionExpression: "user_email = :email",
+        FilterExpression: "currentStatus = :currentStatus",
+        ExpressionAttributeValues: {
+          ":email": email,
+          ":currentStatus": currentTab//"pending"
+        }
+      }).promise().then((data) => {
+        console.log(data);
+        console.log("Current tab: ", currentTab);
+        if (data.Items && data.Items.length > 0) {
+          console.log("data.Items: ", data.Items);
+          const newJobEntries = data.Items.map(item => ({
+            status: item.currentStatus,
+            id: item.id,
+            name: item.profession,
+            region: item.region,
+            description: item.task,
+            user_email: item.user_email,
+            date: "Aangemaakt op: " + item.date, // Provide a default date or derive it from item
+            chats: item.chats, // Provide a default number of chats or derive it from item
+            isCurrent: item.isCurrent, // Provide a default boolean value or derive it from item
+          }));
+          setJobEntries(newJobEntries); // Assuming jobEntries is initialized as an array
+        }
+      }).catch((error) => {
+        console.error("Error fetching pending jobs:", error);
+      });
+    } catch (error) {
+      console.error("Error fetching pending jobs:", error);
+    }
+  }, [currentTab]); // Add currentTab as a dependency if it's used inside getPendingJobs
+
+  useEffect(() => {
+    getPendingJobs();
+    console.log("jobEntries: ", jobEntries);
+    console.log("Current tab changed to: ", currentTab);
+  }, [currentTab]);
+
   const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
@@ -326,88 +378,74 @@ const Jobs = () => {
     </Link>
   ));
 
+  const renderJobEntries = () => {
+    const filteredJobs = jobEntries.filter((job) => job.status === currentTab);
+    return filteredJobs.map((job) => (
+      <div className="job-entry" key={job.id}>
+        <div className="job-description"><b>{job.name.charAt(0).toUpperCase() + job.name.slice(1)}</b></div>
+        <div className="job-description">{job.description}</div>
+        <div className="job-date">{job.date}</div>
+        <div className="job-actions">
+          <div id="job-view-prof-con">
+            <span>View professionals</span>
+            <img src={viewProfessionalsIcon} alt="view professionals" />
+          </div>
+          <div className="chat-indicator">
+            <span>Ongoing chats ({job.chats})</span>
+            <img src={chatIcon} alt="chat" />
+          </div>
+        </div>
+        <Link to={`/nl/jobs/${job.id}`} className="job-view">
+          View job
+        </Link>
+      </div>
+    ));
+  };
 
   return (
-    <main id="job-main">
-      <section className="leftside-Section">
-        <article className="sideNav-main">
-          {/* inhoud sidenav */}
-          <SideNav />
-        </article>
-      </section>
-      <section className='rightside-Section'>
-        <div id="job-main-con">
-          <p>Place a new job</p>
-          <div id="search-wrapper">
-            <form onSubmit={handleSubmit} id="search-form">
-              <div className="search-input-container">
-                <img src={searchicon} alt="search" id="search-icon" />
-                <input
-                  id="job-input-field"
-                  type="text"
-                  placeholder="describe the job (example, plumbing.)"
-                  value={value}
-                  onFocus={handleInputFocus}
-                  onBlur={handleInputBlur}
-                  onKeyDown={handleInputKeyDown}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className={showList ? "search_dropdown open" : "search_dropdown"}>
-                {resultsRender}
-              </div>
-            </form>
+    <div id="job-main">
+      <div id="search-wrapper">
+        <img src={searchicon} alt="search" id="search-icon" />
+        <form onSubmit={handleSubmit} id="search-form">
+          <input
+            id="job-input-field"
+            type="text"
+            placeholder="describe the job (example, plumbing.)"
+            value={jobDescription}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onKeyDown={handleInputKeyDown}
+            onChange={handleInputChange}
+          />
+          <div className={showList ? "search_dropdown open" : "search_dropdown"}>
+            {/* results render */}
+            {resultsRender}
           </div>
-          <div className="job-status">
-            <button
-              className={`status-button ${currentTab === "current" ? "active" : ""
-                }`}
-              onClick={() => setCurrentTab("current")}
-            >
-              Current jobs
-            </button>
-            <button
-              className={`status-button ${currentTab === "finished" ? "active" : ""
-                }`}
-              onClick={() => setCurrentTab("finished")}
-            >
-              Finished jobs
-            </button>
-          </div>
-        </div>
-        <div className="jobs-con">
-          <div className="job-list-con">
-            <div className="job-list-vw">
-              {jobEntries
-                .filter((job) =>
-                  currentTab === "current" ? job.isCurrent : !job.isCurrent
-                )
-                .map((job) => (
-                  <div className="job-entry" key={job.id}>
-                    <p className="job-description">{job.description}</p>
-                    <p className="job-date">{job.date}</p>
-                    <div className="job-actions">
-                      <div id="job-view-prof-con">
-                        <img
-                          src={viewProfessionalsIcon}
-                          alt="View Professionals"
-                        />
-                        <span>View professionals</span>
-                      </div>
-                      <div className="chat-indicator">
-                        <img src={chatIcon} alt="Chat" />
-                        <span>Ongoing chats {`(${job.chats})`}</span>
-                      </div>
-                    </div>
-                    <p className="job-view">View job</p>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+          <button type="submit" id="submit-button">
+            <img src={rightarrow} alt="submit" />
+          </button>
+        </form>
+      </div>
+      <div className="job-status">
+        {userGroup === "HomeOwner" ? (
+          <>
+            <button className={`status-button ${currentTab === "pending" ? "active" : ""}`} onClick={() => setCurrentTab("pending")}>Pending Jobs</button>
+            <button className={`status-button ${currentTab === "current" ? "active" : ""}`} onClick={() => setCurrentTab("current")}>Current Jobs</button>
+            <button className={`status-button ${currentTab === "finished" ? "active" : ""}`} onClick={() => setCurrentTab("finished")}>Finished Jobs</button>
+          </>
+        ) : userGroup === "Professional" && (
+          <>
+            <button className={`status-button ${currentTab === "request" ? "active" : ""}`} onClick={() => setCurrentTab("request")}>Request Jobs</button>
+            <button className={`status-button ${currentTab === "current" ? "active" : ""}`} onClick={() => setCurrentTab("current")}>Current Jobs</button>
+            <button className={`status-button ${currentTab === "finished" ? "active" : ""}`} onClick={() => setCurrentTab("finished")}>Finished Jobs</button>
+          </>
+        )}
+      </div>
+      <div className="job-list-con">
+        {/* Render job entries based on the selected tab */}
+        {renderJobEntries()}
+      </div>
+    </div>
   );
-};
-
+}
 export default Jobs;

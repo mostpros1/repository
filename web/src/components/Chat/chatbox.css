@@ -15,7 +15,7 @@
 
 #sidebar {
   width: 300px;
-  background: linear-gradient(to bottom, #575cd9, #4e95ff);
+  background-color: #4e95ff;
   overflow-y: auto;
   height: 560px;
   margin-left: 20px;
@@ -31,13 +31,13 @@
 #sidebar ul li {
   cursor: pointer;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   height: 90px;
   font-size: 18px;
-  margin-top: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
   transition: background-color 0.3s, color 0.3s;
-  background: linear-gradient(to bottom, #0008ff19, #4e95ff);
+  background-color: #4e95ff;
+  border-bottom: solid 1px rgb(255, 255, 255);
 }
 
 #sidebar ul li:hover,
@@ -253,7 +253,7 @@
 .chatheader {
   display: flex;
   padding: 10px;
-  background: linear-gradient(to bottom, #575cd9, #4e95ff);
+  background-color: #4e95ff;
   color: white;
   height: 80px;
   border-radius: 10px;
@@ -365,7 +365,7 @@
   height: 60px;
 }
 
-.paperclip{
+.paperclip {
   border-radius: 5px;
   width: 40px;
   background-color: #ffffff;
@@ -390,65 +390,68 @@
 .dropup-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  width: 60px;
-  padding: 8px 0;
+  background-color: #ffffff;
+  width: 170px; /* Adjusted for better layout */
+  padding: 10px;
   z-index: 1;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  top: -10px; /* Adjust the position slightly */
+  right: 0; /* Align to the right */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  opacity: 0;
+  transform: translateY(10px); /* Start slightly lower */
+}
+
+.dropup-content.show { /* Add 'show' class for explicit display control */
+  display: block;
+  opacity: 1;
+  transform: translateY(0); /* Move to original position */
 }
 
 .dropup-content button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 8px 16px;
+  padding: 10px;
   background-color: transparent;
   border: none;
-  text-align: left;
   font-size: 16px;
-  color: #333;
+  color: #007bff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 10px;
-  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
 }
 
 .dropup-content button:hover {
-  background-color: #ddd;
-}
-
-.dropup:hover .dropup-content {
-  display: block;
-  bottom: 100%;
-  top: auto;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  background-color: #f0f0f0;
+  color: #0056b3;
 }
 
 .dropup-option {
-  border-radius: 5px;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  color: #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
   background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dropup-option:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
 }
 
 .dropup-option-leeg {
-  border-radius: 5px;
-  text-align: center;
-  width: 60px;
-  height: 0px;
-  color: #ffffff;
-  background-color: #ffffff;
+  display: none; /* Hide empty option */
+}
+
+.amount-input{
+  width: 150px;
+  padding: 10px;
 }

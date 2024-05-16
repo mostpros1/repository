@@ -79,6 +79,14 @@ function RegisterPage() {
           .then(data => console.log(data.Attributes))
           .catch(console.error)
 
+          dynamo.put({
+            TableName: "Uuids",
+            Item: {
+              id: Math.random().toString(36).substring(2),
+              email: stopXSS(email),
+              identifyingName: stopXSS(firstName),
+            },
+          }).promise();
 
         /*const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);

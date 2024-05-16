@@ -9,8 +9,8 @@ import { sendMail } from "./../../../../backend_functions/email.ts"
 
 let taal = "nl";
 
-if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en"){
-taal = window.location.pathname.split('/')[1];
+if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en") {
+    taal = window.location.pathname.split('/')[1];
 }
 
 
@@ -66,6 +66,7 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Professional',
                 }).promise()
+                    .then(() => setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000))
                     .catch(err => console.error(err))
             },
         }
