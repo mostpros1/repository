@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { Amplify, Auth } from "aws-amplify";
-import awsExports from "./aws-exports.js";
+import awsExports from "../src/aws-exports.js";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
@@ -12,10 +12,6 @@ import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { sendMail } from "../../backend_functions/email.ts";
-import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n";
-
-
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -30,8 +26,7 @@ dynamoDB
   .listTables()
   .promise()
   .then(data => console.log(data))
-  .catch((error: Error) => console.error('Error listing DynamoDB tables:', error));
-
+  .catch((error: Error) => console.error(error));
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
@@ -45,9 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
-          <I18nextProvider i18n={i18n}>
-            <App />
-          </I18nextProvider>
+          <App />
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
