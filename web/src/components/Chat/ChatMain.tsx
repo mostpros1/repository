@@ -2,7 +2,7 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useRef, useState } from "react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
-import { API, Auth, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
@@ -11,28 +11,16 @@ import { MdOutlinePayment } from "react-icons/md";
 import axios from 'axios';
 import { BsPaperclip } from "react-icons/bs";
 import JanSchilder from "../../assets/JanSchilder.jpg";
-import { BorderAllRounded } from "@mui/icons-material";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
-import { IoCheckmarkDone } from "react-icons/io5";
-import { dynamo } from "../../../declarations";
 
 function ChatMain({ user, signOut }) {
   const {
     chats,
     setChats,
-    recentMessageEmail,
-    showJoinButton,
-    setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
-    handleStartNewChat,
     handleSendMessage,
-    handleAlertConfirm,
-    handleAlertCancel,
-    handleJoinChat,
     handleReceivedMessage,
+    handleJoinChat,
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -41,10 +29,13 @@ function ChatMain({ user, signOut }) {
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
   const [groupedMessages, setGroupedMessages] = useState({});
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [recipientUUID, setRecipientUUID] = useState("");
   const [isDropUpOpen, setIsDropUpOpen] = useState(false);
-  const [customAmount, setCustomAmount] = useState<string>(''); // Voeg customAmount hier toe
+  const [customAmount, setCustomAmount] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
+
+  const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
 
   useEffect(() => {
     const handleNewMessageNotification = (message) => {
@@ -75,10 +66,10 @@ function ChatMain({ user, signOut }) {
     Notification.requestPermission();
   }, []);
 
-  const [lastMessages, setLastMessages] = useState({});
+  const [lastMessages, setLastMessages] = useState<{ [contact: string]: { text: string; createdAt: string } }>({});
 
   useEffect(() => {
-    const updatedLastMessages = {};
+    const updatedLastMessages: { [contact: string]: { text: string; createdAt: string } } = {};
     chats.forEach(chat => {
       const contact = chat.members.find(member => member !== user.attributes.email);
       if (contact) {
@@ -120,20 +111,12 @@ function ChatMain({ user, signOut }) {
   };
 
   useEffect(() => {
-    const filteredChats = selectedContact
-      ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
-      : [];
-    const groupedMessages = groupMessagesByDate(filteredChats);
-    setGroupedMessages(groupedMessages);
-  }, [chats, selectedContact, user.attributes.email]);
-
-  useEffect(() => {
     if (selectedContact) {
       const filteredChats = chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email));
       const groupedMessages = groupMessagesByDate(filteredChats);
       setGroupedMessages(groupedMessages);
     }
-  }, [selectedContact]);
+  }, [chats, selectedContact, user.attributes.email]);
 
   useEffect(() => {
     async function fetchChats() {
@@ -153,28 +136,32 @@ function ChatMain({ user, signOut }) {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const recipient = searchParams.get('recipient');
-    if (recipient) {
-      setRecipientEmail(recipient);
-      setSelectedContact(recipient);
+    const recipientUUID = searchParams.get('recipient');
+    if (recipientUUID) {
+      setRecipientUUID(recipientUUID);
+      const email = uuidEmailMap.current[recipientUUID];
+      if (email) {
+        setRecipientEmail(email);
+        setSelectedContact(email);
+      }
     }
   }, []);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatBoxRef.current && chats.length > 0) {
+    if (chatBoxRef.current && Object.keys(groupedMessages).length > 0) {
       setTimeout(() => {
         if (chatBoxRef.current) {
           chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
         }
       }, 0);
     }
-  }, [chats]);
+  }, [groupedMessages]);
 
   useEffect(() => {
-    const extractContacts = () => {
-      const contacts = new Set();
+    const extractContacts = (): string[] => {
+      const contacts = new Set<string>();
       chats.forEach(chat => {
         chat.members.forEach(member => {
           if (member !== user.attributes.email) {
@@ -186,34 +173,28 @@ function ChatMain({ user, signOut }) {
     };
 
     const uniqueContacts = extractContacts();
-    //@ts-ignore
     setContactList(uniqueContacts);
   }, [chats, user.attributes.email]);
 
   const switchChat = (contact) => {
-    if (selectedContact === contact) {
-      setSelectedContact(null);
-      setGroupedMessages({});
-    } else {
-      setSelectedContact(contact);
-      const members = [user.attributes.email, contact].sort().join("#");
-      const existingChat = chats.find(chat => chat.sortKey === members);
-      if (existingChat) {
-        setChats([existingChat]);
-      } else {
-        setChats([]);
-      }
-      const url = `/nl/homeowner-dashboard/chat?recipient=${contact}`;
-      window.location.href = url;
-    }
+    const uuid = getUUIDFromEmail(contact);
+    setSelectedContact(contact);
+    const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+    window.history.pushState({}, '', url);
+    setRecipientEmail(contact);
+    handleJoinChat(contact);
   };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const recipient = searchParams.get('recipient');
-    if (recipient) {
-      setRecipientEmail(recipient);
-      setSelectedContact(recipient);
+    const recipientUUID = searchParams.get('recipient');
+    if (recipientUUID) {
+      setRecipientUUID(recipientUUID);
+      const email = uuidEmailMap.current[recipientUUID];
+      if (email) {
+        setRecipientEmail(email);
+        setSelectedContact(email);
+      }
     }
   }, []);
 
@@ -223,8 +204,8 @@ function ChatMain({ user, signOut }) {
     }
   }, [recipientEmail]);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -290,30 +271,24 @@ function ChatMain({ user, signOut }) {
     }
   };
 
-  async function getEmailFromUUID(uuid: string) {
-    try {
-      //const user = await Auth.currentAuthenticatedUser();
-      //const email = user.attributes.email;
-
-      const data = await dynamo.query({
-        TableName: "Uuids",
-        IndexName: "uuidIndex",
-        KeyConditionExpression: "identifyingName = :uuid",
-        ExpressionAttributeValues: {
-          ":uuid": uuid,
-        },
-      }).promise();
-
-      if (data.Items && data.Items.length > 0) {
-        return data.Items[0].email;
-      }
-    } catch (error) {
-      console.error("Error getting UUID:", error);
-    }
+  const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 
-  //example ussage
-  getEmailFromUUID("@TimHei123").then(email => console.log(email));
+  const getUUIDFromEmail = (email: string) => {
+    for (let uuid in uuidEmailMap.current) {
+      if (uuidEmailMap.current[uuid] === email) {
+        return uuid;
+      }
+    }
+    const newUUID = generateUUID();
+    uuidEmailMap.current[newUUID] = email;
+    return newUUID;
+  };
 
   return (
     <div className="chat-container">
@@ -363,8 +338,7 @@ function ChatMain({ user, signOut }) {
             <div className="chat-info">
               <img src={JanSchilder} className="profile-ava" />
               <div className="name-and-status">
-                <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
-                {/* <h5 className="last-seen">Last seen: </h5> */}
+                <h2 className="recipient-name">{selectedContact ? selectedContact.split("@")[0] : ''}</h2>
               </div>
             </div>
           </div>
@@ -383,7 +357,6 @@ function ChatMain({ user, signOut }) {
                         <span className="username-name">{chat.email.split("@")[0]}</span>
                       </div>
                       <p className="text">{chat.text}</p>
-                      {/* <IoCheckmarkDone size={13} className="checkmarks" /> */}
                       <time dateTime={chat.createdAt} className="message-time">
                         {new Intl.DateTimeFormat('nl-NL', {
                           hour: '2-digit',
