@@ -312,6 +312,7 @@ function ChatMain({ user, signOut }) {
     }
   }
 
+  //example ussage
   getEmailFromUUID("@TimHei123").then(email => console.log(email));
 
   return (
