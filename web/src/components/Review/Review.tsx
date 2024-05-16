@@ -21,6 +21,32 @@ const ReviewComponent: React.FC = () => {
   const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
   const [sortType, setSortType] = useState<string>("");
 
+  async function UUID(email: string) {
+    try {
+      //const user = await Auth.currentAuthenticatedUser();
+      //const email = user.attributes.email;
+
+      const data = await dynamo.query({
+        TableName: "Uuids",
+        IndexName: "emailIndex",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": email,
+        },
+      }).promise();
+
+      if (data.Items && data.Items.length > 0) {
+        return data.Items[0].identifyingName;
+      } else {
+        return email;
+        //throw new Error("No items found");
+      }
+    } catch (error) {
+      console.error("Error getting UUID:", error);
+    }
+  }
+
+
   // Sorting function
   const handleSort = (type: string) => {
     const sorted: Review[] = [...reviews]; // Create a copy of reviews
@@ -40,20 +66,26 @@ const ReviewComponent: React.FC = () => {
     try {
       const response = await dynamo.scan({ TableName: "Reviews" }).promise();
       if (response && response.Items) {
-        const mappedReviews: Review[] = response.Items.map((item) => ({
-          id: item.id,
-          author: item.professional_name,
-          homeownerName: item.homeownerName,
-          date: item.date,
-          content: item.description,
-          //totalReviews: item.totalReviews,
-          authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-            Math.random() * 100
-          )}.jpg`, //item.authorImageUrl,
-          rating: item.rating,
-        }));
-        setReviews(mappedReviews);
-        setSortedReviews(mappedReviews);
+        try {
+          const mappedPromises = response.Items.map(async (item) => ({
+            id: item.id,
+            author: item.professional_name,
+            homeownerName: await UUID(item.homeownerName),
+            date: item.date,
+            content: item.description,
+            // totalReviews: item.totalReviews,
+            authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+              Math.random() * 100
+            )}.jpg`, // item.authorImageUrl,
+            rating: item.rating,
+          }));
+        
+          const mappedReviews: Review[] = await Promise.all(mappedPromises);
+          setReviews(mappedReviews);
+          setSortedReviews(mappedReviews);
+        } catch (error) {
+          console.error("Error mapping reviews:", error);
+        }
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -92,38 +124,7 @@ const ReviewComponent: React.FC = () => {
     const [rating, setRating] = useState(0);
 
 
-    async function UUID() {
-      try {
-        const user = await Auth.currentAuthenticatedUser();
-        const email = user.attributes.email;
-
-        const data = await dynamo.query({
-          TableName: "Uuids",
-          IndexName: "emailIndex",
-          KeyConditionExpression: "email = :email",
-          ExpressionAttributeValues: {
-            ":email": email,
-          },
-        }).promise();
-
-        if (data.Items && data.Items.length > 0) {
-          return data.Items[0].identifyingName;
-        } else {
-          dynamo.put({
-            TableName: "Uuids",
-            Item: {
-              id: Math.random().toString(36).substring(2),
-              email: email,
-              identifyingName: Math.random().toString(36).substring(2, 15)
-            },
-          }).promise();
-          return user.attributes.name;
-          //throw new Error("No items found");
-        }
-      } catch (error) {
-        console.error("Error getting UUID:", error);
-      }
-    }
+    
 
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -146,15 +147,17 @@ const ReviewComponent: React.FC = () => {
         setContent("");
         setRating(0);
 
+        const user = await Auth.currentAuthenticatedUser();
+        const email = user.attributes.email;
         // Perform DynamoDB update or post request to add the new review
         try {
-          const uuid = await UUID(); // Wait for the UUID to be resolved
+          //const uuid = await UUID(); // Wait for the UUID to be resolved
           await dynamo.put({
             TableName: "Reviews",
             Item: {
               id: Math.floor(Math.random() * 1000),
               professional_name: name,
-              homeownerName: uuid, // Use the resolved UUID here
+              homeownerName: email, // Use the resolved UUID here
               date: newReview.date,
               description: newReview.content,
               //totalReviews: newReview.totalReviews,
