@@ -6,6 +6,7 @@ import arrowL from './arrowL.png'; // Adjust the path as needed
 import arrowR from './arrowR.png'; // Adjust the path as needed
 import { Auth } from 'aws-amplify';
 import { dynamo } from '../../../declarations';
+import { BorderAll } from '@mui/icons-material';
 
 const CalendarContainer = styled.div`
     display: grid;
@@ -163,7 +164,7 @@ const Cal = () => {
     async function addEntrysToDb(date: string, text: string, time: string, color: string) {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
-    
+
         try {
             await dynamo.put({
                 Item: {
@@ -178,7 +179,7 @@ const Cal = () => {
                 },
                 TableName: "Calendar",
             }).promise();
-    
+
             console.log("Entry added successfully.");
         } catch (err) {
             console.error("Error adding entry:", err);
@@ -245,6 +246,65 @@ const Cal = () => {
     useEffect(() => {
         getAvailabilityFromDB();
     }, []);
+
+
+    async function addWeek(startDate: HTMLInputElement, amountOfDays: number, time: string) {
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const email = authenticatedUser.attributes.email;
+
+        // Convert startDate.value to a Date object
+        const startDateValue = new Date(startDate.value);
+
+        dynamo.query({
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email
+            }
+        }).promise().then(async (data) => {
+            if (data.Items && data.Items.length > 0) {
+                console.log(data.Items[0]);
+                const userId = data.Items[0].id;
+                const baseDate = startDateValue; // Now baseDate is a Date object
+
+                for (let a = 0; a < amountOfDays; a++) {
+                    const currentDate = new Date(baseDate);
+                    currentDate.setDate(baseDate.getDate() + a);
+
+                    // Assuming 'availability' is an array of objects with 'date' and 'time'
+                    // You need to construct the 'itemsForDb' based on your requirements
+                    // For demonstration, we'll just create a dummy object
+                    const itemsForDb = [{
+                        date: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                        time: time // Example time, replace with actual time or logic to determine time
+                    }];
+
+                    await dynamo.update({
+                        TableName: "Professionals",
+                        Key: {
+                            id: userId,
+                        },
+                        UpdateExpression: `set availability = list_append(if_not_exists(availability, :emptyList), :newItem)`,
+                        ExpressionAttributeValues: {
+                            ":emptyList": [],
+                            ":newItem": itemsForDb,
+                        },
+                    }).promise()
+                        .then(output => {
+                            getAvailabilityFromDB();
+                            getEntriesFromDB();
+                            console.log(output.Attributes);
+                        })
+                        .catch(console.error);
+                }
+            } else {
+                console.error("No user found with the provided email.");
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -487,6 +547,7 @@ const Cal = () => {
                         </select>
                         <button type="submit">Add</button>
                     </form>
+
                 </div>
             )}
             <form
@@ -505,6 +566,31 @@ const Cal = () => {
                 <input type="time" name="time" />
                 <button type="submit">Add</button>
             </form>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+                    const ammount = (e.target as HTMLFormElement).elements.namedItem('ammount') as HTMLInputElement;
+
+
+                    const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                    console.log(selectedDate)
+                    // Convert ammount.value to a number before passing it to addWeek
+                    const amountOfDays = parseInt(ammount.value, 10); // Using parseInt
+
+                    addWeek(selectedDate, amountOfDays, time.value); // Now passing a Date object
+                }}
+            >
+                <div>
+                    <br></br>
+                    <b>Meerdere dagen</b>
+                    <input type="date" name="date" />
+                    <input type="time" name="time" />
+                    <input type="number" name="ammount" />
+                    <button type="submit">meerdere dagen</button>
+                </div>
+            </form>
+
         </div >
     );
 };
