@@ -1,5 +1,5 @@
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
@@ -290,6 +290,27 @@ function ChatMain({ user, signOut }) {
     return newUUID;
   };
 
+  const formatCurrencyInput = (value) => {
+    // Replace any non-digit characters except for commas and periods
+    value = value.replace(/[^\d,.]/g, '');
+
+    // Replace periods with commas
+    value = value.replace(/\./g, ',');
+
+    // Split value into euros and cents
+    const parts = value.split(',');
+
+    // Ensure euros are separated by commas if longer than 3 digits
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Ensure only two decimal places for cents
+    if (parts[1]) {
+      parts[1] = parts[1].slice(0, 2);
+    }
+
+    return parts.join(',');
+  };
+
   // Sort contacts by the last message date
   const sortedContacts = contactList.sort((a, b) => {
     const dateA = lastMessages[a] ? new Date(lastMessages[a].createdAt).getTime() : 0;
@@ -402,13 +423,16 @@ function ChatMain({ user, signOut }) {
                     <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
                   </div>
                 )}
-                <input 
-                  type="number" 
-                  placeholder="Voer bedrag in" 
-                  value={customAmount} 
-                  onChange={(e) => setCustomAmount(e.target.value)} 
-                />
-                <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount)} />
+                <div className="amount-input-wrapper">
+                  <input 
+                    type="text" 
+                    placeholder="Voer bedrag in" 
+                    value={customAmount} 
+                    onChange={(e) => setCustomAmount(formatCurrencyInput(e.target.value))} 
+                    className="amount-input"
+                  />
+                </div>
+                <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount.replace(',', '.'))} />
               </div>
             </div>
 
