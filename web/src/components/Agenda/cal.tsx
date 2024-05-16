@@ -293,11 +293,13 @@ const Cal = () => {
                     }).promise()
                         .then(output => {
                             getAvailabilityFromDB();
-                            getEntriesFromDB();
                             console.log(output.Attributes);
                         })
                         .catch(console.error);
                 }
+
+                // Show an alert once all dates have been added
+                window.alert("Datums zijn toegevoegt.");
             } else {
                 console.error("No user found with the provided email.");
             }
@@ -495,6 +497,7 @@ const Cal = () => {
                         console.log(output.Attributes)
                     })
                     .catch(console.error);
+                    window.alert("Datum toegevoegt.");
             } else {
                 console.error("No items found in the query result.");
             }
