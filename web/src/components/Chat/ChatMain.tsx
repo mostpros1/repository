@@ -352,7 +352,17 @@ function ChatMain({ user, signOut }) {
                 onClick={() => switchChat(contact)}
                 className={selectedContact === contact ? 'selected-contact' : ''}
               >
-                {contact.split("@")[0]}
+                <div className="contact-name">
+                  <span>{contact.split("@")[0]}</span>
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {new Intl.DateTimeFormat('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }).format(new Date(lastMessages[contact].createdAt))}
+                    </span>
+                  )}
+                </div>
                 {lastMessages[contact] && (
                   <span className="last-message">
                     {lastMessages[contact].text}
@@ -366,7 +376,17 @@ function ChatMain({ user, signOut }) {
                 onClick={() => switchChat(contact)}
                 className={selectedContact === contact ? 'selected-contact' : ''}
               >
-                {contact.split("@")[0]}
+                <div className="contact-name">
+                  <span>{contact.split("@")[0]}</span>
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {new Intl.DateTimeFormat('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }).format(new Date(lastMessages[contact].createdAt))}
+                    </span>
+                  )}
+                </div>
                 {lastMessages[contact] && (
                   <span className="last-message">
                     {lastMessages[contact].text}
@@ -451,7 +471,6 @@ function ChatMain({ user, signOut }) {
                 <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount.replace(',', '.'))} />
               </div>
             </div>
-
             <div className="chat-enter">
               <kbd><IoSend size={25} /></kbd>
             </div>
