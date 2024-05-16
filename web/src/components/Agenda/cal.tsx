@@ -248,7 +248,7 @@ const Cal = () => {
     }, []);
 
 
-    async function addWeek(startDate: HTMLInputElement, amountOfDays: number, time: string) {
+    async function addmultipleDays(startDate: HTMLInputElement, amountOfDays: number, time: string) {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
 
@@ -578,15 +578,22 @@ const Cal = () => {
                     // Convert ammount.value to a number before passing it to addWeek
                     const amountOfDays = parseInt(ammount.value, 10); // Using parseInt
 
-                    addWeek(selectedDate, amountOfDays, time.value); // Now passing a Date object
+                    addmultipleDays(selectedDate, amountOfDays, time.value); // Now passing a Date object
                 }}
             >
                 <div>
                     <br></br>
                     <b>Meerdere dagen</b>
+                    <br></br>
+                    <label>Datum</label>
                     <input type="date" name="date" />
+                    <br></br>
+                    <label>Tijd</label>
                     <input type="time" name="time" />
+                    <br></br>
+                    <label>aantal dagen</label>
                     <input type="number" name="ammount" />
+                    <br></br>
                     <button type="submit">meerdere dagen</button>
                 </div>
             </form>
