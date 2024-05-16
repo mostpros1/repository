@@ -93,143 +93,144 @@ const ReviewComponent: React.FC = () => {
 
 
     async function getUUID() {
-      const user = await Auth.currentAuthenticatedUser();
-      const email = user.attributes.email;
-    
-      return dynamo.query({
-        TableName: "ChatUsernames",
-        IndexName: "emailIndex",
-        KeyConditionExpression: "email = :email",
-        ExpressionAttributeValues: {
-          ":email": email,
-        },
-      }).promise()
-       .then((data) => {
-          if (data.Items && data.Items.length > 0) {
-            return data.Items[0].Uuid;
-          }
-        })
-       .catch((error) => {
-          console.error("Error getting UUID:", error);
-          // Return "something" in case of an error
-          return "Mike";
-        });
-    }
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const currentDate = new Date().toLocaleDateString();
-      const newReview: Review = {
-        id: sortedReviews.length + 1,
-        author: name,
-        date: currentDate,
-        content: content,
-        //totalReviews: 1,
-        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-          Math.random() * 100
-        )}.jpg`,
-        rating: rating,
-        homeownerName: "",
-      };
-
-      setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
-      setName("");
-      setContent("");
-      setRating(0);
-
-      // Perform DynamoDB update or post request to add the new review
       try {
-        const uuid = await getUUID(); // Wait for the UUID to be resolved
-        await dynamo.put({
-          TableName: "Reviews",
-          Item: {
-            id: Math.floor(Math.random() * 1000),
-            professional_name: name,
-            homeownerName: uuid, // Use the resolved UUID here
-            date: newReview.date,
-            description: newReview.content,
-            //totalReviews: newReview.totalReviews,
-            rating: String(newReview.rating),
+        const user = await Auth.currentAuthenticatedUser();
+        const email = user.attributes.email;
+
+        const data = await dynamo.query({
+          TableName: "Uuids",
+          IndexName: "emailIndex",
+          KeyConditionExpression: "email = :email",
+          ExpressionAttributeValues: {
+            ":email": email,
           },
         }).promise();
-        console.log("Review submitted:", newReview);
-        fetchReviews();
+
+        if (data.Items && data.Items.length > 0) {
+          return data.Items[0].uuid;
+        } else {
+          return user.attributes.name;
+          //throw new Error("No items found");
+        }
       } catch (error) {
-        console.error("Error submitting review:", error);
+        console.error("Error getting UUID:", error);
       }
+    }
+
+      const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const currentDate = new Date().toLocaleDateString();
+        const newReview: Review = {
+          id: sortedReviews.length + 1,
+          author: name,
+          date: currentDate,
+          content: content,
+          //totalReviews: 1,
+          authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+            Math.random() * 100
+          )}.jpg`,
+          rating: rating,
+          homeownerName: "",
+        };
+
+        setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
+        setName("");
+        setContent("");
+        setRating(0);
+
+        // Perform DynamoDB update or post request to add the new review
+        try {
+          const uuid = await getUUID(); // Wait for the UUID to be resolved
+          await dynamo.put({
+            TableName: "Reviews",
+            Item: {
+              id: Math.floor(Math.random() * 1000),
+              professional_name: name,
+              homeownerName: uuid, // Use the resolved UUID here
+              date: newReview.date,
+              description: newReview.content,
+              //totalReviews: newReview.totalReviews,
+              rating: String(newReview.rating),
+            },
+          }).promise();
+          console.log("Review submitted:", newReview);
+          fetchReviews();
+        } catch (error) {
+          console.error("Error submitting review:", error);
+        }
+      };
+
+      return (
+        <form id="review-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Specialist name"
+            required
+          />
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Your review"
+            required
+          />
+          <StarRating rating={rating} onRatingChange={setRating} />
+          <button type="submit">Submit Review</button>
+        </form>
+      );
     };
 
     return (
-      <form id="review-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Specialist name"
-          required
-        />
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Your review"
-          required
-        />
-        <StarRating rating={rating} onRatingChange={setRating} />
-        <button type="submit">Submit Review</button>
-      </form>
+      <section>
+        <div className="upper-review-con">
+          <h1>Reviews</h1>
+          <div>
+            Sort by:
+            <select onChange={(e) => handleSort(e.target.value)}>
+              <option value="">Relevance</option>
+              <option value="date">Date</option>
+              <option value="totalReviews">Total Reviews</option>
+            </select>
+          </div>
+          <p>Reviews are sourced from customers like you.</p>
+          <div className="grid-sect">
+            <ReviewForm />
+            <img src={SittingCustomer} alt="sitting-customer" />
+          </div>
+        </div>
+        <article className="reviews-container">
+          {sortedReviews.map((review) => (
+            <section key={review.id} className="review">
+              <section className="review-header">
+                <img src={review.authorImageUrl} alt={review.author} />
+                <section>
+                  <div className="author-name">{review.homeownerName}</div>
+                  <article className="review-info">
+                    <span className="total-reviews">
+                      Specialist: {review.author}
+                      <span className="review-date">{review.date}</span>
+                    </span>
+                    <article className="star-rating">
+                      <StarRating rating={review.rating} />
+                    </article>
+                  </article>
+                </section>
+              </section>
+              <article className="review-body">
+                <p>{review.content}</p>
+              </article>
+              <article className="review-footer">
+                <article className="review-actions">
+                  <button>Public Comment.</button>
+                  <button>Direct Message.</button>
+                </article>
+              </article>
+            </section>
+          ))}
+        </article>
+      </section>
     );
   };
 
-  return (
-    <section>
-      <div className="upper-review-con">
-        <h1>Reviews</h1>
-        <div>
-          Sort by:
-          <select onChange={(e) => handleSort(e.target.value)}>
-            <option value="">Relevance</option>
-            <option value="date">Date</option>
-            <option value="totalReviews">Total Reviews</option>
-          </select>
-        </div>
-        <p>Reviews are sourced from customers like you.</p>
-        <div className="grid-sect">
-          <ReviewForm />
-          <img src={SittingCustomer} alt="sitting-customer" />
-        </div>
-      </div>
-      <article className="reviews-container">
-        {sortedReviews.map((review) => (
-          <section key={review.id} className="review">
-            <section className="review-header">
-              <img src={review.authorImageUrl} alt={review.author} />
-              <section>
-                <div className="author-name">{review.homeownerName}</div>
-                <article className="review-info">
-                  <span className="total-reviews">
-                    Specialist: {review.author}
-                    <span className="review-date">{review.date}</span>
-                  </span>
-                  <article className="star-rating">
-                    <StarRating rating={review.rating} />
-                  </article>
-                </article>
-              </section>
-            </section>
-            <article className="review-body">
-              <p>{review.content}</p>
-            </article>
-            <article className="review-footer">
-              <article className="review-actions">
-                <button>Public Comment.</button>
-                <button>Direct Message.</button>
-              </article>
-            </article>
-          </section>
-        ))}
-      </article>
-    </section>
-  );
-};
-
-export default ReviewComponent;
+  export default ReviewComponent;
