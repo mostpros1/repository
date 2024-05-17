@@ -7,17 +7,11 @@ import SideNav from "../../components/ui/SideNav/SideNav";
 
 function ResultsPage() {
   return (
-    <>
+    <div id="root">
       <NavBar />
-      <div id="flexbox-panel">
-        <SideNav />
-        <div className="result-con">
-          <FilterBar />
-          <JobList />
-        </div>
-      </div>
+      <JobList />
       <Footer />
-    </>
+    </div>
   );
 }
 

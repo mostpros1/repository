@@ -4,6 +4,7 @@ import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
 import { useChatBackend } from "./ChatBackend";
+import SideNav from "../ui/SideNav/SideNav";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
@@ -298,127 +299,137 @@ function ChatMain({ user, signOut }) {
   });
 
   return (
-    <div className="chat-container">
-      <div className="sidebar" id="sidebar">
-        <input
-          type="text"
-          placeholder="Zoek gebruikers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchList"
-        />
-        <ul>
-          {searchTerm === ""
-            ? sortedContacts.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact.split("@")[0]}
-                {lastMessages[contact] && (
-                  <span className="last-message">
-                    {lastMessages[contact].text}
-                  </span>
-                )}
-              </li>
-            ))
-            : filteredContactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
-              >
-                {contact.split("@")[0]}
-                {lastMessages[contact] && (
-                  <span className="last-message">
-                    {lastMessages[contact].text}
-                  </span>
-                )}
-              </li>
-            ))}
-        </ul>
-      </div>
-      <div className="main-container">
-        <div className="chat-main">
-          <div className="chatheader">
-            <div className="chat-info">
-              <img src={JanSchilder} className="profile-ava" />
-              <div className="name-and-status">
-                <h2 className="recipient-name">{selectedContact ? selectedContact.split("@")[0] : ''}</h2>
-              </div>
-            </div>
-          </div>
-          <div className="chat-box" ref={chatBoxRef}>
-            {Object.keys(groupedMessages).map((date) => (
-              <React.Fragment key={date}>
-                <div className="date-separator">{formatDate(date)}</div>
+    <main className="chatdisplayMain">
+      <section className="sidenavChatSection">
+        <article className="sideNavChat">
+          <SideNav />
+        </article>
+      </section>
+      <section className='rightsideChatSection'>
 
-                {groupedMessages[date].map((chat) => (
-                  <div
-                    key={chat.id}
-                    className={`message-container ${chat.email === user.attributes.email ? "self-message-container" : "other-message-container"}`}
-                  >
-                    <div className={`message-bubble ${chat.email === user.attributes.email ? "self-message" : "other-message"}`}>
-                      <div className="username">
-                        <span className="username-name">{chat.email.split("@")[0]}</span>
-                      </div>
-                      <p className="text">{chat.text}</p>
-                      <time dateTime={chat.createdAt} className="message-time">
-                        {new Intl.DateTimeFormat('nl-NL', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        }).format(new Date(chat.createdAt))}
-                      </time>
-                    </div>
-                  </div>
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="input-form">
+        <div className="chat-container">
+          <div className="sidebar" id="sidebar">
             <input
               type="text"
-              name="search"
-              id="search"
-              placeholder="Stuur een bericht..."
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  const messageText = (e.target as HTMLInputElement).value;
-                  if (messageText && recipientEmail) {
-                    await handleSendMessage(messageText);
-                    (e.target as HTMLInputElement).value = "";
-                  }
-                }
-              }}
-              className="inputchat"
+              placeholder="Zoek gebruikers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="searchList"
             />
-            <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
-              <BsPaperclip className="paperclip" size={25} />
-              <div className={`dropup-content ${isDropUpOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
-                <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue" /></button>
-                {uploadedPhotoUrl && (
-                  <div>
-                    <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
+            <ul>
+              {searchTerm === ""
+                ? sortedContacts.map((contact) => (
+                  <li
+                    key={contact}
+                    onClick={() => switchChat(contact)}
+                    className={selectedContact === contact ? 'selected-contact' : ''}
+                  >
+                    {contact.split("@")[0]}
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                  </li>
+                ))
+                : filteredContactList.map((contact) => (
+                  <li
+                    key={contact}
+                    onClick={() => switchChat(contact)}
+                    className={selectedContact === contact ? 'selected-contact' : ''}
+                  >
+                    {contact.split("@")[0]}
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                  </li>
+                ))}
+            </ul>
+          </div>
+          <div className="main-container">
+            <div className="chat-main">
+              <div className="chatheader">
+                <div className="chat-info">
+                  <img src={JanSchilder} className="profile-ava" />
+                  <div className="name-and-status">
+                    <h2 className="recipient-name">{selectedContact ? selectedContact.split("@")[0] : ''}</h2>
                   </div>
-                )}
-                <input 
-                  type="number" 
-                  placeholder="Voer bedrag in" 
-                  value={customAmount} 
-                  onChange={(e) => setCustomAmount(e.target.value)} 
-                />
-                <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount)} />
+                </div>
               </div>
-            </div>
+              <div className="chat-box" ref={chatBoxRef}>
+                {Object.keys(groupedMessages).map((date) => (
+                  <React.Fragment key={date}>
+                    <div className="date-separator">{formatDate(date)}</div>
 
-            <div className="chat-enter">
-              <kbd><IoSend size={25} /></kbd>
+                    {groupedMessages[date].map((chat) => (
+                      <div
+                        key={chat.id}
+                        className={`message-container ${chat.email === user.attributes.email ? "self-message-container" : "other-message-container"}`}
+                      >
+                        <div className={`message-bubble ${chat.email === user.attributes.email ? "self-message" : "other-message"}`}>
+                          <div className="username">
+                            <span className="username-name">{chat.email.split("@")[0]}</span>
+                          </div>
+                          <p className="text">{chat.text}</p>
+                          <time dateTime={chat.createdAt} className="message-time">
+                            {new Intl.DateTimeFormat('nl-NL', {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            }).format(new Date(chat.createdAt))}
+                          </time>
+                        </div>
+                      </div>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </div>
+              <div className="input-form">
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  placeholder="Stuur een bericht..."
+                  onKeyUp={async (e) => {
+                    if (e.key === "Enter") {
+                      const messageText = (e.target as HTMLInputElement).value;
+                      if (messageText && recipientEmail) {
+                        await handleSendMessage(messageText);
+                        (e.target as HTMLInputElement).value = "";
+                      }
+                    }
+                  }}
+                  className="inputchat"
+                />
+                <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
+                  <BsPaperclip className="paperclip" size={25} />
+                  <div className={`dropup-content ${isDropUpOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+                    <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue" /></button>
+                    {uploadedPhotoUrl && (
+                      <div>
+                        <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
+                      </div>
+                    )}
+                    <input
+                      type="number"
+                      placeholder="Voer bedrag in"
+                      value={customAmount}
+                      onChange={(e) => setCustomAmount(e.target.value)}
+                    />
+                    <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount)} />
+                  </div>
+                </div>
+
+                <div className="chat-enter">
+                  <kbd><IoSend size={25} /></kbd>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }
 

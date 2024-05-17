@@ -1,11 +1,21 @@
 import "./JobList.css";
+import SideNav from "../ui/SideNav/SideNav";
+import FilterBar from "../../components/FilterBar/FilterBar";
 import JobCards from "./JobCards";
 
 function JobList() {
   return (
-    <div className="job-con">
-      <JobCards/>
-    </div>
+    <main className="jobListMain">
+      <section className="sideNavSection">
+        <article className="sideNav">
+          <SideNav />
+        </article>
+      </section>
+      <section className="jobCardsSection">
+        <FilterBar />
+        <JobCards />
+      </section>
+    </main>
   );
 }
 
