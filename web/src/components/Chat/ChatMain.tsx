@@ -1,5 +1,5 @@
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
@@ -14,6 +14,8 @@ import { BsPaperclip } from "react-icons/bs";
 import JanSchilder from "../../assets/JanSchilder.jpg";
 import { MdDriveFileMove } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
+import { stopXSS } from "../../../../backend_functions/stopXSS";
+import ReactDOMServer from 'react-dom/server';
 
 function ChatMain({ user, signOut }) {
   const {
@@ -291,6 +293,27 @@ function ChatMain({ user, signOut }) {
     return newUUID;
   };
 
+  const formatCurrencyInput = (value) => {
+    // Replace any non-digit characters except for commas and periods
+    value = value.replace(/[^\d,.]/g, '');
+
+    // Replace periods with commas
+    value = value.replace(/\./g, ',');
+
+    // Split value into euros and cents
+    const parts = value.split(',');
+
+    // Ensure euros are separated by commas if longer than 3 digits
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Ensure only two decimal places for cents
+    if (parts[1]) {
+      parts[1] = parts[1].slice(0, 2);
+    }
+
+    return parts.join(',');
+  };
+
   // Sort contacts by the last message date
   const sortedContacts = contactList.sort((a, b) => {
     const dateA = lastMessages[a] ? new Date(lastMessages[a].createdAt).getTime() : 0;
@@ -298,138 +321,168 @@ function ChatMain({ user, signOut }) {
     return dateB - dateA;
   });
 
+  const parseLinks = (text: string) => {
+  const linkRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(linkRegex);
+  const jsxElements = parts.flatMap((part, index) => {
+    if (index % 2!== 0) {
+      // This is a URL part, wrap it in an <a> tag
+      return <a href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+    } else {
+      // This is a text part, return it as is
+      return part;
+    }
+  });
+
+  // Convert JSX elements to an HTML string
+  const htmlString = ReactDOMServer.renderToStaticMarkup(<>{jsxElements}</>);
+  return htmlString;
+};
+  console.log(parseLinks("https://www.portaalvoortalent.nl/")); // Should log an array of JSX elements or a single JSX element
   return (
-    <main className="chatdisplayMain">
-      <section className="sidenavChatSection">
-        <article className="sideNavChat">
-          <SideNav />
-        </article>
-      </section>
-      <section className='rightsideChatSection'>
-
-        <div className="chat-container">
-          <div className="sidebar" id="sidebar">
-            <input
-              type="text"
-              placeholder="Zoek gebruikers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="searchList"
-            />
-            <ul>
-              {searchTerm === ""
-                ? sortedContacts.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                  </li>
-                ))
-                : filteredContactList.map((contact) => (
-                  <li
-                    key={contact}
-                    onClick={() => switchChat(contact)}
-                    className={selectedContact === contact ? 'selected-contact' : ''}
-                  >
-                    {contact.split("@")[0]}
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div className="main-container">
-            <div className="chat-main">
-              <div className="chatheader">
-                <div className="chat-info">
-                  <img src={JanSchilder} className="profile-ava" />
-                  <div className="name-and-status">
-                    <h2 className="recipient-name">{selectedContact ? selectedContact.split("@")[0] : ''}</h2>
-                  </div>
+    <div className="chat-container">
+      <div className="sidebar" id="sidebar">
+        <input
+          type="text"
+          placeholder="Zoek gebruikers..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="searchList"
+        />
+        <ul>
+          {searchTerm === ""
+            ? sortedContacts.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                <div className="contact-name">
+                  <span>{contact.split("@")[0]}</span>
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {new Intl.DateTimeFormat('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }).format(new Date(lastMessages[contact].createdAt))}
+                    </span>
+                  )}
                 </div>
-              </div>
-              <div className="chat-box" ref={chatBoxRef}>
-                {Object.keys(groupedMessages).map((date) => (
-                  <React.Fragment key={date}>
-                    <div className="date-separator">{formatDate(date)}</div>
-
-                    {groupedMessages[date].map((chat) => (
-                      <div
-                        key={chat.id}
-                        className={`message-container ${chat.email === user.attributes.email ? "self-message-container" : "other-message-container"}`}
-                      >
-                        <div className={`message-bubble ${chat.email === user.attributes.email ? "self-message" : "other-message"}`}>
-                          <div className="username">
-                            <span className="username-name">{chat.email.split("@")[0]}</span>
-                          </div>
-                          <p className="text">{chat.text}</p>
-                          <time dateTime={chat.createdAt} className="message-time">
-                            {new Intl.DateTimeFormat('nl-NL', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            }).format(new Date(chat.createdAt))}
-                          </time>
-                        </div>
-                      </div>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </div>
-              <div className="input-form">
-                <input
-                  type="text"
-                  name="search"
-                  id="search"
-                  placeholder="Stuur een bericht..."
-                  onKeyUp={async (e) => {
-                    if (e.key === "Enter") {
-                      const messageText = (e.target as HTMLInputElement).value;
-                      if (messageText && recipientEmail) {
-                        await handleSendMessage(messageText);
-                        (e.target as HTMLInputElement).value = "";
-                      }
-                    }
-                  }}
-                  className="inputchat"
-                />
-                <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
-                  <BsPaperclip className="paperclip" size={25} />
-                  <div className={`dropup-content ${isDropUpOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
-                    <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue" /></button>
-                    {uploadedPhotoUrl && (
-                      <div>
-                        <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
-                      </div>
-                    )}
-                    <input
-                      type="number"
-                      placeholder="Voer bedrag in"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                    />
-                    <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount)} />
-                  </div>
+                {lastMessages[contact] && (
+                  <span className="last-message">
+                    {lastMessages[contact].text}
+                  </span>
+                )}
+              </li>
+            ))
+            : filteredContactList.map((contact) => (
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? 'selected-contact' : ''}
+              >
+                <div className="contact-name">
+                  <span>{contact.split("@")[0]}</span>
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {new Intl.DateTimeFormat('nl-NL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }).format(new Date(lastMessages[contact].createdAt))}
+                    </span>
+                  )}
                 </div>
-
-                <div className="chat-enter">
-                  <kbd><IoSend size={25} /></kbd>
-                </div>
+                {lastMessages[contact] && (
+                  <span className="last-message">
+                    {lastMessages[contact].text}
+                  </span>
+                )}
+              </li>
+            ))}
+        </ul>
+      </div>
+      <div className="main-container">
+        <div className="chat-main">
+          <div className="chatheader">
+            <div className="chat-info">
+              <img src={JanSchilder} className="profile-ava" />
+              <div className="name-and-status">
+                <h2 className="recipient-name">{selectedContact ? selectedContact.split("@")[0] : ''}</h2>
               </div>
             </div>
           </div>
+          <div className="chat-box" ref={chatBoxRef}>
+            {Object.keys(groupedMessages).map((date) => (
+              <React.Fragment key={date}>
+                <div className="date-separator">{formatDate(date)}</div>
+
+                {groupedMessages[date].map((chat) => (
+                  <div
+                    key={chat.id}
+                    className={`message-container ${chat.email === user.attributes.email ? "self-message-container" : "other-message-container"}`}
+                  >
+                    <div className={`message-bubble ${chat.email === user.attributes.email ? "self-message" : "other-message"}`}>
+                      <div className="username">
+                        <span className="username-name">{chat.email.split("@")[0]}</span>
+                      </div>
+                      <div className="text" dangerouslySetInnerHTML={{ __html: chat.text }} />
+                      <time dateTime={chat.createdAt} className="message-time">
+                        {new Intl.DateTimeFormat('nl-NL', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        }).format(new Date(chat.createdAt))}
+                      </time>
+                    </div>
+                  </div>
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="input-form">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Stuur een bericht..."
+              onKeyUp={async (e) => {
+                if (e.key === "Enter") {
+                  const messageText = (e.target as HTMLInputElement).value;
+                  if (messageText && recipientEmail) {
+                    await handleSendMessage(stopXSS(messageText));
+                    (e.target as HTMLInputElement).value = "";
+                  }
+                }
+              }}
+              className="inputchat"
+            />
+            <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
+              <BsPaperclip className="paperclip" size={25} />
+              <div className={`dropup-content ${isDropUpOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+                <button className="dropup-option" onClick={() => inputRef.current?.click()}><MdDriveFileMove size={25} color="blue" /></button>
+                {uploadedPhotoUrl && (
+                  <div>
+                    <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
+                  </div>
+                )}
+                <div className="amount-input-wrapper">
+                  <input 
+                    type="text" 
+                    placeholder="Voer bedrag in" 
+                    value={customAmount} 
+                    onChange={(e) => setCustomAmount(formatCurrencyInput(e.target.value))} 
+                    className="amount-input"
+                  />
+                </div>
+                <PaymentLink handleSendMessage={handleSendMessage} subtotal={parseFloat(customAmount.replace(',', '.'))} />
+              </div>
+            </div>
+            <div className="chat-enter">
+              <kbd><IoSend size={25} /></kbd>
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   )
 }
 

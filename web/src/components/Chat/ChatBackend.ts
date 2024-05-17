@@ -70,9 +70,6 @@ const handleJoinChat = (recentMessageEmail) => {
   setNotificationMessage(`${recentMessageEmail} joined the chat`);
 };
 
-// Rest of the code remains the same
-
-
 return {
     chats,
     setChats,

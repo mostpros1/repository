@@ -38,6 +38,9 @@
   transition: background-color 0.3s, color 0.3s;
   background-color: #4e95ff;
   border-bottom: solid 1px rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #sidebar ul li:hover,
@@ -46,16 +49,30 @@
   color: rgb(255, 255, 255);
 }
 
+.contact-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .last-message {
   font-size: 16px;
   color: #ffffffc7;
   display: block;
-  margin-top: 10px;
   max-width: 300px;
   max-height: 35px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; 
+  margin-bottom: 10px;
+}
+
+.last-message-time {
+  font-size: 14px;
+  color: #ffffffc7;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .chat-main {
@@ -391,22 +408,22 @@
   display: none;
   position: absolute;
   background-color: #ffffff;
-  width: 170px; /* Adjusted for better layout */
+  width: 170px;
   padding: 10px;
   z-index: 1;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  top: -10px; /* Adjust the position slightly */
-  right: 0; /* Align to the right */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  top: -10px;
+  right: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
   opacity: 0;
-  transform: translateY(10px); /* Start slightly lower */
+  transform: translateY(10px);
 }
 
-.dropup-content.show { /* Add 'show' class for explicit display control */
+.dropup-content.show {
   display: block;
   opacity: 1;
-  transform: translateY(0); /* Move to original position */
+  transform: translateY(0);
 }
 
 .dropup-content button {
@@ -448,10 +465,35 @@
 }
 
 .dropup-option-leeg {
-  display: none; /* Hide empty option */
+  display: none;
 }
 
-.amount-input{
+.amount-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.amount-input-wrapper::before {
+  content: '€';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #333;
+}
+
+.amount-input {
   width: 150px;
-  padding: 10px;
+  padding: 10px 10px 10px 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.amount-input:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
