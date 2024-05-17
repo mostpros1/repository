@@ -1,43 +1,3 @@
-.faq-main {
-  width: 100%;
-  height: 100%;
-  padding-right: 12rem;
-  /* <- elementen hebben BINNEN in het oranje vlak 120px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
-  padding-top: 5rem;
-  display: flex;
-}
-
-.leftside-faq {
-  width: 30%;
-  /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
-  height: 100vh;
-  display: flex;
-  justify-content: flex-end;
-  /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
-  padding-right: 2rem;
-  /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
-
-}
-
-.sideNav-leftside {
-  height: 50%;
-  width: 18rem;
-  background: #222;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.rightside-faq {
-  width: 70%;
-  /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de sidenavTemplateSection ook aanpast waardoor het samen 100% is  */
-  height: auto;
-  /*<- vh veranderen in 100% wanneer het vlak/de pagina te klein wordt voor je elementen */
-
-}
-
 .faq-container {
   display: flex;
   flex-direction: column;
@@ -173,21 +133,6 @@
   .faq-grid {
     grid-template-columns: 1fr;
     /* Single column grid layout for FAQ */
-  }
-}
-
-
-@media (max-width: 1044px) {
-  .leftside-faq {
-    display: none;
-    /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
-  }
-
-  .faq-main {
-    /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
-    align-items: center;
-    justify-content: center;
-    padding-right: 0rem;
   }
 }
 

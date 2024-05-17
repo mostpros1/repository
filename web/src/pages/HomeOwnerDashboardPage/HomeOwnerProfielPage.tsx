@@ -1,16 +1,16 @@
 import NavBar from "../../components/ui/NavBar/NavBar";
 import Footer from "../../components/ui/Footer/Footer";
-import FAQPageLayout from "./FAQPage-rt";
-import "./FAQPage.css";
+import HomeOwnerProfileLayout from "./HomeOwnerProfiel-rt";
+import "./HomeOwnerProfiel.css";
 
-function FAQPage() {
+function HomeOwnerProfielPage() {
   return (
     <div id="root">
       <NavBar />
-      <FAQPageLayout />
+      <HomeOwnerProfileLayout />
       <Footer />
     </div>
   );
 }
 
-export default FAQPage;
+export default HomeOwnerProfielPage;

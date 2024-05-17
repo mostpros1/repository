@@ -1,5 +1,4 @@
 import React from "react";
-import SideNav from "../ui/SideNav/SideNav";
 import faqpic from "../../assets/FAQ.svg";
 import Category from "./Category";
 import "./FAQ.css";
@@ -236,25 +235,17 @@ const faqData = [
 
 const FAQ = () => {
   return (
-    <main className="faq-main">
-      <section className="leftside-faq">
-        <article className="sideNav-leftside">
-          {/* inhoud sidenav */}
-          <SideNav />
-        </article>
-      </section>
-      <section className='rightside-faq'>
-        <div className="faq-header">
-          <img src={faqpic} alt="faq" />
-          <p>Veel gestelde vragen</p>
-        </div>
-        <div className="sect-header">
-          {faqData.map((category) => (
-            <Category title={category.title} questions={category.questions} />
-          ))}
-        </div>
-      </section>
-    </main>
+    <>
+      <div className="faq-header">
+        <img src={faqpic} alt="faq" />
+        <p>Veel gestelde vragen</p>
+      </div>
+      <div className="sect-header">
+        {faqData.map((category) => (
+          <Category title={category.title} questions={category.questions} />
+        ))}
+      </div>
+    </>
   );
 };
 

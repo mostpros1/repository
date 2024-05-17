@@ -1,35 +1,5 @@
+
 #job-main {
-  width: 100%;
-  height: 100%;
-  padding-right: 12rem;
-  padding-top: 5rem;
-  display: flex;
-}
-
-.leftside-Section {
-  width: 20%;
-  height: 100vh;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 2rem;
-}
-
-.rightside-Section {
-  width: 80%;
-  height: 100vh;
-}
-
-.sideNav {
-  height: 45%;
-  width: 18rem;
-  background: #222;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#job-main-con {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -37,51 +7,37 @@
   padding: 25px;
   max-width: 1200px;
   max-height: 900px;
+  margin: 40px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
 }
 
-.search-con {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  max-width: 100rem;
-}
-
 #search-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  position: relative;
 }
-
-.search-input-container {
-  width: 100%;
-  position: relative;
-  /* Add this */
-}
-
 #search-icon {
-  position: absolute;
-  left: 20px;
-  /* Adjust as necessary */
-  top: 50%;
-  transform: translateY(-20%);
-  z-index: 10;
+  margin-top: 10px;
 }
 
 #job-input-field {
-  width: 115rem;
+  flex-grow: 1;
   border-radius: 25px;
   background-color: #f4f4f4;
-  padding: 12px 40px 12px 50px;
-  /* Adjust padding to not overlap the search icon */
+  padding: 12px 40px 12px 50px; /* Adjust padding to not overlap the search icon */
   border: none;
   outline: none;
   font-size: 16px;
   margin-top: 15px;
   transition: all 0.3s ease;
+  width: 1150px;
+}
+
+#search-icon {
+  position: absolute;
+  left: 15px; /* Adjust as necessary */
+  z-index: 10;
 }
 
 #job-input-field:focus {
@@ -90,14 +46,16 @@
 
 #submit-button {
   position: absolute;
-  right: 20px;
-  /* Adjust as necessary */
+  right: 10px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-25%);
   height: 20px;
   width: 20px;
   background-color: transparent;
   border: none;
+  background-image: url("path-to-your-arrow-icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 
@@ -106,7 +64,6 @@
   width: 100%;
   object-fit: contain;
 }
-
 .job-status {
   display: flex;
   justify-content: flex-start;
@@ -122,8 +79,7 @@
   background: none;
   font-size: 16px;
   cursor: pointer;
-  margin-right: 20px;
-  /* or any spacing you prefer */
+  margin-right: 20px; /* or any spacing you prefer */
 }
 
 .status-button.active {
@@ -140,13 +96,11 @@
 }
 
 .job-entry {
-  border: 1px solid #ccc;
-  /* style as needed */
+  border: 1px solid #ccc; /* style as needed */
   padding: 20px;
   width: 500px;
   border-radius: 8px;
-  position: relative;
-  /* for positioning view-job-button absolutely */
+  position: relative; /* for positioning view-job-button absolutely */
 }
 
 .job-description {
@@ -157,7 +111,6 @@
 .job-date {
   color: black;
 }
-
 .job-view {
   color: #007bff;
   cursor: pointer;
@@ -168,8 +121,7 @@
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  /* spacing from description */
+  margin-top: 10px; /* spacing from description */
   margin-bottom: 15px;
 }
 
@@ -224,49 +176,12 @@
 
 .view-job-button {
   position: absolute;
-  bottom: 20px;
-  /* or adjust as needed */
-  left: 20px;
-  /* or adjust as needed */
+  bottom: 20px; /* or adjust as needed */
+  left: 20px; /* or adjust as needed */
   padding: 10px 20px;
   border: none;
   background-color: #000;
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
-}
-
-@media (max-width: 1044px) {
-  .leftside-Section {
-    display: none;
-  }
-
-  #job-input-field {
-    width: 70rem;
-  }
-
-  .job-list-vw {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 40px;
-    justify-content: center;
-    margin: 20px 10px 20px 55px;
-  }
-
-  .rightside-Section {
-    justify-content: center;
-    align-items: center;
-    margin-left: 10rem;
-  }
-
-  #job-main-con {
-    align-items: center;
-  }
-
-  .job-main {
-    align-items: center;
-    justify-content: center;
-    padding-right: 0rem;
-  }
-
 }
