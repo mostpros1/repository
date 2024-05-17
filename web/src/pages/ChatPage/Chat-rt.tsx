@@ -1,18 +1,17 @@
-import NavBar from "../../components/ui/NavBar/NavBar";
 import SideNav from "../../components/ui/SideNav/SideNav";
 import ChatMain from "../../components/Chat/ChatMain";
-import Footer from "../../components/ui/Footer/Footer";
+import "./Chat-rt.css";
 
 function chatlayout() {
     return (
-        <main className="templateMain">
-            <section className="sidenavTemplateSection">
-                <article className="sideNavTemplate">
+        <main className="chatdisplayMain ">
+            <section className="sidenavChatSection">
+                <article className="sideNavChat">
                     {/* inhoud sidenav */}
                     <SideNav />
                 </article>
             </section>
-            <section className='rightsideTemplateSection'>
+            <section className='rightsideChatSection'>
                 <ChatMain user={undefined} signOut={undefined} />
             </section>
         </main>
