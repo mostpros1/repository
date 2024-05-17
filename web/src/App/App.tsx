@@ -47,6 +47,7 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
+import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
 
 
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
@@ -110,6 +111,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
+      <Route path="/home" element={<HomePageTwo />} />
       <Route
         path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}

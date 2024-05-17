@@ -1,0 +1,115 @@
+.homepagetwomain{
+  width: 100%;
+}
+
+.landingSectionHome{
+  width: 100%;
+  background: linear-gradient(to bottom right, #A1D2FF 40%, #BBDEFD 59%);
+  height: 69.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}
+
+.landingContentHome{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.titleSectionHome{
+  width: 100%;
+}
+
+.titleSectionHomeH2 {
+  text-align: center;
+  font-size: 4.6rem;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+
+.SearchSectionHome{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+}
+
+.SearchBarHome{
+  width: 70rem;
+  height: 6rem;
+  background: #FFFFFF;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.SearchBarInputHome {
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+}
+
+.SearchBarInputHome:focus {
+  outline: none;
+  border: none; 
+}
+
+.searchBarBlueIcon{
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #207CD7;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0.35rem;
+}
+
+.searchBarBlueIcon::after {
+  content: '';
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+
+.JobsSectionHome{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+  .titleSectionHomeH2 {
+    font-size: 3.6rem; /* Adjust the font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .titleSectionHomeH2 {
+    font-size: 2.8rem; /* Further adjust font size for even smaller screens */
+  }
+}
+
+
+@media screen and (max-width: 335px) {
+  .landingSectionHome{
+    height: auto;
+  }
+}
