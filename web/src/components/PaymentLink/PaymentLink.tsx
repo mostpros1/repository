@@ -3,7 +3,6 @@ import { stripeClient } from '../../main';
 import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
 
-
 type PaymentLinkProps = {
     subtotal: number;
     handleSendMessage: (text: any) => void;
@@ -73,11 +72,12 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
 
-            setPaymentLink(result.url as string);
-            handleSendMessage(`Hier is de betalingslink: ${result.url}`);
+            const paymentUrl = result.url as string;
+            setPaymentLink(paymentUrl);
+            handleSendMessage(`Hier is de betalingslink: <a href="${paymentUrl}">${paymentUrl}</a>`);
             setError('');
         } catch (e) {
-            setError('Failed to create payment session. Please try again later.');
+            setError('Failed to create payment session. Please try again later. ' + e);
         } finally {
             setLoading(false);
         }
@@ -93,7 +93,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                     {paymentLink && (
                         <>
                             <p>Betalingslink is succesvol gemaakt:</p>
-                            <a href={paymentLink}>{paymentLink}</a>
+                            <p>{paymentLink}</p>
                         </>
                     )}
                 </>

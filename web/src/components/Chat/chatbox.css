@@ -15,7 +15,7 @@
 
 #sidebar {
   width: 300px;
-  background: linear-gradient(to bottom, #575cd9, #4e95ff);
+  background-color: #4e95ff;
   overflow-y: auto;
   height: 560px;
   margin-left: 20px;
@@ -31,13 +31,16 @@
 #sidebar ul li {
   cursor: pointer;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   height: 90px;
   font-size: 18px;
-  margin-top: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
   transition: background-color 0.3s, color 0.3s;
-  background: linear-gradient(to bottom, #0008ff19, #4e95ff);
+  background-color: #4e95ff;
+  border-bottom: solid 1px rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #sidebar ul li:hover,
@@ -46,16 +49,30 @@
   color: rgb(255, 255, 255);
 }
 
+.contact-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .last-message {
   font-size: 16px;
   color: #ffffffc7;
   display: block;
-  margin-top: 10px;
   max-width: 300px;
   max-height: 35px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; 
+  margin-bottom: 10px;
+}
+
+.last-message-time {
+  font-size: 14px;
+  color: #ffffffc7;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .chat-main {
@@ -253,7 +270,7 @@
 .chatheader {
   display: flex;
   padding: 10px;
-  background: linear-gradient(to bottom, #575cd9, #4e95ff);
+  background-color: #4e95ff;
   color: white;
   height: 80px;
   border-radius: 10px;
@@ -365,7 +382,7 @@
   height: 60px;
 }
 
-.paperclip{
+.paperclip {
   border-radius: 5px;
   width: 40px;
   background-color: #ffffff;
@@ -390,65 +407,93 @@
 .dropup-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  width: 60px;
-  padding: 8px 0;
+  background-color: #ffffff;
+  width: 170px;
+  padding: 10px;
   z-index: 1;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  top: -10px;
+  right: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.dropup-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dropup-content button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 8px 16px;
+  padding: 10px;
   background-color: transparent;
   border: none;
-  text-align: left;
   font-size: 16px;
-  color: #333;
+  color: #007bff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 10px;
-  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
 }
 
 .dropup-content button:hover {
-  background-color: #ddd;
-}
-
-.dropup:hover .dropup-content {
-  display: block;
-  bottom: 100%;
-  top: auto;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  background-color: #f0f0f0;
+  color: #0056b3;
 }
 
 .dropup-option {
-  border-radius: 5px;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  color: #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
   background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dropup-option:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
 }
 
 .dropup-option-leeg {
-  border-radius: 5px;
-  text-align: center;
-  width: 60px;
-  height: 0px;
-  color: #ffffff;
-  background-color: #ffffff;
+  display: none;
+}
+
+.amount-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.amount-input-wrapper::before {
+  content: '€';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #333;
+}
+
+.amount-input {
+  width: 150px;
+  padding: 10px 10px 10px 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.amount-input:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }

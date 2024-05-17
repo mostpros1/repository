@@ -170,8 +170,6 @@ function MultistepForm() {
     }
 
     if (user) {
-      console.log(user)
-      console.log('Timonnn:', data);
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
       dynamo
@@ -182,9 +180,12 @@ function MultistepForm() {
             profession: data.profession,
             task: data.task,
             region: data.stad,
-
+            currentStatus: "pending",
+            date: `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`,
+            chats: 0,
+            isCurrent: true
           },
-          TableName: "Klussen",
+          TableName: "Klussen"
         })
         .promise()
         .catch(console.error)
