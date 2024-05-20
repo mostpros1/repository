@@ -4,11 +4,12 @@ import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
 
 type PaymentLinkProps = {
+    handleSendMessage: (text: string) => void;
     subtotal: number;
-    handleSendMessage: (text: any) => void;
-};
+  };
 
-const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
+  const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
+    const [amount, setAmount] = useState<number>(subtotal);
     const [paymentLink, setPaymentLink] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userStripeAccountId, setUserStripeAccountId] = useState('');
@@ -19,12 +20,9 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         async function checkStripeAccountId() {
             try {
                 const user = await Auth.currentAuthenticatedUser();
-                console.log('Gebruikersattributen:', user.attributes);
                 const email = user.attributes.email;
                 setUserEmail(email);
                 const userStripeAccountId = user.attributes['custom:stripeAccountId'] || '';
-                console.log('E-mail van de gebruiker:', email);
-                console.log('Stripe-account-ID van de gebruiker:', userStripeAccountId);
                 setUserStripeAccountId(userStripeAccountId);
             } catch (e) {
                 setError('Failed to authenticate user.');
@@ -37,9 +35,13 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         if (userStripeAccountId === '') {
             setError('Stripe account ID is missing.');
             return;
-        } 
+        }
         if (userEmail === '') {
-            setError('user email is missing.');
+            setError('User email is missing.');
+            return;
+        }
+        if (amount <= 0) {
+            setError('Please enter a valid amount.');
             return;
         }
 
@@ -47,7 +49,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         setError('');
 
         try {
-            const result = await stripeClient.checkout.sessions.create({
+            const session = await stripeClient.checkout.sessions.create({
                 currency: 'eur',
                 mode: 'payment',
                 customer_email: userEmail,
@@ -57,13 +59,13 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                         product_data: {
                             name: "Betaling voor klus",
                         },
-                        unit_amount: subtotal
+                        unit_amount: Math.round(amount * 100), // Convert to cents
                     },
                     quantity: 1
                 }],
                 payment_method_types: ['card', 'ideal'],
                 payment_intent_data: {
-                    application_fee_amount: Math.ceil(subtotal * 0.02),
+                    application_fee_amount: Math.ceil(amount * 2), // 2% of amount in cents
                     transfer_data: {
                         destination: userStripeAccountId
                     }
@@ -71,7 +73,6 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                 success_url: `${window.location.origin}/payments/success`,
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
-
             const paymentUrl = result.url as string;
             setPaymentLink(paymentUrl);
             handleSendMessage(`Hier is de betalingslink: <a href="${paymentUrl}">${paymentUrl}</a>`);
@@ -85,7 +86,11 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
 
     return (
         <>
-            {loading ? <p>Loading...</p> : (
+            <button onClick={createSession} className="dropup-option">
+                <BsCreditCard size={25} color="blue" />
+            </button>
+            {loading && <p>Loading...</p>}
+            {paymentLink && (
                 <>
                     <button onClick={createSession} className="dropup-option">
                         <BsCreditCard size={25} color="blue"/>
@@ -101,6 +106,6 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </>
     );
-}
+};
 
 export default PaymentLink;

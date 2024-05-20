@@ -486,6 +486,17 @@
   display: block;
   opacity: 1;
   transform: translateY(0);
+  top: -10px;
+  right: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.dropup-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dropup-content button {
@@ -558,4 +569,31 @@
   outline: none;
   border-color: #66afe9;
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.dropup-option {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dropup-option:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.dropup-option-leeg {
+  display: none;
+}
+
+.amount-input{
+  width: 150px;
+  padding: 10px;
 }
