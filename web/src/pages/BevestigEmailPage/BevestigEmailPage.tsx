@@ -58,7 +58,7 @@ function BevestigEmailPage() {
         },
         'PROFESSIONAL': {
             roleName: "Professional",
-            nextPage: `/${taal}/dashboard-professional`,
+            nextPage: `/${taal}/pro-dashboard`,
 
             onSuccess: () => {
                 cognitoClient.adminAddUserToGroup({

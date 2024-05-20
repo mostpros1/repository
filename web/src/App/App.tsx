@@ -88,7 +88,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -107,6 +106,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
+      <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
@@ -183,8 +183,6 @@ const LanguageAwareRoutes = () => {
   );
   //<Route path="/EditProfileSection" element={<EditProfile />} />
 };
-
-
 
 const App = () => {
   const { lang } = useParams();

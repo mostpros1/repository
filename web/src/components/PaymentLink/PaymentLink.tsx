@@ -73,11 +73,12 @@ type PaymentLinkProps = {
                 success_url: `${window.location.origin}/payments/success`,
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
-
-            setPaymentLink(session.url as string);
-            handleSendMessage(`Hier is de betalingslink: ${session.url}`);
+            const paymentUrl = result.url as string;
+            setPaymentLink(paymentUrl);
+            handleSendMessage(`Hier is de betalingslink: <a href="${paymentUrl}">${paymentUrl}</a>`);
+            setError('');
         } catch (e) {
-            setError('Failed to create payment session. Please try again later.');
+            setError('Failed to create payment session. Please try again later. ' + e);
         } finally {
             setLoading(false);
         }
@@ -91,8 +92,15 @@ type PaymentLinkProps = {
             {loading && <p>Loading...</p>}
             {paymentLink && (
                 <>
-                    <p>Betalingslink is succesvol gemaakt:</p>
-                    <a href={paymentLink} target="_blank" rel="noopener noreferrer">{paymentLink}</a>
+                    <button onClick={createSession} className="dropup-option">
+                        <BsCreditCard size={25} color="blue"/>
+                    </button>
+                    {paymentLink && (
+                        <>
+                            <p>Betalingslink is succesvol gemaakt:</p>
+                            <p>{paymentLink}</p>
+                        </>
+                    )}
                 </>
             )}
             {error && <p style={{ color: 'red' }}>{error}</p>}
