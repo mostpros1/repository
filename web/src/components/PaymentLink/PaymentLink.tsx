@@ -4,12 +4,11 @@ import { Auth } from 'aws-amplify';
 import { BsCreditCard } from "react-icons/bs";
 
 type PaymentLinkProps = {
-    handleSendMessage: (text: string) => void;
     subtotal: number;
-  };
+    handleSendMessage: (text: any) => void;
+};
 
-  const PaymentLink = ({ handleSendMessage, subtotal }: PaymentLinkProps) => {
-    const [amount, setAmount] = useState<number>(subtotal);
+const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
     const [paymentLink, setPaymentLink] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userStripeAccountId, setUserStripeAccountId] = useState('');
@@ -20,9 +19,12 @@ type PaymentLinkProps = {
         async function checkStripeAccountId() {
             try {
                 const user = await Auth.currentAuthenticatedUser();
+                console.log('Gebruikersattributen:', user.attributes);
                 const email = user.attributes.email;
                 setUserEmail(email);
                 const userStripeAccountId = user.attributes['custom:stripeAccountId'] || '';
+                console.log('E-mail van de gebruiker:', email);
+                console.log('Stripe-account-ID van de gebruiker:', userStripeAccountId);
                 setUserStripeAccountId(userStripeAccountId);
             } catch (e) {
                 setError('Failed to authenticate user.');
@@ -35,13 +37,9 @@ type PaymentLinkProps = {
         if (userStripeAccountId === '') {
             setError('Stripe account ID is missing.');
             return;
-        }
+        } 
         if (userEmail === '') {
-            setError('User email is missing.');
-            return;
-        }
-        if (amount <= 0) {
-            setError('Please enter a valid amount.');
+            setError('user email is missing.');
             return;
         }
 
@@ -49,7 +47,7 @@ type PaymentLinkProps = {
         setError('');
 
         try {
-            const session = await stripeClient.checkout.sessions.create({
+            const result = await stripeClient.checkout.sessions.create({
                 currency: 'eur',
                 mode: 'payment',
                 customer_email: userEmail,
@@ -59,13 +57,13 @@ type PaymentLinkProps = {
                         product_data: {
                             name: "Betaling voor klus",
                         },
-                        unit_amount: Math.round(amount * 100), // Convert to cents
+                        unit_amount: subtotal
                     },
                     quantity: 1
                 }],
                 payment_method_types: ['card', 'ideal'],
                 payment_intent_data: {
-                    application_fee_amount: Math.ceil(amount * 2), // 2% of amount in cents
+                    application_fee_amount: Math.ceil(subtotal * 0.02),
                     transfer_data: {
                         destination: userStripeAccountId
                     }
@@ -73,6 +71,7 @@ type PaymentLinkProps = {
                 success_url: `${window.location.origin}/payments/success`,
                 cancel_url: `${window.location.origin}/payments/canceled`,
             });
+
             const paymentUrl = result.url as string;
             setPaymentLink(paymentUrl);
             handleSendMessage(`Hier is de betalingslink: <a href="${paymentUrl}">${paymentUrl}</a>`);
@@ -86,11 +85,7 @@ type PaymentLinkProps = {
 
     return (
         <>
-            <button onClick={createSession} className="dropup-option">
-                <BsCreditCard size={25} color="blue" />
-            </button>
-            {loading && <p>Loading...</p>}
-            {paymentLink && (
+            {loading ? <p>Loading...</p> : (
                 <>
                     <button onClick={createSession} className="dropup-option">
                         <BsCreditCard size={25} color="blue"/>
@@ -106,6 +101,6 @@ type PaymentLinkProps = {
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </>
     );
-};
+}
 
 export default PaymentLink;
