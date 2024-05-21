@@ -15,10 +15,15 @@ const stripe = new Stripe('sk_test_Gx4mWEgHtCMr4DYMUIqfIrsz', {
     apiVersion: '2023-10-16',
 });
 
-// Function to check if a product exists by name
+// Function to check if a product exists by name]
 async function getProductByName(name: string): Promise<string | null> {
-    const products = await stripe.products.list({ limit: 1, query_parameters: { name: name } });
-    return products.data.length > 0? products.data[0].id : null;
+  // Fetch all products
+  const products = await stripe.products.list();
+
+  // Filter products by name
+  const matchingProduct = products.data.find(product => product.name === name);
+
+  return matchingProduct? matchingProduct.id : null;
 }
 
 // Function to create a product if it doesn't exist
@@ -55,7 +60,7 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
             })),
         });
 
-        console.log(quote);
+        console.log('Quote created:', quote);
         return quote;
     } catch (error) {
         console.error('Error creating quote:', error);

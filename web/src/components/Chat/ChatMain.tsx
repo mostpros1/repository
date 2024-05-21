@@ -406,7 +406,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return htmlString;
   };
 
-  console.log(parseLinks("https://www.portaalvoortalent.nl/"));
 
   const handleSendMessageClick = async () => {
     const messageInput = document.getElementById("message-input") as HTMLInputElement;
