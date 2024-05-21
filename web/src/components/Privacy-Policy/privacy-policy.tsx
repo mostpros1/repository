@@ -10,7 +10,7 @@ function PrivacyPolicy() {
       </section>
 
       <section id="privacypolicyLowerSection">
-        <p id="privacy-topText">
+        <p>
           Versie: 1.2 Laatst aangepaste datum: 28 - 08 - 2023
         </p>
         <p className="privacy-text">

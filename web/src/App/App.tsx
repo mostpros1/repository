@@ -49,6 +49,7 @@ import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals
 import CareerPage from "../pages/CareerPage/CareerPage";
 import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
+import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
 
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
@@ -90,6 +91,9 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+
+      
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
