@@ -11,8 +11,6 @@ import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { BsPaperclip, BsPersonCircle } from "react-icons/bs";
 import { MdDriveFileMove } from "react-icons/md";
-import PaymentLink from "../PaymentLink/PaymentLink";
-import { useChatBackend } from "./ChatBackend";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
 import "./chatbox.css";
