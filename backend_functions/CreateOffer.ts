@@ -2,53 +2,46 @@ import Stripe from 'stripe';
 
 interface PriceData {
   currency: string;
-  product_data: {
-    name: string;
-    description: string;
-  };
+  product: string; // Corrected to match Stripe's expectation
   unit_amount: number;
-  product: string; // Include the 'product' field to match the expected structure
 }
-
 interface LineItem {
   price_data: PriceData;
   quantity: number;
 }
 
 // Initialize the Stripe client with your secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
+const stripe = new Stripe('sk_test_Gx4mWEgHtCMr4DYMUIqfIrsz', {
+    apiVersion: '2023-10-16',
 });
 
-// Function to create an open quote
-export async function createQuote(lineItemsDetails: { name: string, description: string, unit_amount: number, quantity: number, product: string }[]): Promise<Stripe.Response<Stripe.Quote>> {
+// Function to create a quote
+export async function createQuote(lineItems: { unit_amount: number, quantity: number }[]) {
   try {
-    // Generate line items based on the provided details
-    const lineItems: LineItem[] = lineItemsDetails.map(detail => ({
-      price_data: {
-        currency: 'eur',
-        product_data: {
-          name: detail.name,
-          description: detail.description,
-        },
-        unit_amount: detail.unit_amount,
-        product: detail.product, // Add this line to include the 'product' property
-      },
-      quantity: detail.quantity, // Assuming all items have a quantity of 1, adjust as needed
-    }));
+      const quote = await stripe.quotes.create({
+          line_items: lineItems.map(item => ({
+              price_data: {
+                  currency: 'eur', // Ensure this matches the currency you intend to use
+                  product: 'test', // Use the product ID here
+                  unit_amount: item.unit_amount * 100, // Stripe expects amounts in cents, so multiply by 100
+              },
+              quantity: item.quantity,
+          })),
+      });
 
-    // Create a quote with the adjusted line items
-    const quote = await stripe.quotes.create({
-      line_items: lineItems,
-    });
-
-    console.log(quote);
-    return quote;
+      console.log(quote);
+      return quote;
   } catch (error) {
-    console.error('Error creating quote:', error);
-    throw error;
+      console.error('Error creating quote:', error);
+      throw error;
   }
 }
 
 // Usage example
-
+createQuote([
+    { unit_amount: 1000, quantity: 2 }, // Example line item with unit amount of 1000 (in smallest currency unit) and quantity of 2
+]).then(quote => {
+    console.log(quote);
+}).catch(error => {
+    console.error(error);
+});

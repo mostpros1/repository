@@ -66,8 +66,13 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
             quantity: item.quantity
         }));
 
-        // Call the backend function to create the quote without a customer
-        const quote = await createQuote(lineItemsForStripe);
+        createQuote([
+            { unit_amount: 1000, quantity: 2 }, // Example line item with unit amount of 1000 (in smallest currency unit) and quantity of 2
+        ]).then(quote => {
+            console.log(quote);
+        }).catch(error => {
+            console.error(error);
+        });
 
         const offerMessage = `<div><OfferTemplate /></div>`;
         handleSendMessage(offerMessage);
