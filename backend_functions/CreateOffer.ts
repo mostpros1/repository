@@ -68,11 +68,3 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
     }
 }
 
-// Usage example
-createQuote([
-    { unit_amount: 1000, quantity: 2 }, // Example line item with unit amount of 1000 (in smallest currency unit) and quantity of 2
-]).then(quote => {
-    console.log(quote);
-}).catch(error => {
-    console.error(error);
-});
