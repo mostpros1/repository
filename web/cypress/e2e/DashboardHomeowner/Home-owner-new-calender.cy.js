@@ -1,24 +1,24 @@
-im//Stap 1 - Test 1
-// context('Kalender page bezoeken', () => {
-//   for (let i = 1; i < 2; i++) {
-//     it(`Type in input - test ${i}`, () => {
-//       // TEST 1: Type in input
-//       cy.testinlog();
-//       cy.dshscalnder('abdelrahmanfox22@yahoo.com','0123456789' );
-//       cy.get('body').then(($body) => {
-//         if ($body.text().includes('abdelrahmanfox22@yahoo.com')) {
-//           throw new Error('Foutmelding: abdelrahmanfox22@yahoo.com moet niet bestaan');
-//         } else {
-//           console.log('Het proces is correct uitgevoerd.');
-//         }
-//       });
-//       //cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();  //Job page
-//         //cy.get('.sidebar-list > :nth-child(3) > .sidebar-link').click(); //chat page
-//     });
-//   }
-// });
+//Stap 1 - Test 1
+context('Kalender page bezoeken', () => {
+  for (let i = 1; i < 2; i++) {
+    it(`Type in input - test ${i}`, () => {
+      // TEST 1: Type in input
+      cy.testinlog();
+      cy.dshscalnder('abdelrahmanfox22@yahoo.com','0123456789' );
+      cy.get('body').then(($body) => {
+        if ($body.text().includes('abdelrahmanfox22@yahoo.com')) {
+          throw new Error('Foutmelding: abdelrahmanfox22@yahoo.com moet niet bestaan');
+        } else {
+          console.log('Het proces is correct uitgevoerd.');
+        }
+      });
+      //cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();  //Job page
+        //cy.get('.sidebar-list > :nth-child(3) > .sidebar-link').click(); //chat page
+    });
+  }
+});
 
-//  //Stap 2 Test 1
+ //Stap 2 Test 1
 
 //     context('calender oude datum met bevestiging en verwijder van beschikbaarheiden testen', () => {
 //         beforeEach(() => {
