@@ -8,7 +8,7 @@
 
 .sideNavSection {
     width: 20%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: flex-end;
     padding-right: 2rem;
@@ -28,8 +28,9 @@
     display: flex;
     flex-direction: column;
     width: 80%;
-    height: 100vh;
+    height: 100%;
 }
+
 
 @media (max-width: 1044px) {
     .sideNavSection {
