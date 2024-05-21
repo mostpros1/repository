@@ -1,0 +1,26 @@
+#privacy-policyMain {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    background-color: lightgray;
+}
+
+#privacypolicyUpperSection {
+    display: flex;
+    background-color: pink;
+    justify-content: center;
+    align-items: center;
+}
+
+#privacypolicyUpperSection h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-right: 10rem;
+}
+
+#privacypolicyLowerSection {
+    background-color: yellow;
+    width: 150rem;
+    margin-left: 10rem;
+    text-align: left;
+}

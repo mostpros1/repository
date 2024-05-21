@@ -47,7 +47,8 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
-
+import ProductUpdatepage from "../pages/ProductUpdatepage/ProductUpdatepage";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
@@ -89,6 +90,8 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+      <Route path="/product-update" element={<ProductUpdatepage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
