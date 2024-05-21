@@ -1,12 +1,17 @@
 import Stripe from 'stripe';
 
+interface LineItem {
+    price: string;
+    quantity: number;
+  }
+
 // Initialize the Stripe client with your secret key
 const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
     apiVersion: '2023-10-16',
 });
 
 // Function to create a quote
-async function createQuote(customer: string, line_items: any[]) {
+async function createQuote(customer: string, line_items: LineItem[]) {
   try {
     const quote = await stripe.quotes.create({
       customer: customer,
