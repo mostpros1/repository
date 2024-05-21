@@ -158,6 +158,15 @@
     max-width: 100%;
   }
 
+  #quality-reqboxtop h3 {
+    text-align: center;
+  }
+
+  #quality-reqboxtop {
+    padding: 3rem;
+  }
+
+
   #quality-reqboxtop,
   #quality-reqboxbottom {
     width: auto;
@@ -168,5 +177,20 @@
   #quality-reqboxbottom {
     padding: 3rem;
     border-radius: 0px;
+  }
+
+  #quality-bottomTitle {
+    text-align: center;
+  }
+
+  #quality-bottomSection {
+    flex-direction: column;
+    width: auto;
+    margin: auto;
+  }
+
+  #quality-list {
+    flex-direction: column;
+    gap: 2rem;
   }
 }
