@@ -50,21 +50,26 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
     };
 
     const handleAccept = async () => {
-        const customerId = 'cus_NcMfB0SSFHINCV'; // Example customer ID
-
         // Save each line item to the database
         lineItems.forEach(item => addToDb(item));
 
         // Prepare line items for Stripe
         const lineItemsForStripe = lineItems.map(item => ({
-            price: 'price_1Mr7wULkdIwHu7ixhPkIEN2w', // example price ID, update as necessary
+            price_data: {
+                currency: 'usd', // Set your currency
+                product_data: {
+                    name: item.title,
+                    description: item.description,
+                },
+                unit_amount: item.price * 100, // Amount in cents
+            },
             quantity: item.quantity
         }));
 
-        // Call the backend function to create the quote
-        await createQuote(customerId, lineItemsForStripe);
+        // Call the backend function to create the quote without a customer
+        const quote = await createQuote(lineItemsForStripe);
 
-        const offerMessage = '<div><OfferTemplate /></div>';
+        const offerMessage = `<div><OfferTemplate /></div>`;
         handleSendMessage(offerMessage);
     };
 
@@ -90,6 +95,17 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
                             name="amount"
                             value={item.amount}
                             onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, amount: parseFloat(e.target.value) } : li))}
+                            step="any"
+                            required
+                        />
+
+                        <label htmlFor={`price-${index}`}>Price:</label>
+                        <input
+                            type="number"
+                            id={`price-${index}`}
+                            name="price"
+                            value={item.price}
+                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, price: parseFloat(e.target.value) } : li))}
                             step="any"
                             required
                         />
