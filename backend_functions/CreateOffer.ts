@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 
 interface PriceData {
   currency: string;
-  product: string; // Corrected to match Stripe's expectation
+  product: string;
   unit_amount: number;
 }
 interface LineItem {
@@ -15,26 +15,52 @@ const stripe = new Stripe('sk_test_Gx4mWEgHtCMr4DYMUIqfIrsz', {
     apiVersion: '2023-10-16',
 });
 
+// Function to check if a product exists by name
+async function getProductByName(name: string): Promise<string | null> {
+    const products = await stripe.products.list({ limit: 1, query_parameters: { name: name } });
+    return products.data.length > 0? products.data[0].id : null;
+}
+
+// Function to create a product if it doesn't exist
+async function createProduct(name: string, description: string) {
+    const productId = await getProductByName(name);
+
+    if (!productId) {
+        const product = await stripe.products.create({
+            name: name,
+            description: description,
+            type: 'service', // Or 'good', depending on your needs
+        });
+
+        return product.id;
+    }
+
+    return productId;
+}
+
 // Function to create a quote
 export async function createQuote(lineItems: { unit_amount: number, quantity: number }[]) {
-  try {
-      const quote = await stripe.quotes.create({
-          line_items: lineItems.map(item => ({
-              price_data: {
-                  currency: 'eur', // Ensure this matches the currency you intend to use
-                  product: 'test', // Use the product ID here
-                  unit_amount: item.unit_amount * 100, // Stripe expects amounts in cents, so multiply by 100
-              },
-              quantity: item.quantity,
-          })),
-      });
+    try {
+        // Automatically create the product if it doesn't exist
+        const productDetails = await createProduct('Custom Product Name', 'Custom Product Description');
 
-      console.log(quote);
-      return quote;
-  } catch (error) {
-      console.error('Error creating quote:', error);
-      throw error;
-  }
+        const quote = await stripe.quotes.create({
+            line_items: lineItems.map(item => ({
+                price_data: {
+                    currency: 'eur', // Ensure this matches the currency you intend to use
+                    product: productDetails, // Use the dynamically obtained product ID
+                    unit_amount: item.unit_amount * 100, // Stripe expects amounts in cents, so multiply by 100
+                },
+                quantity: item.quantity,
+            })),
+        });
+
+        console.log(quote);
+        return quote;
+    } catch (error) {
+        console.error('Error creating quote:', error);
+        throw error;
+    }
 }
 
 // Usage example
