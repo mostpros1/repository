@@ -7,14 +7,20 @@ interface PaymentOfferProps {
     handleSendMessage: (message: string) => void;
 }
 
-function addToDb(id: number, title: string, amount: number, description: string) {
+interface LineItem {
+    id: number;
+    title: string;
+    amount: number;
+    description: string;
+    price: number;
+    quantity: number;
+}
+
+function addToDb(lineItem: LineItem) {
     dynamo
         .put({
             Item: {
-                id: id,
-                title: title,
-                amount: amount,
-                description: description,
+                ...lineItem,
                 status: "undecided"
             },
             TableName: "Offers",
@@ -25,67 +31,98 @@ function addToDb(id: number, title: string, amount: number, description: string)
 }
 
 const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage }) => {
-    const [amount, setAmount] = useState<number>(0);
-    const [description, setDescription] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
+    const [lineItems, setLineItems] = useState<LineItem[]>([]);
+
+    const handleAddLineItem = () => {
+        const newItem: LineItem = {
+            id: Date.now(), // Unique identifier
+            title: '',
+            amount: 0,
+            description: '',
+            price: 0, // Assuming price is provided or calculated
+            quantity: 0
+        };
+        setLineItems([...lineItems, newItem]);
+    };
+
+    const handleDeleteLineItem = (itemId: number) => {
+        setLineItems(lineItems.filter(item => item.id !== itemId));
+    };
 
     const handleAccept = async () => {
-        const id = Math.floor(Math.random() * 10000);
-        addToDb(id, title, amount, description);
-        console.log(title, description, amount);
-        console.log("ACCEPT");
+        const customerId = 'cus_NcMfB0SSFHINCV'; // Example customer ID
 
-        const lineItems = [{
+        // Save each line item to the database
+        lineItems.forEach(item => addToDb(item));
+
+        // Prepare line items for Stripe
+        const lineItemsForStripe = lineItems.map(item => ({
             price: 'price_1Mr7wULkdIwHu7ixhPkIEN2w', // example price ID, update as necessary
-            quantity: amount
-        }];
+            quantity: item.quantity
+        }));
 
         // Call the backend function to create the quote
-        await createQuote('cus_NcMfB0SSFHINCV', lineItems);
+        await createQuote(customerId, lineItemsForStripe);
 
-        const offerMessage = '<div>' +
-            '<OfferTemplate />' + '</div>';
+        const offerMessage = '<div><OfferTemplate /></div>';
         handleSendMessage(offerMessage);
     };
 
     return (
         <div>
             <form>
-                <label htmlFor="title">Title:</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
+                {lineItems.map((item, index) => (
+                    <div key={index}>
+                        <label htmlFor={`title-${index}`}>Title:</label>
+                        <input
+                            type="text"
+                            id={`title-${index}`}
+                            name="title"
+                            value={item.title}
+                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, title: e.target.value } : li))}
+                            required
+                        />
 
-                <label htmlFor="amount">Amount:</label>
-                <input
-                    type="number"
-                    id="amount"
-                    name="amount"
-                    value={amount}
-                    onChange={(e) => setAmount(parseFloat(e.target.value))}
-                    step="any"
-                    required
-                />
+                        <label htmlFor={`amount-${index}`}>Amount:</label>
+                        <input
+                            type="number"
+                            id={`amount-${index}`}
+                            name="amount"
+                            value={item.amount}
+                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, amount: parseFloat(e.target.value) } : li))}
+                            step="any"
+                            required
+                        />
 
-                <label htmlFor="description">Description:</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
+                        <label htmlFor={`description-${index}`}>Description:</label>
+                        <textarea
+                            id={`description-${index}`}
+                            name="description"
+                            value={item.description}
+                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, description: e.target.value } : li))}
+                            required
+                        />
 
+                        <label htmlFor={`quantity-${index}`}>Quantity:</label>
+                        <input
+                            type="number"
+                            id={`quantity-${index}`}
+                            name="quantity"
+                            value={item.quantity}
+                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, quantity: parseFloat(e.target.value) } : li))}
+                            step="any"
+                            required
+                        />
+
+                        <button type="button" onClick={() => handleDeleteLineItem(item.id)}>Remove</button>
+                    </div>
+                ))}
+
+                <button type="button" onClick={handleAddLineItem}>Add Line Item</button>
                 <button type="button" onClick={handleAccept}>Submit</button>
             </form>
 
             <p>Aanbieding: €{subtotal.toFixed(2)}</p>
-            <button onClick={handleAccept}>Aanvaarden</button>
         </div>
     );
 };
