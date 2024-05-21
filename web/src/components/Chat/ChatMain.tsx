@@ -419,6 +419,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
+  const handleAcceptOffer = () => {
+    console.log('Offer accepted!');
+    // Implement your logic here
+  };
+
+  const handleDeclineOffer = () => {
+    console.log('Offer declined!');
+    // Implement your logic here
+  };
+  
+
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
