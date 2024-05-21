@@ -90,9 +90,9 @@
 .job-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 34px;
-  row-gap: 90px;
-  padding-top: 69px;
+  gap: 3.4rem;
+  row-gap: 9rem;
+  padding-top: 6.9rem;
   padding-left: 0px;
   justify-content: center;
   align-content: space-evenly;

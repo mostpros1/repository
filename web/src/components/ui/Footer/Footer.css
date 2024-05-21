@@ -40,6 +40,16 @@
     font-size: 80%;
     color: grey;
 }
+
+#footer-office-link {
+    text-decoration: none;
+    font-size: 90%;
+}
+
+#footer-office-link :hover{
+    color: #308AE4;
+}
+
 .link_socials {
     width: fit-content;
 }

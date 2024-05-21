@@ -1,18 +1,1 @@
-#settings-panel {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-  gap: 2rem;
-  margin: 2.5rem auto 0 14rem;
-}
-
-.setting-side-panel-left {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2.5rem;
-}
-
-.setting-side-panel-right {
-  display: flex;
-  width: 100%;
-}
+/*This file could be used for Media Query */

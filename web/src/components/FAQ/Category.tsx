@@ -1,14 +1,14 @@
 import React from "react";
-import Question from "./Question";
+import Answer from "./Answer";
 import "./Category.css";
 
 const Category = ({ title, questions }) => {
   return (
-    <section>
+    <section className="category-con">
       <h2 className="category-title">{title}</h2>
       <div className="questions-con">
-        {questions.map((questionText) => (
-          <Question key={questionText} text={questionText} />
+        {questions.map((question) => (
+          <Answer key={question.text} text={question.text} answers={question.answers} />
         ))}
       </div>
     </section>

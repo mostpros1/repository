@@ -29,7 +29,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
@@ -47,10 +47,13 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
-
+import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
+import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
 
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
+import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 
 
 const LanguageAwareRoutes = () => {
@@ -86,8 +89,14 @@ const LanguageAwareRoutes = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
+      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+
+      
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      <Route path="/quality" element={<QualityPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -118,7 +127,7 @@ const LanguageAwareRoutes = () => {
         path="/pro-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
-      <Route path="/FAQPage" element={<FAQPage />} />
+      <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />

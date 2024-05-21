@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Auth } from 'aws-amplify';
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
 import searchicon from "../../assets/searchicon.svg";
-import viewProfessionalsIcon from "../../assets/view-prof.svg";
-import chatIcon from "../../assets/chatIcon.svg";
+import viewProfessionalsIcon from "../../assets/view-prof.svg"; // Add the correct path and icon
+import chatIcon from "../../assets/chatIcon.svg"; // Add the correct path and icon
 import { dynamo } from "../../../declarations";
 import { Link, useNavigate } from "react-router-dom";
+//import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 import specialists from "../../data/specialists.js";
+
 
 interface Specialist {
   id: number;
@@ -16,90 +18,204 @@ interface Specialist {
   link?: string;
 }
 
-interface JobEntry {
-  id: number;
-  name: string;
-  description: string;
-  date: string;
-  chats: number;
-  isCurrent: boolean;
-  status: string; // 'pending', 'current', 'finished'
-}
+
+
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
-  const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
-  const [currentTab, setCurrentTab] = useState("pending");
-  const [userGroup, setUserGroup] = useState(""); // State to store user group
-  const navigate = useNavigate();
+  const [currentTab, setCurrentTab] = useState("pending"); // Default to showing pending jobs
 
+  const jobEnt = [
+    {
+      id: 1,
+      name: "test",
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 3,
+      isCurrent: true,
+    },
+    {
+      id: 2,
+      name: "test",
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 1,
+      isCurrent: true,
+    },
+    {
+      id: 3,
+      name: "test",
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 1,
+      isCurrent: true,
+    },
+    {
+      id: 4,
+      name: "test",
+      description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
+      date: "25-3-2024",
+      chats: 1,
+      isCurrent: true,
+    },
+    // Add more job entries...
+  ];
+
+  interface JobEntry {
+    id: number;
+    name: string;
+    description: string;
+    date: string;
+    chats: number;
+    isCurrent: boolean;
+  }
+
+  const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
   useEffect(() => {
-    const checkUserGroupAndFetchData = async () => {
+    const fetchProfEmailAndQueryDynamo = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userEmail = user.attributes.email;
+        console.log("User email: ", userEmail);
+        dynamo
+          .query({
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+              ':email': userEmail
+            }
+          })
+          .promise()
+          .then(data => {
+            if (data.Items && data.Items.length > 0) {
+              dynamo
+                .query({
+                  TableName: 'Projects',
+                  IndexName: 'professional_idIndex',
+                  KeyConditionExpression: 'professional_id = :professional_id',
+                  ExpressionAttributeValues: {
+                    ':professional_id': data.Items[0].id
+                  }
+                })
+                .promise()
+                .then(output => {
+                  if (output.Items) {
+
+                    // Create a temporary array to accumulate new job entries
+                    const newJobEntries: JobEntry[] = [];
+                    for (let i = 0; i < output.Items.length; i++) {
+                      console.log(output.Items[i]);
+                      newJobEntries.push({
+                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                        name: output.Items[i].name,
+                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                        chats: output.Items[i].chats,
+                        isCurrent: true,
+                      });
+                    }
+                    // Update the state once with the accumulated array
+                    if (output.Items.length === 0) {
+                      setJobEntries(jobEnt);
+                    } else {
+                      setJobEntries([...jobEntries, ...newJobEntries]);
+                    }
+                  } else {
+                    console.log("No items found in the query");
+                  }
+                })
+                .catch(console.error);
+            } else {
+              console.error("No items found in the first query");
+            }
+          })
+          .catch(console.error);
+      } catch (error) {
+        console.error("Error fetching user email or querying DynamoDB", error);
+      }
+    };
+    const fetchUserEmailAndQueryDynamo = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userEmail = user.attributes.email;
+
+        dynamo
+          .query({
+            TableName: 'Clients',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+              ':email': userEmail
+            }
+          })
+          .promise()
+          .then(data => {
+            if (data.Items && data.Items.length > 0) {
+              dynamo
+                .query({
+                  TableName: 'Projects',
+                  IndexName: 'client_idIndex',
+                  KeyConditionExpression: 'client_id = :client_id',
+                  ExpressionAttributeValues: {
+                    ':client_id': data.Items[0].id
+                  }
+                })
+                .promise()
+                .then(output => {
+                  if (output.Items) {
+
+                    // Create a temporary array to accumulate new job entries
+                    const newJobEntries: JobEntry[] = [];
+                    for (let i = 0; i < output.Items.length; i++) {
+                      console.log(output.Items[i]);
+                      newJobEntries.push({
+                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                        name: output.Items[i].name,
+                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                        chats: output.Items[i].chats,
+                        isCurrent: true,
+                      });
+                    }
+                    // Update the state once with the accumulated array
+                    if (output.Items.length === 0) {
+                      setJobEntries(jobEnt);
+                    } else {
+                      setJobEntries([...jobEntries, ...newJobEntries]);
+                    }
+                  } else {
+                    console.log("No items found in the query");
+                  }
+                })
+                .catch(console.error);
+            } else {
+              console.error("No items found in Clients the first query");
+            }
+          })
+          .catch(console.error);
+      } catch (error) {
+        console.error("Error fetching user email or querying DynamoDB", error);
+      }
+    };
+
+    const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        const userEmail = user.attributes.email;
-        const table = groups.includes("Professional") ? 'Professionals' : 'Clients';
-        const indexName = groups.includes("Professional") ? 'professional_idIndex' : 'client_idIndex';
-
-        const userData = await dynamo.query({
-          TableName: table,
-          IndexName: 'emailIndex',
-          KeyConditionExpression: 'email = :email',
-          ExpressionAttributeValues: { ':email': userEmail }
-        }).promise();
-
-        if (userData.Items && userData.Items.length > 0) {
-          const projectsData = await dynamo.query({
-            TableName: 'Projects',
-            IndexName: indexName,
-            KeyConditionExpression: `${groups.includes("Professional") ? 'professional_id' : 'client_id'} = :id`,
-            ExpressionAttributeValues: { ':id': userData.Items[0].id }
-          }).promise();
-
-          if (projectsData.Items) {
-            const newJobEntries = projectsData.Items.map(item => ({
-              id: item.id,
-              name: item.name,
-              description: item.description,
-              date: item.date,
-              chats: item.chats,
-              isCurrent: item.status === 'current',
-              status: item.status // This attribute should be present in your DynamoDB data model
-            }));
-
-            setJobEntries(newJobEntries);
-          }
+        if (groups && groups.includes("Professional")) {
+          fetchProfEmailAndQueryDynamo();
+        } else if (groups && groups.includes("Homeowner")) {
+          fetchUserEmailAndQueryDynamo();
         }
       } catch (error) {
-        console.error("Error in fetching user data or querying DynamoDB", error);
+        console.error("Error checking user group", error);
       }
     };
 
-    checkUserGroupAndFetchData();
-  }, []);
+    checkUserGroupAndFetch();
+  }, []); // Make sure to include any dependencies in this array
 
-
-  useEffect(() => {
-    const fetchUserGroup = async () => {
-      try {
-        const user = await Auth.currentAuthenticatedUser();
-        const groups = user.signInUserSession.accessToken.payload['cognito:groups']
-
-        if (groups.includes("Professional")) {
-          setUserGroup("Professional");
-        } else if (groups.includes("HomeOwner")) {
-          setUserGroup("HomeOwner");
-        } else {
-          setUserGroup("NoGroup");  // Handling users with no group
-        }
-      } catch (error) {
-        console.error("Failed to fetch user group", error);
-      }
-    };
-
-    fetchUserGroup();
-  }, []);
 
   //zoekbalk
 
@@ -109,10 +225,7 @@ const Jobs = () => {
 
   const handleInputChange = (event) => {
     setValue(event.target.value);
-    setJobDescription(event.target.value);
   };
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -128,6 +241,7 @@ const Jobs = () => {
     }
   };
 
+  const navigate = useNavigate();
   const handleInputFocus = () => {
     setShowList(true);
   };
@@ -195,53 +309,6 @@ const Jobs = () => {
     return [...taskResults, ...specialistResults];
   };
 
-
-  const getPendingJobs = useCallback(async () => {
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      const email = user.attributes.email; // Use the authenticated user's email
-      console.log("email: ", email);
-      dynamo.query({
-        TableName: "Klussen",
-        IndexName: "user_emailIndex",
-        KeyConditionExpression: "user_email = :email",
-        FilterExpression: "currentStatus = :currentStatus",
-        ExpressionAttributeValues: {
-          ":email": email,
-          ":currentStatus": currentTab//"pending"
-        }
-      }).promise().then((data) => {
-        console.log(data);
-        console.log("Current tab: ", currentTab);
-        if (data.Items && data.Items.length > 0) {
-          console.log("data.Items: ", data.Items);
-          const newJobEntries = data.Items.map(item => ({
-            status: item.currentStatus,
-            id: item.id,
-            name: item.profession,
-            region: item.region,
-            description: item.task,
-            user_email: item.user_email,
-            date: "Aangemaakt op: " + item.date, // Provide a default date or derive it from item
-            chats: item.chats, // Provide a default number of chats or derive it from item
-            isCurrent: item.isCurrent, // Provide a default boolean value or derive it from item
-          }));
-          setJobEntries(newJobEntries); // Assuming jobEntries is initialized as an array
-        }
-      }).catch((error) => {
-        console.error("Error fetching pending jobs:", error);
-      });
-    } catch (error) {
-      console.error("Error fetching pending jobs:", error);
-    }
-  }, [currentTab]); // Add currentTab as a dependency if it's used inside getPendingJobs
-
-  useEffect(() => {
-    getPendingJobs();
-    console.log("jobEntries: ", jobEntries);
-    console.log("Current tab changed to: ", currentTab);
-  }, [currentTab]);
-
   const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
@@ -260,32 +327,10 @@ const Jobs = () => {
     </Link>
   ));
 
-  const renderJobEntries = () => {
-    const filteredJobs = jobEntries.filter((job) => job.status === currentTab);
-    return filteredJobs.map((job) => (
-      <div className="job-entry" key={job.id}>
-        <div className="job-description"><b>{job.name.charAt(0).toUpperCase() + job.name.slice(1)}</b></div>
-        <div className="job-description">{job.description}</div>
-        <div className="job-date">{job.date}</div>
-        <div className="job-actions">
-          <div id="job-view-prof-con">
-            <span>View professionals</span>
-            <img src={viewProfessionalsIcon} alt="view professionals" />
-          </div>
-          <div className="chat-indicator">
-            <span>Ongoing chats ({job.chats})</span>
-            <img src={chatIcon} alt="chat" />
-          </div>
-        </div>
-        <Link to={`/nl/jobs/${job.id}`} className="job-view">
-          View job
-        </Link>
-      </div>
-    ));
-  };
 
   return (
     <div id="job-main">
+      <p>Place a new job</p>
       <div id="search-wrapper">
         <img src={searchicon} alt="search" id="search-icon" />
         <form onSubmit={handleSubmit} id="search-form">
@@ -293,14 +338,13 @@ const Jobs = () => {
             id="job-input-field"
             type="text"
             placeholder="describe the job (example, plumbing.)"
-            value={jobDescription}
+            value={value}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onKeyDown={handleInputKeyDown}
             onChange={handleInputChange}
           />
           <div className={showList ? "search_dropdown open" : "search_dropdown"}>
-            {/* results render */}
             {resultsRender}
           </div>
           <button type="submit" id="submit-button">
@@ -308,26 +352,59 @@ const Jobs = () => {
           </button>
         </form>
       </div>
-      <div className="job-status">
-        {userGroup === "HomeOwner" ? (
-          <>
-            <button className={`status-button ${currentTab === "pending" ? "active" : ""}`} onClick={() => setCurrentTab("pending")}>Pending Jobs</button>
-            <button className={`status-button ${currentTab === "current" ? "active" : ""}`} onClick={() => setCurrentTab("current")}>Current Jobs</button>
-            <button className={`status-button ${currentTab === "finished" ? "active" : ""}`} onClick={() => setCurrentTab("finished")}>Finished Jobs</button>
-          </>
-        ) : userGroup === "Professional" && (
-          <>
-            <button className={`status-button ${currentTab === "request" ? "active" : ""}`} onClick={() => setCurrentTab("request")}>Request Jobs</button>
-            <button className={`status-button ${currentTab === "current" ? "active" : ""}`} onClick={() => setCurrentTab("current")}>Current Jobs</button>
-            <button className={`status-button ${currentTab === "finished" ? "active" : ""}`} onClick={() => setCurrentTab("finished")}>Finished Jobs</button>
-          </>
-        )}
-      </div>
-      <div className="job-list-con">
-        {/* Render job entries based on the selected tab */}
-        {renderJobEntries()}
+
+      <div className="jobs-con">
+        <div className="job-status">
+          <button
+            className={`status-button ${currentTab === "pending" ? "active" : ""}`}
+            onClick={() => setCurrentTab("pending")}
+          >
+            Pending Jobs
+          </button>
+          <button
+            className={`status-button ${currentTab === "current" ? "active" : ""}`}
+            onClick={() => setCurrentTab("current")}
+          >
+            Current Jobs
+          </button>
+          <button
+            className={`status-button ${currentTab === "finished" ? "active" : ""}`}
+            onClick={() => setCurrentTab("finished")}
+          >
+            Finished Jobs
+          </button>
+        </div>
+        <div className="job-list-con">
+          <div className="job-list-vw">
+            {jobEntries
+              .filter((job) =>
+                currentTab === "current" ? job.isCurrent : !job.isCurrent
+              )
+              .map((job) => (
+                <div className="job-entry" key={job.id}>
+                  <p className="job-description">{job.description}</p>
+                  <p className="job-date">{job.date}</p>
+                  <div className="job-actions">
+                    <div id="job-view-prof-con">
+                      <img
+                        src={viewProfessionalsIcon}
+                        alt="View Professionals"
+                      />
+                      <span>View professionals</span>
+                    </div>
+                    <div className="chat-indicator">
+                      <img src={chatIcon} alt="Chat" />
+                      <span>Ongoing chats {`(${job.chats})`}</span>
+                    </div>
+                  </div>
+                  <p className="job-view">View job</p>
+                </div>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
 export default Jobs;

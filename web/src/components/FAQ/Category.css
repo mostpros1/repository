@@ -1,7 +1,6 @@
-.category {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 20px; /* This adds space between the grid items */
+.category-con {
+  display: flex;
+  flex-direction: column;
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 10px;
   margin-bottom: 10px;
@@ -32,4 +31,29 @@
   border-radius: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .category-con {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+  }
+
+  .category-title {
+    grid-template-columns: 1fr;
+    width: auto;
+  }
+
+  .category {
+    grid-template-columns: 1fr;
+    width: auto;
+  }
+
+  .questions-con {
+    grid-template-columns: 1fr;
+    width: auto;
+  }
+
 }
