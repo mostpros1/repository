@@ -11,8 +11,8 @@ function JobList() {
           <SideNav />
         </article>
       </section>
-      <section className="jobCardsSection">
         <FilterBar />
+      <section className="jobCardsSection">
         <JobCards />
       </section>
     </main>
