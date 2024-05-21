@@ -1,0 +1,18 @@
+.chat-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0rem;
+    margin: 25px auto 0 140px;
+  }
+  
+  .side-panel-left-chat {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+  
+  .side-panel-right-chat {
+    display: flex;
+    flex-direction: column;
+  }
