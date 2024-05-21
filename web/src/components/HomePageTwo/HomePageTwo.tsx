@@ -4,58 +4,62 @@ import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import RoofingIcon from "@mui/icons-material/Roofing";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
-import { Link } from 'react-router-dom';
-import { taal } from '../ui/NavBar/Navigation.tsx';
+import StarIcon from "@mui/icons-material/Star";
+import WhyMostProsImg from "../../assets/workingman.png";
+import Allin1ServiceImg from "../../assets/workingmantwo.png";
+import AppStore from "../../assets/Appstore_button.png";
+import PlayStore from "../../assets/Google-play-badge-1.png";
+import HomePFP from "../../assets/homepagepfp.png";
+import { Link } from "react-router-dom";
+import { taal } from "../ui/NavBar/Navigation.tsx";
 
 const PopularCardsData = [
   {
     id: 1,
-    name: 'Hovenier',
+    name: "Hovenier",
     icon: <YardIcon />,
   },
   {
     id: 2,
-    name: 'Elektriciën',
+    name: "Elektriciën",
     icon: <ElectricBoltIcon />,
   },
   {
     id: 3,
-    name: 'Loodgieter',
+    name: "Loodgieter",
     icon: <PlumbingIcon />,
   },
   {
     id: 4,
-    name: 'Dakdekker',
+    name: "Dakdekker",
     icon: <RoofingIcon />,
   },
   {
     id: 5,
-    name: 'Schoonmaker',
+    name: "Schoonmaker",
     icon: <CleaningServicesIcon />,
   },
   {
     id: 1,
-    name: 'Hovenier',
+    name: "Hovenier",
     icon: <YardIcon />,
   },
   {
     id: 2,
-    name: 'Elektriciën',
+    name: "Elektriciën",
     icon: <ElectricBoltIcon />,
   },
   {
     id: 3,
-    name: 'Loodgieter',
+    name: "Loodgieter",
     icon: <PlumbingIcon />,
   },
   {
     id: 4,
-    name: 'Dakdekker',
+    name: "Dakdekker",
     icon: <RoofingIcon />,
   },
 ];
-
-
 
 function HomePageTwo() {
   return (
@@ -93,6 +97,259 @@ function HomePageTwo() {
             </article>
           </section>
         </article>
+      </section>
+      <article className="InfoBarHome">
+        <div className="infoContainerHome">
+          <StarIcon />
+          <h4 className="infoContainerHomeH4">100+ Vakspecialisten </h4>
+        </div>
+        <div className="infoContainerHome">
+          <StarIcon />
+          <h4 className="infoContainerHomeH4">1000+ klussen</h4>
+        </div>
+        <div className="infoContainerHome">
+          <StarIcon />
+          <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+        </div>
+        <article className="infoContainerHome">
+          <StarIcon />
+          <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+        </article>
+      </article>
+      <section className="howItWorksSectionHome">
+        <article className="howItWorksTitleContainerHome">
+          <h2 className="howItWorksTitleHome">Hoe Mostpros Werkt</h2>
+        </article>
+        <section className="howItworksContainerCards">
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Beschrijf je klus</h5>
+            <p className="howitworkscardhomeP">
+              Voer in de zoekbalk je klus in en geef een beschrijving van de
+              gewenste werkzaamheden.
+            </p>
+          </article>
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Vind & huur vakmannen</h5>
+            <p className="howitworkscardhomeP">
+              Ontvang reacties van vakmannen. Chat rechtstreeks. Bespreek
+              details, kosten en de tijdlijn. Vergelijk offertes en huur met
+              vertrouwen.
+            </p>
+          </article>
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Beheer & betaal vakmannen</h5>
+            <p className="howitworkscardhomeP">
+              Beheer en betaal veilig de ingehuurde vakman, nadat het gewenste
+              resultaat is geleverd.
+            </p>
+          </article>
+        </section>
+      </section>
+      <section className="whyMostProsSectionHome">
+        <img
+          src={WhyMostProsImg}
+          alt="Werkende vakspecialist bij een klus"
+          className="whyMostProsSectionHomeImg"
+        />
+        <article className="whyMostProsTextContainerHome">
+          <h2 className="howItWorksTitleHome">Waarom Mostpros?</h2>
+          <p className="howitworkscardhomeP">
+            MostPros is een All-in-1 Home Services App. Vind, huur, beheer en
+            betaal gecertificeerde lokale vakspecialist als huiseigenaar voor al
+            uw klussen. <br /> <br />
+            Samen met ons groeiende netwerk bouwen we mee aan de huizen voor de
+            toekomst. Samen helpen we mensen groeien. We accepteren de home
+            service industrie niet zoals die is, samen willen we het veranderen
+            terwijl we plezier hebben.
+          </p>
+          <article className="whyMostProsButtonContainer">
+            <button className="whyMostProsButtonHome">Plaats je klus</button>
+            <button className="whyMostProsButtonTwoHome">
+              Inschrijven als vakman
+            </button>
+          </article>
+        </article>
+      </section>
+      <section className="whyMostProsSectionHomeTwo">
+        <img
+          src={Allin1ServiceImg}
+          alt="Werkende vakspecialist bij een klus"
+          className="whyMostProsSectionHomeImg "
+        />
+        <article className="whyMostProsTextContainerHome">
+          <h2 className="howItWorksTitleHome">All-in-1 Home Services App</h2>
+          <p className="howitworkscardhomeP">
+            Bespaar jezelf kosten en administratieve tijd met de All-in-1 Home
+            Service App. Mostpros is je klus partner tijdens de levenscyclus van
+            je huizenbezit.
+            <br /> <br />
+            Een gebruiksvriendelijke app met gecertificeerde lokale
+            vakspecialisten om elke klus te voltooien.
+          </p>
+          <article className="whyMostProsButtonContainer">
+            <img
+              src={AppStore}
+              alt="Appstore download"
+              className="AppStoreHomeDownload"
+            />
+            <img
+              src={PlayStore}
+              alt="PlayStore download"
+              className="PlayStoreHomeDownload"
+            />
+          </article>
+        </article>
+      </section>
+      <section className="homeProfHighlightHomeSection">
+        <h2 className="howItWorksTitleHome">Uitgelichte vakspecialisten</h2>
+        <p className="howitworkscardhomeP">
+          Top vakspecialisten, zoals aannemers, loodgieters en hoveniers,
+          verbeteren <br /> de ervaring van huiseigenaren met vakmanschap
+        </p>
+      </section>
+      <section className="HomeProfCardsContainer">
+        <section className="HomeProfCardsSectionHome">
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={HomePFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Bas Fixo B.V. <br />
+                Loodgieter
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article>
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+          </article>
+          
+        </section>
+        
       </section>
     </main>
   );

@@ -95,15 +95,315 @@
   flex-wrap: wrap;
 }
 
+.InfoBarHome{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.infoContainerHome{
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoContainerHomeH4{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+}
+.howItWorksSectionHome {
+  margin-top: 11.1rem;
+  width: 100%;
+  display: flex;
+  gap: 8rem;
+  flex-direction: column;
+}
+
+.howItWorksTitleContainerHome {
+  width: 100%;
+  font-size: 2.5rem;
+  padding-left: 25rem;
+}
+
+.howItWorksTitleHome {
+  font-family: 'Poppins', sans-serif;
+}
+
+.howItworksContainerCards {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  position: relative; 
+  flex-wrap: wrap;
+}
+
+.howItworksContainerCards::before {
+  counter-reset: cardCounter; 
+  content: ""; 
+  position: absolute; 
+  top: 0; 
+}
+
+.howItWorksCardHome {
+  min-height: 22.7rem;
+  width: 33.8rem;
+  background: #EFEFEF;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  border-color: #D9D9D9;
+  border-style: solid;
+  border-width: 0.2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.9rem;
+  text-align: center;
+}
+
+.howitworkscardhomeH5{
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.howitworkscardhomeP{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  width: 90%;
+}
+
+.howItWorksCardHome::before {
+  content: counter(cardCounter);
+  counter-increment: cardCounter;
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 5rem;
+  background: #207CD7;
+  border-radius: 50%;
+  border: 0.5rem solid #EFEFEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.whyMostProsSectionHome{
+  width: 100%;
+  margin-top: 11.9rem;
+  margin-bottom: 11.9rem;
+  display: flex;
+  align-items: center;
+  gap: 16rem;
+  flex-wrap: wrap;
+}
+
+.whyMostProsSectionHomeImg {
+  object-fit: contain;
+  width: 66rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.whyMostProsTextContainerHome{
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.whyMostProsButtonContainer{
+  display: flex;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.whyMostProsButtonHome{
+  width: 13.3rem;
+  height: 4rem;
+  background: #207CD7;
+  border: none;
+  border-radius: 0.2rem;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+}
+
+.whyMostProsButtonTwoHome{
+  width: 22.9rem;
+  height: 4rem;
+  background: white;
+  border: 0.2rem solid #222222; 
+  border-radius: 0.2rem;
+  color: #222222;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+}
+
+.whyMostProsSectionHomeTwo{
+  width: 100%;
+  margin-top: 11.9rem;
+  margin-bottom: 11.9rem;
+  display: flex;
+  align-items: center;
+  gap: 16rem;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+
+.AppStoreHomeDownload{
+  width: 16.6rem;
+  height: 5.5rem;
+  margin-top: 6.8rem;
+}
+
+.PlayStoreHomeDownload{
+  width: 18.9rem;
+  height: 5.5rem;
+  margin-top: 6.8rem;
+}
+
+
+
+.homeProfHighlightHomeSection{
+  width: 100%;
+  padding-left: 13.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.HomeProfCardsContainer{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center; 
+  margin-top: 8rem;
+}
+
+.HomeProfCardsSectionHome{
+  width: 60%;
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeProCardHome {
+  height: 36.5rem;
+  min-width: 32rem;
+  background: white;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.8rem;
+  padding: 2rem;
+}
+
+.HomeProCardPFPSection{
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.HomeProfCardPFP{
+  border-radius: 50%;
+  width: 8.6rem;
+  object-fit: contain;
+}
+
+.HomeProCardhomeH5{
+  font-size: 1.6rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.HomeProCardReviewSection{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.HomeProCardhomeReviewP{
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+@media screen and (max-width:1639px){
+  .whyMostProsSectionHome{
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  .whyMostProsSectionHomeTwo{
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  .whyMostProsTextContainerHome{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .whyMostProsButtonContainer{
+    display: flex;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .homeProfHighlightHomeSection{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0rem;
+  }
+}
+
+@media screen and (max-width: 1520px){
+  .howItWorksTitleContainerHome {
+    padding-left: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
 @media screen and (max-width: 768px) {
   .titleSectionHomeH2 {
-    font-size: 3.6rem; /* Adjust the font size for smaller screens */
+    font-size: 3.6rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .titleSectionHomeH2 {
-    font-size: 2.8rem; /* Further adjust font size for even smaller screens */
+    font-size: 2.8rem;
+  }
+
+  .howItWorksTitleContainerHome{
+    font-size: 2rem;
+    text-align: center;
   }
 }
 
