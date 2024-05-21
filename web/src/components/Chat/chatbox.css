@@ -571,29 +571,83 @@
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
-.dropup-option {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  color: #ffffff;
-  background-color: #007bff;
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 220px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 7px;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px auto;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.dropup-option:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
 }
 
-.dropup-option-leeg {
-  display: none;
-}
-
-.amount-input{
-  width: 150px;
+.modal-content input {
+  width: calc(100% - 20px);
   padding: 10px;
+  margin: 10px 0;
+}
+
+.modal-content button {
+  margin: 10px;
+}
+
+.button-modal{
+  border-radius: 8px;
+  width: 80px;
+  height: 30px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+.button-modal:hover{
+  border: solid 2px #007bff;
+  transition: all 0.6s ease;
+  color: black;
+  background-color: white;
 }
