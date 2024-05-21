@@ -1,12 +1,13 @@
-import React, { useState } from 'react'; // Removed useState as it's not used
+import React, { useState } from 'react';
 import { dynamo } from '../../../declarations';
+import { createQuote } from '../../../../backend_functions/CreateOffer';
 
 interface PaymentOfferProps {
     subtotal: number;
     handleSendMessage: (message: string) => void;
 }
 
-function addToDb(id, title, amount, description) {
+function addToDb(id: number, title: string, amount: number, description: string) {
     dynamo
         .put({
             Item: {
@@ -20,19 +21,28 @@ function addToDb(id, title, amount, description) {
         })
         .promise()
         .then(data => console.log(data.Attributes))
-        .catch(console.error)
+        .catch(console.error);
 }
 
-const PaymentOffer = ({ subtotal, handleSendMessage }: PaymentOfferProps) => {
+const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage }) => {
     const [amount, setAmount] = useState<number>(0);
     const [description, setDescription] = useState<string>('');
     const [title, setTitle] = useState<string>('');
 
-    const handleAccept = () => {
+    const handleAccept = async () => {
         const id = Math.floor(Math.random() * 10000);
         addToDb(id, title, amount, description);
         console.log(title, description, amount);
         console.log("ACCEPT");
+
+        const lineItems = [{
+            price: 'price_1Mr7wULkdIwHu7ixhPkIEN2w', // example price ID, update as necessary
+            quantity: amount
+        }];
+
+        // Call the backend function to create the quote
+        await createQuote('cus_NcMfB0SSFHINCV', lineItems);
+
         const offerMessage = '<div>' +
             '<OfferTemplate />' + '</div>';
         handleSendMessage(offerMessage);
@@ -71,12 +81,11 @@ const PaymentOffer = ({ subtotal, handleSendMessage }: PaymentOfferProps) => {
                     required
                 />
 
-                <button type="submit">Submit</button>
+                <button type="button" onClick={handleAccept}>Submit</button>
             </form>
 
             <p>Aanbieding: €{subtotal.toFixed(2)}</p>
             <button onClick={handleAccept}>Aanvaarden</button>
-            {/* Add other elements */}
         </div>
     );
 };
