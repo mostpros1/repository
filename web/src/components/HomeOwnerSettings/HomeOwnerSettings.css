@@ -80,3 +80,13 @@
   width: 10rem;
   cursor: pointer;
 }
+
+#accept-btn {
+  background-color: #308ae4;
+  border: none;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  width: 10rem;
+  cursor: pointer;
+}

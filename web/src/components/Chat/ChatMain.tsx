@@ -4,14 +4,17 @@ import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
+import { useChatBackend } from "./ChatBackend";
+import SideNav from "../ui/SideNav/SideNav";
+import "./chatbox.css";
+import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
 import { BsPaperclip, BsPersonCircle } from "react-icons/bs";
 import { MdDriveFileMove } from "react-icons/md";
-import PaymentLink from "../PaymentLink/PaymentLink";
-import { useChatBackend } from "./ChatBackend";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
 import "./chatbox.css";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 interface Chat {
   id: string;
@@ -34,6 +37,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     handleSendMessage,
     handleReceivedMessage,
     handleJoinChat,
+    handleStartNewChatWithEmail,
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -55,6 +59,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
+  const [showNewChatModal, setShowNewChatModal] = useState(false);
+  const [newChatEmail, setNewChatEmail] = useState("");
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
@@ -418,6 +424,22 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
+  const [open, setOpen] = useState(false);
+  
+  const toggleMenu = () => {
+    setOpen(!open);
+  };
+
+  const handleStartNewChatClick = () => {
+    setShowNewChatModal(true);
+  };
+
+  const handleNewChatConfirm = async () => {
+    console.log("Starting new chat with email:", newChatEmail);
+    await handleStartNewChatWithEmail(newChatEmail);
+    setShowNewChatModal(false);
+  };
+
   const handleAcceptOffer = () => {
     console.log('Offer accepted!');
     // Implement your logic here
@@ -432,13 +454,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   return (
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
-        <input
-          type="text"
-          placeholder="Zoek gebruikers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchList"
-        />
+        <div className="dropdown-container">
+          <BsThreeDotsVertical size={20} className="menu-icon" onClick={toggleMenu} />
+          {open && (
+            <div className="dropdown-menu">
+              <div className="dropdown-item" onClick={handleStartNewChatClick}>
+                Nieuwe chat starten
+              </div>
+              <div className="dropdown-item" onClick={() => console.log('Instellingen')}>
+                Instellingen
+              </div>
+            </div>
+          )}
+        </div>
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
@@ -626,6 +654,21 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           </div>
         </div>
       </div>
+      {showNewChatModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Start Nieuwe Chat</h2>
+            <input
+              type="email"
+              placeholder="Voer e-mailadres in"
+              value={newChatEmail}
+              onChange={(e) => setNewChatEmail(e.target.value)}
+            />
+            <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
+            <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

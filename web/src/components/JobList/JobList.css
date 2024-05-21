@@ -1,5 +1,44 @@
-.job-con{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
+.jobListMain {
+    width: 100%;
+    height: 100%;
+    padding-right: 12rem;
+    padding-top: 5rem;
+    display: flex;
+}
+
+.sideNavSection {
+    width: 20%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
+}
+
+.sideNav {
+    height: 45%;
+    width: 18rem;
+    background: #222;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jobCardsSection {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100vh;
+}
+
+@media (max-width: 1044px) {
+    .sideNavSection {
+        display: none;
+    }
+
+    .jobListMain {
+        align-items: center;
+        justify-content: center;
+        padding-right: 0rem;
+    }
 }
