@@ -49,7 +49,7 @@ const HomeOwnerSecurity = () => {
                 onChange={handlePasswordChange}
               />
             </div>
-              <button id="save-password-settings" onClick={() => console.log("Password Changed!")}>Opslaan</button>
+            <button id="save-password-settings" onClick={() => console.log("Password Changed!")}>Opslaan</button>
           </div>
         </div>
       )}
@@ -57,7 +57,15 @@ const HomeOwnerSecurity = () => {
         <div id="account-setting-content">
           <div id="account-setting-content-header">Account Details</div>
           <div id="account-setting-content-body">
-            {/* Add Account related settings here */}
+            <div className="account-setting">
+              <label>Email</label>
+              <input type="email" placeholder="johndoe@gmail.com" />
+            </div>
+            <div className="account-setting">
+              <label>Re-enter Email</label>
+              <input type="email" placeholder="johndoe@gmail.com" />
+            </div>
+            <button id="accept-btn"> Bevestigen </button>
           </div>
         </div>
       )}
@@ -65,7 +73,17 @@ const HomeOwnerSecurity = () => {
         <div id="account-setting-content">
           <div id="account-setting-content-header">Privacy Settings</div>
           <div id="account-setting-content-body">
-            {/* Add Privacy related settings here */}
+
+            <div className="account-setting">
+              <label>Privacy Policy</label>
+              <p></p>
+              <input type="checkbox" />
+            </div>
+            <div className="account-setting">
+              <label>Terms and Conditions</label>
+              <input type="checkbox" />
+            </div>
+            <button id="accept-btn"> Accept </button>
           </div>
         </div>
       )}

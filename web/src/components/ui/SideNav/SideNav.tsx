@@ -281,10 +281,9 @@ const SideNav = () => {
                   Instellingen
                 </NavLink>
               </li>
-
               <li className="sidebar-item">
                 <NavLink
-                  to={`/${lang}/homeowner-dashboard/help`}
+                  to={`/${taal}/homeowner-dashboard/FAQPage`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }

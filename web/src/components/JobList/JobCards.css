@@ -5,6 +5,13 @@
     align-items: center;
 }
 
+.no-jobs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+}
+
 .user-detail h2{
     font-size: 20px;
     font-weight: 550;

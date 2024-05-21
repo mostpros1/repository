@@ -11,19 +11,22 @@ export const taal = window.location.pathname.split('/')[1];
 function MobileNav() {
   const [open, setOpen] = useState(false);
 
-  const hamburgerIcon = <MenuIcon onClick={() => setOpen(!open)} />;
+  const toggleSidebar = () => {
+    setOpen(!open);
+  };
 
-  const closeIcon = <CloseIcon onClick={() => setOpen(!open)} />;
   return (
     <div className="mobile-nav">
       <Link to="/">
         <div className="nav-leftside">
-          <img src={Logo} alt="" />
           <h1 className="black-h1">Mostpros</h1>
         </div>
       </Link>
-      {open ? closeIcon : hamburgerIcon}
-      {open && <NavLinks />}
+      <div className="menu-icon" onClick={toggleSidebar}>
+        <p>Menu</p>
+        {open ? <CloseIcon /> : <MenuIcon />}
+      </div>
+      {open && <NavLinks toggleSidebar={toggleSidebar} />}
     </div>
   );
 }
