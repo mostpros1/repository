@@ -31,11 +31,10 @@ const PaymentOffer = ({ subtotal, handleSendMessage }: PaymentOfferProps) => {
     const handleAccept = () => {
         const id = Math.floor(Math.random() * 10000);
         addToDb(id, title, amount, description);
-
+        console.log(title, description, amount);
         console.log("ACCEPT");
         const offerMessage = '<div>' +
-            `<iframe src="/nl/offers?ID=${id}" title="Offer Details" width="100%" height="400px" frameBorder="0"></iframe>` +
-            '</div>';
+            '<OfferTemplate />' + '</div>';
         handleSendMessage(offerMessage);
     };
 

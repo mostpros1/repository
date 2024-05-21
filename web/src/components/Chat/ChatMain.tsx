@@ -16,6 +16,7 @@ import { BsCreditCard } from "react-icons/bs";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from 'react-dom/server';
 import PaymentOffer from "../PaymentLink/PaymentOffer";
+import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 function ChatMain({ user, signOut }) {
   const {

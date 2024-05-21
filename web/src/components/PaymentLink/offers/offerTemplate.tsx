@@ -10,12 +10,16 @@ const OfferTemplate = () => {
     // Function to extract ID and amount from the URL
     const extractParamsFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
-        const idParam = params.get('ID'); // Adjust the key according to your URL structure
+        const idParam = params.get('ID');
         const amountParam = params.get('amount');
+        const descriptionParam = params.get('description');
+        const titleParam = params.get('title');
 
-        if (idParam !== null && amountParam !== null) {
+        if ( idParam != null && amountParam != null && descriptionParam != null && titleParam != null) {
             setId(idParam);
             setAmount(Number(amountParam));
+            setDescription(descriptionParam);
+            setTitle(titleParam);
         }
     };
 
@@ -45,7 +49,7 @@ const OfferTemplate = () => {
                 }
             }).catch(console.error)
     }, []);
-    
+
     const handleAccept = () => {
         setStatus('accepted');
         dynamo
@@ -87,6 +91,7 @@ const OfferTemplate = () => {
             {status === null && (
                 <>
                     <p>Offerte.</p>
+                    <p>ID: {id}</p>
                     <p>Title: {title}</p> {/* Display the extracted ID */}
                     <p>Bedrag: {amount}</p> {/* Display the extracted amount */}
                     <p>Beschijving: {description}</p>
