@@ -6,16 +6,11 @@ const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
 });
 
 // Function to create a quote
-async function createQuote() {
+async function createQuote(customer: string, line_items: any[]) {
   try {
     const quote = await stripe.quotes.create({
-      customer: 'cus_NcMfB0SSFHINCV',
-      line_items: [
-        {
-          price: 'price_1Mr7wULkdIwHu7ixhPkIEN2w',
-          quantity: 2,
-        },
-      ],
+      customer: customer,
+      line_items: line_items,
     });
 
     console.log(quote);
@@ -25,4 +20,7 @@ async function createQuote() {
 }
 
 // Call the function
-createQuote();
+createQuote('cus_NcMfB0SSFHINCV',[{
+    price: 'price_1Mr7wULkdIwHu7ixhPkIEN2w',
+    quantity: 2,
+  }]);
