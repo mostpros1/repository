@@ -1,11 +1,7 @@
-import ReactDOM from "react-dom";
 import "./JobList.css";
 import SideNav from "../ui/SideNav/SideNav";
 import FilterBar from "../../components/FilterBar/FilterBar";
 import JobCards from "./JobCards";
-ReactDOM.render(<JobList />, document.getElementById("root"));
-
-
 
 function JobList() {
   return (
@@ -15,10 +11,11 @@ function JobList() {
           <SideNav />
         </article>
       </section>
-      <section className="jobCardsSection">
+      <section id="jobcardSection">
         <FilterBar />
-        
-        <JobCards />
+        <div className="jobCardsDisplay">
+          <JobCards />
+        </div>
       </section>
     </main>
   );
