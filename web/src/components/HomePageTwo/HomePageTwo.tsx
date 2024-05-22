@@ -222,7 +222,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -230,6 +230,10 @@ function HomePageTwo() {
                 <StarIcon style={{ fontSize: "2rem" }} />
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+            </section>
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
             </section>
           </article>
           <article className="HomeProCardHome">
@@ -245,7 +249,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -254,7 +258,11 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-          </article>
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+            </section>
+          </article>        
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -268,7 +276,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -277,7 +285,11 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-          </article>
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+            </section>
+          </article>        
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -291,7 +303,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -300,7 +312,11 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-          </article>
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+            </section>
+          </article>        
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -314,7 +330,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -323,7 +339,11 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-          </article>
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+            </section>
+          </article>        
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -337,7 +357,7 @@ function HomePageTwo() {
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
-              <article>
+              <article className="HomeProCardStarContainer">
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
@@ -346,8 +366,12 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-          </article>
-          
+            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <section className="HomeProCardhomeButtonContainer">
+            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+            </section>
+          </article>        
+           
         </section>
         
       </section>

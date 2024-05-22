@@ -239,6 +239,12 @@
   font-size: 1.5rem;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.whyMostProsButtonHome:hover {
+  background-color: #185a9d;
+  transform: scale(1.05);
 }
 
 .whyMostProsButtonTwoHome{
@@ -251,6 +257,13 @@
   font-size: 1.5rem;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.whyMostProsButtonTwoHome:hover {
+  background-color: #222222;
+  color: white; 
+  transform: scale(1.05);
 }
 
 .whyMostProsSectionHomeTwo{
@@ -268,12 +281,14 @@
   width: 16.6rem;
   height: 5.5rem;
   margin-top: 6.8rem;
+  cursor: pointer;
 }
 
 .PlayStoreHomeDownload{
   width: 18.9rem;
   height: 5.5rem;
   margin-top: 6.8rem;
+  cursor: pointer;
 }
 
 
@@ -304,7 +319,6 @@
 }
 
 .HomeProCardHome {
-  height: 36.5rem;
   min-width: 32rem;
   background: white;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
@@ -341,9 +355,48 @@
   gap: 1.5rem;
 }
 
+.HomeProCardStarContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .HomeProCardhomeReviewP{
   font-size: 1.4rem;
   font-family: 'Poppins', sans-serif;
+}
+
+.HomeProCardhomeReviewText{
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif;
+  max-width: 28rem;
+  margin-top: 1.5rem;
+}
+
+.HomeProCardhomeButtonContainer{
+  width: 100%;
+  margin-top: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeProCardhomeViewProfileButton {
+  width: 23.7rem;
+  height: 4rem;
+  background: white;
+  border: 0.1rem solid #207CD7;
+  border-radius: 0.6rem;
+  color: #207CD7;
+  font-size: 1.2rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.HomeProCardhomeViewProfileButton:hover {
+  background-color: #207CD7;
+  color: white;
 }
 
 @media screen and (max-width:1639px){
