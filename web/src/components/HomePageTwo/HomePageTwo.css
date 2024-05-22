@@ -319,7 +319,7 @@
 }
 
 .HomeProCardHome {
-  min-width: 32rem;
+  min-width: 30rem;
   background: white;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
@@ -399,6 +399,110 @@
   color: white;
 }
 
+.HomeProfReviewSectionHome{
+  width: 100%;
+  margin-top: 11.4rem;
+  background: #e0e0e0;
+  padding-left: 13.4rem;
+  padding-right: 13.4rem;
+  padding-top: 5rem;
+  padding-bottom: 20rem;
+}
+
+.HomeProfReviewTitlesContainer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: auto;
+  height: auto;
+
+}
+
+.HomeProfReviewWrapper{
+  display: flex;
+  gap: 3rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  flex-wrap: wrap;
+}
+
+.HomeProReviewH5HomeOwner, .HomeProReviewH5Proffesional {
+  cursor: pointer;
+  position: relative;
+}
+
+.HomeProReviewH5HomeOwner::after,
+.HomeProReviewH5Proffesional::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.1rem;
+    width: 100%;
+    height: 0.3rem;
+    background-color: #207CD7;
+    display: none;
+    opacity: 0; 
+    animation: fadeInUnderline 0.5s ease forwards; 
+}
+
+@keyframes fadeInUnderline {
+  from {
+      opacity: 0; 
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.HomeProReviewH5HomeOwner.active::after,
+.HomeProReviewH5Proffesional.active::after {
+    display: block; 
+}
+
+.HomeProfReviewHomeContainer{
+  /* background: orange; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+}
+
+.ReviewCardHomeProfHome{
+  /* background: pink; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+
+.dividerDivLine{
+  width: 0.2rem;
+  height: 18rem;
+  background: #CDCDCD;
+  border-radius: 19rem;
+}
+
+.HomeProfCardInfoContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background: green; */
+  flex-wrap: wrap;
+  padding-right: 4rem;
+}
+
+.HomeProCardhomeInfoReviewText{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  max-width: 40.7rem;
+  margin-top: 0.7rem;
+}
+
 @media screen and (max-width:1639px){
   .whyMostProsSectionHome{
     justify-content: center;
@@ -442,6 +546,25 @@
   }
 }
 
+@media screen and (max-width: 1467px){
+  .dividerDivLine{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 801px) {
+  .HomeProfReviewSectionHome{
+    align-items: center;
+    justify-content: center;
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+  
+  .HomeProfReviewTitlesContainer{
+    align-items: center;
+    justify-content: center;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .titleSectionHomeH2 {

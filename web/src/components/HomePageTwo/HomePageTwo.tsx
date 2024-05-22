@@ -1,5 +1,6 @@
 import "./HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
+import React, { useState } from "react";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import RoofingIcon from "@mui/icons-material/Roofing";
@@ -10,6 +11,7 @@ import Allin1ServiceImg from "../../assets/workingmantwo.png";
 import AppStore from "../../assets/Appstore_button.png";
 import PlayStore from "../../assets/Google-play-badge-1.png";
 import HomePFP from "../../assets/homepagepfp.png";
+import StijnPFP from "../../assets/stijn.png";
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 
@@ -62,6 +64,12 @@ const PopularCardsData = [
 ];
 
 function HomePageTwo() {
+  const [activeTab, setActiveTab] = useState("homeOwner");
+
+  const handleClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <main className="homepagetwomain">
       <section className="landingSectionHome">
@@ -231,9 +239,15 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
           </article>
           <article className="HomeProCardHome">
@@ -258,11 +272,17 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
-          </article>        
+          </article>
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -285,11 +305,17 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
-          </article>        
+          </article>
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -312,11 +338,17 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
-          </article>        
+          </article>
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -339,11 +371,17 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
-          </article>        
+          </article>
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
@@ -366,14 +404,96 @@ function HomePageTwo() {
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
-            <p className="HomeProCardhomeReviewText">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p className="HomeProCardhomeReviewText">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </p>
             <section className="HomeProCardhomeButtonContainer">
-            <button className="HomeProCardhomeViewProfileButton">Bekijk Profiel</button>
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
             </section>
-          </article>        
-           
+          </article>
         </section>
-        
+      </section>
+      <section className="HomeProfReviewSectionHome">
+        <article className="HomeProfReviewTitlesContainer">
+          <h2 className="howItWorksTitleHome">Reviews</h2>
+          <section className="HomeProfReviewWrapper">
+            <h5
+              className={
+                activeTab === "homeOwner"
+                  ? "HomeProReviewH5HomeOwner active"
+                  : "HomeProReviewH5HomeOwner"
+              }
+              onClick={() => handleClick("homeOwner")}
+            >
+              Huiseigenaar
+            </h5>
+            <h5
+              className={
+                activeTab === "professional"
+                  ? "HomeProReviewH5Proffesional active"
+                  : "HomeProReviewH5Proffesional"
+              }
+              onClick={() => handleClick("professional")}
+            >
+              Vakspecialist
+            </h5>
+          </section>
+        </article>
+        <article className="HomeProfReviewHomeContainer">
+          <article className="ReviewCardHomeProfHome">
+            <img
+              src={StijnPFP}
+              alt="Profiel Foto"
+              className="HomeProfCardPFP"
+            />
+            <div>
+              <section className="HomeProfCardInfoContainer">
+                <h5 className="HomeProCardhomeH5">Stijn Barneveld</h5>
+                <article className="HomeProCardStarContainer">
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                </article>
+              </section>
+              <section className="HomeProfCardInfoContainer">
+                <p className="HomeProCardhomeInfoReviewText">
+                “Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.  
+                </p>
+              </section>
+            </div>
+          </article>
+          <div className="dividerDivLine"></div>
+          <article className="ReviewCardHomeProfHome">
+            <img
+              src={StijnPFP}
+              alt="Profiel Foto"
+              className="HomeProfCardPFP"
+            />
+            <div>
+              <section className="HomeProfCardInfoContainer">
+                <h5 className="HomeProCardhomeH5">Stijn Barneveld</h5>
+                <article className="HomeProCardStarContainer">
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                  <StarIcon style={{ fontSize: "2rem" }} />
+                </article>
+              </section>
+              <section className="HomeProfCardInfoContainer">
+                <p className="HomeProCardhomeInfoReviewText">
+                “Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.  
+                </p>
+              </section>
+            </div>
+          </article>
+        </article>
       </section>
     </main>
   );
