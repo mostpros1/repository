@@ -29,7 +29,7 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerDashboard.tsx";
+import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
@@ -49,9 +49,15 @@ import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals
 import CareerPage from "../pages/CareerPage/CareerPage";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
 
+import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
+import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
+import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
+import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx"
 
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
+import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 
 
 const LanguageAwareRoutes = () => {
@@ -68,6 +74,7 @@ const LanguageAwareRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/offers" element={<OfferTemplate />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
@@ -87,8 +94,14 @@ const LanguageAwareRoutes = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerDashboardPage />} />
+      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+
+      
+      <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
+      <Route path="/quality" element={<QualityPage />} />
+      <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
+      <Route path="/disclaimer" element={<DisclaimerPage />} />
 
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
@@ -108,6 +121,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
+      <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
@@ -120,7 +134,7 @@ const LanguageAwareRoutes = () => {
         path="/pro-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
-      <Route path="/FAQPage" element={<FAQPage />} />
+      <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
@@ -185,8 +199,6 @@ const LanguageAwareRoutes = () => {
   );
   //<Route path="/EditProfileSection" element={<EditProfile />} />
 };
-
-
 
 const App = () => {
   const { lang } = useParams();

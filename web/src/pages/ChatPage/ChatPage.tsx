@@ -5,6 +5,10 @@ import Footer from "../../components/ui/Footer/Footer";
 import "./ChatPage.css";
 
 function ChatPage() {
+  const dummySignOut = () => {
+    console.log("Signed out");
+  };
+
   return (
     <div id="root">
       <NavBar />
@@ -13,7 +17,7 @@ function ChatPage() {
           <SideNav />
         </div>
         <div className="side-panel-right-chat">
-          <ChatMain user={undefined} signOut={undefined} />
+          <ChatMain user={undefined} signOut={dummySignOut} />
         </div>
       </div>
       <Footer />

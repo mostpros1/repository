@@ -107,7 +107,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   };
 
   if (!jobs || jobs.length === 0) {
-    return <div>No jobs available.</div>;
+    return <div className="no-jobs">No jobs available.</div>;
   }
   const jobCardsRender = jobs.map((job) => (
     <div key={job.id} className="job-item">

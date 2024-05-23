@@ -1,5 +1,69 @@
-.job-con{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
+.jobListMain {
+  width: 100%;
+  height: 100%;
+  padding-top: 5rem;
+  display: flex;
+}
+
+.sideNavSection {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.sideNav {
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#jobcardSection {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.jobCardsDisplay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+@media (max-width: 1400px) {
+  .sideNavSection {
+    display: none;
+  }
+
+  #jobcardSection {
+    width: auto;
+    height: auto;
+  }
+
+  .jobCardsDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .jobListMain {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
 }
