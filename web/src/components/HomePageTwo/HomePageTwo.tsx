@@ -3,15 +3,24 @@ import YardIcon from "@mui/icons-material/Yard";
 import React, { useState } from "react";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import SolarPowerIcon from "@mui/icons-material/SolarPower";
 import RoofingIcon from "@mui/icons-material/Roofing";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import WhyMostProsImg from "../../assets/workingman.png";
 import Allin1ServiceImg from "../../assets/workingmantwo.png";
 import AppStore from "../../assets/Appstore_button.png";
 import PlayStore from "../../assets/Google-play-badge-1.png";
 import HomePFP from "../../assets/homepagepfp.png";
 import StijnPFP from "../../assets/stijn.png";
+import JanyPFP from "../../assets/JanyPFP.png";
+import TuinPFP from "../../assets/TuinPFP.png";
+import ElectrozPFP from "../../assets/ElectrozPFP.png";
+import AanemerPFP from "../../assets/AanemerPFP.png";
+import GijsPFP from "../../assets/GijsPFPpng.png";
+import CarpenterIcon from "@mui/icons-material/Carpenter";
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 
@@ -42,33 +51,89 @@ const PopularCardsData = [
     icon: <CleaningServicesIcon />,
   },
   {
-    id: 1,
-    name: "Hovenier",
-    icon: <YardIcon />,
+    id: 6,
+    name: "Timmerman",
+    icon: <CarpenterIcon />,
   },
   {
-    id: 2,
-    name: "Elektriciën",
-    icon: <ElectricBoltIcon />,
+    id: 7,
+    name: "Zonnepanelen",
+    icon: <SolarPowerIcon />,
   },
   {
-    id: 3,
-    name: "Loodgieter",
-    icon: <PlumbingIcon />,
-  },
-  {
-    id: 4,
-    name: "Dakdekker",
-    icon: <RoofingIcon />,
+    id: 8,
+    name: "Aannemer",
+    icon: <HomeRepairServiceIcon />,
   },
 ];
 
+
 function HomePageTwo() {
-  const [activeTab, setActiveTab] = useState("homeOwner");
+  const [activeTab, setActiveTab] = useState('homeOwner');
+  const [startIndex, setStartIndex] = useState(0);
+
+  const reviews = {
+    homeOwner: [
+      {
+        name: 'Lisa S',
+        image: [TuinPFP], 
+        text: '“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.',
+      },
+      {
+        name: 'Stijn B',
+        image: [StijnPFP], 
+        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+      },
+      {
+        name: 'Test Persoon',
+        image: [AanemerPFP], 
+        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+      },
+      {
+        name: 'Test Persoon 2',
+        image: [GijsPFP], 
+        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+      },
+    ],
+    professional: [
+      {
+        name: 'John D',
+        image: [HomePFP], 
+        text: '“Working with this company has been an incredible experience. Highly professional and skilled team.',
+      },
+      {
+        name: 'Emily R',
+        image: [TuinPFP],
+        text: '“Their services exceeded my expectations. Highly recommend to anyone in need of expert craftsmanship.',
+      },
+      {
+        name: 'Test Persoon',
+        image: [AanemerPFP],
+        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+      },
+      {
+        name: 'Test Persoon 2',
+        image: [GijsPFP],
+        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+      },
+    ],
+  };
 
   const handleClick = (tab) => {
     setActiveTab(tab);
+    setStartIndex(0);
   };
+
+  const handleLeftClick = () => {
+    setStartIndex((prevIndex) =>
+      prevIndex === 0 ? reviews[activeTab].length - 2 : prevIndex - 1
+    );  };
+
+  const handleRightClick = () => {
+    setStartIndex((prevIndex) =>
+      prevIndex === reviews[activeTab].length - 2 ? 0 : prevIndex + 1
+    );  };
+
 
   return (
     <main className="homepagetwomain">
@@ -240,9 +305,12 @@ function HomePageTwo() {
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
             <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
+              Sanitair/ lekkages €65/uur incl. btw
+              <br /> <br />
+              Radiator vervangen €69/uur incl. btw
+              <br />
+              <br />
+              Cv-montage €78/uur incl. btw
             </p>
             <section className="HomeProCardhomeButtonContainer">
               <button className="HomeProCardhomeViewProfileButton">
@@ -253,7 +321,118 @@ function HomePageTwo() {
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
-                src={HomePFP}
+                src={JanyPFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Jany Cleanur B.V.
+                <br />
+                Schoonmaakster
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article className="HomeProCardStarContainer">
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarBorderIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">4.0/5 (7 reviews)</p>
+            </section>
+            <p className="HomeProCardhomeReviewText">
+              Schoonmaak €29/uur incl. btw
+              <br />
+              <br />
+              Opruimen €29/uur incl. btw
+              <br />
+              <br />
+              Wassen €29/uur incl. btw
+            </p>
+            <section className="HomeProCardhomeButtonContainer">
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={TuinPFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Green horizons B.V.
+                <br />
+                Tuinontwerpster
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article className="HomeProCardStarContainer">
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarBorderIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">4.0/5 (19 reviews)</p>
+            </section>
+            <p className="HomeProCardhomeReviewText">
+              Tuinontwerp €75/uur incl. btw
+              <br />
+              <br />
+              Tuinaanleg €64/uur incl. btw
+              <br />
+              <br />
+              Tuinonderhoud €55/uur incl. btw
+            </p>
+            <section className="HomeProCardhomeButtonContainer">
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={ElectrozPFP}
+                alt="Profiel Foto vakspecialist"
+                className="HomeProfCardPFP "
+              />
+              <h5 className="HomeProCardhomeH5">
+                Electroz B.V. <br />
+                Electriciën
+              </h5>
+            </section>
+            <section className="HomeProCardReviewSection">
+              <article className="HomeProCardStarContainer">
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarBorderIcon style={{ fontSize: "2rem" }} />
+              </article>
+              <p className="HomeProCardhomeReviewP">4.0/5 (9 reviews)</p>
+            </section>
+            <p className="HomeProCardhomeReviewText">
+              Groepenkast plaatsen €225+ incl. btw <br />
+              <br />
+              Stopcontact plaatsen €59+ incl. btw <br />
+              <br />
+              Verlichting installeren €78+ incl. btw
+            </p>
+            <section className="HomeProCardhomeButtonContainer">
+              <button className="HomeProCardhomeViewProfileButton">
+                Bekijk Profiel
+              </button>
+            </section>
+          </article>
+          <article className="HomeProCardHome">
+            <section className="HomeProCardPFPSection">
+              <img
+                src={GijsPFP}
                 alt="Profiel Foto vakspecialist"
                 className="HomeProfCardPFP "
               />
@@ -270,12 +449,15 @@ function HomePageTwo() {
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
               </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+              <p className="HomeProCardhomeReviewP">4.0/5 (16 reviews)</p>
             </section>
             <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
+              Tuinhuis/blokschuur €53/uur incl. btw <br />
+              <br />
+              Overkapping/pergola €53/uur incl. btw
+              <br />
+              <br />
+              Poolhouse/veranda €53/uur incl. btw
             </p>
             <section className="HomeProCardhomeButtonContainer">
               <button className="HomeProCardhomeViewProfileButton">
@@ -286,13 +468,13 @@ function HomePageTwo() {
           <article className="HomeProCardHome">
             <section className="HomeProCardPFPSection">
               <img
-                src={HomePFP}
+                src={AanemerPFP}
                 alt="Profiel Foto vakspecialist"
                 className="HomeProfCardPFP "
               />
               <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
+                Huizenbouw B.V. <br />
+                Aannemer
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
@@ -301,113 +483,18 @@ function HomePageTwo() {
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarBorderIcon style={{ fontSize: "2rem" }} />
               </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
+              <p className="HomeProCardhomeReviewP">4.0/5 (4 reviews)</p>
             </section>
             <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={HomePFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={HomePFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={HomePFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
+              Dakrenovatie/vervangen op aanvraag
+              <br />
+              <br />
+              Aanbouw plaatsen op aanvraag
+              <br />
+              <br />
+              Renovatie huis op aanvraag
             </p>
             <section className="HomeProCardhomeButtonContainer">
               <button className="HomeProCardhomeViewProfileButton">
@@ -418,83 +505,61 @@ function HomePageTwo() {
         </section>
       </section>
       <section className="HomeProfReviewSectionHome">
-        <article className="HomeProfReviewTitlesContainer">
-          <h2 className="howItWorksTitleHome">Reviews</h2>
-          <section className="HomeProfReviewWrapper">
-            <h5
-              className={
-                activeTab === "homeOwner"
-                  ? "HomeProReviewH5HomeOwner active"
-                  : "HomeProReviewH5HomeOwner"
-              }
-              onClick={() => handleClick("homeOwner")}
-            >
-              Huiseigenaar
-            </h5>
-            <h5
-              className={
-                activeTab === "professional"
-                  ? "HomeProReviewH5Proffesional active"
-                  : "HomeProReviewH5Proffesional"
-              }
-              onClick={() => handleClick("professional")}
-            >
-              Vakspecialist
-            </h5>
-          </section>
-        </article>
-        <article className="HomeProfReviewHomeContainer">
-          <article className="ReviewCardHomeProfHome">
-            <img
-              src={StijnPFP}
-              alt="Profiel Foto"
-              className="HomeProfCardPFP"
-            />
-            <div>
-              <section className="HomeProfCardInfoContainer">
-                <h5 className="HomeProCardhomeH5">Stijn Barneveld</h5>
-                <article className="HomeProCardStarContainer">
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                </article>
-              </section>
-              <section className="HomeProfCardInfoContainer">
-                <p className="HomeProCardhomeInfoReviewText">
-                “Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.  
-                </p>
-              </section>
-            </div>
-          </article>
-          <div className="dividerDivLine"></div>
-          <article className="ReviewCardHomeProfHome">
-            <img
-              src={StijnPFP}
-              alt="Profiel Foto"
-              className="HomeProfCardPFP"
-            />
-            <div>
-              <section className="HomeProfCardInfoContainer">
-                <h5 className="HomeProCardhomeH5">Stijn Barneveld</h5>
-                <article className="HomeProCardStarContainer">
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                  <StarIcon style={{ fontSize: "2rem" }} />
-                </article>
-              </section>
-              <section className="HomeProfCardInfoContainer">
-                <p className="HomeProCardhomeInfoReviewText">
-                “Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.  
-                </p>
-              </section>
-            </div>
-          </article>
-        </article>
-      </section>
+      <article className="HomeProfReviewTitlesContainer">
+        <h2 className="howItWorksTitleHome">Reviews</h2>
+        <section className="HomeProfReviewWrapper">
+          <h5
+            className={
+              activeTab === 'homeOwner'
+                ? 'HomeProReviewH5HomeOwner active'
+                : 'HomeProReviewH5HomeOwner'
+            }
+            onClick={() => handleClick('homeOwner')}
+          >
+            Huiseigenaar
+          </h5>
+          <h5
+            className={
+              activeTab === 'professional'
+                ? 'HomeProReviewH5Proffesional active'
+                : 'HomeProReviewH5Proffesional'
+            }
+            onClick={() => handleClick('professional')}
+          >
+            Vakspecialist
+          </h5>
+        </section>
+      </article>
+      <div className="arrow left-arrow" onClick={handleLeftClick}></div>
+      <article className="HomeProfReviewHomeContainer">
+        {reviews[activeTab].slice(startIndex, startIndex + 2).map((review, index) => (
+          <React.Fragment key={index}>
+            <article className="ReviewCardHomeProfHome">
+              <img src={review.image} alt="Profiel Foto" className="HomeProfCardPFP" />
+              <div>
+                <section className="HomeProfCardInfoContainer">
+                  <h5 className="HomeProCardhomeH5">{review.name}</h5>
+                  <article className="HomeProCardStarContainer">
+                    <StarIcon style={{ fontSize: '2rem' }} />
+                    <StarIcon style={{ fontSize: '2rem' }} />
+                    <StarIcon style={{ fontSize: '2rem' }} />
+                    <StarIcon style={{ fontSize: '2rem' }} />
+                    <StarIcon style={{ fontSize: '2rem' }} />
+                  </article>
+                </section>
+                <section className="HomeProfCardInfoContainer">
+                  <p className="HomeProCardhomeInfoReviewText">{review.text}</p>
+                </section>
+              </div>
+            </article>
+          </React.Fragment>
+        ))}
+      </article>
+      <div className="arrow right-arrow" onClick={handleRightClick}></div>
+    </section>
+    <section className="JoinTheCommunityHomeSection">
+      
+    </section>
     </main>
   );
 }

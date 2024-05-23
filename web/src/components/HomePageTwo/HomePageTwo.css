@@ -367,7 +367,7 @@
 }
 
 .HomeProCardhomeReviewText{
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-family: 'Poppins', sans-serif;
   max-width: 28rem;
   margin-top: 1.5rem;
@@ -407,6 +407,24 @@
   padding-right: 13.4rem;
   padding-top: 5rem;
   padding-bottom: 20rem;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: 15%;
+  border-color: transparent black transparent transparent;
+}
+
+.right-arrow {
+  right: 15%;
+  border-color: transparent transparent transparent black;
 }
 
 .HomeProfReviewTitlesContainer{
@@ -475,9 +493,11 @@
 .ReviewCardHomeProfHome{
   /* background: pink; */
   display: flex;
+  max-height: 10.7rem;
   justify-content: center;
   align-items: flex-start;
   gap: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .dividerDivLine{
@@ -497,10 +517,29 @@
 }
 
 .HomeProCardhomeInfoReviewText{
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-family: 'Poppins', sans-serif;
   max-width: 40.7rem;
   margin-top: 0.7rem;
+}
+
+@media screen and (max-width:1709px){
+  .arrow {
+    position: absolute;
+    top: 75%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .left-arrow {
+    left: 40%;
+    border-color: transparent black transparent transparent;
+  }
+  
+  .right-arrow {
+    right: 40%;
+    border-color: transparent transparent transparent black;
+  }
 }
 
 @media screen and (max-width:1639px){
@@ -570,6 +609,24 @@
   .titleSectionHomeH2 {
     font-size: 3.6rem;
   }
+
+  .arrow {
+    position: absolute;
+    top: 95%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .left-arrow {
+    left: 30%;
+    border-color: transparent black transparent transparent;
+  }
+  
+  .right-arrow {
+    right: 30%;
+    border-color: transparent transparent transparent black;
+  }
+  
 }
 
 @media screen and (max-width: 480px) {
