@@ -640,9 +640,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 />
                 <PaymentOffer
                   subtotal={parseFloat(customAmount.replace(',', '.'))}
-                  handleAcceptOffer={handleAcceptOffer}
-                  handleDeclineOffer={handleDeclineOffer} 
                   handleSendMessage={handleSendMessage}
+                  recipientEmail={recipientEmail}
                   />
               </div>
             </div>

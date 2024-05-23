@@ -4,8 +4,9 @@ import { createQuote } from '../../../../backend_functions/CreateOffer';
 
 interface PaymentOfferProps {
     subtotal: number;
-    handleSendMessage: (message: string) => void;
-}
+    handleSendMessage: (text: any) => Promise<void>;
+    recipientEmail: string; // Add this line
+  }
 
 interface LineItem {
     id: number;
@@ -30,7 +31,7 @@ function addToDb(lineItem: LineItem) {
         .catch(console.error);
 }
 
-const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage }) => {
+const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage, recipientEmail}) => {
     const [lineItems, setLineItems] = useState<LineItem[]>([]);
 
     const handleAddLineItem = () => {
@@ -62,7 +63,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
         }));
 
         
-        createQuote(lineItemsForStripe).then(quote => {
+        createQuote(lineItemsForStripe, recipientEmail).then(quote => {
             console.log(quote);
         }).catch(error => {
             console.error(error);
