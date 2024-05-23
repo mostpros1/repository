@@ -6,7 +6,7 @@ import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
-
+import Stripe from 'stripe';
 let taal = "nl";
 
 if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en") {
@@ -42,6 +42,10 @@ function BevestigEmailPage() {
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
+    const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+        apiVersion: '2023-10-16',
+    });
+
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
@@ -52,8 +56,23 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Homeowner',
                 }).promise()
-                    .then(() => setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000))
-                    .catch(error => console.error(error))
+                
+                .then(async () => {
+                    const stripeCustomer = await stripe.customers.create({
+                       email: userEmail,
+                       payment_method: 'ideal',
+                       invoice_settings: {
+                           default_payment_method: 'ideal',
+                       },
+                   });
+                   await cognitoClient.adminUpdateUserAttributes({
+                       UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                       Username: userEmail,
+                       UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
+                     }).promise();
+                     setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+               })
+               .catch(error => console.error(error));
             }
         },
         'PROFESSIONAL': {
@@ -66,8 +85,22 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Professional',
                 }).promise()
-                    .then(() => setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000))
-                    .catch(err => console.error(err))
+                .then(async () => {
+                     const stripeCustomer = await stripe.customers.create({
+                        email: userEmail,
+                        payment_method: 'ideal',
+                        invoice_settings: {
+                            default_payment_method: 'ideal',
+                        },
+                    });
+                    await cognitoClient.adminUpdateUserAttributes({
+                        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                        Username: userEmail,
+                        UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
+                      }).promise();
+                    setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+                })
+                .catch(error => console.error(error));
             },
         }
     }
