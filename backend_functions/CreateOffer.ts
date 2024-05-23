@@ -11,11 +11,11 @@ interface LineItem {
 }
 
 // Initialize the Stripe client with your secret key
-const stripe = new Stripe('sk_test_Gx4mWEgHtCMr4DYMUIqfIrsz', {
+const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
     apiVersion: '2023-10-16',
 });
 
-// Function to check if a product exists by name]
+// Function to check if a product exists by name
 async function getProductByName(name: string): Promise<string | null> {
     // Fetch all products
     const products = await stripe.products.list();
@@ -23,7 +23,7 @@ async function getProductByName(name: string): Promise<string | null> {
     // Filter products by name
     const matchingProduct = products.data.find(product => product.name === name);
 
-    return matchingProduct ? matchingProduct.id : null;
+    return matchingProduct? matchingProduct.id : null;
 }
 
 // Function to create a product if it doesn't exist
@@ -59,7 +59,7 @@ async function generatePdf(quoteId: string) {
     }
 }
 
-// Function to create a quote
+// Function to create a quote with a generated fake customer ID
 export async function createQuote(lineItems: { unit_amount: number, quantity: number, title: string, description: string }[]) {
     try {
         let productDetails: string[] = [];
@@ -72,6 +72,7 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
         }
 
         let quote = await stripe.quotes.create({
+            //customer: "acct_1PFy1VGdB8Yragc1",
             line_items: lineItems.map((item, index) => ({
                 price_data: {
                     currency: 'eur', // Ensure this matches the currency you intend to use
@@ -90,4 +91,3 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
         throw error;
     }
 }
-
