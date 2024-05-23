@@ -4,14 +4,19 @@ import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
-import { IoSend } from "react-icons/io5";
-import { BsPaperclip, BsPersonCircle } from "react-icons/bs";
-import { MdDriveFileMove } from "react-icons/md";
-import PaymentLink from "../PaymentLink/PaymentLink";
 import { useChatBackend } from "./ChatBackend";
+import "./chatbox.css";
+import PaymentLink from '../PaymentLink/PaymentLink';
+import { IoSend } from "react-icons/io5";
+import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical } from "react-icons/bs";
+import { MdDriveFileMove } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
-import "./chatbox.css";
+import { FaReply } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa";
+import PaymentOffer from "../PaymentLink/PaymentOffer";
+import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 interface Chat {
   id: string;
@@ -32,6 +37,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     handleSendMessage,
     handleReceivedMessage,
     handleJoinChat,
+    handleStartNewChatWithEmail,
+    visibleName,
+    setVisibleName,
+    textSize,
+    setTextSize
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -53,6 +63,22 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
+  const [showNewChatModal, setShowNewChatModal] = useState(false);
+  const [newChatEmail, setNewChatEmail] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  
+  // New states for extra functionalities
+  const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
+  const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
+
+  // New states for settings modal
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+
+  const handleTypingIndicator = (isTyping: boolean) => {
+    setIsTyping(isTyping);
+    // Emit typing indicator event to backend (e.g., WebSocket, API)
+  };
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
@@ -243,15 +269,15 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     
     reader.onload = async () => {
         if (reader.result) {
-            const base64Data = (reader.result as string).split(',')[1]; // Remove the data URL prefix
+            const base64Data = (reader.result as string).split(',')[1];
             try {
                 const response = await axios.post(
                     'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
                     { photo: base64Data },
                     {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                      headers: {
+                        'Content-Type': 'application/json'
+                      }
                     }
                 );
                 console.log(response.data);
@@ -293,7 +319,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       console.log(response.data);
       setUploadedPhotoUrl(response.data);
 
-      // Send the image URL as a chat message
       await handleSendMessage(
         `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
       );
@@ -384,19 +409,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   });
 
   const parseLinks = (text: string) => {
-    const linkRegex = /(https?:\/\/[^\s]+)/g;
-    const parts = text.split(linkRegex);
-    const jsxElements = parts.flatMap((part, index) => {
-      if (index % 2 !== 0) {
-        return (
+      const linkRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(linkRegex);
+      const jsxElements = parts.flatMap((part, index) => {
+        if (index % 2  !== 0) {
+            return (
           <a href={part} target="_blank" rel="noopener noreferrer">
             {part}
           </a>
         );
-      } else {
-        return part;
-      }
-    });
+        } else {
+            return part;
+        }
+      });
 
     const htmlString = ReactDOMServer.renderToStaticMarkup(
       <>{jsxElements}</>
@@ -404,38 +429,103 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return htmlString;
   };
 
-  console.log(parseLinks("https://www.portaalvoortalent.nl/"));
 
   const handleSendMessageClick = async () => {
     const messageInput = document.getElementById("message-input") as HTMLInputElement;
     if (messageInput) {
       const messageText = messageInput.value;
       if (messageText && recipientEmail) {
-        await handleSendMessage(stopXSS(messageText));
+        if (replyingTo) {
+          await handleSendMessage(
+            stopXSS(
+              `Re: ${replyingTo.text} | U: ${messageText}`
+            )
+          );
+          setReplyingTo(null);
+        } else {
+          await handleSendMessage(stopXSS(messageText));
+        }
         messageInput.value = "";
+        handleTypingIndicator(false);
       }
     }
   };
 
+  const handleInputChange = () => {
+    handleTypingIndicator(true);
+    setTimeout(() => handleTypingIndicator(false), 1000);
+  };
+
+  const [open, setOpen] = useState(false);
+  
+  const toggleMenu = () => {
+    setOpen(!open);
+  };
+
+  const handleStartNewChatClick = () => {
+    setShowNewChatModal(true);
+  };
+
+  const handleNewChatConfirm = async () => {
+    console.log("Starting new chat with email:", newChatEmail);
+    await handleStartNewChatWithEmail(newChatEmail);
+    setShowNewChatModal(false);
+  };
+
+  const handleMarkMessage = (messageId: string) => {
+    setMarkedMessages((prev) => {
+      const newMarkedMessages = new Set(prev);
+      if (newMarkedMessages.has(messageId)) {
+        newMarkedMessages.delete(messageId);
+      } else {
+        newMarkedMessages.add(messageId);
+      }
+      return newMarkedMessages;
+    });
+  };
+
+  const handleReplyMessage = (message: Chat) => {
+    setReplyingTo(message);
+  };
+
+  const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextSize(Number(event.target.value));
+  };
+
+  const handleVisibleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibleName(event.target.value);
+  };
+
+  const handleSaveSettings = () => {
+    setShowSettingsModal(false);
+  };
+
   return (
-    <div className="chat-container">
+    <div className="chat-container" style={{ fontSize: `${textSize}px` }}>
       <div className="sidebar" id="sidebar">
-        <input
-          type="text"
-          placeholder="Zoek gebruikers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchList"
-        />
+        <div className="dropdown-container">
+          <BsThreeDotsVertical size={50} className="menu-icon" onClick={toggleMenu} />
+          {open && (
+            <div className="dropdown-menu">
+              <div className="dropdown-item" onClick={handleStartNewChatClick}>
+                Nieuwe chat starten
+              </div>
+              <div className="dropdown-item">
+                Opgeslagen berichten
+              </div>
+              <div className="dropdown-item" onClick={() => setShowSettingsModal(true)}>
+                Instellingen
+              </div>
+            </div>
+          )}
+        </div>
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
                 <li
                   key={contact}
                   onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
+                  className={selectedContact === contact ? "selected-contact" : ""}
                 >
                   <BsPersonCircle size={50} className="avatar-chat-side" />
                   <div className="contact-details">
@@ -459,9 +549,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <li
                   key={contact}
                   onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
+                  className={selectedContact === contact ? "selected-contact" : ""}
                 >
                   <BsPersonCircle size={50} className="avatar-chat-side" />
                   <div className="contact-details">
@@ -492,6 +580,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <h2 className="recipient-name">
                   {selectedContact ? selectedContact.split("@")[0] : ""}
                 </h2>
+                {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
           </div>
@@ -509,7 +598,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                         chat.email === user.attributes.email
                           ? "self-message-container"
                           : "other-message-container"
-                      }`}
+                      } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                     >
                       <div
                         className={`message-bubble ${
@@ -528,6 +617,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                             minute: "2-digit",
                           }).format(new Date(chat.createdAt))}
                         </time>
+                        <div className="message-actions">
+                          <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                          <button onClick={() => handleMarkMessage(chat.id)}>
+                            {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                          </button>
+                          {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -536,6 +632,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             })}
           </div>
 
+            {replyingTo && (
+              <div className="replying-to">
+                Replying to: <blockquote>{replyingTo.text}</blockquote>
+                <button onClick={() => setReplyingTo(null)}>Cancel</button>
+              </div>
+            )}
           <div className="input-form">
             <input
               type="text"
@@ -548,6 +650,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 }
               }}
               className="inputchat"
+              onChange={handleInputChange}
             />
             <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
               <BsPaperclip className="paperclip" size={25} />
@@ -598,6 +701,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   handleSendMessage={handleSendMessage}
                   subtotal={parseFloat(customAmount.replace(",", "."))}
                 />
+                <PaymentOffer
+                  subtotal={parseFloat(customAmount.replace(',', '.'))}
+                  handleSendMessage={handleSendMessage}
+                  recipientEmail={recipientEmail}
+                  />
               </div>
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
@@ -608,6 +716,51 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           </div>
         </div>
       </div>
+      {showNewChatModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Start Nieuwe Chat</h2>
+            <input
+              type="email"
+              placeholder="Voer e-mailadres in"
+              value={newChatEmail}
+              onChange={(e) => setNewChatEmail(e.target.value)}
+            />
+            <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
+            <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
+      {showSettingsModal && (
+        <div className="settings-modal-overlay">
+          <div className="settings-modal-content">
+            <h2>Instellingen</h2>
+            <div className="settings-item">
+              <label htmlFor="text-size">Tekstgrootte:</label>
+              <input
+                type="range"
+                id="text-size"
+                min="12"
+                max="24"
+                value={textSize}
+                onChange={handleTextSizeChange}
+              />
+              <span>{textSize}px</span>
+            </div>
+            <div className="settings-item">
+              <label htmlFor="visible-name">Zichtbare naam:</label>
+              <input
+                type="text"
+                id="visible-name"
+                value={visibleName}
+                onChange={handleVisibleNameChange}
+              />
+            </div>
+            <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
+            <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

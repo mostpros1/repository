@@ -1,3 +1,4 @@
+
 #job-main {
   display: flex;
   flex-direction: column;
@@ -16,7 +17,6 @@
   display: flex;
   align-items: center;
 }
-
 #search-icon {
   margin-top: 10px;
 }
@@ -25,8 +25,7 @@
   flex-grow: 1;
   border-radius: 25px;
   background-color: #f4f4f4;
-  padding: 12px 40px 12px 50px;
-  /* Adjust padding to not overlap the search icon */
+  padding: 12px 40px 12px 50px; /* Adjust padding to not overlap the search icon */
   border: none;
   outline: none;
   font-size: 16px;
@@ -37,8 +36,7 @@
 
 #search-icon {
   position: absolute;
-  left: 15px;
-  /* Adjust as necessary */
+  left: 15px; /* Adjust as necessary */
   z-index: 10;
 }
 
@@ -66,7 +64,6 @@
   width: 100%;
   object-fit: contain;
 }
-
 .job-status {
   display: flex;
   justify-content: flex-start;
@@ -82,19 +79,11 @@
   background: none;
   font-size: 16px;
   cursor: pointer;
-  margin-right: 20px;
-  /* or any spacing you prefer */
-  transition: all 0.3s ease;
+  margin-right: 20px; /* or any spacing you prefer */
 }
 
 .status-button.active {
-  color: white;
-  background-color: #007bff;
-  border-radius: 10px;
-}
-
-.status-button:hover {
-  color: #035ec1;
+  color: #007bff;
 }
 
 .job-list-vw {
@@ -107,13 +96,11 @@
 }
 
 .job-entry {
-  border: 1px solid #ccc;
-  /* style as needed */
+  border: 1px solid #ccc; /* style as needed */
   padding: 20px;
   width: 500px;
   border-radius: 8px;
-  position: relative;
-  /* for positioning view-job-button absolutely */
+  position: relative; /* for positioning view-job-button absolutely */
 }
 
 .job-description {
@@ -124,7 +111,6 @@
 .job-date {
   color: black;
 }
-
 .job-view {
   color: #007bff;
   cursor: pointer;
@@ -135,8 +121,7 @@
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  /* spacing from description */
+  margin-top: 10px; /* spacing from description */
   margin-bottom: 15px;
 }
 
@@ -191,10 +176,8 @@
 
 .view-job-button {
   position: absolute;
-  bottom: 20px;
-  /* or adjust as needed */
-  left: 20px;
-  /* or adjust as needed */
+  bottom: 20px; /* or adjust as needed */
+  left: 20px; /* or adjust as needed */
   padding: 10px 20px;
   border: none;
   background-color: #000;
