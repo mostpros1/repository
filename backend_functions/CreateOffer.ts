@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { dynamo } from '../web/declarations';
 
 interface PriceData {
     currency: string;
@@ -60,8 +61,22 @@ async function generatePdf(quoteId: string) {
 }
 
 // Function to create a quote with a generated fake customer ID
-export async function createQuote(lineItems: { unit_amount: number, quantity: number, title: string, description: string }[]) {
+export async function createQuote(lineItems: { unit_amount: number, quantity: number, title: string, description: string }[], email: string)  {
     try {
+
+        let stripeCustomerId;
+        dynamo.query({
+            TableName: "Users",
+            KeyConditionExpression: "email = :email",
+            ExpressionAttributeValues: {
+                ":email": email,
+            },
+        }).promise() // Use.promise() here to get a Promise
+        .then(data => {
+            if (data.Items) {
+                stripeCustomerId = data.Items[0].stripeCustomerId;
+            }
+        }).catch(console.error);
         let productDetails: string[] = [];
         // Automatically create the product if it doesn't exist
         console.log("Creating products:", lineItems);
@@ -72,7 +87,7 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
         }
 
         let quote = await stripe.quotes.create({
-            //customer: "acct_1PFy1VGdB8Yragc1",
+            //customer: stripeCustomerId,
             line_items: lineItems.map((item, index) => ({
                 price_data: {
                     currency: 'eur', // Ensure this matches the currency you intend to use
