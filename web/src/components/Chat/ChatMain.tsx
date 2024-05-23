@@ -28,6 +28,8 @@ interface Chat {
 interface GroupedMessages {
   [key: string]: Chat[];
 }
+import PaymentOffer from "../PaymentLink/PaymentOffer";
+import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const {
@@ -401,19 +403,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   });
 
   const parseLinks = (text: string) => {
-    const linkRegex = /(https?:\/\/[^\s]+)/g;
-    const parts = text.split(linkRegex);
-    const jsxElements = parts.flatMap((part, index) => {
-      if (index % 2 !== 0) {
-        return (
+      const linkRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(linkRegex);
+      const jsxElements = parts.flatMap((part, index) => {
+        if (index % 2  !== 0) {
+            return (
           <a href={part} target="_blank" rel="noopener noreferrer">
             {part}
           </a>
         );
-      } else {
-        return part;
-      }
-    });
+        } else {
+            return part;
+        }
+      });
 
     const htmlString = ReactDOMServer.renderToStaticMarkup(
       <>{jsxElements}</>
@@ -421,7 +423,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return htmlString;
   };
 
-  console.log(parseLinks("https://www.portaalvoortalent.nl/"));
 
   const handleSendMessageClick = async () => {
     const messageInput = document.getElementById("message-input") as HTMLInputElement;
@@ -496,7 +497,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     <div className="chat-container">
       <div className="sidebar" id="sidebar">
         <div className="dropdown-container">
-          <BsThreeDotsVertical size={20} className="menu-icon" onClick={toggleMenu} />
+          <BsThreeDotsVertical size={50} className="menu-icon" onClick={toggleMenu} />
           {open && (
             <div className="dropdown-menu">
               <div className="dropdown-item" onClick={handleStartNewChatClick}>
@@ -697,6 +698,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   handleSendMessage={handleSendMessage}
                   subtotal={parseFloat(customAmount.replace(",", "."))}
                 />
+                <PaymentOffer
+                  subtotal={parseFloat(customAmount.replace(',', '.'))}
+                  handleSendMessage={handleSendMessage}
+                  recipientEmail={recipientEmail}
+                  />
               </div>
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
