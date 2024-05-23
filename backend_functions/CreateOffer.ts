@@ -46,19 +46,19 @@ async function createProduct(name: string, description: string) {
 
 async function generatePdf(quoteId: string) {
     try {
-        const response = await stripe.quotes.pdf(quoteId);
-        let chunks: (string | Buffer)[] = [];
-
-        for await (const chunk of response) {
-            chunks.push(chunk);
+        const response = await fetch(`https://3ppb27whl1.execute-api.eu-north-1.amazonaws.com/generatePdf/${quoteId}`);
+        if (response.ok) {
+            const pdfBlob = await response.blob();
+            const url = URL.createObjectURL(pdfBlob);
+            window.open(url);
+        } else {
+            console.error('Error generating PDF:', response.statusText);
         }
-
-        // Process chunks or handle the PDF generation result as needed
-        console.log(chunks); // Example: log the chunks to see the PDF content
     } catch (err) {
-        console.error(err); // Handle errors appropriately
+        console.error(err);
     }
 }
+
 
 // Function to create a quote with a generated fake customer ID
 export async function createQuote(lineItems: { unit_amount: number, quantity: number, title: string, description: string }[], email: string)  {
@@ -67,6 +67,7 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
         let stripeCustomerId;
         dynamo.query({
             TableName: "Users",
+            IndexName: "username",
             KeyConditionExpression: "email = :email",
             ExpressionAttributeValues: {
                 ":email": email,
@@ -87,7 +88,7 @@ export async function createQuote(lineItems: { unit_amount: number, quantity: nu
         }
 
         let quote = await stripe.quotes.create({
-            //customer: stripeCustomerId,
+            customer: stripeCustomerId,
             line_items: lineItems.map((item, index) => ({
                 price_data: {
                     currency: 'eur', // Ensure this matches the currency you intend to use
