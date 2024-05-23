@@ -5,17 +5,18 @@ import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
-import SideNav from "../ui/SideNav/SideNav";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
-import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical} from "react-icons/bs";
+import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical } from "react-icons/bs";
 import { MdDriveFileMove } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
 import { FaReply } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
+import PaymentOffer from "../PaymentLink/PaymentOffer";
+import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 interface Chat {
   id: string;
@@ -28,8 +29,6 @@ interface Chat {
 interface GroupedMessages {
   [key: string]: Chat[];
 }
-import PaymentOffer from "../PaymentLink/PaymentOffer";
-import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const {
@@ -39,6 +38,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     handleReceivedMessage,
     handleJoinChat,
     handleStartNewChatWithEmail,
+    visibleName,
+    setVisibleName,
+    textSize,
+    setTextSize
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -68,6 +71,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   // New states for extra functionalities
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
+
+  // New states for settings modal
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
@@ -466,17 +472,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setShowNewChatModal(false);
   };
 
-  // New function to delete a message
-
-  // const handleDeleteMessage = async (messageId: string) => {
-  //   try {
-  //     await API.graphql(graphqlOperation(queries.deleteChat, { input: { id: messageId } }));
-  //     setChats(chats.filter((chat) => chat.id !== messageId));
-  //   } catch (error) {
-  //     console.error("Error deleting message:", error);
-  //   }
-  // };
-
   const handleMarkMessage = (messageId: string) => {
     setMarkedMessages((prev) => {
       const newMarkedMessages = new Set(prev);
@@ -493,8 +488,20 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setReplyingTo(message);
   };
 
+  const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextSize(Number(event.target.value));
+  };
+
+  const handleVisibleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibleName(event.target.value);
+  };
+
+  const handleSaveSettings = () => {
+    setShowSettingsModal(false);
+  };
+
   return (
-    <div className="chat-container">
+    <div className="chat-container" style={{ fontSize: `${textSize}px` }}>
       <div className="sidebar" id="sidebar">
         <div className="dropdown-container">
           <BsThreeDotsVertical size={50} className="menu-icon" onClick={toggleMenu} />
@@ -506,7 +513,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <div className="dropdown-item">
                 Opgeslagen berichten
               </div>
-              <div className="dropdown-item" onClick={() => console.log('Instellingen')}>
+              <div className="dropdown-item" onClick={() => setShowSettingsModal(true)}>
                 Instellingen
               </div>
             </div>
@@ -518,9 +525,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <li
                   key={contact}
                   onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
+                  className={selectedContact === contact ? "selected-contact" : ""}
                 >
                   <BsPersonCircle size={50} className="avatar-chat-side" />
                   <div className="contact-details">
@@ -544,9 +549,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <li
                   key={contact}
                   onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
+                  className={selectedContact === contact ? "selected-contact" : ""}
                 >
                   <BsPersonCircle size={50} className="avatar-chat-side" />
                   <div className="contact-details">
@@ -629,13 +632,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             })}
           </div>
 
-          <div className="input-form">
             {replyingTo && (
               <div className="replying-to">
                 Replying to: <blockquote>{replyingTo.text}</blockquote>
                 <button onClick={() => setReplyingTo(null)}>Cancel</button>
               </div>
             )}
+          <div className="input-form">
             <input
               type="text"
               id="message-input"
@@ -725,6 +728,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             />
             <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
             <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
+      {showSettingsModal && (
+        <div className="settings-modal-overlay">
+          <div className="settings-modal-content">
+            <h2>Instellingen</h2>
+            <div className="settings-item">
+              <label htmlFor="text-size">Tekstgrootte:</label>
+              <input
+                type="range"
+                id="text-size"
+                min="12"
+                max="24"
+                value={textSize}
+                onChange={handleTextSizeChange}
+              />
+              <span>{textSize}px</span>
+            </div>
+            <div className="settings-item">
+              <label htmlFor="visible-name">Zichtbare naam:</label>
+              <input
+                type="text"
+                id="visible-name"
+                value={visibleName}
+                onChange={handleVisibleNameChange}
+              />
+            </div>
+            <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
+            <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
           </div>
         </div>
       )}

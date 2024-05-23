@@ -20,23 +20,25 @@
   overflow-y: auto;
   height: 560px;
   margin-left: 20px;
-  padding: 20px;
+  padding: 10px 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 #sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 #sidebar ul li {
   cursor: pointer;
-  padding: 10px 20px;
-  height: 100px;
+  padding: 15px 20px;
+  height: auto;
   font-size: 18px;
   transition: background-color 0.3s, color 0.3s;
   background-color: #ffffff;
-  border-bottom: solid 2px rgba(44, 44, 44, 0.493);
+  border-bottom: solid 1px rgba(44, 44, 44, 0.1);
   display: flex;
   align-items: center;
   position: relative;
@@ -44,9 +46,9 @@
 }
 
 #sidebar ul li:hover,
-#sidebar ul li.active {
+#sidebar ul li.selected-contact {
   background: rgba(186, 196, 255, 0.286);
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 .contact-details {
@@ -57,9 +59,9 @@
 }
 
 .contact-name {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
 .last-message {
@@ -572,25 +574,25 @@
 
 .dropdown-container {
   position: relative;
-  display: inline-block;
-  z-index: 10;
-}
-
-#menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
 }
 
 .dropdown-menu {
   position: absolute;
+  top: 100%;
   right: 0;
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   border-radius: 7px;
-  z-index: 10;
+  display: none;
+}
+
+.dropdown-container:hover .dropdown-menu {
+  display: block;
 }
 
 .dropdown-item {
@@ -598,8 +600,11 @@
   cursor: pointer;
   white-space: nowrap;
   font-size: 14px;
-  border-radius: 5px;
-  z-index: 10;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item:hover {
@@ -652,4 +657,85 @@
   transition: all 0.6s ease;
   color: black;
   background-color: white;
+}
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.settings-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.settings-modal-content input,
+.settings-modal-content label {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.settings-modal-content button {
+  margin: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.settings-modal-content button:hover {
+  background-color: #0056b3;
+}
+
+.settings-modal-content .button-modal {
+  border-radius: 8px;
+  width: 80px;
+  height: 30px;
+  background-color: #007bff;
+  color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+.settings-modal-content .button-modal:hover {
+  border: solid 2px #007bff;
+  transition: all 0.6s ease;
+  color: black;
+  background-color: white;
+}
+
+.settings-modal-content .settings-item {
+  margin-bottom: 20px;
+}
+
+.settings-modal-content .settings-item label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.settings-modal-content .settings-item input[type="range"] {
+  width: 100%;
+}
+
+.settings-modal-content .settings-item input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
