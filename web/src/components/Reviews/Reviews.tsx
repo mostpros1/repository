@@ -96,11 +96,6 @@ function Reviews() {
             </div>
           </div>
         </div>
-        <div className="button_container">
-          <Link to="/klussen">
-            <button className="button-task">Nieuwe klus plaatsen</button>
-          </Link>
-        </div>
       </div>
     </>
   );

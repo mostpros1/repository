@@ -67,22 +67,6 @@
   font-size: 16px;
 }
 
-.button-task {
-  height: 65px;
-  width: 200px;
-  background-color: #308ae4;
-  border-radius: 1.5rem;
-  border: none;
-  color: #fff;
-  margin: auto;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.button-task:hover {
-  background-color: #1f6fb2;
-}
-
 @media screen and (max-width: 875px) {
   .review_con {
     padding: 50px 25px;
@@ -117,13 +101,4 @@
   }
 
   /* Other adjustments for smaller elements */
-}
-
-/* Button: Nieuwe Klus plaatsen */
-.button-task {
-  padding-top: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin: auto;
-  font-size: 17px;
 }
