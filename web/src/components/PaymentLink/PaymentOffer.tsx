@@ -4,14 +4,13 @@ import { createQuote } from '../../../../backend_functions/CreateOffer';
 
 interface PaymentOfferProps {
     subtotal: number;
-    handleSendMessage: (text: any) => Promise<void>;
+    handleSendMessage: (text: unknown) => Promise<void>;
     recipientEmail: string; // Add this line
   }
 
 interface LineItem {
     id: number;
     title: string;
-    amount: number;
     description: string;
     price: number;
     quantity: number;
@@ -38,7 +37,6 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
         const newItem: LineItem = {
             id: Date.now(), // Unique identifier
             title: '',
-            amount: 0,
             description: '',
             price: 0, // Assuming price is provided or calculated
             quantity: 0
