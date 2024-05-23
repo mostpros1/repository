@@ -8,7 +8,7 @@
   
   .sidenavJobsSection{  /*<- Het groene vlak aan de linker kant die tot 1044px de sidenav op zijn plek houd */
     width: 20%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: flex-end; /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
     padding-right: 2rem; /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */

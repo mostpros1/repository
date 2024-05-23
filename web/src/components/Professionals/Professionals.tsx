@@ -98,11 +98,6 @@ function Professionals() {
             </section>
           </article>
         </article>
-        <article className="button_container">
-          <Link to="/nl/jobs">
-            <button className="button-professional">Nieuwe klus plaatsen</button>
-          </Link>
-        </article>
       </section>
     </>
   );

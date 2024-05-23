@@ -47,6 +47,8 @@ import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
+
+import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
@@ -95,9 +97,10 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
 
       
-      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
+      <Route path="/disclaimer" element={<DisclaimerPage />} />
 
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
