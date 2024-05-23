@@ -1,0 +1,729 @@
+.homepagetwomain{
+  width: 100%;
+}
+
+.landingSectionHome{
+  width: 100%;
+  background: linear-gradient(to bottom right, #A1D2FF 40%, #BBDEFD 59%);
+  height: 69.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}
+
+.landingContentHome{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.titleSectionHome{
+  width: 100%;
+}
+
+.titleSectionHomeH2 {
+  text-align: center;
+  font-size: 4.6rem;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+
+.SearchSectionHome{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+}
+
+.SearchBarHome{
+  width: 70rem;
+  height: 6rem;
+  background: #FFFFFF;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.SearchBarInputHome {
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+}
+
+.SearchBarInputHome:focus {
+  outline: none;
+  border: none; 
+}
+
+.searchBarBlueIcon{
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #207CD7;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0.35rem;
+}
+
+.searchBarBlueIcon::after {
+  content: '';
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+
+.JobsSectionHome{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.InfoBarHome{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.infoContainerHome{
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoContainerHomeH4{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+}
+.howItWorksSectionHome {
+  margin-top: 11.1rem;
+  width: 100%;
+  display: flex;
+  gap: 8rem;
+  flex-direction: column;
+}
+
+.howItWorksTitleContainerHome {
+  width: 100%;
+  font-size: 2.5rem;
+  padding-left: 25rem;
+}
+
+.howItWorksTitleHome {
+  font-family: 'Poppins', sans-serif;
+}
+
+.howItworksContainerCards {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  position: relative; 
+  flex-wrap: wrap;
+}
+
+.howItworksContainerCards::before {
+  counter-reset: cardCounter; 
+  content: ""; 
+  position: absolute; 
+  top: 0; 
+}
+
+.howItWorksCardHome {
+  min-height: 22.7rem;
+  width: 33.8rem;
+  background: #EFEFEF;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  border-color: #D9D9D9;
+  border-style: solid;
+  border-width: 0.2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.9rem;
+  text-align: center;
+}
+
+.howitworkscardhomeH5{
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.howitworkscardhomeP{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  width: 90%;
+}
+
+.howItWorksCardHome::before {
+  content: counter(cardCounter);
+  counter-increment: cardCounter;
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 5rem;
+  background: #207CD7;
+  border-radius: 50%;
+  border: 0.5rem solid #EFEFEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.whyMostProsSectionHome{
+  width: 100%;
+  margin-top: 11.9rem;
+  margin-bottom: 11.9rem;
+  display: flex;
+  align-items: center;
+  gap: 16rem;
+  flex-wrap: wrap;
+}
+
+.whyMostProsSectionHomeImg {
+  object-fit: contain;
+  width: 66rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.whyMostProsTextContainerHome{
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.whyMostProsButtonContainer{
+  display: flex;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.whyMostProsButtonHome{
+  width: 13.3rem;
+  height: 4rem;
+  background: #207CD7;
+  border: none;
+  border-radius: 0.2rem;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.whyMostProsButtonHome:hover {
+  background-color: #185a9d;
+  transform: scale(1.05);
+}
+
+.whyMostProsButtonTwoHome{
+  width: 22.9rem;
+  height: 4rem;
+  background: transparent;
+  border: 0.2rem solid #222222; 
+  border-radius: 0.2rem;
+  color: #222222;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.whyMostProsButtonTwoHome:hover {
+  background-color: #222222;
+  color: white; 
+  transform: scale(1.05);
+}
+
+.whyMostProsSectionHomeTwo{
+  width: 100%;
+  margin-top: 11.9rem;
+  margin-bottom: 11.9rem;
+  display: flex;
+  align-items: center;
+  gap: 16rem;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+
+.AppStoreHomeDownload{
+  width: 16.6rem;
+  height: 5.5rem;
+  margin-top: 6.8rem;
+  cursor: pointer;
+}
+
+.PlayStoreHomeDownload{
+  width: 18.9rem;
+  height: 5.5rem;
+  margin-top: 6.8rem;
+  cursor: pointer;
+}
+
+
+
+.homeProfHighlightHomeSection{
+  width: 100%;
+  padding-left: 13.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.HomeProfCardsContainer{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center; 
+  margin-top: 8rem;
+}
+
+.HomeProfCardsSectionHome{
+  width: 60%;
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeProCardHome {
+  min-width: 30rem;
+  background: white;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.8rem;
+  padding: 2rem;
+}
+
+.HomeProCardPFPSection{
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.HomeProfCardPFP{
+  border-radius: 50%;
+  width: 8.6rem;
+  object-fit: contain;
+}
+
+.HomeProCardhomeH5{
+  font-size: 1.6rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.HomeProCardReviewSection{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.HomeProCardStarContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeProCardhomeReviewP{
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.HomeProCardhomeReviewText{
+  font-size: 1.35rem;
+  font-family: 'Poppins', sans-serif;
+  max-width: 28rem;
+  margin-top: 1.5rem;
+}
+
+.HomeProCardhomeButtonContainer{
+  width: 100%;
+  margin-top: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeProCardhomeViewProfileButton {
+  width: 23.7rem;
+  height: 4rem;
+  background: white;
+  border: 0.1rem solid #207CD7;
+  border-radius: 0.6rem;
+  color: #207CD7;
+  font-size: 1.2rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.HomeProCardhomeViewProfileButton:hover {
+  background-color: #207CD7;
+  color: white;
+}
+
+.HomeProfReviewSectionHome{
+  width: 100%;
+  margin-top: 11.4rem;
+  background: #e0e0e0;
+  padding-left: 13.4rem;
+  padding-right: 13.4rem;
+  padding-top: 5rem;
+  padding-bottom: 20rem;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: 15%;
+  border-color: transparent black transparent transparent;
+}
+
+.right-arrow {
+  right: 15%;
+  border-color: transparent transparent transparent black;
+}
+
+.HomeProfReviewTitlesContainer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: auto;
+  height: auto;
+
+}
+
+.HomeProfReviewWrapper{
+  display: flex;
+  gap: 3rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  flex-wrap: wrap;
+}
+
+.HomeProReviewH5HomeOwner, .HomeProReviewH5Proffesional {
+  cursor: pointer;
+  position: relative;
+}
+
+.HomeProReviewH5HomeOwner::after,
+.HomeProReviewH5Proffesional::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.1rem;
+    width: 100%;
+    height: 0.3rem;
+    background-color: #207CD7;
+    display: none;
+    opacity: 0; 
+    animation: fadeInUnderline 0.5s ease forwards; 
+}
+
+@keyframes fadeInUnderline {
+  from {
+      opacity: 0; 
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.HomeProReviewH5HomeOwner.active::after,
+.HomeProReviewH5Proffesional.active::after {
+    display: block; 
+}
+
+.HomeProfReviewHomeContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+}
+
+.ReviewCardHomeProfHome{
+  display: flex;
+  max-height: 10.7rem;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-bottom: 10rem;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.ReviewCardHomeProfHome.animate-out {
+  opacity: 0;
+}
+
+.dividerDivLine{
+  width: 0.2rem;
+  height: 18rem;
+  background: #CDCDCD;
+  border-radius: 19rem;
+}
+
+.HomeProfCardInfoContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 4rem;
+}
+
+.HomeProCardhomeInfoReviewText{
+  font-size: 1.25rem;
+  font-family: 'Poppins', sans-serif;
+  max-width: 40.7rem;
+  margin-top: 0.7rem;
+}
+
+.JoinTheCommunityHomeSection {
+  width: 100%;
+  background-image: url('../../assets/communitybackground.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8.1rem;
+}
+
+.JointhecomminityContainer{
+  width: 55.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.JoinTheCommunityH3{
+  font-size: 3.2rem;
+  font-weight: medium;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.JoinTheCommunityP{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.CommunityButtonContainerHome{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 6rem;
+  flex-wrap: wrap;
+}
+
+.CommunityTwoHome{
+    width: 22.9rem;
+    height: 4rem;
+    background: transparent;
+    border: 0.2rem solid #FFFFFF; 
+    border-radius: 0.2rem;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.CommunityTwoHome:hover {
+  background-color: #222222;
+  color: white; 
+  transform: scale(1.05);
+}
+
+.CommunityCircleUp{
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 0.2rem solid #FFFFFF;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 4.2rem;
+}
+
+@media screen and (max-width:1709px){
+  .arrow {
+    position: absolute;
+    top: 75%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .left-arrow {
+    left: 40%;
+    border-color: transparent black transparent transparent;
+  }
+  
+  .right-arrow {
+    right: 40%;
+    border-color: transparent transparent transparent black;
+  }
+}
+
+@media screen and (max-width:1639px){
+  .whyMostProsSectionHome{
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  .whyMostProsSectionHomeTwo{
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  .whyMostProsTextContainerHome{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .whyMostProsButtonContainer{
+    display: flex;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .homeProfHighlightHomeSection{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0rem;
+  }
+}
+
+@media screen and (max-width: 1520px){
+  .howItWorksTitleContainerHome {
+    padding-left: 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1467px){
+  .dividerDivLine{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 801px) {
+  .HomeProfReviewSectionHome{
+    align-items: center;
+    justify-content: center;
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+  
+  .HomeProfReviewTitlesContainer{
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .titleSectionHomeH2 {
+    font-size: 3.6rem;
+  }
+
+  .arrow {
+    position: absolute;
+    top: 90%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .left-arrow {
+    left: 30%;
+    border-color: transparent black transparent transparent;
+  }
+  
+  .right-arrow {
+    right: 30%;
+    border-color: transparent transparent transparent black;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  .titleSectionHomeH2 {
+    font-size: 2.8rem;
+  }
+
+  .howItWorksTitleContainerHome{
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+
+@media screen and (max-width: 335px) {
+  .landingSectionHome{
+    height: auto;
+  }
+}
