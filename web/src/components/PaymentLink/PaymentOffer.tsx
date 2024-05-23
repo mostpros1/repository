@@ -54,7 +54,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
 
         // Prepare line items for Stripe
         const lineItemsForStripe = lineItems.map(item => ({
-            unit_amount: item.price * 100, // Amount in cents
+            unit_amount: item.price,
             quantity: item.quantity,
             title: item.title,
             description: item.description
