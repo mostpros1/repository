@@ -465,7 +465,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setShowNewChatModal(false);
   };
 
-  // // New function to delete a message
+  // New function to delete a message
+
   // const handleDeleteMessage = async (messageId: string) => {
   //   try {
   //     await API.graphql(graphqlOperation(queries.deleteChat, { input: { id: messageId } }));
@@ -475,7 +476,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   //   }
   // };
 
-  // New function to mark a message
   const handleMarkMessage = (messageId: string) => {
     setMarkedMessages((prev) => {
       const newMarkedMessages = new Set(prev);
@@ -488,7 +488,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     });
   };
 
-  // New function to reply to a message
   const handleReplyMessage = (message: Chat) => {
     setReplyingTo(message);
   };

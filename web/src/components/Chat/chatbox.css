@@ -573,13 +573,13 @@
 .dropdown-container {
   position: relative;
   display: inline-block;
+  z-index: 10;
 }
 
 #menu-icon {
   font-size: 24px;
   cursor: pointer;
   z-index: 10;
-  display: inline-block;
 }
 
 .dropdown-menu {
@@ -590,6 +590,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   border-radius: 7px;
+  z-index: 10;
 }
 
 .dropdown-item {
@@ -598,6 +599,7 @@
   white-space: nowrap;
   font-size: 14px;
   border-radius: 5px;
+  z-index: 10;
 }
 
 .dropdown-item:hover {
