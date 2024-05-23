@@ -55,20 +55,14 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
 
         // Prepare line items for Stripe
         const lineItemsForStripe = lineItems.map(item => ({
-            price_data: {
-                currency: 'usd', // Set your currency
-                product_data: {
-                    name: item.title,
-                    description: item.description,
-                },
-                unit_amount: item.price * 100, // Amount in cents
-            },
-            quantity: item.quantity
+            unit_amount: item.price * 100, // Amount in cents
+            quantity: item.quantity,
+            title: item.title,
+            description: item.description
         }));
 
-        createQuote([
-            { unit_amount: 1000, quantity: 2 }, // Example line item with unit amount of 1000 (in smallest currency unit) and quantity of 2
-        ]).then(quote => {
+        
+        createQuote(lineItemsForStripe).then(quote => {
             console.log(quote);
         }).catch(error => {
             console.error(error);
@@ -93,16 +87,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
                             required
                         />
 
-                        <label htmlFor={`amount-${index}`}>Amount:</label>
-                        <input
-                            type="number"
-                            id={`amount-${index}`}
-                            name="amount"
-                            value={item.amount}
-                            onChange={(e) => setLineItems(lineItems.map((li, i) => i === index ? { ...li, amount: parseFloat(e.target.value) } : li))}
-                            step="any"
-                            required
-                        />
+                        
 
                         <label htmlFor={`price-${index}`}>Price:</label>
                         <input
