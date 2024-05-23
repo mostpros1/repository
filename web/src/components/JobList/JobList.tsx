@@ -11,9 +11,11 @@ function JobList() {
           <SideNav />
         </article>
       </section>
-      <section className="jobCardsSection">
+      <section id="jobcardSection">
         <FilterBar />
-        <JobCards />
+        <div className="jobCardsDisplay">
+          <JobCards />
+        </div>
       </section>
     </main>
   );

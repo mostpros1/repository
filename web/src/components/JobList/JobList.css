@@ -1,14 +1,13 @@
 .jobListMain {
     width: 100%;
     height: 100%;
-    padding-right: 12rem;
     padding-top: 5rem;
     display: flex;
 }
 
 .sideNavSection {
     width: 20%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: flex-end;
     padding-right: 2rem;
@@ -24,11 +23,21 @@
     justify-content: center;
 }
 
-.jobCardsSection {
+#jobcardSection {
+    width: 60%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    height: 100vh;
+    gap: 2rem;
+}
+
+.jobCardsDisplay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
 }
 
 @media (max-width: 1044px) {
@@ -37,8 +46,10 @@
     }
 
     .jobListMain {
+        width: auto;
         align-items: center;
         justify-content: center;
         padding-right: 0rem;
+        height: auto;
     }
 }
