@@ -250,7 +250,7 @@
 .whyMostProsButtonTwoHome{
   width: 22.9rem;
   height: 4rem;
-  background: white;
+  background: transparent;
   border: 0.2rem solid #222222; 
   border-radius: 0.2rem;
   color: #222222;
@@ -481,7 +481,6 @@
 }
 
 .HomeProfReviewHomeContainer{
-  /* background: orange; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -491,13 +490,18 @@
 }
 
 .ReviewCardHomeProfHome{
-  /* background: pink; */
   display: flex;
   max-height: 10.7rem;
   justify-content: center;
   align-items: flex-start;
   gap: 2.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 10rem;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.ReviewCardHomeProfHome.animate-out {
+  opacity: 0;
 }
 
 .dividerDivLine{
@@ -511,7 +515,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* background: green; */
   flex-wrap: wrap;
   padding-right: 4rem;
 }
@@ -521,6 +524,84 @@
   font-family: 'Poppins', sans-serif;
   max-width: 40.7rem;
   margin-top: 0.7rem;
+}
+
+.JoinTheCommunityHomeSection {
+  width: 100%;
+  background-image: url('../../assets/communitybackground.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8.1rem;
+}
+
+.JointhecomminityContainer{
+  width: 55.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.JoinTheCommunityH3{
+  font-size: 3.2rem;
+  font-weight: medium;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.JoinTheCommunityP{
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.CommunityButtonContainerHome{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 6rem;
+  flex-wrap: wrap;
+}
+
+.CommunityTwoHome{
+    width: 22.9rem;
+    height: 4rem;
+    background: transparent;
+    border: 0.2rem solid #FFFFFF; 
+    border-radius: 0.2rem;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.CommunityTwoHome:hover {
+  background-color: #222222;
+  color: white; 
+  transform: scale(1.05);
+}
+
+.CommunityCircleUp{
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 0.2rem solid #FFFFFF;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 4.2rem;
 }
 
 @media screen and (max-width:1709px){
@@ -612,7 +693,7 @@
 
   .arrow {
     position: absolute;
-    top: 95%;
+    top: 90%;
     transform: translateY(-50%);
     cursor: pointer;
   }

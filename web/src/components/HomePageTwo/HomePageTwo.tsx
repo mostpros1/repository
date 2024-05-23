@@ -21,6 +21,7 @@ import ElectrozPFP from "../../assets/ElectrozPFP.png";
 import AanemerPFP from "../../assets/AanemerPFP.png";
 import GijsPFP from "../../assets/GijsPFPpng.png";
 import CarpenterIcon from "@mui/icons-material/Carpenter";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 
@@ -67,73 +68,93 @@ const PopularCardsData = [
   },
 ];
 
-
 function HomePageTwo() {
-  const [activeTab, setActiveTab] = useState('homeOwner');
+  const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
+  const [reviewAnimation, setReviewAnimation] = useState(false);
 
   const reviews = {
     homeOwner: [
       {
-        name: 'Lisa S',
-        image: [TuinPFP], 
-        text: '“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.',
+        name: "Lisa S",
+        image: [TuinPFP],
+        text: "“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.",
       },
       {
-        name: 'Stijn B',
-        image: [StijnPFP], 
-        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+        name: "Stijn B",
+        image: [StijnPFP],
+        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
-        name: 'Test Persoon',
-        image: [AanemerPFP], 
-        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+        name: "Test Persoon",
+        image: [AanemerPFP],
+        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
-        name: 'Test Persoon 2',
-        image: [GijsPFP], 
-        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+        name: "Test Persoon 2",
+        image: [GijsPFP],
+        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
     ],
     professional: [
       {
-        name: 'John D',
-        image: [HomePFP], 
-        text: '“Working with this company has been an incredible experience. Highly professional and skilled team.',
+        name: "John D",
+        image: [HomePFP],
+        text: "“Working with this company has been an incredible experience. Highly professional and skilled team.",
       },
       {
-        name: 'Emily R',
+        name: "Emily R",
         image: [TuinPFP],
-        text: '“Their services exceeded my expectations. Highly recommend to anyone in need of expert craftsmanship.',
+        text: "“Their services exceeded my expectations. Highly recommend to anyone in need of expert craftsmanship.",
       },
       {
-        name: 'Test Persoon',
+        name: "Test Persoon",
         image: [AanemerPFP],
-        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
-        name: 'Test Persoon 2',
+        name: "Test Persoon 2",
         image: [GijsPFP],
-        text: '“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.',
+        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
     ],
   };
 
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const handleClick = (tab) => {
-    setActiveTab(tab);
-    setStartIndex(0);
+    setReviewAnimation(true);
+    setTimeout(() => {
+      setActiveTab(tab);
+      setStartIndex(0);
+      setReviewAnimation(false);
+    }, 400);
   };
 
   const handleLeftClick = () => {
-    setStartIndex((prevIndex) =>
-      prevIndex === 0 ? reviews[activeTab].length - 2 : prevIndex - 1
-    );  };
+    setReviewAnimation(true);
+    setTimeout(() => {
+      setStartIndex((prevIndex) =>
+        prevIndex === 0 ? reviews[activeTab].length - 2 : prevIndex - 1
+      );
+      setReviewAnimation(false);
+    }, 400); 
+  };
 
   const handleRightClick = () => {
-    setStartIndex((prevIndex) =>
-      prevIndex === reviews[activeTab].length - 2 ? 0 : prevIndex + 1
-    );  };
-
+    setReviewAnimation(true);
+    setTimeout(() => {
+      setStartIndex((prevIndex) =>
+        prevIndex === reviews[activeTab].length - 2 ? 0 : prevIndex + 1
+      );
+      setReviewAnimation(false);
+    }, 400);
+  };
 
   return (
     <main className="homepagetwomain">
@@ -505,61 +526,86 @@ function HomePageTwo() {
         </section>
       </section>
       <section className="HomeProfReviewSectionHome">
-      <article className="HomeProfReviewTitlesContainer">
-        <h2 className="howItWorksTitleHome">Reviews</h2>
-        <section className="HomeProfReviewWrapper">
-          <h5
-            className={
-              activeTab === 'homeOwner'
-                ? 'HomeProReviewH5HomeOwner active'
-                : 'HomeProReviewH5HomeOwner'
-            }
-            onClick={() => handleClick('homeOwner')}
-          >
-            Huiseigenaar
-          </h5>
-          <h5
-            className={
-              activeTab === 'professional'
-                ? 'HomeProReviewH5Proffesional active'
-                : 'HomeProReviewH5Proffesional'
-            }
-            onClick={() => handleClick('professional')}
-          >
-            Vakspecialist
-          </h5>
-        </section>
-      </article>
-      <div className="arrow left-arrow" onClick={handleLeftClick}></div>
-      <article className="HomeProfReviewHomeContainer">
-        {reviews[activeTab].slice(startIndex, startIndex + 2).map((review, index) => (
-          <React.Fragment key={index}>
-            <article className="ReviewCardHomeProfHome">
-              <img src={review.image} alt="Profiel Foto" className="HomeProfCardPFP" />
-              <div>
-                <section className="HomeProfCardInfoContainer">
-                  <h5 className="HomeProCardhomeH5">{review.name}</h5>
-                  <article className="HomeProCardStarContainer">
-                    <StarIcon style={{ fontSize: '2rem' }} />
-                    <StarIcon style={{ fontSize: '2rem' }} />
-                    <StarIcon style={{ fontSize: '2rem' }} />
-                    <StarIcon style={{ fontSize: '2rem' }} />
-                    <StarIcon style={{ fontSize: '2rem' }} />
-                  </article>
-                </section>
-                <section className="HomeProfCardInfoContainer">
-                  <p className="HomeProCardhomeInfoReviewText">{review.text}</p>
-                </section>
-              </div>
-            </article>
-          </React.Fragment>
-        ))}
-      </article>
-      <div className="arrow right-arrow" onClick={handleRightClick}></div>
-    </section>
-    <section className="JoinTheCommunityHomeSection">
-      
-    </section>
+        <article className="HomeProfReviewTitlesContainer">
+          <h2 className="howItWorksTitleHome">Reviews</h2>
+          <section className="HomeProfReviewWrapper">
+            <h5
+              className={
+                activeTab === "homeOwner"
+                  ? "HomeProReviewH5HomeOwner active"
+                  : "HomeProReviewH5HomeOwner"
+              }
+              onClick={() => handleClick("homeOwner")}
+            >
+              Huiseigenaar
+            </h5>
+            <h5
+              className={
+                activeTab === "professional"
+                  ? "HomeProReviewH5Proffesional active"
+                  : "HomeProReviewH5Proffesional"
+              }
+              onClick={() => handleClick("professional")}
+            >
+              Vakspecialist
+            </h5>
+          </section>
+        </article>
+        <div className="arrow left-arrow" onClick={handleLeftClick}></div>
+        <article className="HomeProfReviewHomeContainer">
+          {reviews[activeTab]
+            .slice(startIndex, startIndex + 2)
+            .map((review, index) => (
+              <React.Fragment key={index}>
+                <article
+                  className={`ReviewCardHomeProfHome ${
+                    reviewAnimation ? "animate-out" : ""
+                  }`}
+                >
+                  <img
+                    src={review.image}
+                    alt="Profiel Foto"
+                    className="HomeProfCardPFP"
+                  />
+                  <div>
+                    <section className="HomeProfCardInfoContainer">
+                      <h5 className="HomeProCardhomeH5">{review.name}</h5>
+                      <article className="HomeProCardStarContainer">
+                        <StarIcon style={{ fontSize: "2rem" }} />
+                        <StarIcon style={{ fontSize: "2rem" }} />
+                        <StarIcon style={{ fontSize: "2rem" }} />
+                        <StarIcon style={{ fontSize: "2rem" }} />
+                        <StarIcon style={{ fontSize: "2rem" }} />
+                      </article>
+                    </section>
+                    <section className="HomeProfCardInfoContainer">
+                      <p className="HomeProCardhomeInfoReviewText">
+                        {review.text}
+                      </p>
+                    </section>
+                  </div>
+                </article>
+              </React.Fragment>
+            ))}
+        </article>
+        <div className="arrow right-arrow" onClick={handleRightClick}></div>
+      </section>
+      <section className="JoinTheCommunityHomeSection">
+        <article className="JointhecomminityContainer">
+          <h3 className="JoinTheCommunityH3">Kom bij de community</h3>
+          <p className="JoinTheCommunityP">
+            MostPros is de All-in-1 Home Services App met een community voor
+            huiseigenaren, vakspecialisten en medewerkers.
+          </p>
+          <article className="CommunityButtonContainerHome">
+            <button className="whyMostProsButtonHome">Plaats je klus</button>
+            <button className="CommunityTwoHome">Inschrijven als vakman</button>
+          </article>
+          <div className="CommunityCircleUp" onClick={handleScrollToTop}>
+            <ArrowUpwardIcon style={{ fontSize: "3rem" }} />
+          </div>
+        </article>
+      </section>
     </main>
   );
 }
