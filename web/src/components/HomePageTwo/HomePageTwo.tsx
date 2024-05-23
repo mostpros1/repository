@@ -76,45 +76,53 @@ function HomePageTwo() {
   const reviews = {
     homeOwner: [
       {
+        rating: 2,
         name: "Lisa S",
-        image: [TuinPFP],
+        image: TuinPFP,
         text: "“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.",
       },
       {
+        rating: 3,
         name: "Stijn B",
-        image: [StijnPFP],
+        image: StijnPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
+        rating: 4,
         name: "Test Persoon",
-        image: [AanemerPFP],
+        image: AanemerPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
+        rating: 5,
         name: "Test Persoon 2",
-        image: [GijsPFP],
+        image: GijsPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
     ],
     professional: [
       {
+        rating: 5,
         name: "John D",
-        image: [HomePFP],
+        image: HomePFP,
         text: "“Working with this company has been an incredible experience. Highly professional and skilled team.",
       },
       {
+        rating: 4,
         name: "Emily R",
-        image: [TuinPFP],
+        image: TuinPFP,
         text: "“Their services exceeded my expectations. Highly recommend to anyone in need of expert craftsmanship.",
       },
       {
+        rating: 4,
         name: "Test Persoon",
-        image: [AanemerPFP],
+        image: AanemerPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
       {
+        rating: 3,
         name: "Test Persoon 2",
-        image: [GijsPFP],
+        image: GijsPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
       },
     ],
@@ -125,6 +133,16 @@ function HomePageTwo() {
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const renderStars = (rating) => {
+    const filledStars = Array(rating).fill(
+      <StarIcon style={{ fontSize: "2rem" }} />
+    );
+    const emptyStars = Array(5 - rating).fill(
+      <StarBorderIcon style={{ fontSize: "2rem" }} />
+    );
+    return [...filledStars, ...emptyStars];
   };
 
   const handleClick = (tab) => {
@@ -143,7 +161,7 @@ function HomePageTwo() {
         prevIndex === 0 ? reviews[activeTab].length - 2 : prevIndex - 1
       );
       setReviewAnimation(false);
-    }, 400); 
+    }, 400);
   };
 
   const handleRightClick = () => {
@@ -321,7 +339,7 @@ function HomePageTwo() {
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
                 <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
+                <StarBorderIcon style={{ fontSize: "2rem" }} />
               </article>
               <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
             </section>
@@ -571,11 +589,20 @@ function HomePageTwo() {
                     <section className="HomeProfCardInfoContainer">
                       <h5 className="HomeProCardhomeH5">{review.name}</h5>
                       <article className="HomeProCardStarContainer">
-                        <StarIcon style={{ fontSize: "2rem" }} />
-                        <StarIcon style={{ fontSize: "2rem" }} />
-                        <StarIcon style={{ fontSize: "2rem" }} />
-                        <StarIcon style={{ fontSize: "2rem" }} />
-                        <StarIcon style={{ fontSize: "2rem" }} />
+                        {[...Array(review.rating)].map((_, i) => (
+                          <StarIcon
+                            key={i}
+                            style={{ fontSize: "2rem", color: "black" }}
+                          />
+                        ))}
+                        {[...Array(Math.max(5 - review.rating, 0))].map(
+                          (_, i) => (
+                            <StarBorderIcon
+                              key={i}
+                              style={{ fontSize: "2rem", color: "black" }}
+                            />
+                          )
+                        )}
                       </article>
                     </section>
                     <section className="HomeProfCardInfoContainer">
@@ -588,6 +615,7 @@ function HomePageTwo() {
               </React.Fragment>
             ))}
         </article>
+
         <div className="arrow right-arrow" onClick={handleRightClick}></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
