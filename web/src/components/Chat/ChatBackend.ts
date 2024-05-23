@@ -9,10 +9,11 @@ export function useChatBackend(user: any, signOut) {
   const [recipientEmail, setRecipientEmail] = React.useState("");
   const [recentMessageEmail, setRecentMessageEmail] = React.useState("");
   const [showJoinButton, setShowJoinButton] = React.useState(false);
-  const [showConfirmedConnection, setShowConfirmedConnection] =
-    React.useState(false);
+  const [showConfirmedConnection, setShowConfirmedConnection] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
+  const [visibleName, setVisibleName] = React.useState<string>(user.attributes.email.split("@")[0]);
+  const [textSize, setTextSize] = React.useState<number>(14);
   const uuidEmailMap = React.useRef<{ [uuid: string]: string }>({});
 
   const generateUUID = () => {
@@ -120,5 +121,9 @@ export function useChatBackend(user: any, signOut) {
     recentMessageEmail,
     handleReceivedMessage,
     signOut,
+    visibleName,
+    setVisibleName,
+    textSize,
+    setTextSize
   };
 }
