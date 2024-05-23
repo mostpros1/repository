@@ -32,9 +32,8 @@
 #sidebar ul li {
   cursor: pointer;
   padding: 10px 20px;
-  height: 90px;
+  height: 100px;
   font-size: 18px;
-  margin-top: 5px;
   transition: background-color 0.3s, color 0.3s;
   background-color: #ffffff;
   border-bottom: solid 2px rgba(44, 44, 44, 0.493);
@@ -114,7 +113,7 @@
   height: 560px;
   width: 740px;
   margin-right: 40px;
-  border-top-right-radius: 0px;
+  border-radius: 5px;
 }
 
 /* .textjoined {
@@ -157,7 +156,7 @@
   overflow-y: auto;
   background-color: #f9f9fb;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .input-form {
@@ -576,10 +575,11 @@
   display: inline-block;
 }
 
-.menu-icon {
+#menu-icon {
   font-size: 24px;
   cursor: pointer;
-  margin-left: 220px;
+  z-index: 10;
+  display: inline-block;
 }
 
 .dropdown-menu {
