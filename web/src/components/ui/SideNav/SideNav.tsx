@@ -38,6 +38,15 @@ const SideNav = () => {
     }
   }, [user, navigate, lang]);
 
+  const comingSoonTabs = [
+    { path: "revenues", label: "Inkomsten" },
+    { path: "reporting", label: "Rapporten" },
+    { path: "occupancy-ahr", label: "Bezettingsgraad" },
+    { path: "screening", label: "Screening" },
+    { path: "promo-codes", label: "Promo codes" },
+    { path: "setup", label: "Setup" },
+  ];
+
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
@@ -88,61 +97,6 @@ const SideNav = () => {
               </NavLink>
             </li>
 
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/revenues`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <StarOutlineIcon />
-                Revenues
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/reporting`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <StarOutlineIcon />
-                Reporting
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/occupancy-ahr`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <StarOutlineIcon />
-                Occupancy
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/reviews`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <StarOutlineIcon />
-                Reviews
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/screening`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <StarOutlineIcon />
-                Screening
-              </NavLink>
-            </li>
 
             <li className="sidebar-item">
               <NavLink
@@ -167,38 +121,25 @@ const SideNav = () => {
               </NavLink>
             </li>
             <li className="sidebar-item">
-                <NavLink
-                  to={`/${lang}/pro-dashboard/help`}
-                  className={({ isActive }) =>
-                    isActive ? "sidebar-link active" : "sidebar-link"
-                  }
-                >
-                  <HelpOutlineIcon />
-                  Help
-                </NavLink>
+              <NavLink
+                to={`/${lang}/pro-dashboard/help`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HelpOutlineIcon />
+                Help
+              </NavLink>
+            </li>
+            {comingSoonTabs.map((tab) => (
+              <li className="sidebar-item coming-soon" key={tab.path}>
+                <div className="sidebar-link">
+                  <StarOutlineIcon />
+                  {tab.label}
+                  <div className="coming-soon-tooltip">Binnenkort online</div>
+                </div>
               </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/promo-codes`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <SettingsIcon />
-                Promo codes
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/setup`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <SettingsIcon />
-                Setup
-              </NavLink>
-            </li>
+            ))}
           </>
         ) : (
           <>
