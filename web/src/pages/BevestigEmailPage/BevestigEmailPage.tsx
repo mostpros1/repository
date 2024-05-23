@@ -71,6 +71,7 @@ function BevestigEmailPage() {
                           }).promise();
                         dynamo.query({
                             TableName: "Users",
+                            IndexName: "username",
                             KeyConditionExpression: "email = :email",
                             ExpressionAttributeValues: {
                                 ":email": userEmail,
@@ -122,6 +123,7 @@ function BevestigEmailPage() {
 
                         dynamo.query({
                             TableName: "Users",
+                            IndexName: "username",
                             KeyConditionExpression: "email = :email",
                             ExpressionAttributeValues: {
                                 ":email": userEmail,
