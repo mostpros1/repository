@@ -62,6 +62,7 @@ function RegisterPage() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
+              stripeCustomerId: ""
 
               /*
               email: stopXSS(email),

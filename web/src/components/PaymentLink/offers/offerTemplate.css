@@ -1,0 +1,32 @@
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkmark-circle,
+.cross-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.checkmark-circle {
+    background-color: #ccf;
+}
+
+.cross-circle {
+    background-color: #fcc;
+}
+
+.feather {
+    width: 24px;
+    height: 24px;
+}
+
