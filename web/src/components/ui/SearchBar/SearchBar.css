@@ -1,81 +1,84 @@
 /* search section */
 .search-container {
-    position: relative; /* Zet de container op relatieve positie */
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.search-container_open{
-    position: relative; /* Zet de container op relatieve positie */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.search-container_open {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .search-container h4 {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .search-container input {
-    border: none;
-    border-radius: 25px;
-    padding: 25px 40px;
-    font-size: 20px;
-    outline: none;
-    max-width: 85%;
+  border: none;
+  border-radius: 2.5rem;
+  padding: 25px 40px;
+  font-size: 20px;
+  outline: none;
+  max-width: 85%;
+  transition: all 0.3s ease;
 }
 
-.search-container_open input{
-    border: none;
-    border-radius: 25px 25px 0px 0px;
-    padding: 25px 40px;
-    font-size: 20px;
-    outline: none;
+.search-container_open input {
+  border: none;
+  border-radius: 25px 25px 0px 0px;
+  padding: 25px 40px;
+  font-size: 20px;
+  outline: none;
+  transition: all 0.03s ease-in-out;
+  max-width: 100%;
 }
 
 .search_dropdown {
-    background-color: white;
-    position: absolute;
-    top: 0%; /* Plaats het dropdown-menu onder de input */
-    left: 0;
-    width: 100%;
-    display: none; /* Verberg het dropdown-menu standaard */
-    flex-direction: column;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+  background-color: white;
+  position: absolute;
+  top: 100%; /* Corrected to place the dropdown below the input */
+  left: 0;
+  max-width: 0;
+  max-height: 0; /* Initially collapsed */
+  opacity: 0; /* Initially invisible */
+  overflow: hidden; /* Hide overflow content */
+  display: flex;
+  flex-direction: column;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  transition: max-height 0.3s ease; /* Transition properties */
 }
 
-.open{
-    background-color: white;
-    top: 100%; /* Plaats het dropdown-menu onder de input */
-    left: 0;
-    width: 100%;
-    display: flex; /* Verberg het dropdown-menu standaard */
-    flex-direction: column;
+.open {
+  max-height: 50rem; /* Set to an appropriate value for your content */
+  width: 100%;
+  max-width: 500rem;
+  opacity: 1; /* Fully visible */
 }
 
-.searchBarSearchText{
-    font-size: 2.2rem;
-    font-weight: bold;
+.searchBarSearchText {
+  font-size: 2.2rem;
+  font-weight: bold;
 }
 
 .search_dropdown_item {
-    padding: 25px 40px;
-    text-decoration: none;
-    color: black;
-    border-bottom: 1px solid #C0C0C8;
-    font-size: 18px;
+  padding: 25px 40px;
+  text-decoration: none;
+  color: black;
+  border-bottom: 1px solid #c0c0c8;
+  font-size: 18px;
 }
 
 .search_dropdown_item:last-child {
-    border: none;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+  border: none;
 }
 
 .search_dropdown_item:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 /* In SearchBar.css */
