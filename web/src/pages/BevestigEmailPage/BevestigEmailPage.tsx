@@ -63,16 +63,12 @@ function BevestigEmailPage() {
                     .then(async () => {
                         const stripeCustomer = await stripe.customers.create({
                             email: userEmail,
-                            payment_method: 'ideal',
-                            invoice_settings: {
-                                default_payment_method: 'ideal',
-                            },
-                        });
-                        await cognitoClient.adminUpdateUserAttributes({
+                          });
+                          await cognitoClient.adminUpdateUserAttributes({
                             UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
                             Username: userEmail,
                             UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
-                        }).promise();
+                          }).promise();
                         dynamo.query({
                             TableName: "Users",
                             KeyConditionExpression: "email = :email",
@@ -80,25 +76,25 @@ function BevestigEmailPage() {
                                 ":email": userEmail,
                             },
                         }).promise() // Use.promise() here to get a Promise
-                        .then(data => {
-                            if (data.Items) {
-                                dynamo.update({
-                                    TableName: "Users",
-                                    Key: {
-                                        id: data.Items[0].Id,
-                                    },
-                                    UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
-                                    ExpressionAttributeValues: {
-                                        ":stripeCustomerId": stripeCustomer.id,
-                                    },
-                                }).promise() // And here as well
-                               .then(output => console.log(output.Attributes))
-                               .catch(console.error);
-                            }
-                            setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
-                        })
-                        .catch(error => console.error(error));
-                       
+                            .then(data => {
+                                if (data.Items) {
+                                    dynamo.update({
+                                        TableName: "Users",
+                                        Key: {
+                                            id: data.Items[0].Id,
+                                        },
+                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
+                                        ExpressionAttributeValues: {
+                                            ":stripeCustomerId": stripeCustomer.id,
+                                        },
+                                    }).promise() // And here as well
+                                        .then(output => console.log(output.Attributes))
+                                        .catch(console.error);
+                                }
+                                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+                            })
+                            .catch(error => console.error(error));
+
                     })
                     .catch(error => console.error(error));
             }
@@ -114,18 +110,15 @@ function BevestigEmailPage() {
                     GroupName: 'Professional',
                 }).promise()
                     .then(async () => {
-                        const stripeCustomer = await stripe.customers.create({
+                
+                          const stripeCustomer = await stripe.customers.create({
                             email: userEmail,
-                            payment_method: 'ideal',
-                            invoice_settings: {
-                                default_payment_method: 'ideal',
-                            },
-                        });
-                        await cognitoClient.adminUpdateUserAttributes({
+                          });
+                          await cognitoClient.adminUpdateUserAttributes({
                             UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
                             Username: userEmail,
                             UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
-                        }).promise();
+                          }).promise();
 
                         dynamo.query({
                             TableName: "Users",
@@ -134,109 +127,108 @@ function BevestigEmailPage() {
                                 ":email": userEmail,
                             },
                         }).promise() // Use.promise() here to get a Promise
-                        .then(data => {
-                            if (data.Items) {
-                                dynamo.update({
-                                    TableName: "Users",
-                                    Key: {
-                                        id: data.Items[0].Id,
-                                    },
-                                    UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
-                                    ExpressionAttributeValues: {
-                                        ":stripeCustomerId": stripeCustomer.id,
-                                    },
-                                }).promise() // And here as well
-                               .then(output => console.log(output.Attributes))
-                               .catch(console.error);
-                            }
-                            setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
-                        })
-                        .catch(error => console.error(error));
-                   }).catch(error => console.error(error));
+                            .then(data => {
+                                if (data.Items) {
+                                    dynamo.update({
+                                        TableName: "Users",
+                                        Key: {
+                                            id: data.Items[0].Id,
+                                        },
+                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
+                                        ExpressionAttributeValues: {
+                                            ":stripeCustomerId": stripeCustomer.id,
+                                        },
+                                    }).promise() // And here as well
+                                        .then(output => console.log(output.Attributes))
+                                        .catch(console.error);
+                                }
+                                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+                            })
+                            .catch(error => console.error(error));
+                    }).catch(error => console.error(error));
             }
         },
     }
-}
-const postConfig = postConfigMap[postConfigId] || null
+    const postConfig = postConfigMap[postConfigId] || null
 
-async function confirmSignUp(code: string) {
+    async function confirmSignUp(code: string) {
 
-    const confirmationResult = await Auth.confirmSignUp(userEmail, code)
-        .catch(error => {
-            console.error(error)
-            const errorActionMap: Record<string, () => void> = {
-                "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
-                "CodeMismatchException": () => { },
-                "default": () => { }
-            };
-            (errorActionMap[error.code] || errorActionMap['default'])()
-        })
-    const addToGroupResult = await cognitoClient.adminAddUserToGroup({
-        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-        Username: userEmail,
-        GroupName: postConfig.roleName,
-    }).promise()
-        .catch(error => console.error(error))
-    console.log(addToGroupResult)
-    if (!addToGroupResult) return
-    if (confirmationResult == 'SUCCESS') {
-        setIsConfirmed(true)
-        postConfig.onSuccess && postConfig.onSuccess()
-        sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
+        const confirmationResult = await Auth.confirmSignUp(userEmail, code)
+            .catch(error => {
+                console.error(error)
+                const errorActionMap: Record<string, () => void> = {
+                    "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
+                    "CodeMismatchException": () => { },
+                    "default": () => { }
+                };
+                (errorActionMap[error.code] || errorActionMap['default'])()
+            })
+        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
+            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+            Username: userEmail,
+            GroupName: postConfig.roleName,
+        }).promise()
+            .catch(error => console.error(error))
+        console.log(addToGroupResult)
+        if (!addToGroupResult) return
+        if (confirmationResult == 'SUCCESS') {
+            setIsConfirmed(true)
+            postConfig.onSuccess && postConfig.onSuccess()
+            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
+        }
     }
-}
 
 
-function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    let code: string = ""
-    inputRef.current.forEach((input: HTMLInputElement) => { code += input.value })
+    function onSubmit(e: FormEvent) {
+        e.preventDefault()
+        let code: string = ""
+        inputRef.current.forEach((input: HTMLInputElement) => { code += input.value })
 
-    confirmSignUp(code)
-}
+        confirmSignUp(code)
+    }
 
-function onNewCode() {
-    Auth.resendSignUp(userEmail)
-        .catch(error => {
-            if (error.code == "InvalidParameterException") {
-                setUserExists(true)
-                setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
-            }
-        })
-}
-const form =
-    <div className="confirmemail-container">
-        <form className="confirmemail-card" onSubmit={onSubmit}>
-            <div className="confirmemail-card_header">
-                <p className="confirmemail-card_title">Bevestig uw e-mailadres</p>
-                <hr />
-            </div>
-            <b className="confirmemail-card_text">Er is een verificatiecode verzonden naar uw e-mailadres.</b>
-            <p className="confirmemail-card_text">Zoek in uw inbox naar een code, en voer die hieronder in. Let op: de mail kan mogelijk in uw spamfolder beland zijn.</p>
-            <DigitInputs amount={6} inputRef={inputRef} />
-            <button className="confirmemail-card_button" type="submit">Bevestigen</button>
-            <a className="confirmemail-card_newCode" onClick={onNewCode}>Nieuwe code versturen</a>
-        </form>
-    </div>
-
-const confirmedPopup =
-    <div className="confirmemail-container confirmed">
-        <p className="confirmemail-card_title confirmed">Gelukt!</p>
-        <div className="confirmemail-screen confirmed">
-            <img src={ThumbsUp} alt="" />
+    function onNewCode() {
+        Auth.resendSignUp(userEmail)
+            .catch(error => {
+                if (error.code == "InvalidParameterException") {
+                    setUserExists(true)
+                    setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000)
+                }
+            })
+    }
+    const form =
+        <div className="confirmemail-container">
+            <form className="confirmemail-card" onSubmit={onSubmit}>
+                <div className="confirmemail-card_header">
+                    <p className="confirmemail-card_title">Bevestig uw e-mailadres</p>
+                    <hr />
+                </div>
+                <b className="confirmemail-card_text">Er is een verificatiecode verzonden naar uw e-mailadres.</b>
+                <p className="confirmemail-card_text">Zoek in uw inbox naar een code, en voer die hieronder in. Let op: de mail kan mogelijk in uw spamfolder beland zijn.</p>
+                <DigitInputs amount={6} inputRef={inputRef} />
+                <button className="confirmemail-card_button" type="submit">Bevestigen</button>
+                <a className="confirmemail-card_newCode" onClick={onNewCode}>Nieuwe code versturen</a>
+            </form>
         </div>
-        <p className="confirmemail-card_text confirmed">Uw email is bevestigd. U wordt nu doorgestuurd naar de volgende pagina.</p>
-    </div>
 
-const userExistsPopup =
-    <div className="confirmemail-container confirmed">
-        <p className="confirmemail-card_title confirmed">U bent al geverifieerd.</p>
-        <p className="confirmemail-card_text confirmed">Uw account is al geverifieerd. U wordt nu doorgestuurd naar de volgende pagina.</p>
-    </div>
+    const confirmedPopup =
+        <div className="confirmemail-container confirmed">
+            <p className="confirmemail-card_title confirmed">Gelukt!</p>
+            <div className="confirmemail-screen confirmed">
+                <img src={ThumbsUp} alt="" />
+            </div>
+            <p className="confirmemail-card_text confirmed">Uw email is bevestigd. U wordt nu doorgestuurd naar de volgende pagina.</p>
+        </div>
 
-return (
-    userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
-)
+    const userExistsPopup =
+        <div className="confirmemail-container confirmed">
+            <p className="confirmemail-card_title confirmed">U bent al geverifieerd.</p>
+            <p className="confirmemail-card_text confirmed">Uw account is al geverifieerd. U wordt nu doorgestuurd naar de volgende pagina.</p>
+        </div>
+
+    return (
+        userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
+    );
 }
 
 export default BevestigEmailPage
