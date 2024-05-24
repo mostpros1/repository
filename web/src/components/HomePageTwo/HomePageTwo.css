@@ -72,17 +72,21 @@
 }
 
 .search_results {
-  display: flex;
   position: absolute;
+  display: flex;
   flex-direction: column;
-  background-color: white;
-  color: black;
-  margin-left: 2rem;
-  width: 35%;
-  height: 35%;
+  max-height: 30rem;
+  max-width: 65rem;
+  width: 100%;
+  height: auto;
   padding: 1.5rem;
+  margin-left: 2rem;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
+  background-color: white;
+  color: black;
+  overflow-y: scroll;
+  scrollbar-width: none;
   transition: all 0.3s ease;
 }
 

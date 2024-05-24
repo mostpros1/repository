@@ -163,7 +163,7 @@ function Searchbar() {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 6); // Beperk tot de eerste 6 resultaten
+  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 6 resultaten
   const resultsRender = slicedResults.map((result, index) => (
     <Link
       to={`/nl/jobs#${result.specialistName.replace(
