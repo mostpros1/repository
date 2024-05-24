@@ -67,7 +67,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [newChatEmail, setNewChatEmail] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  
+
   // New states for extra functionalities
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
@@ -121,7 +121,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         if (
           !updatedLastMessages[contact] ||
           new Date(updatedLastMessages[contact].createdAt) <
-            new Date(chat.createdAt)
+          new Date(chat.createdAt)
         ) {
           updatedLastMessages[contact] = {
             text: chat.text,
@@ -266,35 +266,35 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   const handleFileUpload = async (file) => {
     const reader = new FileReader();
-    
+
     reader.onload = async () => {
-        if (reader.result) {
-            const base64Data = (reader.result as string).split(',')[1];
-            try {
-                const response = await axios.post(
-                    'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
-                    { photo: base64Data },
-                    {
-                      headers: {
-                        'Content-Type': 'application/json'
-                      }
-                    }
-                );
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error uploading photo:', error);
+      if (reader.result) {
+        const base64Data = (reader.result as string).split(',')[1];
+        try {
+          const response = await axios.post(
+            'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
+            { photo: base64Data },
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
             }
-        } else {
-            console.error('FileReader result is null');
+          );
+          console.log(response.data);
+        } catch (error) {
+          console.error('Error uploading photo:', error);
         }
+      } else {
+        console.error('FileReader result is null');
+      }
     };
-    
+
     reader.onerror = (error) => {
-        console.error('Error reading file:', error);
+      console.error('Error reading file:', error);
     };
-    
+
     reader.readAsDataURL(file);
-};
+  };
 
   const handleUpload = async () => {
     try {
@@ -304,24 +304,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       }
 
       const formData = new FormData();
-      formData.append("photo", selectedFile);
-
+      formData.append("photo", selectedFile); // Ensure the server expects the file under this key
+      console.log(formData);
+      // Remove manual Content-Type header setting
       const response = await axios.post(
         "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       console.log(response.data);
-      setUploadedPhotoUrl(response.data);
+      setUploadedPhotoUrl(response.data.url); // Assuming the response contains a URL property
 
-      await handleSendMessage(
-        `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
-      );
+      await handleSendMessage(`<img src="${response.data.url}" alt="Uploaded Image" style="max-width: 100%;" />`);
     } catch (error) {
       console.error("Error uploading photo:", error);
       alert("Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.");
@@ -409,19 +403,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   });
 
   const parseLinks = (text: string) => {
-      const linkRegex = /(https?:\/\/[^\s]+)/g;
-      const parts = text.split(linkRegex);
-      const jsxElements = parts.flatMap((part, index) => {
-        if (index % 2  !== 0) {
-            return (
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(linkRegex);
+    const jsxElements = parts.flatMap((part, index) => {
+      if (index % 2 !== 0) {
+        return (
           <a href={part} target="_blank" rel="noopener noreferrer">
             {part}
           </a>
         );
-        } else {
-            return part;
-        }
-      });
+      } else {
+        return part;
+      }
+    });
 
     const htmlString = ReactDOMServer.renderToStaticMarkup(
       <>{jsxElements}</>
@@ -457,7 +451,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const [open, setOpen] = useState(false);
-  
+
   const toggleMenu = () => {
     setOpen(!open);
   };
@@ -522,53 +516,53 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={selectedContact === contact ? "selected-contact" : ""}
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
-                      </span>
-                    )}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? "selected-contact" : ""}
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
                   </div>
-                </li>
-              ))
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))
             : filteredContactList.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={selectedContact === contact ? "selected-contact" : ""}
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
-                      </span>
-                    )}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? "selected-contact" : ""}
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
                   </div>
-                </li>
-              ))}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
       <div className="main-container">
@@ -594,18 +588,16 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   {groupedMessages[date].map((chat) => (
                     <div
                       key={chat.id}
-                      className={`message-container ${
-                        chat.email === user.attributes.email
+                      className={`message-container ${chat.email === user.attributes.email
                           ? "self-message-container"
                           : "other-message-container"
-                      } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                     >
                       <div
-                        className={`message-bubble ${
-                          chat.email === user.attributes.email
+                        className={`message-bubble ${chat.email === user.attributes.email
                             ? "self-message"
                             : "other-message"
-                        }`}
+                          }`}
                       >
                         <div
                           className="text"
@@ -632,12 +624,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             })}
           </div>
 
-            {replyingTo && (
-              <div className="replying-to">
-                Replying to: <blockquote>{replyingTo.text}</blockquote>
-                <button onClick={() => setReplyingTo(null)}>Cancel</button>
-              </div>
-            )}
+          {replyingTo && (
+            <div className="replying-to">
+              Replying to: <blockquote>{replyingTo.text}</blockquote>
+              <button onClick={() => setReplyingTo(null)}>Cancel</button>
+            </div>
+          )}
           <div className="input-form">
             <input
               type="text"
@@ -705,7 +697,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   subtotal={parseFloat(customAmount.replace(',', '.'))}
                   handleSendMessage={handleSendMessage}
                   recipientEmail={recipientEmail}
-                  />
+                />
               </div>
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
