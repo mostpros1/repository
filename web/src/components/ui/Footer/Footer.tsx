@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="footer">
       <section className="footer_container">
@@ -60,7 +61,7 @@ function Footer() {
         </section>
       </section>
       <article className="cpad_wrapper">
-        <p>©2023</p>
+        <p>©{currentYear}</p>
         <Link to="/privacybeleid">Privacybeleid.</Link>
         <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
         <Link to="/disclaimer">Disclaimer</Link>
