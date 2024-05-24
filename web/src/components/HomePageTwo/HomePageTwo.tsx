@@ -1,7 +1,6 @@
 import "./HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import SolarPowerIcon from "@mui/icons-material/SolarPower";
