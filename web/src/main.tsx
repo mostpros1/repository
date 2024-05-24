@@ -11,7 +11,10 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { sendMail } from "../../backend_functions/email.ts";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n";
+
+
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,

@@ -259,7 +259,8 @@ function SpecialistMultistepForm() {
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
               status: "PENDING",
-              user_role: "PROFESSIONAL"
+              user_role: "PROFESSIONAL",
+              stripeCustomerId: ""
 
             },
             TableName: "Users",

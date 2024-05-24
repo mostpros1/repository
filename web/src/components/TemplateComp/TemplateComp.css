@@ -18,9 +18,9 @@
 
 .sideNavTemplate{ /*<- De sidenav. */
   height: 45%;
-  width: 17.5rem; /* <- aanpassen naar % wanneer er content inzit */
-  background: black;
-  border-radius: 5px; /* bij borderradius mag pixels wel gebruikt worden!*/
+  width: 18rem; /* <- aanpassen naar % wanneer er content inzit */
+  background: #222;
+  border-radius: 8px; /* bij borderradius mag pixels wel gebruikt worden!*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,10 +36,10 @@
   .sidenavTemplateSection { 
     display: none; /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
   }
-
   .templateMain{ /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
     align-items: center;
     justify-content: center;
     padding-right: 0rem;
   }
 }
+

@@ -1,4 +1,4 @@
-#question-var .question {
+#answer-var .answer {
   padding: 25px;
   text-align: center;
   overflow: hidden;
@@ -7,13 +7,13 @@
   font-weight: 600;
 }
 
-#question-var {
+#answer-var {
   max-width: 350px;
   max-height: 350px;
   height: 80%;
 }
 
-#question-var .question {
+#answer-var .answer {
   background-color: #e9f4ff;
   border: none;
   border-radius: 4px;
@@ -25,7 +25,7 @@
   transition: all 0.5s ease;
 }
 
-#question-var p {
+#answer-var p {
   font-size: 15px;
   display: block;
   text-align: center;
@@ -35,12 +35,25 @@
   border-bottom: 1px solid #dee2e6;
 }
 
-/* Hover effect for questions */
-#question-var .question:hover {
+/* Hover effect for answers */
+#answer-var .answer:hover {
   background-color: #d4e9ff;
 }
 
-/* The active or 'open' state of the question, which might display more content */
-#question-var .question-active {
+/* The active or 'open' state of the answer, which might display more content */
+#answer-var .answer-active {
   background-color: #e9ecef;
+}
+
+@media screen and (max-width: 768px) {
+  #answer-var .answer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50rem;
+  }
+  #answer-var p {
+    width: 50rem;
+  }
 }

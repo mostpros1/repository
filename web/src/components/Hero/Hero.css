@@ -23,17 +23,15 @@
 }
 
 .populairjobsHero {
-    width: 85%;
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2.3rem;
     padding: 1rem; /* Add padding for spacing */
     flex-wrap: wrap;
   }
   
   .populairjobsHeroCard {
-    width: 12rem;
-    height: 12rem;
-    background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,17 +43,13 @@
     color: black;
     text-decoration: none;
   }
-  
-  .populairjobsHeroCard:hover {
-    transform: scale(1.05); /* Scale up by 5% */
-}
 
   .populairjobsHeroCard span {
-    font-size: 14px; /* Increase font size for name */
+    font-size: 15px;
   }
   
   .populairjobsHeroCard svg {
-    font-size: 24px; /* Increase icon size */
+    font-size: 4rem;
   }
 
 .hero-container h2{
@@ -73,7 +67,6 @@
 }
 
 
-/* the link button */
 .link-btn{
     display: flex;
     width: fit-content;

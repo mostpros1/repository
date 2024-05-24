@@ -56,16 +56,16 @@
   gap: 10px;
 }
 
-.nav-leftside > img {
+.nav-leftside>img {
   height: 30px;
   aspect-ratio: 1/1;
 }
 
-.nav-leftside > .white-h1 {
+.nav-leftside>.white-h1 {
   color: white;
 }
 
-.nav-leftside > .black-h1 {
+.nav-leftside>.black-h1 {
   color: black;
 }
 
@@ -118,26 +118,26 @@
   font-size: 20px;
 }
 
-.nav-blue-btn > a {
+.nav-blue-btn>a {
   padding: 10px 20px;
   border-radius: 15px;
   border: 3px solid #308ae4;
   transition: all 0.2s;
 }
 
-.nav-blue-btn > a:hover {
+.nav-blue-btn>a:hover {
   background-color: #308ae4;
   color: white !important;
 }
 
-li > .white-items {
+li>.white-items {
   color: white;
   text-decoration: none;
   font-size: 18px;
   font-weight: 600;
 }
 
-li > .black-items {
+li>.black-items {
   color: black;
   text-decoration: none;
   font-size: 15px;
@@ -147,10 +147,13 @@ li > .black-items {
 .loginButton {
   padding: 5px 10px;
   color: black;
+  background-color: none;
+  border: none;
 }
 
 .loginButton:hover {
   cursor: pointer;
+  color: #308ae4;
 }
 
 .loginButton svg {
@@ -163,16 +166,33 @@ li > .black-items {
 
 .dropdown-content {
   position: absolute;
-  top: 150%;
+  top: 140%;
   left: 0;
+  right: 0%;
+  width: 20rem;
+  height: 20rem;
   background-color: white;
-  border: 1px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  z-index: 1;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-content button {
+  display: block;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  text-align: left;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 15px;
+  background-color: #308ae4;
+  cursor: pointer;
 }
 
 .dropdown-content a {
@@ -269,7 +289,7 @@ li > .black-items {
     font-size: 26px;
   }
 
-  .mobile-nav > svg {
+  .mobile-nav>svg {
     font-size: 30px;
   }
 
@@ -285,7 +305,7 @@ li > .black-items {
     padding: 20px;
   }
 
-  .nav-list > li > a {
+  .nav-list>li>a {
     font-size: 20px;
   }
 

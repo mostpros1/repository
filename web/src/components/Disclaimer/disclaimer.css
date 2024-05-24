@@ -1,0 +1,9 @@
+#disclaimerLowerSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: left;
+    margin: auto;
+    width: 70%;
+    height: 100%;
+}
