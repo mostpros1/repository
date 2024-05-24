@@ -11,6 +11,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import WhyMostProsImg from "../../assets/workingman.png";
 import Allin1ServiceImg from "../../assets/workingmantwo.png";
+import VerhuisPFP from "../../assets/Sem_M.png";
 import AppStore from "../../assets/Appstore_button.png";
 import PlayStore from "../../assets/Google-play-badge-1.png";
 import HomePFP from "../../assets/homepagepfp.png";
@@ -89,41 +90,41 @@ function HomePageTwo() {
       },
       {
         rating: 4,
-        name: "Test Persoon",
+        name: "Jos A",
         image: AanemerPFP,
-        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
+        text: "“Riolering was verstopt en dit is binnen 2 uur opgelost. Dankjewel Remco van Mezosun.",
       },
       {
         rating: 5,
-        name: "Test Persoon 2",
+        name: "Mirlo I",
         image: GijsPFP,
-        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
+        text: "“Ons dak moest compleet vernieuwd worden. Ik ging online zoeken maar kon geen betrouwbare dakdekker vinden tegen een redelijke prijs-kwaliteit verhouding. Venlo Dakdekker BV” heeft ons goed geholpen. We zijn tevreden met ons nieuwe dak.",
       },
     ],
     professional: [
       {
         rating: 5,
-        name: "John D",
+        name: "Leo Bos Verhuisservice BV",
+        image: VerhuisPFP,
+        text: "“Thea ging verhuizen naar een levensloop bestendige woning. Fijn om haar hiermee te ondersteunen en ik heb fijne communicatie met Thea ervaren. Dankjewel.",
+      },
+      {
+        rating: 4,
+        name: "Bas Fixo B.V.",
         image: HomePFP,
-        text: "“Working with this company has been an incredible experience. Highly professional and skilled team.",
+        text: "“Jan had twee lekkende waterleidingen en nam hiervoor contact met ons op. We hebben de klus gefixt en het wederzijdse vertrouwen met Jan vonden wij prettig",
       },
       {
         rating: 4,
-        name: "Emily R",
-        image: TuinPFP,
-        text: "“Their services exceeded my expectations. Highly recommend to anyone in need of expert craftsmanship.",
-      },
-      {
-        rating: 4,
-        name: "Test Persoon",
-        image: AanemerPFP,
-        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
+        name: "Electroz B.V.",
+        image: ElectrozPFP,
+        text: "“Nieuwe groepenkast geplaatst bij mevrouw Vera S. Lekkere koffie met koekje gekregen en gezellig dame om mee te babbelen.",
       },
       {
         rating: 3,
-        name: "Test Persoon 2",
+        name: "Houtlab Gijs",
         image: GijsPFP,
-        text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
+        text: "“Ik kreeg de aanvraag binnen om naast het kunstgras hockeyveldje een tuinhuis te maken. Binnen 1 week heb ik dit kunnen realiseren en alles verliep soepel met de huiseigenaar.",
       },
     ],
   };

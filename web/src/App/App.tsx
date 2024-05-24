@@ -73,7 +73,7 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
