@@ -1,6 +1,7 @@
 import "./HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import SolarPowerIcon from "@mui/icons-material/SolarPower";
@@ -73,6 +74,7 @@ function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
   const [reviewAnimation, setReviewAnimation] = useState(false);
+  const navigate = useNavigate();
 
   const reviews = {
     homeOwner: [
@@ -136,14 +138,8 @@ function HomePageTwo() {
     });
   };
 
-  const renderStars = (rating) => {
-    const filledStars = Array(rating).fill(
-      <StarIcon style={{ fontSize: "2rem" }} />
-    );
-    const emptyStars = Array(5 - rating).fill(
-      <StarBorderIcon style={{ fontSize: "2rem" }} />
-    );
-    return [...filledStars, ...emptyStars];
+  const handleProOnboardingClick = () => {
+    navigate(`/${taal}/pro-onboarding`); 
   };
 
   const handleClick = (tab) => {
@@ -154,6 +150,7 @@ function HomePageTwo() {
       setReviewAnimation(false);
     }, 400);
   };
+  
 
   const handleLeftClick = () => {
     setReviewAnimation(true);
@@ -276,8 +273,8 @@ function HomePageTwo() {
             terwijl we plezier hebben.
           </p>
           <article className="whyMostProsButtonContainer">
-            <button className="whyMostProsButtonHome">Plaats je klus</button>
-            <button className="whyMostProsButtonTwoHome">
+            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
+            <button className="whyMostProsButtonTwoHome" onClick={handleProOnboardingClick}>
               Inschrijven als vakman
             </button>
           </article>
@@ -627,7 +624,7 @@ function HomePageTwo() {
             huiseigenaren, vakspecialisten en medewerkers.
           </p>
           <article className="CommunityButtonContainerHome">
-            <button className="whyMostProsButtonHome">Plaats je klus</button>
+            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
             <button className="CommunityTwoHome">Inschrijven als vakman</button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
