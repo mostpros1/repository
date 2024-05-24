@@ -1,4 +1,4 @@
-import "./HomePageTwo.css";
+import "../HomePageTwo/HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ const PopularCardsData = [
   },
 ];
 
-function HomePageTwo() {
+function SpecialistHome() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
   const [reviewAnimation, setReviewAnimation] = useState(false);
@@ -174,40 +174,6 @@ function HomePageTwo() {
 
   return (
     <main className="homepagetwomain">
-      <section className="landingSectionHome">
-        <article className="landingContentHome">
-          <section className="titleSectionHome">
-            <h2 className="titleSectionHomeH2">
-              Vind lokale vakspecialisten <br></br> voor klussen in je huis en
-              tuin
-            </h2>
-          </section>
-          <section className="SearchSectionHome">
-            <article className="SearchBarHome">
-              <input
-                className="SearchBarInputHome"
-                type="text"
-                placeholder="Wat is je klus?"
-              />
-              <article className="searchBarBlueIcon"></article>
-            </article>
-          </section>
-          <section className="JobsSectionHome">
-            <article className="populairjobsHero">
-              {PopularCardsData.map((card) => (
-                <Link
-                  key={card.id}
-                  to={`/${taal}/jobs#${card.name.toLowerCase()}`}
-                  className="populairjobsHeroCard"
-                >
-                  {card.icon}
-                  <span>{card.name}</span>
-                </Link>
-              ))}
-            </article>
-          </section>
-        </article>
-      </section>
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
@@ -474,8 +440,8 @@ function HomePageTwo() {
                 className="HomeProfCardPFP "
               />
               <h5 className="HomeProCardhomeH5">
-                Houtlab Gijs<br />
-                Timmerman
+                Bas Fixo B.V. <br />
+                Loodgieter
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
@@ -636,4 +602,4 @@ function HomePageTwo() {
   );
 }
 
-export default HomePageTwo;
+export default SpecialistHome;
