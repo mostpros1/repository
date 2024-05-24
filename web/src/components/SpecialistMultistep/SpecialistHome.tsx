@@ -1,4 +1,4 @@
-import "./HomePageTwo.css";
+import "../HomePageTwo/HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,19 +26,7 @@ import CarpenterIcon from "@mui/icons-material/Carpenter";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
-//Data imports for the searchbar
-import { useNavigate } from "react-router-dom";
-import specialists from "../../data/specialists.ts";
 
-//Define specialist interface
-interface Specialist {
-  id: number;
-  name: string;
-  tasks: { task: string; link: string }[];
-  link?: string;
-}
-
-//PopularCards data
 const PopularCardsData = [
   {
     id: 1,
@@ -82,131 +70,7 @@ const PopularCardsData = [
   },
 ];
 
-//Function Searchbar component
-
-function Searchbar() {
-  const [value, setValue] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (
-      !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("search_dropdown_item")
-    ) {
-      setShowList(false);
-    }
-  };
-
-  
-
-  const navigate = useNavigate();
-  const handleInputFocus = () => {
-    setShowList(true);
-  };
-
-  const handleResultClick = (link: string) => {
-    navigate(`/nl/jobs${link}`);
-  };
-  const handleInputKeyDown = (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-        break;
-      case "ArrowDown":
-        setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, slicedResults.length - 1)
-        );
-        break;
-      case "Enter":
-        if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
-          const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
-        }
-        break;
-      case "Tab": // Implementing autocomplete on Tab key
-        if (slicedResults.length > 0) {
-          const selectedResult = slicedResults[0];
-          setValue(selectedResult.task); // Autocomplete with the first suggestion
-          setSelectedIndex(0);
-        }
-        break;
-      default:
-        break;
-    }
-  };
-  const searchResults = () => {
-    const searchTerm = value.toLowerCase().trim();
-
-    // Search for matches in individual tasks and specialist names
-    const taskResults = specialists.flatMap((specialist) => {
-      const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
-        .map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
-
-      return tasks.length > 0 ? tasks : [];
-    });
-
-    const specialistResults = specialists
-      .filter((specialist) =>
-        specialist.name.toLowerCase().includes(searchTerm)
-      )
-      .map((specialist: Specialist) => ({
-        specialistName: specialist.name.toLowerCase(),
-        task: "", // Assuming a task field is required, you might want to adjust this
-        link: specialist.link || "", // Assuming a link field is required, you might want to adjust this
-      }));
-
-    return [...taskResults, ...specialistResults];
-  };
-
-  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 6 resultaten
-  const resultsRender = slicedResults.map((result, index) => (
-    <Link
-      to={`/nl/jobs#${result.specialistName.replace(
-        "/",
-        ""
-      )}?${result.link.replace("/", "")}`}
-      key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "active" : ""
-      }`}
-      onMouseDown={() => handleResultClick(result.link)}
-    >
-      {result.task || result.specialistName}
-    </Link>
-  ));
-  return (
-    <div>
-      <div className="SearchBarHome">
-        <input
-          id="SearchBarInputHome"
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onFocus={handleInputFocus}
-          onKeyDown={handleInputKeyDown}
-          onBlur={handleInputBlur}
-          placeholder="Zoek een klus of specialist"
-          className="search_input"
-        />
-        <article
-          className="searchBarBlueIcon"
-          onKeyDown={handleInputKeyDown}
-        ></article>
-      </div>
-      <div className="search_results-con">
-        {showList && <div className="search_results">{resultsRender}</div>}
-      </div>
-    </div>
-  );
-}
-
-function HomePageTwo() {
+function SpecialistHome() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
   const [reviewAnimation, setReviewAnimation] = useState(false);
@@ -310,33 +174,6 @@ function HomePageTwo() {
 
   return (
     <main className="homepagetwomain">
-      <section className="landingSectionHome">
-        <article className="landingContentHome">
-          <section className="titleSectionHome">
-            <h2 className="titleSectionHomeH2">
-              Vind lokale vakspecialisten <br></br> voor klussen in je huis en
-              tuin
-            </h2>
-          </section>
-          <section className="SearchSectionHome">
-            <Searchbar />
-          </section>
-          <section className="JobsSectionHome">
-            <article className="populairjobsHero">
-              {PopularCardsData.map((card) => (
-                <Link
-                  key={card.id}
-                  to={`/${taal}/jobs#${card.name.toLowerCase()}`}
-                  className="populairjobsHeroCard"
-                >
-                  {card.icon}
-                  <span>{card.name}</span>
-                </Link>
-              ))}
-            </article>
-          </section>
-        </article>
-      </section>
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
@@ -603,8 +440,8 @@ function HomePageTwo() {
                 className="HomeProfCardPFP "
               />
               <h5 className="HomeProCardhomeH5">
-                Houtlab Gijs<br />
-                Timmerman
+                Bas Fixo B.V. <br />
+                Loodgieter
               </h5>
             </section>
             <section className="HomeProCardReviewSection">
@@ -765,4 +602,4 @@ function HomePageTwo() {
   );
 }
 
-export default HomePageTwo;
+export default SpecialistHome;
