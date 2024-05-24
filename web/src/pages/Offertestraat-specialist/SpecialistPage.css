@@ -1,0 +1,8 @@
+.multistep-viewportTwo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 20rem;
+    gap: 10rem;
+}
