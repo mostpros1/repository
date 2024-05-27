@@ -69,7 +69,6 @@
 
 .link-btn{
     display: flex;
-    width: fit-content;
     align-items: center;
     gap: 20px;
     color: white;
