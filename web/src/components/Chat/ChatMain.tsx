@@ -8,7 +8,7 @@ import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
-import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical } from "react-icons/bs";
+import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical, BsSun, BsMoon, BsBell, BsBellSlash } from "react-icons/bs";
 import { MdDriveFileMove } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
@@ -16,7 +16,6 @@ import { FaReply } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
-import OfferTemplate from "../PaymentLink/offers/offerTemplate";
 
 interface Chat {
   id: string;
@@ -74,6 +73,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   // New states for settings modal
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [theme, setTheme] = useState("light");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  // New state for showing saved messages modal
+  const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
@@ -83,7 +87,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
       if (message.email !== user.attributes.email) {
-        if (Notification.permission === "granted") {
+        if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
             body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
           });
@@ -103,7 +107,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     });
 
     return () => sub.unsubscribe();
-  }, [user.attributes.email]);
+  }, [user.attributes.email, notificationsEnabled]);
 
   useEffect(() => {
     Notification.requestPermission();
@@ -496,24 +500,32 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setVisibleName(event.target.value);
   };
 
+  const handleThemeChange = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
+  const handleNotificationsToggle = () => {
+    setNotificationsEnabled((prevState) => !prevState);
+  };
+
   const handleSaveSettings = () => {
     setShowSettingsModal(false);
   };
 
   return (
-    <div className="chat-container" style={{ fontSize: `${textSize}px` }}>
-      <div className="sidebar" id="sidebar">
-        <div className="dropdown-container">
-          <BsThreeDotsVertical size={50} className="menu-icon" onClick={toggleMenu} />
+    <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
+      <div className="sidebarr" id="sidebarr">
+        <div className="dropdownn-container">
+          <BsThreeDotsVertical size={30} className="menu-iconn" onClick={toggleMenu} />
           {open && (
-            <div className="dropdown-menu">
-              <div className="dropdown-item" onClick={handleStartNewChatClick}>
+            <div className="dropdownn-menu">
+              <div className="dropdownn-item" onClick={handleStartNewChatClick}>
                 Nieuwe chat starten
               </div>
-              <div className="dropdown-item">
+              <div className="dropdownn-item" onClick={() => setShowSavedMessagesModal(true)}>
                 Opgeslagen berichten
               </div>
-              <div className="dropdown-item" onClick={() => setShowSettingsModal(true)}>
+              <div className="dropdownn-item" onClick={() => setShowSettingsModal(true)}>
                 Instellingen
               </div>
             </div>
@@ -580,7 +592,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <h2 className="recipient-name">
                   {selectedContact ? selectedContact.split("@")[0] : ""}
                 </h2>
-                {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
           </div>
@@ -607,6 +618,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                             : "other-message"
                         }`}
                       >
+                          <div className="message-actions">
+                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                            <button onClick={() => handleMarkMessage(chat.id)}>
+                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                            </button>
+                            {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
+                          </div>
                         <div
                           className="text"
                           dangerouslySetInnerHTML={{ __html: chat.text }}
@@ -617,13 +635,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                             minute: "2-digit",
                           }).format(new Date(chat.createdAt))}
                         </time>
-                        <div className="message-actions">
-                          <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                          <button onClick={() => handleMarkMessage(chat.id)}>
-                            {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
-                          </button>
-                          {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
-                        </div>
                       </div>
                     </div>
                   ))}
@@ -756,8 +767,50 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 onChange={handleVisibleNameChange}
               />
             </div>
+            <div className="settings-item">
+              <label>Theme:</label>
+              <button onClick={handleThemeChange} className="theme-toggle-button">
+                {theme === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
+              </button>
+            </div>
+            <div className="settings-item">
+              <label>Notifications:</label>
+              <button onClick={handleNotificationsToggle} className="notifications-toggle-button">
+                {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
+              </button>
+            </div>
             <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
             <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
+      {showSavedMessagesModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Opgeslagen Berichten</h2>
+            <div className="saved-messages-list">
+              {Array.from(markedMessages).map((messageId) => {
+                const message = chats.find((chat) => chat.id === messageId);
+                if (message) {
+                  return (
+                    <div key={message.id} className="saved-message-item">
+                      <div className="saved-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
+                      <time dateTime={message.createdAt} className="saved-message-time">
+                        {new Intl.DateTimeFormat("nl-NL", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(message.createdAt))}
+                      </time>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+            <button onClick={() => setShowSavedMessagesModal(false)} className="button-modal">Sluiten</button>
           </div>
         </div>
       )}
