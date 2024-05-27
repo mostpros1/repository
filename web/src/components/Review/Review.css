@@ -160,13 +160,42 @@ textarea {
   }
 }
 
+@media (max-width: 1200px) {
+  .grid-sect img {
+    width: 30rem;
+    margin-left: 20rem;
+    margin-bottom: 2.5rem;
+  }
+  .grid-sect img {
+    width: 30rem;
+    margin: auto;
+  }
+  .grid-sect {
+    width: 80rem;
+  }
+  .reviews-container {
+    grid-template-columns: 1fr 1fr;
+  
+  }
+}
+
 @media (max-width: 768px) {
   .reviews-container {
     grid-template-columns: 1fr;
   }
-.upper-review-con {
+  
+  .upper-review-con,
+  .grid-sect {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+  }
 
-}
+  .grid-sect img {
+    width: 30rem;
+  }
+
   .review-actions {
     grid-template-columns: 1fr;
   }
