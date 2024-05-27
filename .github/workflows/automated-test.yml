@@ -35,3 +35,4 @@ jobs:
           working-directory: web
           build: npm run build
           start: npx vite --host
+          #test
