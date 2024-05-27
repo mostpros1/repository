@@ -74,6 +74,7 @@ declare namespace Cypress {
         dshscalnder(value1,value2):void;
         dshsprofile(value1,value2):void;
         dshspayment(value1,value2):void;
+        helps(value1,value2):void;
         
     }
 }
@@ -348,5 +349,16 @@ Cypress.Commands.add('dshspayment', (value1, value2) => {
     cy.inlogmenu();
      cy.get('.dropdown-content > a').click();
      cy.get('   ').click();
+
+});
+
+Cypress.Commands.add('helps', (value1, value2) => {
+    cy.get('input[type="email"]').eq(0).type(value1);
+    cy.get('input[type="password"]').type(value2);
+    cy.nextinlog();
+    cy.wait(6000);
+    cy.inlogmenu();
+     cy.get('.dropdown-content > a').click();
+     cy.get('.sidebar-bottom > :nth-child(3) > .sidebar-link').click();
 
 });
