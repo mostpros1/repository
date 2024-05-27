@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
 import "./Jobs.css";
 import rightarrow from "../../assets/right-arrow.svg";
 import searchicon from "../../assets/searchicon.svg";
@@ -10,16 +10,12 @@ import { Link, useNavigate } from "react-router-dom";
 //import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 import specialists from "../../data/specialists.js";
 
-
 interface Specialist {
   id: number;
   name: string;
   tasks: { task: string; link: string }[];
   link?: string;
 }
-
-
-
 
 const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -79,29 +75,28 @@ const Jobs = () => {
         console.log("User email: ", userEmail);
         dynamo
           .query({
-            TableName: 'Professionals',
-            IndexName: 'emailIndex',
-            KeyConditionExpression: 'email = :email',
+            TableName: "Professionals",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
             ExpressionAttributeValues: {
-              ':email': userEmail
-            }
+              ":email": userEmail,
+            },
           })
           .promise()
-          .then(data => {
+          .then((data) => {
             if (data.Items && data.Items.length > 0) {
               dynamo
                 .query({
-                  TableName: 'Projects',
-                  IndexName: 'professional_idIndex',
-                  KeyConditionExpression: 'professional_id = :professional_id',
+                  TableName: "Projects",
+                  IndexName: "professional_idIndex",
+                  KeyConditionExpression: "professional_id = :professional_id",
                   ExpressionAttributeValues: {
-                    ':professional_id': data.Items[0].id
-                  }
+                    ":professional_id": data.Items[0].id,
+                  },
                 })
                 .promise()
-                .then(output => {
+                .then((output) => {
                   if (output.Items) {
-
                     // Create a temporary array to accumulate new job entries
                     const newJobEntries: JobEntry[] = [];
                     for (let i = 0; i < output.Items.length; i++) {
@@ -142,29 +137,28 @@ const Jobs = () => {
 
         dynamo
           .query({
-            TableName: 'Clients',
-            IndexName: 'emailIndex',
-            KeyConditionExpression: 'email = :email',
+            TableName: "Clients",
+            IndexName: "emailIndex",
+            KeyConditionExpression: "email = :email",
             ExpressionAttributeValues: {
-              ':email': userEmail
-            }
+              ":email": userEmail,
+            },
           })
           .promise()
-          .then(data => {
+          .then((data) => {
             if (data.Items && data.Items.length > 0) {
               dynamo
                 .query({
-                  TableName: 'Projects',
-                  IndexName: 'client_idIndex',
-                  KeyConditionExpression: 'client_id = :client_id',
+                  TableName: "Projects",
+                  IndexName: "client_idIndex",
+                  KeyConditionExpression: "client_id = :client_id",
                   ExpressionAttributeValues: {
-                    ':client_id': data.Items[0].id
-                  }
+                    ":client_id": data.Items[0].id,
+                  },
                 })
                 .promise()
-                .then(output => {
+                .then((output) => {
                   if (output.Items) {
-
                     // Create a temporary array to accumulate new job entries
                     const newJobEntries: JobEntry[] = [];
                     for (let i = 0; i < output.Items.length; i++) {
@@ -202,7 +196,8 @@ const Jobs = () => {
     const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Professional")) {
           fetchProfEmailAndQueryDynamo();
         } else if (groups && groups.includes("Homeowner")) {
@@ -216,9 +211,7 @@ const Jobs = () => {
     checkUserGroupAndFetch();
   }, []); // Make sure to include any dependencies in this array
 
-
   //zoekbalk
-
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -249,7 +242,6 @@ const Jobs = () => {
     navigate(`/nl/jobs${link}`);
   };
 
-
   const handleInputKeyDown = (e) => {
     switch (e.key) {
       case "ArrowUp":
@@ -278,7 +270,6 @@ const Jobs = () => {
     }
   };
 
-
   const searchResults = () => {
     const searchTerm = value.toLowerCase().trim();
 
@@ -295,7 +286,6 @@ const Jobs = () => {
       return tasks.length > 0 ? tasks : [];
     });
 
-
     const specialistResults = specialists
       .filter((specialist) =>
         specialist.name.toLowerCase().includes(searchTerm)
@@ -309,24 +299,27 @@ const Jobs = () => {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 5); // Beperk tot de eerste 5 resultaten
+  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/nl/jobs#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
+      to={`/nl/jobs#${result.specialistName.replace(
+        "/",
+        ""
+      )}?${result.link.replace("/", "")}`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? "selected" : ""
-        }`}
+      className={`search_dropdown_item ${
+        index === selectedIndex ? "selected" : ""
+      }`}
       onClick={() => handleResultClick(result.link)}
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""}
+        {result.specialistName ? `${result.specialistName} - ` : ""} {/* Add the specialist name with the - separator */}
         {result.task}
       </span>
     </Link>
   ));
-
 
   return (
     <div id="job-main">
@@ -344,9 +337,10 @@ const Jobs = () => {
             onKeyDown={handleInputKeyDown}
             onChange={handleInputChange}
           />
-          <div className={showList ? "search_dropdown open" : "search_dropdown"}>
-            {resultsRender}
+          <div className="search_results-con">
+            {showList && <div className="search_dropdown">{resultsRender}</div>}
           </div>
+
           <button type="submit" id="submit-button">
             <img src={rightarrow} alt="submit" />
           </button>
@@ -356,19 +350,25 @@ const Jobs = () => {
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${currentTab === "pending" ? "active" : ""}`}
+            className={`status-button ${
+              currentTab === "pending" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("pending")}
           >
             Pending Jobs
           </button>
           <button
-            className={`status-button ${currentTab === "current" ? "active" : ""}`}
+            className={`status-button ${
+              currentTab === "current" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("current")}
           >
             Current Jobs
           </button>
           <button
-            className={`status-button ${currentTab === "finished" ? "active" : ""}`}
+            className={`status-button ${
+              currentTab === "finished" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("finished")}
           >
             Finished Jobs
