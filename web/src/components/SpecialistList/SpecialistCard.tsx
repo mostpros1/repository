@@ -78,7 +78,6 @@ function SpecialistCard() {
       TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
-      FilterExpression: "profession = :profession",
       ExpressionAttributeValues: {
         ":profession": profession,
       },

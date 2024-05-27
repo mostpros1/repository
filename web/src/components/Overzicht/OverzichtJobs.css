@@ -1,0 +1,51 @@
+.overzicht-klussen-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .klussen-lijst {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .klus-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 10px;
+    padding: 15px;
+    width: 300px;
+    transition: transform 0.2s;
+  }
+  
+  .klus-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .klus-card h2 {
+    margin-top: 0;
+    color: #0056b3;
+  }
+  
+  .klus-card p {
+    margin: 10px 0;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status.in-uitvoering {
+    color: orange;
+  }
+  
+  .status.voltooid {
+    color: green;
+  }
+  
+  .status.nog-te-doen {
+    color: red;
+  }
+  

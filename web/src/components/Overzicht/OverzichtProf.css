@@ -1,0 +1,28 @@
+.overzicht-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .overzicht-tabel {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .overzicht-tabel th, .overzicht-tabel td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .overzicht-tabel th {
+    background-color: #f2f2f2;
+  }
+  
+  .overzicht-tabel tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .overzicht-tabel tr:hover {
+    background-color: #f1f1f1;
+  }
+  
