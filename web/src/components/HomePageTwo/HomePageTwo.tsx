@@ -402,11 +402,11 @@ function HomePageTwo() {
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">100+ <Link to={'/nl/pro-overview'}>Vakspecialisten</Link> </h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/pro-overview'}>100+ Vakspecialisten</Link> </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">1000+ <Link to={'/nl/jobs-overview'}>Klussen</Link></h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/pro-overview'}>1000+ Klussen</Link></h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
@@ -646,7 +646,7 @@ function HomePageTwo() {
             >
               Plaats je klus
             </button>
-            <button className="CommunityTwoHome">Inschrijven als vakman</button>
+            <button className="CommunityTwoHome" onClick={handleProOnboardingClick}>Inschrijven als vakman</button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
             <ArrowUpwardIcon style={{ fontSize: "3rem" }} />
