@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './OverzichtProf.css';
 
 interface Vaksspecialist {
@@ -8,14 +8,31 @@ interface Vaksspecialist {
   email: string;
 }
 
-const vaksspecialisten: Vaksspecialist[] = [
-  { id: 1, naam: 'Jan de Vries', specialisatie: 'Elektricien', email: 'jan@voorbeeld.com' },
-  { id: 2, naam: 'Piet Jansen', specialisatie: 'Loodgieter', email: 'piet@voorbeeld.com' },
-  { id: 3, naam: 'Klaas Pieters', specialisatie: 'Timmerman', email: 'klaas@voorbeeld.com' },
-  // Voeg meer vaksspecialisten toe hier
-];
-
 const OverzichtProf: React.FC = () => {
+  const [vaksspecialisten, setVaksspecialisten] = useState<Vaksspecialist[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Simuleren van een API call
+    const fetchVaksspecialisten = async () => {
+      try {
+        const response = await fetch('/api/vaksspecialisten'); // Vervang dit met de echte API endpoint
+        const data = await response.json();
+        setVaksspecialisten(data);
+      } catch (error) {
+        console.error('Fout bij het ophalen van de vaksspecialisten:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVaksspecialisten();
+  }, []);
+
+  if (loading) {
+    return <div className="loading">Bezig met laden...</div>;
+  }
+
   return (
     <div className="overzicht-container">
       <h1>Overzicht van Vaksspecialisten</h1>

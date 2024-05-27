@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './OverzichtJobs.css';
 
 interface Klus {
@@ -8,14 +8,30 @@ interface Klus {
   status: string;
 }
 
-const klussen: Klus[] = [
-  { id: 1, titel: 'Schilderen woonkamer', beschrijving: 'De muren van de woonkamer schilderen.', status: 'In uitvoering' },
-  { id: 2, titel: 'Tuin opruimen', beschrijving: 'Bladeren en afval uit de tuin verwijderen.', status: 'Voltooid' },
-  { id: 3, titel: 'Dakgoot schoonmaken', beschrijving: 'Dakgoten schoonmaken en bladeren verwijderen.', status: 'Nog te doen' },
-  // Voeg meer klussen toe zoals nodig
-];
-
 const OverzichtKlussen: React.FC = () => {
+  const [klussen, setKlussen] = useState<Klus[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchKlussen = async () => {
+      try {
+        const response = await fetch('/api/klussen');
+        const data = await response.json();
+        setKlussen(data);
+      } catch (error) {
+        console.error('Fout bij het ophalen van de klussen:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchKlussen();
+  }, []);
+
+  if (loading) {
+    return <div className="loading">Bezig met laden...</div>;
+  }
+
   return (
     <div className="overzicht-klussen-container">
       <h1>Overzicht van alle klussen</h1>
