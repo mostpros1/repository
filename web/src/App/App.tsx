@@ -59,6 +59,7 @@ import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
+import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -70,6 +71,7 @@ const LanguageAwareRoutes = () => {
     <Routes>
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
+      <Route path="/help" element={<HelpPage />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
