@@ -39,10 +39,11 @@ function LoginPage() {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       updateUser(authenticatedUser);
-      if (authenticatedUser.attributes.group == "Professional") {
-        navigate(`/${taal}/pro-dashboard`);
-      } else if (authenticatedUser.attributes.group == "Homeowner") {
+      const groups = authenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+      if (groups && groups.includes("Homeowner")) {
         navigate(`/${taal}/homeowner-dashboard`);
+      } else if (groups && groups.includes("Professional")) {
+        navigate(`/${taal}/pro-dashboard`);
       }
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
