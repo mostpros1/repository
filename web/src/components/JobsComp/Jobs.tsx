@@ -63,7 +63,8 @@ const Jobs = () => {
     description: string;
     date: string;
     chats: number;
-    isCurrent: boolean;
+    isCurrent?: boolean;
+    status?: string;
   }
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
@@ -107,7 +108,7 @@ const Jobs = () => {
                         description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                         date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                         chats: output.Items[i].chats,
-                        isCurrent: true,
+                        status: output.Items[i].status,
                       });
                     }
                     // Update the state once with the accumulated array
@@ -169,7 +170,7 @@ const Jobs = () => {
                         description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                         date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                         chats: output.Items[i].chats,
-                        isCurrent: true,
+                        status: output.Items[i].status,
                       });
                     }
                     // Update the state once with the accumulated array
