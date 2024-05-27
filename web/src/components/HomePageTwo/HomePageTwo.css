@@ -182,6 +182,14 @@
   font-size: 1.6rem;
   font-family: "Poppins", sans-serif;
 }
+
+.infoContainerHomeLink{
+  color: black;
+}
+
+.infoContainerHomeLink:hover{
+  color:#207cd7;
+}
 .howItWorksSectionHome {
   margin-top: 11.1rem;
   width: 100%;

@@ -177,11 +177,11 @@ function SpecialistHome() {
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">100+ Vakspecialisten </h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/pro-overview'}>100+ Vakspecialisten</Link> </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">1000+ klussen</h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/pro-overview'}>1000+ Klussen</Link></h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
@@ -582,7 +582,7 @@ function SpecialistHome() {
             huiseigenaren, vakspecialisten en medewerkers.
           </p>
           <article className="CommunityButtonContainerHome">
-            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
+            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Zoek je klus</button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
             <ArrowUpwardIcon style={{ fontSize: "3rem" }} />
