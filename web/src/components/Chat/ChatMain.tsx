@@ -364,9 +364,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     yesterday.setDate(today.getDate() - 1);
 
     if (date.toDateString() === today.toDateString()) {
-      return { text: "Today", className: "date-today" };
+      return { text: "Vandaag", className: "date-today" };
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return { text: "Yesterday", className: "date-yesterday" };
+      return { text: "Gisteren", className: "date-yesterday" };
     } else {
       return {
         text: new Intl.DateTimeFormat("nl-NL", {

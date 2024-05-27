@@ -139,7 +139,7 @@ function SpecialistHome() {
   };
 
   const handleProOnboardingClick = () => {
-    navigate(`/${taal}/pro-onboarding`); 
+    navigate(`/${taal}/pro-onboarding`);
   };
 
   const handleClick = (tab) => {
@@ -150,7 +150,7 @@ function SpecialistHome() {
       setReviewAnimation(false);
     }, 400);
   };
-  
+
 
   const handleLeftClick = () => {
     setReviewAnimation(true);
@@ -198,25 +198,21 @@ function SpecialistHome() {
         </article>
         <section className="howItworksContainerCards">
           <article className="howItWorksCardHome">
-            <h5 className="howitworkscardhomeH5">Beschrijf je klus</h5>
+            <h5 className="howitworkscardhomeH5">Ontvang opdrachten</h5>
             <p className="howitworkscardhomeP">
-              Voer in de zoekbalk je klus in en geef een beschrijving van de
-              gewenste werkzaamheden.
+              Ontvang opdrachten binnen je beschikbaarhed en werkgebied.
             </p>
           </article>
           <article className="howItWorksCardHome">
-            <h5 className="howitworkscardhomeH5">Vind & huur vakmannen</h5>
+            <h5 className="howitworkscardhomeH5">Kom in contact</h5>
             <p className="howitworkscardhomeP">
-              Ontvang reacties van vakmannen. Chat rechtstreeks. Bespreek
-              details, kosten en de tijdlijn. Vergelijk offertes en huur met
-              vertrouwen.
+              Kom eenvoudig in contact met huiseigenaren die klussen hebben.
             </p>
           </article>
           <article className="howItWorksCardHome">
-            <h5 className="howitworkscardhomeH5">Beheer & betaal vakmannen</h5>
+            <h5 className="howitworkscardhomeH5">Plan een afspraak</h5>
             <p className="howitworkscardhomeP">
-              Beheer en betaal veilig de ingehuurde vakman, nadat het gewenste
-              resultaat is geleverd.
+              Plan een afspraak op een tijd die voor jullie beiden goed uitkomt.
             </p>
           </article>
         </section>
@@ -239,10 +235,7 @@ function SpecialistHome() {
             terwijl we plezier hebben.
           </p>
           <article className="whyMostProsButtonContainer">
-            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
-            <button className="whyMostProsButtonTwoHome" onClick={handleProOnboardingClick}>
-              Inschrijven als vakman
-            </button>
+            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Zoek je klus</button>
           </article>
         </article>
       </section>
@@ -533,16 +526,15 @@ function SpecialistHome() {
             </h5>
           </section>
         </article>
-        <div className="arrow left-arrow" onClick={handleLeftClick}></div>
+        <div className="arrowHome lefthome-arrow" onClick={handleLeftClick}></div>
         <article className="HomeProfReviewHomeContainer">
           {reviews[activeTab]
             .slice(startIndex, startIndex + 2)
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${
-                    reviewAnimation ? "animate-out" : ""
-                  }`}
+                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
+                    }`}
                 >
                   <img
                     src={review.image}
@@ -580,7 +572,7 @@ function SpecialistHome() {
             ))}
         </article>
 
-        <div className="arrow right-arrow" onClick={handleRightClick}></div>
+        <div className="arrowHome righthome-arrow" onClick={handleRightClick}></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
         <article className="JointhecomminityContainer">
@@ -591,7 +583,6 @@ function SpecialistHome() {
           </p>
           <article className="CommunityButtonContainerHome">
             <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
-            <button className="CommunityTwoHome">Inschrijven als vakman</button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
             <ArrowUpwardIcon style={{ fontSize: "3rem" }} />
