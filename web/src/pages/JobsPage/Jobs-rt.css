@@ -16,9 +16,9 @@
   
   .sideNavJobs{ /*<- De sidenav. */
     height: 45%;
-    width: 18rem; /* <- aanpassen naar % wanneer er content inzit */
+    width: 18rem;
     background: #222;
-    border-radius: 8px; /* bij borderradius mag pixels wel gebruikt worden!*/
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;

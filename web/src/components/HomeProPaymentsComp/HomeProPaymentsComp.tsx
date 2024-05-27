@@ -20,7 +20,7 @@ const HomeProPaymentsComp: React.FC = () => {
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Paid", amount: 1250 },
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Cancelled", amount: 1250 },
       // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Awaiting", amount: 1250 },
-      { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Pending", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Pending", amount: 1250 },
       // Add more transactions as needed
     ]);
   }, []);
@@ -73,14 +73,14 @@ const HomeProPaymentsComp: React.FC = () => {
 
   return (
     <main className="ProPaymentsMain">
-      <section className="ProPaymentsSearchWrapper">
+      {/* <section className="ProPaymentsSearchWrapper">
         <p className="ProPaymentsText">
           Payments are going through stripe. Stripe is a safe payment service. It looks like you haven’t connected to stripe yet. Click the button below to connect to stripe and get paid for your services.
         </p>
         <button type="button" className="ProPaymentsButton" onClick={stripeSignUp}>
           Connect to Stripe
         </button>
-      </section>
+      </section> */}
 
       <section className="ProPayments">
         <article className="ProPaymentsStroke3">
@@ -105,7 +105,7 @@ const HomeProPaymentsComp: React.FC = () => {
             </article>
           ))
         ) : (
-          <div className="ProPaymentsNoTransactions">No transactions found.</div>
+          <div className="ProPaymentsNoTransactions">Geen betalingen gevonden</div>
         )}
       </section>
     </main>

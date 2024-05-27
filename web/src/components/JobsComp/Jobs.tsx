@@ -364,7 +364,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("current")}
           >
-            Lopende taken
+            Lopende klussen
           </button>
           <button
             className={`status-button ${
@@ -372,7 +372,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("finished")}
           >
-            Voltooide taken
+            Voltooid Klussen
           </button>
         </div>
         <div className="job-list-con">

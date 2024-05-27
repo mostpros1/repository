@@ -8,7 +8,7 @@
 
 .sidenavReviewSection {
     width: 20%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: flex-end;
     padding-right: 2rem;

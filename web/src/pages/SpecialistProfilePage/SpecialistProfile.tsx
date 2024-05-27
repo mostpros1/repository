@@ -8,6 +8,7 @@ function SpecialistProfile() {
     <div id="root">
       <NavBar />
       <div id="main-content-specialist">
+        <SpecialistPage />
       </div>
       <Footer />
     </div>
