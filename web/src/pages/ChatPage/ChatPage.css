@@ -1,18 +1,45 @@
-.chat-panel {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: start;
-    gap: 0rem;
-    margin: 25px auto 0 140px;
+.chatdisplayMain {
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem;
+  padding-top: 5rem;
+  display: flex;
+}
+
+.sidenavChatSection {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.sideNavChat {
+  /*<- De sidenav. */
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsideChatSection {
+  width: 80%;
+  height: 100vh;
+}
+
+@media (max-width: 1044px) {
+  .sidenavChatSection {
+    display: none;
+    /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
   }
-  
-  .side-panel-left-chat {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 25px;
+
+  .chatdisplayMain {
+    /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
   }
-  
-  .side-panel-right-chat {
-    display: flex;
-    flex-direction: column;
-  }
+}
