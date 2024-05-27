@@ -68,7 +68,7 @@ const SideNav = () => {
                 Dashboard
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/calender`}
                 className={({ isActive }) =>
@@ -78,7 +78,7 @@ const SideNav = () => {
                 <DateRangeIcon />
                 Kalender
               </NavLink>
-            </li>
+            </li> */}
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/jobs`}
@@ -170,7 +170,7 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/homeowner-dashboard/calender`}
                 className={({ isActive }) =>
@@ -180,7 +180,7 @@ const SideNav = () => {
                 <DateRangeIcon />
                 Kalender
               </NavLink>
-            </li>
+            </li> */}
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/homeowner-dashboard/payments`}

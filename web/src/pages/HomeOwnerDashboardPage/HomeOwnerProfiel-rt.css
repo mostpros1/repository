@@ -7,8 +7,8 @@
   }
   
   .sidenavHomeOwnerProfileSection{  /*<- Het groene vlak aan de linker kant die tot 1044px de sidenav op zijn plek houd */
-    width: 20%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
-    height: 100vh;
+    width: 35%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
+    height: 100%;
     display: flex;
     justify-content: flex-end; /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
     padding-right: 2rem; /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
@@ -16,9 +16,9 @@
   
   .sideNavHomeOwnerProfile{ /*<- De sidenav. */
     height: 45%;
-    width: 18rem; /* <- aanpassen naar % wanneer er content inzit */
+    width: 18rem;
     background: #222;
-    border-radius: 8px; /* bij borderradius mag pixels wel gebruikt worden!*/
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
