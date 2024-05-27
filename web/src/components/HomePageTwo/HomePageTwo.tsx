@@ -25,9 +25,9 @@ import CarpenterIcon from "@mui/icons-material/Carpenter";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
-//Data imports for the searchbar
 import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
+import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 //Define specialist interface
 interface Specialist {
@@ -402,11 +402,11 @@ function HomePageTwo() {
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">100+ Vakspecialisten </h4>
+          <h4 className="infoContainerHomeH4">100+ <Link to={'/nl/pro-overview'}>Vakspecialisten</Link> </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4">1000+ klussen</h4>
+          <h4 className="infoContainerHomeH4">1000+ <Link to={'/nl/jobs-overview'}>Klussen</Link></h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />

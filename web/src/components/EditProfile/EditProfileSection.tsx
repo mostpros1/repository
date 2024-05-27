@@ -49,30 +49,32 @@ const EditProfileSection = () => {
               </div>
             </div>
           </div>
-          <div className="profile-right-con">
-            <div className="profile-info-card">
-              <h4>Contact informatie</h4>
-              <ul>
-                <li>
-                  <div className="phone-icon">
-                    <PhoneInTalkIcon />
-                  </div>
-                  +31 0612345678
-                </li>
-                <li>
-                  <div className="email-sect">
-                    <EmailRoundedIcon />
-                    Janschilder@hotmail.com
-                  </div>
-                </li>
-              </ul>
+          <div className="moreinfo">
+            <div className="profile-right-con">
+              <div className="profile-info-card">
+                <h4>Contact informatie</h4>
+                <ul>
+                  <li>
+                    <div className="phone-icon">
+                      <PhoneInTalkIcon />
+                    </div>
+                    +31 0612345678
+                  </li>
+                  <li>
+                    <div className="email-sect">
+                      <EmailRoundedIcon />
+                      Janschilder@hotmail.com
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className="availability-con">
-            <button className="availability-btn">
-              <CalendarMonthIcon />
-              Beschikbaarheid doorgeven
-            </button>
+            <div className="availability-con">
+              <button className="availability-btn">
+                <CalendarMonthIcon />
+                Beschikbaarheid doorgeven
+              </button>
+            </div>
           </div>
         </div>
         <div className="text-con">

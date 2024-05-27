@@ -364,9 +364,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     yesterday.setDate(today.getDate() - 1);
 
     if (date.toDateString() === today.toDateString()) {
-      return { text: "Vandaag", className: "date-today" };
+      return { text: "Today", className: "date-today" };
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return { text: "Gisteren", className: "date-yesterday" };
+      return { text: "Yesterday", className: "date-yesterday" };
     } else {
       return {
         text: new Intl.DateTimeFormat("nl-NL", {
@@ -700,7 +700,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   className="dropup-option"
                   onClick={() => inputRef.current?.click()}
                 >
-                  <MdDriveFileMove size={25} color="blue" /> Afbeeldingen
+                  <MdDriveFileMove size={25} color="blue" />
                 </button>
                 <input
                   type="file"
