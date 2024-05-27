@@ -3,7 +3,7 @@ import Footer from "../../components/ui/Footer/Footer";
 import "./OverzichtProfPage.css";
 import OverzichtProf from "../../components/Overzicht/OverzichtProf";
 
-function SpecialistProfile() {
+function OverzichtProfPage() {
   return (
     <div id="root">
       <NavBar />
@@ -15,4 +15,4 @@ function SpecialistProfile() {
   );
 }
 
-export default SpecialistProfile;
+export default OverzichtProfPage;

@@ -238,7 +238,6 @@ function MultistepForm() {
   return (
     <form onSubmit={onSubmit} className='form-con'>
       <div className='progress-con'>
-        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
           {steps.map((_, index) => (
             <div
