@@ -76,54 +76,37 @@ const Jobs = () => {
         console.log("User email: ", userEmail);
         dynamo
           .query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "professional_emailIndex",
+            KeyConditionExpression: "professional_email = :professional_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":professional_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "professional_idIndex",
-                  KeyConditionExpression: "professional_id = :professional_id",
-                  ExpressionAttributeValues: {
-                    ":professional_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        status: output.Items[i].status,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                console.log(output.Items[i]);
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  status: output.Items[i].status,
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries([...jobEntries, ...newJobEntries]);
+              }
             } else {
-              console.error("No items found in the first query");
+              console.log("No items found in the query");
             }
           })
           .catch(console.error);
@@ -131,61 +114,44 @@ const Jobs = () => {
         console.error("Error fetching user email or querying DynamoDB", error);
       }
     };
+
     const fetchUserEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
-
         dynamo
           .query({
-            TableName: "Clients",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "client_emailIndex",
+            KeyConditionExpression: "client_email = :client_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":client_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "client_idIndex",
-                  KeyConditionExpression: "client_id = :client_id",
-                  ExpressionAttributeValues: {
-                    ":client_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        status: output.Items[i].status,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                console.log(output.Items[i]);
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  status: output.Items[i].status,
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries([...jobEntries, ...newJobEntries]);
+              }
             } else {
-              console.error("No items found in Clients the first query");
+              console.log("No items found in the query");
             }
           })
           .catch(console.error);
@@ -309,9 +275,8 @@ const Jobs = () => {
         ""
       )}?${result.link.replace("/", "")}`}
       key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "selected" : ""
-      }`}
+      className={`search_dropdown_item ${index === selectedIndex ? "selected" : ""
+        }`}
       onClick={() => handleResultClick(result.link)}
       onMouseOver={() => setSelectedIndex(index)}
     >
@@ -352,25 +317,22 @@ const Jobs = () => {
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${
-              currentTab === "pending" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "pending" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("pending")}
           >
             In behandeling
           </button>
           <button
-            className={`status-button ${
-              currentTab === "current" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "current" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("current")}
           >
             Lopende klussen
           </button>
           <button
-            className={`status-button ${
-              currentTab === "finished" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "finished" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("finished")}
           >
             Voltooid Klussen
