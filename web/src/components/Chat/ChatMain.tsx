@@ -79,6 +79,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   // New state for showing saved messages modal
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
 
+  // New state for tracking new messages
+  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
+
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
     // Emit typing indicator event to backend (e.g., WebSocket, API)
@@ -91,6 +94,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           new Notification("Nieuw bericht ontvangen", {
             body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
           });
+        }
+        // Increment the new message count for the contact
+        const contact = message.members.find((member) => member !== user.attributes.email);
+        if (contact) {
+          setNewMessagesCount((prevCount) => ({
+            ...prevCount,
+            [contact]: (prevCount[contact] || 0) + 1,
+          }));
         }
       }
     };
@@ -176,6 +187,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
       setGroupedMessages(groupedMessages);
+      // Reset the new message count for the selected contact
+      setNewMessagesCount((prevCount) => ({
+        ...prevCount,
+        [selectedContact]: 0,
+      }));
     }
   }, [chats, selectedContact, user.attributes.email]);
 
@@ -241,6 +257,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     window.history.pushState({}, "", url);
     setRecipientEmail(contact);
     handleJoinChat(contact);
+    // Reset the new message count for the selected contact
+    setNewMessagesCount((prevCount) => ({
+      ...prevCount,
+      [contact]: 0,
+    }));
   };
 
   useEffect(() => {
@@ -506,6 +527,30 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setNotificationsEnabled((prevState) => !prevState);
   };
 
+  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      try {
+        const response = await axios.post(
+          "https://your-upload-url.com",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response.data);
+        // Update the user's profile picture URL in your backend
+      } catch (error) {
+        console.error("Error uploading profile picture:", error);
+      }
+    }
+  };
+
   const handleSaveSettings = () => {
     setShowSettingsModal(false);
   };
@@ -541,6 +586,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <div className="contact-details">
                   <div className="contact-name">
                     <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
                   </div>
                   {lastMessages[contact] && (
                     <span className="last-message">
@@ -565,6 +615,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <div className="contact-details">
                   <div className="contact-name">
                     <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
                   </div>
                   {lastMessages[contact] && (
                     <span className="last-message">
@@ -590,6 +645,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <h2 className="recipient-name">
                   {selectedContact ? selectedContact.split("@")[0] : ""}
                 </h2>
+                {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
           </div>
@@ -774,6 +830,15 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <button onClick={handleNotificationsToggle} className="notifications-toggle-button">
                 {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
               </button>
+            </div>
+            <div className="settings-item">
+              <label htmlFor="profile-picture">Profile Picture:</label>
+              <input
+                type="file"
+                id="profile-picture"
+                accept="image/*"
+                onChange={handleProfilePictureUpload}
+              />
             </div>
             <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
             <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
