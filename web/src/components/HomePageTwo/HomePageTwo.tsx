@@ -178,7 +178,7 @@ function Searchbar() {
   ));
 
   return (
-    <div>
+    <div id="SearchBar-wrapper">
       <div className="SearchBarHome">
         <input
           id="SearchBarInputHome"
