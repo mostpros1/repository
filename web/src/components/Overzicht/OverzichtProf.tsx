@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './OverzichtProf.css';
+import { dynamo } from '../../../declarations';
 
 interface Vaksspecialist {
   id: number;
@@ -13,20 +14,28 @@ const OverzichtProf: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Simuleren van een API call
-    const fetchVaksspecialisten = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/vaksspecialisten'); // Vervang dit met de echte API endpoint
-        const data = await response.json();
-        setVaksspecialisten(data);
+        const data = await dynamo.scan({
+          TableName: "Professionals",
+        }).promise();
+
+        const convertedItems = data.Items?.map(item => ({
+          id: item.id.S,
+          naam: `${item.first_name.S} ${item.last_name.S}`,
+          specialisatie: item.profession.S,
+          email: item.email.S,
+        }));
+
+        setVaksspecialisten(convertedItems || []);
       } catch (error) {
-        console.error('Fout bij het ophalen van de vaksspecialisten:', error);
+        console.error('Error fetching data from DynamoDB', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchVaksspecialisten();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -35,7 +44,7 @@ const OverzichtProf: React.FC = () => {
 
   return (
     <div className="overzicht-container">
-      <h1>Overzicht van Vaksspecialisten</h1>
+      <h1>Overzicht van Vakspecialisten</h1>
       <table className="overzicht-tabel">
         <thead>
           <tr>
@@ -56,6 +65,6 @@ const OverzichtProf: React.FC = () => {
       </table>
     </div>
   );
-}
+};
 
 export default OverzichtProf;
