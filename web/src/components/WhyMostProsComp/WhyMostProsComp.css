@@ -25,12 +25,16 @@
 }
 
 .whymostprosP {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  max-width: 48.3rem;
+}
+.whymostprosPBlue {
+  font-size: 1.3rem;
   max-width: 48.3rem;
 }
 
 .whymostprosBlueSquare {
-  padding: 1.1rem;
+  padding: 0.7rem;
   border-radius: 1.3rem;
   background: #B5DCFF;
   display: flex;
@@ -44,11 +48,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 5rem;
+  gap: 4.6rem;
 }
 
 .whymostprosrigthimg {
-  height: 25rem;
+  height: 27rem;
 }
 
 .smallcardsWhyMostProsContainer {
