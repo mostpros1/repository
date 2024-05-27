@@ -323,14 +323,14 @@ const Jobs = () => {
 
   return (
     <div id="job-main">
-      <p>Place a new job</p>
+      <p>Plaats een nieuwe klus</p>
       <div id="search-wrapper">
         <img src={searchicon} alt="search" id="search-icon" />
         <form onSubmit={handleSubmit} id="search-form">
           <input
             id="job-input-field"
             type="text"
-            placeholder="describe the job (example, plumbing.)"
+            placeholder="Beschrijf de baan (bijvoorbeeld, loodgieter)."
             value={value}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -355,7 +355,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("pending")}
           >
-            Pending Jobs
+            In behandeling
           </button>
           <button
             className={`status-button ${
@@ -363,7 +363,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("current")}
           >
-            Current Jobs
+            Lopende taken
           </button>
           <button
             className={`status-button ${
@@ -371,7 +371,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("finished")}
           >
-            Finished Jobs
+            Voltooide taken
           </button>
         </div>
         <div className="job-list-con">
@@ -390,7 +390,7 @@ const Jobs = () => {
                         src={viewProfessionalsIcon}
                         alt="View Professionals"
                       />
-                      <span>View professionals</span>
+                      <span>Bekijk Vakspecialisten</span>
                     </div>
                     <div className="chat-indicator">
                       <img src={chatIcon} alt="Chat" />
