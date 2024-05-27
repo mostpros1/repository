@@ -234,7 +234,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 848px) {
   #job-input-field {
     width: 50rem;
   }
