@@ -1,0 +1,46 @@
+.mainSectionWhyMostPros{
+  width: 100%;
+  padding-left: 20rem;
+  padding-right: 20rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15rem;
+}
+
+.whymostprosleft{
+  width: 50%;
+  height: 43.1rem;
+  text-align: left;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.whymostprosh4{
+  font-size: 2rem;
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.whymostprosP{
+  font-size: 1.2rem;
+  max-width: 48.3rem;
+}
+
+.whymostprosBlueSquare{
+  width: 50.1rem;
+  height: 9.6rem;
+  background: #B5DCFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whymostprosright{
+  width: 50%;
+  height: 64.3rem;
+  background: orange;
+  border: 2px solid black;
+}

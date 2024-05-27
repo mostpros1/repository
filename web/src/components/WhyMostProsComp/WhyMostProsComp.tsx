@@ -1,0 +1,28 @@
+import "./WhyMostProsComp.css";
+import NavBar from '../../components/ui/NavBar/NavBar';
+import Footer from '../../components/ui/Footer/Footer';
+
+function WhyMostProsComp() {
+  return (
+    <section className="mainSectionWhyMostPros">
+      <article className="whymostprosleft">
+        <div>
+          <h4 className="whymostprosh4">Waarom Mostpros en hoe we samen winnen</h4>
+          <p className="whymostprosP">
+            Een van de snelst verbeterende Alles-in-1 Home Services Apps. Vind, huur, beheer en betaald gecertificeerde lokale vakspecialisten. <br /><br />
+            Missie: Versimpel de home service sector voor 10 miljoen mensen <br /><br /> Ons motto is elke dag 1% beter op het gebied van product ontwikkeling, integraties, veiligheid en intellectueel leiderschap. <br /><br />
+            Mostpros is een onderneming die de manier waarop huiseigenaren hun huisonderhoud en verbouwingsprojecten beheren, revolutioneert. Als een innovatief platform verbindt Mostpros huiseigenaren
+            met bekwame vakspecialisten, waardoor de drempel voor het vinden van de juiste vakmensen voor elke klus aanzienlijk wordt verlaagd.
+          </p>
+        </div>
+        <article className="whymostprosBlueSquare">
+          <p className="whymostprosP">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
+          </p>
+        </article>
+      </article>
+      <article className="whymostprosright"></article>
+    </section>
+  );
+}
+
+export default WhyMostProsComp;

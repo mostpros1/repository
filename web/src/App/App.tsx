@@ -31,6 +31,7 @@ import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
+import WhyMostProsPage from "../pages/WhyMostProsPage/WhyMostProsPage.tsx"
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
@@ -48,7 +49,6 @@ import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import CareerPage from "../pages/CareerPage/CareerPage";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
-
 import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
@@ -85,6 +85,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard" element={<ResultsPage />} />
       <Route path="/about" element={<AboutUsPage />} />
       <Route path="/how-it-works" element={<HowItWorksPage />} />
+      <Route path="/why-mostpros" element={<WhyMostProsPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
