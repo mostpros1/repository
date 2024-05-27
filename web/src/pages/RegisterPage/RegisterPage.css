@@ -33,4 +33,5 @@
 .button-sign-up:hover {
     background-color: #308ae4;
     color: white !important;
+    cursor: pointer;
 }

@@ -23,16 +23,16 @@
 }
 
 #job-input-field {
-  flex-grow: 1;
+  display: flex;
   border-radius: 25px;
   background-color: #f4f4f4;
-  padding: 12px 40px 12px 50px; /* Adjust padding to not overlap the search icon */
+  padding: 1rem 4rem 1rem;
   border: none;
   outline: none;
   font-size: 16px;
   margin-top: 15px;
   transition: all 0.3s ease;
-  width: 1150px;
+  width: 115rem;
 }
 
 .search_dropdown {
@@ -215,4 +215,11 @@
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
+}
+
+@media (max-width: 1400px) {
+  #job-input-field {
+    width: 100%;
+
+  }
 }
