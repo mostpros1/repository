@@ -24,11 +24,11 @@ function WhyMostProsComp() {
         <img className="whymostprosrigthimg" src={thumbsupimg} alt="image of a character with a checklist doing a thumbsup" />
         <article className="smallcardsWhyMostProsContainer">
           <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
-          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
-          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
-          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
-          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
-          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Toegang talentenpools</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Groeiend netwerk</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Open infrastructuur</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Automatiseer workflow</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">500+ diensten</p></article>
 
         </article>
       </article>
