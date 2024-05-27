@@ -171,7 +171,7 @@
 
             // cy.get('.date-time-picker > :nth-child(3)').should('not.be.visible')
         //cy.get('.sidebar-list > :nth-child(2) > .sidebar-link').click();  //Job page
-         //cy.get('.sidebar-list > :nth-child(4) > .sidebar-link').click(); //calender page
+        ////cy.get('.sidebar-list > :nth-child(4) > .sidebar-link').click(); //calender page
 
         });
     });
