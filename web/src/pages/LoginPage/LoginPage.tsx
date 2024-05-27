@@ -39,7 +39,11 @@ function LoginPage() {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       updateUser(authenticatedUser);
-      navigate(`/${taal}/`);
+      if (authenticatedUser.attributes.group == "Professional") {
+        navigate(`/${taal}/pro-dashboard`);
+      } else if (authenticatedUser.attributes.group == "Homeowner") {
+        navigate(`/${taal}/homeowner-dashboard`);
+      }
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);
@@ -56,7 +60,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => { }} handleLogin={handleLogin} setError={setError} error={error} />
         </div>
       </div>
       <Footer />
