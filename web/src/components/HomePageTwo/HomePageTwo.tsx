@@ -82,7 +82,6 @@ const PopularCardsData = [
 ];
 
 //Function Searchbar component
-
 function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
@@ -96,8 +95,6 @@ function Searchbar() {
       setShowList(false);
     }
   };
-
-  
 
   const navigate = useNavigate();
   const handleInputFocus = () => {
@@ -176,9 +173,13 @@ function Searchbar() {
       }`}
       onMouseDown={() => handleResultClick(result.link)}
     >
-      {result.task || result.specialistName}
+      <span>
+        {result.specialistName ? `${result.specialistName} - ` : ""}
+        {result.task}
+      </span>
     </Link>
   ));
+
   return (
     <div>
       <div className="SearchBarHome">
@@ -274,7 +275,7 @@ function HomePageTwo() {
   };
 
   const handleProOnboardingClick = () => {
-    navigate(`/${taal}/pro-onboarding`); 
+    navigate(`/${taal}/pro-onboarding`);
   };
 
   const handleClick = (tab) => {
@@ -285,7 +286,6 @@ function HomePageTwo() {
       setReviewAnimation(false);
     }, 400);
   };
-  
 
   const handleLeftClick = () => {
     setReviewAnimation(true);
@@ -401,8 +401,16 @@ function HomePageTwo() {
             terwijl we plezier hebben.
           </p>
           <article className="whyMostProsButtonContainer">
-            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
-            <button className="whyMostProsButtonTwoHome" onClick={handleProOnboardingClick}>
+            <button
+              className="whyMostProsButtonHome"
+              onClick={handleScrollToTop}
+            >
+              Plaats je klus
+            </button>
+            <button
+              className="whyMostProsButtonTwoHome"
+              onClick={handleProOnboardingClick}
+            >
               Inschrijven als vakman
             </button>
           </article>
@@ -602,7 +610,8 @@ function HomePageTwo() {
                 className="HomeProfCardPFP "
               />
               <h5 className="HomeProCardhomeH5">
-                Houtlab Gijs<br />
+                Houtlab Gijs
+                <br />
                 Timmerman
               </h5>
             </section>
@@ -752,7 +761,12 @@ function HomePageTwo() {
             huiseigenaren, vakspecialisten en medewerkers.
           </p>
           <article className="CommunityButtonContainerHome">
-            <button className="whyMostProsButtonHome" onClick={handleScrollToTop}>Plaats je klus</button>
+            <button
+              className="whyMostProsButtonHome"
+              onClick={handleScrollToTop}
+            >
+              Plaats je klus
+            </button>
             <button className="CommunityTwoHome">Inschrijven als vakman</button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
