@@ -292,7 +292,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     const fileName = selectedFile.name;
 
     // Prepare the fileData string according to your backend's expectations
-    const fileData = "S3" + fileName;// + "!" + base64Data.split(',')[1];
+    const fileData = "S3" + fileName + "!" + base64Data.split(',')[1];
 
     try {
         // Send the fileData to your backend
