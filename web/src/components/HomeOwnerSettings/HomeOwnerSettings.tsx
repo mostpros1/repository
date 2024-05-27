@@ -1,71 +1,94 @@
 import React, { useState } from "react";
 import "./HomeOwnerSettings.css";
 
-const HomeOwnerSettings: React.FC = () => {
-  // Define state for each field
-  const [voornaam, setVoornaam] = useState("");
-  const [achternaam, setAchternaam] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefoonnummer, setTelefoonnummer] = useState("");
+const HomeOwnerSecurity = () => {
+  const [activeTab, setActiveTab] = useState("Security");
+  const [password, setPassword] = useState("**********");
 
-  // Function to handle the button click
-  const updateGegevens = () => {
-    // This function would update the data, for example sending it to an API
-    // For now, we can just log it to the console
-    console.log(voornaam, achternaam, email, telefoonnummer);
-    alert("Gegevens updated!"); // Just a placeholder action
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
   return (
-    <div id="settings-con">
-      <div className="settings-header">
-        <p>Algemene Info</p>
-      </div>
-      <div className="settings-right-con">
-        <div className="inner-settings-con">
-          <div className="col-row">
-            <p>Voornaam</p>
-            <input
-              type="text"
-              placeholder="Type your Voornaam"
-              value={voornaam}
-              onChange={(e) => setVoornaam(e.target.value)}
-            />
-          </div>
-          <div className="col-row">
-            <p>Achternaam</p>
-            <input
-              type="text"
-              placeholder="Type your Achternaam"
-              value={achternaam}
-              onChange={(e) => setAchternaam(e.target.value)}
-            />
-          </div>
-          <div className="col-row">
-            <p>Email</p>
-            <input
-              type="text"
-              placeholder="Type your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="col-row">
-            <p>Telefoonnummer</p>
-            <input
-              type="text"
-              placeholder="Type your Phonenumber"
-              value={telefoonnummer}
-              onChange={(e) => setTelefoonnummer(e.target.value)}
-            />
-          </div>
+    <div className="account-settings">
+      <div id="account-settings-tabs">
+        <div
+          className={`account-settings-tab ${activeTab === "Account" ? "active" : ""}`}
+          onClick={() => setActiveTab("Account")}
+        >
+          Account
         </div>
-        <div className="save-btn">
-          <button onClick={updateGegevens}>Gegevens wijzigen</button>
+        <div
+          className={`account-settings-tab ${activeTab === "Security" ? "active" : ""}`}
+          onClick={() => setActiveTab("Security")}
+        >
+          Security
+        </div>
+        <div
+          className={`account-settings-tab ${activeTab === "Privacy" ? "active" : ""}`}
+          onClick={() => setActiveTab("Privacy")}
+        >
+          Privacy
         </div>
       </div>
+      {activeTab === "Security" && (
+        <div id="account-setting-content">
+          <div id="account-setting-content-header">Security</div>
+          <div id="account-setting-content-body">
+            <div className="account-setting">
+              <label>Wachtwoord</label>
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <label>Herhaal wachtwoord</label>
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </div>
+            <button id="save-password-settings" onClick={() => console.log("Password Changed!")}>Opslaan</button>
+          </div>
+        </div>
+      )}
+      {activeTab === "Account" && (
+        <div id="account-setting-content">
+          <div id="account-setting-content-header">Account Details</div>
+          <div id="account-setting-content-body">
+            <div className="account-setting">
+              <label>Email</label>
+              <input type="email" placeholder="johndoe@gmail.com" />
+            </div>
+            <div className="account-setting">
+              <label>Re-enter Email</label>
+              <input type="email" placeholder="johndoe@gmail.com" />
+            </div>
+            <button id="accept-btn"> Bevestigen </button>
+          </div>
+        </div>
+      )}
+      {activeTab === "Privacy" && (
+        <div id="account-setting-content">
+          <div id="account-setting-content-header">Privacy Settings</div>
+          <div id="account-setting-content-body">
+
+            <div className="account-setting">
+              <label>Privacy Policy</label>
+              <p></p>
+              <input type="checkbox" />
+            </div>
+            <div className="account-setting">
+              <label>Terms and Conditions</label>
+              <input type="checkbox" />
+            </div>
+            <button id="accept-btn"> Accept </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default HomeOwnerSettings;
+export default HomeOwnerSecurity;

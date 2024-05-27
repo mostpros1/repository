@@ -1,17 +1,24 @@
-#jobs-panel {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  margin: 35px 0px 15px 10px;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.side-panel-right {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* This ensures that the content area takes at least the full height of the viewport */
 }
 
-.side-panel-left {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.main-content {
+    flex: 1;
+    /* This allows the main content area to expand to fill the remaining vertical space */
+    padding-top: 70px;
+}
+
+.footer {
+    flex-shrink: 0;
+    /* Prevent the footer from shrinking */
 }

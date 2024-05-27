@@ -1,0 +1,101 @@
+.vacature-list {
+    display: flex;
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.vacature-list-item {
+    list-style: none;
+    transition: all 0.3s ease;
+}
+
+.vacature-list-item h3:hover {
+    background-color: #90b4d8;
+    color: white !important;
+}
+
+.vacature-list-item h3 {
+    background-color: #E9F4FF;
+    width: 120rem;
+    margin-top: 2rem;
+    padding: 25px;
+    font-size: 2rem;
+    color: #529de8;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tech-list,
+.vacature-list-item p {
+    padding: 2rem;
+    font-size: 15px;
+    max-width: 110rem;
+    margin-left: 2.5rem;
+    padding-bottom: 15px;
+    list-style: outside;
+}
+
+#Vacature-desc-title {
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .vacature-list {
+        flex-direction: row;
+        margin-right: 10rem;
+    }
+
+    .vacature-list-col {
+        margin-left: 10rem;
+    }
+
+    .vacature-list-item h3 {
+        width: 60rem;
+        /* Wider buttons for larger screens */
+        padding: 25px;
+        font-size: 2rem;
+        /* Larger font size */
+    }
+
+    .tech-list,
+    .vacature-list-item p {
+        font-size: 1.25rem;
+        /* Increase font size for readability */
+        max-width: 110rem;
+        /* Restore original max width */
+        padding-bottom: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    .vacature-list {
+        flex-direction: column;
+        /* Change to column layout for smaller screens */
+        margin-right: 0;
+        /* Remove right margin */
+    }
+
+    .vacature-list-col {
+        margin-left: 0;
+        /* Remove left margin */
+    }
+
+    .vacature-list-item h3 {
+        width: 80rem;
+        /* Wider buttons for larger screens */
+        padding: 25px;
+        /* Larger padding */
+        font-size: 2rem;
+        /* Larger font size */
+    }
+
+    .tech-list,
+    .vacature-list-item p {
+        font-size: 1.25rem;
+        /* Increase font size for readability */
+        max-width: 110rem;
+        /* Restore original max width */
+        padding-bottom: 15px;
+    }
+}

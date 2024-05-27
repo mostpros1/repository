@@ -1,13 +1,21 @@
 import { FormEvent, useRef, useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { cognitoClient, stripeClient } from '../../main'
+import { cognitoClient } from '../../main'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DigitInputs from '../../components/ui/DigitInputs/DigitInputs'
 import ThumbsUp from '../../assets/thumbsup.svg'
 import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
+import Stripe from 'stripe';
+import { dynamo } from "../../../declarations.ts";
 
-const taal = window.location.pathname.split('/')[1];
+
+let taal = "nl";
+
+if (window.location.pathname.split('/')[1] == "nl" || window.location.pathname.split('/')[1] == "en") {
+    taal = window.location.pathname.split('/')[1];
+}
+
 
 type PostConfig = {
     roleName: string
@@ -20,9 +28,11 @@ function BevestigEmailPage() {
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [userExists, setUserExists] = useState(false)
 
-    const location = useLocation()
-    const navigate = useNavigate()
-    const inputRef = useRef([])
+    const location = useLocation();
+    const navigate = useNavigate();
+    const inputRef = useRef([]);
+
+    console.log("Received state:", location.state);
 
     const url = window.location.href;
 
@@ -35,6 +45,10 @@ function BevestigEmailPage() {
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
+    const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+        apiVersion: '2023-10-16',
+    });
+
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
@@ -45,13 +59,50 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Homeowner',
                 }).promise()
-                    .then(() => setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000))
-                    .catch(error => console.error(error))
+
+                    .then(async () => {
+                        const stripeCustomer = await stripe.customers.create({
+                            email: userEmail,
+                          });
+                          await cognitoClient.adminUpdateUserAttributes({
+                            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                            Username: userEmail,
+                            UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
+                          }).promise();
+                        dynamo.query({
+                            TableName: "Users",
+                            IndexName: "username",
+                            KeyConditionExpression: "email = :email",
+                            ExpressionAttributeValues: {
+                                ":email": userEmail,
+                            },
+                        }).promise() // Use.promise() here to get a Promise
+                            .then(data => {
+                                if (data.Items) {
+                                    dynamo.update({
+                                        TableName: "Users",
+                                        Key: {
+                                            id: data.Items[0].Id,
+                                        },
+                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
+                                        ExpressionAttributeValues: {
+                                            ":stripeCustomerId": stripeCustomer.id,
+                                        },
+                                    }).promise() // And here as well
+                                        .then(output => console.log(output.Attributes))
+                                        .catch(console.error);
+                                }
+                                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+                            })
+                            .catch(error => console.error(error));
+
+                    })
+                    .catch(error => console.error(error));
             }
         },
         'PROFESSIONAL': {
             roleName: "Professional",
-            nextPage: `/${taal}/dashboard-professional`,
+            nextPage: `/${taal}/pro-dashboard`,
 
             onSuccess: () => {
                 cognitoClient.adminAddUserToGroup({
@@ -59,38 +110,46 @@ function BevestigEmailPage() {
                     Username: userEmail,
                     GroupName: 'Professional',
                 }).promise()
-                    .then(() => {
-                        stripeClient.accounts.create({
-                            type: 'standard',
+                    .then(async () => {
+                
+                          const stripeCustomer = await stripe.customers.create({
                             email: userEmail,
-                            country: 'NL',
-                        })
-                            .then(stripeAccount => {
-                                cognitoClient.adminUpdateUserAttributes({
-                                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                                    Username: userEmail,
-                                    UserAttributes: [{
-                                        Name: 'custom:stripeAccountId',
-                                        Value: stripeAccount.id
-                                    }]
-                                }).promise()
-                                    .then(() => {
-                                        stripeClient.accountLinks.create({
-                                            account: stripeAccount.id,
-                                            type: 'account_onboarding',
-                                            refresh_url: `${window.location.origin}/payments/onboarding-failed`,
-                                            return_url: `${window.location.origin}${postConfigMap['PROFESSIONAL'].nextPage}`
-                                        })
-                                            .then(result => window.location.href = result.url)
-                                            .catch(err => console.error(err))
-                                    })
-                                    .catch(err => console.error(err))
+                          });
+                          await cognitoClient.adminUpdateUserAttributes({
+                            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+                            Username: userEmail,
+                            UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
+                          }).promise();
+
+                        dynamo.query({
+                            TableName: "Users",
+                            IndexName: "username",
+                            KeyConditionExpression: "email = :email",
+                            ExpressionAttributeValues: {
+                                ":email": userEmail,
+                            },
+                        }).promise() // Use.promise() here to get a Promise
+                            .then(data => {
+                                if (data.Items) {
+                                    dynamo.update({
+                                        TableName: "Users",
+                                        Key: {
+                                            id: data.Items[0].Id,
+                                        },
+                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
+                                        ExpressionAttributeValues: {
+                                            ":stripeCustomerId": stripeCustomer.id,
+                                        },
+                                    }).promise() // And here as well
+                                        .then(output => console.log(output.Attributes))
+                                        .catch(console.error);
+                                }
+                                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
                             })
-                            .catch(err => console.error(err))
-                    })
-                    .catch(err => console.error(err))
-            },
-        }
+                            .catch(error => console.error(error));
+                    }).catch(error => console.error(error));
+            }
+        },
     }
     const postConfig = postConfigMap[postConfigId] || null
 
@@ -171,7 +230,7 @@ function BevestigEmailPage() {
 
     return (
         userExists ? userExistsPopup : isConfirmed ? confirmedPopup : form
-    )
+    );
 }
 
 export default BevestigEmailPage

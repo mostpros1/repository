@@ -16,8 +16,7 @@ type SearchChoreFormProps = SpecialistData & {
     updateFields: (fields: Partial<SpecialistData>) => void
 }
 
-
-export default function SearchChoreForm({ beroep, bio, email, postCode, stad, updateFields }: SearchChoreFormProps) {
+export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
     const [isValidBeroep, setValidBeroep] = useState(true);
 

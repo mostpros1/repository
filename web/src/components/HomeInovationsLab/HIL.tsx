@@ -8,7 +8,7 @@ import "./HIL.css";
 
 function HIL() {
   return (
-    <div>
+    <main id="DisplayImageSection">
       <div className="image-container">
         <img src={img} alt="dutch steamboat" />
         <div className="text-overlay">
@@ -44,7 +44,7 @@ function HIL() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

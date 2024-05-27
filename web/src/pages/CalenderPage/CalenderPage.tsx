@@ -1,21 +1,15 @@
-import Calender from "../../components/SpecialistMultistep/Calendar";
-import NavBar from "../../components/ui/NavBar/NavBar";
-import Footer from "../../components/ui/Footer/Footer";
-import SideNav from "../../components/ui/SideNav/SideNav";
+import Callendar from "../../components/Agenda/Callendar";
+import NavBar from '../../components/ui/NavBar/NavBar';
+import Footer from '../../components/ui/Footer/Footer';
 import "./CalenderPage.css";
 
 const CalenderPage = () => {
   return (
-    <>
+    <div id="root">
       <NavBar />
-      <div className="calendar-panel">
-        <div className="side-panel-left-calendar">
-          <SideNav />
-        </div>
-        <Calender />
-      </div>
+      <Callendar />
       <Footer />
-    </>
+    </div>
   );
 };
 

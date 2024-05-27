@@ -1,7 +1,7 @@
-#content {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: start;
-    gap: 0rem;
-    margin: 25px auto 0 150px; /* Adjust this margin */
+@media screen and (min-width: 768px) {
+  /* Apply this layout for screens larger than or equal to 768px width */
+  #content {
+    flex-direction: row; /* Arrange content horizontally */
+    align-items: flex-start; /* Align content to the start */
+  }
 }

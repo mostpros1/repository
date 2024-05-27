@@ -1,17 +1,15 @@
-import SideNav from "../../components/ui/SideNav/SideNav";
+import React from 'react';
 import NavBar from "../../components/ui/NavBar/NavBar";
+import ProPaymentLayout from './HomeProPayments-rt';
 import Footer from "../../components/ui/Footer/Footer";
-import HomeProPaymentsComp from "../../components/HomeProPaymentsComp/HomeProPaymentsComp";
 import "./HomeProPaymentsPage.css";
 
 function HomeProPaymentsPage() {
   return (
-    <div>
+    <div id='root'>
       <NavBar />
-      <div id="content">
-        <SideNav />
-        <HomeProPaymentsComp />
-      </div>
+      <ProPaymentLayout />
+      <Footer />
     </div>
   );
 }

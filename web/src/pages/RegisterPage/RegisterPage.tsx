@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
+import { taal } from '../../components/ui/NavBar/Navigation.tsx';
 
 
 function RegisterPage() {
@@ -61,6 +62,7 @@ function RegisterPage() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
+              stripeCustomerId: ""
 
               /*
               email: stopXSS(email),
@@ -78,6 +80,14 @@ function RegisterPage() {
           .then(data => console.log(data.Attributes))
           .catch(console.error)
 
+          dynamo.put({
+            TableName: "Uuids",
+            Item: {
+              id: Math.random().toString(36).substring(2),
+              email: stopXSS(email),
+              identifyingName: Math.random().toString(36).substring(2, 15)
+            },
+          }).promise();
 
         /*const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
@@ -85,7 +95,8 @@ function RegisterPage() {
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
       */
         //const postConfig = postConfigMap['HOMEOWNER'];
-        navigate('/bevestig-email#Jobs', { state: { email: email, postConfig: "HOMEOWNER" } })
+        console.log("Navigating with state:", { email: email, postConfig: "HOMEOWNER" });
+        navigate(`/${taal}/confirm-mail#Jobs`, { state: { email: email, postConfig: "HOMEOWNER" } });
       } catch (error: any) {
         console.error('Error signing up:', error);
         setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');

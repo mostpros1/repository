@@ -1,120 +1,243 @@
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { useEffect, useRef, useState } from "react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
 import { API, graphqlOperation } from "aws-amplify";
+import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
 import PaymentLink from '../PaymentLink/PaymentLink';
 import { IoSend } from "react-icons/io5";
-import { MdOutlinePayment } from "react-icons/md";
-import { IoMdPhotos } from "react-icons/io";
-import axios from 'axios';
+import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical, BsSun, BsMoon, BsBell, BsBellSlash } from "react-icons/bs";
+import { MdDriveFileMove } from "react-icons/md";
+import { stopXSS } from "../../../../backend_functions/stopXSS";
+import ReactDOMServer from "react-dom/server";
+import { FaReply } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa";
+import PaymentOffer from "../PaymentLink/PaymentOffer";
 
-function ChatMain({ user, signOut }) {
+interface Chat {
+  id: string;
+  text: string;
+  createdAt: string;
+  email: string;
+  members: string[];
+}
+
+interface GroupedMessages {
+  [key: string]: Chat[];
+}
+
+function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const {
     chats,
     setChats,
-    recentMessageEmail,
-    showJoinButton,
-    setShowJoinButton,
-    showConfirmedConnection,
-    showAlert,
-    notificationMessage,
-    handleStartNewChat,
     handleSendMessage,
-    handleAlertConfirm,
-    handleAlertCancel,
-    handleJoinChat,
     handleReceivedMessage,
+    handleJoinChat,
+    handleStartNewChatWithEmail,
+    visibleName,
+    setVisibleName,
+    textSize,
+    setTextSize
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredContactList, setFilteredContactList] = useState<string[]>([]);
-  const [groupedMessages, setGroupedMessages] = useState({});
-  const [recipientEmail, setRecipientEmail] = useState("");
+  const [groupedMessages, setGroupedMessages] = useState<GroupedMessages>({});
+  const [recipientEmail, setRecipientEmail] = useState<string>("");
+  const [recipientUUID, setRecipientUUID] = useState<string>("");
+  const [isDropUpOpen, setIsDropUpOpen] = useState(false);
+  const [customAmount, setCustomAmount] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dropUpRef = useRef<HTMLDivElement>(null);
+  const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
 
-  const groupMessagesByDate = (messages) => {
-    const groupedMessages = {};
-    messages.forEach((message) => {
-      const createdAt = new Date(message.createdAt);
-      const dateKey = createdAt.toLocaleDateString('nl-NL', { month: 'long', day: 'numeric' });
-      if (!groupedMessages[dateKey]) {
-        groupedMessages[dateKey] = [];
-      }
-      groupedMessages[dateKey].push(message);
-    });
-    return groupedMessages;
+  const [lastMessages, setLastMessages] = useState<{
+    [contact: string]: { text: string; createdAt: string };
+  }>({});
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
+  const [showNewChatModal, setShowNewChatModal] = useState(false);
+  const [newChatEmail, setNewChatEmail] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  // New states for extra functionalities
+  const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
+  const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
+
+  // New states for settings modal
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [theme, setTheme] = useState("light");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  // New state for showing saved messages modal
+  const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
+
+  // New state for tracking new messages
+  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
+
+  const handleTypingIndicator = (isTyping: boolean) => {
+    setIsTyping(isTyping);
+    // Emit typing indicator event to backend (e.g., WebSocket, API)
   };
 
   useEffect(() => {
-    // Filtered chats based on selected contact
-    const filteredChats = selectedContact
-      ? chats.filter(chat => chat.members.includes(selectedContact) && chat.members.includes(user.attributes.email))
-      : [];
-    
-    // Group and set messages
-    const groupedMessages = groupMessagesByDate(filteredChats);
-    setGroupedMessages(groupedMessages);
-  }, [chats, selectedContact, user.attributes.email]);
-
-useEffect(() => {
-  async function fetchChats() {
-    const allChats = await API.graphql({
-      query: queries.listChats,
-      variables: {
-        filter: {
-          members: { contains: user.attributes.email },
-          },
-        },
-      });
-      //@ts-ignore
-      setChats(allChats.data.listChats.items);
-    }
-    fetchChats();
-  }, [user.attributes.email]);
-  
-    useEffect(() => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const recipient = searchParams.get('recipient');
-      if (recipient) {
-        setRecipientEmail(recipient);
-        setSelectedContact(recipient);
+    const handleNewMessageNotification = (message: Chat) => {
+      if (message.email !== user.attributes.email) {
+        if (Notification.permission === "granted" && notificationsEnabled) {
+          new Notification("Nieuw bericht ontvangen", {
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+          });
+        }
+        // Increment the new message count for the contact
+        const contact = message.members.find((member) => member !== user.attributes.email);
+        if (contact) {
+          setNewMessagesCount((prevCount) => ({
+            ...prevCount,
+            [contact]: (prevCount[contact] || 0) + 1,
+          }));
+        }
       }
-    }, []);
-  
-  useEffect(() => {
+    };
+
     const sub = API.graphql(
       graphqlOperation(subscriptions.onCreateChat)
       //@ts-ignore
     ).subscribe({
-      next: ({ value }) => {
+      next: ({ value }: { value: { data: { onCreateChat: Chat } } }) => {
         handleReceivedMessage(value.data.onCreateChat);
+        handleNewMessageNotification(value.data.onCreateChat);
       },
-      error: (err) => console.log(err),
+      error: (err: any) => console.log(err),
     });
-    return () => sub.unsubscribe();
-  }, [user.attributes.email]);
 
-  const chatBoxRef = useRef<HTMLDivElement>(null);
+    return () => sub.unsubscribe();
+  }, [user.attributes.email, notificationsEnabled]);
 
   useEffect(() => {
-    if (chatBoxRef.current && chats.length > 0) {
+    Notification.requestPermission();
+  }, []);
+
+  useEffect(() => {
+    const updatedLastMessages: {
+      [contact: string]: { text: string; createdAt: string };
+    } = {};
+    chats.forEach((chat) => {
+      const contact = chat.members.find(
+        (member) => member !== user.attributes.email
+      );
+      if (contact) {
+        if (
+          !updatedLastMessages[contact] ||
+          new Date(updatedLastMessages[contact].createdAt) <
+          new Date(chat.createdAt)
+        ) {
+          updatedLastMessages[contact] = {
+            text: chat.text,
+            createdAt: chat.createdAt,
+          };
+        }
+      }
+    });
+    setLastMessages(updatedLastMessages);
+  }, [chats, user.attributes.email]);
+
+  const groupMessagesByDate = (messages: Chat[]): GroupedMessages => {
+    const groupedMessages: GroupedMessages = {};
+
+    messages.forEach((message) => {
+      const createdAt = new Date(message.createdAt);
+      const dateKey = createdAt.toISOString().split("T")[0];
+
+      if (!groupedMessages[dateKey]) {
+        groupedMessages[dateKey] = [];
+      }
+
+      groupedMessages[dateKey].push(message);
+    });
+
+    const sortedDates = Object.keys(groupedMessages).sort(
+      (a, b) => new Date(a).getTime() - new Date(b).getTime()
+    );
+
+    const sortedGroupedMessages: GroupedMessages = {};
+
+    sortedDates.forEach((date) => {
+      groupedMessages[date].sort(
+        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+      sortedGroupedMessages[date] = groupedMessages[date];
+    });
+
+    return sortedGroupedMessages;
+  };
+
+  useEffect(() => {
+    if (selectedContact) {
+      const filteredChats = chats.filter(
+        (chat) =>
+          chat.members.includes(selectedContact) &&
+          chat.members.includes(user.attributes.email)
+      );
+      const groupedMessages = groupMessagesByDate(filteredChats);
+      setGroupedMessages(groupedMessages);
+      // Reset the new message count for the selected contact
+      setNewMessagesCount((prevCount) => ({
+        ...prevCount,
+        [selectedContact]: 0,
+      }));
+    }
+  }, [chats, selectedContact, user.attributes.email]);
+
+  useEffect(() => {
+    async function fetchChats() {
+      const allChats: any = await API.graphql({
+        query: queries.listChats,
+        variables: {
+          filter: {
+            members: { contains: user.attributes.email },
+          },
+        },
+      });
+      setChats(allChats.data.listChats.items);
+    }
+    fetchChats();
+  }, [user.attributes.email]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const recipientUUID = searchParams.get("recipient");
+    if (recipientUUID) {
+      setRecipientUUID(recipientUUID);
+      const email = uuidEmailMap.current[recipientUUID];
+      if (email) {
+        setRecipientEmail(email);
+        setSelectedContact(email);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (chatBoxRef.current && Object.keys(groupedMessages).length > 0) {
       setTimeout(() => {
         if (chatBoxRef.current) {
           chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
         }
       }, 0);
     }
-  }, [chats]);
+  }, [groupedMessages]);
 
   useEffect(() => {
-    const extractContacts = () => {
-      const contacts = new Set();
-      chats.forEach(chat => {
-        chat.members.forEach(member => {
+    const extractContacts = (): string[] => {
+      const contacts = new Set<string>();
+      chats.forEach((chat) => {
+        chat.members.forEach((member) => {
           if (member !== user.attributes.email) {
             contacts.add(member);
           }
@@ -124,50 +247,33 @@ useEffect(() => {
     };
 
     const uniqueContacts = extractContacts();
-    //@ts-ignore
     setContactList(uniqueContacts);
   }, [chats, user.attributes.email]);
-  
-  const switchChat = (contact) => {
-    if (selectedContact === contact) {
-      setSelectedContact(null);
-      setGroupedMessages({});
-    } else {
-      setSelectedContact(contact);
-      const members = [user.attributes.email, contact].sort().join("#");
-      const existingChat = chats.find(chat => chat.sortKey === members);
-      if (existingChat) {
-        setChats([existingChat]);
-      } else {
-        setChats([]);
-      }
-      const url = `/nl/homeowner-dashboard/chat?recipient=${contact}`;
-      window.location.href = url;
-    }
-  };
 
-  const [showPaymentLink, setShowPaymentLink] = useState(false);
-  const [subtotal, setSubtotal] = useState(0);
-  const [customSubtotal, setCustomSubtotal] = useState('');
-
-  const updateSubtotal = () => {
-    if (!customSubtotal || isNaN(Number(customSubtotal))) {
-      alert('Voer een geldig bedrag in.');
-      return;
-    }
-    setSubtotal(Number(customSubtotal));
-  };
-  
-  const handlePaySendMessage = (text) => {
-      console.log(text);
+  const switchChat = (contact: string) => {
+    const uuid = getUUIDFromEmail(contact);
+    setSelectedContact(contact);
+    const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+    window.history.pushState({}, "", url);
+    setRecipientEmail(contact);
+    handleJoinChat(contact);
+    // Reset the new message count for the selected contact
+    setNewMessagesCount((prevCount) => ({
+      ...prevCount,
+      [contact]: 0,
+    }));
   };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const recipient = searchParams.get('recipient');
-    if (recipient) {
-      setRecipientEmail(recipient);
-      setSelectedContact(recipient);
+    const recipientUUID = searchParams.get("recipient");
+    if (recipientUUID) {
+      setRecipientUUID(recipientUUID);
+      const email = uuidEmailMap.current[recipientUUID];
+      if (email) {
+        setRecipientEmail(email);
+        setSelectedContact(email);
+      }
     }
   }, []);
 
@@ -177,180 +283,600 @@ useEffect(() => {
     }
   }, [recipientEmail]);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState(null);
-
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    try {
-      if (!selectedFile) {
-        console.error('No file selected');
-        return;
-      }
-  
-      const formData = new FormData();
-      formData.append('photo', selectedFile);
-  
-      const response = await axios.post('https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-  
-      console.log(response.data);
-      setUploadedPhotoUrl(response.data);
-    } catch (error) {
-      console.error('Error uploading photo:', error);
-      alert('Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.');
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
     }
   };
 
+  // Improved handleUpload function
+  const handleUpload = async () => {
+    // Check if a file is selected before proceeding
+    if (!selectedFile) {
+      console.error("No file selected");
+      return;
+    }
+
+    function getBase64(file: File): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+      });
+    }
+
+    // Convert the selected file to Base64
+    const base64Data = await getBase64(selectedFile);
+
+    // Extract the file name from the selectedFile object
+    const fileName = selectedFile.name;
+
+    // Prepare the fileData string according to your backend's expectations
+    const fileData = "S3" + fileName + "!" + base64Data.split(',')[1];
+
+    try {
+        // Send the fileData to your backend
+        const Data = encodeURIComponent(fileData);
+        console.log("Data ", Data)
+        const response = await fetch(`https://rfzmb9ibkk.execute-api.eu-north-1.amazonaws.com/chatuploads/${Data}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error status: ${response.status}`);
+        }
+
+        const responseData = await response.json(); // Assuming the response is JSON
+        console.log(responseData); // Handle the response data as needed
+
+    } catch (err) {
+        console.error(err);
+    }
+};
+ /*
+    try {
+      // Utility function to convert a file to Base64
+      
+      // Make sure to remove the manual Content-Type header setting when using FormData
+      const response = await axios.post(
+        "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
+        formData
+      );
+
+      console.log(response.data);
+      setUploadedPhotoUrl(response.data.url); // Assuming the response contains a URL property
+
+      await handleSendMessage(`<img src="${response.data.url}" alt="Uploaded Image" style="max-width: 100%;" />`);
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+      alert("Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.");
+    }*/
+
+  const handleDropUpClick = () => {
+    setIsDropUpOpen(!isDropUpOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropUpRef.current && !dropUpRef.current.contains(event.target as Node)) {
+      setIsDropUpOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return { text: "Today", className: "date-today" };
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return { text: "Yesterday", className: "date-yesterday" };
+    } else {
+      return {
+        text: new Intl.DateTimeFormat("nl-NL", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }).format(date),
+        className: "date-other",
+      };
+    }
+  };
+
+  const generateUUID = () => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  };
+
+  const getUUIDFromEmail = (email: string) => {
+    for (let uuid in uuidEmailMap.current) {
+      if (uuidEmailMap.current[uuid] === email) {
+        return uuid;
+      }
+    }
+    const newUUID = generateUUID();
+    uuidEmailMap.current[newUUID] = email;
+    return newUUID;
+  };
+
+  const formatCurrencyInput = (value: string) => {
+    value = value.replace(/[^\d,.]/g, "");
+    value = value.replace(/\./g, ",");
+    const parts = value.split(",");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (parts[1]) {
+      parts[1] = parts[1].slice(0, 2);
+    }
+
+    return parts.join(",");
+  };
+
+  const sortedContacts = contactList.sort((a, b) => {
+    const dateA = lastMessages[a]
+      ? new Date(lastMessages[a].createdAt).getTime()
+      : 0;
+    const dateB = lastMessages[b]
+      ? new Date(lastMessages[b].createdAt).getTime()
+      : 0;
+    return dateB - dateA;
+  });
+
+  const parseLinks = (text: string) => {
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(linkRegex);
+    const jsxElements = parts.flatMap((part, index) => {
+      if (index % 2 !== 0) {
+        return (
+          <a href={part} target="_blank" rel="noopener noreferrer">
+            {part}
+          </a>
+        );
+      } else {
+        return part;
+      }
+    });
+
+    const htmlString = ReactDOMServer.renderToStaticMarkup(
+      <>{jsxElements}</>
+    );
+    return htmlString;
+  };
+
+
+  const handleSendMessageClick = async () => {
+    const messageInput = document.getElementById("message-input") as HTMLInputElement;
+    if (messageInput) {
+      const messageText = messageInput.value;
+      if (messageText && recipientEmail) {
+        if (replyingTo) {
+          await handleSendMessage(
+            stopXSS(
+              `Re: ${replyingTo.text} | U: ${messageText}`
+            )
+          );
+          setReplyingTo(null);
+        } else {
+          await handleSendMessage(stopXSS(messageText));
+        }
+        messageInput.value = "";
+        handleTypingIndicator(false);
+      }
+    }
+  };
+
+  const handleInputChange = () => {
+    handleTypingIndicator(true);
+    setTimeout(() => handleTypingIndicator(false), 1000);
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setOpen(!open);
+  };
+
+  const handleStartNewChatClick = () => {
+    setShowNewChatModal(true);
+  };
+
+  const handleNewChatConfirm = async () => {
+    console.log("Starting new chat with email:", newChatEmail);
+    await handleStartNewChatWithEmail(newChatEmail);
+    setShowNewChatModal(false);
+  };
+
+  const handleMarkMessage = (messageId: string) => {
+    setMarkedMessages((prev) => {
+      const newMarkedMessages = new Set(prev);
+      if (newMarkedMessages.has(messageId)) {
+        newMarkedMessages.delete(messageId);
+      } else {
+        newMarkedMessages.add(messageId);
+      }
+      return newMarkedMessages;
+    });
+  };
+
+  const handleReplyMessage = (message: Chat) => {
+    setReplyingTo(message);
+  };
+
+  const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextSize(Number(event.target.value));
+  };
+
+  const handleVisibleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibleName(event.target.value);
+  };
+
+  const handleThemeChange = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
+  const handleNotificationsToggle = () => {
+    setNotificationsEnabled((prevState) => !prevState);
+  };
+
+  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      try {
+        const response = await axios.post(
+          "https://your-upload-url.com",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response.data);
+        // Update the user's profile picture URL in your backend
+      } catch (error) {
+        console.error("Error uploading profile picture:", error);
+      }
+    }
+  };
+
+  const handleSaveSettings = () => {
+    setShowSettingsModal(false);
+  };
+
   return (
-    <div className="chat-container">
-        <div className="sidebar" id="sidebar">
-      <input
-        type="text"
-        placeholder="Zoek gebruikers..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="searchList"
-      />
-      <ul>
-        {searchTerm === ""
-          ? contactList.map((contact) => (
+    <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
+      <div className="sidebarr" id="sidebarr">
+        <div className="dropdownn-container">
+          <BsThreeDotsVertical size={30} className="menu-iconn" onClick={toggleMenu} />
+          {open && (
+            <div className="dropdownn-menu">
+              <div className="dropdownn-item" onClick={handleStartNewChatClick}>
+                Nieuwe chat starten
+              </div>
+              <div className="dropdownn-item" onClick={() => setShowSavedMessagesModal(true)}>
+                Opgeslagen berichten
+              </div>
+              <div className="dropdownn-item" onClick={() => setShowSettingsModal(true)}>
+                Instellingen
+              </div>
+            </div>
+          )}
+        </div>
+        <ul>
+          {searchTerm === ""
+            ? sortedContacts.map((contact) => (
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
+                className={selectedContact === contact ? "selected-contact" : ""}
               >
-                {contact}
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
+                  </div>
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
               </li>
             ))
-          : filteredContactList.map((contact) => (
+            : filteredContactList.map((contact) => (
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? 'selected-contact' : ''}
+                className={selectedContact === contact ? "selected-contact" : ""}
               >
-                {contact}
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
+                  </div>
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
               </li>
             ))}
-      </ul>
-    </div>
-
-    <div className="button-container">
-      <button
-        type="button"
-        className="buttona"
-        onClick={handleStartNewChat}
-        >
-        Start New Chat
-      </button>
-      <button onClick={handleAlertConfirm} className="buttona">Confirm</button>
-      <button onClick={handleAlertCancel} className="buttona">Cancel</button>
-    </div>
+        </ul>
+      </div>
       <div className="main-container">
         <div className="chat-main">
-          
-        <div className="chatheader">
-          <div className="chat-info">
-            <div className="name-and-status">
-              <h2 className="recipient-name">{recipientEmail.split("@")[0]}</h2>
+          <div className="chatheader">
+            <div className="chat-info">
+              <BsPersonCircle size={50} className="avatar-chat" />
+              <div className="name-and-status">
+                <h2 className="recipient-name">
+                  {selectedContact ? selectedContact.split("@")[0] : ""}
+                </h2>
+                {isTyping && <div className="typing-indicator">Typing...</div>}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="chat-box" ref={chatBoxRef}>
-          
-              {Object.keys(groupedMessages).map((date) => (
+          <div className="chat-box" ref={chatBoxRef}>
+            {Object.keys(groupedMessages).map((date) => {
+              const { text, className } = formatDate(date);
+              return (
                 <React.Fragment key={date}>
-                  <div className="date-separator">{date}</div>
+                  <div className={`date-separator ${className}`}>{text}</div>
 
                   {groupedMessages[date].map((chat) => (
                     <div
-                    key={chat.id}
-                    className={`message-container ${
-                      chat.email === user.attributes.email ? "self-message-container" : "other-message-container"
-                    }`}
+                      key={chat.id}
+                      className={`message-container ${chat.email === user.attributes.email
+                        ? "self-message-container"
+                        : "other-message-container"
+                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                     >
                       <div
-                        className={`message-bubble ${
-                          chat.email === user.attributes.email ? "self-message" : "other-message"
-                        }`}
-                        >
-                        <div className="username">
-                          <span className="username-name">{chat.email.split("@")[0]}</span>
-                        </div>
-                        <p className="text">{chat.text}</p>
+                        className={`message-bubble ${chat.email === user.attributes.email
+                          ? "self-message"
+                          : "other-message"
+                          }`}
+                      >
+                          <div className="message-actions">
+                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                            <button onClick={() => handleMarkMessage(chat.id)}>
+                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                            </button>
+                            {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
+                          </div>
+                        <div
+                          className="text"
+                          dangerouslySetInnerHTML={{ __html: chat.text }}
+                        />
                         <time dateTime={chat.createdAt} className="message-time">
-                          {new Intl.DateTimeFormat('nl-NL', {
-                            hour: '2-digit',
-                            minute: '2-digit',
+                          {new Intl.DateTimeFormat("nl-NL", {
+                            hour: "2-digit",
+                            minute: "2-digit",
                           }).format(new Date(chat.createdAt))}
                         </time>
                       </div>
                     </div>
                   ))}
                 </React.Fragment>
-              ))}
-            </div>
+              );
+            })}
+          </div>
 
-        <div className="input-form">
-          <button onClick={() => setShowPaymentLink(true)} className='addPay'><MdOutlinePayment size={30} /></button>
-            {showPaymentLink && (
-              <PaymentLink
-                    subtotal={subtotal}
-                    handleSendMessage={handlePaySendMessage}
-                />
-            )}
+          {replyingTo && (
+            <div className="replying-to">
+              Replying to: <blockquote>{replyingTo.text}</blockquote>
+              <button onClick={() => setReplyingTo(null)}>Cancel</button>
+            </div>
+          )}
+          <div className="input-form">
             <input
-            type="number"
-            value={customSubtotal}
-            onChange={(e) => setCustomSubtotal(e.target.value)}
-            placeholder="Subtotaal"
-            className="betalingbedrag"
-          />
-          {/* <div>
-            <IoMdPhotos size={25} className="addPhoto" />
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-            />
-        </div>
-            <button onClick={handleUpload}>Upload Foto</button>
-            {uploadedPhotoUrl && (
-              <div>
-                <img src={uploadedPhotoUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />
-              </div>
-            )}
-          </div> */}
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="Stuur een bericht..."
-            onKeyUp={async (e) => {
-              if (e.key === "Enter") {
-                const messageText = (e.target as HTMLInputElement).value;
-                if (messageText && recipientEmail) {
-                  await handleSendMessage(messageText);
-                  (e.target as HTMLInputElement).value = "";
+              type="text"
+              id="message-input"
+              name="search"
+              placeholder="Stuur een bericht..."
+              onKeyUp={async (e) => {
+                if (e.key === "Enter") {
+                  await handleSendMessageClick();
                 }
-              }
-            }}
-            className="inputchat"
-          />
-          <div className="chat-enter">
-            <kbd><IoSend size={25} /></kbd>
+              }}
+              className="inputchat"
+              onChange={handleInputChange}
+            />
+            <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
+              <BsPaperclip className="paperclip" size={25} />
+              <div
+                className={`dropup-content ${isDropUpOpen ? "show" : ""}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="dropup-option"
+                  onClick={() => inputRef.current?.click()}
+                >
+                  <MdDriveFileMove size={25} color="blue" />
+                </button>
+                <input
+                  type="file"
+                  ref={inputRef}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                <button
+                  className="dropup-option"
+                  onClick={handleUpload}
+                  disabled={!selectedFile}
+                >
+                  Upload
+                </button>
+                {uploadedPhotoUrl && (
+                  <div>
+                    <img
+                      src={uploadedPhotoUrl}
+                      alt="Uploaded"
+                      style={{ maxWidth: "100%" }}
+                    />
+                  </div>
+                )}
+                <div className="amount-input-wrapper">
+                  <input
+                    type="text"
+                    placeholder="Voer bedrag in"
+                    value={customAmount}
+                    onChange={(e) =>
+                      setCustomAmount(formatCurrencyInput(e.target.value))
+                    }
+                    className="amount-input"
+                  />
+                </div>
+                <PaymentLink
+                  handleSendMessage={handleSendMessage}
+                  subtotal={parseFloat(customAmount.replace(",", "."))}
+                />
+                <PaymentOffer
+                  subtotal={parseFloat(customAmount.replace(',', '.'))}
+                  handleSendMessage={handleSendMessage}
+                  recipientEmail={recipientEmail}
+                />
+              </div>
+            </div>
+            <div className="chat-enter" onClick={handleSendMessageClick}>
+              <kbd>
+                <IoSend size={25} />
+              </kbd>
+            </div>
           </div>
         </div>
       </div>
-      
-      </div>
-</div>
-)}
+      {showNewChatModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Start Nieuwe Chat</h2>
+            <input
+              type="email"
+              placeholder="Voer e-mailadres in"
+              value={newChatEmail}
+              onChange={(e) => setNewChatEmail(e.target.value)}
+            />
+            <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
+            <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
+      {showSettingsModal && (
+        <div className="settings-modal-overlay">
+          <div className="settings-modal-content">
+            <h2>Instellingen</h2>
+            <div className="settings-item">
+              <label htmlFor="text-size">Tekstgrootte:</label>
+              <input
+                type="range"
+                id="text-size"
+                min="12"
+                max="24"
+                value={textSize}
+                onChange={handleTextSizeChange}
+              />
+              <span>{textSize}px</span>
+            </div>
+            <div className="settings-item">
+              <label htmlFor="visible-name">Zichtbare naam:</label>
+              <input
+                type="text"
+                id="visible-name"
+                value={visibleName}
+                onChange={handleVisibleNameChange}
+              />
+            </div>
+            <div className="settings-item">
+              <label>Theme:</label>
+              <button onClick={handleThemeChange} className="theme-toggle-button">
+                {theme === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
+              </button>
+            </div>
+            <div className="settings-item">
+              <label>Notifications:</label>
+              <button onClick={handleNotificationsToggle} className="notifications-toggle-button">
+                {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
+              </button>
+            </div>
+            <div className="settings-item">
+              <label htmlFor="profile-picture">Profile Picture:</label>
+              <input
+                type="file"
+                id="profile-picture"
+                accept="image/*"
+                onChange={handleProfilePictureUpload}
+              />
+            </div>
+            <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
+            <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
+          </div>
+        </div>
+      )}
+      {showSavedMessagesModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Opgeslagen Berichten</h2>
+            <div className="saved-messages-list">
+              {Array.from(markedMessages).map((messageId) => {
+                const message = chats.find((chat) => chat.id === messageId);
+                if (message) {
+                  return (
+                    <div key={message.id} className="saved-message-item">
+                      <div className="saved-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
+                      <time dateTime={message.createdAt} className="saved-message-time">
+                        {new Intl.DateTimeFormat("nl-NL", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(message.createdAt))}
+                      </time>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+            <button onClick={() => setShowSavedMessagesModal(false)} className="button-modal">Sluiten</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default withAuthenticator(ChatMain);

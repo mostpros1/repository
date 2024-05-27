@@ -122,12 +122,11 @@ function Searchbar() {
   return (
     <>
       <div className={showList ? "search-container_open" : "search-container"}>
-        <label>Wat is je klus?</label>
         <input
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Bijvoorbeeld: loodgieter"
+          placeholder="Wat is je klus?"
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
