@@ -5,9 +5,34 @@ import MostprosDesc from "../MostprosDesc/MostprosDesc"
 function HowItWorks() {
   return (
     <div className="HowItsWorks">
-        <div className="HowItsWorks_con">
+      <section className="howItWorksSectionHome">
+        <article className="howItWorksTitleContainerHome">
+          <h2 className="howItWorksTitleHome">Hoe werkt het als Vakspecialist?</h2>
+        </article>
+        <section className="howItworksContainerCards">
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Ontvang opdrachten</h5>
+            <p className="howitworkscardhomeP">
+              Ontvang opdrachten binnen je beschikbaarhed en werkgebied.
+            </p>
+          </article>
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Kom in contact</h5>
+            <p className="howitworkscardhomeP">
+              Kom eenvoudig in contact met huiseigenaren die klussen hebben.
+            </p>
+          </article>
+          <article className="howItWorksCardHome">
+            <h5 className="howitworkscardhomeH5">Plan een afspraak</h5>
+            <p className="howitworkscardhomeP">
+              Plan een afspraak op een tijd die voor jullie beiden goed uitkomt.
+            </p>
+          </article>
+        </section>
+      </section>
+      <div className="HowItsWorks_con">
             <MostprosDesc />
-        </div>
+      </div>
     </div>
   )
 }
