@@ -135,7 +135,7 @@ context('Profile page bezoeken', () => {
         }
       });
   
-      // Klik op antwoorden
+      // Klik op antwoorden//
       for (let i = 1; i < 7; i++) {
         cy.get(`:nth-child(6) > .questions-con > :nth-child(${i}) > .answer`).click();
       }
