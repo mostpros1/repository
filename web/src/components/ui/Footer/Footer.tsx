@@ -16,6 +16,7 @@ function Footer() {
           <Link to="/nl/OverOns">Over</Link>
           <Link to="/nl/jobs">Jobs</Link>
           <Link to="/nl/OverOns">Product updates</Link>
+          <Link to="/nl/quality">Kwaliteitseisen</Link>
           <Link to="/nl/contact">Contact</Link>
         </article>
         <section className="footerSection">
