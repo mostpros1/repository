@@ -109,7 +109,7 @@ function Navigation() {
       <div className="nav-rightside">
         <ul className="nav-list">
           <li>
-            <Link to={`/${taal}/jobs-mostpros`} className="black-items">
+            <Link to={``} className="black-items">
               {t("Klussen")} <ExpandMoreIcon />
             </Link>
             {/* Translate mega menu items */}
