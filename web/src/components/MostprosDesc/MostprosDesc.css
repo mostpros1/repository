@@ -8,6 +8,11 @@
     gap: 75px;
 }
 
+.howItWorksTitleMostProsDesc{
+    font-family: "Poppins", sans-serif;
+    font-size: 3.75rem;
+}
+
 .description_container{
     width: 100%;
     max-width: 1000px;
