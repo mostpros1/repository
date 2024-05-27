@@ -1,46 +1,185 @@
-.mainSectionWhyMostPros{
+.mainSectionWhyMostPros {
   width: 100%;
   padding-left: 20rem;
   padding-right: 20rem;
   display: flex;
   flex-wrap: wrap;
   margin-top: 15rem;
+  justify-content: center;
 }
 
-.whymostprosleft{
-  width: 50%;
+.whymostprosleft {
   height: 43.1rem;
   text-align: left;
-  border: 2px solid black;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
+  gap: 3rem;
 }
 
-.whymostprosh4{
+.whymostprosh4 {
   font-size: 2rem;
   text-align: left;
   margin-bottom: 3rem;
 }
 
-.whymostprosP{
+.whymostprosP {
   font-size: 1.2rem;
   max-width: 48.3rem;
 }
 
-.whymostprosBlueSquare{
-  width: 50.1rem;
-  height: 9.6rem;
+.whymostprosBlueSquare {
+  padding: 1.1rem;
+  border-radius: 1.3rem;
   background: #B5DCFF;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.whymostprosright{
+.whymostprosright {
   width: 50%;
   height: 64.3rem;
-  background: orange;
-  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.whymostprosrigthimg {
+  height: 25rem;
+}
+
+.smallcardsWhyMostProsContainer {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2rem;
+}
+
+.smallcardsWhyMostProsP {
+  font-size: 1.2rem;
+}
+
+.smallcardsWhyMostPros {
+  width: 23.4rem;
+  height: 6.4rem;
+  background: #E9F4FF;
+  border-radius: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive styles for screens smaller than 1387px */
+@media (max-width: 1387px) {
+  .mainSectionWhyMostPros {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  
+  .flexboxContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .whymostprosleft,
+  .whymostprosright {
+    width: 100%;
+    height: auto;
+    border: none;
+    margin-top: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .whymostprosh4 {
+    font-size: 1.5rem;
+  }
+
+  .whymostprosP {
+    font-size: 1rem;
+  }
+
+  .whymostprosBlueSquare {
+    padding: 0.8rem;
+  }
+
+  .whymostprosrigthimg {
+    height: 20rem;
+  }
+
+  .smallcardsWhyMostPros {
+    width: 18rem;
+    height: 5rem;
+  }
+}
+
+/* Responsive styles for screens smaller than 1024px */
+@media (max-width: 1024px) {
+  .mainSectionWhyMostPros {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .whymostprosh4 {
+    font-size: 1.3rem;
+  }
+
+  .whymostprosP {
+    font-size: 0.9rem;
+  }
+
+  .whymostprosBlueSquare {
+    padding: 0.6rem;
+  }
+
+  .whymostprosrigthimg {
+    height: 15rem;
+  }
+
+  .smallcardsWhyMostPros {
+    width: 15rem;
+    height: 4rem;
+  }
+}
+
+/* Responsive styles for screens smaller than 768px */
+@media (max-width: 768px) {
+  .mainSectionWhyMostPros {
+    flex-direction: column;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .whymostprosleft,
+  .whymostprosright {
+    align-items: center;
+    text-align: center;
+  }
+
+  .whymostprosh4 {
+    font-size: 1.2rem;
+  }
+
+  .whymostprosP {
+    font-size: 0.8rem;
+  }
+
+  .whymostprosBlueSquare {
+    padding: 0.5rem;
+  }
+
+  .whymostprosrigthimg {
+    height: 10rem;
+  }
+
+  .smallcardsWhyMostPros {
+    width: 13rem;
+    height: 3.5rem;
+  }
 }

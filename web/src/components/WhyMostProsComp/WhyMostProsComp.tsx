@@ -1,12 +1,12 @@
 import "./WhyMostProsComp.css";
-import NavBar from '../../components/ui/NavBar/NavBar';
-import Footer from '../../components/ui/Footer/Footer';
+import thumbsupimg from "../../assets/thumbsupcheck.png";
+
 
 function WhyMostProsComp() {
   return (
     <section className="mainSectionWhyMostPros">
       <article className="whymostprosleft">
-        <div>
+        <section className="flexboxContainer">
           <h4 className="whymostprosh4">Waarom Mostpros en hoe we samen winnen</h4>
           <p className="whymostprosP">
             Een van de snelst verbeterende Alles-in-1 Home Services Apps. Vind, huur, beheer en betaald gecertificeerde lokale vakspecialisten. <br /><br />
@@ -14,13 +14,24 @@ function WhyMostProsComp() {
             Mostpros is een onderneming die de manier waarop huiseigenaren hun huisonderhoud en verbouwingsprojecten beheren, revolutioneert. Als een innovatief platform verbindt Mostpros huiseigenaren
             met bekwame vakspecialisten, waardoor de drempel voor het vinden van de juiste vakmensen voor elke klus aanzienlijk wordt verlaagd.
           </p>
-        </div>
+        </section>
         <article className="whymostprosBlueSquare">
           <p className="whymostprosP">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
           </p>
         </article>
       </article>
-      <article className="whymostprosright"></article>
+      <article className="whymostprosright">
+        <img className="whymostprosrigthimg" src={thumbsupimg} alt="image of a character with a checklist doing a thumbsup" />
+        <article className="smallcardsWhyMostProsContainer">
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+          <article className="smallcardsWhyMostPros"><p className="smallcardsWhyMostProsP">Goede klantervaring</p></article>
+
+        </article>
+      </article>
     </section>
   );
 }
