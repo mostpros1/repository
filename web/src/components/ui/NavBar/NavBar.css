@@ -235,12 +235,20 @@ li > .black-items {
 
 .mega-content {
   background-color: white;
-  padding: 25px 40px;
+  padding: 2.5rem 4rem;
   display: flex;
-  gap: 50px;
-  width: 100rem;
+  gap: 5rem;
+  width: max-content;
+  height: auto;
   justify-content: space-evenly;
+  width: 80rem;
   margin: 0 auto;
+}
+.mega-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  white-space: nowrap;
 }
 
 .mega-row header {
@@ -256,12 +264,16 @@ li > .black-items {
   display: flex;
   flex-direction: column;
   gap: 11px;
+  width: 10rem;
 }
 
 .mega-links li a {
   display: block;
   color: black;
-  font-size: 1.5rem;
+  font-weight: 100;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .mobile-nav {
