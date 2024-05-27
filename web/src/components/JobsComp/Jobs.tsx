@@ -21,7 +21,7 @@ const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [currentTab, setCurrentTab] = useState("pending"); // Default to showing pending jobs
 
-  /*const jobEnt = [
+  const jobEnt = [
     {
       id: 1,
       name: "test",
@@ -29,7 +29,7 @@ const Jobs = () => {
       date: "25-3-2024",
       chats: 3,
       isCurrent: true,
-    },
+    },/*
     {
       id: 2,
       name: "test",
@@ -53,9 +53,9 @@ const Jobs = () => {
       date: "25-3-2024",
       chats: 1,
       isCurrent: true,
-    },
+    },*/
     // Add more job entries...
-  ];*/
+  ];
 
   interface JobEntry {
     id: number;
@@ -183,8 +183,8 @@ const Jobs = () => {
     const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const groups =
-          user.signInUserSession.accessToken.payload["cognito:groups"];
+        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        console.log("group: ", groups)
         if (groups && groups.includes("Professional")) {
           fetchProfEmailAndQueryDynamo();
         } else if (groups && groups.includes("Homeowner")) {
