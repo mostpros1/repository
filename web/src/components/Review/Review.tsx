@@ -194,52 +194,52 @@ const ReviewComponent: React.FC = () => {
 
     return (
       <section>
-        <div className="upper-review-con">
-          <h1>Reviews</h1>
-          <div>
-            Sort by:
-            <select onChange={(e) => handleSort(e.target.value)}>
-              <option value="">Relevance</option>
-              <option value="date">Date</option>
-              <option value="totalReviews">Total Reviews</option>
-            </select>
-          </div>
-          <p>Reviews are sourced from customers like you.</p>
-          <div className="grid-sect">
-            <ReviewForm />
-            <img src={SittingCustomer} alt="sitting-customer" />
-          </div>
+      <div className="upper-review-con">
+        <h1>Beoordelingen</h1>
+        <div>
+        Sorteren op:
+        <select onChange={(e) => handleSort(e.target.value)}>
+          <option value="">Relevantie</option>
+          <option value="date">Datum</option>
+          <option value="totalReviews">Totaal aantal beoordelingen</option>
+        </select>
         </div>
-        <article className="reviews-container">
-          {sortedReviews.map((review) => (
-            <section key={review.id} className="review">
-              <section className="review-header">
-                <img src={review.authorImageUrl} alt={review.author} />
-                <section>
-                  <div className="author-name">{review.homeownerName}</div>
-                  <article className="review-info">
-                    <span className="total-reviews">
-                      Specialist: {review.author}
-                      <span className="review-date">{review.date}</span>
-                    </span>
-                    <article className="star-rating">
-                      <StarRating rating={review.rating} />
-                    </article>
-                  </article>
-                </section>
-              </section>
-              <article className="review-body">
-                <p>{review.content}</p>
-              </article>
-              <article className="review-footer">
-                <article className="review-actions">
-                  <button>Public Comment.</button>
-                  <button>Direct Message.</button>
-                </article>
-              </article>
-            </section>
-          ))}
-        </article>
+        <p>Beoordelingen zijn afkomstig van klanten zoals jij.</p>
+        <div className="grid-sect">
+        <ReviewForm />
+        <img src={SittingCustomer} alt="zittende-klant" />
+        </div>
+      </div>
+      <article className="reviews-container">
+        {sortedReviews.map((review) => (
+        <section key={review.id} className="review">
+          <section className="review-header">
+          <img src={review.authorImageUrl} alt={review.author} />
+          <section>
+            <div className="author-name">{review.homeownerName}</div>
+            <article className="review-info">
+            <span className="total-reviews">
+              Specialist: {review.author}
+              <span className="review-date">{review.date}</span>
+            </span>
+            <article className="star-rating">
+              <StarRating rating={review.rating} />
+            </article>
+            </article>
+          </section>
+          </section>
+          <article className="review-body">
+          <p>{review.content}</p>
+          </article>
+          <article className="review-footer">
+          <article className="review-actions">
+            <button>Openbare reactie.</button>
+            <button>Direct bericht.</button>
+          </article>
+          </article>
+        </section>
+        ))}
+      </article>
       </section>
     );
   };
