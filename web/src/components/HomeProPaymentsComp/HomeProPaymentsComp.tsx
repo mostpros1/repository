@@ -75,20 +75,20 @@ const HomeProPaymentsComp: React.FC = () => {
     <main className="ProPaymentsMain">
       {/* <section className="ProPaymentsSearchWrapper">
         <p className="ProPaymentsText">
-          Payments are going through stripe. Stripe is a safe payment service. It looks like you haven’t connected to stripe yet. Click the button below to connect to stripe and get paid for your services.
+          Betalingen worden verwerkt via Stripe. Stripe is een veilige betaaldienst. Het lijkt erop dat je nog niet bent verbonden met Stripe. Klik op de onderstaande knop om verbinding te maken met Stripe en betaald te worden voor je diensten.
         </p>
         <button type="button" className="ProPaymentsButton" onClick={stripeSignUp}>
-          Connect to Stripe
+          Verbind met Stripe
         </button>
       </section> */}
 
       <section className="ProPayments">
         <article className="ProPaymentsStroke3">
-          <div className="divContainerPro">Date</div>
-          <div className="divContainerPro">Name</div>
-          <div className="divContainerPro">Transaction Nr.</div>
+          <div className="divContainerPro">Datum</div>
+          <div className="divContainerPro">Naam</div>
+          <div className="divContainerPro">Transactie Nr.</div>
           <div className="divContainerPro">Status</div>
-          <div className="divContainerPro">Amount</div>
+          <div className="divContainerPro">Bedrag</div>
         </article>
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => (
