@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
+import * as mutations from "../../graphql/mutations"; // Import the mutations
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
@@ -55,7 +56,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-
   const [lastMessages, setLastMessages] = useState<{
     [contact: string]: { text: string; createdAt: string };
   }>({});
@@ -65,37 +65,26 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [showNewChatModal, setShowNewChatModal] = useState(false);
   const [newChatEmail, setNewChatEmail] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  
-  // New states for extra functionalities
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
-
-  // New states for settings modal
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  // New state for showing saved messages modal
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
-
-  // New state for tracking new messages
   const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
-    // Emit typing indicator event to backend (e.g., WebSocket, API)
   };
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
-      if (message.email !== user.attributes.email) {
+      if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
             body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
           });
         }
-        // Increment the new message count for the contact
         const contact = message.members.find((member) => member !== user.attributes.email);
         if (contact) {
           setNewMessagesCount((prevCount) => ({
@@ -187,7 +176,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
       setGroupedMessages(groupedMessages);
-      // Reset the new message count for the selected contact
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
         [selectedContact]: 0,
@@ -257,7 +245,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     window.history.pushState({}, "", url);
     setRecipientEmail(contact);
     handleJoinChat(contact);
-    // Reset the new message count for the selected contact
     setNewMessagesCount((prevCount) => ({
       ...prevCount,
       [contact]: 0,
@@ -529,33 +516,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setNotificationsEnabled((prevState) => !prevState);
   };
 
-  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("photo", file);
-
-      try {
-        const response = await axios.post(
-          "https://your-upload-url.com",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response.data);
-        // Update the user's profile picture URL in your backend
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
-      }
-    }
-  };
-
   const handleSaveSettings = () => {
+    localStorage.setItem("visibleName", visibleName);
     setShowSettingsModal(false);
   };
+
+  useEffect(() => {
+    const storedVisibleName = localStorage.getItem("visibleName");
+    if (storedVisibleName) {
+      setVisibleName(storedVisibleName);
+    }
+  }, []);
 
   return (
     <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
@@ -702,7 +673,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             {replyingTo && (
               <div className="replying-to">
                 Replying to: <blockquote>{replyingTo.text}</blockquote>
-                <button onClick={() => setReplyingTo(null)}>Cancel</button>
+                <button onClick={() => setReplyingTo(null)}>Annuleren</button>
               </div>
             )}
           <div className="input-form">
@@ -836,15 +807,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
               </button>
             </div>
-            <div className="settings-item">
-              <label htmlFor="profile-picture">Profile Picture:</label>
-              <input
-                type="file"
-                id="profile-picture"
-                accept="image/*"
-                onChange={handleProfilePictureUpload}
-              />
-            </div>
             <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
             <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
           </div>
@@ -885,3 +847,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 }
 
 export default withAuthenticator(ChatMain);
+
+
+// bij chat wat ik had over zoeken in de homeoage input zetten
+
+// tijden weg bij calender
+
+// 

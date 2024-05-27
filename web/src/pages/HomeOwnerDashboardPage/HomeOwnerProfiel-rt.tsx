@@ -7,7 +7,6 @@ function HomeOwnerProfileLayout() {
         <main className="homeOwnerProfileMain">
             <section className="sidenavHomeOwnerProfileSection">
                 <article className="sideNavHomeOwnerProfile">
-                    {/* inhoud sidenav */}
                     <SideNav />
                 </article>
             </section>

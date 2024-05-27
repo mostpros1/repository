@@ -1,14 +1,16 @@
 import NavBar from "../../components/ui/NavBar/NavBar";
-import ReviewLayout from "./Review-rt";
 import Footer from "../../components/ui/Footer/Footer";
+import FAQPageLayout from "./HelpPage-rt";
+import "./FAQPage.css";
 
-const ReviewPage = () => {
+function HelpPage() {
   return (
     <div id="root">
       <NavBar />
-      <ReviewLayout />
+      <FAQPageLayout />
+      <Footer />
     </div>
   );
-};
+}
 
-export default ReviewPage;
+export default HelpPage;

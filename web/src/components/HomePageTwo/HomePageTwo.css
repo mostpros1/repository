@@ -86,7 +86,6 @@
   background-color: white;
   color: black;
   overflow-y: scroll;
-  scrollbar-width: none;
   transition: all 0.3s ease;
 }
 
@@ -194,7 +193,9 @@
 .howItWorksTitleContainerHome {
   width: 100%;
   font-size: 2.5rem;
-  padding-left: 25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .howItWorksTitleHome {
@@ -298,7 +299,7 @@
 }
 
 .whyMostProsButtonHome {
-  width: 13.3rem;
+  width: 17.3rem;
   height: 4rem;
   background: #207cd7;
   border: none;
@@ -384,6 +385,15 @@
   justify-content: center;
 }
 
+.HomeProCardContainer {
+  width: 100%;
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
 .HomeProCardHome {
   min-width: 30rem;
   background: white;
@@ -411,6 +421,8 @@
   font-size: 1.6rem;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .HomeProCardReviewSection {
@@ -437,6 +449,9 @@
   font-family: "Poppins", sans-serif;
   max-width: 28rem;
   margin-top: 1.5rem;
+  gap: 1.2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .HomeProCardhomeButtonContainer {
@@ -476,20 +491,24 @@
   position: relative;
 }
 
-.arrow {
+.arrowHome {
   position: absolute;
-  top: 45%;
+  top: 43%;
   transform: translateY(-50%);
   cursor: pointer;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1rem;
 }
 
-.left-arrow {
-  left: 15%;
+.lefthome-arrow {
+  left: 16%;
   border-color: transparent black transparent transparent;
 }
 
-.right-arrow {
-  right: 15%;
+.righthome-arrow {
+  right: 16%;
   border-color: transparent transparent transparent black;
 }
 
@@ -671,19 +690,19 @@
 }
 
 @media screen and (max-width: 1709px) {
-  .arrow {
+  .arrowHome {
     position: absolute;
     top: 75%;
     transform: translateY(-50%);
     cursor: pointer;
   }
 
-  .left-arrow {
+  .lefthome-arrow {
     left: 40%;
     border-color: transparent black transparent transparent;
   }
 
-  .right-arrow {
+  .righthome-arrow {
     right: 40%;
     border-color: transparent transparent transparent black;
   }
@@ -723,15 +742,6 @@
   }
 }
 
-@media screen and (max-width: 1520px) {
-  .howItWorksTitleContainerHome {
-    padding-left: 0rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
 @media screen and (max-width: 1467px) {
   .dividerDivLine {
     display: none;
@@ -755,6 +765,22 @@
 @media screen and (max-width: 768px) {
   .titleSectionHomeH2 {
     font-size: 3.6rem;
+  }
+  #SearchBar-wrapper {
+    width: 50rem;
+  }
+
+  .SearchBarHome {
+    width: 50rem;
+  }
+
+  .search_results {
+    max-width: 45rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 50rem;
   }
 
   .arrow {
@@ -780,6 +806,29 @@
     font-size: 2.8rem;
   }
 
+  #SearchBar-wrapper {
+    width: 50rem;
+    padding: 0;
+  }
+
+  .SearchBarHome {
+    width: 37rem;
+    padding: 0;
+  }
+
+  .searchBarBlueIcon {
+    margin-right: 1rem;
+  }
+
+  .search_results {
+    max-width: 35rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 35rem;
+  }
+
   .howItWorksTitleContainerHome {
     font-size: 2rem;
     text-align: center;
@@ -789,5 +838,27 @@
 @media screen and (max-width: 335px) {
   .landingSectionHome {
     height: auto;
+  }
+
+  #SearchBar-wrapper {
+    width: 30rem;
+  }
+
+  .SearchBarHome {
+    width: 30rem;
+    padding: 0;
+  }
+
+  .searchBarBlueIcon {
+    margin-right: 1rem;
+  }
+
+  .search_results {
+    max-width: 26rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 35rem;
   }
 }

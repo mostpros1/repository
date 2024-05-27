@@ -368,6 +368,14 @@
     flex-direction: column;
 }
 
+.register-form-input input {
+    border: 2px solid #C0C0C8;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 18px;
+    outline: none;
+}
+
 .register-link{
     font-size: 14px;
 }

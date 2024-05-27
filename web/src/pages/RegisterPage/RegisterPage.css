@@ -43,15 +43,13 @@
     padding: 10px 25px;
     cursor: pointer;
     border-radius: 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border:none;
-  }
-  .registerForm_con button:hover {
-    border: 2px solid #308AE4;
-    background-color: white;
-    color: #000000;
-  }
-  
+    background-color: #308ae4;
+    transition: all 0.2s;
+    border: none;
+    margin-top: 20px;
+}
+.button-sign-up:hover {
+    background-color: #308ae4;
+    color: white !important;
+    cursor: pointer;
+}
