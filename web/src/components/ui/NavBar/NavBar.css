@@ -238,7 +238,7 @@ li > .black-items {
   padding: 25px 40px;
   display: flex;
   gap: 50px;
-  width: fit-content;
+  width: 100rem;
   justify-content: space-evenly;
   margin: 0 auto;
 }
@@ -261,7 +261,7 @@ li > .black-items {
 .mega-links li a {
   display: block;
   color: black;
-  font-size: 15px;
+  font-size: 1.5rem;
 }
 
 .mobile-nav {
