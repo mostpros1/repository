@@ -834,3 +834,9 @@
   font-size: 0.9em;
   margin-left: 10px;
 }
+
+.replying-to{
+  display: flex;
+  opacity: 0.8;
+  justify-content: space-evenly;
+}
