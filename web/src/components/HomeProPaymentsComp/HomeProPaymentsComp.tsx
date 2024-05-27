@@ -73,14 +73,14 @@ const HomeProPaymentsComp: React.FC = () => {
 
   return (
     <main className="ProPaymentsMain">
-      <section className="ProPaymentsSearchWrapper">
+      {/* <section className="ProPaymentsSearchWrapper">
         <p className="ProPaymentsText">
           Payments are going through stripe. Stripe is a safe payment service. It looks like you haven’t connected to stripe yet. Click the button below to connect to stripe and get paid for your services.
         </p>
         <button type="button" className="ProPaymentsButton" onClick={stripeSignUp}>
           Connect to Stripe
         </button>
-      </section>
+      </section> */}
 
       <section className="ProPayments">
         <article className="ProPaymentsStroke3">
