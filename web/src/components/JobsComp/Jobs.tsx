@@ -315,7 +315,8 @@ const Jobs = () => {
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""} {/* Add the specialist name with the - separator */}
+        {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
+        {/* Add the specialist name with the - separator */}
         {result.task}
       </span>
     </Link>
@@ -394,7 +395,7 @@ const Jobs = () => {
                     </div>
                     <div className="chat-indicator">
                       <img src={chatIcon} alt="Chat" />
-                      <span>Ongoing chats {`(${job.chats})`}</span>
+                      <span>Lopende chats {`(${job.chats})`}</span>
                     </div>
                   </div>
                   <p className="job-view">View job</p>
