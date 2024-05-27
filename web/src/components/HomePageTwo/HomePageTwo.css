@@ -385,7 +385,7 @@
   justify-content: center;
 }
 
-.HomeProCardContainer{
+.HomeProCardContainer {
   width: 100%;
   display: flex;
   gap: 2.5rem;
@@ -766,6 +766,22 @@
   .titleSectionHomeH2 {
     font-size: 3.6rem;
   }
+  #SearchBar-wrapper {
+    width: 50rem;
+  }
+
+  .SearchBarHome {
+    width: 50rem;
+  }
+
+  .search_results {
+    max-width: 45rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 50rem;
+  }
 
   .arrow {
     position: absolute;
@@ -790,6 +806,29 @@
     font-size: 2.8rem;
   }
 
+  #SearchBar-wrapper {
+    width: 50rem;
+    padding: 0;
+  }
+
+  .SearchBarHome {
+    width: 37rem;
+    padding: 0;
+  }
+
+  .searchBarBlueIcon {
+    margin-right: 1rem;
+  }
+
+  .search_results {
+    max-width: 35rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 35rem;
+  }
+
   .howItWorksTitleContainerHome {
     font-size: 2rem;
     text-align: center;
@@ -799,5 +838,27 @@
 @media screen and (max-width: 335px) {
   .landingSectionHome {
     height: auto;
+  }
+
+  #SearchBar-wrapper {
+    width: 30rem;
+  }
+
+  .SearchBarHome {
+    width: 30rem;
+    padding: 0;
+  }
+
+  .searchBarBlueIcon {
+    margin-right: 1rem;
+  }
+
+  .search_results {
+    max-width: 26rem;
+    width: auto;
+  }
+
+  #SearchBarInputHome {
+    width: 35rem;
   }
 }
