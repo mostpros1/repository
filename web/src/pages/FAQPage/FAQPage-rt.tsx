@@ -10,7 +10,6 @@ function FAQPageLayout() {
         <main className="FAQmain">
             <section className="RightsideFAQsection">
                 <article className="sideNavFAQ">
-                    {/* inhoud sidenav */}
                     <SideNav />
                 </article>
             </section>

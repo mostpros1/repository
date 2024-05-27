@@ -58,7 +58,8 @@ import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx"
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
-
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
+import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -66,15 +67,11 @@ const LanguageAwareRoutes = () => {
   const { lang } = useParams();
   const { t } = useTranslation();
 
-  // Function to prepend language to the given path
-  /*const addLanguagePrefix = (path) => {
-    return `/${lang}${path}`;
-  };*/
-
   return (
     <Routes>
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
+      <Route path="/help" element={<HelpPage />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
@@ -97,13 +94,10 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-
-      
       <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
       <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
-
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -112,10 +106,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/calender" element={<Calender />} />
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
-      <Route
-        path="/MijnKlussenOverzicht"
-        element={<MijnKlussenOverzichtPage />}
-      />
+      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
@@ -127,24 +118,15 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
       <Route path="/home" element={<HomePageTwo />} />
-      <Route
-        path="/homeowner-dashboard/settings"
-        element={<HomeOwnerSettingsPage />}
-      />
-      <Route
-        path="/pro-dashboard/settings"
-        element={<HomeOwnerSettingsPage />}
-      />
+      <Route path="/homeowner-dashboard/settings" element={<HomeOwnerSettingsPage />} />
+      <Route path="/pro-dashboard/settings" element={<HomeOwnerSettingsPage />} />
       <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
       <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route
-        path="/MijnKlussenOverzicht"
-        element={<MijnKlussenOverzichtPage />}
-      />
+      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
       <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
@@ -199,7 +181,6 @@ const LanguageAwareRoutes = () => {
       />
     </Routes>
   );
-  //<Route path="/EditProfileSection" element={<EditProfile />} />
 };
 
 const App = () => {
@@ -225,21 +206,22 @@ const App = () => {
   }, [navigate]);
 
   useEffect(() => {
-
     if (lang) {
       i18n.changeLanguage(lang);
       setLanguage(lang);
-
     }
   }, [lang, i18n]);
 
   return (
-    <Routes>
-      {/* Wildcard route to capture the language part of the URL */}
-      <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
-      {/* Fallback route if no language is specified */}
-      <Route path="/*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <>
+      <ScrollToTop /> {/* Add ScrollToTop here */}
+      <Routes>
+        {/* Wildcard route to capture the language part of the URL */}
+        <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
+        {/* Fallback route if no language is specified */}
+        <Route path="/*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 };
 

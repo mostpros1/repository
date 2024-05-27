@@ -16,18 +16,19 @@ function Footer() {
           <Link to="/nl/OverOns">Over</Link>
           <Link to="/nl/jobs">Jobs</Link>
           <Link to="/nl/OverOns">Product updates</Link>
+          <Link to="/nl/quality">Kwaliteitseisen</Link>
           <Link to="/nl/contact">Contact</Link>
         </article>
         <section className="footerSection">
           <h4>Huiseigenaar</h4>
           <Link to="/nl/">Vind vakspecialist</Link>
-          <Link to="/nl/FAQPage">Help</Link>
+          <Link to="/nl/help">Help</Link>
         </section>
         <article className="footerSection">
           <h4>Vakspecialist</h4>
           <Link to="/nl/pro-onboarding">Inschrijven als vakspecialist</Link>
           <p>Pro bedrijven centrum</p>
-          <Link to="/nl/FAQPage">Help voor professionals</Link>
+          <Link to="/nl/help">Help voor professionals</Link>
         </article>
         <article className="footerSection">
           <h4>Netwerk</h4>
