@@ -801,3 +801,36 @@
 .message-actions button:hover {
   background-color: #f0f0f0;
 }
+
+.menu-iconn{
+  cursor: pointer;
+}
+
+.saved-messages-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.saved-message-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.saved-message-text {
+  margin-bottom: 5px;
+}
+
+.saved-message-time {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.new-message-badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
