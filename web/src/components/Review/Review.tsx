@@ -174,20 +174,20 @@ const ReviewComponent: React.FC = () => {
       return (
         <form id="review-form" onSubmit={handleSubmit}>
           <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Specialist name"
-            required
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Naam Specialist"
+        required
           />
           <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Your review"
-            required
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="Jouw Beoordeling"
+        required
           />
           <StarRating rating={rating} onRatingChange={setRating} />
-          <button type="submit">Submit Review</button>
+          <button type="submit">Beoordeling indienen</button>
         </form>
       );
     };
