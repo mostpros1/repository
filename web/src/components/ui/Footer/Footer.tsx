@@ -11,7 +11,7 @@ function Footer() {
         <article className="footerSection">
           <h4>Bedrijf</h4>
           <Link to="/nl/how-it-works">Hoe werkt het</Link>
-          <a href="">Waarom mostpros</a>
+          <a href="/nl/why-mostpros">Waarom mostpros</a>
           <Link to="/nl/OverOns">Over</Link>
           <Link to="/nl/jobs">Career</Link>
           <Link to="/nl/OverOns">Product updates</Link>
