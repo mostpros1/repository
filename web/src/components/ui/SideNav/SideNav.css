@@ -3,8 +3,8 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 5rem;
-  margin-top: 2.0rem;
-  margin-left: 2.0rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
 }
 
 .sidebar {
@@ -19,7 +19,7 @@
 
 .sidebar-link.active {
   color: #207cd8;
-  border-radius: 1.0rem;
+  border-radius: 1rem;
 }
 
 .sidebar-list {
@@ -30,14 +30,15 @@
 }
 
 .sidebar-item {
+  padding-top: 0.4rem;
   margin-bottom: 0.5rem;
   font-weight: 0;
   font-family: "Poppins", sans-serif;
 }
 
 .sidebar-item svg {
-  margin-right: 1.0rem;
-  font-size: 2.0rem;
+  margin-right: 1rem;
+  font-size: 2rem;
 }
 
 .sidebar-bottom {
