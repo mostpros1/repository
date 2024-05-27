@@ -439,20 +439,24 @@
   position: relative;
 }
 
-.arrow {
+.arrowHome {
   position: absolute;
-  top: 45%;
+  top: 43%;
   transform: translateY(-50%);
   cursor: pointer;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1rem;
 }
 
-.left-arrow {
-  left: 15%;
+.lefthome-arrow {
+  left: 16%;
   border-color: transparent black transparent transparent;
 }
 
-.right-arrow {
-  right: 15%;
+.righthome-arrow {
+  right: 16%;
   border-color: transparent transparent transparent black;
 }
 
