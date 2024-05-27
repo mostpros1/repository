@@ -86,7 +86,6 @@
   background-color: white;
   color: black;
   overflow-y: scroll;
-  scrollbar-width: none;
   transition: all 0.3s ease;
 }
 
@@ -384,6 +383,15 @@
   justify-content: center;
 }
 
+.HomeProCardContainer{
+  width: 100%;
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
 .HomeProCardHome {
   min-width: 30rem;
   background: white;
@@ -411,6 +419,8 @@
   font-size: 1.6rem;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .HomeProCardReviewSection {
@@ -437,6 +447,9 @@
   font-family: "Poppins", sans-serif;
   max-width: 28rem;
   margin-top: 1.5rem;
+  gap: 1.2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .HomeProCardhomeButtonContainer {
@@ -675,19 +688,19 @@
 }
 
 @media screen and (max-width: 1709px) {
-  .arrow {
+  .arrowHome {
     position: absolute;
     top: 75%;
     transform: translateY(-50%);
     cursor: pointer;
   }
 
-  .left-arrow {
+  .lefthome-arrow {
     left: 40%;
     border-color: transparent black transparent transparent;
   }
 
-  .right-arrow {
+  .righthome-arrow {
     right: 40%;
     border-color: transparent transparent transparent black;
   }

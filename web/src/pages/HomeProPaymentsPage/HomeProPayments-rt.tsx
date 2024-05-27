@@ -7,7 +7,6 @@ function proPaymentLayout() {
         <main className="homeProPaymentsMain">
             <section className="sidenavHomeProPaymentsSection">
                 <article className="sideNavHomeProPayments">
-                    {/* inhoud sidenav */}
                     <SideNav />
                 </article>
             </section>

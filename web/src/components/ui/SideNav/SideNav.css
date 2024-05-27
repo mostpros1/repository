@@ -30,9 +30,9 @@
 }
 
 .sidebar-item {
-  padding-top: 0.4rem;
+  padding-top: 1rem;
   margin-bottom: 0.5rem;
-  font-weight: 0;
+  font-weight: 100;
   font-family: "Poppins", sans-serif;
 }
 

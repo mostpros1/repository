@@ -33,11 +33,9 @@
 @media (max-width: 1044px) {
   .sidenavChatSection {
     display: none;
-    /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
   }
 
   .chatdisplayMain {
-    /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
     align-items: center;
     justify-content: center;
     padding-right: 0rem;
