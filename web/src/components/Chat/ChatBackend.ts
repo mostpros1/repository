@@ -78,6 +78,7 @@ export function useChatBackend(user: any, signOut) {
       const url = `/chat?recipient=${uuid}`;
       window.history.pushState({}, "", url);
       setRecipientEmail(recipientEmail);
+      localStorage.setItem("selectedContact", recipientEmail);
     } catch (error) {
       console.error("Error starting new chat:", error);
     }
@@ -103,6 +104,7 @@ export function useChatBackend(user: any, signOut) {
     setShowJoinButton(false); 
     setShowConfirmedConnection(true); 
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
+    localStorage.setItem("selectedContact", recentMessageEmail);
   };
 
   return {
