@@ -81,7 +81,6 @@ const PopularCardsData = [
   },
 ];
 
-//Function Searchbar component
 function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
@@ -168,9 +167,8 @@ function Searchbar() {
         ""
       )}?${result.link.replace("/", "")}`}
       key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "active" : ""
-      }`}
+      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""
+        }`}
       onMouseDown={() => handleResultClick(result.link)}
     >
       <span>
@@ -264,6 +262,71 @@ function HomePageTwo() {
         image: GijsPFP,
         text: "“Ik kreeg de aanvraag binnen om naast het kunstgras hockeyveldje een tuinhuis te maken. Binnen 1 week heb ik dit kunnen realiseren en alles verliep soepel met de huiseigenaar.",
       },
+    ],
+  };
+
+  const highligtedpros = {
+    professionals: [
+      {
+        rating: 5,
+        name: "Bas Fixo B.V.",
+        stats: "5.0/5 (17 reviews)",
+        image: HomePFP,
+        proffesion: "Loodgieter",
+        textone: "Sanitair/ lekkages €65/uur incl. btw",
+        texttwo: "Radiator vervangen €69/uur incl. btw",
+        textthree: "Cv-montage €78/uur incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Jany Cleanur B.V.",
+        stats: "4.0/5 (7 reviews)",
+        image: JanyPFP,
+        proffesion: "Schoonmaakster",
+        textone: "Schoonmaak €29/uur incl. btw",
+        texttwo: "Opruimen €29/uur incl. btw",
+        textthree: "Wassen €29/uur incl. btw"
+      },
+      {
+        rating: 4,
+        name: "Green horizons B.V.",
+        stats: "4.0/5 (19 reviews)",
+        image: TuinPFP,
+        proffesion: "Tuinontwerpster",
+        textone: "Tuinontwerp €75/uur incl. btw",
+        texttwo: "Tuinaanleg €64/uur incl. btw",
+        textthree: "Tuinonderhoud €55/uur incl. btw"
+      },
+      {
+        rating: 4,
+        name: "Electroz B.V.",
+        stats: "4.0/5 (9 reviews)",
+        image: ElectrozPFP,
+        proffesion: "Electriciën",
+        textone: "Groepenkast plaatsen €225+ incl. btw",
+        texttwo: "Stopcontact plaatsen €59+ incl. btw",
+        textthree: "Verlichting installeren €78+ incl. btw"
+      },
+      {
+        rating: 4,
+        name: "Houtlab Gijs",
+        stats: "4.0/5 (16 reviews)",
+        image: GijsPFP,
+        proffesion: "Timmerman",
+        textone: "Tuinhuis/blokschuur €53/uur incl. btw",
+        texttwo: "Overkapping/pergola €53/uur incl. btw",
+        textthree: "Poolhouse/veranda €53/uur incl. btw"
+      },
+      {
+        rating: 4,
+        name: "Huizenbouw B.V.",
+        stats: "4.0/5 (4 reviews)",
+        image: AanemerPFP,
+        proffesion: "Aannemer",
+        textone: "Dakrenovatie/vervangen op aanvraag",
+        texttwo: "Aanbouw plaatsen op aanvraag",
+        textthree: "Renovatie huis op aanvraag"
+      }
     ],
   };
 
@@ -455,227 +518,44 @@ function HomePageTwo() {
       </section>
       <section className="HomeProfCardsContainer">
         <section className="HomeProfCardsSectionHome">
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={HomePFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
+          <div className="HomeProCardContainer">
+            {highligtedpros.professionals.map((pro, index) => (
+              <article className="HomeProCardHome" key={index}>
+                <section className="HomeProCardPFPSection">
+                  <img
+                    src={pro.image}
+                    alt="Profiel Foto vakspecialist"
+                    className="HomeProfCardPFP"
+                  />
+                  <article className="HomeProCardhomeH5">
+                    <h5 className="HomeProCardhomeH5">{pro.name}</h5>
+                    <h5 className="HomeProCardhomeH5">{pro.proffesion}</h5>                    
+                  </article>
+                </section>
+                <section className="HomeProCardReviewSection">
+                  <article className="HomeProCardStarContainer">
+                    {[...Array(pro.rating)].map((_, i) => (
+                      <StarIcon key={i} style={{ fontSize: "2rem" }} />
+                    ))}
+                    {[...Array(5 - pro.rating)].map((_, i) => (
+                      <StarBorderIcon key={i} style={{ fontSize: "2rem" }} />
+                    ))}
+                  </article>
+                  <p className="HomeProCardhomeReviewP">{pro.stats}</p>
+                </section>
+                <article className="HomeProCardhomeReviewText">
+                  <p>{pro.textone}</p>
+                  <p>{pro.texttwo}</p>
+                  <p>{pro.textthree}</p>
+                </article>
+                <section className="HomeProCardhomeButtonContainer">
+                  <button className="HomeProCardhomeViewProfileButton">
+                    Bekijk Profiel
+                  </button>
+                </section>
               </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Sanitair/ lekkages €65/uur incl. btw
-              <br /> <br />
-              Radiator vervangen €69/uur incl. btw
-              <br />
-              <br />
-              Cv-montage €78/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={JanyPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Jany Cleanur B.V.
-                <br />
-                Schoonmaakster
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (7 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Schoonmaak €29/uur incl. btw
-              <br />
-              <br />
-              Opruimen €29/uur incl. btw
-              <br />
-              <br />
-              Wassen €29/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={TuinPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Green horizons B.V.
-                <br />
-                Tuinontwerpster
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (19 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Tuinontwerp €75/uur incl. btw
-              <br />
-              <br />
-              Tuinaanleg €64/uur incl. btw
-              <br />
-              <br />
-              Tuinonderhoud €55/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={ElectrozPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Electroz B.V. <br />
-                Electriciën
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (9 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Groepenkast plaatsen €225+ incl. btw <br />
-              <br />
-              Stopcontact plaatsen €59+ incl. btw <br />
-              <br />
-              Verlichting installeren €78+ incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={GijsPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Houtlab Gijs
-                <br />
-                Timmerman
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (16 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Tuinhuis/blokschuur €53/uur incl. btw <br />
-              <br />
-              Overkapping/pergola €53/uur incl. btw
-              <br />
-              <br />
-              Poolhouse/veranda €53/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={AanemerPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Huizenbouw B.V. <br />
-                Aannemer
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (4 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Dakrenovatie/vervangen op aanvraag
-              <br />
-              <br />
-              Aanbouw plaatsen op aanvraag
-              <br />
-              <br />
-              Renovatie huis op aanvraag
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
+            ))}
+          </div>
         </section>
       </section>
       <section className="HomeProfReviewSectionHome">
@@ -704,16 +584,15 @@ function HomePageTwo() {
             </h5>
           </section>
         </article>
-        <div className="arrow left-arrow" onClick={handleLeftClick}></div>
+        <div className="arrowHome lefthome-arrow" onClick={handleLeftClick}></div>
         <article className="HomeProfReviewHomeContainer">
           {reviews[activeTab]
             .slice(startIndex, startIndex + 2)
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${
-                    reviewAnimation ? "animate-out" : ""
-                  }`}
+                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
+                    }`}
                 >
                   <img
                     src={review.image}
@@ -751,7 +630,7 @@ function HomePageTwo() {
             ))}
         </article>
 
-        <div className="arrow right-arrow" onClick={handleRightClick}></div>
+        <div className="arrowHome righthome-arrow" onClick={handleRightClick}></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
         <article className="JointhecomminityContainer">
