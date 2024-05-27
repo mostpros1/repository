@@ -700,7 +700,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   className="dropup-option"
                   onClick={() => inputRef.current?.click()}
                 >
-                  <MdDriveFileMove size={25} color="blue" /> Afbeeldingen
+                  <MdDriveFileMove size={25} color="blue" />
                 </button>
                 <input
                   type="file"
