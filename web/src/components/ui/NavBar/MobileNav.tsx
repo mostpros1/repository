@@ -17,8 +17,9 @@ function MobileNav() {
 
   return (
     <div className="mobile-nav">
-      <Link to="/">
+      <Link to={`/${taal}/`}>
         <div className="nav-leftside">
+          <img src={Logo} alt="" />
           <h1 className="black-h1">Mostpros</h1>
         </div>
       </Link>
