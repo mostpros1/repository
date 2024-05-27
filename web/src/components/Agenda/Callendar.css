@@ -16,9 +16,9 @@
   
   .sideNavCalendar{ 
     height: 45%;
-    width: 18rem; 
+    width: 18rem;
     background: #222;
-    border-radius: 8px; 
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
