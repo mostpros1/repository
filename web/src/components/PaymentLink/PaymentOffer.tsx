@@ -76,7 +76,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
             <form>
                 {lineItems.map((item, index) => (
                     <div key={index}>
-                        <label htmlFor={`title-${index}`}>Title:</label>
+                        <label htmlFor={`title-${index}`}>Titel:</label>
                         <input
                             type="text"
                             id={`title-${index}`}
@@ -88,7 +88,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
 
                         
 
-                        <label htmlFor={`price-${index}`}>Price:</label>
+                        <label htmlFor={`price-${index}`}>Prijs:</label>
                         <input
                             type="number"
                             id={`price-${index}`}
@@ -99,7 +99,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
                             required
                         />
 
-                        <label htmlFor={`description-${index}`}>Description:</label>
+                        <label htmlFor={`description-${index}`}>Omschrijving:</label>
                         <textarea
                             id={`description-${index}`}
                             name="description"
@@ -108,7 +108,7 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
                             required
                         />
 
-                        <label htmlFor={`quantity-${index}`}>Quantity:</label>
+                        <label htmlFor={`quantity-${index}`}>Aantal:</label>
                         <input
                             type="number"
                             id={`quantity-${index}`}
@@ -119,12 +119,12 @@ const PaymentOffer: React.FC<PaymentOfferProps> = ({ subtotal, handleSendMessage
                             required
                         />
 
-                        <button type="button" onClick={() => handleDeleteLineItem(item.id)}>Remove</button>
+                        <button type="button" onClick={() => handleDeleteLineItem(item.id)}>Verwijder</button>
                     </div>
                 ))}
 
-                <button type="button" onClick={handleAddLineItem}>Add Line Item</button>
-                <button type="button" onClick={handleAccept}>Submit</button>
+                <button type="button" onClick={handleAddLineItem}>Maak aan</button>
+                <button type="button" onClick={handleAccept}>Bevestig</button>
             </form>
 
             <p>Aanbieding: €{subtotal.toFixed(2)}</p>
