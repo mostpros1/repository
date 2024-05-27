@@ -20,14 +20,14 @@ function Footer() {
         </article>
         <section className="footerSection">
           <h4>Huiseigenaar</h4>
-          <p>Vind vakspecialist</p>
-          <p>Help</p>
+          <Link to="/nl/">Vind vakspecialist</Link>
+          <Link to="/nl/FAQPage">Help</Link>
         </section>
         <article className="footerSection">
           <h4>Vakspecialist</h4>
           <Link to="/nl/pro-onboarding">Inschrijven als vakspecialist</Link>
           <p>Pro bedrijven centrum</p>
-          <p>Help voor professionals</p>
+          <Link to="/nl/FAQPage">Help voor professionals</Link>
         </article>
         <article className="footerSection">
           <h4>Netwerk</h4>
