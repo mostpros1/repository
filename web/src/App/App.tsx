@@ -95,6 +95,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
+      <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
 
       
