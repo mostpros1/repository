@@ -364,7 +364,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
         <div className="week">
           {renderCalendar()}
         </div>
-        <div className="timezone-selector">
+        {/* <div className="timezone-selector">
           <label htmlFor="timezone-select">Timezone:</label>
           <select
             id="timezone-select"
@@ -376,9 +376,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
               <option className='timezones' key={tz} value={tz}>{tz}</option>
             ))}
           </select>
-        </div>
+        </div> */}
       </div>
-      {selectedDay && (
+      {/* {selectedDay && (
         <div className="time-selector">
           {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
             <div
@@ -395,9 +395,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
           ))}
         </div>
 
-      )}
-      <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
-      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
+      )} */}
+      {/* <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
+      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button> */}
     </div>
   );
 };
