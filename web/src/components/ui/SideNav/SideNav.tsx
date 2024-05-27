@@ -20,7 +20,7 @@ const SideNav = () => {
   const [isHomeowner, setIsHomeowner] = useState(false);
 
   useEffect(() => {
-    const delay = 2500; // 2.5 seconds
+    const delay = 5000; // 2.5 seconds
     const timer = setTimeout(() => {
       if (
         user &&
