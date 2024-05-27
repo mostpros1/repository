@@ -9,7 +9,7 @@ function MostprosDesc() {
             {/* How does Mostpros work? */}
             <div className='desc_step_con'>
                 <div className="title_container">
-                    <h2>Hoe werkt Mostpros?</h2>
+                    <h2 className="howItWorksTitleMostProsDesc">Hoe werkt het als Huiseigenaar?</h2>
                 </div>
                 <div className="description_container">
                     <div className="description">
