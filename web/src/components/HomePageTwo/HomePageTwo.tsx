@@ -704,7 +704,7 @@ function HomePageTwo() {
             </h5>
           </section>
         </article>
-        <div className="arrow left-arrow" onClick={handleLeftClick}></div>
+        <div className="arrowHome lefthome-arrow" onClick={handleLeftClick}></div>
         <article className="HomeProfReviewHomeContainer">
           {reviews[activeTab]
             .slice(startIndex, startIndex + 2)
@@ -751,7 +751,7 @@ function HomePageTwo() {
             ))}
         </article>
 
-        <div className="arrow right-arrow" onClick={handleRightClick}></div>
+        <div className="arrowHome righthome-arrow" onClick={handleRightClick}></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
         <article className="JointhecomminityContainer">
