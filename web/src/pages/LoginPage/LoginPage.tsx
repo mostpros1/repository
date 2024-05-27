@@ -39,7 +39,12 @@ function LoginPage() {
     try {
       const authenticatedUser = await Auth.signIn(loginData.email, loginData.password);
       updateUser(authenticatedUser);
-      navigate(`/${taal}/`);
+      const groups = authenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+      if (groups && groups.includes("Homeowner")) {
+        navigate(`/${taal}/homeowner-dashboard`);
+      } else if (groups && groups.includes("Professional")) {
+        navigate(`/${taal}/pro-dashboard`);
+      }
       console.log('Logged in user:', authenticatedUser);
     } catch (error: any) {
       console.error('Login failed:', error);
@@ -56,7 +61,7 @@ function LoginPage() {
       <NavBar />
       <div className="loginForm_wrapper">
         <div className="loginForm_con">
-          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => {}} handleLogin={handleLogin} setError={setError} error={error}/>
+          <LoginForm {...loginData} updateFields={updateLoginData} setUserExists={() => { }} handleLogin={handleLogin} setError={setError} error={error} />
         </div>
       </div>
       <Footer />
