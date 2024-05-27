@@ -21,7 +21,7 @@ const Jobs = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [currentTab, setCurrentTab] = useState("pending"); // Default to showing pending jobs
 
-  const jobEnt = [
+  /*const jobEnt = [
     {
       id: 1,
       name: "test",
@@ -55,7 +55,7 @@ const Jobs = () => {
       isCurrent: true,
     },
     // Add more job entries...
-  ];
+  ];*/
 
   interface JobEntry {
     id: number;
@@ -68,6 +68,22 @@ const Jobs = () => {
   }
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
+
+  const filterJobEntriesByTab = (jobEntries: JobEntry[], currentTab: string) => {
+    switch (currentTab) {
+      case "pending":
+        return jobEntries.filter(job =>job.status === "pending");
+      case "current":
+        return jobEntries.filter(job => job.status === "current");
+      case "finished":
+        // Assuming you have a way to identify finished jobs, e.g., a 'status' property
+        return jobEntries.filter(job => job.status === "finished");
+      default:
+        return jobEntries;
+    }
+  };
+
+
   useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
@@ -85,6 +101,7 @@ const Jobs = () => {
           })
           .promise()
           .then((output) => {
+            console.log(output);
             if (output.Items) {
               // Create a temporary array to accumulate new job entries
               const newJobEntries: JobEntry[] = [];
@@ -99,10 +116,12 @@ const Jobs = () => {
                   status: output.Items[i].status,
                 });
               }
+              console.log("test ", newJobEntries);
               // Update the state once with the accumulated array
               if (output.Items.length === 0) {
                 setJobEntries(jobEnt);
               } else {
+                console.log("test ", newJobEntries);
                 setJobEntries([...jobEntries, ...newJobEntries]);
               }
             } else {
@@ -148,6 +167,7 @@ const Jobs = () => {
               if (output.Items.length === 0) {
                 setJobEntries(jobEnt);
               } else {
+                console.log(newJobEntries);
                 setJobEntries([...jobEntries, ...newJobEntries]);
               }
             } else {
@@ -340,20 +360,14 @@ const Jobs = () => {
         </div>
         <div className="job-list-con">
           <div className="job-list-vw">
-            {jobEntries
-              .filter((job) =>
-                currentTab === "current" ? job.isCurrent : !job.isCurrent
-              )
-              .map((job) => (
+            {filterJobEntriesByTab(jobEntries, currentTab)
+            .map((job) => (
                 <div className="job-entry" key={job.id}>
                   <p className="job-description">{job.description}</p>
                   <p className="job-date">{job.date}</p>
                   <div className="job-actions">
                     <div id="job-view-prof-con">
-                      <img
-                        src={viewProfessionalsIcon}
-                        alt="View Professionals"
-                      />
+                      <img src={viewProfessionalsIcon} alt="View Professionals" />
                       <span>Bekijk Vakspecialisten</span>
                     </div>
                     <div className="chat-indicator">
