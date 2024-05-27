@@ -101,6 +101,7 @@
   justify-content: center;
   position: absolute;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 .day.empty {
@@ -240,7 +241,7 @@ width: 80px;
 height: 30px;
 font-size: 15px;
 margin-bottom: 60px;
-margin-left: 215px;
+margin-left: 230px;
 background-color: #3a72ffd4;
 color: white;
 cursor: pointer;
