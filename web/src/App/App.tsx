@@ -83,7 +83,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
       <Route path="/jobs/sanitair-installeren" element={<KlussenPage />} />
       <Route path="/jobs/tuinontwerp-maken" element={<KlussenPage />} />
-      <Route path="/forgot-password" element={<WachtwoordVergetenPage />} />
+      <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
       <Route path="/confirm-mail" element={<BevestigEmailPage />} />
       <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/pro-onboarding" element={<SpecialistPage />} />

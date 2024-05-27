@@ -45,7 +45,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
     'GMT+11:00 Australia/Sydney'
   ];
 
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
     const dateString = date.toISOString().split('T')[0];
@@ -334,15 +334,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
               <ArrowBackIosNewIcon/>
             </div>
           </button>
-          <button
-            type="button"
-            onClick={handleCurrentMonth}
-            className='buttonToday'
-            aria-label="Ga naar huidige maand"
-            tabIndex={0}
-          >
-            Today
-          </button>
           <span aria-live="polite">{months[currentMonth]} {currentYear}</span>
           <button
             type="button"
@@ -357,7 +348,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
           </button>
         </div>
         <div className="week-days">
-          {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
+          {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
             <div key={day}>{day}</div>
           ))}
         </div>

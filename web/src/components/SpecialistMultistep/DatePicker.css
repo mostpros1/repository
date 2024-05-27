@@ -9,7 +9,7 @@
 }
 
 .date-time-picker span {
-  background-color: #3a72ffd4;
+  background-color: #007bff;
   border-radius: 10px;
   font-size: 17px;
   width: 140px;
@@ -90,7 +90,7 @@
 
 .week-number {
   margin-right: 5px;
-  background-color: #3a72ffd4;
+  background-color: #007bff;
   color: white;
   border-radius: 10%;
   height: 35px;
@@ -173,9 +173,9 @@
 
 .submitBeschikbaarheid{
 border-radius: 10px;
-background-color: #3a72ffd4;
+background-color: #007bff;
 color: white;
-border: solid 2px #3a72ffd4;
+border: solid 2px #007bff;
 width: 250px;
 height: 60px;
 text-align: center;
@@ -226,7 +226,7 @@ color: white; /* Witte tekst voor betere leesbaarheid */
 }
 
 .day.today {
-border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
+border: 3px solid #007bff; /* Of een andere stijl die u verkiest */
 border-radius: 20%; /* Maakt de rand rond */
 justify-content: center;
 align-items: center;
@@ -272,14 +272,14 @@ border-radius: 10px;
 
 .prevIcon svg{
   font-size: 24px;
-  color: #3a72ffd4;
+  color: #007bff;
   cursor: pointer;
 
 }
 
 .nextIcon svg{
   font-size: 24px;
-  color: #3a72ffd4;
+  color: #007bff;
   cursor: pointer;
 
 }
