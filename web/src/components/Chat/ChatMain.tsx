@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
+import * as mutations from "../../graphql/mutations"; // Import the mutations
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
@@ -55,7 +56,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-
   const [lastMessages, setLastMessages] = useState<{
     [contact: string]: { text: string; createdAt: string };
   }>({});
@@ -65,37 +65,26 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [showNewChatModal, setShowNewChatModal] = useState(false);
   const [newChatEmail, setNewChatEmail] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
-  // New states for extra functionalities
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
-
-  // New states for settings modal
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  // New state for showing saved messages modal
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
-
-  // New state for tracking new messages
   const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
-    // Emit typing indicator event to backend (e.g., WebSocket, API)
   };
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
-      if (message.email !== user.attributes.email) {
+      if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
             body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
           });
         }
-        // Increment the new message count for the contact
         const contact = message.members.find((member) => member !== user.attributes.email);
         if (contact) {
           setNewMessagesCount((prevCount) => ({
@@ -136,7 +125,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         if (
           !updatedLastMessages[contact] ||
           new Date(updatedLastMessages[contact].createdAt) <
-          new Date(chat.createdAt)
+            new Date(chat.createdAt)
         ) {
           updatedLastMessages[contact] = {
             text: chat.text,
@@ -187,7 +176,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
       setGroupedMessages(groupedMessages);
-      // Reset the new message count for the selected contact
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
         [selectedContact]: 0,
@@ -257,7 +245,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     window.history.pushState({}, "", url);
     setRecipientEmail(contact);
     handleJoinChat(contact);
-    // Reset the new message count for the selected contact
     setNewMessagesCount((prevCount) => ({
       ...prevCount,
       [contact]: 0,
@@ -289,67 +276,69 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-  // Improved handleUpload function
-  const handleUpload = async () => {
-    // Check if a file is selected before proceeding
-    if (!selectedFile) {
-      console.error("No file selected");
-      return;
-    }
-
-    function getBase64(file: File): Promise<string> {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-      });
-    }
-
-    // Convert the selected file to Base64
-    const base64Data = await getBase64(selectedFile);
-
-    // Extract the file name from the selectedFile object
-    const fileName = selectedFile.name;
-
-    // Prepare the fileData string according to your backend's expectations
-    const fileData = "S3" + fileName + "!" + base64Data.split(',')[1];
-
-    try {
-        // Send the fileData to your backend
-        const Data = encodeURIComponent(fileData);
-        console.log("Data ", Data)
-        const response = await fetch(`https://rfzmb9ibkk.execute-api.eu-north-1.amazonaws.com/chatuploads/${Data}`);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error status: ${response.status}`);
+  const handleFileUpload = async (file) => {
+    const reader = new FileReader();
+    
+    reader.onload = async () => {
+        if (reader.result) {
+            const base64Data = (reader.result as string).split(',')[1];
+            try {
+                const response = await axios.post(
+                    'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
+                    { photo: base64Data },
+                    {
+                      headers: {
+                        'Content-Type': 'application/json'
+                      }
+                    }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error uploading photo:', error);
+            }
+        } else {
+            console.error('FileReader result is null');
         }
-
-        const responseData = await response.json(); // Assuming the response is JSON
-        console.log(responseData); // Handle the response data as needed
-
-    } catch (err) {
-        console.error(err);
-    }
+    };
+    
+    reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+    };
+    
+    reader.readAsDataURL(file);
 };
- /*
+
+  const handleUpload = async () => {
     try {
-      // Utility function to convert a file to Base64
-      
-      // Make sure to remove the manual Content-Type header setting when using FormData
+      if (!selectedFile) {
+        console.error("No file selected");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("photo", selectedFile);
+
       const response = await axios.post(
         "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       console.log(response.data);
-      setUploadedPhotoUrl(response.data.url); // Assuming the response contains a URL property
+      setUploadedPhotoUrl(response.data);
 
-      await handleSendMessage(`<img src="${response.data.url}" alt="Uploaded Image" style="max-width: 100%;" />`);
+      await handleSendMessage(
+        `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
+      );
     } catch (error) {
       console.error("Error uploading photo:", error);
       alert("Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.");
-    }*/
+    }
+  };
 
   const handleDropUpClick = () => {
     setIsDropUpOpen(!isDropUpOpen);
@@ -432,19 +421,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   });
 
   const parseLinks = (text: string) => {
-    const linkRegex = /(https?:\/\/[^\s]+)/g;
-    const parts = text.split(linkRegex);
-    const jsxElements = parts.flatMap((part, index) => {
-      if (index % 2 !== 0) {
-        return (
+      const linkRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(linkRegex);
+      const jsxElements = parts.flatMap((part, index) => {
+        if (index % 2  !== 0) {
+            return (
           <a href={part} target="_blank" rel="noopener noreferrer">
             {part}
           </a>
         );
-      } else {
-        return part;
-      }
-    });
+        } else {
+            return part;
+        }
+      });
 
     const htmlString = ReactDOMServer.renderToStaticMarkup(
       <>{jsxElements}</>
@@ -480,7 +469,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const [open, setOpen] = useState(false);
-
+  
   const toggleMenu = () => {
     setOpen(!open);
   };
@@ -527,33 +516,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setNotificationsEnabled((prevState) => !prevState);
   };
 
-  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("photo", file);
-
-      try {
-        const response = await axios.post(
-          "https://your-upload-url.com",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response.data);
-        // Update the user's profile picture URL in your backend
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
-      }
-    }
-  };
-
   const handleSaveSettings = () => {
+    localStorage.setItem("visibleName", visibleName);
     setShowSettingsModal(false);
   };
+
+  useEffect(() => {
+    const storedVisibleName = localStorage.getItem("visibleName");
+    if (storedVisibleName) {
+      setVisibleName(storedVisibleName);
+    }
+  }, []);
 
   return (
     <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
@@ -577,63 +550,63 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
-              >
-                <BsPersonCircle size={50} className="avatar-chat-side" />
-                <div className="contact-details">
-                  <div className="contact-name">
-                    <span>{contact.split("@")[0]}</span>
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? "selected-contact" : ""}
+                >
+                  <BsPersonCircle size={50} className="avatar-chat-side" />
+                  <div className="contact-details">
+                    <div className="contact-name">
+                      <span>{contact.split("@")[0]}</span>
                       {newMessagesCount[contact] > 0 && (
                         <span className="new-message-badge">
                           {newMessagesCount[contact]}
                         </span>
                       )}
+                    </div>
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                    {lastMessages[contact] && (
+                      <span className="last-message-time">
+                        {formatDate(lastMessages[contact].createdAt).text}
+                      </span>
+                    )}
                   </div>
-                  {lastMessages[contact] && (
-                    <span className="last-message">
-                      {lastMessages[contact].text}
-                    </span>
-                  )}
-                  {lastMessages[contact] && (
-                    <span className="last-message-time">
-                      {formatDate(lastMessages[contact].createdAt).text}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))
+                </li>
+              ))
             : filteredContactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
-              >
-                <BsPersonCircle size={50} className="avatar-chat-side" />
-                <div className="contact-details">
-                  <div className="contact-name">
-                    <span>{contact.split("@")[0]}</span>
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={selectedContact === contact ? "selected-contact" : ""}
+                >
+                  <BsPersonCircle size={50} className="avatar-chat-side" />
+                  <div className="contact-details">
+                    <div className="contact-name">
+                      <span>{contact.split("@")[0]}</span>
                       {newMessagesCount[contact] > 0 && (
                         <span className="new-message-badge">
                           {newMessagesCount[contact]}
                         </span>
                       )}
+                    </div>
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                    {lastMessages[contact] && (
+                      <span className="last-message-time">
+                        {formatDate(lastMessages[contact].createdAt).text}
+                      </span>
+                    )}
                   </div>
-                  {lastMessages[contact] && (
-                    <span className="last-message">
-                      {lastMessages[contact].text}
-                    </span>
-                  )}
-                  {lastMessages[contact] && (
-                    <span className="last-message-time">
-                      {formatDate(lastMessages[contact].createdAt).text}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
+                </li>
+              ))}
         </ul>
       </div>
       <div className="main-container">
@@ -659,16 +632,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   {groupedMessages[date].map((chat) => (
                     <div
                       key={chat.id}
-                      className={`message-container ${chat.email === user.attributes.email
-                        ? "self-message-container"
-                        : "other-message-container"
-                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                      className={`message-container ${
+                        chat.email === user.attributes.email
+                          ? "self-message-container"
+                          : "other-message-container"
+                      } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                     >
                       <div
-                        className={`message-bubble ${chat.email === user.attributes.email
-                          ? "self-message"
-                          : "other-message"
-                          }`}
+                        className={`message-bubble ${
+                          chat.email === user.attributes.email
+                            ? "self-message"
+                            : "other-message"
+                        }`}
                       >
                           <div className="message-actions">
                             <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
@@ -695,12 +670,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             })}
           </div>
 
-          {replyingTo && (
-            <div className="replying-to">
-              Replying to: <blockquote>{replyingTo.text}</blockquote>
-              <button onClick={() => setReplyingTo(null)}>Cancel</button>
-            </div>
-          )}
+            {replyingTo && (
+              <div className="replying-to">
+                Replying to: <blockquote>{replyingTo.text}</blockquote>
+                <button onClick={() => setReplyingTo(null)}>Annuleren</button>
+              </div>
+            )}
           <div className="input-form">
             <input
               type="text"
@@ -725,7 +700,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   className="dropup-option"
                   onClick={() => inputRef.current?.click()}
                 >
-                  <MdDriveFileMove size={25} color="blue" />
+                  <MdDriveFileMove size={25} color="blue" /> Afbeeldingen
                 </button>
                 <input
                   type="file"
@@ -768,7 +743,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   subtotal={parseFloat(customAmount.replace(',', '.'))}
                   handleSendMessage={handleSendMessage}
                   recipientEmail={recipientEmail}
-                />
+                  />
               </div>
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
@@ -831,15 +806,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
               </button>
             </div>
-            <div className="settings-item">
-              <label htmlFor="profile-picture">Profile Picture:</label>
-              <input
-                type="file"
-                id="profile-picture"
-                accept="image/*"
-                onChange={handleProfilePictureUpload}
-              />
-            </div>
             <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
             <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
           </div>
@@ -880,3 +846,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 }
 
 export default withAuthenticator(ChatMain);
+
+
+// bij chat wat ik had over zoeken in de homeoage input zetten
+
+// tijden weg bij calender
+
+// 
