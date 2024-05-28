@@ -579,6 +579,8 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     e.preventDefault();
                     const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
                     const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+                    
+                    setSelectedDate(new Date(date.value));
                     addAvailibility(date.value, time.value);
                     date.value = '';
                     time.value = '';
