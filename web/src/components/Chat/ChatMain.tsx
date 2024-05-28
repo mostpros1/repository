@@ -7,15 +7,22 @@ import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
-import PaymentLink from '../PaymentLink/PaymentLink';
+import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
-import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical, BsSun, BsMoon, BsBell, BsBellSlash } from "react-icons/bs";
+import {
+  BsPaperclip,
+  BsPersonCircle,
+  BsThreeDotsVertical,
+  BsSun,
+  BsMoon,
+  BsBell,
+  BsBellSlash,
+  BsCreditCard,
+} from "react-icons/bs";
 import { MdDriveFileMove } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
-import { FaReply } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FaBookmark } from "react-icons/fa";
+import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
 
 interface Chat {
@@ -41,7 +48,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     visibleName,
     setVisibleName,
     textSize,
-    setTextSize
+    setTextSize,
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -72,6 +79,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
   const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
+
+  // State for controlling the payment modal
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
@@ -125,7 +135,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         if (
           !updatedLastMessages[contact] ||
           new Date(updatedLastMessages[contact].createdAt) <
-            new Date(chat.createdAt)
+          new Date(chat.createdAt)
         ) {
           updatedLastMessages[contact] = {
             text: chat.text,
@@ -278,35 +288,35 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   const handleFileUpload = async (file) => {
     const reader = new FileReader();
-    
+
     reader.onload = async () => {
-        if (reader.result) {
-            const base64Data = (reader.result as string).split(',')[1];
-            try {
-                const response = await axios.post(
-                    'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
-                    { photo: base64Data },
-                    {
-                      headers: {
-                        'Content-Type': 'application/json'
-                      }
-                    }
-                );
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error uploading photo:', error);
+      if (reader.result) {
+        const base64Data = (reader.result as string).split(',')[1];
+        try {
+          const response = await axios.post(
+            'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
+            { photo: base64Data },
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
             }
-        } else {
-            console.error('FileReader result is null');
+          );
+          console.log(response.data);
+        } catch (error) {
+          console.error('Error uploading photo:', error);
         }
+      } else {
+        console.error('FileReader result is null');
+      }
     };
-    
+
     reader.onerror = (error) => {
-        console.error('Error reading file:', error);
+      console.error('Error reading file:', error);
     };
-    
+
     reader.readAsDataURL(file);
-};
+  };
 
   const handleUpload = async () => {
     try {
@@ -421,26 +431,25 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   });
 
   const parseLinks = (text: string) => {
-      const linkRegex = /(https?:\/\/[^\s]+)/g;
-      const parts = text.split(linkRegex);
-      const jsxElements = parts.flatMap((part, index) => {
-        if (index % 2  !== 0) {
-            return (
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(linkRegex);
+    const jsxElements = parts.flatMap((part, index) => {
+      if (index % 2 !== 0) {
+        return (
           <a href={part} target="_blank" rel="noopener noreferrer">
             {part}
           </a>
         );
-        } else {
-            return part;
-        }
-      });
+      } else {
+        return part;
+      }
+    });
 
     const htmlString = ReactDOMServer.renderToStaticMarkup(
       <>{jsxElements}</>
     );
     return htmlString;
   };
-
 
   const handleSendMessageClick = async () => {
     const messageInput = document.getElementById("message-input") as HTMLInputElement;
@@ -469,7 +478,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const [open, setOpen] = useState(false);
-  
+
   const toggleMenu = () => {
     setOpen(!open);
   };
@@ -550,63 +559,63 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={selectedContact === contact ? "selected-contact" : ""}
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? "selected-contact" : ""}
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
                       </span>
                     )}
                   </div>
-                </li>
-              ))
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))
             : filteredContactList.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={selectedContact === contact ? "selected-contact" : ""}
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={selectedContact === contact ? "selected-contact" : ""}
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
                       </span>
                     )}
                   </div>
-                </li>
-              ))}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
       <div className="main-container">
@@ -636,22 +645,22 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                         chat.email === user.attributes.email
                           ? "self-message-container"
                           : "other-message-container"
-                      } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                     >
                       <div
                         className={`message-bubble ${
                           chat.email === user.attributes.email
                             ? "self-message"
                             : "other-message"
-                        }`}
+                          }`}
                       >
-                          <div className="message-actions">
-                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                            <button onClick={() => handleMarkMessage(chat.id)}>
-                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
-                            </button>
-                            {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
-                          </div>
+                        {/* <div className="message-actions">
+                          {/* <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                          <button onClick={() => handleMarkMessage(chat.id)}>
+                            {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                          </button> */}
+                          {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
+                        {/* </div> */}
                         <div
                           className="text"
                           dangerouslySetInnerHTML={{ __html: chat.text }}
@@ -670,12 +679,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             })}
           </div>
 
-            {replyingTo && (
-              <div className="replying-to">
-                Replying to: <blockquote>{replyingTo.text}</blockquote>
-                <button onClick={() => setReplyingTo(null)}>Annuleren</button>
-              </div>
-            )}
+          {replyingTo && (
+            <div className="replying-to">
+              Replying to: <blockquote>{replyingTo.text}</blockquote>
+              <button onClick={() => setReplyingTo(null)}>Annuleren</button>
+            </div>
+          )}
           <div className="input-form">
             <input
               type="text"
@@ -690,61 +699,30 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               className="inputchat"
               onChange={handleInputChange}
             />
-            <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
-              <BsPaperclip className="paperclip" size={25} />
-              <div
-                className={`dropup-content ${isDropUpOpen ? "show" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  className="dropup-option"
-                  onClick={() => inputRef.current?.click()}
-                >
-                  <MdDriveFileMove size={25} color="blue" />
-                </button>
-                <input
-                  type="file"
-                  ref={inputRef}
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-                <button
-                  className="dropup-option"
-                  onClick={handleUpload}
-                  disabled={!selectedFile}
-                >
-                  Upload
-                </button>
-                {uploadedPhotoUrl && (
-                  <div>
-                    <img
-                      src={uploadedPhotoUrl}
-                      alt="Uploaded"
-                      style={{ maxWidth: "100%" }}
-                    />
-                  </div>
-                )}
-                <div className="amount-input-wrapper">
+            <div className="dropup" ref={dropUpRef}>
+              <BsPaperclip className="paperclip" size={25} onClick={handleDropUpClick} />
+              {isDropUpOpen && (
+                <div className="dropup-content show">
+                  <button
+                    className="dropup-option"
+                    onClick={() => inputRef.current?.click()}
+                  >
+                    <MdDriveFileMove size={25} color="blue" />
+                  </button>
                   <input
-                    type="text"
-                    placeholder="Voer bedrag in"
-                    value={customAmount}
-                    onChange={(e) =>
-                      setCustomAmount(formatCurrencyInput(e.target.value))
-                    }
-                    className="amount-input"
+                    type="file"
+                    ref={inputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
                   />
+                  <button
+                    className="dropup-option"
+                    onClick={() => setShowPaymentModal(true)}
+                  >
+                    <BsCreditCard size={25} color="blue" />
+                  </button>
                 </div>
-                <PaymentLink
-                  handleSendMessage={handleSendMessage}
-                  subtotal={parseFloat(customAmount.replace(",", "."))}
-                />
-                <PaymentOffer
-                  subtotal={parseFloat(customAmount.replace(',', '.'))}
-                  handleSendMessage={handleSendMessage}
-                  recipientEmail={recipientEmail}
-                  />
-              </div>
+              )}
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
               <kbd>
@@ -841,15 +819,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           </div>
         </div>
       )}
+      {showPaymentModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Payment Options</h2>
+            <div className="amount-input-wrapper">
+              <input
+                type="text"
+                placeholder="Voer bedrag in"
+                value={customAmount}
+                onChange={(e) =>
+                  setCustomAmount(formatCurrencyInput(e.target.value))
+                }
+                className="amount-input-modal"
+              />
+            </div>
+            <PaymentLink
+              handleSendMessage={handleSendMessage}
+              subtotal={parseFloat(customAmount.replace(",", "."))}
+            />
+            <PaymentOffer
+              subtotal={parseFloat(customAmount.replace(',', '.'))}
+              handleSendMessage={handleSendMessage}
+              recipientEmail={recipientEmail}
+            />
+            <button onClick={() => setShowPaymentModal(false)} className="button-modal">Sluiten</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default withAuthenticator(ChatMain);
-
-
-// bij chat wat ik had over zoeken in de homeoage input zetten
-
-// tijden weg bij calender
-
-// 

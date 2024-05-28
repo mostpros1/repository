@@ -217,7 +217,7 @@ const App = () => {
 
   return (
     <>
-      <ScrollToTop /> {/* Add ScrollToTop here */}
+      <ScrollToTop />
       <Routes>
         {/* Wildcard route to capture the language part of the URL */}
         <Route path="/:lang/*" element={<LanguageAwareRoutes />} />
