@@ -3,7 +3,7 @@ import Footer from "../../components/ui/Footer/Footer";
 import "./OverzichtKlussenPage.css";
 import OverzichtKlussen from "../../components/Overzicht/OverzichtJobs";
 
-function SpecialistProfile() {
+function OverzichtKlussenPage() {
   return (
     <div id="root">
       <NavBar />
@@ -15,4 +15,4 @@ function SpecialistProfile() {
   );
 }
 
-export default SpecialistProfile;
+export default OverzichtKlussenPage;

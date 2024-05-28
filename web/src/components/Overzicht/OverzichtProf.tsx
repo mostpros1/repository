@@ -21,10 +21,10 @@ const OverzichtProf: React.FC = () => {
         }).promise();
 
         const convertedItems = data.Items?.map(item => ({
-          id: item.id.S,
-          naam: `${item.first_name.S} ${item.last_name.S}`,
-          specialisatie: item.profession.S,
-          email: item.email.S,
+          id: item.id,
+          naam: `${item.first_name} ${item.last_name}`,
+          specialisatie: item.profession,
+          email: item.email,
         }));
 
         setVaksspecialisten(convertedItems || []);

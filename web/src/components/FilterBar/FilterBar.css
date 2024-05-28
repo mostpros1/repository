@@ -12,7 +12,8 @@
   transform: translateY(10px);
   box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2.5rem;
   align-items: center;
 }
 

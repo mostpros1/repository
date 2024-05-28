@@ -1,5 +1,5 @@
 .jobListMain {
-  width: 100%;
+  width: 90%;
   height: 100%;
   padding-top: 5rem;
   display: flex;
@@ -24,7 +24,8 @@
 }
 
 #jobcardSection {
-  width: 60%;
+  margin-top: auto;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -32,6 +33,7 @@
 }
 
 .jobCardsDisplay {
+  margin-top: 5rem;
   width: 100%;
   height: 100%;
   display: flex;

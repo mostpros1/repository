@@ -22,17 +22,21 @@ const SideNav = () => {
   const [isHomeowner, setIsHomeowner] = useState(false);
 
   useEffect(() => {
-    if (user?.signInUserSession?.accessToken?.payload) {
-      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups?.includes("Homeowner")) {
-        setIsHomeowner(true);
-      } else if (groups?.includes("Professional")) {
-        setIsProfessional(true);
+    const checkUserRole = async () => {
+      if (user?.signInUserSession?.accessToken?.payload) {
+        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups?.includes("Homeowner")) {
+          setIsHomeowner(true);
+        } else if (groups?.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        console.log("User data is not fully available.");
+        navigate(`/${lang}/login`);
       }
-    } else {
-      console.log("User data is not fully available.");
-      navigate(`/${lang}/login`);
-    }
+    };
+
+    checkUserRole();
   }, [user, navigate, lang]);
 
   const comingSoonTabs = [

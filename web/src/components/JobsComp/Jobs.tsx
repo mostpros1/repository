@@ -9,6 +9,7 @@ import { dynamo } from "../../../declarations";
 import { Link, useNavigate } from "react-router-dom";
 //import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 import specialists from "../../data/specialists.js";
+import { taal } from "../ui/NavBar/Navigation.js";
 
 interface Specialist {
   id: number;
@@ -23,13 +24,13 @@ const Jobs = () => {
 
   const jobEnt = [
     {
-      id: 1,
+      id: 0,
       name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 3,
-      isCurrent: true,
-    },/*
+      currentStatus: "pending",
+    }/*,
     {
       id: 2,
       name: "test",
@@ -58,13 +59,13 @@ const Jobs = () => {
   ];
 
   interface JobEntry {
+    currentStatus: string;
     id: number;
     name: string;
     description: string;
     date: string;
     chats: number;
     isCurrent?: boolean;
-    status?: string;
   }
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
@@ -72,24 +73,22 @@ const Jobs = () => {
   const filterJobEntriesByTab = (jobEntries: JobEntry[], currentTab: string) => {
     switch (currentTab) {
       case "pending":
-        return jobEntries.filter(job =>job.status === "pending");
+        return jobEntries.filter(job => job.currentStatus === "pending");
       case "current":
-        return jobEntries.filter(job => job.status === "current");
+        return jobEntries.filter(job => job.currentStatus === "current");
       case "finished":
         // Assuming you have a way to identify finished jobs, e.g., a 'status' property
-        return jobEntries.filter(job => job.status === "finished");
+        return jobEntries.filter(job => job.currentStatus === "finished");
       default:
         return jobEntries;
     }
   };
-
 
   useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
-        console.log("User email: ", userEmail);
         dynamo
           .query({
             TableName: "Projects",
@@ -101,43 +100,40 @@ const Jobs = () => {
           })
           .promise()
           .then((output) => {
-            console.log(output);
             if (output.Items) {
               // Create a temporary array to accumulate new job entries
               const newJobEntries: JobEntry[] = [];
               for (let i = 0; i < output.Items.length; i++) {
-                console.log(output.Items[i]);
                 newJobEntries.push({
                   id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
                   name: output.Items[i].name,
                   description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                   date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                   chats: output.Items[i].chats,
-                  status: output.Items[i].status,
+                  currentStatus: output.Items[i].currentStatus
                 });
               }
-              console.log("test ", newJobEntries);
               // Update the state once with the accumulated array
               if (output.Items.length === 0) {
                 setJobEntries(jobEnt);
               } else {
-                console.log("test ", newJobEntries);
                 setJobEntries([...jobEntries, ...newJobEntries]);
               }
             } else {
               console.log("No items found in the query");
             }
           })
-          .catch(console.error);
+          .catch(console.error)
+
       } catch (error) {
         console.error("Error fetching user email or querying DynamoDB", error);
       }
     };
-
     const fetchUserEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
+
         dynamo
           .query({
             TableName: "Projects",
@@ -153,21 +149,19 @@ const Jobs = () => {
               // Create a temporary array to accumulate new job entries
               const newJobEntries: JobEntry[] = [];
               for (let i = 0; i < output.Items.length; i++) {
-                console.log(output.Items[i]);
                 newJobEntries.push({
                   id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
                   name: output.Items[i].name,
                   description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                   date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                   chats: output.Items[i].chats,
-                  status: output.Items[i].status,
+                  currentStatus: output.Items[i].currentStatus
                 });
               }
               // Update the state once with the accumulated array
               if (output.Items.length === 0) {
                 setJobEntries(jobEnt);
               } else {
-                console.log(newJobEntries);
                 setJobEntries([...jobEntries, ...newJobEntries]);
               }
             } else {
@@ -183,8 +177,8 @@ const Jobs = () => {
     const checkUserGroupAndFetch = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        console.log("group: ", groups)
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups && groups.includes("Professional")) {
           fetchProfEmailAndQueryDynamo();
         } else if (groups && groups.includes("Homeowner")) {
@@ -290,7 +284,7 @@ const Jobs = () => {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/nl/jobs#${result.specialistName.replace(
+      to={`/${taal}/jobs#${result.specialistName.replace(
         "/",
         ""
       )}?${result.link.replace("/", "")}`}
@@ -361,13 +355,16 @@ const Jobs = () => {
         <div className="job-list-con">
           <div className="job-list-vw">
             {filterJobEntriesByTab(jobEntries, currentTab)
-            .map((job) => (
-                <div className="job-entry" key={job.id}>
+              .map((job) => (
+                <div className="job-entry" key={job.id}> {/* Ensure job.id is unique */}
                   <p className="job-description">{job.description}</p>
                   <p className="job-date">{job.date}</p>
                   <div className="job-actions">
-                    <div id="job-view-prof-con">
-                      <img src={viewProfessionalsIcon} alt="View Professionals" />
+                    <div id="job-view-prof-con" onClick={() => navigate(`/home-owner-result#${job.name}?${job.description}!${job.date}`)}>
+                      <img
+                        src={viewProfessionalsIcon}
+                        alt="View Professionals"
+                      />
                       <span>Bekijk Vakspecialisten</span>
                     </div>
                     <div className="chat-indicator">

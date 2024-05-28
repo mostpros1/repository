@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
+
 //Define specialist interface
 interface Specialist {
   id: number;
@@ -162,7 +163,7 @@ function Searchbar() {
   const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 6 resultaten
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/nl/jobs#${result.specialistName.replace(
+      to={`/${taal}/jobs#${result.specialistName.replace(
         "/",
         ""
       )}?${result.link.replace("/", "")}`}
@@ -402,11 +403,11 @@ function HomePageTwo() {
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/pro-overview'}>100+ Vakspecialisten</Link> </h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/pro-overview`}>100+ Vakspecialisten</Link> </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={'/nl/jobs-overview'}>1000+ Klussen</Link></h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/jobs-overview`}>1000+ Klussen</Link></h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />

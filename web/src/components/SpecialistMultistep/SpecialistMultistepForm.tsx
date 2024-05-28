@@ -494,10 +494,6 @@ function SpecialistMultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
         <div className="progress-bar">
           {steps.map((_, index) => (
             <div
@@ -508,7 +504,6 @@ function SpecialistMultistepForm() {
             ></div>
           ))}
         </div>
-      </div>
       {showNoKvK ? <NoKvK /> : <>{step}</>}
       <>
         <div className="btn-wrapper">
