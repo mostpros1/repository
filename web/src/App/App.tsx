@@ -39,6 +39,7 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import Jobspage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
+import DataSafetyPage from "../pages/DataSafetyPage/DataSafetyPage.tsx";
 import ChatMain from "../pages/ChatPage/ChatPage";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import ChatContactList from "../components/Chat/ChatContactList";
@@ -117,6 +118,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/data-safety" element={<DataSafetyPage />} />
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
