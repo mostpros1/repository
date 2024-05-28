@@ -30,7 +30,6 @@ import specialists from "../../data/specialists.ts";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 
-//Define specialist interface
 interface Specialist {
   id: number;
   name: string;
@@ -38,7 +37,6 @@ interface Specialist {
   link?: string;
 }
 
-//PopularCards data
 const PopularCardsData = [
   {
     id: 1,
