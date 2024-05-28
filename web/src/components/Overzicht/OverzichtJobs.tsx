@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './OverzichtJobs.css';
+import { dynamo } from '../../../declarations';
 
 interface Klus {
   id: number;
@@ -13,19 +14,29 @@ const OverzichtKlussen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchKlussen = async () => {
-      try {
-        const response = await fetch('/api/klussen');
-        const data = await response.json();
-        setKlussen(data);
-      } catch (error) {
-        console.error('Fout bij het ophalen van de klussen:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchKlussen();
+    dynamo.scan({
+      TableName: "Professionals",
+    }).promise()
+     .then(data => {
+      console.log("data: ", data.Items);
+        if (data.Items){
+          console.log("data: ", data.Items);
+          // Transform data.Items into an array of Klus objects
+          /*const klussenData = data.Items.map(item => ({
+            id: item.id,
+            titel: `${item.first_name} ${item.last_name}`, // Assuming you want to combine first_name and last_name into titel
+            beschrijving: item.bio, // Assuming bio contains the description needed
+            status: 'Available', // Or however you determine the status
+            price: item.price,
+            rating: item.rating,
+          }));
+  
+          console.log("klussenData: ", klussenData);
+          // Now set the transformed array to state
+          setKlussen(klussenData);*/
+        }
+      })
+      .catch(err => console.log("Error dynamo: ", err));
   }, []);
 
   if (loading) {
