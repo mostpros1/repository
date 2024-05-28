@@ -9,6 +9,7 @@ import { dynamo } from "../../../declarations";
 import { Link, useNavigate } from "react-router-dom";
 //import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 import specialists from "../../data/specialists.js";
+import { taal } from "../ui/NavBar/Navigation.js";
 
 interface Specialist {
   id: number;
