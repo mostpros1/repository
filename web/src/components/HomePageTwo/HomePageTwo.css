@@ -146,6 +146,10 @@
   text-decoration: none;
 }
 
+.populairjobsHeroCard:hover{
+  color: white;
+}
+
 .populairjobsHeroCard span {
   font-size: 15px;
 }

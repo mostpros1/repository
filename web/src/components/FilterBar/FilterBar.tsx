@@ -19,8 +19,8 @@ function FilterBar() {
   const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showPriceOptions, setShowPriceOptions] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("All");
-  const [selectedSort, setSelectedSort] = useState("Select a sorting option");
+  const [selectedLocation, setSelectedLocation] = useState("Alles");
+  const [selectedSort, setSelectedSort] = useState("Selecteer een sorteeroptie");
   const [selectedPrice, setSelectedPrice] = useState("Select a price option");
   const [filteredItems, setFilteredItems] = useState<JobListingItem[]>([]); // Initialize with all items
   const joblisting: JobListingItem[] = [
@@ -235,7 +235,7 @@ function FilterBar() {
         break;
     }
   };
-  const locationOptions = ["All", "Amsterdam", "Rotterdam", "Haarlem"];
+  const locationOptions = ["Alles", "Amsterdam", "Rotterdam", "Haarlem"];
   const sortOptions = [
     "Van laag naar hoog",
     "Van hoog naar laag",
@@ -329,10 +329,6 @@ function FilterBar() {
             </div>
           </div>
         </div>
-        {/* Button to apply filters */}
-        <button className="filter_search_btn" onClick={handleSearch}>
-          Zoeken
-        </button>
       </div>
       {/* Banenlijst sectie */}
       <Banenlijst />

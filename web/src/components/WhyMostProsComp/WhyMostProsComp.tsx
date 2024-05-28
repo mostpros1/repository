@@ -16,7 +16,7 @@ function WhyMostProsComp() {
           </p>
         </section>
         <article className="whymostprosBlueSquare">
-          <p className="whymostprosP">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
+          <p className="whymostprosPBlue">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
           </p>
         </article>
       </article>
