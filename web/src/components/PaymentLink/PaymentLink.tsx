@@ -87,8 +87,8 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
         <>
             {loading ? <p>Loading...</p> : (
                 <>
-                    <button onClick={createSession} className="dropup-option">
-                        <BsCreditCard size={25} color="blue"/>
+                    <button onClick={createSession} className="button-modal">
+                        Maak aan
                     </button>
                     {paymentLink && (
                         <>
