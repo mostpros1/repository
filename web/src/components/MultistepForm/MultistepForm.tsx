@@ -189,15 +189,29 @@ function MultistepForm() {
         })
         .promise()
         .catch(console.error)
+      dynamo.put({
+        Item: {
+          id: Math.floor(Math.random() * 1000000000),
+          chats: 0,
+          client_email: currentAuthenticatedUser.attributes.email,
+          date: `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`,
+          description: "Bestrating: 50 m²; Tuin of Patio; Tegels Timon",
+          name: "test",
+          professional_email: "something",
+          currentStatus: "pending"
+        },
+        TableName: "Projects"
+      }).promise()
+        .catch(console.error)
 
-        const profession = window.location.hash.replace("#", "").split("?")[0];
-        const task = window.location.hash.replace("#", "").split("?")[1];
+      const profession = window.location.hash.replace("#", "").split("?")[0];
+      const task = window.location.hash.replace("#", "").split("?")[1];
 
-        const datum = new Date(data.date);
-        const date = datum.toISOString().split('T')[0];
-        navigate(`/home-owner-result#${profession}?${task}!${date}`);
-    
-      } else {
+      const datum = new Date(data.date);
+      const date = datum.toISOString().split('T')[0];
+      navigate(`/home-owner-result#${profession}?${task}!${date}`);
+
+    } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
         username: userData.email,

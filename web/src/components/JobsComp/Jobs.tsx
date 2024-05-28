@@ -24,12 +24,12 @@ const Jobs = () => {
 
   const jobEnt = [
     {
-      id: 1,
+      id: 0,
       name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 3,
-      isCurrent: true,
+      currentStatus: "pending",
     }/*,
     {
       id: 2,
@@ -59,15 +59,31 @@ const Jobs = () => {
   ];
 
   interface JobEntry {
+    currentStatus: string;
     id: number;
     name: string;
     description: string;
     date: string;
     chats: number;
-    isCurrent: boolean;
+    isCurrent?: boolean;
   }
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
+
+  const filterJobEntriesByTab = (jobEntries: JobEntry[], currentTab: string) => {
+    switch (currentTab) {
+      case "pending":
+        return jobEntries.filter(job => job.currentStatus === "pending");
+      case "current":
+        return jobEntries.filter(job => job.currentStatus === "current");
+      case "finished":
+        // Assuming you have a way to identify finished jobs, e.g., a 'status' property
+        return jobEntries.filter(job => job.currentStatus === "finished");
+      default:
+        return jobEntries;
+    }
+  };
+
   useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
@@ -76,57 +92,42 @@ const Jobs = () => {
         console.log("User email: ", userEmail);
         dynamo
           .query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "professional_emailIndex",
+            KeyConditionExpression: "professional_email = :professional_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":professional_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "professional_idIndex",
-                  KeyConditionExpression: "professional_id = :professional_id",
-                  ExpressionAttributeValues: {
-                    ":professional_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        isCurrent: true,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            console.log(output.Items);
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                console.log(output.Items[i]);
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  currentStatus: output.Items[i].currentStatus
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries([...jobEntries, ...newJobEntries]);
+              }
             } else {
-              console.error("No items found in the first query");
+              console.log("No items found in the query");
             }
           })
-          .catch(console.error);
+          .catch(console.error)
+
       } catch (error) {
         console.error("Error fetching user email or querying DynamoDB", error);
       }
@@ -138,54 +139,37 @@ const Jobs = () => {
 
         dynamo
           .query({
-            TableName: "Clients",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "client_emailIndex",
+            KeyConditionExpression: "client_email = :client_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":client_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "client_idIndex",
-                  KeyConditionExpression: "client_id = :client_id",
-                  ExpressionAttributeValues: {
-                    ":client_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        isCurrent: true,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                console.log(output.Items[i]);
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  currentStatus: output.Items[i].currentStatus
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries([...jobEntries, ...newJobEntries]);
+              }
             } else {
-              console.error("No items found in Clients the first query");
+              console.log("No items found in the query");
             }
           })
           .catch(console.error);
@@ -304,14 +288,13 @@ const Jobs = () => {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-    to={`/${taal}/jobs#${result.specialistName.replace(
+      to={`/${taal}/jobs#${result.specialistName.replace(
         "/",
         ""
       )}?${result.link.replace("/", "")}`}
       key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "selected" : ""
-      }`}
+      className={`search_dropdown_item ${index === selectedIndex ? "selected" : ""
+        }`}
       onClick={() => handleResultClick(result.link)}
       onMouseOver={() => setSelectedIndex(index)}
     >
@@ -352,25 +335,22 @@ const Jobs = () => {
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${
-              currentTab === "pending" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "pending" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("pending")}
           >
             In behandeling
           </button>
           <button
-            className={`status-button ${
-              currentTab === "current" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "current" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("current")}
           >
             Lopende klussen
           </button>
           <button
-            className={`status-button ${
-              currentTab === "finished" ? "active" : ""
-            }`}
+            className={`status-button ${currentTab === "finished" ? "active" : ""
+              }`}
             onClick={() => setCurrentTab("finished")}
           >
             Voltooid Klussen
@@ -378,12 +358,9 @@ const Jobs = () => {
         </div>
         <div className="job-list-con">
           <div className="job-list-vw">
-            {jobEntries
-              .filter((job) =>
-                currentTab === "current" ? job.isCurrent : !job.isCurrent
-              )
+            {filterJobEntriesByTab(jobEntries, currentTab)
               .map((job) => (
-                <div className="job-entry" key={job.id}>
+                <div className="job-entry" key={job.id}> {/* Ensure job.id is unique */}
                   <p className="job-description">{job.description}</p>
                   <p className="job-date">{job.date}</p>
                   <div className="job-actions">
