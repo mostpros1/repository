@@ -89,7 +89,6 @@ const Jobs = () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
-        console.log("User email: ", userEmail);
         dynamo
           .query({
             TableName: "Projects",
@@ -101,12 +100,10 @@ const Jobs = () => {
           })
           .promise()
           .then((output) => {
-            console.log(output.Items);
             if (output.Items) {
               // Create a temporary array to accumulate new job entries
               const newJobEntries: JobEntry[] = [];
               for (let i = 0; i < output.Items.length; i++) {
-                console.log(output.Items[i]);
                 newJobEntries.push({
                   id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
                   name: output.Items[i].name,
@@ -152,7 +149,6 @@ const Jobs = () => {
               // Create a temporary array to accumulate new job entries
               const newJobEntries: JobEntry[] = [];
               for (let i = 0; i < output.Items.length; i++) {
-                console.log(output.Items[i]);
                 newJobEntries.push({
                   id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
                   name: output.Items[i].name,
@@ -364,7 +360,7 @@ const Jobs = () => {
                   <p className="job-description">{job.description}</p>
                   <p className="job-date">{job.date}</p>
                   <div className="job-actions">
-                    <div id="job-view-prof-con">
+                    <div id="job-view-prof-con" onClick={() => navigate(`/home-owner-result#${job.name}?${job.description}!${job.date}`)}>
                       <img
                         src={viewProfessionalsIcon}
                         alt="View Professionals"
