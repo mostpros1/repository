@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './OverzichtJobs.css';
+import { dynamo } from '../../../declarations';
 
 interface Klus {
+  currentStatus: string;
   id: number;
-  titel: string;
-  beschrijving: string;
-  status: string;
+  profession: string;
+  region: string;
+  task: string
+  user_email: string,
 }
 
 const OverzichtKlussen: React.FC = () => {
@@ -13,24 +16,38 @@ const OverzichtKlussen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchKlussen = async () => {
-      try {
-        const response = await fetch('/api/klussen');
-        const data = await response.json();
-        setKlussen(data);
-      } catch (error) {
-        console.error('Fout bij het ophalen van de klussen:', error);
-      } finally {
-        setLoading(false);
+    dynamo.scan({
+      TableName: "Klussen",
+      FilterExpression: "currentStatus = :statusVal",
+      ExpressionAttributeValues: {
+        ":statusVal": "pending"
       }
-    };
+    }).promise()
 
-    fetchKlussen();
+      .then(data => {
+        if (data.Items) {
+          console.log("data.Items: ", data.Items);
+          // Transform data.Items into an array of Klus objects
+          const klussenData = data.Items.map(item => ({
+            currentStatus: item.currentStatus,
+            id: item.id,
+            profession: item.profession,
+            region: item.region,
+            task: item.task,
+            user_email: item.user_email,
+          }));
+
+          console.log("klussenData: ", klussenData);
+          // Now set the transformed array to state
+          setKlussen(klussenData);
+        }
+      })
+      .catch(err => console.log("Error dynamo: ", err));
   }, []);
 
-  if (loading) {
+  /*if (loading) {
     return <div className="loading">Bezig met laden...</div>;
-  }
+  }*/
 
   return (
     <div className="overzicht-klussen-container">
@@ -38,9 +55,9 @@ const OverzichtKlussen: React.FC = () => {
       <div className="klussen-lijst">
         {klussen.map(klus => (
           <div key={klus.id} className="klus-card">
-            <h2>{klus.titel}</h2>
-            <p>{klus.beschrijving}</p>
-            <p>Status: <span className={`status ${klus.status.replace(/\s+/g, '-').toLowerCase()}`}>{klus.status}</span></p>
+            <h2>{klus.profession}</h2>
+            <p>{klus.task}</p>
+            <p>Status: <span className={`status ${klus.currentStatus.replace(/\s+/g, '-').toLowerCase()}`}>{klus.currentStatus}</span></p>
           </div>
         ))}
       </div>
