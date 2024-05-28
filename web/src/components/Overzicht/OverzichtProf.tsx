@@ -6,7 +6,7 @@ interface Vaksspecialist {
   id: number;
   naam: string;
   specialisatie: string;
-  email: string;
+  email?: string;
 }
 
 const OverzichtProf: React.FC = () => {
@@ -24,7 +24,6 @@ const OverzichtProf: React.FC = () => {
           id: item.id,
           naam: `${item.first_name} ${item.last_name}`,
           specialisatie: item.profession,
-          email: item.email,
         }));
 
         setVaksspecialisten(convertedItems || []);
@@ -58,7 +57,6 @@ const OverzichtProf: React.FC = () => {
             <tr key={specialist.id}>
               <td>{specialist.naam}</td>
               <td>{specialist.specialisatie}</td>
-              <td>{specialist.email}</td>
             </tr>
           ))}
         </tbody>
