@@ -85,5 +85,14 @@
 }
 
 .resetpassword-form_field input {
-    outline: none;
+    width: 100%;
+    max-height: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.resetpassword-form_field input:focus {
+    border: 1px solid #308AE4;
 }
