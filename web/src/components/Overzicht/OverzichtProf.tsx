@@ -49,7 +49,6 @@ const OverzichtProf: React.FC = () => {
           <tr>
             <th>Naam</th>
             <th>Specialisatie</th>
-            <th>Email</th>
           </tr>
         </thead>
         <tbody>
