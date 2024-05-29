@@ -52,7 +52,8 @@
 
 #quality-bottomTitle {
   font-weight: 100;
-  padding-bottom: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 #quality-listcon ul {
@@ -90,30 +91,30 @@
 }
 
 .firstquality-tilesBox {
-    background-color: #E9F4FF;
-    padding: 5rem;
-    border-radius: 10px;
+  background-color: #E9F4FF;
+  padding: 5rem;
+  border-radius: 10px;
 }
 
 .firstquality-tilesBox h3 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    font-weight: medium;
-  }
-  
-  .firstquality-tilesBox p {
-    font-size: 1.6rem;
-    padding: 1.5rem;
-    line-height: 2.4rem;
-  }
-  
-  .firstquality-tilesBoxli {
-    list-style: square;
-    margin-left: 4rem;
-    font-size: 1.6rem;
-    line-height: 2.4rem;
-  }
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: medium;
+}
+
+.firstquality-tilesBox p {
+  font-size: 1.6rem;
+  padding: 1.5rem;
+  line-height: 2.4rem;
+}
+
+.firstquality-tilesBoxli {
+  list-style: square;
+  margin-left: 4rem;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
 
 .quality-tilesBox {
   background-color: #E9F4FF;
@@ -156,7 +157,7 @@
 
   #quality-leftSection {
     max-width: 100%;
-  } 
+  }
 
   #quality-reqboxtop h3 {
     text-align: center;
