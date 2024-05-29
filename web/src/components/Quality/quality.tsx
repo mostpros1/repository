@@ -10,18 +10,13 @@ const QualityRequirements = () => {
           <div id="quality-reqboxtop">
             <h3>De huisregels van Mostpros</h3>
             <p>
-              Vakmannen bij Mostpros hechten waarde aan hun werk en de band met
-              hun klanten. Om te garanderen dat iedere vakman de gewenste
-              service en kwaliteit levert, gaan ze akkoord met de huisregels van
-              Mostpros.
+              Vakspecialisten bij Mostpros hechten waarde aan professionaliteit. Als zij van dit platform gebruik willen maken dienen zij akkoord te gaan met de huisregels van Mostpros. Hiermee garanderen wij de beste service voor huiseigenaren.
             </p>
           </div>
           <div id="quality-reqboxbottom">
-            <h3>De Kwaliteitseisen van Mostpros</h3>
+            <h3>De kwaliteitseisen van Mostpros</h3>
             <p>
-              Elke vakman die zich bij Mostpros aansluit, moet voldoen aan
-              bepaalde kwaliteitseisen. Al onze vakmannen dienen bij het
-              inschrijven een KvK-nummer invoeren.
+              Om de kwaliteitseisen te waarborgen dient elke vakspecialist die van Mostpros gebruik maakt verplicht een KvK-nummer door te geven.Klanten verwachten een professioneel bericht bij een grote investering. Schrijf dus duidelijk en in begrijpelijk Nederlands. Doe geen extreem lage biedingen en waarschuw niet voor kosten aan jouw kant. Zorg dat je offertes helder zijn en geef duidelijkheid over BTW en hoe er betaald kan worden.
             </p>
           </div>
         </section>
@@ -35,30 +30,21 @@ const QualityRequirements = () => {
               <span id="quality-numberList">1</span>
               <div className="firstquality-tilesBox">
                 <h3>
-                  Behandel de klant met respect, zowel op het platform als
-                  erbuiten
+                  Wees professioneel en integer
                 </h3>
                 <p>
-                  Ruim na je werk op. Wees professioneel en respectvol. Vermijd
-                  geweld. Mostpros herinnert klanten ook aan hun
-                  verantwoordelijkheid.
+                  Elke vakspecialist dient op een professionele manier om te gaan met een huiseigenaar, zowel op het platform als daarbuiten. Mostpros verwacht hetzelde van de huiseigenaar. Schrijf in begrijpbaar Nederlands, doe geen lage biedingen en zorg dat jouw offertes duidelijk zijn.
                 </p>
               </div>
             </li>
             <li id="quality-list">
               <span id="quality-numberList">2</span>
               <div className="quality-tilesBox">
-                <h3>Houd je aan afspraken met de klant.</h3>
-                <p>Zorg ervoor dat je:</p>
-                <li>
-                  Aanwezig bent en op tijd komt bij het opnemen van een offerte
-                </li>
-                <li>Je levert de offerte op binnen de afgesproken termijn</li>
-                <li>Aanwezig en op tijd bent bij het uitvoeren van de klus</li>
+                <h3>Houd je aan gemaakte afspraken</h3>
+                <p>Bij Mostpros gaat kwaliteit boven kwantiteit. Maak geen afspraken die je niet na kunt komen, neem dus ook geen klussen aan die je niet uit kunt voeren.</p>
+
                 <p>
-                  Als ondernemer ben je vaak druk. Dat snappen we. Kun je een
-                  afspraak niet nakomen? Laat dit dan tijdig weten, plan een
-                  nieuwe afspraak en bied je excuses aan.
+                  Zorg ervoor dat op tijd op locatie bent bij de huiseigenaar, je de offerte binnen de afgesproken termijn oplevert en de klus binnen de afgesproken periode uitvoert. Mocht je een gemaakte afspraak niet na kunnen komen, dan dien je dit tijdig te melden bij de huiseigenaar.
                 </p>
               </div>
             </li>
@@ -66,56 +52,21 @@ const QualityRequirements = () => {
               <span id="quality-numberList">3</span>
               <div className="quality-tilesBox">
                 <h3>
-                  Communiceer duidelijk met de klant over (extra) kosten,
-                  wanneer je kan beginnen en hoe lang het werk duurt.
+                  Wees duidelijk over de kosten
                 </h3>
                 <p>
-                  Klanten zoeken duidelijkheid en zekerheid zonder verrassingen.
-                  Jij bent de expert, dus communiceer duidelijk als er iets
-                  verandert en geef vooraf aan wat ze kunnen verwachten.
+                  Huiseigenaren verwachten duidelijkheid over de kosten, communiceer dus met de klant over wat ze kunnen verwachten. Mochten er extra kosten in rekening komen laat dit dan tijdig weten aan de huiseigenaar.
                 </p>
               </div>
             </li>
             <li id="quality-list">
               <span id="quality-numberList">4</span>
               <div className="quality-tilesBox">
-                <h3>Zorg voor professionele berichten.</h3>
-                <p>
-                  Klanten verwachten een professioneel bericht bij een grote
-                  investering. Schrijf dus duidelijk en in begrijpelijk
-                  Nederlands. Doe geen extreem lage biedingen en waarschuw niet
-                  voor kosten aan jouw kant. Zorg dat je offertes helder zijn en
-                  geef duidelijkheid over BTW en hoe er betaald kan worden.
-                </p>
-              </div>
-            </li>
-            <li id="quality-list">
-              <span id="quality-numberList">5</span>
-              <div className="quality-tilesBox">
                 <h3>
-                  Lever goed werk, maak het werk af en los eventuele klachten
-                  netjes op.
+                  Verdere informatie en klachten
                 </h3>
                 <p>
-                  Het belangrijkste is dat je kwalitatief goed werk levert. Neem
-                  geen opdrachten aan die je niet aankunt. Rond je werk goed af
-                  en laat klanten niet in de steek. Als er problemen zijn,
-                  handel dan klachten netjes af. Als je er met de klant niet
-                  uitkomt, neem dan contact met ons op voor advies.
-                </p>
-              </div>
-            </li>
-            <li id="quality-list">
-              <span id="quality-numberList">6</span>
-              <div className="quality-tilesBox">
-                <h3>Voorwaarden</h3>
-                <p>
-                  Als je ons platform gebruikt, ga je akkoord met de huisregels.
-                  Bij klachten onderzoeken we de situatie. Afhankelijk van het
-                  verleden van het bedrijf kunnen we waarschuwen of het bedrijf
-                  van het platform verwijderen. Vragen? Mail ons op
-                  info@mostpros.com.
-                </p>
+                Door ons platform te gebruiken, stem je in met onze huisregels. Bij klachten onderzoeken we de situatie. Afhankelijk van de geschiedenis van het bedrijf kunnen we een waarschuwing geven of het bedrijf van het platform verwijderen. Mochten er nog verdere onduidelijkheden zijn of wil je een klacht indienen? Mail dan naar info@mostpros.com</p>
               </div>
             </li>
           </ul>
