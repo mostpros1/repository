@@ -181,7 +181,7 @@ function SpecialistHome() {
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/pro-overview`}>1000+ Klussen</Link></h4>
+          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/jobs-overview`}>1000+ Klussen</Link></h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
