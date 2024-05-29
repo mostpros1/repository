@@ -30,15 +30,13 @@
 }
 .whymostprosPBlue {
   font-size: 1.7rem;
-  letter-spacing: 0.1rem;
-  line-height: 2.3rem;
   max-width: 48.3rem;
 }
 
 .whymostprosBlueSquare {
   padding: 0.7rem;
   border-radius: 1.3rem;
-  background: #B5DCFF;
+  background: #E9F4FF;
   display: flex;
   align-items: center;
   justify-content: center;

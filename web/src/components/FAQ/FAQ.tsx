@@ -237,7 +237,7 @@ const FAQ = () => {
   return (
     <>
       <div className="faq-header">
-        <img src={faqpic} alt="faq" />
+        <img className="faq-headerIMG" src={faqpic} alt="faq" />
         <p>Veel gestelde vragen</p>
       </div>
       <div className="sect-header">
