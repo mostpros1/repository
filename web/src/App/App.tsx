@@ -56,6 +56,10 @@ import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
 import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
 import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
+import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
+
+
+
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -65,6 +69,7 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/test" element={<DateAndTimePicker />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
       <Route path="/jobs-overview" element={<OverzichtKlussenPage />} />
@@ -212,7 +217,7 @@ const App = () => {
 
   return (
     <>
-      <ScrollToTop /> {/* Add ScrollToTop here */}
+      <ScrollToTop />
       <Routes>
         {/* Wildcard route to capture the language part of the URL */}
         <Route path="/:lang/*" element={<LanguageAwareRoutes />} />

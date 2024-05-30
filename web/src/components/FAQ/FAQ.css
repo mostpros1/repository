@@ -76,13 +76,15 @@
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 2.0rem;
-  margin-left: 5.5rem;
   align-items: center;
+  justify-content: center;
   max-width: 50rem;
+  gap: 4rem;
+  flex-wrap: wrap;
 }
 
-.faq-header img {
-  display: flex;
+.faq-headerIMG{
+  margin: 0;
 }
 
 .faq-con {
@@ -101,10 +103,10 @@
     width: auto;
   }
 
-  .faq-header img {
+  /* .faq-header img {
     margin-right: 150px;
     width: 500px;
-  }
+  } */
 
   .faq-header {
     display: flex;
@@ -166,7 +168,7 @@
     display: flex;
     flex-direction: column;
     grid-template-columns: auto;
-    width: auto;
+    width: 100%;
     align-items: stretch;
     margin: 0rem;
   }
