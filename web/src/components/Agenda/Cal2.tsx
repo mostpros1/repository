@@ -34,10 +34,13 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
     const handleDateSelect = (_day: number, date: Date) => {
         const dateString = date.toISOString().split('T')[0];
+        today.setDate(today.getDate() - 1);
         if (date < today) return; // Voorkomt selectie van vorige dagen
 
         setSelectedDates([dateString]);
-
+        const dateToAddOneDay = new Date(dateString);
+        dateToAddOneDay.setDate(dateToAddOneDay.getDate() + 1);
+        setSelectedDate(dateToAddOneDay);
         if (selectedDates.length === 1 && selectedDates[0] === dateString) {
             // Als de enige geselecteerde datum de datum is die net gedeselecteerd werd
             setSelectedDay(null); // Zet selectedDay op null
