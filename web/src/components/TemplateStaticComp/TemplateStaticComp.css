@@ -1,0 +1,31 @@
+.mainSectionStaticTemplate{
+  height: 100%; /* Verander % in vh wanneer je elementen te klein zijn waardoor het kader kleiner wordt */
+  width: 100%;
+  background: orange; /* kleur kan veranderd/verwijderd worden dit is puur als voorbeeld zodat je ziet waar het vak zit */
+  padding: 9rem 14rem 9rem 14rem; /* padding wordt later met een mediaqueery verwijderd zodat de pagina responsive blijft */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* dit zorgt ervoor dat elementen onder elkaar komen te staan wanneer er niet genoeg ruimte meer is om naast elkaar te staan */
+  gap: 10rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+
+.paddingExampleStaticTemplate{
+  border: 0.5rem solid black; /* Mag verwijderd worden wordt puur als voorbeeld gebruikt zodat je ziet waar de vlakken staan op de pagina */
+  width: 100%;
+  min-height: 30rem; /* minheight zorgt ervoor dat het vak wel groter maar niet kleiner als 30rem mag worden. Dit is responsive een goede fix voor als de pagina kleiner wordt */
+  display: flex;
+  gap: 5rem;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+
+@media (max-width: 1024px) {
+  .mainSectionStaticTemplate{
+    padding: 0rem; /* dit is de rem waarbij ik eerder zij dat deze nog verwijderd zou worden ivm responsivness */
+  }
+}
