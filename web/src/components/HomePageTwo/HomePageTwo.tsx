@@ -29,7 +29,6 @@ import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
-
 interface Specialist {
   id: number;
   name: string;
@@ -158,7 +157,7 @@ function Searchbar() {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 6 resultaten
+  const slicedResults = searchResults().slice(0, 10); // Limit to the first 10 results
   const resultsRender = slicedResults.map((result, index) => (
     <Link
       to={`/${taal}/jobs#${result.specialistName.replace(
@@ -171,12 +170,11 @@ function Searchbar() {
       onMouseDown={() => handleResultClick(result.link)}
     >
       <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""}
         {result.task}
       </span>
     </Link>
+    
   ));
-
   return (
     <div id="SearchBar-wrapper">
       <div className="SearchBarHome">
@@ -284,7 +282,7 @@ function HomePageTwo() {
         proffesion: "Schoonmaakster",
         textone: "Schoonmaak €29/uur incl. btw",
         texttwo: "Opruimen €29/uur incl. btw",
-        textthree: "Wassen €29/uur incl. btw"
+        textthree: "Wassen €29/uur incl. btw",
       },
       {
         rating: 4,
@@ -294,7 +292,7 @@ function HomePageTwo() {
         proffesion: "Tuinontwerpster",
         textone: "Tuinontwerp €75/uur incl. btw",
         texttwo: "Tuinaanleg €64/uur incl. btw",
-        textthree: "Tuinonderhoud €55/uur incl. btw"
+        textthree: "Tuinonderhoud €55/uur incl. btw",
       },
       {
         rating: 4,
@@ -304,7 +302,7 @@ function HomePageTwo() {
         proffesion: "Electriciën",
         textone: "Groepenkast plaatsen €225+ incl. btw",
         texttwo: "Stopcontact plaatsen €59+ incl. btw",
-        textthree: "Verlichting installeren €78+ incl. btw"
+        textthree: "Verlichting installeren €78+ incl. btw",
       },
       {
         rating: 4,
@@ -314,7 +312,7 @@ function HomePageTwo() {
         proffesion: "Timmerman",
         textone: "Tuinhuis/blokschuur €53/uur incl. btw",
         texttwo: "Overkapping/pergola €53/uur incl. btw",
-        textthree: "Poolhouse/veranda €53/uur incl. btw"
+        textthree: "Poolhouse/veranda €53/uur incl. btw",
       },
       {
         rating: 4,
@@ -324,8 +322,8 @@ function HomePageTwo() {
         proffesion: "Aannemer",
         textone: "Dakrenovatie/vervangen op aanvraag",
         texttwo: "Aanbouw plaatsen op aanvraag",
-        textthree: "Renovatie huis op aanvraag"
-      }
+        textthree: "Renovatie huis op aanvraag",
+      },
     ],
   };
 
@@ -401,11 +399,25 @@ function HomePageTwo() {
       <article className="InfoBarHome">
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/pro-overview`}>100+ Vakspecialisten</Link> </h4>
+          <h4 className="infoContainerHomeH4">
+            <Link
+              className="infoContainerHomeLink"
+              to={`/${taal}/pro-overview`}
+            >
+              100+ Vakspecialisten
+            </Link>{" "}
+          </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
-          <h4 className="infoContainerHomeH4"><Link className="infoContainerHomeLink" to={`/${taal}/jobs-overview`}>1000+ Klussen</Link></h4>
+          <h4 className="infoContainerHomeH4">
+            <Link
+              className="infoContainerHomeLink"
+              to={`/${taal}/jobs-overview`}
+            >
+              1000+ Klussen
+            </Link>
+          </h4>
         </div>
         <div className="infoContainerHome">
           <StarIcon />
@@ -528,7 +540,7 @@ function HomePageTwo() {
                   />
                   <article className="HomeProCardhomeH5">
                     <h5 className="HomeProCardhomeH5">{pro.name}</h5>
-                    <h5 className="HomeProCardhomeH5">{pro.proffesion}</h5>                    
+                    <h5 className="HomeProCardhomeH5">{pro.proffesion}</h5>
                   </article>
                 </section>
                 <section className="HomeProCardReviewSection">
@@ -583,15 +595,19 @@ function HomePageTwo() {
             </h5>
           </section>
         </article>
-        <div className="arrowHome lefthome-arrow" onClick={handleLeftClick}></div>
+        <div
+          className="arrowHome lefthome-arrow"
+          onClick={handleLeftClick}
+        ></div>
         <article className="HomeProfReviewHomeContainer">
           {reviews[activeTab]
             .slice(startIndex, startIndex + 2)
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
-                    }`}
+                  className={`ReviewCardHomeProfHome ${
+                    reviewAnimation ? "animate-out" : ""
+                  }`}
                 >
                   <img
                     src={review.image}
@@ -629,7 +645,10 @@ function HomePageTwo() {
             ))}
         </article>
 
-        <div className="arrowHome righthome-arrow" onClick={handleRightClick}></div>
+        <div
+          className="arrowHome righthome-arrow"
+          onClick={handleRightClick}
+        ></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
         <article className="JointhecomminityContainer">
@@ -645,7 +664,12 @@ function HomePageTwo() {
             >
               Plaats je klus
             </button>
-            <button className="CommunityTwoHome" onClick={handleProOnboardingClick}>Inschrijven als vakman</button>
+            <button
+              className="CommunityTwoHome"
+              onClick={handleProOnboardingClick}
+            >
+              Inschrijven als vakman
+            </button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
             <ArrowUpwardIcon style={{ fontSize: "3rem" }} />
