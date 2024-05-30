@@ -1,6 +1,6 @@
 import NavBar from "../../components/ui/NavBar/NavBar";
 import Footer from "../../components/ui/Footer/Footer";
-import FAQPageLayout from "./HelpPage-rt";
+import FAQPageLayout from "../../components/HelpComp/HelpComp";
 import "./FAQPage.css";
 
 function HelpPage() {
