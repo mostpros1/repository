@@ -552,11 +552,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     };
 
     const addAvailibility = async (date: string, time: string) => {
-        if (selectedDate === null) {
-            console.error("Selected date is null. Cannot add entry.");
-            return;
-        }
-
+       
         console.log(entries);
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
