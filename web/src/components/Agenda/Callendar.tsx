@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNav from "../ui/SideNav/SideNav.tsx";
-import Cal from "./cal.tsx";
+import DateAndTimePicker from "./Cal2.tsx";
 import './Callendar.css'; // Import the CSS file
 import "../ui/NavBar/NavBar.css";
 
@@ -14,7 +14,7 @@ function Callendar() {
                 </article>
             </section>
             <section className='rightsideCalendarSection'>
-                <Cal />
+                <DateAndTimePicker />
             </section>
         </main>
     );
