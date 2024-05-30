@@ -1,0 +1,14 @@
+
+.IMGTextContainerHelp{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.1rem;
+  flex-wrap: wrap-reverse;
+  margin-bottom: 7rem;
+}
+
+.FAQTopSectionP{
+  font-size: 2rem;
+}
