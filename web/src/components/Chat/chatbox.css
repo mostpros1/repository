@@ -844,3 +844,30 @@
   border-radius: 5px;
   border: solid 2px black;
 }
+
+.search-input-header {
+  position: absolute;
+  left: 260px;
+  width: 140px;
+  border: solid 2px black;
+  border-radius: 5px;
+  height: 30px;
+  padding: 10px;
+  margin-top: 5px;
+  transition: opacity 0.3s, visibility 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  margin-top: 8px;
+}
+
+.search-input-header.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-header{
+  position: absolute;
+  left: 430px;
+  top: 10px;
+  cursor: pointer;
+}
