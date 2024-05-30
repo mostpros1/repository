@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
-import * as mutations from "../../graphql/mutations"; // Import the mutations
+import * as mutations from "../../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
 import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 import {
   BsPaperclip,
   BsPersonCircle,
@@ -18,12 +19,21 @@ import {
   BsBell,
   BsBellSlash,
   BsCreditCard,
+  BsPin,
+  BsPinFill,
+  BsStar,
+  BsStarFill,
 } from "react-icons/bs";
+import { CiSearch } from "react-icons/ci";
 import { MdDriveFileMove } from "react-icons/md";
+import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
+import { MdOutlineCancel } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
 import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
+import { MdOutlineEdit } from "react-icons/md";
 
 interface Chat {
   id: string;
@@ -31,6 +41,8 @@ interface Chat {
   createdAt: string;
   email: string;
   members: string[];
+  read: boolean;
+  delivered: boolean;
 }
 
 interface GroupedMessages {
@@ -74,14 +86,24 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [isTyping, setIsTyping] = useState(false);
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
+  const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
+  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(new Set());
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
   const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
 
   // State for controlling the payment modal
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  // State for loading feedback
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const [messageSearchTerm, setMessageSearchTerm] = useState<string>("");
+  const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
 
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
@@ -195,15 +217,21 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   useEffect(() => {
     async function fetchChats() {
-      const allChats: any = await API.graphql({
-        query: queries.listChats,
-        variables: {
-          filter: {
-            members: { contains: user.attributes.email },
+      setIsLoading(true);
+      try {
+        const allChats: any = await API.graphql({
+          query: queries.listChats,
+          variables: {
+            filter: {
+              members: { contains: user.attributes.email },
+            },
           },
-        },
-      });
-      setChats(allChats.data.listChats.items);
+        });
+        setChats(allChats.data.listChats.items);
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+      setIsLoading(false);
     }
     fetchChats();
   }, [user.attributes.email]);
@@ -286,13 +314,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-  const handleFileUpload = async (file) => {
+  const handleFileUpload = async (file: File) => {
     const reader = new FileReader();
 
     reader.onload = async () => {
       if (reader.result) {
         const base64Data = (reader.result as string).split(',')[1];
         try {
+          setIsUploading(true);
           const response = await axios.post(
             'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
             { photo: base64Data },
@@ -303,8 +332,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             }
           );
           console.log(response.data);
+          await handleSendMessage(`<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`);
+          setIsUploading(false);
         } catch (error) {
           console.error('Error uploading photo:', error);
+          alert('Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.');
+          setIsUploading(false);
         }
       } else {
         console.error('FileReader result is null');
@@ -316,38 +349,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     };
 
     reader.readAsDataURL(file);
-  };
-
-  const handleUpload = async () => {
-    try {
-      if (!selectedFile) {
-        console.error("No file selected");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("photo", selectedFile);
-
-      const response = await axios.post(
-        "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log(response.data);
-      setUploadedPhotoUrl(response.data);
-
-      await handleSendMessage(
-        `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
-      );
-    } catch (error) {
-      console.error("Error uploading photo:", error);
-      alert("Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.");
-    }
   };
 
   const handleDropUpClick = () => {
@@ -366,6 +367,166 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowNewChatModal(false);
+        setShowSettingsModal(false);
+        setShowSavedMessagesModal(false);
+        setShowPaymentModal(false);
+        setShowFavoritesModal(false);
+      }
+    };
+
+    const handleClickOutsideModal = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        (showNewChatModal || showSettingsModal || showSavedMessagesModal || showPaymentModal || showFavoritesModal) &&
+        target &&
+        !document.querySelector(".modal-content")?.contains(target)
+      ) {
+        setShowNewChatModal(false);
+        setShowSettingsModal(false);
+        setShowSavedMessagesModal(false);
+        setShowPaymentModal(false);
+        setShowFavoritesModal(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("mousedown", handleClickOutsideModal);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleClickOutsideModal);
+    };
+  }, [showNewChatModal, showSettingsModal, showSavedMessagesModal, showPaymentModal, showFavoritesModal]);
+
+  const handleEditMessage = async (messageId: string, newText: string) => {
+    try {
+      await API.graphql({
+        query: mutations.updateChat,
+        variables: {
+          input: {
+            id: messageId,
+            text: newText,
+          },
+        },
+      });
+      // Update local state
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === messageId ? { ...chat, text: newText } : chat
+        )
+      );
+    } catch (error) {
+      console.error("Error editing message:", error);
+    }
+  };
+
+  const handleDeleteMessage = async (messageId: string) => {
+    try {
+      await API.graphql({
+        query: mutations.deleteChat,
+        variables: {
+          input: {
+            id: messageId,
+          },
+        },
+      });
+      // Update local state
+      setChats((prevChats) => prevChats.filter((chat) => chat.id !== messageId));
+    } catch (error) {
+      console.error("Error deleting message:", error);
+    }
+  };
+
+  const handleDeleteChat = async (contact: string) => {
+    try {
+      const chatToDelete = chats.find(chat => chat.members.includes(contact) && chat.members.includes(user.attributes.email));
+      if (chatToDelete) {
+        await API.graphql({
+          query: mutations.deleteChat,
+          variables: {
+            input: { id: chatToDelete.id }
+          }
+        });
+        setChats(prevChats => prevChats.filter(chat => chat.id !== chatToDelete.id));
+        setSelectedContact(null);
+      }
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+    }
+  };
+
+  // const markAsRead = async (messageId: string) => {
+  //   try {
+  //     await API.graphql({
+  //       query: mutations.updateChatReadStatus,
+  //       variables: {
+  //         id: messageId,
+  //         read: true,
+  //       },
+  //     });
+  //     setChats((prevChats) =>
+  //       prevChats.map((chat) =>
+  //         chat.id === messageId ? { ...chat, read: true } : chat
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error marking message as read:", error);
+  //   }
+  // };
+
+  // const markAsDelivered = async (messageId: string) => {
+  //   try {
+  //     await API.graphql({
+  //       query: mutations.updateChatDeliveredStatus,
+  //       variables: {
+  //         id: messageId,
+  //         delivered: true,
+  //       },
+  //     });
+  //     setChats((prevChats) =>
+  //       prevChats.map((chat) =>
+  //         chat.id === messageId ? { ...chat, delivered: true } : chat
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error marking message as delivered:", error);
+  //   }
+  // };
+
+  // // Mark messages as read when the chat box is opened
+  // useEffect(() => {
+  //   if (selectedContact) {
+  //     const unreadMessages = chats.filter(
+  //       (chat) => chat.members.includes(selectedContact) && !chat.read
+  //     );
+  //     unreadMessages.forEach((message) => markAsRead(message.id));
+  //   }
+  // }, [selectedContact, chats]);
+
+  // // Mark messages as delivered when they are sent
+  // useEffect(() => {
+  //   const undeliveredMessages = chats.filter(
+  //     (chat) => chat.members.includes(selectedContact) && !chat.delivered
+  //   );
+  //   undeliveredMessages.forEach((message) => markAsDelivered(message.id));
+  // }, [chats, selectedContact]);
+
+  const handleSendLocation = async () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const locationUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
+        await handleSendMessage(`<a href="${locationUrl}" target="_blank">Mijn locatie</a>`);
+      });
+    } else {
+      alert("Geolocatie wordt niet ondersteund door deze browser.");
+    }
+  };
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -451,16 +612,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return htmlString;
   };
 
+  const validateMessageContent = (message: string) => {
+    const phoneNumberRegex = /(\+?\d{1,3}[-.\s]?|(\(?\d{2,4}\)?))\d{3}[-.\s]?\d{4,6}/g;
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/;
+    const forbiddenWords = ["password", "secret", "confidential"];
+
+    if (phoneNumberRegex.test(message) || emailRegex.test(message)) {
+      return false;
+    }
+
+    for (const word of forbiddenWords) {
+      if (message.toLowerCase().includes(word)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleSendMessageClick = async () => {
     const messageInput = document.getElementById("message-input") as HTMLInputElement;
     if (messageInput) {
       const messageText = messageInput.value;
       if (messageText && recipientEmail) {
+        if (!validateMessageContent(messageText)) {
+          alert("Het bericht bevat verboden informatie en kan niet worden verzonden.");
+          return;
+        }
         if (replyingTo) {
           await handleSendMessage(
-            stopXSS(
-              `Re: ${replyingTo.text} | U: ${messageText}`
-            )
+            stopXSS(`Re: ${replyingTo.text} | U: ${messageText}`)
           );
           setReplyingTo(null);
         } else {
@@ -505,6 +686,30 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     });
   };
 
+  const handlePinMessage = (messageId: string) => {
+    setPinnedMessages((prev) => {
+      const newPinnedMessages = new Set(prev);
+      if (newPinnedMessages.has(messageId)) {
+        newPinnedMessages.delete(messageId);
+      } else {
+        newPinnedMessages.add(messageId);
+      }
+      return newPinnedMessages;
+    });
+  };
+
+  const handleFavoriteMessage = (messageId: string) => {
+    setFavoriteMessages((prev) => {
+      const newFavoriteMessages = new Set(prev);
+      if (newFavoriteMessages.has(messageId)) {
+        newFavoriteMessages.delete(messageId);
+      } else {
+        newFavoriteMessages.add(messageId);
+      }
+      return newFavoriteMessages;
+    });
+  };
+
   const handleReplyMessage = (message: Chat) => {
     setReplyingTo(message);
   };
@@ -537,6 +742,39 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (messageSearchTerm) {
+      const filtered = chats.filter((chat) =>
+        chat.text.toLowerCase().includes(messageSearchTerm.toLowerCase())
+      );
+      setFilteredMessages(filtered);
+    } else {
+      setFilteredMessages([]);
+    }
+  }, [messageSearchTerm, chats]);
+
+  const [messageSearchTermm, setMessageSearchTermm] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleSearchClick = () => {
+    setShowSearch(true);
+  };
+
+  const handleCancelClick = () => {
+    setShowSearch(false);
+    setMessageSearchTerm('');
+  };
+
+  const MessageStatusIcon = ({ delivered, read }: { delivered: boolean; read: boolean }) => {
+    if (read) {
+      return <IoCheckmarkDone className="message-status-icon read" />;
+    } else if (delivered) {
+      return <IoCheckmark className="message-status-icon delivered" />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
       <div className="sidebarr" id="sidebarr">
@@ -553,6 +791,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <div className="dropdownn-item" onClick={() => setShowSettingsModal(true)}>
                 Instellingen
               </div>
+              {selectedContact && (
+                <div className="dropdownn-item" onClick={() => handleDeleteChat(selectedContact)}>
+                  Verwijder chat
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -630,55 +873,118 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
+            <div className="search-container" style={{ position: 'relative' }}>
+              {!showSearch && (
+                <button onClick={handleSearchClick} className="search-icon">
+                  <CiSearch className="search-header" size={25}/>
+                </button>
+              )}
+              <input
+                type="text"
+                placeholder="Zoek berichten..."
+                value={messageSearchTerm}
+                onChange={(e) => setMessageSearchTerm(e.target.value)}
+                className={`search-input-header ${showSearch ? 'show' : ''}`}
+              />
+              {showSearch && (
+                <button onClick={handleCancelClick} className="cancel-icon">
+                  <MdOutlineCancel className="search-header" size={25}/>
+                </button>
+              )}
+            </div>
           </div>
           <div className="chat-box" ref={chatBoxRef}>
-            {Object.keys(groupedMessages).map((date) => {
-              const { text, className } = formatDate(date);
-              return (
-                <React.Fragment key={date}>
-                  <div className={`date-separator ${className}`}>{text}</div>
-
-                  {groupedMessages[date].map((chat) => (
+            {isLoading && <div className="loading-spinner">Loading...</div>}
+            {filteredMessages.length > 0 ? (
+              filteredMessages.map((chat) => (
+                <div
+                  key={chat.id}
+                  className={`message-container ${
+                    chat.email === user.attributes.email
+                      ? "self-message-container"
+                      : "other-message-container"
+                  } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                >
+                  <div
+                    className={`message-bubble ${
+                      chat.email === user.attributes.email
+                        ? "self-message"
+                        : "other-message"
+                    }`}
+                  >
                     <div
-                      key={chat.id}
-                      className={`message-container ${
-                        chat.email === user.attributes.email
-                          ? "self-message-container"
-                          : "other-message-container"
-                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
-                    >
-                      <div
-                        className={`message-bubble ${
-                          chat.email === user.attributes.email
-                            ? "self-message"
-                            : "other-message"
-                          }`}
-                      >
-                        {/* <div className="message-actions">
-                          {/* <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                          <button onClick={() => handleMarkMessage(chat.id)}>
-                            {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
-                          </button> */}
-                          {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
-                        {/* </div> */}
-                        <div
-                          className="text"
-                          dangerouslySetInnerHTML={{ __html: chat.text }}
-                        />
-                        <time dateTime={chat.createdAt} className="message-time">
-                          {new Intl.DateTimeFormat("nl-NL", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }).format(new Date(chat.createdAt))}
-                        </time>
-                      </div>
+                      className="text"
+                      dangerouslySetInnerHTML={{ __html: chat.text }}
+                    />
+                    <div className="message-actions">
+                      <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                      <button onClick={() => handleMarkMessage(chat.id)}>
+                        {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                      </button>
+                      <button onClick={() => handleDeleteMessage(chat.id)}><MdDeleteOutline /></button>
                     </div>
-                  ))}
-                </React.Fragment>
-              );
-            })}
+                    <div className="message-status">
+                      <MessageStatusIcon delivered={chat.delivered} read={chat.read} />
+                    </div>
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat("nl-NL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(chat.createdAt))}
+                    </time>
+                  </div>
+                </div>
+              ))
+            ) : (
+              Object.keys(groupedMessages).map((date) => {
+                const { text, className } = formatDate(date);
+                return (
+                  <React.Fragment key={date}>
+                    <div className={`date-separator ${className}`}>{text}</div>
+                    {groupedMessages[date].map((chat) => (
+                      <div
+                        key={chat.id}
+                        className={`message-container ${
+                          chat.email === user.attributes.email
+                            ? "self-message-container"
+                            : "other-message-container"
+                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                      >
+                        <div
+                          className={`message-bubble ${
+                            chat.email === user.attributes.email
+                              ? "self-message"
+                              : "other-message"
+                          }`}
+                        >
+                          <div
+                            className="text"
+                            dangerouslySetInnerHTML={{ __html: chat.text }}
+                          />
+                          <div className="message-actions">
+                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
+                            <button onClick={() => handleMarkMessage(chat.id)}>
+                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                            </button>
+                            <button onClick={() => handleDeleteMessage(chat.id)}><MdDeleteOutline /></button>
+                          </div>
+                          <div className="message-status">
+                          <MessageStatusIcon delivered={chat.delivered} read={chat.read} />
+                          </div>
+                          <time dateTime={chat.createdAt} className="message-time">
+                            {new Intl.DateTimeFormat("nl-NL", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }).format(new Date(chat.createdAt))}
+                          </time>
+                        </div>
+                      </div>
+                    ))}
+                  </React.Fragment>
+                );
+              })
+            )}
           </div>
-
           {replyingTo && (
             <div className="replying-to">
               Replying to: <blockquote>{replyingTo.text}</blockquote>
@@ -686,6 +992,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             </div>
           )}
           <div className="input-form">
+            {isUploading && <div className="loading-spinner">Uploading...</div>}
             <input
               type="text"
               id="message-input"
@@ -720,6 +1027,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                     onClick={() => setShowPaymentModal(true)}
                   >
                     <BsCreditCard size={25} color="blue" />
+                  </button>
+                  <button className="dropup-option" onClick={handleSendLocation}>
+                    <FaLocationCrosshairs size={25} color="blue" />
                   </button>
                 </div>
               )}
@@ -799,6 +1109,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 if (message) {
                   return (
                     <div key={message.id} className="saved-message-item">
+                      <div className="saved-message-sender">
+                        Van: {message.email.split("@")[0]}
+                      </div>
                       <div className="saved-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
                       <time dateTime={message.createdAt} className="saved-message-time">
                         {new Intl.DateTimeFormat("nl-NL", {
@@ -816,6 +1129,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               })}
             </div>
             <button onClick={() => setShowSavedMessagesModal(false)} className="button-modal">Sluiten</button>
+          </div>
+        </div>
+      )}
+      {showFavoritesModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Favoriete Berichten</h2>
+            <div className="favorite-messages-list">
+              {Array.from(favoriteMessages).map((messageId) => {
+                const message = chats.find((chat) => chat.id === messageId);
+                if (message) {
+                  return (
+                    <div key={message.id} className="favorite-message-item">
+                      <div className="favorite-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
+                      <time dateTime={message.createdAt} className="favorite-message-time">
+                        {new Intl.DateTimeFormat("nl-NL", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(message.createdAt))}
+                      </time>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+            <button onClick={() => setShowFavoritesModal(false)} className="button-modal">Sluiten</button>
           </div>
         </div>
       )}
