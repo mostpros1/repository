@@ -47,9 +47,10 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx"
+import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 
-import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
+import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
+import TemplateStaticPage from "../pages/TemplatePageStatic/TemplatePageStatic.tsx";
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
@@ -76,6 +77,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-overview" element={<OverzichtProfPage />} />
       <Route path="/help" element={<HelpPage />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
+      <Route path="/TemplateStaticPage" element={<TemplateStaticPage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
@@ -97,9 +99,9 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
-      <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
