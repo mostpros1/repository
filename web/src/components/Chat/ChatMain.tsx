@@ -105,6 +105,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [messageSearchTerm, setMessageSearchTerm] = useState<string>("");
   const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
 
+  const settingsModalRef = useRef<HTMLDivElement>(null);
+
   const handleTypingIndicator = (isTyping: boolean) => {
     setIsTyping(isTyping);
   };
@@ -356,7 +358,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropUpRef.current && !dropUpRef.current.contains(event.target as Node)) {
+    if (
+      dropUpRef.current &&
+      !dropUpRef.current.contains(event.target as Node) &&
+      !settingsModalRef.current?.contains(event.target as Node)
+    ) {
       setIsDropUpOpen(false);
     }
   };
@@ -384,7 +390,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       if (
         (showNewChatModal || showSettingsModal || showSavedMessagesModal || showPaymentModal || showFavoritesModal) &&
         target &&
-        !document.querySelector(".modal-content")?.contains(target)
+        !settingsModalRef.current?.contains(target)
       ) {
         setShowNewChatModal(false);
         setShowSettingsModal(false);
@@ -1044,7 +1050,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       </div>
       {showNewChatModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Start Nieuwe Chat</h2>
             <input
               type="email"
@@ -1059,7 +1065,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       )}
       {showSettingsModal && (
         <div className="settings-modal-overlay">
-          <div className="settings-modal-content">
+          <div className="settings-modal-content" ref={settingsModalRef}>
             <h2>Instellingen</h2>
             <div className="settings-item">
               <label htmlFor="text-size">Tekstgrootte:</label>
@@ -1101,7 +1107,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       )}
       {showSavedMessagesModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Opgeslagen Berichten</h2>
             <div className="saved-messages-list">
               {Array.from(markedMessages).map((messageId) => {
@@ -1134,7 +1140,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       )}
       {showFavoritesModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Favoriete Berichten</h2>
             <div className="favorite-messages-list">
               {Array.from(favoriteMessages).map((messageId) => {
@@ -1164,7 +1170,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       )}
       {showPaymentModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Payment Options</h2>
             <div className="amount-input-wrapper">
               <input
