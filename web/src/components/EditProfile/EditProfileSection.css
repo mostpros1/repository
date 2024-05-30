@@ -3,12 +3,13 @@
 .edit_profile_container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .profile-con-upper {
-  width: 100rem;
+  width: 100%;
   min-height: 50rem;
-  margin: auto;
+  margin: auto 0 0 2rem;
   background-color: #e8f3fe;
   border-radius: 10px;
 }
@@ -16,6 +17,8 @@
 .moreinfo {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-left: auto;
   width: fit-content;
 }
 
@@ -206,7 +209,7 @@
 .img-slideshow-con {
   display: flex;
   flex-direction: column;
-  width: auto;
+  width: 100%;
 }
 .img-slideshow-con p {
   font-family: "poppins", "Inter";
@@ -218,8 +221,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 50rem;
-  margin: 20px 0px;
+  width: 100%;
+  margin: auto;
 }
 
 .img-col img {
@@ -267,7 +270,7 @@
 .img-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 50rem;
+  width: auto;
 }
 
 .large-img img {
@@ -390,6 +393,7 @@
     flex-direction: row;
     width: 100%;
     justify-content: center;
+    align-items: center;
   }
 }
 

@@ -30,13 +30,22 @@
 }
 
 @media (max-width: 1044px) {
-  .RightsideHomeOwnerSettingsSection {
-      display: none;
+
+  .homeOwnerProfileMain {
+    padding-right: 0rem;
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidenavHomeOwnerProfileSection {
+    display: none;
   }
 
   .HomeOwnerSettingsMain {
-      align-items: center;
-      justify-content: center;
-      padding-right: 0rem;
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
   }
 }
