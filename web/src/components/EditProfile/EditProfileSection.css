@@ -93,6 +93,7 @@
 .profile-info-con-side {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
   justify-content: space-evenly;
 }
 
@@ -369,7 +370,7 @@
     padding: 1rem;
     text-align: center;
     align-items: center;
-  } 
+  }
 
   .availability-con {
     display: flex;
@@ -420,7 +421,7 @@
     align-items: center;
     width: 100%;
   }
-  
+
   .edit_profile_container {
     display: flex;
     flex-direction: column;

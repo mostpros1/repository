@@ -24,7 +24,7 @@ const EditProfileSection = () => {
     rating: 4,
     phone: "+31 0612345678",
     email: "Janschilder@hotmail.com",
-    introduction: "Hallo, ik ben Jan.",
+    introduction: "Hallo, ik ben Jason.",
     description:
       "Ik ben een Loodgieter voor meer dan 10 jaar. Ik heb aan veel projecten gewerkt en heb veel ervaring met alle klussen die te maken hebben met loodgieterswerk dus als je mij nodig heb neem meteen contact op met mij.",
     images: [Bas_R, Gardener, Rik, Robbert],
