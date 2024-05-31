@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import { Auth } from 'aws-amplify';
-import '../MultistepForm/DatePicker.css';
+import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import { dynamo } from '../../../declarations.ts';
+import { Checkbox } from '@mui/material';
+import "./Cal2.css";
 
 interface DateAndTimePickerProps {
     // onDateChange?: (selectedDates: string[]) => void;
@@ -34,10 +36,13 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
     const handleDateSelect = (_day: number, date: Date) => {
         const dateString = date.toISOString().split('T')[0];
+        today.setDate(today.getDate() - 1);
         if (date < today) return; // Voorkomt selectie van vorige dagen
 
         setSelectedDates([dateString]);
-
+        const dateToAddOneDay = new Date(dateString);
+        dateToAddOneDay.setDate(dateToAddOneDay.getDate() + 1);
+        setSelectedDate(dateToAddOneDay);
         if (selectedDates.length === 1 && selectedDates[0] === dateString) {
             // Als de enige geselecteerde datum de datum is die net gedeselecteerd werd
             setSelectedDay(null); // Zet selectedDay op null
@@ -198,9 +203,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         } // Subtract 1 because JS months are 0-indexed
         // Set the date to the first day of the selected month/year
     };
-    
 
-    
+
+
 
     async function getEntriesFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
@@ -272,7 +277,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
 
 
-    
+
     async function getAvailabilityFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
@@ -451,22 +456,22 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
             console.error(err);
         }
         );
-
+        setCheckedItems([]);
     };
 
     const DeleteMultipleDays = async (startDate: HTMLInputElement, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
-    
+
         // Calculate the total number of days in the month
         const year = startDateValue.getFullYear();
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
+
         // Get the authenticated user's email
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
-    
+
         // Query the Professionals table to find the user's record
         dynamo.query({
             TableName: "Professionals",
@@ -479,17 +484,17 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
             if (data.Items && data.Items.length > 0) {
                 const userId = data.Items[0].id;
                 const existingAvailability = data.Items[0].availability || [];
-    
+
                 // Determine the starting point based on the pattern
-                let baseDate = new Date(startDateValue);
+                const baseDate = new Date(startDateValue);
                 switch (pattern) {
                     case 'weekday':
-                        while (baseDate.getDay()!== 1) { // Find the first Monday
+                        while (baseDate.getDay() !== 1) { // Find the first Monday
                             baseDate.setDate(baseDate.getDate() + 1);
                         }
                         break;
                     case 'weekend':
-                        while (baseDate.getDay()!== 6) { // Find the first Saturday
+                        while (baseDate.getDay() !== 6) { // Find the first Saturday
                             baseDate.setDate(baseDate.getDate() + 1);
                         }
                         break;
@@ -499,7 +504,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     default:
                         throw new Error("Invalid pattern");
                 }
-    
+
                 // Construct the new availability list by removing the dates added based on the pattern
                 const updatedAvailability = existingAvailability.filter(item => {
                     const itemDate = new Date(item.date);
@@ -507,21 +512,21 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     for (let a = 0; a < daysInMonth; a++) {
                         const currentDate = new Date(baseDate);
                         currentDate.setDate(baseDate.getDate() + a);
-    
+
                         // Skip weekends for 'weekday' pattern
                         if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
-    
+
                         // Skip weekdays for 'weekend' pattern
                         if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
-    
+
                         if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
                             skip = true;
                             break;
                         }
                     }
-                    return!skip;
+                    return !skip;
                 });
-    
+
                 // Update the user's record in the Professionals table
                 dynamo.update({
                     TableName: "Professionals",
@@ -536,11 +541,11 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                         ":val": updatedAvailability
                     }
                 }).promise()
-                  .then(output => {
+                    .then(output => {
                         getAvailabilityFromDB(); // Refresh the availability data
                         console.log("Deleted days successfully.", output.Attributes);
                     })
-                  .catch(error => {
+                    .catch(error => {
                         console.error("Failed to delete days:", error);
                     });
             } else {
@@ -552,10 +557,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     };
 
     const addAvailibility = async (date: string, time: string) => {
-        if (selectedDate === null) {
-            console.error("Selected date is null. Cannot add entry.");
-            return;
-        }
 
         console.log(entries);
         const authenticatedUser = await Auth.currentAuthenticatedUser();
@@ -603,7 +604,17 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         });
     };
 
+    const firstDate = new Date(selectedDates[0]);
+    firstDate.setDate(firstDate.getDate() + 1); // Adjust the date to the previous day
 
+    const vandaag = new Date(today);
+    vandaag.setHours(12);
+    let dateKey = format(vandaag, 'yyyy-MM-dd');
+
+    if (firstDate && isValid(firstDate)) {
+        dateKey = format(firstDate, 'yyyy-MM-dd');
+        // Proceed with formattedDate
+    }
 
     return (
         <div className="date-time-picker">
@@ -634,125 +645,157 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     {renderCalendar()}
                 </div>
             </div>
-            {selectedDate && (
-                <div>
-                    <h3>Entries for {format(selectedDate, 'yyyy-MM-dd')}</h3>
-                    <ul>
-                        {entries[format(selectedDate, 'yyyy-MM-dd')]?.map((entry, index) => (
-                            <li key={index}>
-                                <div style={{ backgroundColor: entry.color, opacity: 0.5, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
-                                    <>
-                                        {entry.text}
-                                        {' '}
-                                        {entry.time}
-                                    </>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+
+            <div className="container">
+                <div className="left-section">
+                    {selectedDate && (
+                        <div>
+                            <h3>Entries for {format(selectedDate, 'yyyy-MM-dd')}</h3>
+                            <ul>
+                                {entries[format(selectedDate, 'yyyy-MM-dd')]?.map((entry, index) => (
+                                    <li key={index}>
+                                        <div style={{ backgroundColor: entry.color, opacity: 0.5, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
+                                            <>
+                                                {entry.text}
+                                                {' '}
+                                                {entry.time}
+                                            </>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                            <form
+                                onSubmit={e => {
+                                    e.preventDefault();
+                                    const entry = (e.target as HTMLFormElement).elements.namedItem('entry') as HTMLInputElement;
+                                    const color = (e.target as HTMLFormElement).elements.namedItem('color') as HTMLSelectElement;
+                                    addEntry(entry.value, '', color.value);
+                                    entry.value = '';
+                                }}
+                            >
+                                <input type="text" name="entry" placeholder="Add an entry" />
+                                <select name="color">
+                                    <option value="rgba(0,0,0,0.5)">Black</option>
+                                    <option value="rgba(255,0,0,0.5)">Red</option>
+                                    <option value="rgba(0,255,0,0.5)">Green</option>
+                                    <option value="rgb(52, 143, 255)">Blue</option>
+                                </select>
+                                <button type="submit">Add</button>
+                            </form>
+
+                        </div>
+                    )}
                     <form
                         onSubmit={e => {
                             e.preventDefault();
-                            const entry = (e.target as HTMLFormElement).elements.namedItem('entry') as HTMLInputElement;
-                            const color = (e.target as HTMLFormElement).elements.namedItem('color') as HTMLSelectElement;
-                            addEntry(entry.value, '', color.value);
-                            entry.value = '';
+                            const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                            const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
+
+                            setSelectedDate(new Date(date.value));
+                            addAvailibility(date.value, time.value);
+                            date.value = '';
+                            time.value = '';
                         }}
                     >
-                        <input type="text" name="entry" placeholder="Add an entry" />
-                        <select name="color">
-                            <option value="rgba(0,0,0,0.5)">Black</option>
-                            <option value="rgba(255,0,0,0.5)">Red</option>
-                            <option value="rgba(0,255,0,0.5)">Green</option>
-                            <option value="rgb(52, 143, 255)">Blue</option>
-                        </select>
+                        <b>Add availability</b>
+                        <br></br>
+                        <input type="date" name="date" />
+                        <input type="time" name="time" />
                         <button type="submit">Add</button>
                     </form>
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                            const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                            const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
 
+                            // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
+                            const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
+
+                            // Now pass the asserted patternValue to addMultipleDays
+                            addMultipleDays(selectedDate, "heele dag", patternValue);
+                        }}
+                    >
+                        <div>
+                            <br></br>
+                            <b>Meerdere dagen</b>
+                            <br></br>
+                            <label>Datum</label>
+                            <input type="date" name="date" />
+                            <br></br>
+                            <label>Select Pattern:</label>
+                            <select name="pattern">
+                                <option value="weekday">Door de weeks</option>
+                                <option value="weekend">Weekend</option>
+                                <option value="daily">Elke Dag</option>
+                            </select>
+                            <br></br>
+                            <button type="submit">meerdere dagen</button>
+                        </div>
+                    </form>
+
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                            const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
+                            const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
+
+                            // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
+                            const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
+
+                            // Call the function to delete multiple days based on the selected pattern
+                            DeleteMultipleDays(selectedDate, patternValue);
+                        }}
+                    >
+                        <div>
+                            <br></br>
+                            <b>Verwijder Meerdere Dagen</b>
+                            <br></br>
+                            <label>Date:</label>
+                            <input type="date" name="date" />
+                            <br></br>
+                            <label>Select Pattern:</label>
+                            <select name="pattern">
+                                <option value="weekday">Door de weeks</option>
+                                <option value="weekend">Weekend</option>
+                                <option value="daily">Elke Dag</option>
+                            </select>
+                            <br></br>
+                            <button type="submit">Verwijder Meerdere Dagen</button>
+                        </div>
+                    </form>
                 </div>
-            )}
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    const date = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-                    const time = (e.target as HTMLFormElement).elements.namedItem('time') as HTMLInputElement;
-                    
-                    setSelectedDate(new Date(date.value));
-                    addAvailibility(date.value, time.value);
-                    date.value = '';
-                    time.value = '';
-                }}
-            >
-                <b>Add availability</b>
-                <br></br>
-                <input type="date" name="date" />
-                <input type="time" name="time" />
-                <button type="submit">Add</button>
-            </form>
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-                    const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
-
-                    // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
-                    const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
-
-                    // Now pass the asserted patternValue to addMultipleDays
-                    addMultipleDays(selectedDate, "heele dag", patternValue);
-                }}
-            >
-                <div>
-                    <br></br>
-                    <b>Meerdere dagen</b>
-                    <br></br>
-                    <label>Datum</label>
-                    <input type="date" name="date" />
-                    <br></br>
-                    <label>Select Pattern:</label>
-                    <select name="pattern">
-                        <option value="weekday">Door de weeks</option>
-                        <option value="weekend">Weekend</option>
-                        <option value="daily">Elke Dag</option>
-                    </select>
-                    <br></br>
-                    <button type="submit">meerdere dagen</button>
+                <div className="right-section">
+                    <div className="dropdown">
+                        <form onSubmit={handleSubmit}>
+                            Verwijder Beschikbaarheid<br></br>
+                            {availability
+                                .filter(availabilityItem => availabilityItem.date === dateKey)
+                                .map((filteredAvailabilityItem, index) => (
+                                    <div key={index}>
+                                        <Checkbox
+                                            //type="checkbox"
+                                            name={`delete-date-${index}`}
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setCheckedItems([...checkedItems, filteredAvailabilityItem]);
+                                                } else {
+                                                    // Compare both date and time for uniqueness
+                                                    setCheckedItems(checkedItems.filter(item => item.date !== filteredAvailabilityItem.date || item.time !== filteredAvailabilityItem.time));
+                                                }
+                                            }} />
+                                        <label htmlFor={`delete-date-${filteredAvailabilityItem.date}`}>
+                                            {filteredAvailabilityItem.date} om {filteredAvailabilityItem.time}
+                                        </label>
+                                    </div>
+                                ))}
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
                 </div>
-            </form>
+            </div>
 
-            <form
-    onSubmit={e => {
-        e.preventDefault();
-        const selectedDate = (e.target as HTMLFormElement).elements.namedItem('date') as HTMLInputElement;
-        const pattern = (e.target as HTMLFormElement).elements.namedItem('pattern') as HTMLSelectElement;
-
-        // Ensure pattern is of type 'weekday' | 'weekend' | 'daily'
-        const patternValue = pattern.value as 'weekday' | 'weekend' | 'daily';
-
-        // Call the function to delete multiple days based on the selected pattern
-        DeleteMultipleDays(selectedDate, patternValue);
-    }}
->
-    <div>
-        <br></br>
-        <b>Delete Multiple Days</b>
-        <br></br>
-        <label>Date:</label>
-        <input type="date" name="date" />
-        <br></br>
-        <label>Select Pattern:</label>
-        <select name="pattern">
-            <option value="weekday">Door de weeks</option>
-            <option value="weekend">Weekend</option>
-            <option value="daily">Elke Dag</option>
-        </select>
-        <br></br>
-        <button type="submit">Delete Multiple Days</button>
-    </div>
-</form>
-
-            <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
-        </div>
+        </div >
     );
 };
 
