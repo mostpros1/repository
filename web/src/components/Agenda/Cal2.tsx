@@ -587,50 +587,27 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
     const addAvailibility = async (date: string, time: string) => {
 
-        console.log(entries);
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
-        console.log(email);
-        console.log(date);
-        console.log(time);
-        dynamo.query({
+        const newItem = { date: date, time: time };
+        const availibilityArray = Array.isArray(availability) ? availability : [availability];
+        const updatedAvailability = [...availibilityArray, newItem];
+
+        dynamo.update({
             TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            Key: {
+                id: professionalId,
+            },
+            UpdateExpression: `set availability = :availability`,
             ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-
-                const newItem = { date: date, time: time };
-                const availibilityArray = Array.isArray(data.Items[0].availability) ? data.Items[0].availability : [data.Items[0].availability];
-                const updatedAvailability = [...availibilityArray, newItem];
-
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: data.Items[0].id,
-                    },
-                    UpdateExpression: `set availability = :availability`,
-                    ExpressionAttributeValues: {
-                        ":availability": updatedAvailability,
-                    },
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB();
-                        getEntriesFromDB();
-                        console.log(output.Attributes)
-                    })
-                    .catch(console.error);
-                window.alert("Datum toegevoegt.");
-            } else {
-                console.error("No items found in the query result.");
-            }
-        }).catch((err) => {
-            console.error(err);
-        });
+                ":availability": updatedAvailability,
+            },
+        }).promise()
+            .then(output => {
+                getAvailabilityFromDB();
+                getEntriesFromDB();
+                console.log(output.Attributes)
+            })
+            .catch(console.error);
+        window.alert("Datum toegevoegt.");
     };
 
     const firstDate = new Date(selectedDates[0]);
