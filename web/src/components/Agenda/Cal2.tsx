@@ -20,7 +20,6 @@ interface Availability {
 const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
-    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
     //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
@@ -204,8 +203,38 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         // Set the date to the first day of the selected month/year
     };
 
+    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
+    const [professionalId, setProfessionalId] = useState<number | null>(null);
 
+    useEffect(() => {
+        const fetchProfessionalData = async () => {
+            try {
+                const authenticatedUser = await Auth.currentAuthenticatedUser();
+                const email = authenticatedUser.attributes.email;
+                const response = await dynamo.query({
+                    TableName: "Professionals",
+                    IndexName: "emailIndex",
+                    KeyConditionExpression: "email = :email",
+                    ExpressionAttributeValues: {
+                        ":email": email
+                    }
+                }).promise();
 
+                if (response.Items && response.Items.length > 0) {
+                    setProfessionalId(response.Items[0].id);
+                    setAvailability(response.Items[0].availability);
+                    console.log(response.Items[0].id);
+                    console.log(response.Items[0].availability);
+                } else {
+                    console.log("No professional found with the provided email.");
+                }
+            } catch (error) {
+                console.error("An error occurred while fetching professional data:", error);
+            }
+        };
+
+        fetchProfessionalData();
+    }, []);
 
     async function getEntriesFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
