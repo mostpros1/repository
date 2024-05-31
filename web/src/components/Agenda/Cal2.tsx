@@ -491,98 +491,91 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     const DeleteMultipleDays = async (startDate: HTMLInputElement, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
-
+    
+        // Validate the start date
+        if (isNaN(startDateValue.getTime())) {
+            console.error("Ongeldige startdatum");
+            return;
+        }
+    
         // Calculate the total number of days in the month
         const year = startDateValue.getFullYear();
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        // Get the authenticated user's email
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
-
-        // Query the Professionals table to find the user's record
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then(async (data) => {
-            if (data.Items && data.Items.length > 0) {
-                const userId = data.Items[0].id;
-                const existingAvailability = data.Items[0].availability || [];
-
-                // Determine the starting point based on the pattern
-                const baseDate = new Date(startDateValue);
-                switch (pattern) {
-                    case 'weekday':
-                        while (baseDate.getDay() !== 1) { // Find the first Monday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'weekend':
-                        while (baseDate.getDay() !== 6) { // Find the first Saturday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'daily':
-                        // No change needed for daily pattern
-                        break;
-                    default:
-                        throw new Error("Invalid pattern");
+    
+        const existingAvailability = availability || [];
+    
+        // Determine the starting point based on the pattern
+        const baseDate = new Date(startDateValue);
+        switch (pattern) {
+            case 'weekday':
+                while (baseDate.getDay()!== 1) { // Find the first Monday
+                    baseDate.setDate(baseDate.getDate() + 1);
                 }
-
-                // Construct the new availability list by removing the dates added based on the pattern
-                const updatedAvailability = existingAvailability.filter(item => {
-                    const itemDate = new Date(item.date);
-                    let skip = false;
-                    for (let a = 0; a < daysInMonth; a++) {
-                        const currentDate = new Date(baseDate);
-                        currentDate.setDate(baseDate.getDate() + a);
-
-                        // Skip weekends for 'weekday' pattern
-                        if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
-
-                        // Skip weekdays for 'weekend' pattern
-                        if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
-
-                        if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
-                            skip = true;
-                            break;
-                        }
-                    }
-                    return !skip;
-                });
-
-                // Update the user's record in the Professionals table
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: userId,
-                    },
-                    UpdateExpression: "SET #av = :val",
-                    ExpressionAttributeNames: {
-                        "#av": "availability"
-                    },
-                    ExpressionAttributeValues: {
-                        ":val": updatedAvailability
-                    }
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB(); // Refresh the availability data
-                        console.log("Deleted days successfully.", output.Attributes);
-                    })
-                    .catch(error => {
-                        console.error("Failed to delete days:", error);
-                    });
-            } else {
-                console.error("No user found with the provided email.");
+                break;
+            case 'weekend':
+                while (baseDate.getDay()!== 6) { // Find the first Saturday
+                    baseDate.setDate(baseDate.getDate() + 1);
+                }
+                break;
+            case 'daily':
+                // No change needed for daily pattern
+                break;
+            default:
+                throw new Error("Invalid pattern");
+        }
+    
+        // Construct the new availability list by removing the dates added based on the pattern
+        const updatedAvailability = existingAvailability.filter(item => {
+            const itemDate = new Date(item.date);
+            // Validate each item date
+            if (isNaN(itemDate.getTime())) {
+                console.error(`Ongeldige datum in beschikbaarheid: ${item.date}`);
+                return false; // Skip invalid dates
             }
-        }).catch((err) => {
-            console.error(err);
+    
+            let skip = false;
+            for (let a = 0; a < daysInMonth; a++) {
+                const currentDate = new Date(baseDate);
+                currentDate.setDate(baseDate.getDate() + a);
+    
+                // Skip weekends for 'weekday' pattern
+                if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
+    
+                // Skip weekdays for 'weekend' pattern
+                if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
+    
+                if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
+                    skip = true;
+                    break;
+                }
+            }
+            return!skip;
         });
+    
+        console.log("Updated availability: ", updatedAvailability);
+    
+        // Update the user's record in the Professionals table
+        dynamo.update({
+            TableName: "Professionals",
+            Key: {
+                id: professionalId, // Ensure this variable is defined and holds the correct professional ID
+            },
+            UpdateExpression: "SET #av = :val",
+            ExpressionAttributeNames: {
+                "#av": "availability"
+            },
+            ExpressionAttributeValues: {
+                ":val": updatedAvailability
+            }
+        }).promise()
+           .then(output => {
+                getAvailabilityFromDB(); // Refresh the availability data
+                alert("Deleted days successfully. " + output.Attributes);
+            })
+           .catch(error => {
+                console.error("Failed to delete days:", error);
+            });
     };
 
     const addAvailibility = async (date: string, time: string) => {
