@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format, isValid } from 'date-fns';
 import { Auth } from 'aws-amplify';
-import '../MultistepForm/DatePicker.css';
+import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
 import { dynamo } from '../../../declarations.ts';

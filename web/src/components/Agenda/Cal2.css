@@ -1,7 +1,6 @@
 .container {
     display: flex;
-    flex-direction: row; 
-    height: 100%;/* Align items horizontally */
+    flex-direction: row;/* Align items horizontally */
 }
 
 /* Adjust these class names as needed */
