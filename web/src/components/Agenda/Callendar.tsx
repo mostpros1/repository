@@ -1,6 +1,6 @@
 import React from 'react';
-import SideNav from "../ui/SideNav/SideNav.tsx";
-import Cal from "./cal.tsx";
+import SideNav from "../ui/SideNav/SideNav";
+import Cal from "./cal";
 import './Callendar.css'; // Import the CSS file
 import "../ui/NavBar/NavBar.css";
 
