@@ -1,42 +1,76 @@
-.CalendarMain{ 
-    width: 100%; 
-    height: 100%;
-    padding-right: 12rem; 
-    padding-top: 5rem;
-    display: flex;
-  }
-  
-  .sideNavCalendarSection{  
-    width: 20%; 
-    height: 100%;
-    display: flex;
-    justify-content: flex-end; 
-    padding-right: 2rem; 
-  }
-  
-  .sideNavCalendar{ 
-    height: 45%;
-    width: 18rem;
-    background: #222;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .rightsideCalendarSection{ 
-    width: 80%; 
-    height: 100%; 
-  }
-  
-  @media (max-width: 1044px) {
-    .sideNavCalendarSection { 
+.CalendarMain { 
+  width: 100%; 
+  height: 100%;
+  padding-right: 12rem; 
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.sideNavCalendarSection {  
+  width: 20%; 
+  height: 100%;
+  display: flex;
+  justify-content: flex-end; 
+  padding-right: 2rem; 
+}
+
+.sideNavCalendar { 
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsideCalendarSection { 
+  max-width: 80%; 
+  flex-grow: 1;
+}
+
+@media (max-width: 1044px) {
+  .sideNavCalendarSection { 
       display: none; 
-    }
-    .CalendarMain{ 
+      padding-right: 0rem; 
+  }
+
+  .CalendarMain { 
       align-items: center;
       justify-content: center;
       padding-right: 0rem;
-    }
+      padding-left: 0rem;
   }
-  
+}
+
+@media (max-width: 697px) {
+  .CalendarMain {
+      flex-direction: column;
+      padding-top: 2rem;
+      padding-right: 0;
+  }
+
+  .gVkvzB{
+    background-color: purple;
+  }
+
+  .rightsideCalendarSection {
+      width: 100%;
+      max-width: 100%;
+  }
+}
+
+@media (max-width: 300px) {
+  .CalendarMain {
+      padding-top: 1rem;
+  }
+
+  .sideNavCalendarSection {
+      display: none;
+  }
+
+  .rightsideCalendarSection {
+      padding: 0 1rem;
+  }
+}
