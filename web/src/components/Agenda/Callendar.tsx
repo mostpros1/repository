@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNav from "../ui/SideNav/SideNav";
 import Cal from "./cal";
+import DateAndTimePicker from "./Cal2.tsx";
 import './Callendar.css'; // Import the CSS file
 import "../ui/NavBar/NavBar.css";
 
@@ -14,7 +15,8 @@ function Callendar() {
                 </article>
             </section>
             <section className='rightsideCalendarSection'>
-                <Cal />
+                {/* <Cal /> Versie Dani */}
+                 {/* <DateAndTimePicker/> deze uncommenten voor de versie van Timon  */}
             </section>
         </main>
     );
