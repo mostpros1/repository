@@ -39,18 +39,22 @@ import ChatMain from "../pages/ChatPage/ChatPage";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
-import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
-import CareerPage from "../pages/CareerPage/CareerPage";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
+
+/* Extra Pages */
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
+import CareerPage from "../pages/CareerPage/CareerPage";
 import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
-import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
+import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
+import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage";
+/* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
-
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
 import TemplateStaticPage from "../pages/TemplatePageStatic/TemplatePageStatic.tsx";
+
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
@@ -104,6 +108,9 @@ const LanguageAwareRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+
+
+      <Route path="/product-updates" element={<ProductUpdatePage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
