@@ -188,7 +188,7 @@ textarea {
   .grid-sect {
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: 100%;
     align-items: center;
   }
 
@@ -196,7 +196,21 @@ textarea {
     width: 30rem;
   }
 
+  #review-form {
+    min-width: 30rem;
+    width: 100%;
+  }
+
+  .review {
+    max-width: 100%;
+  }
+    
+
+
   .review-actions {
-    grid-template-columns: 1fr;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
   }
 }
