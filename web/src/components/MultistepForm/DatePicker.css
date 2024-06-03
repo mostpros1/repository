@@ -1,3 +1,8 @@
+.select-month-and-year {
+  margin-top: 10rem;
+}
+
+
 .date-time-picker {
   background: white;
   border-radius: 8px;
@@ -247,6 +252,7 @@ color: white; /* Witte tekst voor betere leesbaarheid */
 
 .day.today {
 border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
+opacity: 1;
 border-radius: 20%; /* Maakt de rand rond */
 justify-content: center;
 align-items: center;

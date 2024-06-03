@@ -1,18 +1,19 @@
 .FAQmain {
     width: 100%;
     height: 100%;
-    padding-right: 12rem;
     padding-top: 5rem;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
+/* 
 .RightsideFAQsection {
     width: 20%;
     height: 100%;
     display: flex;
     justify-content: flex-end;
     padding-right: 2rem;
-}
+} */
 
 .sideNavFAQ {
     height: 45%;
@@ -25,18 +26,16 @@
 }
 
 .rightsideFAQSection {
-    width: 80%;
+    width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 1044px) {
     .RightsideFAQsection {
         display: none;
-    }
-
-    .FAQmain {
-        align-items: center;
-        justify-content: center;
-        padding-right: 0rem;
     }
 }

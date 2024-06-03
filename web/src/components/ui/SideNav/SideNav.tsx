@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
-import MessageIcon from "@mui/icons-material/Message";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-import PaymentIcon from "@mui/icons-material/Payment";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsIcon from "@mui/icons-material/Settings";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import {
+  Dashboard as DashboardIcon,
+  HandymanOutlined as HandymanOutlinedIcon,
+  Message as MessageIcon,
+  DateRange as DateRangeIcon,
+  Payment as PaymentIcon,
+  StarOutline as StarOutlineIcon,
+  AccountCircle as AccountCircleIcon,
+  Settings as SettingsIcon,
+  HelpOutline as HelpOutlineIcon,
+} from "@mui/icons-material";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
 
@@ -20,27 +22,21 @@ const SideNav = () => {
   const [isHomeowner, setIsHomeowner] = useState(false);
 
   useEffect(() => {
-    const delay = 5000; // 2.5 seconds
-    const timer = setTimeout(() => {
-      if (
-        user &&
-        user.signInUserSession &&
-        user.signInUserSession.accessToken &&
-        user.signInUserSession.accessToken.payload
-      ) {
+    const checkUserRole = async () => {
+      if (user?.signInUserSession?.accessToken?.payload) {
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups && groups.includes("Homeowner")) {
+        if (groups?.includes("Homeowner")) {
           setIsHomeowner(true);
-        } else if (groups && groups.includes("Professional")) {
+        } else if (groups?.includes("Professional")) {
           setIsProfessional(true);
         }
       } else {
         console.log("User data is not fully available.");
         navigate(`/${lang}/login`);
       }
-    }, delay);
+    };
 
-    return () => clearTimeout(timer);
+    checkUserRole();
   }, [user, navigate, lang]);
 
   const comingSoonTabs = [
@@ -68,7 +64,7 @@ const SideNav = () => {
                 Dashboard
               </NavLink>
             </li>
-            {/* <li className="sidebar-item">
+            <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/calender`}
                 className={({ isActive }) =>
@@ -78,7 +74,7 @@ const SideNav = () => {
                 <DateRangeIcon />
                 Kalender
               </NavLink>
-            </li> */}
+            </li>
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/jobs`}
@@ -101,8 +97,6 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-
-
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/profile`}
@@ -110,7 +104,7 @@ const SideNav = () => {
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
               >
-                <SettingsIcon />
+                <AccountCircleIcon />
                 Profiel
               </NavLink>
             </li>
@@ -170,17 +164,6 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-            {/* <li className="sidebar-item">
-              <NavLink
-                to={`/${lang}/homeowner-dashboard/calender`}
-                className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
-                }
-              >
-                <DateRangeIcon />
-                Kalender
-              </NavLink>
-            </li> */}
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/homeowner-dashboard/payments`}
@@ -215,7 +198,6 @@ const SideNav = () => {
                   Profiel
                 </NavLink>
               </li>
-
               <li className="sidebar-item">
                 <NavLink
                   to={`/${lang}/homeowner-dashboard/settings`}

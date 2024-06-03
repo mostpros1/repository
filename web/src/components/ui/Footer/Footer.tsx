@@ -12,9 +12,9 @@ function Footer() {
           <h4>Bedrijf</h4>
           <Link to="/nl/how-it-works">Hoe werkt het</Link>
           <a href="/nl/why-mostpros">Waarom mostpros</a>
-          <Link to="/nl/OverOns">Over</Link>
-          <Link to="/nl/jobs">Career</Link>
-          <Link to="/nl/OverOns">Product updates</Link>
+          <Link to="/nl/about">Over</Link>
+          <Link to="/nl/career">Career</Link>
+          <Link to="/nl/about">Product updates</Link>
           <Link to="/nl/quality">Kwaliteitseisen</Link>
           <Link to="/nl/contact">Contact</Link>
         </article>

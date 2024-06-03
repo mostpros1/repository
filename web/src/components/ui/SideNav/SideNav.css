@@ -10,7 +10,7 @@
 .sidebar {
   height: 45%;
   width: 18.5rem;
-  background: #222;
+  background: #308ae4;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
 }
 
 .sidebar-link.active {
-  color: #207cd8;
+  color: #222;
   border-radius: 1rem;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .sidebar-link:hover {
-  color: #207cd8;
+  color: #222;
 }
 
 .coming-soon {
@@ -96,7 +96,7 @@
   .sidebar {
     height: 50%;
     width: 18.5rem;
-    background: #222;
+    background: #308ae4;
     border-radius: 8px;
     display: flex;
     align-items: center;

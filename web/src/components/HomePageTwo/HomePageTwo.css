@@ -146,6 +146,10 @@
   text-decoration: none;
 }
 
+.populairjobsHeroCard:hover{
+  color: white;
+}
+
 .populairjobsHeroCard span {
   font-size: 15px;
 }
@@ -181,6 +185,14 @@
 .infoContainerHomeH4 {
   font-size: 1.6rem;
   font-family: "Poppins", sans-serif;
+}
+
+.infoContainerHomeLink{
+  color: black;
+}
+
+.infoContainerHomeLink:hover{
+  color:#207cd7;
 }
 .howItWorksSectionHome {
   margin-top: 11.1rem;
@@ -503,12 +515,12 @@
 }
 
 .lefthome-arrow {
-  left: 16%;
+  left: 13%;
   border-color: transparent black transparent transparent;
 }
 
 .righthome-arrow {
-  right: 16%;
+  right: 15%;
   border-color: transparent transparent transparent black;
 }
 

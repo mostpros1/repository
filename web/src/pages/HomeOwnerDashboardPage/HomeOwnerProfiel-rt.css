@@ -1,22 +1,20 @@
 .homeOwnerProfileMain {
-  /*<- Het grote vlak wat de hele pagina covered. */
   width: 100%;
   height: 100%;
-  padding-right: 12rem; /* <- elementen hebben BINNEN in het oranje vlak 120px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
+  padding-right: 12rem;
   padding-top: 5rem;
   display: flex;
 }
 
 .sidenavHomeOwnerProfileSection {
-  width: 35%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
+  width: 20%;
   height: 100%;
   display: flex;
-  justify-content: flex-end; /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
-  padding-right: 2rem; /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
+  justify-content: flex-end;
+  padding-right: 2rem;
 }
 
 .sideNavHomeOwnerProfile {
-  /*<- De sidenav. */
   height: 45%;
   width: 18rem;
   background: #222;
@@ -27,23 +25,25 @@
 }
 
 .rightsideHomeOwnerProfileSection {
-  width: 80%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de sidenavTemplateSection ook aanpast waardoor het samen 100% is  */
-  height: 100%; /*<- vh veranderen in 100% wanneer het vlak/de pagina te klein wordt voor je elementen */
+  width: 80%;
+  height: 100%;
 }
 
-@media (max-width: 1400px) {
-  .sidenavHomeOwnerProfileSection {
-    display: none; /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
-  }
-
-  .rightsideHomeOwnerProfileSection {
-    align-items: center;
-    justify-content: center;
-    padding-right: 0rem; /*<- Dit zorgt ervoor dat het groene vlak in het midden komt nadat de sivenav weg is gegaan*/
-  }
+@media (max-width: 1044px) {
 
   .homeOwnerProfileMain {
-    width: auto;
+    padding-right: 0rem;
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidenavHomeOwnerProfileSection {
+    display: none;
+  }
+
+  .HomeOwnerSettingsMain {
     align-items: center;
     justify-content: center;
     padding-right: 0rem;

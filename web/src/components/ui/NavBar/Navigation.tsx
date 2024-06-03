@@ -348,7 +348,7 @@ function Navigation() {
             </div>
           </li>
           <li>
-            <Link to={`/${taal}/`} className="black-items">
+            <Link to={`/${taal}/why-mostpros/`} className="black-items">
               {t("Waarom Mostpros")} <ExpandMoreIcon />
             </Link>
             {/* Translate dropdown menu items */}

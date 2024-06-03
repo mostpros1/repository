@@ -1,0 +1,298 @@
+.select-month-and-year {
+    margin-top: 10rem;
+  }
+  
+  
+  .date-time-picker {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    width: 100%;
+    margin-top: 20px;
+    max-width: 550px;
+    margin-left: 20px;
+  }
+  
+  .date-time-picker span {
+    background-color: #3a72ffd4;
+    border-radius: 10px;
+    font-size: 17px;
+    width: 140px;
+    text-align: center;
+    margin-top: 100px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .month-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  .prev-month, .next-month {
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 32px;
+    margin: 0 40px 40px 40px;
+    border: 0;
+    transition: all 1s ease;
+  }
+  
+  .week-days{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 20px;
+  }
+  
+  .week-day{
+    display: flex;
+  }
+  
+  .week{
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 35px;
+  }
+  
+  .days-container{
+    display: flex;
+    position: absolute;
+    gap: 7px;
+  }
+  
+  .day {
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 50px;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: light;
+  }
+  
+  .day:hover, .day.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+  }
+  
+  .week-number {
+    margin-right: 5px;
+    background-color: #3a72ffd4;
+    color: white;
+    border-radius: 10%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: 10px;
+  }
+  
+  .day.empty {
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  .past-day {
+    color: #999;
+    font-weight: lighter;
+  }
+  
+  .future-day {
+    font-weight: bold; 
+  }
+  
+  .past {
+    opacity: 0.5;
+  }
+  
+  .day:hover:not(.past) {
+    background-color: #3a72ffd4;
+  }
+  
+  .days-past{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+  
+  .days-past:hover, .days-past.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+    font-weight: lighter;
+  }
+  
+  .days-next{
+    padding: 10px;
+    margin: 2px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10%;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    color: #999;
+  }
+  
+  .days-next:hover, .days-next.selected, .week-number {
+    background-color: #3a72ffd4;
+    color: white;
+    font-weight: lighter;
+  }
+  
+  .day.weekend {
+    color: #94b2ff; /* Witte tekstkleur */
+    font-weight: lighter;
+  }
+  
+  .fotoinButtonL{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
+  
+  .fotoinButtonR{
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+  }
+  
+  .submitBeschikbaarheid{
+  border-radius: 10px;
+  background-color: #3a72ffd4;
+  color: white;
+  border: solid 2px #3a72ffd4;
+  width: 250px;
+  height: 60px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  margin-left: 140px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  }
+  
+  .submitBeschikbaarheid:hover{
+  transition: all 1s ease;
+  border-radius: 15px;
+  background-color: #3a72ff;
+  }
+  
+  .time-selector {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Maak twee kolommen */
+  gap: 10px; /* Voeg wat ruimte tussen de kolommen en rijen */
+  }
+  
+  .time-slot {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  margin: 5px 0; /* Ruimte tussen tijdslots */
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  width: 225px;
+  }
+  
+  .time-slot:hover {
+  background-color: #007bff;
+  color: white;
+  }
+  
+  .time-slot.selected {
+  background-color: #007bff; /* Blauwe achtergrond voor geselecteerde tijden */
+  color: white; /* Witte tekst voor betere leesbaarheid */
+  }
+  
+  .day.today {
+  border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
+  opacity: 1;
+  border-radius: 20%; /* Maakt de rand rond */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  }
+  
+  .buttonToday{
+  border-radius: 10px;
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  font-size: 15px;
+  margin-bottom: 60px;
+  margin-left: 215px;
+  background-color: #3a72ffd4;
+  color: white;
+  cursor: pointer;
+  border: 0;
+  transition: all 1s ease;
+  margin-top: 20px;
+  }
+  
+  .buttonToday:hover{
+  background-color: #007bff;
+  border-radius: 15px;
+  }
+  
+  .timezone-selector{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  
+  .timezone-select{
+  margin-left: 10px;
+  border-radius: 10px; 
+  }

@@ -2,13 +2,10 @@ import { Routes, Route, useParams, Navigate, useNavigate } from "react-router-do
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import React from "react";
-import HomePage from "../pages/HomePage/HomePage";
 import KlussenPage from "../pages/KlussenPage/KlussenPage";
 import SpecialistPage from "../pages/Offertestraat-specialist/SpecialistPage";
 import ResultsPage from "../pages/ResultsPage/ResultsPage";
 import MyTaskPage from "../pages/MyTasksPage/MyTaskPage";
-import HomeOwnerTasksPage from "../pages/HomeOwnerTasksPage/HomeOwnerTasksPage";
-import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import HowItWorksPage from "../pages/HowItWorksPage/HowItWorksPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import HomeOwnerResultPage from "../pages/HomeOwnerResultPage/HomeOwnerResultPage";
@@ -18,7 +15,6 @@ import ManageUser from "../pages/AdminHomePage/ManageUser";
 import WachtwoordVergetenPage from "../pages/WachtwoordVergetenPage/WachtwoordVergetenPage";
 import BevestigEmailPage from "../pages/BevestigEmailPage/BevestigEmailPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
-import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import HomeOwnerDashboard from "../pages/HomeOwnerDashboard/HomeOwnerDashboard";
 import ProfessionalDashboard from "../pages/ProfessionalDashboard/ProfessionalDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -29,7 +25,6 @@ import HomeInovation from "../pages/HomeInovationPage/HomeInovation";
 import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
-import HomeOwnerDashboardPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
 import WhyMostProsPage from "../pages/WhyMostProsPage/WhyMostProsPage.tsx"
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
@@ -39,27 +34,37 @@ import HomeOwnerSettingsPage from "../pages/HomeOwnerSettingsPage/HomeOwnerSetti
 import Jobspage from "../pages/JobsPage/JobsPage";
 import ReviewPage from "../pages/ReviewPage/ReviewPage";
 import InvoicePage from "../pages/InvoicePage/InvoicePage.tsx";
+import DataSafetyPage from "../pages/DataSafetyPage/DataSafetyPage.tsx";
 import ChatMain from "../pages/ChatPage/ChatPage";
 import IdealOptionsPage from "../pages/IdealOptionsPage/IdealOptionsPage.tsx";
-import ChatContactList from "../components/Chat/ChatContactList";
 import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPage.tsx";
-import ChatPage from "../pages/ChatPage/ChatPage.tsx";
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
-import FAQPage from "../pages/FAQPage/FAQPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
-import CareerPage from "../pages/CareerPage/CareerPage";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
+
+/* Extra Pages */
+import FAQPage from "../pages/FAQPage/FAQPage.tsx";
+import CareerPage from "../pages/CareerPage/CareerPage";
 import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
-import QualityPage from "../pages/ProductUpdatepage/QualityPage.tsx";
+import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx"
+import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage";
+/* Template */
+import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
+import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
+import TemplateStaticPage from "../pages/TemplatePageStatic/TemplatePageStatic.tsx";
 
-import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx"
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop.tsx";
 import HelpPage from "../pages/FAQPage/HelpPage.tsx";
+import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
+import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
+import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
+
+
+
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -69,23 +74,26 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/test" element={<DateAndTimePicker />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
+      <Route path="/jobs-overview" element={<OverzichtKlussenPage />} />
+      <Route path="/pro-overview" element={<OverzichtProfPage />} />
       <Route path="/help" element={<HelpPage />} />
       <Route path="/TemplatePage" element={<TemplatePage />} />
+      <Route path="/TemplateStaticPage" element={<TemplateStaticPage />} />
       <Route path="/home-owner-result" element={<HomeOwnerResultPage />} />
       <Route path="/jobs-mostpros" element={<MyTaskPage />} />
       <Route path="/jobs" element={<KlussenPage />} />
       <Route path="/jobs/lekkages-repareren" element={<KlussenPage />} />
       <Route path="/jobs/sanitair-installeren" element={<KlussenPage />} />
       <Route path="/jobs/tuinontwerp-maken" element={<KlussenPage />} />
-      <Route path="/forgot-password" element={<WachtwoordVergetenPage />} />
+      <Route path="/wachtwoord-vergeten" element={<WachtwoordVergetenPage />} />
       <Route path="/confirm-mail" element={<BevestigEmailPage />} />
       <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/pro-onboarding" element={<SpecialistPage />} />
       <Route path="/homeowner-dashboard" element={<ResultsPage />} />
       <Route path="/pro-dashboard" element={<ResultsPage />} />
-      <Route path="/about" element={<AboutUsPage />} />
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/why-mostpros" element={<WhyMostProsPage />} />
       <Route path="/contact" element={<ContactPage />} />
@@ -95,11 +103,14 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
-      <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
-      <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+
+
+      <Route path="/product-updates" element={<ProductUpdatePage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
@@ -108,11 +119,12 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
-      <Route path="/OverOns" element={<OverOns />} />
+      <Route path="/about" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
+      <Route path="/data-safety" element={<DataSafetyPage />} />
       <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
       <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />} />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
@@ -128,7 +140,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
-      <Route path="/OverOns" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
@@ -215,7 +226,7 @@ const App = () => {
 
   return (
     <>
-      <ScrollToTop /> {/* Add ScrollToTop here */}
+      <ScrollToTop />
       <Routes>
         {/* Wildcard route to capture the language part of the URL */}
         <Route path="/:lang/*" element={<LanguageAwareRoutes />} />

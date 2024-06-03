@@ -6,10 +6,10 @@
   flex-wrap: wrap;
   margin-top: 15rem;
   justify-content: center;
+  margin-bottom: 15rem;
 }
 
 .whymostprosleft {
-  height: 43.1rem;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -25,14 +25,18 @@
 }
 
 .whymostprosP {
-  font-size: 1.2rem;
+  font-size: 2rem;
+  max-width: 48.3rem;
+}
+.whymostprosPBlue {
+  font-size: 1.7rem;
   max-width: 48.3rem;
 }
 
 .whymostprosBlueSquare {
-  padding: 1.1rem;
+  padding: 0.7rem;
   border-radius: 1.3rem;
-  background: #B5DCFF;
+  background: #E9F4FF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,15 +44,14 @@
 
 .whymostprosright {
   width: 50%;
-  height: 64.3rem;
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 5rem;
+  gap: 4.6rem;
 }
 
 .whymostprosrigthimg {
-  height: 25rem;
+  height: 36rem;
 }
 
 .smallcardsWhyMostProsContainer {
@@ -56,11 +59,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2.2rem;
+  gap: 3rem;
 }
 
 .smallcardsWhyMostProsP {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
 .smallcardsWhyMostPros {
@@ -97,20 +100,8 @@
     text-align: center;
   }
 
-  .whymostprosh4 {
-    font-size: 1.5rem;
-  }
-
-  .whymostprosP {
-    font-size: 1rem;
-  }
-
   .whymostprosBlueSquare {
     padding: 0.8rem;
-  }
-
-  .whymostprosrigthimg {
-    height: 20rem;
   }
 
   .smallcardsWhyMostPros {
@@ -126,20 +117,8 @@
     padding-right: 2rem;
   }
 
-  .whymostprosh4 {
-    font-size: 1.3rem;
-  }
-
-  .whymostprosP {
-    font-size: 0.9rem;
-  }
-
   .whymostprosBlueSquare {
     padding: 0.6rem;
-  }
-
-  .whymostprosrigthimg {
-    height: 15rem;
   }
 
   .smallcardsWhyMostPros {
@@ -162,20 +141,8 @@
     text-align: center;
   }
 
-  .whymostprosh4 {
-    font-size: 1.2rem;
-  }
-
-  .whymostprosP {
-    font-size: 0.8rem;
-  }
-
   .whymostprosBlueSquare {
     padding: 0.5rem;
-  }
-
-  .whymostprosrigthimg {
-    height: 10rem;
   }
 
   .smallcardsWhyMostPros {

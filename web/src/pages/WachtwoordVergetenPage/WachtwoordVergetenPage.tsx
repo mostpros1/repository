@@ -143,7 +143,7 @@ const WachtwoordVergetenPage = () => {
                         name="email"
                         required
                         type="email"
-                        placeholder="Bijv. joe@hhotmail.com"
+                        placeholder="Bijv. joe@hotmail.com"
                         value={fields.email}
                         readOnly={codeSent ? true : false}
                         onChange={e => setFields({...fields, email: e.target.value })}
