@@ -7,8 +7,8 @@ interface Klus {
   id: number;
   profession: string;
   region: string;
-  task: string
-  user_email: string,
+  task: string;
+  user_email: string;
 }
 
 const OverzichtKlussen: React.FC = () => {
@@ -23,11 +23,9 @@ const OverzichtKlussen: React.FC = () => {
         ":statusVal": "pending"
       }
     }).promise()
-
       .then(data => {
         if (data.Items) {
           console.log("data.Items: ", data.Items);
-          // Transform data.Items into an array of Klus objects
           const klussenData = data.Items.map(item => ({
             currentStatus: item.currentStatus,
             id: item.id,
@@ -38,16 +36,24 @@ const OverzichtKlussen: React.FC = () => {
           }));
 
           console.log("klussenData: ", klussenData);
-          // Now set the transformed array to state
           setKlussen(klussenData);
         }
+        setLoading(false);
       })
-      .catch(err => console.log("Error dynamo: ", err));
+      .catch(err => {
+        console.log("Error dynamo: ", err);
+        setLoading(false);
+      });
   }, []);
 
-  /*if (loading) {
+  const handleContactClick = (email: string) => {
+    // Replace this with your actual routing logic
+    window.location.href = `/chat?email=${email}`;
+  };
+
+  if (loading) {
     return <div className="loading">Bezig met laden...</div>;
-  }*/
+  }
 
   return (
     <div className="overzicht-klussen-container">
@@ -55,9 +61,12 @@ const OverzichtKlussen: React.FC = () => {
       <div className="klussen-lijst">
         {klussen.map(klus => (
           <div key={klus.id} className="klus-card">
-            <h2>{klus.profession}</h2>
-            <p>{klus.task}</p>
-            <p>Status: <span className={`status ${klus.currentStatus.replace(/\s+/g, '-').toLowerCase()}`}>{klus.currentStatus}</span></p>
+            <div className="klus-card-content">
+              <h2>{klus.profession}</h2>
+              <p>{klus.task}</p>
+              <p>Regio: {klus.region}</p>
+              <button onClick={() => handleContactClick(klus.user_email)} className='buttoncontact'>Contact opnemen</button>
+            </div>
           </div>
         ))}
       </div>
