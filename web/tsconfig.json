@@ -29,6 +29,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
   },
-  "include": ["src", "../backend_functions/CreateOffer.ts"],
+  "include": ["src", "../backend_functions/CreateOffer.ts", "aws-exports.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

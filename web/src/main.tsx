@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { Amplify, Auth } from "aws-amplify";
-import awsExports from "../src/aws-exports.js";
+import awsExports from "../aws-exports.js/index.js";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App/App";
