@@ -6,10 +6,10 @@ import SpecialistPage from "../Offertestraat-specialist/SpecialistPage";
 function SpecialistProfile() {
   return (
     <div id="root">
-      <NavBar />
-      <div id="main-content-specialist">
+      {/* <NavBar /> */}
+      {/* <div id="main-content-specialist"> */}
         <SpecialistPage />
-      </div>
+      {/* </div> */}
       <Footer />
     </div>
   );
