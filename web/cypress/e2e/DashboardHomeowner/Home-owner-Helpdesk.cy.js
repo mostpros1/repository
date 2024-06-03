@@ -18,7 +18,7 @@ context('Profile page bezoeken', () => {
     }
   });
   
-//Test 2
+///Test 2
   context('Over Mostpros', () => {
     it('Type in input en controleer foutmelding', () => {
       // TEST 1: Type in input
