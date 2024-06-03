@@ -328,6 +328,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     console.log(beschikbaarheid);
                 }
                 setAvailability(beschikbaarheid);
+                setProfessionalId(data.Items[0].id);
             } else {
                 console.error("No items found in the query result.");
             }
@@ -342,8 +343,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
 
     async function addMultipleDays(startDate: HTMLInputElement, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
 
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
@@ -353,17 +352,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then(async (data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-                const userId = data.Items[0].id;
+                const userId = professionalId;
                 const baseDate = startDateValue; // Now baseDate is a Date object
 
                 // Determine the starting point based on the pattern
@@ -423,12 +412,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
                 // Show an alert once all dates have been added
                 window.alert("Datums zijn toegevoegt.");
-            } else {
-                console.error("No user found with the provided email.");
-            }
-        }).catch((err) => {
-            console.error(err);
-        });
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -445,76 +428,58 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         console.log("Selected options:", filteredCheckedItems);
         // Your submission logic here
 
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
 
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-
-                const itemsForDb = data.Items[0].availability.filter(checkedItem =>
-                    !filteredCheckedItems.some(uncheckedItem =>
-                        uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
-                    )
-                );
-
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: data.Items[0].id,
-                    },
-                    UpdateExpression: `set availability = :availability`,
-                    ExpressionAttributeValues: {
-                        ":availability": itemsForDb,
-                    },
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB();
-                        console.log(output.Attributes)
-                    })
-                    .catch(console.error);
-            }
-        }).catch((err) => {
-            console.error(err);
-        }
+        const itemsForDb = availability.filter(checkedItem =>
+            !filteredCheckedItems.some(uncheckedItem =>
+                uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
+            )
         );
+
+        dynamo.update({
+            TableName: "Professionals",
+            Key: {
+                id: professionalId,
+            },
+            UpdateExpression: `set availability = :availability`,
+            ExpressionAttributeValues: {
+                ":availability": itemsForDb,
+            },
+        }).promise()
+            .then(output => {
+                getAvailabilityFromDB();
+                console.log(output.Attributes)
+            })
+            .catch(console.error);
         setCheckedItems([]);
     };
 
     const DeleteMultipleDays = async (startDate: HTMLInputElement, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
-    
+
         // Validate the start date
         if (isNaN(startDateValue.getTime())) {
             console.error("Ongeldige startdatum");
             return;
         }
-    
+
         // Calculate the total number of days in the month
         const year = startDateValue.getFullYear();
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
+
         const existingAvailability = availability || [];
-    
+
         // Determine the starting point based on the pattern
         const baseDate = new Date(startDateValue);
         switch (pattern) {
             case 'weekday':
-                while (baseDate.getDay()!== 1) { // Find the first Monday
+                while (baseDate.getDay() !== 1) { // Find the first Monday
                     baseDate.setDate(baseDate.getDate() + 1);
                 }
                 break;
             case 'weekend':
-                while (baseDate.getDay()!== 6) { // Find the first Saturday
+                while (baseDate.getDay() !== 6) { // Find the first Saturday
                     baseDate.setDate(baseDate.getDate() + 1);
                 }
                 break;
@@ -524,7 +489,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
             default:
                 throw new Error("Invalid pattern");
         }
-    
+
         // Construct the new availability list by removing the dates added based on the pattern
         const updatedAvailability = existingAvailability.filter(item => {
             const itemDate = new Date(item.date);
@@ -533,28 +498,28 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                 console.error(`Ongeldige datum in beschikbaarheid: ${item.date}`);
                 return false; // Skip invalid dates
             }
-    
+
             let skip = false;
             for (let a = 0; a < daysInMonth; a++) {
                 const currentDate = new Date(baseDate);
                 currentDate.setDate(baseDate.getDate() + a);
-    
+
                 // Skip weekends for 'weekday' pattern
                 if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
-    
+
                 // Skip weekdays for 'weekend' pattern
                 if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
-    
+
                 if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
                     skip = true;
                     break;
                 }
             }
-            return!skip;
+            return !skip;
         });
-    
+
         console.log("Updated availability: ", updatedAvailability);
-    
+
         // Update the user's record in the Professionals table
         dynamo.update({
             TableName: "Professionals",
@@ -569,11 +534,11 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                 ":val": updatedAvailability
             }
         }).promise()
-           .then(output => {
+            .then(output => {
                 getAvailabilityFromDB(); // Refresh the availability data
                 alert("Deleted days successfully. " + output.Attributes);
             })
-           .catch(error => {
+            .catch(error => {
                 console.error("Failed to delete days:", error);
             });
     };
