@@ -34,11 +34,28 @@
   top: 0;
   right: 0;
   width: 30%;
-  height: 100.2rem;
+  height: 77.3rem;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 2rem 1rem;
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
+}
+
+.nav-list-mobile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  list-style: none;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 15px;
+}
+
+.nav-list-item {
+  color: black;
+  list-style: none;
+  font-weight: 600;
+  margin: 1rem 0;
 }
 
 .nav-list-container {
@@ -108,26 +125,101 @@
 }
 
 .navlink-top {
+  display: block;
   width: 100%;
 }
 
 .navlink-bottom {
+  display: block;
   width: 100%;
 }
 
 .nav-list-item-btm {
-  color: #333;
   list-style: none;
   font-weight: 600;
   margin: 1rem 0;
 }
 
+.nav-item-logins {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+#nav-item-btn {
+  display: flex;
+  background-color: #308ae4;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 10px;
+  border: 0;
+}
+
+#nav-item-specialist-btn {
+  display: flex;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: 2px solid #308ae4;
+  background-color: white;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+#nav-item-specialist-btn:hover {
+  background-color: #308ae4;
+  color: white;
+}
+
 @media screen and (max-width: 1024px) {
   .mobile-nav {
     display: flex;
+    margin: 0;
   }
 
   .nav-list-container {
+    height: 77.3rem;
     transform: translateX(0);
+  }
+  .nav-item-logins {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+  }
+
+  #nav-item-btn {
+    display: flex;
+    background-color: #308ae4;
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-list-container {
+    width: 50%;
+  }
+  #nav-item-specialist-btn {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 375px) {
+  .nav-list-container {
+    width: 100%;
   }
 }
