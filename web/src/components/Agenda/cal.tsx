@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfWeek, endOfWeek, addMonths, subMonths } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import arrowL from '../../assets/arrowL.png';
 import arrowR from '../../assets/arrowR.png';
 import './cal.css';
-
-
 
 interface DayProps {
     isCurrentMonth: boolean;
@@ -16,6 +14,12 @@ interface DayProps {
 
 interface NavButtonProps {
     image: string;
+}
+
+interface Entry {
+    text: string;
+    time?: string;
+    color: string;
 }
 
 const CalendarContainer = styled.div`
@@ -29,11 +33,23 @@ const CalendarContainer = styled.div`
 const Day = styled.button<DayProps>`
     position: relative;
     padding: 10px;
-    background-color: ${props => props.isCurrentMonth ? 'white' : '#e0e0e0'};
-    border: 1px solid ${props => props.hasAvailability ? 'green' : '#939395'};
-    color: ${props => props.isCurrentMonth ? 'black' : 'gray'};
+    background-color: ${props => props.isCurrentMonth ? 'transparent' : 'transparent'};
+    border: 1px solid ${props => props.hasAvailability ? 'transparent' : 'transparent'};
+    color: ${props => props.isCurrentMonth ? '#308ae4' : 'gray'};
     cursor: pointer;
-    font-size: 12px;
+    font-size: 1.5rem;
+
+    &:hover {
+        border: 0.18rem solid ${props => props.hasAvailability ? '#17a1fa47' : '#17a1fa47'};
+        background-color: ${props => props.isCurrentMonth ? '#3EA3E6' : '#3EA3E6'};
+        color: ${props => props.isCurrentMonth ? 'blue' : 'blue'};
+    }
+
+    &.selected {
+        border: 0.18rem solid ${props => props.hasAvailability ? '#17a1fa47' : '#17a1fa47'};
+        background-color: ${props => props.isCurrentMonth ? '#3EA3E6' : '#3EA3E6'};
+        color: ${props => props.isCurrentMonth ? 'blue' : 'blue'};
+    }
 
     &::after {
         content: '';
@@ -60,7 +76,7 @@ const Day = styled.button<DayProps>`
         height: 200px;
         overflow-y: auto;
     }
-    
+
     &:hover .dropdown {
         display: block;
     }
@@ -106,8 +122,13 @@ const NavButton = styled.button<NavButtonProps>`
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [entries, setEntries] = useState<{ [key: string]: { text: string; color: string }[] }>({});
+    const [entries, setEntries] = useState<{ [key: string]: Entry[] }>({});
     const [availabilities, setAvailabilities] = useState<{ [key: string]: string[] }>({});
+    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+
+    useEffect(() => {
+        setSelectedDate(null); // Reset selectedDate whenever currentMonth changes
+    }, [currentMonth]);
 
     const renderDaysOfWeek = () => {
         const daysOfWeek = ['Maa', 'Din', 'Woe', 'Don', 'Vri', 'Zat', 'Zon'];
@@ -118,6 +139,10 @@ const Cal = () => {
                 ))}
             </DaysOfWeekContainer>
         );
+    };
+
+    const clearSelectedDates = () => {
+        setSelectedDates([]);
     };
 
     const renderCalendarDays = () => {
@@ -142,19 +167,27 @@ const Cal = () => {
                             isCurrentMonth={isCurrentMonth}
                             hasAvailability={hasAvailability}
                             hasEntries={hasEntries}
-                            onClick={() => setSelectedDate(day)}
+                            className={selectedDates.some(selectedDate => selectedDate.getDate() === day.getDate() && selectedDate.getMonth() === day.getMonth() && selectedDate.getFullYear() === day.getFullYear()) ? 'selected' : ''}
+                            onClick={() => {
+                                if (selectedDates.some(selectedDate => selectedDate.getTime() === day.getTime())) {
+                                    setSelectedDates(selectedDates.filter(selectedDate => selectedDate.getTime() !== day.getTime()));
+                                } else {
+                                    setSelectedDates([...selectedDates, day]);
+                                }
+                            }}
                         >
                             {format(day, 'd')}
                             {hasEntries && (
                                 <div className="dropdown">
                                     {entries[formattedDate].map((entry, index) => (
                                         <div key={index} style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
-                                            {entry.text}
+                                            {entry.text} {entry.time && `- ${entry.time}`}
                                         </div>
                                     ))}
                                 </div>
                             )}
                         </Day>
+
                     );
                 })}
             </CalendarContainer>
@@ -180,7 +213,7 @@ const Cal = () => {
         const newEntries = entries[formattedDate] || [];
         setEntries({
             ...entries,
-            [formattedDate]: [...newEntries, { text, color }]
+            [formattedDate]: [...newEntries, { text, time, color }]
         });
     };
 
@@ -218,7 +251,6 @@ const Cal = () => {
                 <MonthYearDisplay>{format(currentMonth, 'MMMM yyyy', { locale: nl })}</MonthYearDisplay>
                 <NavButton image={arrowR} onClick={navigateToNextMonth} />
             </ButtonContainer>
-            <button className="current-month-button" onClick={goToCurrentMonth}>Ga naar huidige maand</button>
             {renderDaysOfWeek()}
             {renderCalendarDays()}
             <form className="entry-form" onSubmit={(e) => {
@@ -235,9 +267,10 @@ const Cal = () => {
                     <label>Tijd: <input name="entryTime" type="time" required /></label>
                 </div>
                 <div className="form-group">
-                    <label className='colorgroup'>Kleur: <input className='colorgroupInput' name="entryColor" type="color" required /></label>
+                    <label>Kleur: <input name="entryColor" type="color" required /></label>
                 </div>
-                <button type="submit">Toevoegen</button>
+                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
+                <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
             </form>
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
@@ -246,24 +279,25 @@ const Cal = () => {
                 const pattern = (e.target as any).elements.availPattern.value;
                 addMultipleDays(date, time, pattern);
             }}>
-                <div className="form-group">
-                    <label>Datum: <input name="availDate" type="date" required /></label>
+                <div className='patternSection' >
+                    <h4>Verwijder Beschikbaarheid</h4>
+                    <button className={`submitButtonStyling ${selectedDates.length === 1 ? '' : 'disabled'}`} type='button'>Verwijder Datum</button>
                 </div>
-                <div className="form-group">
-                    <label>Tijd: <input name="availTime" type="time" required /></label>
-                </div>
-                <div className="form-group">
-                    <label>Herhaalpatroon:
-                        <select name="availPattern" required>
-                            <option value="weekday">Weekdagen</option>
-                            <option value="weekend">Weekend</option>
-                            <option value="daily">Dagelijks</option>
-                        </select>
-                    </label>
-                </div>
-                <button type="submit">Toevoegen</button>
+                <div className='patternSection' >
+                    <br />
+                    <b>Verwijder meerdere Dagen</b>
+                    <br />
+                    <label>Select Pattern:</label>
+                    <select name="pattern">
+                        <option value="weekday">Door de weeks</option>
+                        <option value="weekend">Weekend</option>
+                        <option value="daily">Elke Dag</option>
+                    </select>
+                    <br />
+                    <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
+                </div> {/* Here's the missing closing tag */}
             </form>
-        </div>
+        </div >
     );
 };
 
