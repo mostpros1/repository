@@ -20,7 +20,6 @@ interface Availability {
 const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange */ }) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
-    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
     //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
@@ -204,8 +203,38 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         // Set the date to the first day of the selected month/year
     };
 
+    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
+    const [professionalId, setProfessionalId] = useState<number | null>(null);
 
+    useEffect(() => {
+        const fetchProfessionalData = async () => {
+            try {
+                const authenticatedUser = await Auth.currentAuthenticatedUser();
+                const email = authenticatedUser.attributes.email;
+                const response = await dynamo.query({
+                    TableName: "Professionals",
+                    IndexName: "emailIndex",
+                    KeyConditionExpression: "email = :email",
+                    ExpressionAttributeValues: {
+                        ":email": email
+                    }
+                }).promise();
 
+                if (response.Items && response.Items.length > 0) {
+                    setProfessionalId(response.Items[0].id);
+                    setAvailability(response.Items[0].availability);
+                    console.log(response.Items[0].id);
+                    console.log(response.Items[0].availability);
+                } else {
+                    console.log("No professional found with the provided email.");
+                }
+            } catch (error) {
+                console.error("An error occurred while fetching professional data:", error);
+            }
+        };
+
+        fetchProfessionalData();
+    }, []);
 
     async function getEntriesFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
@@ -299,6 +328,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
                     console.log(beschikbaarheid);
                 }
                 setAvailability(beschikbaarheid);
+                setProfessionalId(data.Items[0].id);
             } else {
                 console.error("No items found in the query result.");
             }
@@ -313,8 +343,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
 
     async function addMultipleDays(startDate: HTMLInputElement, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
 
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
@@ -324,17 +352,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then(async (data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-                const userId = data.Items[0].id;
+                const userId = professionalId;
                 const baseDate = startDateValue; // Now baseDate is a Date object
 
                 // Determine the starting point based on the pattern
@@ -394,12 +412,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
 
                 // Show an alert once all dates have been added
                 window.alert("Datums zijn toegevoegt.");
-            } else {
-                console.error("No user found with the provided email.");
-            }
-        }).catch((err) => {
-            console.error(err);
-        });
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -416,46 +428,28 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         console.log("Selected options:", filteredCheckedItems);
         // Your submission logic here
 
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
 
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-
-                const itemsForDb = data.Items[0].availability.filter(checkedItem =>
-                    !filteredCheckedItems.some(uncheckedItem =>
-                        uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
-                    )
-                );
-
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: data.Items[0].id,
-                    },
-                    UpdateExpression: `set availability = :availability`,
-                    ExpressionAttributeValues: {
-                        ":availability": itemsForDb,
-                    },
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB();
-                        console.log(output.Attributes)
-                    })
-                    .catch(console.error);
-            }
-        }).catch((err) => {
-            console.error(err);
-        }
+        const itemsForDb = availability.filter(checkedItem =>
+            !filteredCheckedItems.some(uncheckedItem =>
+                uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
+            )
         );
+
+        dynamo.update({
+            TableName: "Professionals",
+            Key: {
+                id: professionalId,
+            },
+            UpdateExpression: `set availability = :availability`,
+            ExpressionAttributeValues: {
+                ":availability": itemsForDb,
+            },
+        }).promise()
+            .then(output => {
+                getAvailabilityFromDB();
+                console.log(output.Attributes)
+            })
+            .catch(console.error);
         setCheckedItems([]);
     };
 
@@ -463,145 +457,115 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
         // Convert startDate.value to a Date object
         const startDateValue = new Date(startDate.value);
 
+        // Validate the start date
+        if (isNaN(startDateValue.getTime())) {
+            console.error("Ongeldige startdatum");
+            return;
+        }
+
         // Calculate the total number of days in the month
         const year = startDateValue.getFullYear();
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        // Get the authenticated user's email
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
+        const existingAvailability = availability || [];
 
-        // Query the Professionals table to find the user's record
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then(async (data) => {
-            if (data.Items && data.Items.length > 0) {
-                const userId = data.Items[0].id;
-                const existingAvailability = data.Items[0].availability || [];
-
-                // Determine the starting point based on the pattern
-                const baseDate = new Date(startDateValue);
-                switch (pattern) {
-                    case 'weekday':
-                        while (baseDate.getDay() !== 1) { // Find the first Monday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'weekend':
-                        while (baseDate.getDay() !== 6) { // Find the first Saturday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'daily':
-                        // No change needed for daily pattern
-                        break;
-                    default:
-                        throw new Error("Invalid pattern");
+        // Determine the starting point based on the pattern
+        const baseDate = new Date(startDateValue);
+        switch (pattern) {
+            case 'weekday':
+                while (baseDate.getDay() !== 1) { // Find the first Monday
+                    baseDate.setDate(baseDate.getDate() + 1);
                 }
+                break;
+            case 'weekend':
+                while (baseDate.getDay() !== 6) { // Find the first Saturday
+                    baseDate.setDate(baseDate.getDate() + 1);
+                }
+                break;
+            case 'daily':
+                // No change needed for daily pattern
+                break;
+            default:
+                throw new Error("Invalid pattern");
+        }
 
-                // Construct the new availability list by removing the dates added based on the pattern
-                const updatedAvailability = existingAvailability.filter(item => {
-                    const itemDate = new Date(item.date);
-                    let skip = false;
-                    for (let a = 0; a < daysInMonth; a++) {
-                        const currentDate = new Date(baseDate);
-                        currentDate.setDate(baseDate.getDate() + a);
-
-                        // Skip weekends for 'weekday' pattern
-                        if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
-
-                        // Skip weekdays for 'weekend' pattern
-                        if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
-
-                        if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
-                            skip = true;
-                            break;
-                        }
-                    }
-                    return !skip;
-                });
-
-                // Update the user's record in the Professionals table
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: userId,
-                    },
-                    UpdateExpression: "SET #av = :val",
-                    ExpressionAttributeNames: {
-                        "#av": "availability"
-                    },
-                    ExpressionAttributeValues: {
-                        ":val": updatedAvailability
-                    }
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB(); // Refresh the availability data
-                        console.log("Deleted days successfully.", output.Attributes);
-                    })
-                    .catch(error => {
-                        console.error("Failed to delete days:", error);
-                    });
-            } else {
-                console.error("No user found with the provided email.");
+        // Construct the new availability list by removing the dates added based on the pattern
+        const updatedAvailability = existingAvailability.filter(item => {
+            const itemDate = new Date(item.date);
+            // Validate each item date
+            if (isNaN(itemDate.getTime())) {
+                console.error(`Ongeldige datum in beschikbaarheid: ${item.date}`);
+                return false; // Skip invalid dates
             }
-        }).catch((err) => {
-            console.error(err);
+
+            let skip = false;
+            for (let a = 0; a < daysInMonth; a++) {
+                const currentDate = new Date(baseDate);
+                currentDate.setDate(baseDate.getDate() + a);
+
+                // Skip weekends for 'weekday' pattern
+                if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
+
+                // Skip weekdays for 'weekend' pattern
+                if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
+
+                if (itemDate.toISOString().split('T')[0] === currentDate.toISOString().split('T')[0]) {
+                    skip = true;
+                    break;
+                }
+            }
+            return !skip;
         });
+
+        console.log("Updated availability: ", updatedAvailability);
+
+        // Update the user's record in the Professionals table
+        dynamo.update({
+            TableName: "Professionals",
+            Key: {
+                id: professionalId, // Ensure this variable is defined and holds the correct professional ID
+            },
+            UpdateExpression: "SET #av = :val",
+            ExpressionAttributeNames: {
+                "#av": "availability"
+            },
+            ExpressionAttributeValues: {
+                ":val": updatedAvailability
+            }
+        }).promise()
+            .then(output => {
+                getAvailabilityFromDB(); // Refresh the availability data
+                alert("Deleted days successfully. " + output.Attributes);
+            })
+            .catch(error => {
+                console.error("Failed to delete days:", error);
+            });
     };
 
     const addAvailibility = async (date: string, time: string) => {
 
-        console.log(entries);
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
-        console.log(email);
-        console.log(date);
-        console.log(time);
-        dynamo.query({
+        const newItem = { date: date, time: time };
+        const availibilityArray = Array.isArray(availability) ? availability : [availability];
+        const updatedAvailability = [...availibilityArray, newItem];
+
+        dynamo.update({
             TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            Key: {
+                id: professionalId,
+            },
+            UpdateExpression: `set availability = :availability`,
             ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-
-                const newItem = { date: date, time: time };
-                const availibilityArray = Array.isArray(data.Items[0].availability) ? data.Items[0].availability : [data.Items[0].availability];
-                const updatedAvailability = [...availibilityArray, newItem];
-
-                dynamo.update({
-                    TableName: "Professionals",
-                    Key: {
-                        id: data.Items[0].id,
-                    },
-                    UpdateExpression: `set availability = :availability`,
-                    ExpressionAttributeValues: {
-                        ":availability": updatedAvailability,
-                    },
-                }).promise()
-                    .then(output => {
-                        getAvailabilityFromDB();
-                        getEntriesFromDB();
-                        console.log(output.Attributes)
-                    })
-                    .catch(console.error);
-                window.alert("Datum toegevoegt.");
-            } else {
-                console.error("No items found in the query result.");
-            }
-        }).catch((err) => {
-            console.error(err);
-        });
+                ":availability": updatedAvailability,
+            },
+        }).promise()
+            .then(output => {
+                getAvailabilityFromDB();
+                getEntriesFromDB();
+                console.log(output.Attributes)
+            })
+            .catch(console.error);
+        window.alert("Datum toegevoegt.");
     };
 
     const firstDate = new Date(selectedDates[0]);

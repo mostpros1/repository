@@ -16,7 +16,7 @@ function Callendar() {
             </section>
             <section className='rightsideCalendarSection'>
                 {/* versie Dani */}
-                <Cal />
+                <DateAndTimePicker/>
                  {/* <DateAndTimePicker/> deze uncommenten voor de versie van Timon  */}
             </section>
         </main>
