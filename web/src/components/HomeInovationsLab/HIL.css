@@ -8,9 +8,9 @@
 .image-container {
   display: flex;
   position: relative;
-  margin: 0;
-  width: 75%; /* Adjust if necessary */
-  height: auto; /* Adjust or set a fixed height if necessary */
+  margin: auto;
+  width: 120rem; /* Adjust if necessary */
+  height: 50rem; /* Adjust or set a fixed height if necessary */
 }
 
 .image-container img {
@@ -42,14 +42,16 @@
 
 .grid-con {
   margin: 0;
-  width: 75%; /* Set this to match the width of the image-container */
+  width: 120rem; /* Set this to match the width of the image-container */
 }
 
 .grid-row {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
   margin: 5rem 0; /* Remove side margins and keep only vertical margins */
   width: 100%;
+  height: 100%;
 }
 
 .grid-col {
@@ -84,17 +86,57 @@
 
   .text-overlay h1 {
     font-size: 4rem;
+    white-space: nowrap;
+  }
+
+  .text-overlay p {
+    font-size: auto;
   }
 
   .image-container {
     width: auto;
+    height: auto;
   }
 
-  .grid-con{
+  .image-container img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .grid-con {
     width: 100%;
   }
 
   .grid-col {
     width: 48%;
+  }
+}
+
+@media (max-width: 550px) {
+  .text-overlay h1 {
+    font-size: 2.5rem;
+    white-space: nowrap;
+  }
+
+  .text-overlay p {
+    font-size: 2rem;
+  }
+  .grid-con {
+    width: 100%;
+    height: 100%;
+  }
+  .grid-row {
+    margin: 2rem auto;
+  }
+
+  .grid-col {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grid-col p {
+    align-items: center;
+    display: flex;
   }
 }
