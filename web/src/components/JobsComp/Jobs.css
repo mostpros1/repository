@@ -254,8 +254,13 @@
   .job-entry {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
     height: 50%;
+  }
+
+  .job-list-vw p {
+    width: auto;
+    margin-bottom: 2rem;
   }
 
   .job-actions {
