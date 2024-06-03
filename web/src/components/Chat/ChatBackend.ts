@@ -37,18 +37,22 @@ export function useChatBackend(user: any, signOut) {
 
   const handleSendMessage = async (text) => {
     const members = [user.attributes.email, recipientEmail];
-    await API.graphql({
-      query: mutations.createChat,
-      variables: {
+    console.log("Sending message:", text, "to members:", members);
+    try {
+      await API.graphql(graphqlOperation(mutations.createChat, {
         input: {
-          text: text,
+          text,
           email: user.attributes.email,
           members,
           sortKey: members.sort().join("#"),
-        },
-      },
-    });
+        }
+      }));
+      console.log("Message sent successfully");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
+  
 
   const handleReceivedMessage = (receivedChat) => {
     if (receivedChat.members.includes(user.attributes.email)) {
@@ -58,7 +62,7 @@ export function useChatBackend(user: any, signOut) {
         setShowJoinButton(true);
       }
     }
-  };
+  };  
 
   const handleStartNewChatWithEmail = async (recipientEmail) => {
     try {
