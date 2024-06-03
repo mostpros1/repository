@@ -5,6 +5,7 @@
   padding-top: 5rem;
   display: flex;
   flex-direction: row;
+  background: orange;
 }
 
 .sideNavCalendarSection {  
@@ -13,6 +14,7 @@
   display: flex;
   justify-content: flex-end; 
   padding-right: 2rem; 
+  background: pink;
 }
 
 .sideNavCalendar { 
@@ -28,6 +30,7 @@
 .rightsideCalendarSection { 
   max-width: 80%; 
   flex-grow: 1;
+  background: green;
 }
 
 @media (max-width: 1044px) {
