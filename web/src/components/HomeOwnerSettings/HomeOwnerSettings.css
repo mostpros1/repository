@@ -36,10 +36,11 @@
 }
 
 #account-setting-content {
-  padding: 20px;
+  padding: 2rem;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-bottom: 2rem;
 }
 
 #account-setting-content-header {
@@ -63,7 +64,7 @@
   color: #333;
 }
 
-.account-setting input[type="password"] {
+.account-setting input {
   width: 40%;
   padding: 0.8rem;
   border: 0.1rem solid #ccc;
