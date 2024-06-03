@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
-import { taal } from "./MobileNav";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dashboard as DashboardIcon,
@@ -15,14 +14,16 @@ import {
   HelpOutline as HelpOutlineIcon,
 } from "@mui/icons-material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Auth } from "aws-amplify";
 
 function NavLinks({ toggleSidebar }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { user } = useUser();
+  const { user, updateUser } = useUser();
   const navigate = useNavigate();
   const { lang } = useParams(); // Extract the lang parameter
   const [isProfessional, setIsProfessional] = useState(false);
   const [isHomeowner, setIsHomeowner] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -31,12 +32,11 @@ function NavLinks({ toggleSidebar }) {
           user.signInUserSession.accessToken.payload["cognito:groups"];
         if (groups?.includes("Homeowner")) {
           setIsHomeowner(true);
+          setIsLoggedIn(true);
         } else if (groups?.includes("Professional")) {
           setIsProfessional(true);
+          setIsLoggedIn(true);
         }
-      } else {
-        console.log("User data is not fully available.");
-        navigate(`/${lang}/login`);
       }
     };
 
@@ -45,6 +45,25 @@ function NavLinks({ toggleSidebar }) {
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const checkAuthStatus = async () => {
+    try {
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      updateUser(authenticatedUser);
+    } catch (error) {
+      updateUser(null);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+      updateUser(null);
+      console.log("Logout successful");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const comingSoonTabs = [
@@ -62,176 +81,233 @@ function NavLinks({ toggleSidebar }) {
         <p>Close Menu</p>
         <CloseIcon />
       </div>
-      <ul className="nav-list">
-        {isProfessional ? (
+      <ul className="nav-list-mobile">
+        {isLoggedIn ? (
           <>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <DashboardIcon />
-                Dashboard
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/calender`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <DateRangeIcon />
-                Kalender
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/jobs`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <HandymanOutlinedIcon />
-                Klussen
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/chat`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <MessageIcon />
-                Berichten
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/profile`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <AccountCircleIcon />
-                Profiel
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/settings`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <SettingsIcon />
-                Instellingen
-              </NavLink>
-            </li>
-            <li className="nav-list-item">
-              <NavLink
-                to={`/${lang}/pro-dashboard/help`}
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                <HelpOutlineIcon />
-                Help
-              </NavLink>
-            </li>
-            {comingSoonTabs.map((tab) => (
-              <li className="nav-list-item coming-soon" key={tab.path}>
-                <div className="sidebar-link">
-                  <StarOutlineIcon />
-                  {tab.label}
-                  <div className="coming-soon-tooltip">Binnenkort online</div>
+            {isProfessional ? (
+              <>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <DashboardIcon />
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/calender`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <DateRangeIcon />
+                    Kalender
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/jobs`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <HandymanOutlinedIcon />
+                    Klussen
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/chat`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <MessageIcon />
+                    Berichten
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/profile`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <AccountCircleIcon />
+                    Profiel
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/settings`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <SettingsIcon />
+                    Instellingen
+                  </NavLink>
+                </li>
+                <li className="nav-list-item">
+                  <NavLink
+                    to={`/${lang}/pro-dashboard/help`}
+                    className={({ isActive }) =>
+                      isActive ? "nav-link active" : "nav-link"
+                    }
+                  >
+                    <HelpOutlineIcon />
+                    Help
+                  </NavLink>
+                </li>
+                {comingSoonTabs.map((tab) => (
+                  <li className="nav-list-item coming-soon" key={tab.path}>
+                    <div className="sidebar-link">
+                      <StarOutlineIcon />
+                      {tab.label}
+                      <div className="coming-soon-tooltip">
+                        Binnenkort online
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </>
+            ) : (
+              <>
+                <div className="navlink-top">
+                  <li className="nav-list-item-tp">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/jobs`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <HandymanOutlinedIcon />
+                      Klussen
+                    </NavLink>
+                  </li>
+                  <li className="nav-list-item-tp">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/chat`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <MessageIcon />
+                      Berichten
+                    </NavLink>
+                  </li>
+                  <li className="nav-list-item-tp">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/payments`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <PaymentIcon />
+                      Betalingen
+                    </NavLink>
+                  </li>
+                  <li className="nav-list-item-tp">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/reviews`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <StarOutlineIcon />
+                      Reviews
+                    </NavLink>
+                  </li>
                 </div>
-              </li>
-            ))}
+                <div className="navlink-bottom">
+                  <li className="nav-list-item-btm">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/profile`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <AccountCircleIcon />
+                      Profiel
+                    </NavLink>
+                  </li>
+                  <li className="nav-list-item-btm">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/settings`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <SettingsIcon />
+                      Instellingen
+                    </NavLink>
+                  </li>
+                  <li className="nav-list-item-btm">
+                    <NavLink
+                      to={`/${lang}/homeowner-dashboard/FAQPage`}
+                      className={({ isActive }) =>
+                        isActive ? "nav-link active" : "nav-link"
+                      }
+                    >
+                      <HelpOutlineIcon />
+                      Help
+                    </NavLink>
+                  </li>
+                </div>
+              </>
+            )}
+            <li className="nav-list-item">
+              <button id="nav-item-logout" onClick={handleLogout}>
+                <AccountCircleIcon />
+                Uitloggen
+              </button>
+            </li>
           </>
         ) : (
           <>
-            <div className="navlink-top">
-              <li className="nav-list-item-tp">
+            <li className="nav-list-item"></li>
+            <div className="nav-item-logins">
+              <li className="nav-list-item">
                 <NavLink
-                  to={`/${lang}/homeowner-dashboard/jobs`}
+                  to={`/${lang}/login`}
                   className={({ isActive }) =>
                     isActive ? "nav-link active" : "nav-link"
                   }
                 >
-                  <HandymanOutlinedIcon />
-                  Klussen
+                  <button id="nav-item-btn">
+                    <AccountCircleIcon />
+                    Inloggen
+                  </button>
                 </NavLink>
               </li>
-              <li className="nav-list-item-tp">
+              <li className="nav-list-item">
                 <NavLink
-                  to={`/${lang}/homeowner-dashboard/chat`}
+                  to={`/${lang}/register`}
                   className={({ isActive }) =>
                     isActive ? "nav-link active" : "nav-link"
                   }
                 >
-                  <MessageIcon />
-                  Berichten
+                  <button id="nav-item-btn">
+                    <AccountCircleIcon />
+                    Registreren
+                  </button>
                 </NavLink>
               </li>
-              <li className="nav-list-item-tp">
+
+              <li className="nav-list-item">
                 <NavLink
-                  to={`/${lang}/homeowner-dashboard/payments`}
+                  to={`/${lang}/pro-onboarding`}
                   className={({ isActive }) =>
                     isActive ? "nav-link active" : "nav-link"
                   }
                 >
-                  <PaymentIcon />
-                  Betalingen
-                </NavLink>
-              </li>
-              <li className="nav-list-item-tp">
-                <NavLink
-                  to={`/${lang}/homeowner-dashboard/reviews`}
-                  className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
-                  }
-                >
-                  <StarOutlineIcon />
-                  Reviews
-                </NavLink>
-              </li>
-            </div>
-            <div className="navlink-bottom">
-              <li className="nav-list-item-btm">
-                <NavLink
-                  to={`/${lang}/homeowner-dashboard/profile`}
-                  className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
-                  }
-                >
-                  <AccountCircleIcon />
-                  Profiel
-                </NavLink>
-              </li>
-              <li className="nav-list-item-btm">
-                <NavLink
-                  to={`/${lang}/homeowner-dashboard/settings`}
-                  className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
-                  }
-                >
-                  <SettingsIcon />
-                  Instellingen
-                </NavLink>
-              </li>
-              <li className="nav-list-item-btm">
-                <NavLink
-                  to={`/${lang}/homeowner-dashboard/FAQPage`}
-                  className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
-                  }
-                >
-                  <HelpOutlineIcon />
-                  Help
+                  <button id="nav-item-specialist-btn">
+                    Inschrijven als Vakspecialist
+                  </button>
                 </NavLink>
               </li>
             </div>
@@ -241,4 +317,5 @@ function NavLinks({ toggleSidebar }) {
     </div>
   );
 }
+
 export default NavLinks;

@@ -146,7 +146,7 @@
   text-decoration: none;
 }
 
-.populairjobsHeroCard:hover{
+.populairjobsHeroCard:hover {
   color: white;
 }
 
@@ -187,12 +187,12 @@
   font-family: "Poppins", sans-serif;
 }
 
-.infoContainerHomeLink{
+.infoContainerHomeLink {
   color: black;
 }
 
-.infoContainerHomeLink:hover{
-  color:#207cd7;
+.infoContainerHomeLink:hover {
+  color: #207cd7;
 }
 .howItWorksSectionHome {
   margin-top: 11.1rem;
@@ -871,6 +871,8 @@
   }
 
   .searchBarBlueIcon {
+    min-width: 3rem;
+    min-height: 3rem;
     margin-right: 1rem;
   }
 

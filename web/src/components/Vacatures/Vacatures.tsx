@@ -35,7 +35,7 @@ const Vacatures = () => {
                                 )}
                                 {job.requirements.length > 0 && (
                                     <>
-                                        <p id='Vacature-desc-title'>Requirements</p>
+                                        <p id='Vacature-desc-title'>Pre if you have experience with:</p>
                                         <ul className='tech-list'>
                                             {job.requirements.map((tech, index) => (
                                                 <li key={index}>{tech}</li>
