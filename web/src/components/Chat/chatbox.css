@@ -847,7 +847,7 @@
 
 .search-input-header {
   position: absolute;
-  left: 260px;
+  left: 250px;
   width: 140px;
   border: solid 2px black;
   border-radius: 5px;
@@ -867,7 +867,8 @@
 
 .search-header{
   position: absolute;
-  left: 430px;
+  left: 420px;
   top: 10px;
   cursor: pointer;
 }
+
