@@ -19,7 +19,7 @@ function CalResult() {
                 <form>
                     Verwijder Beschikbaarheid<br></br>
                     {availability
-                        .filter(availabilityItem => availabilityItem.date === dateKey)
+                        // .filter(availabilityItem => availabilityItem.date === dateKey)
                         .map((filteredAvailabilityItem, index) => (
                             <div key={index}>
                                 <Checkbox

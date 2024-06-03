@@ -83,7 +83,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
   const [showNewChatModal, setShowNewChatModal] = useState(false);
   const [newChatEmail, setNewChatEmail] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
   const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
@@ -110,10 +109,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
 
   const settingsModalRef = useRef<HTMLDivElement>(null);
-
-  const handleTypingIndicator = (isTyping: boolean) => {
-    setIsTyping(isTyping);
-  };
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
@@ -217,6 +212,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           chat.members.includes(user.attributes.email)
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
+      console.log("Filtered chats for selected contact:", filteredChats);
       setGroupedMessages(groupedMessages);
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
@@ -497,64 +493,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-  // const markAsRead = async (messageId: string) => {
-  //   try {
-  //     await API.graphql({
-  //       query: mutations.updateChatReadStatus,
-  //       variables: {
-  //         id: messageId,
-  //         read: true,
-  //       },
-  //     });
-  //     setChats((prevChats) =>
-  //       prevChats.map((chat) =>
-  //         chat.id === messageId ? { ...chat, read: true } : chat
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error marking message as read:", error);
-  //   }
-  // };
-
-  // const markAsDelivered = async (messageId: string) => {
-  //   try {
-  //     await API.graphql({
-  //       query: mutations.updateChatDeliveredStatus,
-  //       variables: {
-  //         id: messageId,
-  //         delivered: true,
-  //       },
-  //     });
-  //     setChats((prevChats) =>
-  //       prevChats.map((chat) =>
-  //         chat.id === messageId ? { ...chat, delivered: true } : chat
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error marking message as delivered:", error);
-  //   }
-  // };
-
-  // // Mark messages as read when the chat box is opened
-  // useEffect(() => {
-  //   if (selectedContact) {
-  //     const unreadMessages = chats.filter(
-  //       (chat) => chat.members.includes(selectedContact) && !chat.read
-  //     );
-  //     unreadMessages.forEach((message) => markAsRead(message.id));
-  //   }
-  // }, [selectedContact, chats]);
-
-  // // Mark messages as delivered when they are sent
-  // useEffect(() => {
-  //   const undeliveredMessages = chats.filter(
-  //     (chat) => chat.members.includes(selectedContact) && !chat.delivered
-  //   );
-  //   undeliveredMessages.forEach((message) => markAsDelivered(message.id));
-  // }, [chats, selectedContact]);
-  
-
-
   const handleSendLocation = async () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -693,14 +631,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           await handleSendMessage(stopXSS(messageText));
         }
         messageInput.value = "";
-        handleTypingIndicator(false);
       }
     }
-  };
-
-  const handleInputChange = () => {
-    handleTypingIndicator(true);
-    setTimeout(() => handleTypingIndicator(false), 1000);
   };
 
   const [open, setOpen] = useState(false);
@@ -709,7 +641,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setOpen(!open);
   };
 
-  const handleStartNewChatClick = () => {
+  const handleStartNewChatClick = (email: string = "") => {
+    setNewChatEmail(email);
     setShowNewChatModal(true);
   };
 
@@ -717,6 +650,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     console.log("Starting new chat with email:", newChatEmail);
     await handleStartNewChatWithEmail(newChatEmail);
     setShowNewChatModal(false);
+    const uuid = getUUIDFromEmail(newChatEmail);
+    const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+    window.history.pushState({}, "", url);
+    setRecipientEmail(newChatEmail);
+    setSelectedContact(newChatEmail);
   };
 
   const handleMarkMessage = (messageId: string) => {
@@ -842,7 +780,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           />
           {open && (
             <div className="dropdownn-menu">
-              <div className="dropdownn-item" onClick={handleStartNewChatClick}>
+              <div className="dropdownn-item" onClick={() => handleStartNewChatClick()}>
                 Nieuwe chat starten
               </div>
               <div
@@ -943,13 +881,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <h2 className="recipient-name">
                   {selectedContact ? selectedContact.split("@")[0] : ""}
                 </h2>
-                {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
             <div className="search-container" style={{ position: "relative" }}>
               {!showSearch && (
                 <button onClick={handleSearchClick} className="search-icon">
-                  <CiSearch className="search-header" size={25} />
+                  <CiSearch className="search-header" size={25} color="blue"/>
                 </button>
               )}
               <input
@@ -961,7 +898,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               />
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
-                  <MdOutlineCancel className="search-header" size={25} />
+                  <MdOutlineCancel className="search-header" size={25} color="blue"/>
                 </button>
               )}
             </div>
@@ -1103,7 +1040,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 }
               }}
               className="inputchat"
-              onChange={handleInputChange}
+              onChange={() => {}}
             />
             <div className="dropup" ref={dropUpRef}>
               <BsPaperclip
@@ -1352,3 +1289,4 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 }
 
 export default withAuthenticator(ChatMain);
+
