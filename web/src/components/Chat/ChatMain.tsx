@@ -34,7 +34,7 @@ import ReactDOMServer from "react-dom/server";
 import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
 import { MdOutlineEdit } from "react-icons/md";
-
+import { getInfo } from "../../../../backend_functions/coordsToKm.ts"
 interface Chat {
   id: string;
   text: string;
@@ -87,13 +87,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
   const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
-  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(new Set());
+  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(
+    new Set()
+  );
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
-  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
+  const [newMessagesCount, setNewMessagesCount] = useState<{
+    [contact: string]: number;
+  }>({});
 
   // State for controlling the payment modal
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -116,10 +120,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
-            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]
+              }`,
           });
         }
-        const contact = message.members.find((member) => member !== user.attributes.email);
+        const contact = message.members.find(
+          (member) => member !== user.attributes.email
+        );
         if (contact) {
           setNewMessagesCount((prevCount) => ({
             ...prevCount,
@@ -193,7 +200,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
     sortedDates.forEach((date) => {
       groupedMessages[date].sort(
-        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
       sortedGroupedMessages[date] = groupedMessages[date];
     });
@@ -321,33 +329,38 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
     reader.onload = async () => {
       if (reader.result) {
-        const base64Data = (reader.result as string).split(',')[1];
-        try {
-          setIsUploading(true);
-          const response = await axios.post(
-            'https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/',
-            { photo: base64Data },
-            {
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            }
-          );
-          console.log(response.data);
-          await handleSendMessage(`<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`);
-          setIsUploading(false);
-        } catch (error) {
-          console.error('Error uploading photo:', error);
-          alert('Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.');
-          setIsUploading(false);
-        }
+        const base64Data = (reader.result as string).split(",")[1];
+        console.log(base64Data);
+        //   try {
+        //     setIsUploading(true);
+        //     const response = await axios.post(
+        //       "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
+        //       { photo: base64Data },
+        //       {
+        //         headers: {
+        //           "Content-Type": "application/json",
+        //         },
+        //       }
+        //     );
+        //     console.log(response.data);
+        //     await handleSendMessage(
+        //       `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
+        //     );
+        //     setIsUploading(false);
+        //   } catch (error) {
+        //     console.error("Error uploading photo:", error);
+        //     alert(
+        //       "Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw."
+        //     );
+        //     setIsUploading(false);
+        //   }
       } else {
-        console.error('FileReader result is null');
+        console.error("FileReader result is null");
       }
     };
 
     reader.onerror = (error) => {
-      console.error('Error reading file:', error);
+      console.error("Error reading file:", error);
     };
 
     reader.readAsDataURL(file);
@@ -388,7 +401,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     const handleClickOutsideModal = (event: MouseEvent) => {
       const target = event.target as Node;
       if (
-        (showNewChatModal || showSettingsModal || showSavedMessagesModal || showPaymentModal || showFavoritesModal) &&
+        (showNewChatModal ||
+          showSettingsModal ||
+          showSavedMessagesModal ||
+          showPaymentModal ||
+          showFavoritesModal) &&
         target &&
         !settingsModalRef.current?.contains(target)
       ) {
@@ -407,7 +424,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       document.removeEventListener("keydown", handleEscape);
       document.removeEventListener("mousedown", handleClickOutsideModal);
     };
-  }, [showNewChatModal, showSettingsModal, showSavedMessagesModal, showPaymentModal, showFavoritesModal]);
+  }, [
+    showNewChatModal,
+    showSettingsModal,
+    showSavedMessagesModal,
+    showPaymentModal,
+    showFavoritesModal,
+  ]);
 
   const handleEditMessage = async (messageId: string, newText: string) => {
     try {
@@ -442,7 +465,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         },
       });
       // Update local state
-      setChats((prevChats) => prevChats.filter((chat) => chat.id !== messageId));
+      setChats((prevChats) =>
+        prevChats.filter((chat) => chat.id !== messageId)
+      );
     } catch (error) {
       console.error("Error deleting message:", error);
     }
@@ -450,15 +475,21 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   const handleDeleteChat = async (contact: string) => {
     try {
-      const chatToDelete = chats.find(chat => chat.members.includes(contact) && chat.members.includes(user.attributes.email));
+      const chatToDelete = chats.find(
+        (chat) =>
+          chat.members.includes(contact) &&
+          chat.members.includes(user.attributes.email)
+      );
       if (chatToDelete) {
         await API.graphql({
           query: mutations.deleteChat,
           variables: {
-            input: { id: chatToDelete.id }
-          }
+            input: { id: chatToDelete.id },
+          },
         });
-        setChats(prevChats => prevChats.filter(chat => chat.id !== chatToDelete.id));
+        setChats((prevChats) =>
+          prevChats.filter((chat) => chat.id !== chatToDelete.id)
+        );
         setSelectedContact(null);
       }
     } catch (error) {
@@ -521,13 +552,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   //   );
   //   undeliveredMessages.forEach((message) => markAsDelivered(message.id));
   // }, [chats, selectedContact]);
+  
+
 
   const handleSendLocation = async () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
         const locationUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
-        await handleSendMessage(`<a href="${locationUrl}" target="_blank">Mijn locatie</a>`);
+        getInfo(latitude, longitude);
+        await handleSendMessage(
+          `<a href="${locationUrl}" target="_blank">Mijn locatie</a>`
+        );
       });
     } else {
       alert("Geolocatie wordt niet ondersteund door deze browser.");
@@ -612,14 +648,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       }
     });
 
-    const htmlString = ReactDOMServer.renderToStaticMarkup(
-      <>{jsxElements}</>
-    );
+    const htmlString = ReactDOMServer.renderToStaticMarkup(<>{jsxElements}</>);
     return htmlString;
   };
 
   const validateMessageContent = (message: string) => {
-    const phoneNumberRegex = /(\+?\d{1,3}[-.\s]?|(\(?\d{2,4}\)?))\d{3}[-.\s]?\d{4,6}/g;
+    const phoneNumberRegex =
+      /(\+?\d{1,3}[-.\s]?|(\(?\d{2,4}\)?))\d{3}[-.\s]?\d{4,6}/g;
     const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/;
     const forbiddenWords = ["password", "secret", "confidential"];
 
@@ -637,12 +672,16 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const handleSendMessageClick = async () => {
-    const messageInput = document.getElementById("message-input") as HTMLInputElement;
+    const messageInput = document.getElementById(
+      "message-input"
+    ) as HTMLInputElement;
     if (messageInput) {
       const messageText = messageInput.value;
       if (messageText && recipientEmail) {
         if (!validateMessageContent(messageText)) {
-          alert("Het bericht bevat verboden informatie en kan niet worden verzonden.");
+          alert(
+            "Het bericht bevat verboden informatie en kan niet worden verzonden."
+          );
           return;
         }
         if (replyingTo) {
@@ -724,7 +763,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setTextSize(Number(event.target.value));
   };
 
-  const handleVisibleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVisibleNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setVisibleName(event.target.value);
   };
 
@@ -759,7 +800,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   }, [messageSearchTerm, chats]);
 
-  const [messageSearchTermm, setMessageSearchTermm] = useState('');
+  const [messageSearchTermm, setMessageSearchTermm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearchClick = () => {
@@ -768,10 +809,16 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   const handleCancelClick = () => {
     setShowSearch(false);
-    setMessageSearchTerm('');
+    setMessageSearchTerm("");
   };
 
-  const MessageStatusIcon = ({ delivered, read }: { delivered: boolean; read: boolean }) => {
+  const MessageStatusIcon = ({
+    delivered,
+    read,
+  }: {
+    delivered: boolean;
+    read: boolean;
+  }) => {
     if (read) {
       return <IoCheckmarkDone className="message-status-icon read" />;
     } else if (delivered) {
@@ -782,23 +829,39 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   return (
-    <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
+    <div
+      className={`chat-container ${theme}`}
+      style={{ fontSize: `${textSize}px` }}
+    >
       <div className="sidebarr" id="sidebarr">
         <div className="dropdownn-container">
-          <BsThreeDotsVertical size={30} className="menu-iconn" onClick={toggleMenu} />
+          <BsThreeDotsVertical
+            size={30}
+            className="menu-iconn"
+            onClick={toggleMenu}
+          />
           {open && (
             <div className="dropdownn-menu">
               <div className="dropdownn-item" onClick={handleStartNewChatClick}>
                 Nieuwe chat starten
               </div>
-              <div className="dropdownn-item" onClick={() => setShowSavedMessagesModal(true)}>
+              <div
+                className="dropdownn-item"
+                onClick={() => setShowSavedMessagesModal(true)}
+              >
                 Opgeslagen berichten
               </div>
-              <div className="dropdownn-item" onClick={() => setShowSettingsModal(true)}>
+              <div
+                className="dropdownn-item"
+                onClick={() => setShowSettingsModal(true)}
+              >
                 Instellingen
               </div>
               {selectedContact && (
-                <div className="dropdownn-item" onClick={() => handleDeleteChat(selectedContact)}>
+                <div
+                  className="dropdownn-item"
+                  onClick={() => handleDeleteChat(selectedContact)}
+                >
                   Verwijder chat
                 </div>
               )}
@@ -811,7 +874,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
               >
                 <BsPersonCircle size={50} className="avatar-chat-side" />
                 <div className="contact-details">
@@ -840,7 +905,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
               >
                 <BsPersonCircle size={50} className="avatar-chat-side" />
                 <div className="contact-details">
@@ -879,10 +946,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
             </div>
-            <div className="search-container" style={{ position: 'relative' }}>
+            <div className="search-container" style={{ position: "relative" }}>
               {!showSearch && (
                 <button onClick={handleSearchClick} className="search-icon">
-                  <CiSearch className="search-header" size={25}/>
+                  <CiSearch className="search-header" size={25} />
                 </button>
               )}
               <input
@@ -890,47 +957,56 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 placeholder="Zoek berichten..."
                 value={messageSearchTerm}
                 onChange={(e) => setMessageSearchTerm(e.target.value)}
-                className={`search-input-header ${showSearch ? 'show' : ''}`}
+                className={`search-input-header ${showSearch ? "show" : ""}`}
               />
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
-                  <MdOutlineCancel className="search-header" size={25}/>
+                  <MdOutlineCancel className="search-header" size={25} />
                 </button>
               )}
             </div>
           </div>
           <div className="chat-box" ref={chatBoxRef}>
             {isLoading && <div className="loading-spinner">Loading...</div>}
-            {filteredMessages.length > 0 ? (
-              filteredMessages.map((chat) => (
+            {filteredMessages.length > 0
+              ? filteredMessages.map((chat) => (
                 <div
                   key={chat.id}
-                  className={`message-container ${
-                    chat.email === user.attributes.email
-                      ? "self-message-container"
-                      : "other-message-container"
-                  } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                  className={`message-container ${chat.email === user.attributes.email
+                    ? "self-message-container"
+                    : "other-message-container"
+                    } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                 >
                   <div
-                    className={`message-bubble ${
-                      chat.email === user.attributes.email
-                        ? "self-message"
-                        : "other-message"
-                    }`}
+                    className={`message-bubble ${chat.email === user.attributes.email
+                      ? "self-message"
+                      : "other-message"
+                      }`}
                   >
                     <div
                       className="text"
                       dangerouslySetInnerHTML={{ __html: chat.text }}
                     />
                     <div className="message-actions">
-                      <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                      <button onClick={() => handleMarkMessage(chat.id)}>
-                        {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                      <button onClick={() => handleReplyMessage(chat)}>
+                        <FaReply />
                       </button>
-                      <button onClick={() => handleDeleteMessage(chat.id)}><MdDeleteOutline /></button>
+                      <button onClick={() => handleMarkMessage(chat.id)}>
+                        {markedMessages.has(chat.id) ? (
+                          <FaBookmark />
+                        ) : (
+                          <FaRegBookmark />
+                        )}
+                      </button>
+                      <button onClick={() => handleDeleteMessage(chat.id)}>
+                        <MdDeleteOutline />
+                      </button>
                     </div>
                     <div className="message-status">
-                      <MessageStatusIcon delivered={chat.delivered} read={chat.read} />
+                      <MessageStatusIcon
+                        delivered={chat.delivered}
+                        read={chat.read}
+                      />
                     </div>
                     <time dateTime={chat.createdAt} className="message-time">
                       {new Intl.DateTimeFormat("nl-NL", {
@@ -941,43 +1017,61 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   </div>
                 </div>
               ))
-            ) : (
-              Object.keys(groupedMessages).map((date) => {
+              : Object.keys(groupedMessages).map((date) => {
                 const { text, className } = formatDate(date);
                 return (
                   <React.Fragment key={date}>
-                    <div className={`date-separator ${className}`}>{text}</div>
+                    <div className={`date-separator ${className}`}>
+                      {text}
+                    </div>
                     {groupedMessages[date].map((chat) => (
                       <div
                         key={chat.id}
-                        className={`message-container ${
-                          chat.email === user.attributes.email
-                            ? "self-message-container"
-                            : "other-message-container"
-                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                        className={`message-container ${chat.email === user.attributes.email
+                          ? "self-message-container"
+                          : "other-message-container"
+                          } ${markedMessages.has(chat.id) ? "marked-message" : ""
+                          }`}
                       >
                         <div
-                          className={`message-bubble ${
-                            chat.email === user.attributes.email
-                              ? "self-message"
-                              : "other-message"
-                          }`}
+                          className={`message-bubble ${chat.email === user.attributes.email
+                            ? "self-message"
+                            : "other-message"
+                            }`}
                         >
                           <div
                             className="text"
                             dangerouslySetInnerHTML={{ __html: chat.text }}
                           />
                           <div className="message-actions">
-                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                            <button onClick={() => handleMarkMessage(chat.id)}>
-                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
+                            <button onClick={() => handleReplyMessage(chat)}>
+                              <FaReply />
                             </button>
-                            <button onClick={() => handleDeleteMessage(chat.id)}><MdDeleteOutline /></button>
+                            <button
+                              onClick={() => handleMarkMessage(chat.id)}
+                            >
+                              {markedMessages.has(chat.id) ? (
+                                <FaBookmark />
+                              ) : (
+                                <FaRegBookmark />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMessage(chat.id)}
+                            >
+                              <MdDeleteOutline />
+                            </button>
                           </div>
                           <div className="message-status">
-                          <MessageStatusIcon delivered={chat.delivered} read={chat.read} />
+                            <MessageStatusIcon
+                              delivered={chat.delivered}
+                              read={chat.read}
+                            />
                           </div>
-                          <time dateTime={chat.createdAt} className="message-time">
+                          <time
+                            dateTime={chat.createdAt}
+                            className="message-time"
+                          >
                             {new Intl.DateTimeFormat("nl-NL", {
                               hour: "2-digit",
                               minute: "2-digit",
@@ -988,8 +1082,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                     ))}
                   </React.Fragment>
                 );
-              })
-            )}
+              })}
           </div>
           {replyingTo && (
             <div className="replying-to">
@@ -1013,7 +1106,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               onChange={handleInputChange}
             />
             <div className="dropup" ref={dropUpRef}>
-              <BsPaperclip className="paperclip" size={25} onClick={handleDropUpClick} />
+              <BsPaperclip
+                className="paperclip"
+                size={25}
+                onClick={handleDropUpClick}
+              />
               {isDropUpOpen && (
                 <div className="dropup-content show">
                   <button
@@ -1034,7 +1131,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                   >
                     <BsCreditCard size={25} color="blue" />
                   </button>
-                  <button className="dropup-option" onClick={handleSendLocation}>
+                  <button
+                    className="dropup-option"
+                    onClick={handleSendLocation}
+                  >
                     <FaLocationCrosshairs size={25} color="blue" />
                   </button>
                 </div>
@@ -1058,8 +1158,15 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               value={newChatEmail}
               onChange={(e) => setNewChatEmail(e.target.value)}
             />
-            <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
-            <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+            <button onClick={handleNewChatConfirm} className="button-modal">
+              Bevestigen
+            </button>
+            <button
+              onClick={() => setShowNewChatModal(false)}
+              className="button-modal"
+            >
+              Annuleren
+            </button>
           </div>
         </div>
       )}
@@ -1090,18 +1197,35 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             </div>
             <div className="settings-item">
               <label>Theme:</label>
-              <button onClick={handleThemeChange} className="theme-toggle-button">
+              <button
+                onClick={handleThemeChange}
+                className="theme-toggle-button"
+              >
                 {theme === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
               </button>
             </div>
             <div className="settings-item">
               <label>Notifications:</label>
-              <button onClick={handleNotificationsToggle} className="notifications-toggle-button">
-                {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
+              <button
+                onClick={handleNotificationsToggle}
+                className="notifications-toggle-button"
+              >
+                {notificationsEnabled ? (
+                  <BsBellSlash size={20} />
+                ) : (
+                  <BsBell size={20} />
+                )}
               </button>
             </div>
-            <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
-            <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
+            <button onClick={handleSaveSettings} className="button-modal">
+              Opslaan
+            </button>
+            <button
+              onClick={() => setShowSettingsModal(false)}
+              className="button-modal"
+            >
+              Annuleren
+            </button>
           </div>
         </div>
       )}
@@ -1118,8 +1242,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                       <div className="saved-message-sender">
                         Van: {message.email.split("@")[0]}
                       </div>
-                      <div className="saved-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
-                      <time dateTime={message.createdAt} className="saved-message-time">
+                      <div
+                        className="saved-message-text"
+                        dangerouslySetInnerHTML={{ __html: message.text }}
+                      />
+                      <time
+                        dateTime={message.createdAt}
+                        className="saved-message-time"
+                      >
                         {new Intl.DateTimeFormat("nl-NL", {
                           day: "numeric",
                           month: "short",
@@ -1134,7 +1264,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 return null;
               })}
             </div>
-            <button onClick={() => setShowSavedMessagesModal(false)} className="button-modal">Sluiten</button>
+            <button
+              onClick={() => setShowSavedMessagesModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
           </div>
         </div>
       )}
@@ -1148,8 +1283,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 if (message) {
                   return (
                     <div key={message.id} className="favorite-message-item">
-                      <div className="favorite-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
-                      <time dateTime={message.createdAt} className="favorite-message-time">
+                      <div
+                        className="favorite-message-text"
+                        dangerouslySetInnerHTML={{ __html: message.text }}
+                      />
+                      <time
+                        dateTime={message.createdAt}
+                        className="favorite-message-time"
+                      >
                         {new Intl.DateTimeFormat("nl-NL", {
                           day: "numeric",
                           month: "short",
@@ -1164,7 +1305,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 return null;
               })}
             </div>
-            <button onClick={() => setShowFavoritesModal(false)} className="button-modal">Sluiten</button>
+            <button
+              onClick={() => setShowFavoritesModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
           </div>
         </div>
       )}
@@ -1188,11 +1334,16 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               subtotal={parseFloat(customAmount.replace(",", "."))}
             />
             <PaymentOffer
-              subtotal={parseFloat(customAmount.replace(',', '.'))}
+              subtotal={parseFloat(customAmount.replace(",", "."))}
               handleSendMessage={handleSendMessage}
               recipientEmail={recipientEmail}
             />
-            <button onClick={() => setShowPaymentModal(false)} className="button-modal">Sluiten</button>
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
           </div>
         </div>
       )}
