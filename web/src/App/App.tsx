@@ -49,7 +49,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import ProductUpdatePage from "../pages/ProductUpdatepage/ProductUpdatePage.tsx";  
+import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";  
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
@@ -74,7 +74,7 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/test" element={<Cal />} />
+      <Route path="/test" element={<DateAndTimePicker />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
       <Route path="/jobs-overview" element={<OverzichtKlussenPage />} />
