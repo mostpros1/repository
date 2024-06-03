@@ -585,7 +585,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
             <div className="calendar">
                 <div className="month-selector">
                     <button type="button" className='prev-month' onClick={handlePrevMonth}><img src={Prev} className='fotoinButtonL' /></button>
-                    <button type="button" onClick={handleCurrentMonth} className='buttonToday'>Today</button> {/* Voeg deze regel toe */}
                     <div className='select-month-and-year'>
                         <select id="year-select" value={currentYear} onChange={handleChange}>
                             {yearsOptions.map(year => (

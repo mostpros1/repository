@@ -1,9 +1,8 @@
 .container {
     display: flex;
-    flex-direction: row;/* Align items horizontally */
+    flex-direction: row;
 }
 
-/* Adjust these class names as needed */
 .left-section,.right-section {
     flex: 1;
 }

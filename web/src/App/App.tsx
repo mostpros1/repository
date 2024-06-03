@@ -49,7 +49,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage";
+import ProductUpdatePage from "../pages/ProductUpdatepage/ProductUpdatePage.tsx";  
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
@@ -102,7 +102,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/VSDashboard" element={<VSDashboard />} />
       <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
-      <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} />
+      {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -130,22 +130,12 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
-      <Route path="/home" element={<HomePageTwo />} />
       <Route path="/homeowner-dashboard/settings" element={<HomeOwnerSettingsPage />} />
       <Route path="/pro-dashboard/settings" element={<HomeOwnerSettingsPage />} />
       <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
-      <Route path="/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
-      <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
-      <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
-      <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/Invoice" element={<InvoicePage />} />
-      <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
-      <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
