@@ -62,7 +62,7 @@ import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
 import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
 import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
-
+import Cal from "../components/Agenda/cal.tsx"
 
 
 
@@ -74,7 +74,7 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/test" element={<DateAndTimePicker />} />
+      <Route path="/test" element={<Cal />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
       <Route path="/jobs-overview" element={<OverzichtKlussenPage />} />
