@@ -34,7 +34,7 @@ import ReactDOMServer from "react-dom/server";
 import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
 import { MdOutlineEdit } from "react-icons/md";
-
+import { getInfo } from "../../../../backend_functions/coordsToKm.ts"
 interface Chat {
   id: string;
   text: string;
@@ -120,9 +120,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
-            body: `Je hebt een nieuw bericht ontvangen van ${
-              message.email.split("@")[0]
-            }`,
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]
+              }`,
           });
         }
         const contact = message.members.find(
@@ -167,7 +166,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         if (
           !updatedLastMessages[contact] ||
           new Date(updatedLastMessages[contact].createdAt) <
-            new Date(chat.createdAt)
+          new Date(chat.createdAt)
         ) {
           updatedLastMessages[contact] = {
             text: chat.text,
@@ -331,29 +330,30 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     reader.onload = async () => {
       if (reader.result) {
         const base64Data = (reader.result as string).split(",")[1];
-        try {
-          setIsUploading(true);
-          const response = await axios.post(
-            "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
-            { photo: base64Data },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          console.log(response.data);
-          await handleSendMessage(
-            `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
-          );
-          setIsUploading(false);
-        } catch (error) {
-          console.error("Error uploading photo:", error);
-          alert(
-            "Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw."
-          );
-          setIsUploading(false);
-        }
+        console.log(base64Data);
+        //   try {
+        //     setIsUploading(true);
+        //     const response = await axios.post(
+        //       "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
+        //       { photo: base64Data },
+        //       {
+        //         headers: {
+        //           "Content-Type": "application/json",
+        //         },
+        //       }
+        //     );
+        //     console.log(response.data);
+        //     await handleSendMessage(
+        //       `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
+        //     );
+        //     setIsUploading(false);
+        //   } catch (error) {
+        //     console.error("Error uploading photo:", error);
+        //     alert(
+        //       "Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw."
+        //     );
+        //     setIsUploading(false);
+        //   }
       } else {
         console.error("FileReader result is null");
       }
@@ -552,12 +552,15 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   //   );
   //   undeliveredMessages.forEach((message) => markAsDelivered(message.id));
   // }, [chats, selectedContact]);
+  
+
 
   const handleSendLocation = async () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
         const locationUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
+        getInfo(latitude, longitude);
         await handleSendMessage(
           `<a href="${locationUrl}" target="_blank">Mijn locatie</a>`
         );
@@ -868,67 +871,67 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
                       </span>
                     )}
                   </div>
-                </li>
-              ))
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))
             : filteredContactList.map((contact) => (
-                <li
-                  key={contact}
-                  onClick={() => switchChat(contact)}
-                  className={
-                    selectedContact === contact ? "selected-contact" : ""
-                  }
-                >
-                  <BsPersonCircle size={50} className="avatar-chat-side" />
-                  <div className="contact-details">
-                    <div className="contact-name">
-                      <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
-                    </div>
-                    {lastMessages[contact] && (
-                      <span className="last-message">
-                        {lastMessages[contact].text}
-                      </span>
-                    )}
-                    {lastMessages[contact] && (
-                      <span className="last-message-time">
-                        {formatDate(lastMessages[contact].createdAt).text}
+              <li
+                key={contact}
+                onClick={() => switchChat(contact)}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
+              >
+                <BsPersonCircle size={50} className="avatar-chat-side" />
+                <div className="contact-details">
+                  <div className="contact-name">
+                    <span>{contact.split("@")[0]}</span>
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
                       </span>
                     )}
                   </div>
-                </li>
-              ))}
+                  {lastMessages[contact] && (
+                    <span className="last-message">
+                      {lastMessages[contact].text}
+                    </span>
+                  )}
+                  {lastMessages[contact] && (
+                    <span className="last-message-time">
+                      {formatDate(lastMessages[contact].createdAt).text}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
       <div className="main-container">
@@ -967,124 +970,119 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             {isLoading && <div className="loading-spinner">Loading...</div>}
             {filteredMessages.length > 0
               ? filteredMessages.map((chat) => (
-                  <div
-                    key={chat.id}
-                    className={`message-container ${
-                      chat.email === user.attributes.email
-                        ? "self-message-container"
-                        : "other-message-container"
+                <div
+                  key={chat.id}
+                  className={`message-container ${chat.email === user.attributes.email
+                    ? "self-message-container"
+                    : "other-message-container"
                     } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                >
+                  <div
+                    className={`message-bubble ${chat.email === user.attributes.email
+                      ? "self-message"
+                      : "other-message"
+                      }`}
                   >
                     <div
-                      className={`message-bubble ${
-                        chat.email === user.attributes.email
-                          ? "self-message"
-                          : "other-message"
-                      }`}
-                    >
-                      <div
-                        className="text"
-                        dangerouslySetInnerHTML={{ __html: chat.text }}
-                      />
-                      <div className="message-actions">
-                        <button onClick={() => handleReplyMessage(chat)}>
-                          <FaReply />
-                        </button>
-                        <button onClick={() => handleMarkMessage(chat.id)}>
-                          {markedMessages.has(chat.id) ? (
-                            <FaBookmark />
-                          ) : (
-                            <FaRegBookmark />
-                          )}
-                        </button>
-                        <button onClick={() => handleDeleteMessage(chat.id)}>
-                          <MdDeleteOutline />
-                        </button>
-                      </div>
-                      <div className="message-status">
-                        <MessageStatusIcon
-                          delivered={chat.delivered}
-                          read={chat.read}
-                        />
-                      </div>
-                      <time dateTime={chat.createdAt} className="message-time">
-                        {new Intl.DateTimeFormat("nl-NL", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        }).format(new Date(chat.createdAt))}
-                      </time>
+                      className="text"
+                      dangerouslySetInnerHTML={{ __html: chat.text }}
+                    />
+                    <div className="message-actions">
+                      <button onClick={() => handleReplyMessage(chat)}>
+                        <FaReply />
+                      </button>
+                      <button onClick={() => handleMarkMessage(chat.id)}>
+                        {markedMessages.has(chat.id) ? (
+                          <FaBookmark />
+                        ) : (
+                          <FaRegBookmark />
+                        )}
+                      </button>
+                      <button onClick={() => handleDeleteMessage(chat.id)}>
+                        <MdDeleteOutline />
+                      </button>
                     </div>
+                    <div className="message-status">
+                      <MessageStatusIcon
+                        delivered={chat.delivered}
+                        read={chat.read}
+                      />
+                    </div>
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat("nl-NL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(chat.createdAt))}
+                    </time>
                   </div>
-                ))
+                </div>
+              ))
               : Object.keys(groupedMessages).map((date) => {
-                  const { text, className } = formatDate(date);
-                  return (
-                    <React.Fragment key={date}>
-                      <div className={`date-separator ${className}`}>
-                        {text}
-                      </div>
-                      {groupedMessages[date].map((chat) => (
-                        <div
-                          key={chat.id}
-                          className={`message-container ${
-                            chat.email === user.attributes.email
-                              ? "self-message-container"
-                              : "other-message-container"
-                          } ${
-                            markedMessages.has(chat.id) ? "marked-message" : ""
+                const { text, className } = formatDate(date);
+                return (
+                  <React.Fragment key={date}>
+                    <div className={`date-separator ${className}`}>
+                      {text}
+                    </div>
+                    {groupedMessages[date].map((chat) => (
+                      <div
+                        key={chat.id}
+                        className={`message-container ${chat.email === user.attributes.email
+                          ? "self-message-container"
+                          : "other-message-container"
+                          } ${markedMessages.has(chat.id) ? "marked-message" : ""
                           }`}
+                      >
+                        <div
+                          className={`message-bubble ${chat.email === user.attributes.email
+                            ? "self-message"
+                            : "other-message"
+                            }`}
                         >
                           <div
-                            className={`message-bubble ${
-                              chat.email === user.attributes.email
-                                ? "self-message"
-                                : "other-message"
-                            }`}
-                          >
-                            <div
-                              className="text"
-                              dangerouslySetInnerHTML={{ __html: chat.text }}
-                            />
-                            <div className="message-actions">
-                              <button onClick={() => handleReplyMessage(chat)}>
-                                <FaReply />
-                              </button>
-                              <button
-                                onClick={() => handleMarkMessage(chat.id)}
-                              >
-                                {markedMessages.has(chat.id) ? (
-                                  <FaBookmark />
-                                ) : (
-                                  <FaRegBookmark />
-                                )}
-                              </button>
-                              <button
-                                onClick={() => handleDeleteMessage(chat.id)}
-                              >
-                                <MdDeleteOutline />
-                              </button>
-                            </div>
-                            <div className="message-status">
-                              <MessageStatusIcon
-                                delivered={chat.delivered}
-                                read={chat.read}
-                              />
-                            </div>
-                            <time
-                              dateTime={chat.createdAt}
-                              className="message-time"
+                            className="text"
+                            dangerouslySetInnerHTML={{ __html: chat.text }}
+                          />
+                          <div className="message-actions">
+                            <button onClick={() => handleReplyMessage(chat)}>
+                              <FaReply />
+                            </button>
+                            <button
+                              onClick={() => handleMarkMessage(chat.id)}
                             >
-                              {new Intl.DateTimeFormat("nl-NL", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              }).format(new Date(chat.createdAt))}
-                            </time>
+                              {markedMessages.has(chat.id) ? (
+                                <FaBookmark />
+                              ) : (
+                                <FaRegBookmark />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMessage(chat.id)}
+                            >
+                              <MdDeleteOutline />
+                            </button>
                           </div>
+                          <div className="message-status">
+                            <MessageStatusIcon
+                              delivered={chat.delivered}
+                              read={chat.read}
+                            />
+                          </div>
+                          <time
+                            dateTime={chat.createdAt}
+                            className="message-time"
+                          >
+                            {new Intl.DateTimeFormat("nl-NL", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }).format(new Date(chat.createdAt))}
+                          </time>
                         </div>
-                      ))}
-                    </React.Fragment>
-                  );
-                })}
+                      </div>
+                    ))}
+                  </React.Fragment>
+                );
+              })}
           </div>
           {replyingTo && (
             <div className="replying-to">
