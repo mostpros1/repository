@@ -823,6 +823,10 @@
     font-size: 2.8rem;
   }
 
+  .landingSectionHome {
+    padding-top: 5rem;
+  }
+
   #SearchBar-wrapper {
     width: 50rem;
     padding: 0;
