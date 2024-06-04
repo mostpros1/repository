@@ -20,6 +20,10 @@
   margin-top: 10px;
 }
 
+.jobs-con{
+  width: 100%;
+}
+
 #job-input-field {
   display: flex;
   border-radius: 25px;
@@ -97,8 +101,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 20px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   margin-bottom: 0px;
 }
 
@@ -108,7 +113,10 @@
   background: none;
   font-size: 16px;
   cursor: pointer;
-  margin-right: 20px; /* or any spacing you prefer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-right: 20px; or any spacing you prefer */
 }
 
 .status-button.active {
@@ -225,9 +233,9 @@
 }
 
 @media (max-width: 1200px) {
-  #job-input-field {
+  /* #job-input-field {
     width: 61rem;
-  }
+  } */
 
   #search-form {
     width: 100%;
@@ -235,9 +243,9 @@
 }
 
 @media (max-width: 848px) {
-  #job-input-field {
-    width: 50rem;
-  }
+  /* #job-input-field {
+    width: 100%;
+  } */
 
   #search-form {
     width: 100%;

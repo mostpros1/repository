@@ -257,10 +257,10 @@ const Cal = () => {
                 addEntry(text, time, color);
             }}>
                 <div className="form-group">
-                    <label>Tekst: <input name="entryText" type="text" required /></label>
+                    <label>Tekst: <input className='inputFormGroupCal' name="entryText" type="text" required /></label>
                 </div>
                 <div className="form-group">
-                    <label>Tijd: <input name="entryTime" type="time" required /></label>
+                    <label>Tijd: <input className='inputFormGroupCal' name="entryTime" type="time" required /></label>
                 </div>
 
                 <div className="form-group">
