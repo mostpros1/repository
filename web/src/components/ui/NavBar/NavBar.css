@@ -170,10 +170,10 @@ li > .black-items {
 
 .dropdown-content {
   position: absolute;
-  top: 140%;
-  left: 0;
-  right: 0%;
-  width: 20rem;
+  top: 141%;
+  left: auto;
+  right: 0;
+  width: 30rem;
   height: 20rem;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -184,6 +184,11 @@ li > .black-items {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dropdown-content p {
+  text-align: center;
+  width: 100%;
 }
 
 .dropdown-content button {

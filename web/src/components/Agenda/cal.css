@@ -99,9 +99,9 @@ select {
     font-size: 1.4rem;
 }
 
-.submitButtonStyling {
+/* .submitButtonStyling {
     padding: 1rem 2rem;
-    background-color: #178feb; /* Change to gray */
+    background-color: #178feb; /* Change to gray
     color: white;
     border: none;
     border-radius: 0.5rem;
@@ -109,18 +109,18 @@ select {
     font-size: 1.6rem;
     margin-top: 2rem;
     margin-right: 2rem;
-}
+} */
 
-.submitButtonStyling.disabled {
-    background-color: gray; /* Change to blue */
+/* .submitButtonStyling.disabled {
+    background-color: gray;
     cursor: not-allowed;
-}
+} */
 
-.submitButtonStyling:hover {
-    background-color: #0e70b8;
-}
-
-
-button[type="submit"]:hover {
+/* .submitButtonStyling:hover {
     background-color: #0e70b8;
 } */
+
+
+/* button[type="submit"]:hover {
+    background-color: #0e70b8;
+} */ 

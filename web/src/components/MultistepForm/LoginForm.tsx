@@ -4,6 +4,7 @@ import google from '../../assets/google_.svg';
 import instagram from '../../assets/instagram_.svg';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import './MultistepForm.css';
 
 type LoginData = {
   email: string
