@@ -7,6 +7,7 @@ import arrowR from '../../assets/arrowR.png';
 import './cal.css';
 import { dynamo } from '../../../declarations';
 import { Auth } from 'aws-amplify';
+import { stopXSS } from '../../../../backend_functions/stopXSS';
 
 
 
@@ -285,7 +286,7 @@ const Cal = () => {
                     email: email,
                     enrtys: {
                         date: date, // Use computed property name to dynamically set the date as the key
-                        text: text,
+                        text: stopXSS(text),
                         time: time,
                         color: color
                     }
@@ -362,66 +363,66 @@ const Cal = () => {
         const month = startDateValue.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-                const userId = professionalId;
-                const baseDate = startDateValue; // Now baseDate is a Date object
+        const userId = professionalId;
+        const baseDate = startDateValue; // Now baseDate is a Date object
 
-                // Determine the starting point based on the pattern
-                switch (pattern) {
-                    case 'weekday':
-                        while (baseDate.getDay() !== 1) { // Find the first Monday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'weekend':
-                        while (baseDate.getDay() !== 6) { // Find the first Saturday
-                            baseDate.setDate(baseDate.getDate() + 1);
-                        }
-                        break;
-                    case 'daily':
-                        // No change needed for daily pattern
-                        break;
-                    default:
-                        throw new Error("Invalid pattern");
+        // Determine the starting point based on the pattern
+        switch (pattern) {
+            case 'weekday':
+                while (baseDate.getDay() !== 1) { // Find the first Monday
+                    baseDate.setDate(baseDate.getDate() + 1);
                 }
-
-                for (let a = 0; a < daysInMonth; a++) {
-                    const currentDate = new Date(baseDate);
-                    currentDate.setDate(baseDate.getDate() + a);
-
-                    // Skip weekends for 'weekday' pattern
-                    if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
-
-                    // Skip weekdays for 'weekend' pattern
-                    if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
-
-                    // Assuming 'availability' is an array of objects with 'date' and 'time'
-                    // You need to construct the 'itemsForDb' based on your requirements
-                    // For demonstration, we'll just create a dummy object
-                    const itemsForDb = [{
-                        date: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-                        time: time // Example time, replace with actual time or logic to determine time
-                    }];
-
-                    await dynamo.update({
-                        TableName: "Professionals",
-                        Key: {
-                            id: userId,
-                        },
-                        UpdateExpression: `set availability = list_append(if_not_exists(availability, :emptyList), :newItem)`,
-                        ExpressionAttributeValues: {
-                            ":emptyList": [],
-                            ":newItem": itemsForDb,
-                        },
-                    }).promise()
-                        .then(output => {
-                            getAvailabilityFromDB();
-                            console.log(output.Attributes);
-                        })
-                        .catch(console.error);
+                break;
+            case 'weekend':
+                while (baseDate.getDay() !== 6) { // Find the first Saturday
+                    baseDate.setDate(baseDate.getDate() + 1);
                 }
+                break;
+            case 'daily':
+                // No change needed for daily pattern
+                break;
+            default:
+                throw new Error("Invalid pattern");
+        }
 
-                // Show an alert once all dates have been added
-                window.alert("Datums zijn toegevoegt.");
+        for (let a = 0; a < daysInMonth; a++) {
+            const currentDate = new Date(baseDate);
+            currentDate.setDate(baseDate.getDate() + a);
+
+            // Skip weekends for 'weekday' pattern
+            if (pattern === 'weekday' && (currentDate.getDay() === 0 || currentDate.getDay() === 6)) continue;
+
+            // Skip weekdays for 'weekend' pattern
+            if (pattern === 'weekend' && (currentDate.getDay() >= 1 && currentDate.getDay() <= 5)) continue;
+
+            // Assuming 'availability' is an array of objects with 'date' and 'time'
+            // You need to construct the 'itemsForDb' based on your requirements
+            // For demonstration, we'll just create a dummy object
+            const itemsForDb = [{
+                date: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                time: time // Example time, replace with actual time or logic to determine time
+            }];
+
+            await dynamo.update({
+                TableName: "Professionals",
+                Key: {
+                    id: userId,
+                },
+                UpdateExpression: `set availability = list_append(if_not_exists(availability, :emptyList), :newItem)`,
+                ExpressionAttributeValues: {
+                    ":emptyList": [],
+                    ":newItem": itemsForDb,
+                },
+            }).promise()
+                .then(output => {
+                    getAvailabilityFromDB();
+                    console.log(output.Attributes);
+                })
+                .catch(console.error);
+        }
+
+        // Show an alert once all dates have been added
+        window.alert("Datums zijn toegevoegt.");
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
