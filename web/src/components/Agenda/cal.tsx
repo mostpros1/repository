@@ -274,15 +274,17 @@ const Cal = () => {
                 ":email": email
             },
         }).promise().then((data) => {
+            console.log(data);
             setEntries(prev => {
                 const updatedEntries = { ...prev }; // Start with a copy of the previous state
                 if (data.Items && data.Items.length > 0) {
                     for (let i = 0; i < data.Items.length; i++) {
-                        const currentItem = data.Items[i];
+                        const currentItem = data.Items[i].enrtys;
+                        console.log(currentItem);
                         // Controleer of currentItem.date een geldig datumobject is
-                        if (!isValid(currentItem.date)) {
-                            console.warn(`Ongeldige datumwaarde gevonden: ${currentItem.date}`);
-                            continue; // Sla deze iteratie over als de datum ongeldig is
+                        if (!currentItem || typeof currentItem.date === 'undefined') {
+                            console.warn("Ongeldige of ontbrekende datumwaarde gevonden.");
+                            continue;
                         }
                         const dateKey = format(currentItem.date, 'yyyy-MM-dd'); // Gebruik alleen als currentItem.date geldig is
                         updatedEntries[dateKey] = [
@@ -293,6 +295,7 @@ const Cal = () => {
                 } else {
                     console.log("No items found in the query result.");
                 }
+                console.log(updatedEntries);
                 return updatedEntries;
             });
         }).catch((err) => { console.log(err) });
@@ -307,7 +310,7 @@ const Cal = () => {
         const email = authenticatedUser.attributes.email;
 
         try {
-            await dynamo.put({
+            const data = await dynamo.put({
                 Item: {
                     id: Math.floor(Math.random() * 1000000),
                     email: email,
@@ -321,10 +324,13 @@ const Cal = () => {
                 TableName: "Calendar",
             }).promise();
 
+            console.log(data);
             console.log("Entry added successfully.");
         } catch (err) {
             console.error("Error adding entry:", err);
         }
+
+        getEntriesFromDB();
     }
 
 
@@ -575,10 +581,12 @@ const Cal = () => {
             </ButtonContainer>
             {renderDaysOfWeek()}
             {renderCalendarDays()}
+
             <form className="entry-form" onSubmit={(e) => {
                 e.preventDefault();
                 const text = (e.target as any).elements.entryText.value;
                 const time = (e.target as any).elements.entryTime.value;
+                console.log(time);
                 const color = (e.target as any).elements.entryColor.value;
                 addEntry(text, time, color);
             }}>
@@ -591,9 +599,10 @@ const Cal = () => {
                 <div className="form-group">
                     <label>Kleur: <input name="entryColor" type="color" required /></label>
                 </div>
-                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1? '' : 'disabled'}`} type="submit" disabled={selectedDates.length!== 1}>Toevoegen</button>
-                <button className={`submitButtonStyling ${selectedDates.length >= 1? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
+                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
+                <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
             </form>
+
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
                 const date = (e.target as any).elements.availabilityDate.value;
@@ -607,6 +616,7 @@ const Cal = () => {
                 </div>
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
             </form>
+
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const date = new Date((e.target as any).elements.startdate.value);
@@ -629,8 +639,34 @@ const Cal = () => {
                 </div>
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
+
+            <form className="availability-form" onSubmit={(e) => {
+                e.preventDefault();
+                const date = new Date((e.target as any).elements.startdate.value);
+                const pattern = (e.target as any).elements.pattern.value;
+                DeleteMultipleDays(date, pattern);
+            }}>
+                <div className='patternSection'>
+                    <br />
+                    <b>Verwijder meerdere Dagen</b>
+                    <br />
+                    <div className="form-group">
+                        <label>Vanaf: <input name="startdate" type="date" required /></label>
+                    </div>
+                    <br />
+                    <label>Select Pattern:</label>
+                    <select name="pattern">
+                        <option value="weekday">Door de weeks</option>
+                        <option value="weekend">Weekend</option>
+                        <option value="daily">Elke Dag</option>
+                    </select>
+                    <br />
+                    <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
+                </div>
+            </form>
         </div>
     );
+
 };
 
 export default Cal;
