@@ -1083,6 +1083,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               </kbd>
             </div>
           </div>
+
         </div>
       </div>
       {showNewChatModal && (
