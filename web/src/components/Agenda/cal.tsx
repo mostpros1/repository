@@ -201,7 +201,16 @@ const Cal = () => {
                             {hasEntries && (
                                 <div className="dropdown">
                                     {entries[formattedDate].map((entry, index) => (
-                                        <div key={index} style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
+                                        <div
+                                            key={index}
+                                            style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px', cursor: 'pointer' }} // Add cursor:pointer to indicate it's clickable
+                                            onClick={() => {
+                                                console.log(entry.id);
+                                                if (typeof entry.id !== 'undefined') {
+                                                    deleteEntrys(entry.id);
+                                                }
+                                            }} // Log the id when the div is clicked
+                                        >
                                             {entry.text} {entry.time && `- ${entry.time}`}
                                         </div>
                                     ))}
@@ -351,6 +360,19 @@ const Cal = () => {
         getEntriesFromDB();
     };
 
+    function deleteEntrys(id: number) {
+        dynamo.delete({
+            TableName: "Calendar",
+            Key: {
+                id: id
+            }
+        }).promise().then((data) => {
+            console.log("Data: ", data);
+            getEntriesFromDB();
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
 
 
     async function getAvailabilityFromDB() {
