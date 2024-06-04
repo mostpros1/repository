@@ -20,6 +20,12 @@ interface NavButtonProps {
     image: string;
 }
 
+interface Entry {
+    text: string;
+    time?: string;
+    color: string;
+}
+
 const CalendarContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -185,7 +191,7 @@ const Cal = () => {
                                 <div className="dropdown">
                                     {entries[formattedDate].map((entry, index) => (
                                         <div key={index} style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px' }}>
-                                            {entry.text}
+                                            {entry.text} {entry.time && `- ${entry.time}`}
                                         </div>
                                     ))}
                                 </div>
@@ -594,20 +600,11 @@ const Cal = () => {
                 <div className="form-group">
                     <label>Tijd: <input name="entryTime" type="time" required /></label>
                 </div>
-
                 <div className="form-group">
-                    <label>Herhaalpatroon:
-                        <select name="availPattern" required>
-                            <option value="weekday">Weekdagen</option>
-                            <option value="weekend">Weekend</option>
-                            <option value="daily">Dagelijks</option>
-                        </select>
-                    </label>
+                    <label>Kleur: <input name="entryColor" type="color" required /></label>
                 </div>
-
                 <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
                 <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
-
             </form>
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
@@ -621,10 +618,8 @@ const Cal = () => {
                     <button className={`submitButtonStyling ${selectedDates.length === 1 ? '' : 'disabled'}`} type='button'>Verwijder Datum</button>
                 </div>
                 <div className='patternSection' >
-
                     <br />
                     <b>Verwijder meerdere Dagen</b>
-
                     <br />
                     <label>Select Pattern:</label>
                     <select name="pattern">
@@ -632,12 +627,10 @@ const Cal = () => {
                         <option value="weekend">Weekend</option>
                         <option value="daily">Elke Dag</option>
                     </select>
-
                     <br />
                     <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
                 </div> {/* Here's the missing closing tag */}
             </form>
-
         </div >
     );
 };

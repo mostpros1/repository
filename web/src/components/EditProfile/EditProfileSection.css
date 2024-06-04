@@ -55,14 +55,12 @@
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  background-color: #e8f3fe;
 }
 
 .profile-info-con {
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  background-color: #e8f3fe;
 }
 
 .profile-info-card {
@@ -83,10 +81,9 @@
 }
 
 .profile-info-card ul li {
-  font-size: 1.4rem;
-  text-align: left;
-  margin-bottom: 0.8rem;
-  padding-bottom: 1.3rem;
+  display: flex;
+  width: 100%;
+  font-size: 1.3rem;
   list-style: none;
 }
 
@@ -110,6 +107,7 @@
 }
 
 .job-title {
+  text-transform: lowercase;
   padding-top: 1.4rem;
   font-size: 1.4rem;
   color: #9c9c9c;
@@ -322,7 +320,7 @@
   .profile-con {
     display: flex;
     flex-direction: row;
-    width: fit-content;
+    width: 100%;
     padding: 2rem;
     margin: 0;
   }
@@ -360,26 +358,31 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: flex-start;
   }
 
+  
   .profile-info-card,
   .profile-right-con {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 1rem;
-    text-align: center;
-    align-items: center;
+    align-items: flex-start;
+    width: 95%;
   }
 
   .availability-con {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    align-items: flex-start;
     width: 100%;
-    margin: auto;
+    margin: 0;
   }
 
+  .availability-btn {
+    width: 100%;
+    margin: 0;
+  }
+  
   .img-slideshow-con {
     display: flex;
     flex-direction: column;
