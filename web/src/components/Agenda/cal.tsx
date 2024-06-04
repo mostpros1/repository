@@ -360,20 +360,18 @@ const Cal = () => {
         getEntriesFromDB();
     };
 
-    function deleteEntrys(id: number) {
-        dynamo.delete({
+    
+    async function deleteEntrys(id: number) {
+        const data = await dynamo.delete({
             TableName: "Calendar",
             Key: {
                 id: id
             }
-        }).promise().then((data) => {
-            console.log("Data: ", data);
-            getEntriesFromDB();
-        }).catch((err) => {
-            console.error(err);
-        });
+        }).promise();
+        console.log(data);
+        await getEntriesFromDB(); // Await the completion of getEntriesFromDB
+        
     }
-
 
     async function getAvailabilityFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
