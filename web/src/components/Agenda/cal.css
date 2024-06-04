@@ -80,7 +80,7 @@
     max-width: 5rem;
     min-height: 4rem;
 }
-
+/* 
 label {
     display: block;
     font-size: 1.4rem;
@@ -116,3 +116,8 @@ label {
 .submitButtonStyling:hover {
     background-color: #0e70b8;
 }
+
+
+button[type="submit"]:hover {
+    background-color: #0e70b8;
+} */

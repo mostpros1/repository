@@ -21,23 +21,23 @@ const SideNav = () => {
   const [isProfessional, setIsProfessional] = useState(false);
   const [isHomeowner, setIsHomeowner] = useState(false);
 
-  useEffect(() => {
-    const checkUserRole = async () => {
-      if (user?.signInUserSession?.accessToken?.payload) {
-        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups?.includes("Homeowner")) {
-          setIsHomeowner(true);
-        } else if (groups?.includes("Professional")) {
-          setIsProfessional(true);
-        }
-      } else {
-        console.log("User data is not fully available.");
-        navigate(`/${lang}/login`);
-      }
-    };
+  // useEffect(() => {
+  //   const checkUserRole = async () => {
+  //     if (user?.signInUserSession?.accessToken?.payload) {
+  //       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+  //       if (groups?.includes("Homeowner")) {
+  //         setIsHomeowner(true);
+  //       } else if (groups?.includes("Professional")) {
+  //         setIsProfessional(true);
+  //       }
+  //     } else {
+  //       console.log("User data is not fully available.");
+  //       navigate(`/${lang}/login`);
+  //     }
+  //   };
 
-    checkUserRole();
-  }, [user, navigate, lang]);
+  //   checkUserRole();
+  // }, [user, navigate, lang]);
 
   const comingSoonTabs = [
     { path: "revenues", label: "Inkomsten" },
@@ -229,3 +229,9 @@ const SideNav = () => {
 };
 
 export default SideNav;
+
+
+
+
+
+

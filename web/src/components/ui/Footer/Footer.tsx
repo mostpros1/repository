@@ -14,7 +14,7 @@ function Footer() {
           <a href="/nl/why-mostpros">Waarom mostpros</a>
           <Link to="/nl/about">Over</Link>
           <Link to="/nl/career">Career</Link>
-          <Link to="/nl/about">Product updates</Link>
+          <Link to="/nl/product-updates">Product updates</Link>
           <Link to="/nl/quality">Kwaliteitseisen</Link>
           <Link to="/nl/contact">Contact</Link>
         </article>

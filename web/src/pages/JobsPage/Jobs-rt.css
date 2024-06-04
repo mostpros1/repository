@@ -32,7 +32,7 @@
   height: 100vh; /*<- vh veranderen in 100% wanneer het vlak/de pagina te klein wordt voor je elementen */
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1025px) {
   .sidenavJobsSection {
     display: none; /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
   }
