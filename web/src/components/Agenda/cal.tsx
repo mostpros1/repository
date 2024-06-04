@@ -464,25 +464,24 @@ const Cal = () => {
         setCheckedItems([]);
     };
 
-    const DeleteMultipleDays = async (startDate: HTMLInputElement, pattern: 'weekday' | 'weekend' | 'daily') => {
+    const DeleteMultipleDays = async (startDate: Date, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
-        const startDateValue = new Date(startDate.value);
-
+          
         // Validate the start date
-        if (isNaN(startDateValue.getTime())) {
+        if (isNaN(startDate.getTime())) {
             console.error("Ongeldige startdatum");
             return;
         }
 
         // Calculate the total number of days in the month
-        const year = startDateValue.getFullYear();
-        const month = startDateValue.getMonth();
+        const year = startDate.getFullYear();
+        const month = startDate.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         const existingAvailability = availability || [];
 
         // Determine the starting point based on the pattern
-        const baseDate = new Date(startDateValue);
+        const baseDate = new Date(startDate);
         switch (pattern) {
             case 'weekday':
                 while (baseDate.getDay() !== 1) { // Find the first Monday
@@ -607,21 +606,47 @@ const Cal = () => {
                 <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
                 <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
             </form>
+
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                const date = (e.target as any).elements.startdate.value;
+                const patroon = (e.target as any).elements.availPattern.value;
+                addMultipleDays(date, "hele dag", patroon);
+            }}>
+            <div className="form-group">
+                    <label>Start Dag: <input name="startdate" type="date" required /></label>
+                </div>
+
+                <div className="form-group">
+                    <label>Herhaalpatroon:
+                        <select name="availPattern" required>
+                            <option value="weekday">Weekdagen</option>
+                            <option value="weekend">Weekend</option>
+                            <option value="daily">Dagelijks</option>
+                        </select>
+                    </label>
+                </div>
+                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
+            </form>
+                
+                
+            <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
+
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
-                const date = (e.target as any).elements.availDate.value;
-                const time = (e.target as any).elements.availTime.value;
-                const pattern = (e.target as any).elements.availPattern.value;
-                addMultipleDays(date, time, pattern);
+                const date = new Date((e.target as any).elements.startdate.value);
+                console.log(date);
+                const pattern = (e.target as any).elements.pattern.value;
+                DeleteMultipleDays(date, pattern);
             }}>
-                <div className='patternSection' >
-                    <h4>Verwijder Beschikbaarheid</h4>
-                    <button className={`submitButtonStyling ${selectedDates.length === 1 ? '' : 'disabled'}`} type='button'>Verwijder Datum</button>
-                </div>
                 <div className='patternSection' >
                     <br />
                     <b>Verwijder meerdere Dagen</b>
                     <br />
+                    <div className="form-group">
+                    <label>Vanaf: <input name="startdate" type="date" required /></label>
+                </div>
+                <br />
                     <label>Select Pattern:</label>
                     <select name="pattern">
                         <option value="weekday">Door de weeks</option>
