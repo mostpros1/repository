@@ -43,9 +43,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
-          <I18nextProvider i18n={i18n}>
-            <App />
-          </I18nextProvider>
+          <App />
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>

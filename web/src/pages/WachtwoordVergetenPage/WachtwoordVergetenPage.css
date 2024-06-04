@@ -51,7 +51,7 @@
     font-size: 3rem;
 }
 
-.resetpassword-card_button {
+/* .resetpassword-card_button {
     width: 50%;
     height: 80%;
     border-radius: 10px;
@@ -59,7 +59,29 @@
     background: #308AE4;
     color: #FFF;
     font-size: 12px;
+} */
+.resetpassword-card_button {
+    width: 50%;
+    height: 40px; /* Aangepast van 80% voor consistentie */
+    border-radius: 10px;
+    border: none;
+    background: #308AE4;
+    color: #FFF;
+    font-size: 16px; /* Aangepast voor betere leesbaarheid */
+    cursor: pointer; /* Geeft een handje weer als je over de knop hovert */
+    transition: background 0.3s, transform 0.1s; /* Gladde transitie-effecten */
 }
+
+.resetpassword-card_button:hover {
+    background: #1f6fb2; /* Donkerdere tint voor hover effect */
+    transform: scale(1.05); /* Laat de knop iets groeien in grootte */
+}
+
+.resetpassword-card_button:active {
+    background: #155a8a; /* Nog donkerder voor het effect van indrukken */
+    transform: scale(0.95); /* Laat de knop iets krimpen alsof deze ingedrukt wordt */
+}
+
 
 .resetpassword-card_text {
     width: 50%;
