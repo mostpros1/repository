@@ -353,18 +353,17 @@ const Cal = () => {
     }, []);
 
 
-    async function addMultipleDays(startDate: HTMLInputElement, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
+    async function addMultipleDays(startDate: Date, time: string, pattern: 'weekday' | 'weekend' | 'daily') {
 
         // Convert startDate.value to a Date object
-        const startDateValue = new Date(startDate.value);
 
         // Calculate the total number of days in the month
-        const year = startDateValue.getFullYear();
-        const month = startDateValue.getMonth();
+        const year = startDate.getFullYear();
+        const month = startDate.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         const userId = professionalId;
-        const baseDate = startDateValue; // Now baseDate is a Date object
+        const baseDate = startDate; // Now baseDate is a Date object
 
         // Determine the starting point based on the pattern
         switch (pattern) {
@@ -466,7 +465,7 @@ const Cal = () => {
 
     const DeleteMultipleDays = async (startDate: Date, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
-          
+
         // Validate the start date
         if (isNaN(startDate.getTime())) {
             console.error("Ongeldige startdatum");
@@ -609,11 +608,13 @@ const Cal = () => {
 
             <form onSubmit={(e) => {
                 e.preventDefault();
-                const date = (e.target as any).elements.startdate.value;
+                const date = new Date((e.target as any).elements.startdate.value);
+                console.log(date);
                 const patroon = (e.target as any).elements.availPattern.value;
+                console.log(patroon);
                 addMultipleDays(date, "hele dag", patroon);
             }}>
-            <div className="form-group">
+                <div className="form-group">
                     <label>Start Dag: <input name="startdate" type="date" required /></label>
                 </div>
 
@@ -626,10 +627,10 @@ const Cal = () => {
                         </select>
                     </label>
                 </div>
-                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
+                <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
-                
-                
+
+
             <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
 
             <form className="availability-form" onSubmit={(e) => {
@@ -644,9 +645,9 @@ const Cal = () => {
                     <b>Verwijder meerdere Dagen</b>
                     <br />
                     <div className="form-group">
-                    <label>Vanaf: <input name="startdate" type="date" required /></label>
-                </div>
-                <br />
+                        <label>Vanaf: <input name="startdate" type="date" required /></label>
+                    </div>
+                    <br />
                     <label>Select Pattern:</label>
                     <select name="pattern">
                         <option value="weekday">Door de weeks</option>
