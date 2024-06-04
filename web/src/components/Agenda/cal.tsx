@@ -594,6 +594,23 @@ const Cal = () => {
                 <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
                 <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
             </form>
+            <form className="availability-form" onSubmit={(e) => {
+                e.preventDefault();
+                const date = (e.target as any).elements.availabilityDate.value;
+                const time = (e.target as any).elements.availabilityTime.value;
+                addAvailibility(date, time);
+            }
+            }>
+                Voeg Beschikbaarheid Toe
+                <br />
+                <div className="form-group">
+                    <label>Datum: <input name="availabilityDate" type="date" required /></label>
+                </div>
+                <div className="form-group">
+                    <label>Tijd: <input name="availabilityTime" type="time" required /></label>
+                </div>
+                <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
+            </form>
 
             <form onSubmit={(e) => {
                 e.preventDefault();
