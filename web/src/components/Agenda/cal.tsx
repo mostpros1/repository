@@ -597,7 +597,7 @@ const Cal = () => {
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
                 const date = (e.target as any).elements.availabilityDate.value;
-                const time = (e.target as any).elements.availabilityTime.value;
+                const time = "hele dag";
                 addAvailibility(date, time);
             }
             }>
@@ -606,9 +606,9 @@ const Cal = () => {
                 <div className="form-group">
                     <label>Datum: <input name="availabilityDate" type="date" required /></label>
                 </div>
-                <div className="form-group">
+                {/*<div className="form-group">
                     <label>Tijd: <input name="availabilityTime" type="time" required /></label>
-                </div>
+                </div>*/}
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
             </form>
 
