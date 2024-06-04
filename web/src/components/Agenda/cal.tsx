@@ -22,6 +22,7 @@ interface NavButtonProps {
 }
 
 interface Entry {
+    id?: number;
     text: string;
     time?: string;
     color: string;
@@ -136,7 +137,7 @@ const Cal = () => {
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [entries, setEntries] = useState<{ [date: string]: { text: string, time: string, color: string }[] }>({});
+    const [entries, setEntries] = useState<{ [date: string]: Entry[] }>({});
     //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
@@ -279,17 +280,17 @@ const Cal = () => {
                 const updatedEntries = { ...prev }; // Start with a copy of the previous state
                 if (data.Items && data.Items.length > 0) {
                     for (let i = 0; i < data.Items.length; i++) {
-                        const currentItem = data.Items[i].enrtys;
+                        const currentItem = data.Items[i];
                         console.log(currentItem);
                         // Controleer of currentItem.date een geldig datumobject is
-                        if (!currentItem || typeof currentItem.date === 'undefined') {
+                        if (!currentItem || typeof currentItem.enrtys.date === 'undefined') {
                             console.warn("Ongeldige of ontbrekende datumwaarde gevonden.");
                             continue;
                         }
-                        const dateKey = format(currentItem.date, 'yyyy-MM-dd'); // Gebruik alleen als currentItem.date geldig is
+                        const dateKey = format(currentItem.enrtys.date, 'yyyy-MM-dd'); // Gebruik alleen als currentItem.date geldig is
                         updatedEntries[dateKey] = [
                             ...(updatedEntries[dateKey] || []),
-                            { text: currentItem.text, time: "", color: currentItem.color }
+                            { id: currentItem.id, text: currentItem.enrtys.text, time: currentItem.enrtys.time, color: currentItem.enrtys.color }
                         ];
                     }
                 } else {
