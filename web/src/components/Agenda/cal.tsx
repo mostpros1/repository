@@ -8,7 +8,7 @@ import './cal.css';
 import { dynamo } from '../../../declarations';
 import { Auth } from 'aws-amplify';
 import { stopXSS } from '../../../../backend_functions/stopXSS';
-
+import { useAvailability } from '../../AvailabilityContext';
 
 
 interface DayProps {
@@ -25,6 +25,11 @@ interface Entry {
     text: string;
     time?: string;
     color: string;
+}
+
+interface Availability {
+    date: string;
+    time: string;
 }
 
 const CalendarContainer = styled.div`
@@ -124,6 +129,7 @@ const NavButton = styled.button<NavButtonProps>`
     background-size: cover;
 `;
 
+
 const Cal = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [availabilities, setAvailabilities] = useState<{ [key: string]: string[] }>({});
@@ -134,12 +140,15 @@ const Cal = () => {
     //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
-    const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
+    //const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
+    const { availability, setAvailability } = useAvailability();
     const [professionalId, setProfessionalId] = useState<number | null>(null);
 
     useEffect(() => {
         setSelectedDate(null); // Reset selectedDate whenever currentMonth changes
     }, [currentMonth]);
+
+
 
     const renderDaysOfWeek = () => {
         const daysOfWeek = ['Maa', 'Din', 'Woe', 'Don', 'Vri', 'Zat', 'Zon'];
@@ -233,7 +242,14 @@ const Cal = () => {
 
                 if (response.Items && response.Items.length > 0) {
                     setProfessionalId(response.Items[0].id);
-                    setAvailability(response.Items[0].availability);
+                    const output = response.Items[0];
+                    const beschikbaarheid: Availability[] = []
+                    for (let i = 0; i < output.availability.length; i++) {
+                        console.log(output.availability[i].date);
+                        beschikbaarheid.push({ date: output.availability[i].date, time: output.availability[i].time });
+                        console.log(beschikbaarheid);
+                    }
+                    setAvailability(beschikbaarheid);
                     console.log(response.Items[0].id);
                     console.log(response.Items[0].availability);
                 } else {
@@ -424,45 +440,6 @@ const Cal = () => {
         window.alert("Datums zijn toegevoegt.");
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        // Remove unchecked items from checkedItems array
-        const filteredCheckedItems = checkedItems.filter(checkedItem =>
-            !uncheckedItems.some(uncheckedItem =>
-                uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
-            )
-        );
-
-
-        // Submit remaining checked items
-        console.log("Selected options:", filteredCheckedItems);
-        // Your submission logic here
-
-
-        const itemsForDb = availability.filter(checkedItem =>
-            !filteredCheckedItems.some(uncheckedItem =>
-                uncheckedItem.date === checkedItem.date && uncheckedItem.time === checkedItem.time
-            )
-        );
-
-        dynamo.update({
-            TableName: "Professionals",
-            Key: {
-                id: professionalId,
-            },
-            UpdateExpression: `set availability = :availability`,
-            ExpressionAttributeValues: {
-                ":availability": itemsForDb,
-            },
-        }).promise()
-            .then(output => {
-                getAvailabilityFromDB();
-                console.log(output.Attributes)
-            })
-            .catch(console.error);
-        setCheckedItems([]);
-    };
-
     const DeleteMultipleDays = async (startDate: Date, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
 
@@ -630,7 +607,7 @@ const Cal = () => {
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
 
-werkt nog niet
+            werkt nog niet
             <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
 
             <form className="availability-form" onSubmit={(e) => {
@@ -658,7 +635,8 @@ werkt nog niet
                     <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
                 </div> {/* Here's the missing closing tag */}
             </form>
-        </div >
+        </div>
+
     );
 };
 
