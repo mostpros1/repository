@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfWeek, endOfWeek, addMonths, subMonths } from 'date-fns';
+import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfWeek, endOfWeek, addMonths, subMonths, isValid } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import arrowL from '../../assets/arrowL.png';
 import arrowR from '../../assets/arrowR.png';
@@ -274,22 +274,33 @@ const Cal = () => {
                 ":email": email
             },
         }).promise().then((data) => {
-            if (data && data.Items && data.Items.length > 0) {
-                const dateKey = format(data.Items[0].enrtys.date, 'yyyy-MM-dd');
-                setEntries(prev => ({
-                    ...prev,
-                    [dateKey]: [...(prev[dateKey] || []), ...(data.Items ? [{ text: data.Items[0].entrys.text, time: "", color: data.Items[0].entrys.color }] : [])]
-                }));
-                setEntries(data.Items[0].availability);
-                console.log(data);
-            } else {
-                console.log("No items found in the query result.");
-            }
-        });
+            setEntries(prev => {
+                const updatedEntries = { ...prev }; // Start with a copy of the previous state
+                if (data.Items && data.Items.length > 0) {
+                    for (let i = 0; i < data.Items.length; i++) {
+                        const currentItem = data.Items[i];
+                        // Controleer of currentItem.date een geldig datumobject is
+                        if (!isValid(currentItem.date)) {
+                            console.warn(`Ongeldige datumwaarde gevonden: ${currentItem.date}`);
+                            continue; // Sla deze iteratie over als de datum ongeldig is
+                        }
+                        const dateKey = format(currentItem.date, 'yyyy-MM-dd'); // Gebruik alleen als currentItem.date geldig is
+                        updatedEntries[dateKey] = [
+                            ...(updatedEntries[dateKey] || []),
+                            { text: currentItem.text, time: "", color: currentItem.color }
+                        ];
+                    }
+                } else {
+                    console.log("No items found in the query result.");
+                }
+                return updatedEntries;
+            });
+        }).catch((err) => { console.log(err) });
 
     }
-    getEntriesFromDB();
-
+    useEffect(() => {
+        getEntriesFromDB();
+    }, []);
 
     async function addEntrysToDb(date: string, text: string, time: string, color: string) {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
@@ -325,7 +336,7 @@ const Cal = () => {
         selectedDates.forEach(date => {
             const dateKey = format(date, 'yyyy-MM-dd');
             setEntries(prev => ({
-               ...prev,
+                ...prev,
                 [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
             }));
             addEntrysToDb(dateKey, entry, time, color);
