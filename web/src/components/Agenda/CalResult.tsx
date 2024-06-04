@@ -4,6 +4,7 @@ import { Checkbox } from '@mui/material';
 import { dynamo } from '../../../declarations';
 import getAvailabilityFromDB from './cal.tsx';
 import { useAvailability } from '../../AvailabilityContext';
+import { Auth } from 'aws-amplify';
 
 
 function CalResult() {
@@ -15,7 +16,7 @@ function CalResult() {
     //const [availability, setAvailability] = useState<{ date: string, time: string }[]>([]);
     const [professionalId, setProfessionalId] = useState<number | null>(null);
     
-    const { availability } = useAvailability();
+    const { availability, setAvailability } = useAvailability();
 
 
 
@@ -41,22 +42,41 @@ function CalResult() {
             )
         );
 
-        dynamo.update({
-            TableName: "Professionals",
-            Key: {
-                id: professionalId,
-            },
-            UpdateExpression: `set availability = :availability`,
-            ExpressionAttributeValues: {
-                ":availability": itemsForDb,
-            },
-        }).promise()
-            .then(output => {
-                getAvailabilityFromDB();
-                console.log(output.Attributes)
-            })
-            .catch(console.error);
-        setCheckedItems([]);
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            const email = authenticatedUser.attributes.email;
+            const response = await dynamo.query({
+                TableName: "Professionals",
+                IndexName: "emailIndex",
+                KeyConditionExpression: "email = :email",
+                ExpressionAttributeValues: {
+                    ":email": email
+                }
+            }).promise();
+
+            if (response.Items && response.Items.length > 0) {
+                dynamo.update({
+                    TableName: "Professionals",
+                    Key: {
+                        id: response.Items[0].id,
+                    },
+                    UpdateExpression: `set availability = :availability`,
+                    ExpressionAttributeValues: {
+                        ":availability": itemsForDb,
+                    },
+                }).promise()
+                    .then(output => {
+                        setAvailability(itemsForDb);
+                        console.log(output.Attributes)
+                    })
+                    .catch(console.error);
+                setCheckedItems([]);
+            } else {
+                console.log("No professional found with the provided email.");
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching professional data in CalResult.tsx: ", error);
+        }
     };
 
 
