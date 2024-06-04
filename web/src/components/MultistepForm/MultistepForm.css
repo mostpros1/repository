@@ -235,14 +235,13 @@
 }
 
 .dateCards_info {
-    height: 91.33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-style: italic;
-    font-weight: bold;
-    
+  height: 91.33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .dateCards_info.number {
@@ -303,6 +302,20 @@
   gap: 15px;
 }
 
+.login-form-email-con {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.login-form-password-con {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
 .login-form input {
   border: 2px solid #c0c0c8;
   border-radius: 5px;
@@ -355,7 +368,7 @@
   align-items: center;
   width: 100%;
   gap: 15px;
-  padding: 125px 100px 0px 100px;
+  padding: 5rem 10rem 5rem 10rem;
 }
 
 .register-form-container {
@@ -489,22 +502,33 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: center;
+  }
+
+  .login-form-email-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .login-form-password-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
   }
 
   .login-form label {
     font-size: 2rem;
   }
 
-  .login-form input {
-    padding: 2rem;
-    max-width: 60rem;
-    width: 100%;
-    font-size: 16px;
-  }
-
   .Button-login {
     border-radius: 0.5rem;
-    width: 30rem;
+    max-width: 60rem;
+    width: 100%;
     transition: all 0.3s ease;
   }
 
@@ -516,6 +540,23 @@
   .error-con {
     width: 100%;
     margin-bottom: 5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  /*register*/
+  .registerForm_con {
+    width: 100%;
+    max-width: 80rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .register-container {
+    padding: 2rem;
   }
 }
 
@@ -537,7 +578,8 @@
   .login-con h2 {
     font-size: 2.5rem;
     width: 100%;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
+    text-align: center;
   }
 
   .login-form-con {
@@ -547,27 +589,37 @@
   }
 
   .login-form {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 15px;
     align-items: center;
+  }
+
+  .login-form-email-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
     width: 100%;
-    height: 100%;
+    gap: 1rem;
+  }
+
+  .login-form-password-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
   }
 
   .login-form label {
     font-size: 2rem;
   }
 
-  .login-form input {
-    padding: 2rem;
-    max-width: 30rem;
-    width: 100%;
-    font-size: 16px;
-  }
-
   .Button-login {
     border-radius: 0.5rem;
-    width: 30rem;
+    max-width: 60rem;
+    width: 100%;
     transition: all 0.3s ease;
   }
 
@@ -580,4 +632,6 @@
     width: 100%;
     margin-bottom: 5rem;
   }
+
+  /* Register */
 }
