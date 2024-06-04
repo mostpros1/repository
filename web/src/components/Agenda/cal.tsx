@@ -591,39 +591,33 @@ const Cal = () => {
                 <div className="form-group">
                     <label>Kleur: <input name="entryColor" type="color" required /></label>
                 </div>
-                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type="submit" disabled={selectedDates.length !== 1}>Toevoegen</button>
-                <button className={`submitButtonStyling ${selectedDates.length >= 1 ? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
+                <button className={`submitButton submitButtonStyling ${selectedDates.length >= 1? '' : 'disabled'}`} type="submit" disabled={selectedDates.length!== 1}>Toevoegen</button>
+                <button className={`submitButtonStyling ${selectedDates.length >= 1? '' : 'disabled'}`} type='button' onClick={clearSelectedDates}>Verwijder geselecteerde</button>
             </form>
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
                 const date = (e.target as any).elements.availabilityDate.value;
                 const time = "hele dag";
                 addAvailibility(date, time);
-            }
-            }>
-                Voeg Beschikbaarheid Toe
+            }}>
+                <b>Voeg Beschikbaarheid Toe</b>
                 <br />
                 <div className="form-group">
                     <label>Datum: <input name="availabilityDate" type="date" required /></label>
                 </div>
-                {/*<div className="form-group">
-                    <label>Tijd: <input name="availabilityTime" type="time" required /></label>
-                </div>*/}
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
             </form>
-
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const date = new Date((e.target as any).elements.startdate.value);
-                console.log(date);
                 const patroon = (e.target as any).elements.availPattern.value;
-                console.log(patroon);
                 addMultipleDays(date, "hele dag", patroon);
             }}>
+                <b>Voeg Meerdere Dagen Toe</b>
+                <br />
                 <div className="form-group">
                     <label>Start Dag: <input name="startdate" type="date" required /></label>
                 </div>
-
                 <div className="form-group">
                     <label>Herhaalpatroon:
                         <select name="availPattern" required>
@@ -635,35 +629,7 @@ const Cal = () => {
                 </div>
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
-
-            {/* werkt nog niet <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>*/}
-            <form className="availability-form" onSubmit={(e) => {
-                e.preventDefault();
-                const date = new Date((e.target as any).elements.startdate.value);
-                console.log(date);
-                const pattern = (e.target as any).elements.pattern.value;
-                DeleteMultipleDays(date, pattern);
-            }}>
-                <div className='patternSection' >
-                    <br />
-                    <b>Verwijder meerdere Dagen</b>
-                    <br />
-                    <div className="form-group">
-                        <label>Vanaf: <input name="startdate" type="date" required /></label>
-                    </div>
-                    <br />
-                    <label>Select Pattern:</label>
-                    <select name="pattern">
-                        <option value="weekday">Door de weeks</option>
-                        <option value="weekend">Weekend</option>
-                        <option value="daily">Elke Dag</option>
-                    </select>
-                    <br />
-                    <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
-                </div> {/* Here's the missing closing tag */}
-            </form>
         </div>
-
     );
 };
 
