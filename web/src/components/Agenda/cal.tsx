@@ -630,7 +630,7 @@ const Cal = () => {
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
 
-
+werkt nog niet
             <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
 
             <form className="availability-form" onSubmit={(e) => {
