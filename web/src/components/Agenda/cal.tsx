@@ -318,19 +318,20 @@ const Cal = () => {
 
 
     const addEntry = (entry: string, time: string, color: string) => {
-        if (selectedDate === null) {
+        if (selectedDates === null) {
             console.error("Selected date is null. Cannot add entry.");
             return;
         }
-        const dateKey = format(selectedDate, 'yyyy-MM-dd');
-        setEntries(prev => ({
-            ...prev,
-            [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
-        }));
-        addEntrysToDb(dateKey, entry, time, color);
+        selectedDates.forEach(date => {
+            const dateKey = format(date, 'yyyy-MM-dd');
+            setEntries(prev => ({
+               ...prev,
+                [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
+            }));
+            addEntrysToDb(dateKey, entry, time, color);
+        });
         getEntriesFromDB();
     };
-
 
 
 
@@ -607,9 +608,7 @@ const Cal = () => {
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
 
-            werkt nog niet
-            <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
-
+            {/* werkt nog niet <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>*/}
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
                 const date = new Date((e.target as any).elements.startdate.value);
