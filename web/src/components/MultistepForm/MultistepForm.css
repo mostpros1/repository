@@ -235,10 +235,14 @@
 }
 
 .dateCards_info {
-  height: 33.33%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 91.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    
 }
 
 .dateCards_info.number {

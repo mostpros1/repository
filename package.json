@@ -34,6 +34,7 @@
     "cors": "^2.8.5",
     "date-fns": "^3.1.0",
     "dotenv": "^16.4.4",
+    "expo": "^51.0.1",
     "fs": "^0.0.1-security",
     "nodemailer": "^6.9.10",
     "react": "^18.2.0",
@@ -46,6 +47,10 @@
     "styled-components": "^6.1.11"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "faker": "^5.5.3",
+    "Faker": "^0.7.2",
+    "typescript": "^5.3.3"
     "@types/jest": "^29.5.11",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.15",
