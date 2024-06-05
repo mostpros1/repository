@@ -1,10 +1,10 @@
 #privacy-policyMain {
-  height: max-content;
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
   margin-bottom: 5rem;
   padding: 2rem;
+  align-items: center;
 }
 
 #privacypolicyUpperSection {
@@ -12,8 +12,10 @@
   flex-direction: row;
   margin: auto;
   max-width: 100rem;
-  max-height: fit-content;
   text-align: left;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rem;
 }
 
 #privacypolicyUpperSection h1 {
@@ -36,7 +38,6 @@
   flex-direction: column;
   margin: auto;
   max-width: 100rem;
-  max-height: fit-content;
   text-align: left;
 }
 
@@ -63,26 +64,47 @@
 @media screen and (max-width: 1400px) {
   #privacy-policyMain {
     margin-bottom: auto;
+    padding: 1rem;
   }
 
   #privacypolicyLowerSection {
     max-width: 100%;
-    max-height: 100%;
   }
 
   #privacypolicyUpperSection {
-    display: flex;
     flex-direction: column;
     margin-top: 0;
+    align-items: center;
+    justify-content: center;
   }
 
   #privacypolicyUpperSection h1 {
-    margin: auto;
+    margin: 0;
+    padding-bottom: 2rem;
+    text-align: center;
   }
 
   #Privacyimage {
     width: 60%;
-    height: 70%;
-    margin-bottom: 3rem;
+    height: auto;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #Privacyimage {
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+  }
+
+  #privacypolicyUpperSection h1 {
+    width: 100%;
+    font-size: 2rem;
+  }
+
+  #privacypolicyLowerSection span {
+    font-size: 1.8rem;
   }
 }

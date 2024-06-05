@@ -10,9 +10,7 @@ function PrivacyPolicy() {
       </section>
 
       <section id="privacypolicyLowerSection">
-        <p>
-          Versie: 1.2 Laatst aangepaste datum: 28 - 08 - 2023
-        </p>
+        <p>Versie: 1.2 Laatst aangepaste datum: 28 - 08 - 2023</p>
         <p className="privacy-text">
           Wij zijn er van bewust dat je vertrouwen stelt in ons. Wij zien het
           dan ook als onze ver­ant­woor­de­lijk­heid om jouw privacy te
