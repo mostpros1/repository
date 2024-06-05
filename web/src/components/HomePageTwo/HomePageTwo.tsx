@@ -210,13 +210,13 @@ function HomePageTwo() {
   const reviews = {
     homeOwner: [
       {
-        rating: 2,
+        rating: 4,
         name: "Lisa S",
         image: TuinPFP,
         text: "“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.",
       },
       {
-        rating: 3,
+        rating: 5,
         name: "Stijn B",
         image: StijnPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",

@@ -15,7 +15,7 @@ function ContactForm() {
           </div>
         </div>
         <div className="contact_right">
-          <h2>Heb je vragen neem contact met ons op!</h2>         
+          <h2 className="contact_righth2">Heb je vragen neem contact met ons op!</h2>         
           <ContactInputs />
         </div>
       </div>
