@@ -206,9 +206,9 @@
 }
 
 .dateCards_wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    gap: 20px;
 }
 
 .dateCards {

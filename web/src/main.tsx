@@ -22,14 +22,6 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
-import { dynamoDB } from "../declarations.ts";
-
-
-dynamoDB
-  .listTables()
-  .promise()
-  .then(data => console.log(data))
-  .catch((error: Error) => console.error(error));
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
@@ -53,5 +45,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </React.StrictMode >
 );
-
-export { dynamoDB };
