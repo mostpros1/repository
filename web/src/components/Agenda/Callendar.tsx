@@ -2,7 +2,6 @@ import React from 'react';
 import SideNav from "../ui/SideNav/SideNav";
 import Cal from "./cal";
 import CalResult from "./CalResult.tsx";
-import DateAndTimePicker from "./Cal2.tsx";
 import './Callendar.css'; // Import the CSS file
 import "../ui/NavBar/NavBar.css";
 
