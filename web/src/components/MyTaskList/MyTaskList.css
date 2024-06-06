@@ -1,24 +1,68 @@
-.mytask_con{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    min-height: 70vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: auto;
 }
 
-.current_task_con{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.mytask_con {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  min-height: 70vh;
 }
 
-.finished_task_con{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.current_task_con {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.taskCard_con{
+.finished_task_con {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.NewtaskCard_con {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.taskCard_con {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+@media screen and (max-width: 1025px) {
+  .mytask_con {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    margin: 2rem;
+    min-height: 70%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .mytask_con {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem;
+  }
+
+  .mytask_con h2 {
+    width: max-content;
+  }
+
+  .taskCard_con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: auto;
+    gap: 2rem;
+  }
 }

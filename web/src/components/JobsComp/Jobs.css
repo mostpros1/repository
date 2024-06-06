@@ -3,9 +3,8 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  margin: auto;
   padding: 2.5rem;
-  max-width: fit-content;
-  max-height: max-content;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
 }
@@ -14,13 +13,36 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 #search-icon {
   margin-top: 10px;
 }
 
-.jobs-con{
+.jobs-con {
+  width: 100%;
+}
+
+#submit-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-25%);
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#submit-button img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+#search-form {
   width: 100%;
 }
 
@@ -34,10 +56,18 @@
   font-size: 16px;
   margin-top: 15px;
   transition: all 0.3s ease;
-  width: 100rem;
+  width: 100%;
 }
 
-.search_dropdown {
+.Jobssearch_results-con {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.Jobssearch_dropdown {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -53,16 +83,17 @@
   color: black;
   overflow-y: scroll;
   scrollbar-width: none;
-  transition: all 0.3s ease;
+  z-index: 1;
+  border: 1px solid #ccc;
 }
 
-.search_dropdown a {
+.Jobssearch_dropdown a {
   text-decoration: none;
   color: black;
   padding: 1.5rem;
 }
 
-.search_dropdown:active {
+.Jobssearch_dropdown:active {
   display: flex;
   flex-direction: column;
 }
@@ -70,33 +101,12 @@
 #search-icon {
   position: absolute;
   left: 15px; /* Adjust as necessary */
-  z-index: 10;
 }
 
 #job-input-field:focus {
   background-color: #eaeaea;
 }
 
-#submit-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-25%);
-  height: 20px;
-  width: 20px;
-  background-color: transparent;
-  border: none;
-  background-image: url("path-to-your-arrow-icon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-#submit-button img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
 .job-status {
   display: flex;
   justify-content: flex-start;
@@ -125,10 +135,10 @@
 
 .job-list-vw {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  flex-basis: 90%;
-  margin: auto;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  padding-top: 2rem;
+  height: 100%;
   gap: 1rem;
 }
 
@@ -140,17 +150,22 @@
 .job-entry {
   border: 1px solid #ccc; /* style as needed */
   padding: 20px;
-  width: 500px;
+  width: 39rem;
   border-radius: 8px;
   position: relative; /* for positioning view-job-button absolutely */
 }
 
 .job-description {
-  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  font-size: 1.8rem;
   color: black;
+  margin-bottom: 3rem;
 }
 
 .job-date {
+  width: 100%;
+  height: 100%;
   color: black;
 }
 .job-view {
@@ -159,12 +174,12 @@
 }
 
 .job-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
   justify-content: center;
   align-items: center;
-  margin-top: 10px; /* spacing from description */
-  margin-bottom: 15px;
+  margin: auto;
 }
 
 #job-view-prof-con {
@@ -243,11 +258,7 @@
   }
 }
 
-@media (max-width: 1200px) {
-  /* #job-input-field {
-    width: 61rem;
-  } */
-
+@media (max-width: 1025px) {
   #search-form {
     width: 100%;
   }
@@ -295,5 +306,69 @@
 
   #search-form {
     width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .job-status {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: auto;
+    justify-content: center;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  #job-main {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
+  .jobs-con {
+    width: 100%;
+  }
+
+  .job-entry {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .job-description {
+    font-size: 1.5rem;
+  }
+
+  .job-list-vw {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    margin: auto;
+    height: 100%;
+    gap: 1rem;
+  }
+
+  .job-actions {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #job-view-prof-con {
+    width: 100%;
+  }
+
+  .chat-indicator {
+    width: 100%;
+  }
+  .job-view {
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
   }
 }

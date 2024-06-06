@@ -198,8 +198,10 @@
   }
 
   .nav-list-container {
-    height: 77.3rem;
+    position: absolute;
+    height: 100vh;
     transform: translateX(0);
+    z-index: 1;
   }
   .nav-item-logins {
     display: flex;
@@ -230,7 +232,7 @@
     width: 50%;
   }
   #nav-item-specialist-btn {
-    font-size: 1.3rem;
+    font-size: 60%;
     font-weight: 600;
   }
 }
@@ -238,6 +240,11 @@
 @media (max-width: 375px) {
   .nav-list-container {
     width: 100%;
-    height: 100rem;
+    height: 100vh;
+  }
+
+  #nav-item-specialist-btn:hover {
+    background-color: #308ae4;
+    color: white;
   }
 }

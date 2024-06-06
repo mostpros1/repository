@@ -30,7 +30,7 @@ const Jobs = () => {
       date: "25-3-2024",
       chats: 3,
       currentStatus: "pending",
-    }/*,
+    } /*,
     {
       id: 2,
       name: "test",
@@ -54,7 +54,7 @@ const Jobs = () => {
       date: "25-3-2024",
       chats: 1,
       isCurrent: true,
-    },*/
+    },*/,
     // Add more job entries...
   ];
 
@@ -70,15 +70,18 @@ const Jobs = () => {
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
 
-  const filterJobEntriesByTab = (jobEntries: JobEntry[], currentTab: string) => {
+  const filterJobEntriesByTab = (
+    jobEntries: JobEntry[],
+    currentTab: string
+  ) => {
     switch (currentTab) {
       case "pending":
-        return jobEntries.filter(job => job.currentStatus === "pending");
+        return jobEntries.filter((job) => job.currentStatus === "pending");
       case "current":
-        return jobEntries.filter(job => job.currentStatus === "current");
+        return jobEntries.filter((job) => job.currentStatus === "current");
       case "finished":
         // Assuming you have a way to identify finished jobs, e.g., a 'status' property
-        return jobEntries.filter(job => job.currentStatus === "finished");
+        return jobEntries.filter((job) => job.currentStatus === "finished");
       default:
         return jobEntries;
     }
@@ -110,7 +113,7 @@ const Jobs = () => {
                   description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                   date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                   chats: output.Items[i].chats,
-                  currentStatus: output.Items[i].currentStatus
+                  currentStatus: output.Items[i].currentStatus,
                 });
               }
               // Update the state once with the accumulated array
@@ -123,8 +126,7 @@ const Jobs = () => {
               console.log("No items found in the query");
             }
           })
-          .catch(console.error)
-
+          .catch(console.error);
       } catch (error) {
         console.error("Error fetching user email or querying DynamoDB", error);
       }
@@ -155,7 +157,7 @@ const Jobs = () => {
                   description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
                   date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
                   chats: output.Items[i].chats,
-                  currentStatus: output.Items[i].currentStatus
+                  currentStatus: output.Items[i].currentStatus,
                 });
               }
               // Update the state once with the accumulated array
@@ -209,7 +211,7 @@ const Jobs = () => {
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("search_dropdown_item")
+      !e.relatedTarget.classList.contains("Jobssearch_dropdown_item")
     ) {
       setShowList(false);
     }
@@ -286,8 +288,11 @@ const Jobs = () => {
     <Link
       to={`/${taal}/jobs#${result.specialistName}?${result.link.replace(/\//g, "")}`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""}`}
-      onMouseDown={() => handleResultClick(`#${result.specialistName}?${result.link.replace(/\//g, "")}`)}
+      className={`Jobssearch_dropdown_item ${
+        index === selectedIndex ? "selected" : ""
+      }`}
+      onClick={() => handleResultClick(result.link)}
+      onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
         {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
@@ -302,6 +307,9 @@ const Jobs = () => {
       <p>Plaats een nieuwe klus</p>
       <div id="search-wrapper">
         <img src={searchicon} alt="search" id="search-icon" />
+        <button type="submit" id="submit-button">
+          <img src={rightarrow} alt="submit" />
+        </button>
         <form onSubmit={handleSubmit} id="search-form">
           <input
             id="job-input-field"
@@ -313,35 +321,36 @@ const Jobs = () => {
             onKeyDown={handleInputKeyDown}
             onChange={handleInputChange}
           />
-          <div className="search_results-con">
-            {showList && <div className="search_dropdown">{resultsRender}</div>}
+          <div className="JobsSearch_results-con">
+            {showList && (
+              <div className="Jobssearch_dropdown">{resultsRender}</div>
+            )}
           </div>
-
-          <button type="submit" id="submit-button">
-            <img src={rightarrow} alt="submit" />
-          </button>
         </form>
       </div>
 
       <div className="jobs-con">
         <div className="job-status">
           <button
-            className={`status-button ${currentTab === "pending" ? "active" : ""
-              }`}
+            className={`status-button ${
+              currentTab === "pending" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("pending")}
           >
             In behandeling
           </button>
           <button
-            className={`status-button ${currentTab === "current" ? "active" : ""
-              }`}
+            className={`status-button ${
+              currentTab === "current" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("current")}
           >
             Lopende klussen
           </button>
           <button
-            className={`status-button ${currentTab === "finished" ? "active" : ""
-              }`}
+            className={`status-button ${
+              currentTab === "finished" ? "active" : ""
+            }`}
             onClick={() => setCurrentTab("finished")}
           >
             Voltooid Klussen
@@ -349,27 +358,32 @@ const Jobs = () => {
         </div>
         <div className="job-list-con">
           <div className="job-list-vw">
-            {filterJobEntriesByTab(jobEntries, currentTab)
-              .map((job) => (
-                <div className="job-entry" key={job.id}> {/* Ensure job.id is unique */}
-                  <p className="job-description">{job.description}</p>
-                  <p className="job-date">{job.date}</p>
-                  <div className="job-actions">
-                    <div id="job-view-prof-con" onClick={() => navigate(`/home-owner-result#${job.name}?${job.description}!${job.date}`)}>
-                      <img
-                        src={viewProfessionalsIcon}
-                        alt="View Professionals"
-                      />
-                      <span>Bekijk Vakspecialisten</span>
-                    </div>
-                    <div className="chat-indicator">
-                      <img src={chatIcon} alt="Chat" />
-                      <span>Lopende chats {`(${job.chats})`}</span>
-                    </div>
+            {filterJobEntriesByTab(jobEntries, currentTab).map((job) => (
+              <div className="job-entry" key={job.id}>
+                {" "}
+                {/* Ensure job.id is unique */}
+                <p className="job-description">{job.description}</p>
+                <p className="job-date">{job.date}</p>
+                <div className="job-actions">
+                  <div
+                    id="job-view-prof-con"
+                    onClick={() =>
+                      navigate(
+                        `/home-owner-result#${job.name}?${job.description}!${job.date}`
+                      )
+                    }
+                  >
+                    <img src={viewProfessionalsIcon} alt="View Professionals" />
+                    <span>Bekijk Vakspecialisten</span>
                   </div>
-                  <p className="job-view">View job</p>
+                  <div className="chat-indicator">
+                    <img src={chatIcon} alt="Chat" />
+                    <span>Lopende chats {`(${job.chats})`}</span>
+                  </div>
                 </div>
-              ))}
+                <p className="job-view">View job</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
