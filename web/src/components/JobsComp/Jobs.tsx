@@ -257,7 +257,7 @@ const Jobs = () => {
     // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
       const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
+        .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
         .map((task) => ({
           specialistName: specialist.name.toLowerCase(),
           task: task.task,
@@ -280,7 +280,7 @@ const Jobs = () => {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 5 resultaten
+  const slicedResults = searchResults().slice(0, 20); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link

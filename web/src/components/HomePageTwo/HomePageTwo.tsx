@@ -134,7 +134,7 @@ function Searchbar() {
     // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
       const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
+        .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
         .map((task) => ({
           specialistName: specialist.name.toLowerCase(),
           task: task.task,
@@ -170,10 +170,12 @@ function Searchbar() {
       onMouseDown={() => handleResultClick(result.link)}
     >
       <span>
+        {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
+        {/* Add the specialist name with the - separator */}
         {result.task}
       </span>
     </Link>
-    
+
   ));
   return (
     <div id="SearchBar-wrapper">
@@ -605,9 +607,8 @@ function HomePageTwo() {
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${
-                    reviewAnimation ? "animate-out" : ""
-                  }`}
+                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
+                    }`}
                 >
                   <img
                     src={review.image}
