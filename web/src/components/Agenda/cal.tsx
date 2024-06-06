@@ -325,10 +325,10 @@ const Cal = () => {
                     id: Math.floor(Math.random() * 1000000),
                     email: email,
                     enrtys: {
-                        date: date, // Use computed property name to dynamically set the date as the key
+                        date: stopXSS(date), // Use computed property name to dynamically set the date as the key
                         text: stopXSS(text),
-                        time: time,
-                        color: color
+                        time: stopXSS(time),
+                        color: stopXSS(color)
                     }
                 },
                 TableName: "Calendar",
@@ -453,8 +453,8 @@ const Cal = () => {
             // You need to construct the 'itemsForDb' based on your requirements
             // For demonstration, we'll just create a dummy object
             const itemsForDb = [{
-                date: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-                time: time // Example time, replace with actual time or logic to determine time
+                date: stopXSS(currentDate.toISOString().split('T')[0]), // Format date as YYYY-MM-DD
+                time: stopXSS(time) // Example time, replace with actual time or logic to determine time
             }];
 
             await dynamo.update({
@@ -570,7 +570,7 @@ const Cal = () => {
 
     const addAvailibility = async (date: string, time: string) => {
 
-        const newItem = { date: date, time: time };
+        const newItem = { date: stopXSS(date), time: stopXSS(time) };
         const availibilityArray = Array.isArray(availability) ? availability : [availability];
         const updatedAvailability = [...availibilityArray, newItem];
 

@@ -8,6 +8,7 @@ import './BevestigEmailPage.css'
 import { sendMail } from "./../../../../backend_functions/email.ts"
 import Stripe from 'stripe';
 import { dynamo } from "../../../declarations.ts";
+import { stopXSS } from '../../../../backend_functions/stopXSS.ts'
 
 
 let taal = "nl";
@@ -86,7 +87,7 @@ function BevestigEmailPage() {
                                         },
                                         UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
                                         ExpressionAttributeValues: {
-                                            ":stripeCustomerId": stripeCustomer.id,
+                                            ":stripeCustomerId": Number(stopXSS(String(stripeCustomer.id))),
                                         },
                                     }).promise() // And here as well
                                         .then(output => console.log(output.Attributes))
@@ -138,7 +139,7 @@ function BevestigEmailPage() {
                                         },
                                         UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
                                         ExpressionAttributeValues: {
-                                            ":stripeCustomerId": stripeCustomer.id,
+                                            ":stripeCustomerId": Number(stopXSS(String(stripeCustomer.id))),
                                         },
                                     }).promise() // And here as well
                                         .then(output => console.log(output.Attributes))
