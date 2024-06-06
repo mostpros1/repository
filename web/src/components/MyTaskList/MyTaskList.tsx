@@ -29,6 +29,8 @@ function MyTaskList() {
             info: "De leiding in de keuken. Er is wel schade in de tuin waar de leiding momenteel is.",
         },
 
+        // add more cards if needed
+
     ]
 
     // Filter task cards based on status
@@ -41,7 +43,7 @@ function MyTaskList() {
                 <div className="mytask_con">
                     <div className="current_task_con">
                         <h2>Huidige klussen</h2>
-                        <div className="taskCard_con">
+                        <div className="NewtaskCard_con">
                             {/* Render task cards with status "ongoing" */}
                             {ongoingTasks.map((taskCard) => (
                                 <TaskCard key={taskCard.id} {...taskCard} />

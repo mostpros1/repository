@@ -28,8 +28,8 @@
 }
 
 .rightsideJobsSection {
-  width: 80%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de sidenavTemplateSection ook aanpast waardoor het samen 100% is  */
-  height: 100vh; /*<- vh veranderen in 100% wanneer het vlak/de pagina te klein wordt voor je elementen */
+  width: 68%;
+  height: 100%;
 }
 
 @media (max-width: 1025px) {
@@ -46,5 +46,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media (max-width: 427px) {
+  .rightsideJobsSection {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .JobsMain {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
   }
 }

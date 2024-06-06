@@ -28,7 +28,7 @@
 
 .rightsideHomeProPaymentsSection {
   width: 80%;
-  height: 100vh;
+  height: 100%;
 }
 
 @media (max-width: 1044px) {
@@ -39,5 +39,8 @@
     align-items: center;
     justify-content: center;
     padding-right: 0rem;
+  }
+  .rightsideHomeProPaymentsSection {
+    width: 100%;
   }
 }

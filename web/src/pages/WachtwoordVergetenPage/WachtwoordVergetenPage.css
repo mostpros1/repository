@@ -1,120 +1,444 @@
 .resetpassword-container {
-    max-height: 60%;
-    width: 60%;
-    background: #E9F4FF;
-    display: flex;
-    justify-self: center;
-    align-self: center;
-    justify-content: center;
-    align-items: start;
+  height: 100%;
+  width: 70%;
+  background: #e9f4ff;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-items: start;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 .resetpassword-container.codesent {
-    max-height: 80%;
+  max-height: 90%;
+  max-width: 90%;
 }
 
 .resetpassword-card {
-    height: 100%;
-    width: 100%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    background-color: #E9F4FF;
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    gap: 1rem;
-    justify-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: safe flex-start;
+  align-items: center;
+  padding: 10rem 0 10rem 0;
+  gap: 2rem;
 }
 
 .resetpassword-card.codesent {
-    grid-template-rows: 2fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 1fr;
+  grid-template-rows: 2fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 1fr;
 }
 
 .resetpassword-card_header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  padding-bottom: 2rem;
 }
 
 .resetpassword-card_header hr {
-    width: 80%;
-    position: absolute;
-    bottom: 0;
+  width: 80%;
+  position: absolute;
+  bottom: 0;
 }
 
 .resetpassword-card_title {
-    text-align: center;
-    align-self: center;
-    width: 50%;
-    font-size: 3rem;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  font-size: 3rem;
 }
-
-/* .resetpassword-card_button {
-    width: 50%;
-    height: 80%;
-    border-radius: 10px;
-    border: none;
-    background: #308AE4;
-    color: #FFF;
-    font-size: 12px;
-} */
-.resetpassword-card_button {
-    width: 50%;
-    height: 40px; /* Aangepast van 80% voor consistentie */
-    border-radius: 10px;
-    border: none;
-    background: #308AE4;
-    color: #FFF;
-    font-size: 16px; /* Aangepast voor betere leesbaarheid */
-    cursor: pointer; /* Geeft een handje weer als je over de knop hovert */
-    transition: background 0.3s, transform 0.1s; /* Gladde transitie-effecten */
-}
-
-.resetpassword-card_button:hover {
-    background: #1f6fb2; /* Donkerdere tint voor hover effect */
-    transform: scale(1.05); /* Laat de knop iets groeien in grootte */
-}
-
-.resetpassword-card_button:active {
-    background: #155a8a; /* Nog donkerder voor het effect van indrukken */
-    transform: scale(0.95); /* Laat de knop iets krimpen alsof deze ingedrukt wordt */
-}
-
 
 .resetpassword-card_text {
-    width: 50%;
-    font-size: 1.5rem;
-    justify-self: center;
-    align-self: center;
+  width: 100%;
+  font-size: 1.5rem;
+  justify-self: center;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.resetpassword-card_longtext {
+  width: 100%;
+  font-size: 1.5rem;
+  justify-self: center;
+  align-self: center;
 }
 
 .resetpassword-card_newCode {
-    color: #308AE4;
+  color: #308ae4;
+  width: 50%;
+  font-weight: 400;
+  font-size: 1.5rem;
+  justify-self: center;
+  align-self: center;
+  cursor: pointer;
+}
+.resetpasswordform-middletext {
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+  text-align: left;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.resetpassword-card_text {
+  text-align: left;
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.resetpassword-form_field {
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+}
+
+.resetpassword-form_field input {
+  width: 100%;
+  max-height: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.resetpassword-form_field input:focus {
+  border: 1px solid #308ae4;
+}
+
+.resetpassword-card-buttoncontainer {
+  display: flex;
+  flex-direction: row;
+  width: 40rem;
+  gap: 1rem;
+}
+
+.resetpassword-card_button {
+  width: 15rem;
+  height: 5rem;
+  border-radius: 10px;
+  border: none;
+  background: #308ae4;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.resetpassword-backbutton {
+  width: 15rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+  background: #308ae4;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.resetpassword-card.codesent a {
+  color: #308ae4;
+  width: 40rem;
+  font-weight: 400;
+  font-size: 1.5rem;
+  justify-self: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .resetpassword-card-buttoncontainer {
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+  }
+
+  .resetpassword-card.codesent a {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .resetpassword-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  }
+
+  .resetpassword-container.codesent {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    max-width: 100%;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resetpassword-card.codesent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpassword-card.codesent label {
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 85%;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpasswordform-middletext {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5rem;
+  }
+
+  .resetpassword-card_text {
+    font-size: 1.5rem;
+    width: 100%;
+    margin: auto;
+  }
+
+  .resetpassword-card_longtext {
+    font-size: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: left;
+  }
+
+  .resetpassword-form_field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card-buttoncontainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  .resetpassword-card.codesent a {
+    color: #308ae4;
     width: 50%;
     font-weight: 400;
     font-size: 1.5rem;
     justify-self: center;
     align-self: center;
     cursor: pointer;
+  }
 }
 
-.resetpassword-form_field {
-    width: 50%;
+@media screen and (max-width: 425px) {
+  .resetpassword-container {
     display: flex;
     flex-direction: column;
-}
-
-.resetpassword-form_field input {
+    height: 100%;
     width: 100%;
+    align-items: center;
+  }
+
+  .resetpassword-container.codesent {
+    display: flex;
+    flex-direction: column;
     max-height: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    max-width: 100%;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resetpassword-card.codesent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpassword-card.codesent label {
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card.codesent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 90%;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpasswordform-middletext {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5rem;
+  }
+
+  .resetpassword-card_text {
+    font-size: 1.5rem;
+    width: 100%;
+    margin: auto;
+  }
+
+  .resetpassword-card_longtext {
+    font-size: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: left;
+  }
+
+  .resetpassword-form_field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card-buttoncontainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  .resetpassword-card.codesent a {
+    color: #308ae4;
+    width: 50%;
+    font-weight: 400;
+    font-size: 1.5rem;
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
+  }
 }
 
-.resetpassword-form_field input:focus {
-    border: 1px solid #308AE4;
+@media screen and (max-width: 325px) {
+  .resetpassword-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  }
+
+  .resetpassword-container.codesent {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    max-width: 100%;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resetpassword-card.codesent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 85%;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpassword-card.codesent label {
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 85%;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10rem 0 10rem 0;
+    gap: 2rem;
+  }
+
+  .resetpassword-card_title {
+    font-size: 2.5rem;
+  }
+
+  .resetpassword-card_header hr {
+    width: 100%;
+  }
+
+  .resetpasswordform-middletext {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5rem;
+  }
+
+  .resetpassword-card_text {
+    font-size: 1.5rem;
+    width: 100%;
+    margin: auto;
+    white-space: wrap;
+    text-align: left;
+  }
+
+  .resetpassword-card_longtext {
+    font-size: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: left;
+  }
+
+  .resetpassword-form_field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .resetpassword-card-buttoncontainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  .resetpassword-card.codesent a {
+    color: #308ae4;
+    width: 50%;
+    font-weight: 400;
+    font-size: 1.5rem;
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
+  }
 }

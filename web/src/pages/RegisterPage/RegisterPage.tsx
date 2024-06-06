@@ -1,29 +1,27 @@
-import { useState } from 'react';
-import { Auth } from 'aws-amplify';
-import NavBar from '../../components/ui/NavBar/NavBar';
-import { RegisterForm } from '../../components/MultistepForm/RegisterForm';
-import Footer from '../../components/ui/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
-import './RegisterPage.css';
+import { useState } from "react";
+import { Auth } from "aws-amplify";
+import NavBar from "../../components/ui/NavBar/NavBar";
+import { RegisterForm } from "../../components/MultistepForm/RegisterForm";
+import Footer from "../../components/ui/Footer/Footer";
+import { useNavigate } from "react-router-dom";
+import "./RegisterPage.css";
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
-import { taal } from '../../components/ui/NavBar/Navigation.tsx';
-
+import { taal } from "../../components/ui/NavBar/Navigation.tsx";
 
 function RegisterPage() {
-
   const [registerData, setRegisterData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    repeatPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    repeatPassword: "",
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   interface RegisterData {
     firstName: string;
@@ -36,7 +34,6 @@ function RegisterPage() {
 
   function signUp(registerData: RegisterData): void {
     const { email, phoneNumber, password, firstName, lastName } = registerData;
-
 
     const signUpUser = async () => {
       try {
@@ -51,7 +48,6 @@ function RegisterPage() {
           autoSignIn: { enabled: true },
         });
 
-
         dynamo
           .put({
             Item: {
@@ -62,7 +58,7 @@ function RegisterPage() {
               phone_number: stopXSS(phoneNumber),
               created_at: new Date().toISOString(),
               user_type: "HOMEOWNER",
-              stripeCustomerId: ""
+              stripeCustomerId: "",
 
               /*
               email: stopXSS(email),
@@ -77,17 +73,19 @@ function RegisterPage() {
             TableName: "Users",
           })
           .promise()
-          .then(data => console.log(data.Attributes))
-          .catch(console.error)
+          .then((data) => console.log(data.Attributes))
+          .catch(console.error);
 
-          dynamo.put({
+        dynamo
+          .put({
             TableName: "Uuids",
             Item: {
               id: Number(stopXSS(String(Math.random().toString(36).substring(2)))),
               email: stopXSS(email),
               identifyingName: Number(stopXSS(String(Math.random().toString(36).substring(2, 15))))
             },
-          }).promise();
+          })
+          .promise();
 
         /*const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
@@ -95,17 +93,23 @@ function RegisterPage() {
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
       */
         //const postConfig = postConfigMap['HOMEOWNER'];
-        console.log("Navigating with state:", { email: email, postConfig: "HOMEOWNER" });
-        navigate(`/${taal}/confirm-mail#Jobs`, { state: { email: email, postConfig: "HOMEOWNER" } });
+        console.log("Navigating with state:", {
+          email: email,
+          postConfig: "HOMEOWNER",
+        });
+        navigate(`/${taal}/confirm-mail#Jobs`, {
+          state: { email: email, postConfig: "HOMEOWNER" },
+        });
       } catch (error: any) {
-        console.error('Error signing up:', error);
-        setError(error.message || 'Er is een fout opgetreden bij het aanmelden.');
+        console.error("Error signing up:", error);
+        setError(
+          error.message || "Er is een fout opgetreden bij het aanmelden."
+        );
       }
     };
 
     signUpUser();
   }
-
 
   const handleSignUp = async () => {
     signUp(registerData);
@@ -121,14 +125,20 @@ function RegisterPage() {
       <NavBar />
       <div className="registerForm_wrapper">
         <div className="registerForm_con">
-
           {/* <RegisterForm {...registerData} updateFields={updateRegisterData} setError={setError} error={error}/> */}
 
-          <RegisterForm setUserExists={undefined} {...registerData} updateFields={updateRegisterData} /*setError={setError}*/ error={error} />
-          <button className="button-sign-up" onClick={handleSignUp}>Sign Up</button>
+          <RegisterForm
+            setUserExists={undefined}
+            {...registerData}
+            updateFields={updateRegisterData}
+            /*setError={setError}*/ error={error}
+          />
+          <button className="button-sign-up" onClick={handleSignUp}>
+            Sign Up
+          </button>
         </div>
       </div>
-
+      <Footer />
     </>
   );
 }

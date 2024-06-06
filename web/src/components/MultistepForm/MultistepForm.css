@@ -4,205 +4,205 @@
     padding: 15px;
 } */
 
-.content-con{
-    width: 100%;  
+.content-con {
+  width: 100%;
 }
 
-.content-con img{
-    height: 250px;
-    width: 100%;
-    object-fit: contain;
+.content-con img {
+  height: 250px;
+  width: 100%;
+  object-fit: contain;
 }
 
-.form-con{
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 50px;
-    align-items: center;
+.form-con {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
 }
 
-.form-con a{
-    align-self: start;
+.form-con a {
+  align-self: start;
 }
 
-.progress-con{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.progress-con {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.progress-con h3{
-    font-size: 18px;
+.progress-con h3 {
+  font-size: 18px;
 }
 
 .progress-bar {
-    background-color: white;
-    height: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    width: 100%;
-    gap: 5px;
+  background-color: white;
+  height: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  width: 100%;
+  gap: 5px;
 }
-  
+
 .progress-step {
-    height: 100%;
-    transition: 0.3s; /* Voeg een overgang toe voor kleurverandering */
+  height: 100%;
+  transition: 0.3s; /* Voeg een overgang toe voor kleurverandering */
 }
 
 .progress-step.active {
-    background-color: #007bff; /* Kleur per stap */
+  background-color: #007bff; /* Kleur per stap */
 }
 
-.form-inputs{
-    width: 100%;
+.form-inputs {
+  width: 100%;
 }
 
-.form-input{
-    border: none;
-    width: 50%;
-    padding: 20px;
-    font-size: 18px;
-    outline: none;
+.form-input {
+  border: none;
+  width: 50%;
+  padding: 20px;
+  font-size: 18px;
+  outline: none;
 }
 
-.first-input{
-    border: 2px solid #C0C0C8;
-    border-radius: 5px 0px 0px 5px;
+.first-input {
+  border: 2px solid #c0c0c8;
+  border-radius: 5px 0px 0px 5px;
 }
 
-.second-input{
-    border-right: 2px solid #C0C0C8;
-    border-top: 2px solid #C0C0C8;
-    border-bottom: 2px solid #C0C0C8;
-    border-radius: 0px 5px 5px 0px;
+.second-input {
+  border-right: 2px solid #c0c0c8;
+  border-top: 2px solid #c0c0c8;
+  border-bottom: 2px solid #c0c0c8;
+  border-radius: 0px 5px 5px 0px;
 }
 
-.btn-wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
+.btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
-.form-btn{
-    width: 45%;
-    padding: 15px 0px;
-    background-color: #308AE4;
-    font-size: 20px;
-    font-weight: 500;
-    border-radius: 5px;
-    border: none;
-    color: white;
+.form-btn {
+  width: 45%;
+  padding: 15px 0px;
+  background-color: #308ae4;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 5px;
+  border: none;
+  color: white;
 }
 
-.form-btn:hover{
-    cursor: pointer;
+.form-btn:hover {
+  cursor: pointer;
 }
 
-.back{
-    background-color: white;
-    border: 2px solid #308AE4;
-    color: black;
+.back {
+  background-color: white;
+  border: 2px solid #308ae4;
+  color: black;
 }
 
-.next:hover{
-    cursor: pointer;
-    background-color: #2879ca;
+.next:hover {
+  cursor: pointer;
+  background-color: #2879ca;
 }
 
-.repaircards-wrapper{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 50px;
+.repaircards-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 50px;
 }
 
-.repaircards-con{
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
-    text-align: center;
+.repaircards-con {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  text-align: center;
 }
 
-.repairCard{
-    position: relative;
-    min-height: 200px;  
-    display: flex;
-    flex-direction: column;
-    font-size: 16px;
-    justify-content: space-around;
+.repairCard {
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  justify-content: space-around;
 }
 
-.repairCard:hover{
-    cursor: pointer;
+.repairCard:hover {
+  cursor: pointer;
 }
 
-.repairCard input{
-    position: absolute;
-    top: 0;
-    right: 0;
+.repairCard input {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
-.repairCard label{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.repairCard label {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.repairCard label img{
-    height: 75px;
-    width: 100%;
-    object-fit: contain;
+.repairCard label img {
+  height: 75px;
+  width: 100%;
+  object-fit: contain;
 }
 
-.icon{
-    height: 50%;
-    width: 100%;
+.icon {
+  height: 50%;
+  width: 100%;
 }
 
-.info-con{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 30px;
+.info-con {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
 }
 
-.text-field-con{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.text-field-con {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.text-field-con h4{
-    font-weight: 400;
-    font-size: 16px;
-    color: #8B8D96;
+.text-field-con h4 {
+  font-weight: 400;
+  font-size: 16px;
+  color: #8b8d96;
 }
 
-.text-field{
-    width: 100%;
-    min-height: 250px;
-    font-family: inherit;
-    padding: 20px 15px;
-    border: 2px solid #C0C0C8;
-    border-radius: 5px;
-    outline: none;
-    resize: none;
+.text-field {
+  width: 100%;
+  min-height: 250px;
+  font-family: inherit;
+  padding: 20px 15px;
+  border: 2px solid #c0c0c8;
+  border-radius: 5px;
+  outline: none;
+  resize: none;
 }
 
-::placeholder{
-    color: #C0C0C8; 
+::placeholder {
+  color: #c0c0c8;
 }
 
-.dateForm_wrapper{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.dateForm_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .dateCards_wrapper {
@@ -212,148 +212,163 @@
 }
 
 .dateCards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 200px;
-    border: 3px solid #308AE4;
-    border-radius: 15px;
-    transition: all 0.2s;
-    padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  border: 3px solid #308ae4;
+  border-radius: 15px;
+  transition: all 0.2s;
+  padding: 25px;
 }
 
 .dateCards:last-child {
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.dateCards:hover, .dateCards.selected {  /* Voeg .selected toe voor geselecteerde kaart */
-    background-color: #308AE4;
-    color: white;
+.dateCards:hover,
+.dateCards.selected {
+  /* Voeg .selected toe voor geselecteerde kaart */
+  background-color: #308ae4;
+  color: white;
 }
 
 .dateCards_info {
-    height: 91.33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-style: italic;
-    font-weight: bold;
-    
+  height: 91.33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .dateCards_info.number {
-    font-size: 36px;
+  font-size: 36px;
 }
 
 .hidden {
-    display: none;
-  }
-
-.email-con{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 100px;
+  display: none;
 }
 
-.email-field-con{
-    margin-bottom: 75px;
-    display: flex;
-    flex-direction: column; 
-    align-self: center;
-    max-width: 60%;
-    width: 100%;
-    gap: 5px;
+.email-con {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 100px;
 }
 
-.email-field-con label{
-    font-size: 18px;
-}
-.email-input{
-    width: 100%;
-    outline: none;
-    font-size: 18px;
-}
-
-.login-con{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 25px;
+.email-field-con {
+  margin-bottom: 75px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  max-width: 60%;
+  width: 100%;
+  gap: 5px;
 }
 
-.login-form-con{   
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 100px 0px 100px;   
-    gap: 25px;
+.email-field-con label {
+  font-size: 18px;
+}
+.email-input {
+  width: 100%;
+  outline: none;
+  font-size: 18px;
 }
 
-.login-form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.login-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 25px;
+}
+
+.login-form-con {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 100px 0px 100px;
+  gap: 25px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form-email-con {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.login-form-password-con {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
 }
 
 .login-form input {
-    border: 2px solid #C0C0C8;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 18px;
-    outline: none;
+  border: 2px solid #c0c0c8;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 18px;
+  outline: none;
 }
 
-.login-link{
-    font-size: 14px;
+.login-link {
+  font-size: 14px;
 }
 
-.login-link a{
-    color: #308AE4;
+.login-link a {
+  color: #308ae4;
 }
 
-.login-btn{
-    width: 100%;
+.login-btn {
+  width: 100%;
 }
 
-.social-con{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    border-top: 1px solid #A6ACB2;
-    width: 100%;
-    max-width: 70%;
-    margin: 0 auto;
-    padding-top: 25px;
-    gap: 10px;
+.social-con {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-top: 1px solid #a6acb2;
+  width: 100%;
+  max-width: 70%;
+  margin: 0 auto;
+  padding-top: 25px;
+  gap: 10px;
 }
 
-.social-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    padding: 10px;
-    position: relative;
+.social-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  padding: 10px;
+  position: relative;
 }
 
-.social-btn img{
-    position: absolute;
-    left: 0;
+.social-btn img {
+  position: absolute;
+  left: 0;
 }
 
-.register-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 15px;
-    padding: 125px 100px 0px 100px;
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+  padding: 5rem 10rem 5rem 10rem;
 }
 
 @media (max-width: 400px) {
@@ -383,78 +398,260 @@
     gap: 15px;
 }
 
-.register-form-input{
-    display: flex;
-    flex-direction: column;
+.register-form-input {
+  display: flex;
+  flex-direction: column;
 }
 
 .register-form-input input {
-    border: 2px solid #C0C0C8;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 18px;
-    outline: none;
+  border: 2px solid #c0c0c8;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 18px;
+  outline: none;
 }
 
-.register-link{
-    font-size: 14px;
+.register-link {
+  font-size: 14px;
 }
 
-.register-link a{
-    color: #308AE4;
+.register-link a {
+  color: #308ae4;
 }
 
-.register-btn{
-    width: 100%;
-}
-  
-.error-con{
-    width: 100%;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f8d7da;
-    border: 2px solid #f1aeb5;
-}
-.error-message{
-    color: red;
-    font-size: 14px;
+.register-btn {
+  width: 100%;
 }
 
-.Button-login{
-    background-color: #308AE4;
-    color: white;
-    font-size: 20px;
-    padding: 10px 25px;
-    cursor: pointer;
-    border-radius: 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border:none;
+.error-con {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8d7da;
+  border: 2px solid #f1aeb5;
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.Button-login {
+  background-color: #308ae4;
+  color: white;
+  font-size: 20px;
+  padding: 10px 25px;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
 }
 .Button-login:hover {
-    border: 2px solid #308AE4;
-    background-color: white;
-    color: #000000;
-  }
-  .dateForm_wrapper {
-    position: relative;
-    /* Andere stijlen die je mogelijk hebt */
+  border: 2px solid #308ae4;
+  background-color: white;
+  color: #000000;
+}
+
+.loginForm_wrapper {
+  width: 100%;
+  height: 100vh;
+  padding: 150px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm_con {
+  width: 100%;
+  max-width: 700px;
+}
+
+.dateForm_wrapper {
+  position: relative;
+  /* Andere stijlen die je mogelijk hebt */
 }
 
 /* Stijl voor de sluitknop */
 .close-calendar-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333; /* Pas dit aan volgens uw kleurenschema */
-    position: absolute; /* Absoluut positioneren om het naar rechtsboven te verplaatsen */
-    top: 0; /* Aan de bovenkant van de parent container */
-    right: 0; /* Aan de rechterkant van de parent container */
-    padding: 55px; /* Voeg wat padding toe voor touch targets en spacing */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333; /* Pas dit aan volgens uw kleurenschema */
+  position: absolute; /* Absoluut positioneren om het naar rechtsboven te verplaatsen */
+  top: 0; /* Aan de bovenkant van de parent container */
+  right: 0; /* Aan de rechterkant van de parent container */
+  padding: 55px; /* Voeg wat padding toe voor touch targets en spacing */
 }
 
 .close-calendar-button:hover {
-    color: red; /* Lichtere kleur bij hover */
+  color: red; /* Lichtere kleur bij hover */
+}
+
+@media (max-width: 1025px) {
+  .loginForm_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+    margin-top: 1rem;
+  }
+
+  .login-con {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-con h2 {
+    font-size: 2.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .login-form-con {
+    padding: 0;
+    margin: auto;
+    width: 100%;
+  }
+
+  .login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .login-form-email-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .login-form-password-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .login-form label {
+    font-size: 2rem;
+  }
+
+  .Button-login {
+    border-radius: 0.5rem;
+    max-width: 60rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .Button-login:hover {
+    background-color: #308ae4;
+    color: white;
+  }
+
+  .error-con {
+    width: 100%;
+    margin-bottom: 5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  /*register*/
+  .registerForm_con {
+    width: 100%;
+    max-width: 80rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .register-container {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .loginForm_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+    margin-top: 1rem;
+  }
+
+  .login-con {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-con h2 {
+    font-size: 2.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .login-form-con {
+    padding: 0;
+    margin: auto;
+    width: 100%;
+  }
+
+  .login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .login-form-email-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .login-form-password-con {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .login-form label {
+    font-size: 2rem;
+  }
+
+  .Button-login {
+    border-radius: 0.5rem;
+    max-width: 60rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .Button-login:hover {
+    background-color: #308ae4;
+    color: white;
+  }
+
+  .error-con {
+    width: 100%;
+    margin-bottom: 5rem;
+  }
+
+  /* Register */
 }
