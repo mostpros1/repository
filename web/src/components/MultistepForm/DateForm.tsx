@@ -12,7 +12,7 @@ function DateForm({ updateDate, updateFields }) {
     useEffect(() => {
         const generateDateOptions = () => {
             const options: Array<Date> = [];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 7; i++) {
                 const date = new Date(currentDate);
                 date.setDate(currentDate.getDate() + i);
                 options.push(date);
