@@ -1,9 +1,111 @@
-#disclaimerLowerSection {
+#privacy-policyMain {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    text-align: left;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+    align-items: center;
+  }
+  
+  #privacypolicyUpperSection {
+    display: flex;
+    flex-direction: row;
     margin: auto;
-    width: 70%;
-    height: 100%;
-}
+    max-width: 100rem;
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8rem;
+  }
+  
+  #privacypolicyUpperSection h1 {
+    margin: auto;
+    width: 70rem;
+    padding-bottom: 20rem;
+    white-space: nowrap;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+  
+  #Privacyimage {
+    margin-left: 15rem;
+    width: 45%;
+    height: 50%;
+  }
+  
+  #privacypolicyLowerSection {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 100rem;
+    text-align: left;
+  }
+  
+  #privacypolicyLowerSection p {
+    padding-bottom: 1.5rem;
+  }
+  
+  #privacypolicyLowerSection span {
+    font-weight: 700;
+    padding-top: 2rem;
+  }
+  
+  .privacy-text {
+    padding-bottom: 5rem;
+  }
+  
+  #privacy-mini-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  @media screen and (max-width: 1400px) {
+    #privacy-policyMain {
+      margin-bottom: auto;
+      padding: 1rem;
+    }
+  
+    #privacypolicyLowerSection {
+      max-width: 100%;
+    }
+  
+    #privacypolicyUpperSection {
+      flex-direction: column;
+      margin-top: 0;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    #privacypolicyUpperSection h1 {
+      margin: 0;
+      padding-bottom: 2rem;
+      text-align: center;
+    }
+  
+    #Privacyimage {
+      width: 60%;
+      height: auto;
+      margin: 0 auto;
+      padding-bottom: 2rem;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    #Privacyimage {
+      width: 80%;
+      margin: 0 auto;
+      padding-bottom: 1rem;
+    }
+  
+    #privacypolicyUpperSection h1 {
+      width: 100%;
+      font-size: 2rem;
+    }
+  
+    #privacypolicyLowerSection span {
+      font-size: 1.8rem;
+    }
+  }
+  

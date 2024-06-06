@@ -1,16 +1,16 @@
-import React from "react";
-import lockkey from "../../assets/locked_icon_dude.svg";
 import "./disclaimer.css";
+import privacylockpic from "../../assets/locked_icon_dude.svg";
 
-const Disclaimer = () => {
+function disclaimer() {
   return (
-    <main id="disclaimerMain">
-      <section id="terms-UpperSection">
+    <main id="privacy-policyMain">
+      <section id="privacypolicyUpperSection">
         <h1>Disclaimer</h1>
-        <img id="terms-image" src={lockkey} alt="Privacy Lock" />
+        <img id="Privacyimage" src={privacylockpic} alt="Privacy Lock" />
       </section>
-      <section id="disclaimerLowerSection">
-        <p>
+
+      <section id="privacypolicyLowerSection">
+        <p className="privacy-text">
           Er kunnen op geen enkele wijze rechten worden ontleend aan, noch
           aanspraak gemaakt worden op de inhoud van deze website. Hoewel bij de
           sa­men­stel­ling van de inhoud van deze in­ter­netsi­te de grootst
@@ -28,7 +28,6 @@ const Disclaimer = () => {
           (verwijzen). De gegevens op deze site kunnen zonder waar­schu­wing
           worden gewijzigd.
         </p>
-
         <p>
           Mostpros geeft geen garanties met betrekking tot de aard en de inhoud
           van de informatie van de site en is niet aan­spra­ke­lijk voor de
@@ -41,8 +40,7 @@ const Disclaimer = () => {
           die niet eigendom zijn van Mostpros zijn slechts opgenomen ter
           informatie van de gebruiker van de site.
         </p>
-
-        <p>
+        <p className="privacy-text">
           Mostpros is niet ver­ant­woor­de­lijk voor de be­schik­baar­heid van
           deze sites of bronnen. Mostpros aanvaardt geen enkele
           aan­spra­ke­lijk­heid met betrekking tot de inhoud, ad­ver­ten­ties,
@@ -50,20 +48,29 @@ const Disclaimer = () => {
           be­schik­baar­heid. Mostpros is niet aan­spra­ke­lijk voor enige vorm
           van schade of verlies ver­oor­zaakt door of in verband met het gebruik
           van of door het afgaan op de inhoud, goederen of diensten als
-          aangeboden op dergelijke sites of bronnen.
+          aangeboden op dergelijke sites of bronnen
         </p>
-
         <p>
-          <h3>©Copyright</h3>
-          Alle rechten voor­be­hou­den. Niets uit deze website (informatie,
-          beelden, images), mag worden gekopieerd dan wel opgeslagen in een
-          ge­ge­vens­be­stand, in enige vorm of enige wijze, hetzij
-          elek­tro­nisch, digitaal, mechanisch, handmatig, fo­to­gra­fisch of
-          enige andere wijze.
+          Wanneer je een e-mail of andere berichten naar ons stuurt, is het
+          mogelijk dat we die berichten bewaren. Soms vragen wij je naar jouw
+          per­soon­lij­ke gegevens die voor de situatie relevant zijn. Dit maakt
+          het mogelijk jouw vragen te verwerken en jouw verzoeken te
+          be­ant­woor­den. De gegevens worden opgeslagen op eigen beveiligde
+          servers van Mostpros of die van een derde partij. Wij zullen deze
+          gegevens niet combineren met andere per­soon­lij­ke gegevens waarover
+          wij beschikken.
+        </p>
+        <span>Copyright</span>
+        <p>
+          Alle rechten voor­be­hou­den. Niets uit deze website
+          (informatie, beelden, images), mag worden gekopieerd dan wel
+          opgeslagen in een ge­ge­vens­be­stand, in enige vorm of enige wijze,
+          hetzij elek­tro­nisch, digitaal, mechanisch, handmatig,
+          fo­to­gra­fisch of enige andere wijze.
         </p>
       </section>
     </main>
   );
-};
+}
 
-export default Disclaimer;
+export default disclaimer;
