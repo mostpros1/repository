@@ -160,14 +160,10 @@ function Searchbar() {
   const slicedResults = searchResults().slice(0, 20); // Limit to the first 10 results
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName.replace(
-        "/",
-        ""
-      )}?${result.link.replace("/", "")}`}
+      to={`/${taal}/jobs#${result.specialistName}?${result.link.replace(/\//g, "")}`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""
-        }`}
-      onMouseDown={() => handleResultClick(result.link)}
+      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""}`}
+      onMouseDown={() => handleResultClick(`#${result.specialistName}?${result.link.replace(/\//g, "")}`)}
     >
       <span>
         {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
@@ -175,6 +171,8 @@ function Searchbar() {
         {result.task}
       </span>
     </Link>
+
+
 
   ));
   return (
