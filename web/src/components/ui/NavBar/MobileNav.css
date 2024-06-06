@@ -198,8 +198,10 @@
   }
 
   .nav-list-container {
-    height: 77.3rem;
+    position: absolute;
+    height: 100vh;
     transform: translateX(0);
+    z-index: 1;
   }
   .nav-item-logins {
     display: flex;
@@ -238,7 +240,7 @@
 @media (max-width: 375px) {
   .nav-list-container {
     width: 100%;
-    height: 100rem;
+    height: 100vh;
   }
 
   #nav-item-specialist-btn:hover {

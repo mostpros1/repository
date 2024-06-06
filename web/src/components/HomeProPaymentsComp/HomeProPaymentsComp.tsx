@@ -99,7 +99,9 @@ const HomeProPaymentsComp: React.FC = () => {
                 {transaction.transactionId}
               </div>
               <div
-                className={`divContainerPro ${getStatusClassName(transaction.status)}`}
+                className={`divContainerPro ${getStatusClassName(
+                  transaction.status
+                )}`}
                 data-label="Status"
               >
                 {transaction.status}
@@ -113,7 +115,9 @@ const HomeProPaymentsComp: React.FC = () => {
             </article>
           ))
         ) : (
-          <div className="ProPaymentsNoTransactions">Geen betalingen gevonden</div>
+          <div className="ProPaymentsNoTransactions">
+            Geen betalingen gevonden
+          </div>
         )}
       </section>
     </main>
