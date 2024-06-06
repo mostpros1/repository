@@ -4,6 +4,7 @@ import SittingCustomer from "../../assets/SittingCustomer.png";
 import { Star } from "@mui/icons-material";
 import { dynamo } from "../../../declarations";
 import { Auth } from "aws-amplify";
+import { stopXSS } from "../../../../backend_functions/stopXSS";
 
 // Define a specific type for review objects
 interface Review {
@@ -155,13 +156,13 @@ const ReviewComponent: React.FC = () => {
           await dynamo.put({
             TableName: "Reviews",
             Item: {
-              id: Math.floor(Math.random() * 1000),
-              professional_name: name,
-              homeownerName: email, // Use the resolved UUID here
-              date: newReview.date,
-              description: newReview.content,
+              id: Number(stopXSS(String(Math.floor(Math.random() * 1000)))),
+              professional_name: stopXSS(name),
+              homeownerName: stopXSS(email), // Use the resolved UUID her)e
+              date: stopXSS(newReview.date),
+              description: stopXSS(newReview.content),
               //totalReviews: newReview.totalReviews,
-              rating: String(newReview.rating),
+              rating: stopXSS(String(newReview.rating)),
             },
           }).promise();
           console.log("Review submitted:", newReview);
