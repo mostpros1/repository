@@ -49,8 +49,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-// import ProductUpdatePage from "../pages/ProductUpdatepage/ProductUpdatePage.tsx";  
-
+import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";  
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
@@ -63,7 +62,7 @@ import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
 import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
 import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
-
+import Cal from "../components/Agenda/cal.tsx"
 
 
 

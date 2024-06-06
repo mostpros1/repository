@@ -1,6 +1,6 @@
 import { Auth } from "aws-amplify";
 import { dynamo } from "../../web/declarations.ts";
-
+import {stopXSS } from "../stopXSS.ts"
 
 async function UUID() {
     try {
@@ -22,9 +22,9 @@ async function UUID() {
         dynamo.put({
           TableName: "Uuids",
           Item: {
-            id: Math.random().toString(36).substring(2),
-            email: email,
-            identifyingName: Math.random().toString(36).substring(2, 15)
+            id: stopXSS(Math.random().toString(36).substring(2)),
+            email: stopXSS(email),
+            identifyingName: stopXSS(Math.random().toString(36).substring(2, 15))
           },
         }).promise();
         return user.attributes.name;

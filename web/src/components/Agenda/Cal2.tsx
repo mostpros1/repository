@@ -23,7 +23,6 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = ({ /* onDateChange *
     //const [selectedOptions, setSelectedOptions] = useState("");
     const [checkedItems, setCheckedItems] = useState<{ date: string; time: string; }[]>([]);
     const [uncheckedItems, setUncheckedItems] = useState<{ date: string; time: string; }[]>([]);
-
     const today = new Date();
     const [date, setDate] = useState(today);
     const currentMonth = date.getMonth();

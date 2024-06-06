@@ -157,7 +157,7 @@ function Searchbar() {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 10); // Limit to the first 10 results
+  const slicedResults = searchResults().slice(0, 20); // Limit to the first 10 results
   const resultsRender = slicedResults.map((result, index) => (
     <Link
       to={`/${taal}/jobs#${result.specialistName.replace(
