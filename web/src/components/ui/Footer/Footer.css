@@ -4,16 +4,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 25px;
+    gap: 2.5rem;
 }
 
 .footer_container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 100rem;
     display: flex;
     justify-content: space-between;
-    gap: 30px; 
-    padding: 50px 30px 0px;
+    gap: 3rem; 
+    padding: 5rem 3rem 0px;
 }
 
 .footerSection {
@@ -40,6 +40,16 @@
     font-size: 80%;
     color: grey;
 }
+
+#footer-office-link {
+    text-decoration: none;
+    font-size: 90%;
+}
+
+#footer-office-link :hover{
+    color: #308AE4;
+}
+
 .link_socials {
     width: fit-content;
 }
@@ -61,14 +71,14 @@
 
 .cpad_wrapper{
     width: 100%;
-    max-width: 700px;
-    border-top: 2px solid #DCDEE2;
+    max-width: 70rem;
+    border-top: 0.2rem solid #DCDEE2;
     font-size: 14px;
-    padding: 30px;
+    padding: 3rem;
     justify-content: center;
     align-items: center;
     display: flex;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 .cpad_wrapper a{

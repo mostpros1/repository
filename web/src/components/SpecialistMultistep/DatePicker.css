@@ -9,7 +9,7 @@
 }
 
 .date-time-picker span {
-  background-color: #3a72ffd4;
+  background-color: #007bff;
   border-radius: 10px;
   font-size: 17px;
   width: 140px;
@@ -26,7 +26,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
   padding: 5px;
   color: white;
   font-weight: bold;
@@ -90,7 +89,7 @@
 
 .week-number {
   margin-right: 5px;
-  background-color: #3a72ffd4;
+  background-color: #007bff;
   color: white;
   border-radius: 10%;
   height: 35px;
@@ -101,6 +100,7 @@
   justify-content: center;
   position: absolute;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 .day.empty {
@@ -170,33 +170,11 @@
   font-weight: lighter;
 }
 
-.fotoinButtonL{
-  width: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-}
-
-.fotoinButtonR{
-  width: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-}
-
 .submitBeschikbaarheid{
 border-radius: 10px;
-background-color: #3a72ffd4;
+background-color: #007bff;
 color: white;
-border: solid 2px #3a72ffd4;
+border: solid 2px #007bff;
 width: 250px;
 height: 60px;
 text-align: center;
@@ -247,7 +225,7 @@ color: white; /* Witte tekst voor betere leesbaarheid */
 }
 
 .day.today {
-border: 3px solid rgb(0, 81, 255); /* Of een andere stijl die u verkiest */
+border: 3px solid #007bff; /* Of een andere stijl die u verkiest */
 border-radius: 20%; /* Maakt de rand rond */
 justify-content: center;
 align-items: center;
@@ -262,7 +240,7 @@ width: 80px;
 height: 30px;
 font-size: 15px;
 margin-bottom: 60px;
-margin-left: 215px;
+margin-left: 230px;
 background-color: #3a72ffd4;
 color: white;
 cursor: pointer;
@@ -289,4 +267,18 @@ margin-bottom: 10px;
 .timezone-select{
 margin-left: 10px;
 border-radius: 10px; 
+}
+
+.prevIcon svg{
+  font-size: 24px;
+  color: #007bff;
+  cursor: pointer;
+
+}
+
+.nextIcon svg{
+  font-size: 24px;
+  color: #007bff;
+  cursor: pointer;
+
 }

@@ -1,0 +1,104 @@
+.overzicht-container {
+  padding: 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.overzicht-container h1 {
+  text-align: center;
+  color: #333;
+}
+
+.profiel-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.profiel-blok {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.profiel-blok:hover {
+  transform: scale(1.05);
+}
+
+.profiel-foto img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.placeholder-foto {
+  width: 100%;
+  height: 200px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.profiel-info {
+  padding: 20px;
+}
+
+.profiel-info h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.profiel-info p {
+  margin: 10px 0;
+  color: #666;
+}
+
+.profiel-info button {
+  padding: 10px 20px;
+  background-color: #308ae4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profiel-info button:hover {
+  background-color: #104c89;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5em;
+  color: #308ae4;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profiel-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profiel-blok {
+    width: 90%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .profiel-container {
+    justify-content: space-around;
+  }
+
+  .profiel-blok {
+    width: 45%;
+  }
+}

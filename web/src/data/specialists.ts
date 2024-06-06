@@ -3,8 +3,8 @@ const specialists = [
         id: 1,
         name: "Loodgieter",
         tasks: [
-            { task: "Lekkende Kranen/Leidingen Reparatie", link: "/lekkages-repareren" },
             { task: "Sanitair Installatie/Vervanging", link: "/sanitair-installeren" },
+            { task: "Lekkende Kranen/Leidingen Reparatie", link: "/lekkages-repareren" },
             { task: "Afvoer Ontstopping", link: "/lekkages-repareren" },
             { task: "Boiler/Geiser Onderhoud", link: "/lekkages-repareren" },
             { task: "Verwarmingssysteem Reparatie/Installatie", link: "/verwarmingssysteem-reparatie-installatie" },
@@ -26,13 +26,12 @@ const specialists = [
     },
     {
         id: 3,
-        name: "Elektriciën",
+        name: "Elektriciën ",
         tasks: [
             { task: "Elektrische bedrading repareren", link: "/elektrische-bedrading-repareren" },
             { task: "Stopcontacten installeren", link: "/stopcontacten-installeren" },
 
             { task: "Nieuwe Elektrische Bedrading Installatie", link: "/nieuwe-elektrische-bedrading-installatie" },
-            { task: "Elektrische Systeem Reparatie", link: "/elektrische-systeem-reparatie" },
             { task: "Elektrische Onderhoud", link: "/elektrische-olnderhoud" },
             { task: "Groepenkast Werkzaamheden", link: "/groepenkast-werkzaamheden" },
             { task: "Verlichtingsarmaturen Werkzaamheden", link: "/verlichtingsarmaturen-werkzaamheden" },
@@ -115,6 +114,17 @@ const specialists = [
             { task: "Meubel/decor selectie", link: "/meubel-selectie" },
             { task: "Maatwerk meubeldesign", link: "/maatwerk-meubeldesign" },
             { task: "Raambekleding keuze", link: "/raambekleding" },
+            { task: "Lichtplan Ontwikkeling", link: "/lichtplan-ontwikkeling" },
+            { task: "Materiaalgebruik Advies", link: "/materiaalgebruik-advies" },
+            { task: "Renovatie Visualisatie", link: "/renovatie-visualisatie" },
+            { task: "Moodboard/Stijlgids Creatie", link: "/moodboard-stijlgids-creatie" },
+            { task: "Winkelbezoek Begeleiding", link: "/winkelbezoek-begeleiding" },
+            { task: "Renovatie Samenwerking", link: "/renovatie-samenwerking" },
+            { task: "Projectmanagement Opvolging", link: "/projectmanagement-opvolging" },
+            { task: "Kunstselectie Advies", link: "/kunstselectie-advies" },
+            { task: "Technologie Integratie", link: "/technologie-integratie" },
+            { task: "Duurzaam Interieuradvies", link: "/duurzaam-interieuradvies" },
+            { task: "Toegankelijkheidsadvies", link: "/toegankelijkheidsadvies" }
         ]
     },
     {
@@ -428,7 +438,7 @@ const specialists = [
         id: 30,
         name: "Zwembadinstallateur",
         tasks: [
-            { task: "Zwembadontwerp", link: "/zwembadontwerp" },
+            { task: "Zwembadinstallateur Zwembadontwerp", link: "/zwembadontwerp" },
             { task: "Zwembadlocatie graven/voorbereiden", link: "/zwembadlocatie-graven-voorbereiden" },
             { task: "Inbouwzwembaden installeren", link: "/inbouwzwembaden-installeren" },
             { task: "Bovengrondse zwembaden aanleggen", link: "/bovengrondse-zwembaden-aanleggen" },
@@ -448,7 +458,6 @@ const specialists = [
             { task: "Zwembadranden/terrassen aanleggen", link: "/zwembadranden-terrassen-aanleggen" },
             { task: "Energiezuinige zwembadoplossingen advies", link: "/energiezuinige-zwembadoplossingen-advies" },
             { task: "Saunafaciliteiten installeren/onderhouden", link: "/saunafaciliteiten-installeren-onderhouden" }
-
         ]
     },
     {
@@ -501,7 +510,7 @@ const specialists = [
             { task: "Lange termijn opslagoplossingen", link: "/lange-termijn-opslagoplossingen" },
             { task: "Hulp bij inrichten/plaatsen meubels in nieuwe woning", link: "/hulp-bij-inrichten-plaatsen-meubels" },
             { task: "Lege verhuisdozen/verpakkingsmateriaal terugnemen", link: "/lege-verhuisdozen-verpakkingsmateriaal-terugnemen" }
-                    ]
+        ]
     },
     {
         id: 33,
@@ -562,27 +571,29 @@ const specialists = [
         id: 35,
         name: "Ongediertebestrijder",
         tasks: [
-            { task: "Muizen en ratten bestrijden", link: "/muizen-en-ratten-bestrijden" },
-            { task: "Wespennesten verwijderen", link: "/wespennesten-verwijderen" },
-            { task: "Bedwantsen bestrijden", link: "/bedwantsen-bestrijden" },
-            { task: "Vlooienplagen aanpakken", link: "/vlooienplagen-aanpakken" },
+            { task: "Muizen/ratten bestrijden", link: "/muizen-ratten-bestrijden" },
             { task: "Kakkerlakken bestrijden", link: "/kakkerlakken-bestrijden" },
-            { task: "Mierenoverlast verhelpen", link: "/mierenoverlast-verhelpen" },
-            { task: "Zilvervisjes/Papiervisjes aanpakken", link: "/zilvervisjes-papiervisjes-aanpakken" },
-            { task: "Houtworm/Boktor bestrijden", link: "/houtworm-boktor-bestrijden" },
+            { task: "Mollen bestrijden", link: "/mollen-bestrijden" },
+            { task: "Wespen/horzel nesten verwijderen", link: "/wespen-horzel-nesten-verwijderen" },
+            { task: "Mieren bestrijden", link: "/mieren-bestrijden" },
+            { task: "Vlooien/tick bestrijden", link: "/vlooien-tick-bestrijden" },
+            { task: "Houtwormen/boktorren bestrijden", link: "/houtwormen-boktorren-bestrijden" },
+            { task: "Zilvervisjes/papiervisjes bestrijden", link: "/zilvervisjes-papiervisjes-bestrijden" },
+            { task: "Bedwantsen bestrijden", link: "/bedwantsen-bestrijden" },
+            { task: "Duiven/ander gevogelte weren", link: "/duiven-ander-gevogelte-weren" },
+            { task: "Rupsen/kevers bestrijden", link: "/rupsen-kevers-bestrijden" },
             { task: "Ongediertepreventie advies", link: "/ongediertepreventie-advies" },
-            { task: "Vogelwering plaatsen", link: "/vogelwering-plaatsen" },
-            { task: "Mollen in tuinen bestrijden", link: "/mollen-in-tuinen-bestrijden" },
-            { task: "Motmuggen/Fruitvliegjes aanpakken", link: "/motmuggen-fruitvliegjes-aanpakken" },
-            { task: "Ongedierte inspectie in panden", link: "/ongedierte-inspectie-in-panden" },
-            { task: "Endoscopisch onderzoek bij ongedierte", link: "/endoscopisch-onderzoek-bij-ongedierte" },
-            { task: "Voorlichting over ongedierte/gezondheidsrisico's", link: "/voorlichting-ongedierte-gezondheidsrisicos" },
-            { task: "Knaagdieren/Insecten wering aanbrengen", link: "/knaagdieren-insecten-wering-aanbrengen" },
-            { task: "Spinnen/Overige insecten bestrijden", link: "/spinnen-overige-insecten-bestrijden" },
-            { task: "Bestrijdingsmiddelen/Apparatuur onderhoud", link: "/bestrijdingsmiddelen-apparatuur-onderhoud" },
-            { task: "Samenwerking bij grootschalige plagen", link: "/samenwerking-grootschalige-plagen" },
-            { task: "Veilig gebruik bestrijdingsmiddelen advies", link: "/veilig-gebruik-bestrijdingsmiddelen-advies" }
+            { task: "Ongediertebestrijding in tuinen", link: "/ongediertebestrijding-tuinen" },
+            { task: "Lokdozen/vallen plaatsen", link: "/lokdozen-vallen-plaatsen" },
+            { task: "Professionele bestrijdingsmiddelen gebruiken", link: "/professionele-bestrijdingsmiddelen-gebruiken" },
+            { task: "Ecologische bestrijdingsmethoden toepassen", link: "/ecologische-bestrijdingsmethoden-toepassen" },
+            { task: "Ongedierte inspectierapporten opstellen", link: "/ongedierte-inspectierapporten-opstellen" },
+            { task: "Ongediertebestrijding bij bedrijfspanden", link: "/ongediertebestrijding-bedrijfspanden" },
+            { task: "Hygiëneadvies ter preventie van ongedierte", link: "/hygieneadvies-preventie-ongedierte" },
+            { task: "Biologische bestrijdingsmiddelen adviseren/gebruiken", link: "/biologische-bestrijdingsmiddelen-adviseren-gebruiken" }
           ]
+    
+
           
     },
     {
@@ -638,6 +649,22 @@ const specialists = [
             { task: "Landbouw monitoring/gewasinspectie", link: "/landbouw-monitoring-gewasinspectie" },
             { task: "Vastgoedpromotie/-vertoning", link: "/vastgoedpromotie-vertoning" },
             { task: "Inspectie moeilijk bereikbare locaties", link: "/inspectie-moeilijk-bereikbare-locaties" },
+            { task: "Natuur-/Wildlifemonitoring", link: "/natuur-wildlifemonitoring" },
+            { task: "Kartografie/Landmeting", link: "/kartografie-landmeting" },
+            { task: "Film-/Televisieopnames", link: "/film-televisieopnames" },
+            { task: "Bewaking/Beveiliging met Drones", link: "/bewaking-beveiliging-met-drones" },
+            { task: "Kleine Pakketten Levering", link: "/kleine-pakketten-levering" },
+            { task: "Energie-Installaties Inspectie (Windturbines, Zonnepanelen)", link: "/energie-installaties-inspectie" },
+            { task: "Brand-/Reddingsoperaties", link: "/brand-reddingsoperaties" },
+            { task: "Evenementenfotografie/-Videografie", link: "/evenementenfotografie-videografie" },
+            { task: "Luchtkwaliteitsmetingen", link: "/luchtkwaliteitsmetingen" },
+            { task: "Onderzoek/Dataverzameling", link: "/onderzoek-dataverzameling" },
+            { task: "Sport-/Actiefotografie", link: "/sport-actiefotografie" },
+            { task: "Wedstrijd-/Racebeelden", link: "/wedstrijd-racebeelden" },
+            { task: "Maritieme/Kustbewaking", link: "/maritieme-kustbewaking" },
+            { task: "Drone-Vliegen Training/Workshops", link: "/drone-vliegen-training-workshops" },
+            { task: "3D-Modellering/-Mapping", link: "/3d-modellering-mapping" },
+            
         ]
     },
     {

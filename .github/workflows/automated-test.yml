@@ -3,7 +3,7 @@ name: Cypress Tests
 on: 
   push:
     branches:
-      - 'automated-test'
+      - '*'
 
 jobs:
   cypress-run:
@@ -18,11 +18,14 @@ jobs:
           cd web
           npm ci --verbose
 
+      # Install Cypress
+
       - name: Cypress install
         uses: cypress-io/github-action@v6
         with:
           working-directory: web
           runTests: false
+          
 
       # and run all Cypress tests
       
@@ -32,3 +35,4 @@ jobs:
           working-directory: web
           build: npm run build
           start: npx vite --host
+          #test

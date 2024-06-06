@@ -27,6 +27,7 @@
   flex-direction: column;
   gap: 10px;
   box-shadow: 0px 5px 20px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .reviewImg_con {
@@ -72,7 +73,7 @@
   }
   .review_title,
   .review_name {
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
   }
 
   .review_comment {
@@ -99,19 +100,5 @@
     font-size: smaller;
   }
 
-  .button {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-
   /* Other adjustments for smaller elements */
-}
-
-/* Button: Nieuwe Klus plaatsen */
-.button {
-  padding-top: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin: auto;
-  font-size: 17px;
 }

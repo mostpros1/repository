@@ -1,20 +1,16 @@
-import NavBar from '../../components/ui/NavBar/NavBar'
-import './ResultsPage.css'
-import JobList from '../../components/JobList/JobList'
-import FilterBar from '../../components/FilterBar/FilterBar'
+import NavBar from "../../components/ui/NavBar/NavBar";
+import "./ResultsPage.css";
+import JobList from "../../components/JobList/JobList";
+import Footer from "../../components/ui/Footer/Footer";
 
 function ResultsPage() {
   return (
-    <>
-        <NavBar />
-        <div className='resultpage'>
-            <div className='result-con'>
-                <FilterBar />
-                <JobList />
-            </div>
-        </div>      
-    </>
-  )
+    <div id="root">
+      <NavBar />
+      <JobList />
+      <Footer />
+    </div>
+  );
 }
 
-export default ResultsPage
+export default ResultsPage;

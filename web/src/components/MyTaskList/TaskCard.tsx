@@ -13,8 +13,8 @@ function TaskCard({ title, taskNR, price, info, status }) {
                 <div className="myTaskCard_left_text_con">
                     <p>{title}</p>
                     <p>Opdrachtnummer: {taskNR}</p>
-                    <p>€{price},-</p>
                 </div>
+                    <p className="taskcard-Price">€{price},-</p>
             </div>
             <div className="myTaskCard_right">
                 <div className="myTaskCard_right_text_con">

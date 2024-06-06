@@ -1,0 +1,92 @@
+.overzicht-klussen-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.overzicht-klussen-container h1 {
+  color: #333;
+}
+
+.klussen-lijst {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.klus-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.klus-card:hover {
+  transform: scale(1.05);
+}
+
+.klus-card-content {
+  padding: 20px;
+}
+
+.klus-card h2 {
+  margin-top: 0;
+  background-color: #94c8ff;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.klus-card p {
+  margin: 10px 0;
+  color: #666;
+}
+
+.loading {
+  font-size: 1.5em;
+  color: #4CAF50;
+}
+
+.buttoncontact {
+  background-color: #308ae4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.buttoncontact:hover {
+  background-color: #1c436a;
+}
+
+@media (max-width: 768px) {
+  .klussen-lijst {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .klus-card {
+    width: 90%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .klussen-lijst {
+    justify-content: space-around;
+  }
+
+  .klus-card {
+    width: 45%;
+  }
+}

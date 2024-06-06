@@ -12,7 +12,7 @@ function DateForm({ updateDate, updateFields }) {
     useEffect(() => {
         const generateDateOptions = () => {
             const options: Array<Date> = [];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 7; i++) {
                 const date = new Date(currentDate);
                 date.setDate(currentDate.getDate() + i);
                 options.push(date);
@@ -26,31 +26,25 @@ function DateForm({ updateDate, updateFields }) {
 
     const handleCardClick = (index: number) => {
         const selectedDate = dateOptions[index];
-        console.log("selected date is "+ selectedDate);
+        console.log("selected date is " + selectedDate);
 
         const isValid = selectedDate >= currentDate;
-        console.log("is valid date "+ isValid);
+        console.log("is valid date " + isValid);
         setIsValidDate(isValid);
 
-        // Only update date and fields if the selected date is valid
         if (isValid) {
             const isoDateString = selectedDate.toISOString();
             setSelectedCard(index === selectedCard ? null : index);
-            console.log(isoDateString);
             updateDate(selectedDate);
-            //updateDate(isoDateString);
-            console.log("SELECTED:" + selectedDate);
             updateFields({ date: isoDateString });
         }
     };
 
     const handleCalendarDateSelect = (isoDateString: string) => {
         const selectedDate = new Date(isoDateString);
-
         const isValid = selectedDate >= currentDate;
         setIsValidDate(isValid);
 
-        // Only update date and fields if the selected date is valid
         if (isValid) {
             updateDate(selectedDate);
             updateFields({ date: isoDateString });
@@ -58,18 +52,21 @@ function DateForm({ updateDate, updateFields }) {
     };
 
     const handleMoreDatesClick = () => {
-        setShowMoreDates(true); // Zet showMoreDates op true om de Calendar te laten zien
+        setShowMoreDates(true);
     };
 
     const handleLessDatesClick = () => {
-        setShowMoreDates(false); // Zet showMoreDates op true om de Calendar te laten zien
+        setShowMoreDates(false);
     };
 
     return (
         <div className="dateForm_wrapper">
             <h2>Wanneer moet de klus gedaan worden</h2>
             {showMoreDates ? (
-                <Calendar />
+                <div data-testid="calendar">
+                    <Calendar />
+                    <button onClick={handleLessDatesClick} className="close-calendar-button" data-testid="close-calendar">X</button>
+                </div>
             ) : (
                 <div className="dateCards_wrapper">
                     {dateOptions.map((date, index) => (
@@ -77,22 +74,23 @@ function DateForm({ updateDate, updateFields }) {
                             key={index}
                             className={`dateCards ${index === selectedCard ? 'selected' : ''}`}
                             onClick={() => handleCardClick(index)}
+                            data-testid={`date-card-${index}`}
                         >
                             <p className="dateCards_info">
                                 {index === 0 ? 'Vandaag' : index === 1 ? 'Morgen' : date.toLocaleDateString('nl-NL', { weekday: 'long' })}
                             </p>
-                            <p className="dateCards_info number">{date.getDate()}</p>
-                            {index === 0 && <p className="dateCards_info">snelste optie</p>}
+                            <p className="dateCards_info number" data-testid={`date-number-${index}`}>{date.getDate()}</p>
+                            {index === 0 && <p className="dateCards_info" data-testid="fastest-option">snelste optie</p>}
                         </div>
                     ))}
-                    <div className="dateCards" onClick={handleMoreDatesClick}>
+                    <div className="dateCards" onClick={handleMoreDatesClick} data-testid="more-dates">
                         <p className="dateCards_info">Meer datums</p>
                     </div>
                 </div>
             )}
 
-            {isValidDate ? null : (
-                <p className="error-message">Voer alstublieft een geldige datum in</p>
+            {!isValidDate && (
+                <p className="error-message" data-testid="error-message">Voer alstublieft een geldige datum in</p>
             )}
         </div>
     );

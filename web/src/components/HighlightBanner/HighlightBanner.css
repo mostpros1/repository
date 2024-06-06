@@ -24,6 +24,7 @@
     font-size: 16px;
     gap: 10px;
     flex-wrap: wrap;
+    align-content: center;
 }
 
 .highlight_stars svg{
@@ -44,6 +45,7 @@
     display: flex;
     gap: 10px;
     flex-direction: row;
+    cursor: pointer;
 }
 
 .appstore_button{
@@ -58,6 +60,8 @@
     width: 100%;
     height: 50px;
     object-fit: contain;
+    cursor: pointer;
+
 }
 
 .googleplay_button{

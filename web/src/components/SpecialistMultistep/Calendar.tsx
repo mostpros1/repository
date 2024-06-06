@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './DatePicker.css';
 import Next from './arrowR.png';
 import Prev from './arrowL.png';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import aws from 'aws-sdk';
 import { dynamo } from '../../../declarations.ts';
 import professionalId from './SpecialistMultistepForm.tsx';
@@ -43,7 +45,7 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
     'GMT+11:00 Australia/Sydney'
   ];
 
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "October", "November", "December"];
 
   const handleDateSelect = (_day: number, date: Date) => {
     const dateString = date.toISOString().split('T')[0];
@@ -328,16 +330,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Vorige maand"
             tabIndex={0}
           >
-            <img src={Prev} className='fotoinButtonL' alt="Vorige" />
-          </button>
-          <button
-            type="button"
-            onClick={handleCurrentMonth}
-            className='buttonToday'
-            aria-label="Ga naar huidige maand"
-            tabIndex={0}
-          >
-            Today
+            <div className="prevIcon">
+              <ArrowBackIosNewIcon/>
+            </div>
           </button>
           <span aria-live="polite">{months[currentMonth]} {currentYear}</span>
           <button
@@ -347,18 +342,20 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
             aria-label="Volgende maand"
             tabIndex={0}
           >
-            <img src={Next} className='fotoinButtonR' alt="Volgende" />
+            <div className='nextIcon'>
+              <ArrowForwardIosIcon/>
+            </div>
           </button>
         </div>
         <div className="week-days">
-          {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
+          {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
             <div key={day}>{day}</div>
           ))}
         </div>
         <div className="week">
           {renderCalendar()}
         </div>
-        <div className="timezone-selector">
+        {/* <div className="timezone-selector">
           <label htmlFor="timezone-select">Timezone:</label>
           <select
             id="timezone-select"
@@ -370,9 +367,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
               <option className='timezones' key={tz} value={tz}>{tz}</option>
             ))}
           </select>
-        </div>
+        </div> */}
       </div>
-      {selectedDay && (
+      {/* {selectedDay && (
         <div className="time-selector">
           {['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'].map(time => (
             <div
@@ -389,9 +386,9 @@ const DateAndTimePicker: React.FC<DateAndTimePickerProps> = () => {
           ))}
         </div>
 
-      )}
-      <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
-      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button>
+      )} */}
+      {/* <button type="button" className='submitBeschikbaarheid' onClick={submitDates}>Bevestig keuze</button>
+      <button type="button" className='submitBeschikbaarheid' onClick={deleteDates}>Verwijder uw beschikbaarheid</button> */}
     </div>
   );
 };

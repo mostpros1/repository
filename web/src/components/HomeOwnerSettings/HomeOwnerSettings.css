@@ -1,0 +1,93 @@
+/* HomeOwnerSettings.css */
+.account-settings {
+  background-color: transparent;
+  /* Remove background for a clean look */
+  padding: 0;
+  width: 100%;
+  max-width: 813px;
+}
+
+#account-settings-tabs {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.account-settings-tab {
+  font-size: 16px;
+  margin-right: 20px;
+  padding: 10px 0;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.account-settings-tab:last-child {
+  margin-right: 0;
+  /* Removes margin from the last tab */
+}
+
+.account-settings-tab:hover,
+.account-settings-tab.active {
+  color: #333;
+  font-weight: 900;
+  /* Darker color for active or hovered tabs */
+}
+
+#account-setting-content {
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+#account-setting-content-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#account-setting-content-body {
+  margin-top: 10px;
+}
+
+.account-setting {
+  margin-bottom: 20px;
+}
+
+.account-setting label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-setting input {
+  width: 40%;
+  padding: 0.8rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.4rem;
+  box-sizing: border-box;
+}
+
+#save-password-settings {
+  background-color: #308ae4;
+  border: none;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  width: 10rem;
+  cursor: pointer;
+}
+
+#accept-btn {
+  background-color: #308ae4;
+  border: none;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  width: 10rem;
+  cursor: pointer;
+}

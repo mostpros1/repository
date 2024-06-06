@@ -1,135 +1,237 @@
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {
+  Dashboard as DashboardIcon,
+  HandymanOutlined as HandymanOutlinedIcon,
+  Message as MessageIcon,
+  DateRange as DateRangeIcon,
+  Payment as PaymentIcon,
+  StarOutline as StarOutlineIcon,
+  AccountCircle as AccountCircleIcon,
+  Settings as SettingsIcon,
+  HelpOutline as HelpOutlineIcon,
+} from "@mui/icons-material";
+import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
-import React from "react";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
-// Icons from Material UI
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
-import MessageIcon from "@mui/icons-material/Message";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-import PaymentIcon from "@mui/icons-material/Payment";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsIcon from "@mui/icons-material/Settings";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+const SideNav = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const { lang } = useParams();  // Extract the lang parameter
+  const [isProfessional, setIsProfessional] = useState(false);
+  const [isHomeowner, setIsHomeowner] = useState(false);
 
-function SideNav() {
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (user?.signInUserSession?.accessToken?.payload) {
+        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups?.includes("Homeowner")) {
+          setIsHomeowner(true);
+        } else if (groups?.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        console.log("User data is not fully available.");
+        navigate(`/${lang}/login`);
+      }
+    };
+
+    checkUserRole();
+  }, [user, navigate, lang]);
+
+  const comingSoonTabs = [
+    { path: "revenues", label: "Inkomsten" },
+    { path: "reporting", label: "Rapporten" },
+    { path: "occupancy-ahr", label: "Bezettingsgraad" },
+    { path: "screening", label: "Screening" },
+    { path: "promo-codes", label: "Promo codes" },
+    { path: "setup", label: "Setup" },
+  ];
+
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
-        <li className="sidebar-item">
-          <NavLink
-            to="/MijnKlussen"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <DashboardIcon />
-            Dashboard
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
-          <NavLink
-            to="/Jobs"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <HandymanOutlinedIcon />
-            Jobs
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
-          <NavLink
-            to="/Message"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <MessageIcon />
-            Message
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
-          <NavLink
-            to="/Calendar"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <DateRangeIcon />
-            Calendar
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
-          <NavLink
-            to="/Payments"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <PaymentIcon />
-            Payments
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
-          <NavLink
-            to="/Reviews"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link active" : "sidebar-link"
-            }
-          >
-            <StarOutlineIcon />
-            Reviews
-          </NavLink>
-        </li>
-
-        <div className="sidebar-bottom">
-          <li className="sidebar-item">
-            <NavLink
-              to="/Profile"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <AccountCircleIcon />
-              Profile
-            </NavLink>
-          </li>
-
-          <li className="sidebar-item">
-            <NavLink
-              to="/Settings"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <SettingsIcon />
-              Settings
-            </NavLink>
-          </li>
-
-          <li className="sidebar-item">
-            <NavLink
-              to="/Helpdesk"
-              className={({ isActive }) =>
-                isActive ? "sidebar-link active" : "sidebar-link"
-              }
-            >
-              <HelpOutlineIcon />
-              Helpdesk
-            </NavLink>
-          </li>
-        </div>
+        {isProfessional ? (
+          <>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <DashboardIcon />
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/calender`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <DateRangeIcon />
+                Kalender
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/jobs`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HandymanOutlinedIcon />
+                Klussen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/chat`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <MessageIcon />
+                Berichten
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/profile`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <AccountCircleIcon />
+                Profiel
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/settings`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <SettingsIcon />
+                Instellingen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/help`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HelpOutlineIcon />
+                Help
+              </NavLink>
+            </li>
+            {comingSoonTabs.map((tab) => (
+              <li className="sidebar-item coming-soon" key={tab.path}>
+                <div className="sidebar-link">
+                  <StarOutlineIcon />
+                  {tab.label}
+                  <div className="coming-soon-tooltip">Binnenkort online</div>
+                </div>
+              </li>
+            ))}
+          </>
+        ) : (
+          <>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/homeowner-dashboard/jobs`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <HandymanOutlinedIcon />
+                Klussen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/homeowner-dashboard/chat`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <MessageIcon />
+                Berichten
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/homeowner-dashboard/payments`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <PaymentIcon />
+                Betalingen
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/homeowner-dashboard/reviews`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <StarOutlineIcon />
+                Reviews
+              </NavLink>
+            </li>
+            <div className="sidebar-bottom">
+              <li className="sidebar-item">
+                <NavLink
+                  to={`/${lang}/homeowner-dashboard/profile`}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <AccountCircleIcon />
+                  Profiel
+                </NavLink>
+              </li>
+              <li className="sidebar-item">
+                <NavLink
+                  to={`/${lang}/homeowner-dashboard/settings`}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <SettingsIcon />
+                  Instellingen
+                </NavLink>
+              </li>
+              <li className="sidebar-item">
+                <NavLink
+                  to={`/${lang}/homeowner-dashboard/FAQPage`}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-link active" : "sidebar-link"
+                  }
+                >
+                  <HelpOutlineIcon />
+                  Help
+                </NavLink>
+              </li>
+            </div>
+          </>
+        )}
       </ul>
     </div>
   );
-}
+};
 
 export default SideNav;
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+.FAQmain {
+    width: 100%;
+    height: 100%;
+    padding-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LeftsideFAQsection {
+    width: 20%;
+    height: 100%;
+    display: none;
+    justify-content: flex-end;
+    padding-right: 2rem;
+}
+
+.sideNavFAQ {
+    height: 45%;
+    width: 18rem;
+    background: #222;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.RightsideFAQSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1044px) {
+    .RightsideFAQsection {
+        display: none;
+    }
+}

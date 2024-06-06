@@ -32,7 +32,7 @@ function Searchbar() {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/klussen${link}`);
+    navigate(`/nl/jobs${link}`);
   };
 
 
@@ -99,7 +99,7 @@ function Searchbar() {
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/klussen#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
+      to={`/nl/jobs#${result.specialistName.replace('/', '')}?${result.link.replace('/', '')}`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "selected" : ""
@@ -116,18 +116,17 @@ function Searchbar() {
 
   // Helper function to navigate to the selected result
   const navigateToResult = (link: string) => {
-    navigate(`/klussen${link}`);
+    navigate(`/nl/jobs${link}`);
   };
 
   return (
     <>
       <div className={showList ? "search-container_open" : "search-container"}>
-        <label>Wat is je klus?</label>
         <input
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Bijvoorbeeld: loodgieter"
+          placeholder="Wat is je klus?"
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}

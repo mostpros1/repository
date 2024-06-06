@@ -1,0 +1,7 @@
+@media screen and (min-width: 768px) {
+  /* Apply this layout for screens larger than or equal to 768px width */
+  #content {
+    flex-direction: row; /* Arrange content horizontally */
+    align-items: flex-start; /* Align content to the start */
+  }
+}

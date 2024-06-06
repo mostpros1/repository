@@ -1,5 +1,5 @@
 import './MultistepForm.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormEvent } from "react"
 import { LocationForm } from './LocationForm'
 import { useQuestionData } from '../../data/MSFquestions'
@@ -11,9 +11,13 @@ import { useHomeOwnerMultistepForm } from '../../hooks/useHomeOwnerMultistepform
 import Calendar from './Calendar'
 import kraan from '../../assets/kraan.svg'
 import { Auth } from 'aws-amplify'
+import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom'
 import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
+import { userInfo } from 'os'
+import { dynamo } from '../../../declarations'
+import { stopXSS } from '../../../../backend_functions/stopXSS'
 
 type FormData = {
   postCode: string
@@ -28,12 +32,14 @@ type FormData = {
   phoneNumber: string
   password: string
   repeatPassword: string
+  profession: string;
+  task: string;
 }
 
 function MultistepForm() {
   const navigate = useNavigate()
   const questionsData = useQuestionData();
-  
+
   const INITIAL_DATA: FormData = {
     postCode: "",
     stad: "",
@@ -48,11 +54,13 @@ function MultistepForm() {
     lastName: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    profession: "",
+    task: "",
   }
 
   const [data, setData] = useState(INITIAL_DATA);
-  
+
   function updateFields(fields: Partial<FormData>) {
     setData((prev) => ({ ...prev, ...fields }));
   }
@@ -116,74 +124,136 @@ function MultistepForm() {
     />
   ));
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm({
+
+  const { user, updateUser } = useUser();
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useHomeOwnerMultistepForm(
+    user ? {
       steps: [
         <LocationForm {...data} updateFields={updateFields} />,
         <DateForm updateDate={updateDate} updateFields={updateFields} />,
         <InfoForm {...data} updateFields={updateFields} />,
-
-        //<AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => {}} error=""/>,
-        <PageSpecialisten />
       ],
-      onStepChange: () => {}
-    });
+      onStepChange: () => { }
+    } : {
+      steps: [
+        <LocationForm {...data} updateFields={updateFields} />,
+        <DateForm updateDate={updateDate} updateFields={updateFields} />,
+        <InfoForm {...data} updateFields={updateFields} />,
+        <>
+          <AccountForm {...data} beroep='' formConfig='HOMEOWNER' updateFields={updateFields} setError={() => { }} error="" />
+        </>
+      ],
+      onStepChange: () => { }
+    }
+  );
+  useEffect(() => {
+    const profession = window.location.hash.replace("#", "").split("?")[0];
+    const task = window.location.hash.replace("#", "").split("?")[1];
 
-    async function onSubmit(e: FormEvent) {
-      e.preventDefault()
-      console.log('Form Data:', data);
-      if (!isLastStep) return next()
 
-      const userData = {
-        email: data.email,
-        password: data.password,
-        repeatPassword: data.repeatPassword,
-        firstName: data.firstName.trim(),
-        lastName: data.lastName.trim(),
-        phoneNumber: data.phoneNumber
-      }
-  
-      if (userData.firstName == "" && userData.lastName == "" && userData.phoneNumber == "") {
-        await Auth.signIn(userData.email, userData.password)
-        .then(() => {
-          navigate('/huiseigenaar-resultaat')
+    updateFields({ profession, task });
+  }, []);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    console.log('Form Data:', data);
+    if (!isLastStep) return next()
+
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      repeatPassword: data.repeatPassword,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      phoneNumber: data.phoneNumber
+    }
+
+    if (user) {
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+
+      dynamo
+        .put({
+          Item: {
+            id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+            user_email: stopXSS(currentAuthenticatedUser.attributes.email),
+            profession: stopXSS(data.profession),
+            task: stopXSS(data.task),
+            region: stopXSS(data.stad),
+            currentStatus: stopXSS("pending"),
+            date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+            chats: Number(stopXSS(String(0))),
+            isCurrent: stopXSS(String(true))
+          },
+          TableName: "Klussen"
         })
-        .catch((err) => {
-          console.error(err)
-        })
-      }
-      else {
-        if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
-        await Auth.signUp({
+        .promise()
+        .catch(console.error);
+        const profession = window.location.hash.replace("#", "").split("?")[0];
+      const task = window.location.hash.replace("#", "").split("?")[1];
+
+      dynamo.put({
+        Item: {
+          id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+          chats: Number(stopXSS(String(0))),
+          client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+          date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+          description: stopXSS(task),
+          name: stopXSS(profession),
+          professional_email: stopXSS("something"),
+          currentStatus: stopXSS("pending")
+        },
+        TableName: "Projects"
+      }).promise()
+        .catch(console.error)
+
+
+      const datum = new Date(data.date);
+      const date = datum.toISOString().split('T')[0];
+      navigate(`/home-owner-result#${profession}?${task}!${date}`);
+
+    } else {
+      if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
+      await Auth.signUp({
         username: userData.email,
         password: userData.password,
         attributes: {
+          phone_number: userData.phoneNumber,
           name: userData.firstName,
-          family_name: userData.lastName,
-          email: userData.email,
-          phone_number: userData.phoneNumber
+          "custom:family_name": userData.lastName,
         },
-        autoSignIn: { enabled: true }
-        })
+        autoSignIn: { enabled: true },
+      })
         .then(() => {
-          navigate('/bevestig-email', { state: { email: userData.email } })
+          const profession = window.location.hash.replace("#", "").split("?")[0];
+          const task = window.location.hash.replace("#", "").split("?")[1];
+
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
         })
         .catch(async error => {
           if (error.code == 'UsernameExistsException') {
             await Auth.resendSignUp(userData.email)
-            navigate('/bevestig-email', { state: { email: userData.email } })
+            const profession = window.location.hash.replace("#", "").split("?")[0];
+            const task = window.location.hash.replace("#", "").split("?")[1];
+
+            const datum = new Date(data.date);
+            const date = datum.toISOString().split('T')[0];
+            navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { state: { email: userData.email, postConfig: "HOMEOWNER" } })
           } else {
             console.error("foutmelding:", error)
           }
         })
-      }
     }
+  }
 
   const stepWidth = 100 / steps.length;
 
   return (
     <form onSubmit={onSubmit} className='form-con'>
       <div className='progress-con'>
-        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
           {steps.map((_, index) => (
             <div

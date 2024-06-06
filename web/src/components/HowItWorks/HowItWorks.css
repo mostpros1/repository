@@ -1,9 +1,12 @@
 .HowItsWorks{
     width: 100%;
-    padding: 100px 30px;
+    padding: 5rem 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    margin-bottom: 12rem;
+    gap: 3rem;
 }
 
 .HowItsWorks_con{

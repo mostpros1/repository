@@ -1,13 +1,15 @@
 .resultpage{
-    display: flex;
-    justify-content: center;
-    padding: 150px 30px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0rem;
+    margin: 25px auto 0 150px;
 }
 
 .result-con{
     display: flex;
     width: 100%;
-    max-width: 1500px;
+    max-width: 110rem;
     flex-direction: column;
     gap: 100px;
 }

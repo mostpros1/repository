@@ -1,0 +1,44 @@
+.data-safety-comp {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 10rem;
+  flex-wrap: wrap;
+  gap: 5rem;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.data-safety-comp h2 {
+  margin: 0 0 2rem 0;
+}
+
+.data-safety-img {
+  width: 33rem;
+  height: auto;
+}
+
+.data-safety-comp ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.data-safety-comp li {
+  font-size: 1.2em;
+  margin: 1rem 0;
+  color: black;
+}
+
+.data-safety-comp .number {
+  color: #0066cc; 
+  font-weight: bold;
+}

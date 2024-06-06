@@ -2,33 +2,36 @@ import React, { useState, useEffect } from 'react';
 import './PageSpecialisten.css';
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import { dynamo } from "../../../declarations";
+import { dynamo } from "../../../declarations.ts";
 
 const exampleSpecialists = [
   {
     id: 1,
-    name: 'Jan Schilder',
+    first_name: 'Jan',
+    last_name: 'Schilder',
     profession: 'Loodgieter',
-    location: 'Haarlem',
-    price: 500,
+    region: 'Haarlem',
+    //price: 500,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
   {
     id: 2,
-    name: 'Jan Schilder',
+    first_name: 'Jan',
+    last_name: 'Schilder',
     profession: 'Loodgieter',
-    location: 'Amsterdam',
-    price: 500,
+    region: 'Amsterdam',
+    //price: 500,
     rating: 2,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
   {
     id: 3,
-    name: 'Jan Schilder',
+    first_name: 'Jan',
+    last_name: 'Schilder',
     profession: 'Loodgieter',
-    location: 'Haarlem',
-    price: 500,
+    region: 'Haarlem',
+    //price: 500,
     rating: 4.5,
     bio: 'Ik werk in en om de omgeving van Amsterdam. Voor hoge kwaliteit werk moet je bij mij zijn.',
   },
@@ -38,40 +41,40 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
   const [location, setLocation] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
-
-  const applyFilters = () => {
-    let filteredSpecialists = specialists;
-
-    //console.log("hello:  ", filteredSpecialists);
-    // Filter by location
-    if (location) {
-      filteredSpecialists = filteredSpecialists.filter(specialist => specialist.location.toLowerCase() === location);
-    }
-
-    // Filter by price
-    if (priceFrom) {
-      filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
-    }
-
-    // Sort by criteria
-    if (sortBy) {
-      if (sortBy === 'priceLowHigh') {
-        filteredSpecialists.sort((a, b) => a.price - b.price);
-      } else if (sortBy === 'priceHighLow') {
-        filteredSpecialists.sort((a, b) => b.price - a.price);
-      } else if (sortBy === 'rating') {
-        filteredSpecialists.sort((a, b) => b.rating - a.rating);
-      }
-    }
-
-    setSpecialists(filteredSpecialists);
-  };
+  const [specialists, setSpecialists] = useState(exampleSpecialists);
 
   useEffect(() => {
-    // This function will be called automatically whenever location, sortBy, or priceFrom changes.
-    applyFilters();
-  }, [location, sortBy, priceFrom, applyFilters]); // These are the dependencies for the effect.
+    const applyFilters = () => {
+      let filteredSpecialists = specialists;
 
+      // Filter by location
+      if (location) {
+        filteredSpecialists = filteredSpecialists.filter(specialist => specialist.region.toLowerCase() === location);
+      }
+
+      // Filter by price
+      /*if (priceFrom) {
+        filteredSpecialists = filteredSpecialists.filter(specialist => specialist.price >= parseInt(priceFrom));
+      }*/
+
+      // Sort by criteria
+      if (sortBy) {
+        /*if (sortBy === 'priceLowHigh') {
+          filteredSpecialists.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'priceHighLow') {
+          filteredSpecialists.sort((a, b) => b.price - a.price);
+        } else*/  if (sortBy === 'rating') {
+          filteredSpecialists.sort((a, b) => b.rating - a.rating);
+        }
+      }
+
+      setSpecialists(filteredSpecialists);
+    };
+
+    // This function will be called automatically whenever location, sortBy, priceFrom, or specialists changes.
+    applyFilters();
+  }, [location, sortBy, priceFrom, specialists]); // Include 'specialists' in the dependency array.
+  
   const handleLocationChange = (event) => {
     setLocation(event.target.value);
   };
@@ -84,26 +87,16 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
     setPriceFrom(event.target.value);
   };*/
 
-  const [specialists, setSpecialists] = useState(exampleSpecialists);
-
-
-
-
-
-  //make a function to grab data behind the hashtag in the url and print it into the console
-
-
-
   //backend niet verwijderen
   useEffect(() => {
     let professionals: any[] = [];
 
     const profession = window.location.hash.replace("#", "").split("?")[0];
-    
+
     const task = window.location.hash.replace("#", "").split("?")[1];
-    
+
     dynamo.query({
-      TableName: "Specialists",
+      TableName: "Professionals",
       IndexName: "profession",
       KeyConditionExpression: "profession = :profession",
       FilterExpression: "task = :task",
@@ -116,14 +109,16 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
 
         const convertedItems = data.Items?.map(item => ({
           id: item.id,
-          name: item.name,
+          first_name: item.first_name,
+          last_name: item.last_name,
           email: item.email,
           profession: item.profession,
-          location: item.location,
           price: item.price,
           rating: item.rating,
           bio: item.bio,
           availibility: item.availibility,
+
+
         }));
         /*
                 const Availability = JSON.parse(convertedItems[0].availibility);
@@ -153,7 +148,7 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
       }}).catch(err => {
         console.log(err);
       });
-  
+
   }, [updateDate]);
 
   return (
@@ -177,8 +172,9 @@ const PageSpecialisten = (updateDate, /*{ date }*/) => {
           <div key={specialist.id} className="specialist-card">
             <div className="specialist-header">
               <div className="specialist-info-1">
-                <h3>{specialist.name}</h3>
+                <h3>{specialist.first_name + " " + specialist.last_name}</h3>
                 <h5>{specialist.profession}</h5>
+                <h5>{specialist.region}</h5>
               </div>
             </div>
             <div className="specialist-info-2">

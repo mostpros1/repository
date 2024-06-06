@@ -11,7 +11,10 @@ import "dayjs/locale/nl.js";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { sendMail } from "../../backend_functions/email.ts";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n";
+import { AvailabilityProvider } from './AvailabilityContext';
+
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -19,14 +22,6 @@ aws.config.update({
   region: import.meta.env.VITE_AWS_REGION,
 });
 
-import { dynamoDB } from "../declarations.ts";
-
-
-dynamoDB
-  .listTables()
-  .promise()
-  .then(data => console.log(data))
-  .catch((error: Error) => console.error(error));
 
 export const cognitoClient = new aws.CognitoIdentityServiceProvider();
 Amplify.configure(awsExports);
@@ -40,11 +35,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
-          <App />
+          <I18nextProvider i18n={i18n}>
+            <AvailabilityProvider>
+              <App />
+            </AvailabilityProvider>
+          </I18nextProvider>
         </LocalizationProvider>
       </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode >
 );
-
-export { dynamoDB };

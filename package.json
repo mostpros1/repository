@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "start:frontend": "vite",
-    "start:backend": "node ../backend_functions/emailSturenWeb.js",
-    "dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "dev": "npm run start:frontend",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -43,7 +42,8 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
-    "stripe": "^14.23.0"
+    "stripe": "^14.23.0",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
@@ -59,7 +59,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "jest": "^29.7.0",
-    "react-router-dom": "^6.17.0",
+    "react-router-dom": "^6.23.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^4.5.2",

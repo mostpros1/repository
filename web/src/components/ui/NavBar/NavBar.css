@@ -40,7 +40,7 @@
 .nav-container {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 120rem;
   display: flex;
   justify-content: space-between;
 }
@@ -79,18 +79,22 @@
   font-size: 15px;
 }
 
-/* .apps-icon {
-  display: flex;
-  box-shadow: 0 0 5px #c7c7c7;
-  border: 2px solid #c7c7c7;
-  border-radius: 15px;
-  padding: 5px 10px 5px 10px;
-  transition: all 0.2s;
-} */
+.apps-icon {
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 18px;
+  margin-top: 0;
+  padding: 12px;
+  text-align: center;
+  width: auto;
+  transition: all 0.2s ease;
+}
 
 .apps-icon:hover {
-  cursor: pointer;
-  background-color: #6e6c70;
+  padding: 12px;
+  background-color: #8eb7e1;
 }
 
 .apps-icon svg {
@@ -147,10 +151,13 @@ li > .black-items {
 .loginButton {
   padding: 5px 10px;
   color: black;
+  background-color: none;
+  border: none;
 }
 
 .loginButton:hover {
   cursor: pointer;
+  color: #308ae4;
 }
 
 .loginButton svg {
@@ -163,16 +170,38 @@ li > .black-items {
 
 .dropdown-content {
   position: absolute;
-  top: 150%;
-  left: 0;
+  top: 141%;
+  left: auto;
+  right: 0;
+  width: 30rem;
+  height: 20rem;
   background-color: white;
-  border: 1px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  z-index: 1;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-content p {
+  text-align: center;
+  width: 100%;
+}
+
+.dropdown-content button {
+  display: block;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  text-align: left;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 15px;
+  background-color: #308ae4;
+  cursor: pointer;
 }
 
 .dropdown-content a {
@@ -211,12 +240,20 @@ li > .black-items {
 
 .mega-content {
   background-color: white;
-  padding: 25px 40px;
+  padding: 2.5rem 4rem;
   display: flex;
-  gap: 50px;
-  width: fit-content;
+  gap: 5rem;
+  width: max-content;
+  height: auto;
   justify-content: space-evenly;
+  width: 80rem;
   margin: 0 auto;
+}
+.mega-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  white-space: nowrap;
 }
 
 .mega-row header {
@@ -232,12 +269,16 @@ li > .black-items {
   display: flex;
   flex-direction: column;
   gap: 11px;
+  width: 10rem;
 }
 
 .mega-links li a {
   display: block;
   color: black;
+  font-weight: 100;
   font-size: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .mobile-nav {

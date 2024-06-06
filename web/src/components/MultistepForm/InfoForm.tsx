@@ -13,9 +13,8 @@ export function InfoForm({ aanvullendeInformatie, updateFields }: InfoFormProps)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
-    const inputRegex = /^[a-zA-Z0-9\s]*$/;
-    const isValid = inputRegex.test(inputValue);
-
+    const inputRegex = /^[a-zA-Z0-9\s!@#$%^&*()_+\-=\[\]{};':"\\|,.\/?`~]+$/;
+    const isValid = inputRegex.test(inputValue) || inputValue === "";
     setValidInput(isValid);
 
     if (isValid) {

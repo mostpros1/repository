@@ -1,0 +1,194 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.ProPayments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center items horizontally */
+  gap: 1rem;
+}
+
+.ProPaymentsMain {
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.ProPaymentsText {
+  font-size: 1.6rem;
+}
+
+.ProPaymentsInfo {
+  font-size: 1.4rem;
+  text-align: left;
+}
+
+.ProPaymentsButton {
+  width: 18.1rem;
+  height: 4rem;
+  color: white;
+  font-size: 1.4rem;
+  background: #207cd7;
+  border-width: 0;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProPaymentsSearchWrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.ProPaymentInfoBold {
+  font-weight: bold;
+}
+
+.textred {
+  color: #d9534f;
+  /* Bootstrap's `btn-danger` red */
+}
+
+.textorange {
+  color: #f0ad4e;
+  /* Bootstrap's `btn-warning` orange */
+}
+
+.textblue {
+  color: #5bc0de;
+  /* Bootstrap's `btn-info` blue */
+}
+
+.textgreen {
+  color: #5cb85c;
+  /* Bootstrap's `btn-success` green */
+}
+
+/* Additional style for "Cancelled" */
+.textcancelled {
+  color: red;
+  text-decoration: line-through;
+}
+
+.ProPaymentsStroke3 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.ProPaymentsStroke2 {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow items to wrap */
+  width: 100%;
+  /* Ensure articles take up full width */
+  padding: 1rem 0;
+  /* Add padding between articles */
+  font-size: 1.6rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.divContainerPro {
+  flex: 1;
+  /* Allow items to grow and shrink */
+  padding: 0.5rem;
+  /* Adjust padding as needed */
+  min-width: 0;
+  /* Allow items to shrink beyond their content */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.ProPaymentsText {
+  font-size: 1.6rem;
+}
+
+.ProPaymentsButton {
+  width: 18.1rem;
+  height: 4rem;
+  color: white;
+  font-size: 1.4rem;
+  background: #207cd7;
+  border-width: 0;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ProPaymentsNoTransactions {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #666;
+}
+
+@media screen and (max-width: 1024px) {
+  .ProPaymentsMain {
+    width: 100%;
+    margin: auto;
+  }
+
+  .ProPaymentsStroke2 {
+    gap: 1rem;
+  }
+
+  .divContainerPro {
+    width: 2rem;
+    padding: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ProPaymentsText {
+    font-size: 1.2rem;
+  }
+
+  .ProPaymentsButton {
+    width: 100%;
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+  .ProPaymentsStroke3 {
+    display: none; /* Hide the header row */
+  }
+
+  .ProPaymentsStroke2 {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .divContainerPro {
+    width: 100%;
+    padding: 0.5rem 0;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .divContainerPro::before {
+    content: attr(data-label);
+    font-weight: bold;
+    flex-basis: 30%;
+    text-align: left;
+  }
+}

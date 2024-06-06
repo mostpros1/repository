@@ -1,0 +1,46 @@
+.homeProPaymentsMain {
+  /*<- Het grote vlak wat de hele pagina covered. */
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem;
+  padding-top: 5rem;
+  display: flex;
+}
+
+.sidenavHomeProPaymentsSection {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.sideNavHomeProPayments {
+  /*<- De sidenav. */
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsideHomeProPaymentsSection {
+  width: 80%;
+  height: 100%;
+}
+
+@media (max-width: 1044px) {
+  .sidenavHomeProPaymentsSection {
+    display: none;
+  }
+  .homeProPaymentsMain {
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
+  }
+  .rightsideHomeProPaymentsSection {
+    width: 100%;
+  }
+}
