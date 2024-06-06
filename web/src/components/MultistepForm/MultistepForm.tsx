@@ -17,6 +17,7 @@ import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
 import { userInfo } from 'os'
 import { dynamo } from '../../../declarations'
+import { stopXSS } from '../../../../backend_functions/stopXSS'
 
 type FormData = {
   postCode: string
@@ -175,15 +176,15 @@ function MultistepForm() {
       dynamo
         .put({
           Item: {
-            id: Math.floor(Math.random() * 1000000000),
-            user_email: currentAuthenticatedUser.attributes.email,
-            profession: data.profession,
-            task: data.task,
-            region: data.stad,
-            currentStatus: "pending",
-            date: `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`,
-            chats: 0,
-            isCurrent: true
+            id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+            user_email: stopXSS(currentAuthenticatedUser.attributes.email),
+            profession: stopXSS(data.profession),
+            task: stopXSS(data.task),
+            region: stopXSS(data.stad),
+            currentStatus: stopXSS("pending"),
+            date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+            chats: Number(stopXSS(String(0))),
+            isCurrent: stopXSS(String(true))
           },
           TableName: "Klussen"
         })
@@ -194,14 +195,14 @@ function MultistepForm() {
 
       dynamo.put({
         Item: {
-          id: Math.floor(Math.random() * 1000000000),
-          chats: 0,
-          client_email: currentAuthenticatedUser.attributes.email,
-          date: `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`,
-          description: task,
-          name: profession,
-          professional_email: "something",
-          currentStatus: "pending"
+          id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+          chats: Number(stopXSS(String(0))),
+          client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+          date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+          description: stopXSS(task),
+          name: stopXSS(profession),
+          professional_email: stopXSS("something"),
+          currentStatus: stopXSS("pending")
         },
         TableName: "Projects"
       }).promise()

@@ -338,9 +338,9 @@ function SpecialistMultistepForm() {
           dynamo.put({
             TableName: "Uuids",
             Item: {
-              id: Math.random().toString(36).substring(2),
+              id: Number(stopXSS(String(Math.random().toString(36).substring(2)))),
               email: stopXSS(email),
-              identifyingName: Math.random().toString(36).substring(2, 15)
+              identifyingName: Number(stopXSS(String(Math.random().toString(36).substring(2, 15))))
             },
           }).promise();
 
