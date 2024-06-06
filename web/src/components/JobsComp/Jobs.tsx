@@ -117,7 +117,7 @@ const Jobs = () => {
               if (output.Items.length === 0) {
                 setJobEntries(jobEnt);
               } else {
-                setJobEntries([...jobEntries, ...newJobEntries]);
+                setJobEntries(newJobEntries.filter(entry =>!jobEntries.some(existingEntry => existingEntry.id === entry.id)));
               }
             } else {
               console.log("No items found in the query");
