@@ -1,0 +1,42 @@
+.reviewMain {
+    width: 100%;
+    height: 100%;
+    padding-right: 12rem;
+    padding-top: 5rem;
+    display: flex;
+}
+
+.sidenavReviewSection {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
+}
+
+.sideNavReview {
+    height: 45%;
+    width: 18rem;
+    background: #222;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightsideReviewSection {
+    width: 80%;
+    height: 100vh;
+}
+
+@media (max-width: 1400px) {
+    .sidenavReviewSection {
+        display: none;
+    }
+
+    .reviewMain {
+        align-items: center;
+        justify-content: center;
+        padding-right: 0rem;
+    }
+}
