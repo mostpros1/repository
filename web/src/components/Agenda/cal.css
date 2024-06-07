@@ -111,13 +111,8 @@ label {
 .submitButtonStyling.disabled {
     background-color: gray; 
     cursor: not-allowed;
-}
+} */
 
-.submitButtonStyling:hover {
-    background-color: #0e70b8;
-}
-
-
-button[type="submit"]:hover {
+ .submitButtonStyling:hover {
     background-color: #0e70b8;
 }
