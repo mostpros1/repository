@@ -97,7 +97,7 @@ function RegisterPage() {
           email: email,
           postConfig: "HOMEOWNER",
         });
-        navigate(`/${taal}/confirm-mail#Jobs`, {
+        navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
           state: { email: email, postConfig: "HOMEOWNER" },
         });
       } catch (error: any) {
