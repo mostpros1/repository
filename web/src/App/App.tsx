@@ -41,6 +41,8 @@ import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPag
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
+import Setup from "../pages/SetupPage/SetupPage.tsx"
+import PromoCodePage from "../components/PromoCode/PromoCode.tsx";
 
 /* Extra Pages */
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
@@ -108,6 +110,8 @@ const LanguageAwareRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/pro-dashboard/setup" element={<Setup />} />
+      <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
 
 
       {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}

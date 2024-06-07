@@ -36,6 +36,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+.sidebar-item-space {
+  padding-top: 1rem;
+  margin-bottom: 2.5rem;
+  font-weight: 100;
+  font-family: "Poppins", sans-serif;
+}
+
 .sidebar-item svg {
   margin-right: 1rem;
   font-size: 2rem;
@@ -80,10 +87,10 @@
   border-radius: 0.2rem;
   position: absolute;
   left: 120%;
-  top: 50%;
+  top: 52%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-top: -0.5rem;
   margin-left: 3.5rem;
 }
