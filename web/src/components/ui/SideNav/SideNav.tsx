@@ -96,7 +96,7 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-            <li className="sidebar-item-space">
+            <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/reporting`}
                 className={({ isActive }) =>
@@ -151,7 +151,7 @@ const SideNav = () => {
                 Help
               </NavLink>
             </li>
-            <li className="sidebar-item-space">
+            <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/promocode`}
                 className={({ isActive }) =>
