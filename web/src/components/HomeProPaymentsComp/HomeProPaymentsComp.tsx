@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './HomeProPaymentsComp.css';
-import { Auth } from 'aws-amplify';
-import { stripeClient, cognitoClient } from '../../main';
+import React, { useState, useEffect } from "react";
+import "./HomeProPaymentsComp.css";
+import { Auth } from "aws-amplify";
+import { stripeClient, cognitoClient } from "../../main";
 
 interface Transaction {
   date: string;
@@ -14,14 +14,16 @@ interface Transaction {
 const HomeProPaymentsComp: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  // Example transaction data - this would be fetched from an API in a real application
   useEffect(() => {
     setTransactions([
-      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Paid", amount: 1250 },
-      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Cancelled", amount: 1250 },
-      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Awaiting", amount: 1250 },
-      // { date: "19 Mar, 2024", name: "S. Barneveld", transactionId: "2102399123489", status: "Pending", amount: 1250 },
-      // Add more transactions as needed
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Paid", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Cancelled", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Awaiting", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Pending", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Paid", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Cancelled", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Awaiting", amount: 1250 },
+      // { date: "19 Mar, 2024", name: "A. Hans", transactionId: "2102399123489", status: "Pending", amount: 1250 },
     ]);
   }, []);
 
@@ -30,58 +32,52 @@ const HomeProPaymentsComp: React.FC = () => {
       const user = await Auth.currentAuthenticatedUser();
       const userEmail = user.attributes.email;
       const stripeAccount = await stripeClient.accounts.create({
-        type: 'standard',
+        type: "standard",
         email: userEmail,
-        country: 'NL',
+        country: "NL",
       });
 
-      await cognitoClient.adminUpdateUserAttributes({
-        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-        Username: userEmail,
-        UserAttributes: [{ Name: 'custom:stripeAccountId', Value: stripeAccount.id }]
-      }).promise();
+      await cognitoClient
+        .adminUpdateUserAttributes({
+          UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+          Username: userEmail,
+          UserAttributes: [
+            { Name: "custom:stripeAccountId", Value: stripeAccount.id },
+          ],
+        })
+        .promise();
 
       const result = await stripeClient.accountLinks.create({
         account: stripeAccount.id,
-        type: 'account_onboarding',
+        type: "account_onboarding",
         refresh_url: `${window.location.origin}/nl/payments/onboarding-failed`,
-        return_url: `${window.location.origin}/nl/homeowner-dashboard/payments`
+        return_url: `${window.location.origin}/nl/homeowner-dashboard/payments`,
       });
 
       window.location.href = result.url;
     } catch (err) {
       console.error(err);
-      console.log('Failed to connect to stripe')
+      console.log("Failed to connect to stripe");
     }
   };
 
   const getStatusClassName = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'paid':
-        return 'textgreen';
-      case 'cancelled':
-        return 'textcancelled'; // Use the new class for cancelled status
-      case 'awaiting':
-        return 'textorange';
-      case 'pending':
-        return 'textblue';
+      case "paid":
+        return "textgreen";
+      case "cancelled":
+        return "textcancelled";
+      case "awaiting":
+        return "textorange";
+      case "pending":
+        return "textblue";
       default:
-        return '';
+        return "";
     }
   };
 
-
   return (
     <main className="ProPaymentsMain">
-      {/* <section className="ProPaymentsSearchWrapper">
-        <p className="ProPaymentsText">
-          Betalingen worden verwerkt via Stripe. Stripe is een veilige betaaldienst. Het lijkt erop dat je nog niet bent verbonden met Stripe. Klik op de onderstaande knop om verbinding te maken met Stripe en betaald te worden voor je diensten.
-        </p>
-        <button type="button" className="ProPaymentsButton" onClick={stripeSignUp}>
-          Verbind met Stripe
-        </button>
-      </section> */}
-
       <section className="ProPayments">
         <article className="ProPaymentsStroke3">
           <div className="divContainerPro">Datum</div>
@@ -93,24 +89,39 @@ const HomeProPaymentsComp: React.FC = () => {
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => (
             <article key={index} className="ProPaymentsStroke2">
-              <div className="divContainerPro">{transaction.date}</div>
-              <div className="divContainerPro">{transaction.name}</div>
-              <div className="divContainerPro">{transaction.transactionId}</div>
-              <div className={`divContainerPro ${getStatusClassName(transaction.status)}`}>
+              <div className="divContainerPro" data-label="Datum">
+                {transaction.date}
+              </div>
+              <div className="divContainerPro" data-label="Naam">
+                {transaction.name}
+              </div>
+              <div className="divContainerPro" data-label="Transactie Nr.">
+                {transaction.transactionId}
+              </div>
+              <div
+                className={`divContainerPro ${getStatusClassName(
+                  transaction.status
+                )}`}
+                data-label="Status"
+              >
                 {transaction.status}
               </div>
-              <div className="divContainerPro">
-                {transaction.amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })}
+              <div className="divContainerPro" data-label="Bedrag">
+                {transaction.amount.toLocaleString("nl-NL", {
+                  style: "currency",
+                  currency: "EUR",
+                })}
               </div>
             </article>
           ))
         ) : (
-          <div className="ProPaymentsNoTransactions">Geen betalingen gevonden</div>
+          <div className="ProPaymentsNoTransactions">
+            Geen betalingen gevonden
+          </div>
         )}
       </section>
     </main>
   );
-}
-
+};
 
 export default HomeProPaymentsComp;

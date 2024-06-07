@@ -75,9 +75,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-  const [lastMessages, setLastMessages] = useState<{
-    [contact: string]: { text: string; createdAt: string };
-  }>({});
+  const [lastMessages, setLastMessages] = useState<{[contact: string]: { text: string; createdAt: string };}>({});
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
@@ -86,28 +84,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
   const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
-  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(
-    new Set()
-  );
+  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(new Set());
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
-  const [newMessagesCount, setNewMessagesCount] = useState<{
-    [contact: string]: number;
-  }>({});
-
-  // State for controlling the payment modal
+  const [newMessagesCount, setNewMessagesCount] = useState<{[contact: string]: number;}>({});
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
-  // State for loading feedback
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-
   const [messageSearchTerm, setMessageSearchTerm] = useState<string>("");
   const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
-
   const settingsModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1083,6 +1071,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               </kbd>
             </div>
           </div>
+
         </div>
       </div>
       {showNewChatModal && (

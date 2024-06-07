@@ -134,7 +134,7 @@ function Searchbar() {
     // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
       const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
+        .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
         .map((task) => ({
           specialistName: specialist.name.toLowerCase(),
           task: task.task,
@@ -157,23 +157,23 @@ function Searchbar() {
     return [...taskResults, ...specialistResults];
   };
 
-  const slicedResults = searchResults().slice(0, 10); // Limit to the first 10 results
+  const slicedResults = searchResults().slice(0, 20); // Limit to the first 10 results
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName.replace(
-        "/",
-        ""
-      )}?${result.link.replace("/", "")}`}
+      to={`/${taal}/jobs#${result.specialistName}?${result.link.replace(/\//g, "")}`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""
-        }`}
-      onMouseDown={() => handleResultClick(result.link)}
+      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""}`}
+      onMouseDown={() => handleResultClick(`#${result.specialistName}?${result.link.replace(/\//g, "")}`)}
     >
       <span>
+        {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
+        {/* Add the specialist name with the - separator */}
         {result.task}
       </span>
     </Link>
-    
+
+
+
   ));
   return (
     <div id="SearchBar-wrapper">
@@ -210,13 +210,13 @@ function HomePageTwo() {
   const reviews = {
     homeOwner: [
       {
-        rating: 2,
+        rating: 4,
         name: "Lisa S",
         image: TuinPFP,
         text: "“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.",
       },
       {
-        rating: 3,
+        rating: 5,
         name: "Stijn B",
         image: StijnPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
@@ -605,9 +605,8 @@ function HomePageTwo() {
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${
-                    reviewAnimation ? "animate-out" : ""
-                  }`}
+                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
+                    }`}
                 >
                   <img
                     src={review.image}

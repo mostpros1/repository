@@ -41,6 +41,8 @@ import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPag
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
+import Setup from "../pages/SetupPage/SetupPage.tsx"
+import PromoCodePage from "../components/PromoCode/PromoCode.tsx";
 
 /* Extra Pages */
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
@@ -49,7 +51,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-// import ProductUpdatePage from "../pages/ProductUpdatepage/ProductUpdatePage.tsx";  
+// import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";  
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
@@ -62,7 +64,7 @@ import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
 import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
 import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
-
+import Cal from "../components/Agenda/cal.tsx"
 
 
 
@@ -108,6 +110,8 @@ const LanguageAwareRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
+      <Route path="/pro-dashboard/setup" element={<Setup />} />
+      <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
 
 
       {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}

@@ -11,6 +11,8 @@ import {
   Settings as SettingsIcon,
   HelpOutline as HelpOutlineIcon,
 } from "@mui/icons-material";
+import { MdOutlinePhonelinkSetup } from "react-icons/md";
+import { MdOutlinePointOfSale } from "react-icons/md";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
 
@@ -21,31 +23,28 @@ const SideNav = () => {
   const [isProfessional, setIsProfessional] = useState(false);
   const [isHomeowner, setIsHomeowner] = useState(false);
 
-  // useEffect(() => {
-  //   const checkUserRole = async () => {
-  //     if (user?.signInUserSession?.accessToken?.payload) {
-  //       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-  //       if (groups?.includes("Homeowner")) {
-  //         setIsHomeowner(true);
-  //       } else if (groups?.includes("Professional")) {
-  //         setIsProfessional(true);
-  //       }
-  //     } else {
-  //       console.log("User data is not fully available.");
-  //       navigate(`/${lang}/login`);
-  //     }
-  //   };
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (user?.signInUserSession?.accessToken?.payload) {
+        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups?.includes("Homeowner")) {
+          setIsHomeowner(true);
+        } else if (groups?.includes("Professional")) {
+          setIsProfessional(true);
+        }
+      } else {
+        console.log("User data is not fully available.");
+        navigate(`/${lang}/login`);
+      }
+    };
 
-  //   checkUserRole();
-  // }, [user, navigate, lang]);
+    checkUserRole();
+  }, [user, navigate, lang]);
 
   const comingSoonTabs = [
     { path: "revenues", label: "Inkomsten" },
-    { path: "reporting", label: "Rapporten" },
     { path: "occupancy-ahr", label: "Bezettingsgraad" },
     { path: "screening", label: "Screening" },
-    { path: "promo-codes", label: "Promo codes" },
-    { path: "setup", label: "Setup" },
   ];
 
   return (
@@ -99,11 +98,33 @@ const SideNav = () => {
             </li>
             <li className="sidebar-item">
               <NavLink
+                to={`/${lang}/pro-dashboard/reporting`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+                >
+                <PaymentIcon />
+                Reporting
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/setup`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+                >
+                <MdOutlinePhonelinkSetup />
+                Setup
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
                 to={`/${lang}/pro-dashboard/profile`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-              >
+                >
                 <AccountCircleIcon />
                 Profiel
               </NavLink>
@@ -114,7 +135,7 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-              >
+                >
                 <SettingsIcon />
                 Instellingen
               </NavLink>
@@ -125,9 +146,20 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-              >
+                >
                 <HelpOutlineIcon />
                 Help
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to={`/${lang}/pro-dashboard/promocode`}
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
+              >
+                <MdOutlinePointOfSale />
+                Promo codes
               </NavLink>
             </li>
             {comingSoonTabs.map((tab) => (
@@ -229,3 +261,9 @@ const SideNav = () => {
 };
 
 export default SideNav;
+
+
+
+
+
+

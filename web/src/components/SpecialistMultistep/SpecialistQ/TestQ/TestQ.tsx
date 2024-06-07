@@ -25,7 +25,7 @@ const TestQ: React.FC<TestQProps> = ({ question, questions, updateQuestionAnswer
           <h2>{question.label}</h2>
           <div className="specialist_q_con">
             {question.options.map((option) => (
-              <label className='specialist_q' key={option}>
+              <label className='specialist_qTestQ' key={option}>
                 {option}
                 <input
                   type="radio"
