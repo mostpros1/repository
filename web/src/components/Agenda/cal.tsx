@@ -387,12 +387,14 @@ const Cal = () => {
             if (data.Items && data.Items.length > 0) {
                 console.log(data.Items[0]);
                 const output = data.Items[0];
+                console.log(output);
                 const beschikbaarheid: Availability[] = []
                 for (let i = 0; i < output.availability.length; i++) {
                     console.log(output.availability[i].date);
                     beschikbaarheid.push({ date: output.availability[i].date, time: output.availability[i].time });
                     console.log(beschikbaarheid);
                 }
+                console.log(beschikbaarheid);
                 setAvailability(beschikbaarheid);
                 setProfessionalId(data.Items[0].id);
             } else {
@@ -568,11 +570,20 @@ const Cal = () => {
             });
     };
 
-    const addAvailibility = async (date: string, time: string) => {
+    const addAvailibility = async () => {
 
-        const newItem = { date: stopXSS(date), time: stopXSS(time) };
         const availibilityArray = Array.isArray(availability) ? availability : [availability];
-        const updatedAvailability = [...availibilityArray, newItem];
+       
+
+        const newDates: Availability[] = [];
+
+        for (let i = 0; i < selectedDates.length; i++) {
+            newDates.push({
+                date: stopXSS(selectedDates[i].toISOString().split('T')[0]),
+                time: stopXSS("hele dag")
+            })
+        }
+        const updatedAvailability = [...availibilityArray, ...newDates];
 
         dynamo.update({
             TableName: "Professionals",
@@ -589,7 +600,7 @@ const Cal = () => {
                 getEntriesFromDB();
                 console.log(output.Attributes)
             })
-            .catch(console.error);
+           .catch(console.error);
         window.alert("Datum toegevoegt.");
     };
 
@@ -626,15 +637,8 @@ const Cal = () => {
 
             <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
-                const date = (e.target as any).elements.availabilityDate.value;
-                const time = "hele dag";
-                addAvailibility(date, time);
+                addAvailibility();
             }}>
-                <b>Voeg Beschikbaarheid Toe</b>
-                <br />
-                <div className="form-group">
-                    <label>Datum: <input name="availabilityDate" type="date" required /></label>
-                </div>
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
             </form>
 

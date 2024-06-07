@@ -80,7 +80,7 @@
     max-width: 5rem;
     min-height: 4rem;
 }
-/* 
+
 label {
     display: block;
     font-size: 1.4rem;
@@ -96,7 +96,7 @@ label {
     font-size: 1.4rem;
 }
 
-/* .submitButtonStyling {
+.submitButtonStyling {
     padding: 1rem 2rem;
     background-color: #178feb;
     color: white;
@@ -106,18 +106,18 @@ label {
     font-size: 1.6rem;
     margin-top: 2rem;
     margin-right: 2rem;
-} */
+}
 
 .submitButtonStyling.disabled {
     background-color: gray; 
     cursor: not-allowed;
-} */
+}
 
-/* .submitButtonStyling:hover {
+.submitButtonStyling:hover {
     background-color: #0e70b8;
-} */
+}
 
 
-/* button[type="submit"]:hover {
+button[type="submit"]:hover {
     background-color: #0e70b8;
-} */ 
+} 
