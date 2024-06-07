@@ -1,0 +1,51 @@
+.promo-code-page {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .promo-code-page h1 {
+    color: #333;
+  }
+  
+  .promo-code-form {
+    margin: 20px 0;
+  }
+  
+  .promo-code-form input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .promo-code-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #308ae4;
+    color: white;
+    cursor: pointer;
+    transition: all 0.5s ease;
+  }
+  
+  .promo-code-form button:hover {
+    background-color: #194470;
+  }
+  
+  .message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #d8000c;
+  }
+  
+  .message.success {
+    color: #4CAF50;
+  }
+  

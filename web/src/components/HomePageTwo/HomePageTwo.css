@@ -287,7 +287,8 @@
   display: flex;
   align-items: center;
   gap: 16rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Keep flex-wrap as nowrap for as long as possible */
+  flex-direction: row; /* Ensure the default direction is row */
 }
 
 .whyMostProsSectionHomeImg {
@@ -354,8 +355,8 @@
   display: flex;
   align-items: center;
   gap: 16rem;
-  flex-wrap: wrap;
-  flex-direction: row-reverse;
+  flex-wrap: nowrap; /* Keep flex-wrap as nowrap for as long as possible */
+  flex-direction: row-reverse; /* Ensure the default direction is row */
 }
 
 .AppStoreHomeDownload {
@@ -757,6 +758,32 @@
 @media screen and (max-width: 1467px) {
   .dividerDivLine {
     display: none;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .whyMostProsSectionHome {
+    flex-wrap: wrap;
+    flex-direction: column; 
+    align-items: center;
+    gap: 7rem;
+  }
+
+  .whyMostProsTextContainerHome {
+    width: 100%;
+    text-align: center; 
+  }
+
+  .whyMostProsSectionHomeImg {
+    width: 100%; 
+    max-width: 66rem; 
+  }
+
+  .whyMostProsSectionHomeTwo {
+    align-items: center;
+    gap: 7rem;
+    flex-wrap: wrap; 
+    flex-direction: column;
   }
 }
 
