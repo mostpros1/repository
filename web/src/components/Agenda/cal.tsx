@@ -224,6 +224,11 @@ const Cal = () => {
         );
     };
 
+    useEffect(() => {
+        console.log(entries);
+    }, [entries]);
+
+
     const navigateToPreviousMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
     };
@@ -285,32 +290,33 @@ const Cal = () => {
             },
         }).promise().then((data) => {
             console.log(data);
-            setEntries(prev => {
-                const updatedEntries = { ...prev }; // Start with a copy of the previous state
+            setEntries(() => {
+                const updatedEntries = {}; // Initialize as an empty object to start fresh
                 if (data.Items && data.Items.length > 0) {
                     for (let i = 0; i < data.Items.length; i++) {
                         const currentItem = data.Items[i];
-                        console.log(currentItem);
-                        // Controleer of currentItem.date een geldig datumobject is
+                        console.log("currentItem", currentItem);
+                        // Check if currentItem.date is a valid date object
                         if (!currentItem || typeof currentItem.enrtys.date === 'undefined') {
-                            console.warn("Ongeldige of ontbrekende datumwaarde gevonden.");
+                            console.warn("Invalid or missing date value found.");
                             continue;
                         }
-                        const dateKey = format(currentItem.enrtys.date, 'yyyy-MM-dd'); // Gebruik alleen als currentItem.date geldig is
+                        const dateKey = format(currentItem.enrtys.date, 'yyyy-MM-dd'); // Use only if currentItem.date is valid
                         updatedEntries[dateKey] = [
-                            ...(updatedEntries[dateKey] || []),
+                            ...(updatedEntries[dateKey] || []), // This line ensures that if there are multiple entries for the same date, they are grouped together
                             { id: currentItem.id, text: currentItem.enrtys.text, time: currentItem.enrtys.time, color: currentItem.enrtys.color }
                         ];
                     }
                 } else {
                     console.log("No items found in the query result.");
                 }
-                console.log(updatedEntries);
+                console.log("updatedEntries", updatedEntries);
                 return updatedEntries;
-            });
+            })
         }).catch((err) => { console.log(err) });
-
     }
+
+
     useEffect(() => {
         getEntriesFromDB();
     }, []);
@@ -322,8 +328,8 @@ const Cal = () => {
         try {
             const data = await dynamo.put({
                 Item: {
-                    id: Math.floor(Math.random() * 1000000),
-                    email: email,
+                    id: Number(stopXSS(String(Math.floor(Math.random() * 1000000)))),
+                    email: stopXSS(email),
                     enrtys: {
                         date: stopXSS(date), // Use computed property name to dynamically set the date as the key
                         text: stopXSS(text),
@@ -351,16 +357,11 @@ const Cal = () => {
         }
         selectedDates.forEach(date => {
             const dateKey = format(date, 'yyyy-MM-dd');
-            setEntries(prev => ({
-                ...prev,
-                [dateKey]: [...(prev[dateKey] || []), { text: entry, time: time, color: color }]
-            }));
             addEntrysToDb(dateKey, entry, time, color);
         });
-        getEntriesFromDB();
     };
 
-    
+
     async function deleteEntrys(id: number) {
         const data = await dynamo.delete({
             TableName: "Calendar",
@@ -369,8 +370,7 @@ const Cal = () => {
             }
         }).promise();
         console.log(data);
-        await getEntriesFromDB(); // Await the completion of getEntriesFromDB
-        
+        await getEntriesFromDB(); // Correctly await the completion of getEntriesFromDB
     }
 
     async function getAvailabilityFromDB() {
