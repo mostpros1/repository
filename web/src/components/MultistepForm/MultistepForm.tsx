@@ -190,7 +190,7 @@ function MultistepForm() {
         })
         .promise()
         .catch(console.error);
-        const profession = window.location.hash.replace("#", "").split("?")[0];
+      const profession = window.location.hash.replace("#", "").split("?")[0];
       const task = window.location.hash.replace("#", "").split("?")[1];
 
       dynamo.put({
@@ -246,6 +246,62 @@ function MultistepForm() {
             console.error("foutmelding:", error)
           }
         })
+
+      /*
+      // Assuming the signUpUser function is defined as shown in your provided code snippet
+async function signUpUser(userData) {
+const url = 'YOUR_API_GATEWAY_URL'; // Make sure to replace this with your actual API Gateway URL
+const response = await fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(userData),
+});
+
+if (!response.ok) {
+  throw new Error('Network response was not ok');
+}
+
+const data = await response.json();
+console.log(data); // Process the response data
+
+// Assuming you want to navigate after successful registration
+// You might need to adjust the navigation logic based on your application's routing needs
+const profession = window.location.hash.replace("#", "").split("?")[0];
+const task = window.location.hash.replace("#", "").split("?")[1];
+
+const datum = new Date(data.date);
+const date = datum.toISOString().split('T')[0];
+navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { 
+state: { email: userData.email, postConfig: "HOMEOWNER" },
+ })
+
+}
+
+// Your existing code for preparing userData
+const userData = {
+firstName: stopXSS(data.firstName),
+lastName: stopXSS(data.lastName),
+email: stopXSS(data.email),
+phoneNumber: stopXSS(data.phoneNumber),
+password: stopXSS(data.password),
+};
+
+// Check if passwords match before proceeding
+if (data.password!== data.repeatPassword) {
+console.log("Passwords do not match!");
+return; // Optionally, you could show an error message to the user instead of just logging it
+}
+
+try {
+// Attempt to sign up the user via the API
+await signUpUser(userData);
+} catch (error) {
+console.error("Registration failed:", error);
+// Handle errors, such as showing an error message to the user
+}
+      */
     }
   }
 
