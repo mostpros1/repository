@@ -181,6 +181,66 @@ function BevestigEmailPage() {
         }
     }
 
+    /*
+    //RESTAPI VERSION
+
+    const postConfigMap: Record<string, PostConfig> = {
+    'HOMEOWNER': {
+        roleName: "Homeowner",
+        nextPage: `/${taal}/homeowner-dashboard`,
+        onSuccess: () => {
+            setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+        },
+    },
+    'PROFESSIONAL': {
+        roleName: "Professional",
+        nextPage: `/${taal}/pro-dashboard`,
+        onSuccess: () => {
+            setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+        },
+    },
+}
+
+    async function confirmSignUp(code: string) {
+        const apiUrl = process.env.REACT_APP_CONFIRM_SIGNUP_API_URL; // Use an environment variable for the API URL
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: userEmail,
+                    code: code,
+                    postConfigId: postConfigId,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const data = await response.json();
+    
+            if (data.statusCode!== 200) {
+                throw new Error(data.message || 'Failed to confirm sign-up');
+            }
+    
+            setIsConfirmed(true);
+            postConfig.onSuccess && postConfig.onSuccess();
+            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>");
+        } catch (error) {
+            console.error(error);
+            const errorActionMap: Record<number, () => void> = {
+                400: () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) }, // Assuming 400 is used for user exists or incorrect code
+                // Add more mappings as needed based on your API's error codes
+            };
+            (errorActionMap[data.statusCode] || errorActionMap.default)();
+        }
+    }
+    */
+
 
     function onSubmit(e: FormEvent) {
         e.preventDefault()

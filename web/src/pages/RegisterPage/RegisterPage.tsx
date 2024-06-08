@@ -111,9 +111,49 @@ function RegisterPage() {
     signUpUser();
   }
 
+  //REST API VERSIE
+  /*
+    async function signUpUser(userData) {
+  
+      const url = 'YOUR_API_GATEWAY_URL'; // Replace with your API Gateway URL
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log(data); // Process the response data
+  
+      navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
+            state: { email: stopXSS(email), postConfig: "HOMEOWNER" },
+          });
+  
+  
+    }
+  
+    */
+
   const handleSignUp = async () => {
     signUp(registerData);
     console.log(registerData);
+    /*
+    const userData = {
+    firstName: stopXSS(firstName),
+    lastName: stopXSS(lastName),
+    email: stopXSS(email),
+    phoneNumber: stopXSS(phoneNumber),
+    password: stopXSS(password)
+  };
+
+  signUpUser(userData);
+  */
   };
 
   const updateRegisterData = (fields) => {
