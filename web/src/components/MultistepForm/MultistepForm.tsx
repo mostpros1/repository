@@ -213,6 +213,47 @@ function MultistepForm() {
       const date = datum.toISOString().split('T')[0];
       navigate(`/home-owner-result#${profession}?${task}!${date}`);
 
+      //REST API VERSIE
+/*
+const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+      const profession = window.location.hash.replace("#", "").split("?")[0];
+      const task = window.location.hash.replace("#", "").split("?")[1];
+
+      const combinedData = {
+        user_email: stopXSS(currentAuthenticatedUser.attributes.email),
+        profession: stopXSS(data.profession),
+        task: stopXSS(data.task),
+        region: stopXSS(data.stad),
+        client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+        description: stopXSS(data.task),
+        name: stopXSS(data.profession),
+        professional_email: stopXSS("something") // Placeholder value, adjust as needed
+      };
+
+      // Sending the combined data to the API using fetch
+      fetch('https://your-api-id.execute-api.your-region.amazonaws.com/prod/endpoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(combinedData),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/home-owner-result#${profession}?${task}!${date}`);
+        })
+        .then(data => {
+          console.log('Data submitted successfully:', data);
+        })
+        .catch((error) => {
+          console.error('There was a problem with your fetch operation:', error);
+        });
+*/
+
     } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
