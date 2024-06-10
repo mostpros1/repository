@@ -1,4 +1,4 @@
-import { dynamoDB } from './main.tsx';
+import { dynamoDB } from '../declarations';
 
 export function addUser(username: string, email: string, password: string, first_name: string, last_name: string,
     date_of_birth: string, created_at: string, updated_at: string, status: string) {
@@ -311,3 +311,5 @@ export function addStripe_connected_accounts(id: number, user_id: number, accoun
         }
     });
 }
+
+export default dynamoDB;
