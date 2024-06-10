@@ -107,7 +107,7 @@ const HomeProPaymentsComp: React.FC = () => {
       }
 
       const reportRun = await stripe.reporting.reportRuns.create({
-        report_type: 'revenue_recognition.debit_credit_by_invoice.1',
+        report_type: 'connected_account_balance_change_from_activity.itemized.1',
         parameters: {
           interval_start: Math.floor(new Date('2024-05-01').getTime() / 1000),
           interval_end: Math.floor(new Date('2024-06-01').getTime() / 1000),
