@@ -5,7 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HeadsetMicOutlined from "@mui/icons-material/HeadsetMicOutlined";
 import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
-import Donald from "../../assets/donald.png";
+import Donald from "../../assets/Donald.png";
 import TaskCard from "../ui/TaskCard/TaskCard";
 import { Task } from "@mui/icons-material";
 
