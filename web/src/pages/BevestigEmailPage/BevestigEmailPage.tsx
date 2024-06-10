@@ -35,13 +35,13 @@ function BevestigEmailPage() {
 
     console.log("Received state:", location.state);
 
-    //const url = window.location.href;
+    const url = window.location.href;
 
-    //const urlObj = new URL(url);
+    const urlObj = new URL(url);
 
-    //const hash = urlObj.hash;
+    const hash = urlObj.hash;
 
-    //const everythingAfterFirstHash = hash.substring(1);
+    const everythingAfterFirstHash = hash.substring(1);
 
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
@@ -187,7 +187,7 @@ function BevestigEmailPage() {
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
-            nextPage: `/${taal}/homeowner-dashboard`,
+            nextPage: `${taal}/` + everythingAfterFirstHash,
             onSuccess: () => {
                 setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
             },
@@ -231,6 +231,7 @@ function BevestigEmailPage() {
             const postConfig = postConfigMap[postConfigId] || null;
             postConfig.onSuccess && postConfig.onSuccess();
             sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>");
+            navigate(postConfig.nextPage);
         } catch (error) {
             console.error(error);
             const errorActionMap: Record<number, () => void> = {
