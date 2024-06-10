@@ -186,17 +186,15 @@ const HomeProPaymentsComp: React.FC = () => {
         <ul className="ProPaymentsTipsList">
           <li>Controleer regelmatig je transactiegeschiedenis voor eventuele afwijkingen.</li>
           <li>Zorg ervoor dat je betalingsgegevens up-to-date zijn om betalingsproblemen te voorkomen.</li>
-          <li>Neem contact op met onze klantenservice bij vragen over een transactie.</li>
         </ul>
         <button className="ProPaymentsButton" onClick={stripeSignUp}>Verbind met Stripe</button>
       </section>
       <section className="RevenueRecognitionOverview">
-        <h2 className="RevenueRecognitionTitle">Revenue Recognition API</h2>
+        <h2 className="RevenueRecognitionTitle">Revenue Recognition</h2>
         <p>Automatiseer je transactiekostenverwerkingsproces met Stripe Revenue Recognition.</p>
         <button className="ProPaymentsButton" onClick={fetchReport}>Download Revenue Recognition Rapport</button>
         {reportStatus && <p>{reportStatus}</p>}
         <p className="tekstondergenerate">Je kunt je aanmelden voor een 30-daagse proefperiode van Revenue Recognition of je aanmelden voor het Billing Scale-plan. Wij baseren onze tarieven op Stripe Billing prijzen.</p>
-        <a href="https://stripe.com/docs/revenue-recognition" className="RevenueRecognitionLink">Lees meer over Stripe’s Revenue Recognition-methodologie.</a>
       </section>
     </main>
   );
