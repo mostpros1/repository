@@ -127,7 +127,7 @@ const ReviewComponent: React.FC = () => {
 
 
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    /*const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const currentDate = new Date().toLocaleDateString();
       const newReview: Review = {
@@ -170,13 +170,13 @@ const ReviewComponent: React.FC = () => {
       } catch (error) {
         console.error("Error submitting review:", error);
       }
-    };
+    };*/
 
     //REST API VERSIE
-    /*
+    
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const response = await fetch('/path/to/your/api/gateway/dev/reviews', {
+      const response = await fetch('https://o4q0gf6gzb.execute-api.eu-north-1.amazonaws.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ const ReviewComponent: React.FC = () => {
       // Handle success (e.g., clear form)
       fetchReviews();
     };
-    */
+    
 
     return (
       <form id="review-form" onSubmit={handleSubmit}>
