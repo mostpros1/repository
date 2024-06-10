@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // Import useTranslation hook
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
@@ -13,23 +12,23 @@ import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 export let taal = "nl";
 
 if (
-  window.location.pathname.split("/")[1] == "nl" ||
-  window.location.pathname.split("/")[1] == "en"
+  window.location.pathname.split("/")[1] === "nl" ||
+  window.location.pathname.split("/")[1] === "en"
 ) {
   taal = window.location.pathname.split("/")[1];
 }
 console.log("test ", taal);
 
 function Navigation() {
-  const { t } = useTranslation(); // Use useTranslation hook to access translation functions
+  const { t } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
-
-  // Assuming navigate is obtained from useNavigate
+  const [isProfessional, setIsProfessional] = useState(false);
+  const [isHomeowner, setIsHomeowner] = useState(false);
 
   const handleIconClick = () => {
-    navigate(`/${taal}/home-innovation`); // Use navigate function to redirect
+    navigate(`/${taal}/home-innovation`);
   };
 
   const handleDropdownToggle = () => {
@@ -39,6 +38,22 @@ function Navigation() {
   useEffect(() => {
     checkAuthStatus();
   }, []);
+
+  useEffect(() => {
+    if (user?.signInUserSession?.accessToken?.payload) {
+      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+      if (groups?.includes("Homeowner")) {
+        setIsHomeowner(true);
+        setIsProfessional(false);
+      } else if (groups?.includes("Professional")) {
+        setIsProfessional(true);
+        setIsHomeowner(false);
+      }
+    } else {
+      console.log("User data is not fully available.");
+      navigate(`/${taal}/login`);
+    }
+  }, [user, navigate]);
 
   const checkAuthStatus = async () => {
     try {
@@ -59,30 +74,34 @@ function Navigation() {
     }
   };
 
+  const handleDashboardSwitch = () => {
+    if (isProfessional) {
+      setIsProfessional(false);
+      setIsHomeowner(true);
+      navigate(`/${taal}/homeowner-dashboard/jobs`);
+    } else if (isHomeowner) {
+      setIsProfessional(true);
+      setIsHomeowner(false);
+      navigate(`/${taal}/pro-dashboard`);
+    }
+  };
+
   let authButtons = (
     <>
       <Link to={`/${taal}/login`}>{t("Login")}</Link>{" "}
-      {/* Translate login button */}
       <Link to={`/${taal}/register`}>{t("Register")}</Link>{" "}
-      {/* Translate register button */}
     </>
   );
 
   if (user) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-    let DashboardLink: React.ReactNode = null;
+    let DashboardLink: React.ReactElement | null = null;
     if (groups && groups.includes("Homeowner")) {
       DashboardLink = (
         <Link to={`/${taal}/homeowner-dashboard/jobs`}>{t("Account")}</Link>
       );
-      {
-        /* Translate account link */
-      }
     } else if (groups && groups.includes("Professional")) {
       DashboardLink = <Link to={`/${taal}/pro-dashboard`}>{t("Account")}</Link>;
-      {
-        /* Translate account link */
-      }
     }
 
     authButtons = (
@@ -90,7 +109,6 @@ function Navigation() {
         <p>{user.attributes.email}</p>
         {DashboardLink}
         <button onClick={handleLogout}>{t("Logout")}</button>{" "}
-        {/* Translate logout button */}
       </>
     );
   }
@@ -112,7 +130,6 @@ function Navigation() {
             <Link to={``} className="black-items">
               {t("Klussen")} <ExpandMoreIcon />
             </Link>
-            {/* Translate mega menu items */}
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
@@ -167,9 +184,7 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#stukadoor`}>
-                        {t("Stukadoor")}
-                      </Link>
+                      <Link to={`/${taal}/jobs#stukadoor`}>{t("Stukadoor")}</Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#verwarmingsinstallateur`}>
@@ -195,9 +210,7 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#dakdekker`}>
-                        {t("Dakdekker")}
-                      </Link>
+                      <Link to={`/${taal}/jobs#dakdekker`}>{t("Dakdekker")}</Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#gevelspecialist`}>
@@ -210,14 +223,10 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#metselaar`}>
-                        {t("Metselaar")}
-                      </Link>
+                      <Link to={`/${taal}/jobs#metselaar`}>{t("Metselaar")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#glaszetter`}>
-                        {t("Glaszetter")}
-                      </Link>
+                      <Link to={`/${taal}/jobs#glaszetter`}>{t("Glaszetter")}</Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#kozijspecialist`}>
@@ -351,7 +360,6 @@ function Navigation() {
             <Link to={`/${taal}/why-mostpros/`} className="black-items">
               {t("Waarom Mostpros")} <ExpandMoreIcon />
             </Link>
-            {/* Translate dropdown menu items */}
             <div className="mega-box">
               <div className="mega-content">
                 <div className="mega-row">
@@ -367,9 +375,7 @@ function Navigation() {
                       <Link to={`/${taal}/`}>{t("Toegang talentenpools")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>
-                        {t("Automatiseer workflows")}
-                      </Link>
+                      <Link to={`/${taal}/`}>{t("Automatiseer workflows")}</Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/`}>{t("Open infrastructuur")}</Link>
@@ -406,16 +412,20 @@ function Navigation() {
             </div>
           </li>
           <li className="nav-blue-btn">
-            <Link to={`/${taal}/pro-onboarding`} className="black-items">
-              {t("Inschrijven als vakspecialist")} {/* Translate button */}
-            </Link>
+            {user && user.signInUserSession.accessToken.payload["cognito:groups"]?.includes("Professional") ? (
+              <button onClick={handleDashboardSwitch} className="black-items">
+                {t("Switch Dashboard")}
+              </button>
+            ) : (
+              <Link to={`/${taal}/pro-onboarding`} className="black-items">
+                {t("Inschrijven als vakspecialist")}
+              </Link>
+            )}
           </li>
         </ul>
-        {/* Apps icon */}
         <div className="apps-icon" onClick={handleIconClick}>
           <AppsRoundedIcon />
         </div>
-        {/* Dropdown */}
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
             <MenuIcon />
