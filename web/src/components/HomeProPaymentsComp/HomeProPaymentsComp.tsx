@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./HomeProPaymentsComp.css";
 import { Auth } from "aws-amplify";
-import { stripeClient, cognitoClient } from "../../main";
-import { Stripe } from "stripe";
+import Stripe from "stripe";
+import AWS from "aws-sdk";
 
 interface Transaction {
   date: string;
@@ -30,12 +30,17 @@ const HomeProPaymentsComp: React.FC = () => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       const userEmail = user.attributes.email;
-      const stripeAccount = await stripeClient.accounts.create({
+      const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+        apiVersion: "2023-10-16",
+      });
+
+      const stripeAccount = await stripe.accounts.create({
         type: "standard",
         email: userEmail,
         country: "NL",
       });
 
+      const cognitoClient = new AWS.CognitoIdentityServiceProvider();
       await cognitoClient
         .adminUpdateUserAttributes({
           UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -46,7 +51,7 @@ const HomeProPaymentsComp: React.FC = () => {
         })
         .promise();
 
-      const result = await stripeClient.accountLinks.create({
+      const result = await stripe.accountLinks.create({
         account: stripeAccount.id,
         type: "account_onboarding",
         refresh_url: `${window.location.origin}/nl/payments/onboarding-failed`,
@@ -78,9 +83,29 @@ const HomeProPaymentsComp: React.FC = () => {
   const fetchReport = async () => {
     setReportStatus("Rapport wordt gegenereerd...");
 
-    const stripe = import.meta.env.VITE_STRIPE_SECRET_KEY;
+    const stripeSecretKey = import.meta.env.VITE_STRIPE_SECRET_KEY;
+
+    if (!stripeSecretKey) {
+      console.error("Stripe secret key is not defined");
+      setReportStatus("Stripe geheim sleutel ontbreekt. Controleer configuratie.");
+      return;
+    }
+
+    console.log("Stripe secret key is available");
+
+    const stripe = new Stripe(stripeSecretKey, {
+      apiVersion: "2023-10-16",
+    });
 
     try {
+      const user = await Auth.currentAuthenticatedUser();
+      const sessionValid = user.signInUserSession && user.signInUserSession.isValid();
+
+      if (!sessionValid) {
+        console.log("Session is invalid, refreshing...");
+        await Auth.currentSession();
+      }
+
       const reportRun = await stripe.reporting.reportRuns.create({
         report_type: 'revenue_recognition.debit_credit_by_invoice.1',
         parameters: {
@@ -101,7 +126,7 @@ const HomeProPaymentsComp: React.FC = () => {
         setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Error generating report: ", err);
       setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
     }
   };
