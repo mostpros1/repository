@@ -1,0 +1,42 @@
+.ErrorPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff; /* Minder heftige achtergrondkleur */
+    color: #FFFFFF;
+}
+
+.ErrorPage-content {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 3rem;
+    width: 100%;
+    height: 100%;
+}
+
+.ErrorPage-title {
+    font-size: 4.5em;
+    color: #207CD7;
+}
+
+.ErrorPage-message {
+    font-size: 1.5em;
+    color: #000000;
+    max-width: 80%;
+
+}
+
+.ErrorPage-link {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: #207CD7;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+}
