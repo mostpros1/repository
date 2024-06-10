@@ -1,4 +1,5 @@
-import { Routes, Route, useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import React from "react";
@@ -26,7 +27,7 @@ import OverOns from "../pages/OverOns/OverOns";
 import VSDashboard from "../pages/VakspecialistDashboard/VSDashboard";
 import SpecialistProfile from "../pages/SpecialistProfilePage/SpecialistProfile";
 import DetailJobPage from "../pages/DetailJobPage/DetailJobPage";
-import WhyMostProsPage from "../pages/WhyMostProsPage/WhyMostProsPage.tsx"
+import WhyMostProsPage from "../pages/WhyMostProsPage/WhyMostProsPage.tsx";
 import MijnKlussenOverzichtPage from "../pages/MijnKlussenOverzichtPage/MijnKlussenOverzichtPage";
 import VSMijnklussen from "../pages/VakspecialistMijnKlussen/VSMijnklussen";
 import ConfirmDatePage from "../pages/ConfirmDatePage/ConfirmDatePage";
@@ -41,7 +42,7 @@ import HomeProPaymentsPage from "../pages/HomeProPaymentsPage/HomeProPaymentsPag
 import Calender from "../pages/CalenderPage/CalenderPage.tsx";
 import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals";
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
-import Setup from "../pages/SetupPage/SetupPage.tsx"
+import Setup from "../pages/SetupPage/SetupPage.tsx";
 import PromoCodePage from "../components/PromoCode/PromoCode.tsx";
 
 /* Extra Pages */
@@ -51,11 +52,37 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-// import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";  
+// import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
 import TemplateStaticPage from "../pages/TemplatePageStatic/TemplatePageStatic.tsx";
+
+// error pages
+
+import ErrorPage404 from "../pages/!ErrorPages/ErrorPage404.tsx";
+import ErrorPage101 from "../pages/!ErrorPages/ErrorPage101.tsx";
+import ErrorPage100 from "../pages/!ErrorPages/ErrorPage100.tsx";
+import ErrorPage102 from "../pages/!ErrorPages/ErrorPage102.tsx";
+import ErrorPage103 from "../pages/!ErrorPages/ErrorPage103.tsx";
+import ErrorPage200 from "../pages/!ErrorPages/ErrorPage200.tsx";
+import ErrorPage201 from "../pages/!ErrorPages/ErrorPage201.tsx";
+import ErrorPage202 from "../pages/!ErrorPages/ErrorPage202.tsx";
+import ErrorPage203 from "../pages/!ErrorPages/ErrorPage203.tsx";
+import ErrorPage204 from "../pages/!ErrorPages/ErrorPage204.tsx";
+import ErrorPage205 from "../pages/!ErrorPages/ErrorPage205.tsx";
+import ErrorPage206 from "../pages/!ErrorPages/ErrorPage206.tsx";
+import ErrorPage207 from "../pages/!ErrorPages/ErrorPage207.tsx";
+import ErrorPage208 from "../pages/!ErrorPages/ErrorPage208.tsx";
+import ErrorPage226 from "../pages/!ErrorPages/ErrorPage226.tsx";
+import ErrorPage301 from "../pages/!ErrorPages/ErrorPage301.tsx";
+import ErrorPage302 from "../pages/!ErrorPages/ErrorPage302.tsx";
+import ErrorPage303 from "../pages/!ErrorPages/ErrorPage303.tsx";
+import ErrorPage304 from "../pages/!ErrorPages/ErrorPage304.tsx";
+import ErrorPage305 from "../pages/!ErrorPages/ErrorPage305.tsx";
+import ErrorPage306 from "../pages/!ErrorPages/ErrorPage306.tsx";
+import ErrorPage307 from "../pages/!ErrorPages/ErrorPage307.tsx";
+import ErrorPage308 from "../pages/!ErrorPages/ErrorPage308.tsx";
 
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
@@ -64,9 +91,7 @@ import HelpPage from "../pages/FAQPage/HelpPage.tsx";
 import OverzichtProfPage from "../pages/OverzichtPage/OverzichtProfPage.tsx";
 import OverzichtKlussenPage from "../pages/OverzichtPage/OverzichtKlussenPage.tsx";
 import DateAndTimePicker from "../components/Agenda/Cal2.tsx";
-import Cal from "../components/Agenda/cal.tsx"
-
-
+import Cal from "../components/Agenda/cal.tsx";
 
 const LanguageAwareRoutes = () => {
   const { user } = useUser();
@@ -76,6 +101,31 @@ const LanguageAwareRoutes = () => {
 
   return (
     <Routes>
+      {/* error pages  */}
+      <Route path="/404" element={<ErrorPage404 />} />
+      <Route path="/100" element={<ErrorPage100 />} />
+      <Route path="/101" element={<ErrorPage101 />} />
+      <Route path="/102" element={<ErrorPage102 />} />
+      <Route path="/103" element={<ErrorPage103 />} />
+      <Route path="/200" element={<ErrorPage200 />} />
+      <Route path="/201" element={<ErrorPage201 />} />
+      <Route path="/202" element={<ErrorPage202 />} />
+      <Route path="/203" element={<ErrorPage203 />} />
+      <Route path="/204" element={<ErrorPage204 />} />
+      <Route path="/205" element={<ErrorPage205 />} />
+      <Route path="/206" element={<ErrorPage206 />} />
+      <Route path="/207" element={<ErrorPage207 />} />
+      <Route path="/208" element={<ErrorPage208 />} />
+      <Route path="/226" element={<ErrorPage226 />} />
+      <Route path="/301" element={<ErrorPage301 />} />
+      <Route path="/302" element={<ErrorPage302 />} />
+      <Route path="/303" element={<ErrorPage303 />} />
+      <Route path="/304" element={<ErrorPage304 />} />
+      <Route path="/305" element={<ErrorPage305 />} />
+      <Route path="/306" element={<ErrorPage306 />} />
+      <Route path="/307" element={<ErrorPage307 />} />
+      <Route path="/308" element={<ErrorPage308 />} />
+
       <Route path="/test" element={<DateAndTimePicker />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
@@ -102,7 +152,10 @@ const LanguageAwareRoutes = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route path="/homeowner-dashboard/profile" element={<HomeOwnerProfielPage />} />
+      <Route
+        path="/homeowner-dashboard/profile"
+        element={<HomeOwnerProfielPage />}
+      />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
@@ -113,7 +166,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/setup" element={<Setup />} />
       <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
 
-
       {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
@@ -122,20 +174,35 @@ const LanguageAwareRoutes = () => {
       <Route path="/homeowner-dashboard/calender" element={<Calender />} />
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
-      <Route path="/MijnKlussenOverzicht" element={<MijnKlussenOverzichtPage />} />
+      <Route
+        path="/MijnKlussenOverzicht"
+        element={<MijnKlussenOverzichtPage />}
+      />
       <Route path="/about" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
       <Route path="/data-safety" element={<DataSafetyPage />} />
-      <Route path="/homeowner-dashboard/payments" element={<HomeProPaymentsPage />} />
-      <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />} />
+      <Route
+        path="/homeowner-dashboard/payments"
+        element={<HomeProPaymentsPage />}
+      />
+      <Route
+        path="/pro-dashboard/reporting"
+        element={<HomeProPaymentsPage />}
+      />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
-      <Route path="/homeowner-dashboard/settings" element={<HomeOwnerSettingsPage />} />
-      <Route path="/pro-dashboard/settings" element={<HomeOwnerSettingsPage />} />
+      <Route
+        path="/homeowner-dashboard/settings"
+        element={<HomeOwnerSettingsPage />}
+      />
+      <Route
+        path="/pro-dashboard/settings"
+        element={<HomeOwnerSettingsPage />}
+      />
       <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
@@ -200,12 +267,12 @@ const App = () => {
     const pathName = window.location.pathname;
     const hash = window.location.hash;
 
-    if (!window.location.pathname.startsWith('/nl')) {
-      if (!window.location.pathname.startsWith('/en')) {
-        if (pathName === '/') {
-          navigate('/nl/');
+    if (!window.location.pathname.startsWith("/nl")) {
+      if (!window.location.pathname.startsWith("/en")) {
+        if (pathName === "/") {
+          navigate("/nl/");
         } else {
-          navigate('/nl' + pathName + hash);
+          navigate("/nl" + pathName + hash);
         }
       }
     }
