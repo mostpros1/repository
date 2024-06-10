@@ -185,19 +185,20 @@ function Searchbar() {
   };
 
   const slicedResults = searchResults().slice(0, 20);
+  
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${result.link.replace(
+      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${result.link?.replace(
         /\//g,
         ""
-      )}`}
+      ) ?? ""}`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "active" : ""
       }`}
       onMouseDown={() =>
         handleResultClick(
-          `#${result.specialistName.toLowerCase()}?${result.link.replace(
+          `#${result.specialistName.toLowerCase()}?${result.link?.replace(
             /\//g,
             ""
           )}`
@@ -210,6 +211,7 @@ function Searchbar() {
       </div>
     </Link>
   ));
+
   
 
   return (
