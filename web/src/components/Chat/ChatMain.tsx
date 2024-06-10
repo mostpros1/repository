@@ -547,7 +547,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     if (parts[1]) {
       parts[1] = parts[1].slice(0, 2);
     }
-
     return parts.join(",");
   };
 

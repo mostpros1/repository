@@ -75,35 +75,36 @@ const HomeProPaymentsComp: React.FC = () => {
     }
   };
 
-  // const fetchReport = async () => {
-  //   setReportStatus("Rapport wordt gegenereerd...");
+  const fetchReport = async () => {
+    setReportStatus("Rapport wordt gegenereerd...");
 
+    const stripe = import.meta.env.VITE_STRIPE_SECRET_KEY;
 
-  //   try {
-  //     const reportRun = await stripe.reporting.reportRuns.create({
-  //       report_type: 'revenue_recognition.debit_credit_by_invoice.1',
-  //       parameters: {
-  //         interval_start: Math.floor(new Date('2024-05-01').getTime() / 1000),
-  //         interval_end: Math.floor(new Date('2024-06-01').getTime() / 1000),
-  //       },
-  //     });
+    try {
+      const reportRun = await stripe.reporting.reportRuns.create({
+        report_type: 'revenue_recognition.debit_credit_by_invoice.1',
+        parameters: {
+          interval_start: Math.floor(new Date('2024-05-01').getTime() / 1000),
+          interval_end: Math.floor(new Date('2024-06-01').getTime() / 1000),
+        },
+      });
 
-  //     const reportRunStatus = await stripe.reporting.reportRuns.retrieve(reportRun.id);
+      const reportRunStatus = await stripe.reporting.reportRuns.retrieve(reportRun.id);
 
-  //     if (reportRunStatus.status === "succeeded" && reportRunStatus.result) {
-  //       const resultId = reportRunStatus.result.id;
-  //       const downloadUrl = `https://files.stripe.com/v1/files/${resultId}/contents`;
+      if (reportRunStatus.status === "succeeded" && reportRunStatus.result) {
+        const resultId = reportRunStatus.result.id;
+        const downloadUrl = `https://files.stripe.com/v1/files/${resultId}/contents`;
 
-  //       setReportStatus("Rapport succesvol gegenereerd. Downloaden...");
-  //       window.location.href = downloadUrl;
-  //     } else {
-  //       setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
-  //   }
-  // };
+        setReportStatus("Rapport succesvol gegenereerd. Downloaden...");
+        window.location.href = downloadUrl;
+      } else {
+        setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
+      }
+    } catch (err) {
+      console.error(err);
+      setReportStatus("Genereren van rapport mislukt. Probeer het opnieuw.");
+    }
+  };
 
   const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
   const paidTransactions = transactions.filter(transaction => transaction.status.toLowerCase() === "betaald").length;
@@ -167,7 +168,7 @@ const HomeProPaymentsComp: React.FC = () => {
       <section className="RevenueRecognitionOverview">
         <h2 className="RevenueRecognitionTitle">Revenue Recognition API</h2>
         <p>Automatiseer je transactiekostenverwerkingsproces met Stripe Revenue Recognition.</p>
-        {/* <button className="ProPaymentsButton" onClick={fetchReport}>Download Revenue Recognition Rapport</button> */}
+        <button className="ProPaymentsButton" onClick={fetchReport}>Download Revenue Recognition Rapport</button>
         {reportStatus && <p>{reportStatus}</p>}
         <p className="tekstondergenerate">Je kunt je aanmelden voor een 30-daagse proefperiode van Revenue Recognition of je aanmelden voor het Billing Scale-plan. Wij baseren onze tarieven op Stripe Billing prijzen.</p>
         <a href="https://stripe.com/docs/revenue-recognition" className="RevenueRecognitionLink">Lees meer over Stripe’s Revenue Recognition-methodologie.</a>
