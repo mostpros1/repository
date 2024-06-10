@@ -88,6 +88,7 @@ function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -109,7 +110,8 @@ function Searchbar() {
   };
 
   const handleInputKeyDown = (e) => {
-    switch (e.key) {
+    switch (e.key)
+     {
       case "ArrowUp":
         setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
         break;
@@ -136,6 +138,11 @@ function Searchbar() {
     }
   };
 
+  const handleInputChange = (e) => {
+    setValue(e.target.value);
+    setSearchPerformed(true); // Indicate that a search has been performed
+  };
+
   const fuse = new Fuse(specialists, {
     keys: ["name", "tasks.task"],
     includeScore: true,
@@ -149,7 +156,13 @@ function Searchbar() {
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
     if (!searchTerm) {
-      return [];
+      return specialists.flatMap((specialist) =>
+        specialist.tasks.map((task) => ({
+          specialistName: capitalizeFirstLetter(specialist.name),
+          task: capitalizeFirstLetter(task.task),
+          link: task.link,
+        }))
+      );
     }
 
     const result = fuse.search(searchTerm);
@@ -191,12 +204,13 @@ function Searchbar() {
         )
       }
     >
-      <span>
+      <div className={index === selectedIndex ? "selected" : ""}>
         {result.specialistName ? `${result.specialistName} - ` : ""}
         {result.task}
-      </span>
+      </div>
     </Link>
   ));
+  
 
   return (
     <div id="SearchBar-wrapper">
@@ -205,7 +219,7 @@ function Searchbar() {
           id="SearchBarInputHome"
           type="text"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleInputChange}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}
           onBlur={handleInputBlur}
@@ -218,7 +232,15 @@ function Searchbar() {
         ></article>
       </div>
       <div className="search_results-con">
-        {showList && <div className="search_results">{resultsRender}</div>}
+        {showList && (
+          <div className="search_results">
+            {slicedResults.length > 0
+              ? resultsRender
+              : searchPerformed && (
+                  <div className="no_results">No results found</div>
+                )}
+          </div>
+        )}
       </div>
     </div>
   );

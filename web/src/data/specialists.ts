@@ -8,6 +8,16 @@ const specialists = [
             { task: "Afvoer Ontstopping", link: "/lekkages-repareren" },
             { task: "Boiler/Geiser Onderhoud", link: "/lekkages-repareren" },
             { task: "Verwarmingssysteem Reparatie/Installatie", link: "/verwarmingssysteem-reparatie-installatie" },
+            { task: "Waterleiding Aanleg", link: "/waterleidingen-aanleggen" },
+            { task: "Waterfilter/Ontharder Installatie", link: "/Waterfilter-Ontharder-Installatie" },
+            { task: "Riolering Reparatie/Vervanging", link: "/Riolering Reparatie-Vervanging" },
+            { task: "Gasleiding Installatie/Onderhoud", link: "/Gasleiding-Installatie-Onderhoud" },
+            { task: "Vloerverwarming Installatie/Onderhoud", link: "/Vloerverwarming-Installatie-Onderhoud" },
+            { task: "Regenwaterafvoer Aanleg", link: "/Regenwaterafvoer-Aanleg" },
+            { task: "Septische Tank Inspectie/Onderhoud", link: "/Septische-Tank-Inspectie-Onderhoud" },
+            { task: "Dakgoot Onderhoud/Vervanging", link: "/Dakgoot-Onderhoud-Vervanging" },
+            { task: "Waterdichte Installaties", link: "/Waterdichte-Installaties" },
+            { task: "Waterbesparend Advies", link: "/Waterbesparend-Advies" },
         ]
     },
     {
@@ -26,7 +36,7 @@ const specialists = [
     },
     {
         id: 3,
-        name: "Elektriciën ",
+        name: "Elektricien",
         tasks: [
             { task: "Elektrische bedrading repareren", link: "/elektrische-bedrading-repareren" },
             { task: "Stopcontacten installeren", link: "/stopcontacten-installeren" },
@@ -391,7 +401,7 @@ const specialists = [
             { task: "Terrassen leggen", link: "/terrassen-leggen" },
             { task: "Tuinpaden aanleggen", link: "/tuinpaden-aanleggen" },
             { task: "Trottoirs/stoepen plaatsen", link: "/trottoirs-stoepen-plaatsen" },
-            { task: "Sierbestrating leggen", link: "/sierbestrating-leggen" }, 
+            { task: "Sierbestrating leggen", link: "/sierbestrating-leggen" },
             { task: "Verzakte bestrating herstellen", link: "/verzakte-bestrating-herstellen" },
             { task: "Kantopsluitingen aanbrengen", link: "/kantopsluitingen-aanbrengen" },
             { task: "Goten/afwateringssystemen plaatsen", link: "/goten-afwateringssystemen-plaatsen" },
@@ -417,7 +427,7 @@ const specialists = [
             { task: "Irrigatie-/druppelsystemen aanleggen", link: "/irrigatie-druppelsystemen-aanleggen" },
             { task: "Vijverpompen/-filters installatie", link: "/vijverpompen-filters-installatie" },
             { task: "Fonteinen/waterpartijen plaatsen/onderhoud", link: "/fonteinen-waterpartijen-plaatsen-onderhoud" },
-            { task: "Tuinberegeningssystemen installeren", link: "/tuinberegeningssystemen-installeren" }, 
+            { task: "Tuinberegeningssystemen installeren", link: "/tuinberegeningssystemen-installeren" },
             { task: "Tuingereedschap/-machines onderhoud/reparatie", link: "/tuingereedschap-machines-onderhoud-reparatie" },
             { task: "Elektrische bekabeling voor tuinapparatuur aanleggen", link: "/elektrische-bekabeling-tuinapparatuur-aanleggen" },
             { task: "Buitenstopcontacten plaatsen", link: "/buitenstopcontacten-plaatsen" },
@@ -536,8 +546,8 @@ const specialists = [
             { task: "Beveiligingsadvies (woningen/bedrijfspanden)", link: "/beveiligingsadvies-woningen-bedrijfspanden" },
             { task: "Toegangscontrolesystemen installeren", link: "/toegangscontrolesystemen-installeren" },
             { task: "Periodiek onderhoud sloten/beveiligingssystemen", link: "/periodiek-onderhoud-sloten-beveiligingssystemen" }
-          ]
-          
+        ]
+
     },
     {
         id: 34,
@@ -564,8 +574,8 @@ const specialists = [
             { task: "Domotica/smart home systemen voor energiebeheer integratie", link: "/domotica-smart-home-systemen-energiebeheer-integratie" },
             { task: "Impact verduurzamingsmaatregelen evalueren", link: "/impact-verduurzamingsmaatregelen-evalueren" },
             { task: "Overstap naar duurzame energieleveranciers/energiecontracten begeleiden", link: "/overstap-duurzame-energieleveranciers-energiecontracten-begeleiden" }
-          ]
-          
+        ]
+
     },
     {
         id: 35,
@@ -591,10 +601,10 @@ const specialists = [
             { task: "Ongediertebestrijding bij bedrijfspanden", link: "/ongediertebestrijding-bedrijfspanden" },
             { task: "Hygiëneadvies ter preventie van ongedierte", link: "/hygieneadvies-preventie-ongedierte" },
             { task: "Biologische bestrijdingsmiddelen adviseren/gebruiken", link: "/biologische-bestrijdingsmiddelen-adviseren-gebruiken" }
-          ]
-    
+        ]
 
-          
+
+
     },
     {
         id: 36,
@@ -664,7 +674,7 @@ const specialists = [
             { task: "Maritieme/Kustbewaking", link: "/maritieme-kustbewaking" },
             { task: "Drone-Vliegen Training/Workshops", link: "/drone-vliegen-training-workshops" },
             { task: "3D-Modellering/-Mapping", link: "/3d-modellering-mapping" },
-            
+
         ]
     },
     {
@@ -680,7 +690,6 @@ const specialists = [
     },
     // Voeg hier meer specialisten toe met hun specifieke taken
 ];
-
 
 
 export default specialists
