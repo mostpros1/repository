@@ -1,12 +1,7 @@
-body {
-  background-color: #f5f5f5;
-}
-
 .ProPayments {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Center items horizontally */
   gap: 1rem;
 }
 
@@ -39,6 +34,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .ProPaymentsSearchWrapper {
@@ -57,25 +53,20 @@ body {
 
 .textred {
   color: #d9534f;
-  /* Bootstrap's `btn-danger` red */
 }
 
 .textorange {
   color: #f0ad4e;
-  /* Bootstrap's `btn-warning` orange */
 }
 
 .textblue {
   color: #5bc0de;
-  /* Bootstrap's `btn-info` blue */
 }
 
 .textgreen {
   color: #5cb85c;
-  /* Bootstrap's `btn-success` green */
 }
 
-/* Additional style for "Cancelled" */
 .textcancelled {
   color: red;
   text-decoration: line-through;
@@ -93,22 +84,16 @@ body {
 .ProPaymentsStroke2 {
   display: flex;
   flex-wrap: wrap;
-  /* Allow items to wrap */
   width: 100%;
-  /* Ensure articles take up full width */
   padding: 1rem 0;
-  /* Add padding between articles */
   font-size: 1.6rem;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .divContainerPro {
   flex: 1;
-  /* Allow items to grow and shrink */
   padding: 0.5rem;
-  /* Adjust padding as needed */
   min-width: 0;
-  /* Allow items to shrink beyond their content */
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -139,6 +124,66 @@ body {
   color: #666;
 }
 
+.ProPaymentsSummary {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 0.7rem;
+  width: 100%;
+}
+
+.ProPaymentsSummaryTitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.ProPaymentsSummarySubtitle {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+
+.ProPaymentsTipsList {
+  list-style-type: disc;
+  padding-left: 2rem;
+}
+
+.RevenueRecognitionOverview {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f0f0f0;
+  border-radius: 0.7rem;
+  width: 100%;
+}
+
+.RevenueRecognitionTitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.RevenueRecognitionSubtitle {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+
+.RevenueRecognitionList {
+  list-style-type: disc;
+  padding-left: 2rem;
+}
+
+.RevenueRecognitionLink {
+  color: #207cd7;
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+
+.RevenueRecognitionLink:hover {
+  text-decoration: underline;
+}
+
+.tekstondergenerate{
+  margin-top: 10px;
+}
+
 @media screen and (max-width: 1024px) {
   .ProPaymentsMain {
     width: 100%;
@@ -166,10 +211,9 @@ body {
   }
 }
 
-/* Responsive adjustments for smaller screens */
 @media screen and (max-width: 768px) {
   .ProPaymentsStroke3 {
-    display: none; /* Hide the header row */
+    display: none;
   }
 
   .ProPaymentsStroke2 {
