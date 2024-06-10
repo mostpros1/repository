@@ -179,9 +179,6 @@ const HomeProPaymentsComp: React.FC = () => {
         )}
       </section>
       <section className="ProPaymentsSummary">
-        <h2 className="ProPaymentsSummaryTitle">Samenvatting</h2>
-        <p>Totaal Bedrag: {totalAmount.toLocaleString("nl-NL", { style: "currency", currency: "EUR" })}</p>
-        <p>Aantal Betaalde Transacties: {paidTransactions}</p>
         <h3 className="ProPaymentsSummarySubtitle">Handige Tips</h3>
         <ul className="ProPaymentsTipsList">
           <li>Controleer regelmatig je transactiegeschiedenis voor eventuele afwijkingen.</li>

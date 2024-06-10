@@ -142,7 +142,7 @@ const SideNav = () => {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to={`/${lang}/pro-dashboard/help`}
+                to={`/${lang}/help`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -243,7 +243,7 @@ const SideNav = () => {
               </li>
               <li className="sidebar-item">
                 <NavLink
-                  to={`/${lang}/homeowner-dashboard/FAQPage`}
+                  to={`/${lang}/FAQPage`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }
@@ -261,9 +261,3 @@ const SideNav = () => {
 };
 
 export default SideNav;
-
-
-
-
-
-
