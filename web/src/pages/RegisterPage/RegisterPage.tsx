@@ -10,14 +10,6 @@ import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 import { taal } from "../../components/ui/NavBar/Navigation.tsx";
 
 function RegisterPage() {
-  const [registerData, setRegisterData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    repeatPassword: "",
-  });
 
   const [error, setError] = useState("");
 
@@ -32,6 +24,16 @@ function RegisterPage() {
     repeatPassword: string;
   }
 
+  const [registerData, setRegisterData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    repeatPassword: "",
+  });
+
+  /*
   function signUp(registerData: RegisterData): void {
     const { email, phoneNumber, password, firstName, lastName } = registerData;
 
@@ -60,7 +62,7 @@ function RegisterPage() {
               user_type: "HOMEOWNER",
               stripeCustomerId: "",
 
-              /*
+              
               email: stopXSS(email),
               first_name: stopXSS(firstName),
               last_name: stopXSS(lastName),
@@ -68,7 +70,7 @@ function RegisterPage() {
               updated_at: new Date().toISOString(),
               status: "PENDING",
               user_role: "HOMEOWNER"
-              */
+              
             },
             TableName: "Users",
           })
@@ -87,11 +89,11 @@ function RegisterPage() {
           })
           .promise();
 
-        /*const user = await Auth.signIn(email, password);
+        const user = await Auth.signIn(email, password);
         sessionStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
         sessionStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
         sessionStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
-      */
+      
         //const postConfig = postConfigMap['HOMEOWNER'];
         console.log("Navigating with state:", {
           email: email,
@@ -110,55 +112,51 @@ function RegisterPage() {
 
     signUpUser();
   }
+  */
 
   //REST API VERSIE
-  /*
-    async function signUpUser(userData) {
-  
-      const url = 'YOUR_API_GATEWAY_URL'; // Replace with your API Gateway URL
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const data = await response.json();
-      console.log(data); // Process the response data
-  
-      navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
-            state: { email: stopXSS(email), postConfig: "HOMEOWNER" },
-          });
-  
-  
+
+  async function signUpUser(userData) {
+
+    const { email } = registerData;
+
+    const url = 'https://xkvqft2ld6.execute-api.eu-north-1.amazonaws.com/registration'; // Replace with your API Gateway URL
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
+
+    const data = await response.json();
+    console.log(data); // Process the response data
+
+    navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
+      state: { email: stopXSS(email), postConfig: "HOMEOWNER" },
+    });
+
+
+  }
+
   
-    */
 
   const handleSignUp = async () => {
-    signUp(registerData);
+    //signUp(registerData);
     console.log(registerData);
-    /*
-    const userData = {
-    firstName: stopXSS(firstName),
-    lastName: stopXSS(lastName),
-    email: stopXSS(email),
-    phoneNumber: stopXSS(phoneNumber),
-    password: stopXSS(password)
+
+    signUpUser(registerData);
   };
 
-  signUpUser(userData);
-  */
-  };
 
   const updateRegisterData = (fields) => {
     setRegisterData((prevData) => ({ ...prevData, ...fields }));
   };
+
 
   return (
     <>
@@ -184,4 +182,5 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
+
 /*<Footer />*/

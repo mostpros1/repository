@@ -35,18 +35,18 @@ function BevestigEmailPage() {
 
     console.log("Received state:", location.state);
 
-    const url = window.location.href;
+    //const url = window.location.href;
 
-    const urlObj = new URL(url);
+    //const urlObj = new URL(url);
 
-    const hash = urlObj.hash;
+    //const hash = urlObj.hash;
 
-    const everythingAfterFirstHash = hash.substring(1);
+    //const everythingAfterFirstHash = hash.substring(1);
 
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
-    const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+    /*const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
         apiVersion: '2023-10-16',
     });
 
@@ -181,29 +181,29 @@ function BevestigEmailPage() {
         }
     }
 
-    /*
+    */
     //RESTAPI VERSION
 
     const postConfigMap: Record<string, PostConfig> = {
-    'HOMEOWNER': {
-        roleName: "Homeowner",
-        nextPage: `/${taal}/homeowner-dashboard`,
-        onSuccess: () => {
-            setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+        'HOMEOWNER': {
+            roleName: "Homeowner",
+            nextPage: `/${taal}/homeowner-dashboard`,
+            onSuccess: () => {
+                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+            },
         },
-    },
-    'PROFESSIONAL': {
-        roleName: "Professional",
-        nextPage: `/${taal}/pro-dashboard`,
-        onSuccess: () => {
-            setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+        'PROFESSIONAL': {
+            roleName: "Professional",
+            nextPage: `/${taal}/pro-dashboard`,
+            onSuccess: () => {
+                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+            },
         },
-    },
-}
+    }
 
     async function confirmSignUp(code: string) {
-        const apiUrl = process.env.REACT_APP_CONFIRM_SIGNUP_API_URL; // Use an environment variable for the API URL
-    
+        const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit"; // Use an environment variable for the API URL
+
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -216,30 +216,46 @@ function BevestigEmailPage() {
                     postConfigId: postConfigId,
                 }),
             });
-    
+
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok, status code: ${response.status}`);
             }
-    
+
             const data = await response.json();
-    
-            if (data.statusCode!== 200) {
+
+            if (data.statusCode !== 200) {
                 throw new Error(data.message || 'Failed to confirm sign-up');
             }
-    
+
             setIsConfirmed(true);
+            const postConfig = postConfigMap[postConfigId] || null;
             postConfig.onSuccess && postConfig.onSuccess();
             sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>");
         } catch (error) {
             console.error(error);
             const errorActionMap: Record<number, () => void> = {
-                400: () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) }, // Assuming 400 is used for user exists or incorrect code
+                200: () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
+                400: () => { console.log('Bad Request'); }, // Handle 400 status code specifically
                 // Add more mappings as needed based on your API's error codes
             };
-            (errorActionMap[data.statusCode] || errorActionMap.default)();
+            // Check if the error thrown contains a status code
+            if (error instanceof Error && error.message.includes('status code')) {
+                const statusCode = parseInt(error.message.split(': ')[1], 10);
+                // Attempt to execute the action associated with the status code
+                if (Object.prototype.hasOwnProperty.call(errorActionMap, statusCode)) {
+                    errorActionMap[statusCode]();
+                } else {
+                    // Explicitly handle the case where there's no specific action for the status code
+                    console.log('No specific action defined for status code:', statusCode);
+                    // Optionally, you can define a generic error handling function here
+                }
+            } else {
+                // Handle other cases or call a generic error handler
+                console.log('Error handling logic for non-status-code errors');
+            }
         }
     }
-    */
+
 
 
     function onSubmit(e: FormEvent) {
