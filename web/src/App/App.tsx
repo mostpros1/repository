@@ -160,7 +160,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
       <Route path="/pro-dashboard/help" element={<FAQPage  />} />
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
-      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />

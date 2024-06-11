@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
-import Fuse from "fuse.js";
+import Fuse, { FuseSearchOptions } from "fuse.js";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 interface Specialist {
@@ -142,19 +142,20 @@ function Searchbar() {
     setSearchPerformed(true); // Indicate that a search has been performed
   };
 
-  const fuse = new Fuse(specialists, {
+  const fuseOptions = {
     keys: ["name", "tasks.task"],
     includeScore: true,
-    includeMatches: true,
-    threshold: 0.2,
-    distance: 100,
-    ignoreLocation: true,
-    findAllMatches: true,
-  });
+    threshold: 0.3, // Adjust the threshold for fuzzy matching
+    distance: 100, // Maximum distance for fuzzy search
+    limit: 20, // Limit the number of results
+  };
+
+  const fuse = new Fuse(specialists, fuseOptions);
 
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
     if (!searchTerm) {
+      // Return all specialists if no search term is provided
       return specialists.flatMap((specialist) =>
         specialist.tasks.map((task) => ({
           specialistName: capitalizeFirstLetter(specialist.name),
@@ -163,26 +164,26 @@ function Searchbar() {
         }))
       );
     }
+  
+   // Perform a search using the configured Fuse instance
+   const result = fuse.search(searchTerm);
 
-    const result = fuse.search(searchTerm);
-
-    const taskResults = result.flatMap((res) => {
-      return res.item.tasks
-        .filter(
-          (task) =>
-            task.task.toLowerCase().includes(searchTerm) ||
-            res.item.name.toLowerCase().includes(searchTerm)
-        )
-        .map((task) => ({
-          specialistName: capitalizeFirstLetter(res.item.name),
-          task: capitalizeFirstLetter(task.task),
-          link: task.link,
-        }));
-    });
-
-    return taskResults;
-  };
-
+   const taskResults = result.flatMap((res) => {
+     return res.item.tasks
+       .filter(
+         (task) =>
+           task.task.toLowerCase().includes(searchTerm) ||
+           res.item.name.toLowerCase().includes(searchTerm)
+       )
+       .map((task) => ({
+         specialistName: capitalizeFirstLetter(res.item.name),
+         task: capitalizeFirstLetter(task.task),
+         link: task.link,
+       }));
+   });
+ 
+   return taskResults;
+ };
   const slicedResults = searchResults().slice(0, 20);
 
   const resultsRender = slicedResults.map((result, index) => (
