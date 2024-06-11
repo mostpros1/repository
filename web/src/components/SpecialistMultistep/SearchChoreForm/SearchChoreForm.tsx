@@ -1,31 +1,26 @@
-import "./SearchChoreForm.css"
+import "./SearchChoreForm.css";
 import { useState } from 'react';
+import specialists from "../../../data/specialists";
 
 type SpecialistData = {
-    email: string
-    postCode: string
-    stad: string
-    beroep?: string
-}
+    email: string;
+    postCode: string;
+    stad: string;
+    beroep?: string;
+};
 
 type SearchChoreFormProps = SpecialistData & {
-    updateFields: (fields: Partial<SpecialistData>) => void
-}
+    updateFields: (fields: Partial<SpecialistData>) => void;
+};
 
 export default function SearchChoreForm({ beroep, email, postCode, stad, updateFields }: SearchChoreFormProps) {
 
     const [isValidBeroep, setValidBeroep] = useState(true);
 
-    const handleBeroepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleBeroepChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const inputValueBeroep = e.target.value;
-        const inputBeroepRegex = /^[A-Za-z\s]*$/; // Allow empty string
-        const isValidBeroep = inputBeroepRegex.test(inputValueBeroep);
-
-        setValidBeroep(isValidBeroep);
-
-        if (isValidBeroep || inputValueBeroep === '') {
-            updateFields({ beroep: inputValueBeroep });
-        }
+        setValidBeroep(true); // Reset validity on change
+        updateFields({ beroep: inputValueBeroep });
     };
 
     const [isValidEmail, setValidEmail] = useState(true);
@@ -83,18 +78,17 @@ export default function SearchChoreForm({ beroep, email, postCode, stad, updateF
             <div className="search_chore_form">
 
                 <label>Uw hoofdberoep</label>
-                <input
-                    type="text"
+                <select
                     required
-                    placeholder="Uw beroep"
-                    className={`${isValidBeroep ? '' : 'invalid'}`}
                     value={beroep}
                     onChange={handleBeroepChange}
-                    pattern="[A-Za-z\s]+"
-                />
-                {!isValidBeroep && (
-                    <p className="error-message">Voer alstublieft een geldige beroep in</p>
-                )}
+                >
+                    {[specialists.map((specialist, index) => (
+                        <option key={index} value={specialist.name}>
+                            {specialist.name}
+                        </option>
+                    ))]}
+                </select>
                 <label>Email:</label>
                 <input
                     type="email"

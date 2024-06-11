@@ -145,7 +145,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/huiseigenaar-resultaat" element={<HomeOwnerDashboard />} />
       <Route path="/pro-onboarding" element={<SpecialistPage />} />
       <Route path="/homeowner-dashboard" element={<ResultsPage />} />
-      <Route path="/pro-dashboard" element={<ResultsPage />} />
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/why-mostpros" element={<WhyMostProsPage />} />
       <Route path="/contact" element={<ContactPage />} />
@@ -156,7 +155,10 @@ const LanguageAwareRoutes = () => {
         path="/homeowner-dashboard/profile"
         element={<HomeOwnerProfielPage />}
       />
+      /* Pro dashboard links */
+      <Route path="/pro-dashboard" element={<ResultsPage />} />
       <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
+      <Route path="/pro-dashboard/help" element={<FAQPage  />} />
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
@@ -165,6 +167,12 @@ const LanguageAwareRoutes = () => {
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/pro-dashboard/setup" element={<Setup />} />
       <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
+      <Route path="/pro-dashboard/calender" element={<Calender />} />
+      <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
+      <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />}/>
+      <Route path="/pro-dashboard/chat" element={<ChatMain />} />
+      <Route path="/pro-dashboard/settings" element={<HomeOwnerSettingsPage />}/>
+      <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
 
       {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
@@ -172,7 +180,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />
       <Route path="/IdealOptions" element={<IdealOptionsPage />} />
       <Route path="/homeowner-dashboard/calender" element={<Calender />} />
-      <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/ViewProfessionals" element={<ViewProfessionals />} />
       <Route
         path="/MijnKlussenOverzicht"
@@ -181,32 +188,21 @@ const LanguageAwareRoutes = () => {
       <Route path="/about" element={<OverOns />} />
       <Route path="/ConfirmDate" element={<ConfirmDatePage />} />
       <Route path="/homeowner-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
       <Route path="/Invoice" element={<InvoicePage />} />
       <Route path="/data-safety" element={<DataSafetyPage />} />
       <Route
         path="/homeowner-dashboard/payments"
         element={<HomeProPaymentsPage />}
       />
-      <Route
-        path="/pro-dashboard/reporting"
-        element={<HomeProPaymentsPage />}
-      />
       <Route path="/homeowner-dashboard/chat" element={<ChatMain />} />
-      <Route path="/pro-dashboard/chat" element={<ChatMain />} />
       <Route path="/career" element={<CareerPage />} />
       <Route
         path="/homeowner-dashboard/settings"
         element={<HomeOwnerSettingsPage />}
       />
-      <Route
-        path="/pro-dashboard/settings"
-        element={<HomeOwnerSettingsPage />}
-      />
       <Route path="/homeowner-dashboard/FAQPage" element={<FAQPage />} />
       <Route path="/jobspage" element={<Jobspage />} />
       <Route path="/homeowner-dashboard/reviews" element={<ReviewPage />} />
-      <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
       <Route path="/VSMijnklussen" element={<VSMijnklussen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
