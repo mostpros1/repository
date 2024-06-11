@@ -409,7 +409,6 @@ const specialists = [
             { task: "Trends/ontwikkelingen bouwsector volgen", link: "/trends-ontwikkelingen-bouwsector-volgen" },
             { task: "Contacten onderhouden (leveranciers/onderaannemers)", link: "/contacten-onderhouden-leveranciers-onderaannemers" },
             { task: "Werkzaamheden onderaannemers beoordelen", link: "/werkzaamheden-onderaannemers-beoordelen" },
-            { task: "Professional Sugar Daddy <3", link: "/sugardaddy" },
         ]
     },
     {
