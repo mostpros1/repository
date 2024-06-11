@@ -40,18 +40,23 @@ function Navigation() {
   }, []);
 
   useEffect(() => {
-    if (user?.signInUserSession?.accessToken?.payload) {
-      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups?.includes("Homeowner")) {
-        setIsHomeowner(true);
-        setIsProfessional(false);
-      } else if (groups?.includes("Professional")) {
-        setIsProfessional(true);
-        setIsHomeowner(false);
+    const currentURL = window.location.href;
+
+    if (currentURL.includes("dashboard")) {
+      if (user?.signInUserSession?.accessToken?.payload) {
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups?.includes("Homeowner")) {
+          setIsHomeowner(true);
+          setIsProfessional(false);
+        } else if (groups?.includes("Professional")) {
+          setIsProfessional(true);
+          setIsHomeowner(false);
+        }
+      } else {
+        console.log("User data is not fully available.");
+        navigate(`/${taal}/login`);
       }
-    } else {
-      console.log("User data is not fully available.");
-      navigate(`/${taal}/login`);
     }
   }, [user, navigate]);
 
@@ -184,7 +189,9 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#stukadoor`}>{t("Stukadoor")}</Link>
+                      <Link to={`/${taal}/jobs#stukadoor`}>
+                        {t("Stukadoor")}
+                      </Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#verwarmingsinstallateur`}>
@@ -210,7 +217,9 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#dakdekker`}>{t("Dakdekker")}</Link>
+                      <Link to={`/${taal}/jobs#dakdekker`}>
+                        {t("Dakdekker")}
+                      </Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#gevelspecialist`}>
@@ -223,10 +232,14 @@ function Navigation() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#metselaar`}>{t("Metselaar")}</Link>
+                      <Link to={`/${taal}/jobs#metselaar`}>
+                        {t("Metselaar")}
+                      </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/jobs#glaszetter`}>{t("Glaszetter")}</Link>
+                      <Link to={`/${taal}/jobs#glaszetter`}>
+                        {t("Glaszetter")}
+                      </Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/jobs#kozijspecialist`}>
@@ -375,7 +388,9 @@ function Navigation() {
                       <Link to={`/${taal}/`}>{t("Toegang talentenpools")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Automatiseer workflows")}</Link>
+                      <Link to={`/${taal}/`}>
+                        {t("Automatiseer workflows")}
+                      </Link>
                     </li>
                     <li>
                       <Link to={`/${taal}/`}>{t("Open infrastructuur")}</Link>
@@ -412,7 +427,10 @@ function Navigation() {
             </div>
           </li>
           <li className="nav-blue-btn">
-            {user && user.signInUserSession.accessToken.payload["cognito:groups"]?.includes("Professional") ? (
+            {user &&
+            user.signInUserSession.accessToken.payload[
+              "cognito:groups"
+            ]?.includes("Professional") ? (
               <button onClick={handleDashboardSwitch} className="black-items">
                 {t("Switch Dashboard")}
               </button>
