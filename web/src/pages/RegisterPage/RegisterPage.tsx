@@ -8,6 +8,7 @@ import "./RegisterPage.css";
 import { dynamo } from "../../../declarations.ts";
 import { stopXSS } from "./../../../../backend_functions/stopXSS.ts";
 import { taal } from "../../components/ui/NavBar/Navigation.tsx";
+import { CompressOutlined } from "@mui/icons-material";
 
 function RegisterPage() {
 
@@ -117,41 +118,40 @@ function RegisterPage() {
   //REST API VERSIE
 
   async function signUpUser(userData) {
-
-    const { email } = registerData;
-
+    console.log(JSON.stringify(userData));
+    const { email } = userData;
     const url = 'https://xkvqft2ld6.execute-api.eu-north-1.amazonaws.com/registration'; // Replace with your API Gateway URL
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    console.log(data); // Process the response data
-
-    navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
-      state: { email: stopXSS(email), postConfig: "HOMEOWNER" },
-    });
-
-
-  }
-
   
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      console.log('Response data:', response);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Response data:', data); // Log the response data
+  
+      navigate(`/${taal}/confirm-mail#homeowner-dashboard`, {
+        state: { email: stopXSS(email), postConfig: "HOMEOWNER" },
+      });
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    }
+}
 
   const handleSignUp = async () => {
-    //signUp(registerData);
     console.log(registerData);
-
-    signUpUser(registerData);
+    await signUpUser(registerData);
   };
-
 
   const updateRegisterData = (fields) => {
     setRegisterData((prevData) => ({ ...prevData, ...fields }));
