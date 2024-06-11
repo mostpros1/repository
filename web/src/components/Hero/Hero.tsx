@@ -43,7 +43,7 @@ function Hero() {
     <div className="hero">
       <div className="hero-container">
         <h2>Vind lokale vakspecialisten voor klussen in je huis en tuin</h2>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <article className="populairjobsHero">
           {PopularCardsData.map((card) => (
             <Link key={card.id} to={`/${taal}/jobs#${card.name.toLowerCase()}`} className="populairjobsHeroCard">
