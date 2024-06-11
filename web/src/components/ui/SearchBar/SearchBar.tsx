@@ -1,10 +1,10 @@
-// import "./SearchBar.css";
-// import specialists from "../../../data/specialists.js";
-// import { Link } from "react-router-dom";
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import "./SearchBar.css";
+import specialists from "../../../data/specialists.js";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// // ...
+// ...
 
 // interface Specialist {
 //   id: number;
@@ -13,7 +13,7 @@
 //   link?: string;
 // }
 
-// function Searchbar() {
+function Searchbar() {
 //   const [value, setValue] = useState("");
 //   const [showList, setShowList] = useState(false);
 //   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -137,7 +137,7 @@
 //       </div>
 //     </>
 //   );
-// }
-// // ...
+}
+// ...
 
-// export default Searchbar;
+export default Searchbar;
