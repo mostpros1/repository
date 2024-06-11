@@ -40,11 +40,9 @@
 .nav-container {
   position: relative;
   width: 100%;
+  max-width: 120rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-left: 15rem;
-  margin-right: 15rem;
 }
 
 .nav-container a {
