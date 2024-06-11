@@ -110,8 +110,7 @@ function Searchbar() {
   };
 
   const handleInputKeyDown = (e) => {
-    switch (e.key)
-     {
+    switch (e.key) {
       case "ArrowUp":
         setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
         break;
@@ -185,13 +184,12 @@ function Searchbar() {
   };
 
   const slicedResults = searchResults().slice(0, 20);
-  
+
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${result.link?.replace(
-        /\//g,
-        ""
-      ) ?? ""}`}
+      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${
+        result.link?.replace(/\//g, "") ?? ""
+      }`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "active" : ""
@@ -211,8 +209,6 @@ function Searchbar() {
       </div>
     </Link>
   ));
-
-  
 
   return (
     <div id="SearchBar-wrapper">
@@ -444,37 +440,40 @@ function HomePageTwo() {
         </article>
       </section>
       <article className="InfoBarHome">
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/pro-overview`}
-            >
-              100+ Vakspecialisten
-            </Link>{" "}
-          </h4>
+        <div className="scrollContainer">
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/pro-overview`}
+              >
+                100+ Vakspecialisten
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/jobs-overview`}
+              >
+                1000+ Klussen
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+          </div>
         </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/jobs-overview`}
-            >
-              1000+ Klussen
-            </Link>
-          </h4>
-        </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
-        </div>
-        <article className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">All-in-1 App</h4>
-        </article>
       </article>
+
       <section className="howItWorksSectionHome">
         <article className="howItWorksTitleContainerHome">
           <h2 className="howItWorksTitleHome">Hoe Mostpros Werkt</h2>
