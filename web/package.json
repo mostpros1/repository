@@ -32,6 +32,7 @@
     "dotenv": "^16.4.4",
     "esbuild": "^0.21.1",
     "fs": "^0.0.1-security",
+    "fuse.js": "^7.0.0",
     "i18next": "^23.11.3",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.1",

@@ -1,6 +1,6 @@
 import "./HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import SolarPowerIcon from "@mui/icons-material/SolarPower";
@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
+import Fuse, { FuseSearchOptions } from "fuse.js";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 interface Specialist {
@@ -79,12 +80,19 @@ const PopularCardsData = [
   },
 ];
 
+function capitalizeFirstLetter(str) {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const navigate = useNavigate();
+
+  const handleInputBlur = (e) => {
     if (
       !e.relatedTarget ||
       !e.relatedTarget.classList.contains("search_dropdown_item")
@@ -93,14 +101,14 @@ function Searchbar() {
     }
   };
 
-  const navigate = useNavigate();
   const handleInputFocus = () => {
     setShowList(true);
   };
 
-  const handleResultClick = (link: string) => {
+  const handleResultClick = (link) => {
     navigate(`/nl/jobs${link}`);
   };
+
   const handleInputKeyDown = (e) => {
     switch (e.key) {
       case "ArrowUp":
@@ -117,10 +125,10 @@ function Searchbar() {
           handleResultClick(selectedResult.link);
         }
         break;
-      case "Tab": // Implementing autocomplete on Tab key
+      case "Tab":
         if (slicedResults.length > 0) {
           const selectedResult = slicedResults[0];
-          setValue(selectedResult.task); // Autocomplete with the first suggestion
+          setValue(selectedResult.task);
           setSelectedIndex(0);
         }
         break;
@@ -128,53 +136,81 @@ function Searchbar() {
         break;
     }
   };
-  const searchResults = () => {
-    const searchTerm = value.toLowerCase().trim();
 
-    // Search for matches in individual tasks and specialist names
-    const taskResults = specialists.flatMap((specialist) => {
-      const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
-        .map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
-
-      return tasks.length > 0 ? tasks : [];
-    });
-
-    const specialistResults = specialists
-      .filter((specialist) =>
-        specialist.name.toLowerCase().includes(searchTerm)
-      )
-      .map((specialist: Specialist) => ({
-        specialistName: specialist.name.toLowerCase(),
-        task: "", // Assuming a task field is required, you might want to adjust this
-        link: specialist.link || "", // Assuming a link field is required, you might want to adjust this
-      }));
-
-    return [...taskResults, ...specialistResults];
+  const handleInputChange = (e) => {
+    setValue(e.target.value);
+    setSearchPerformed(true); // Indicate that a search has been performed
   };
 
-  const slicedResults = searchResults().slice(0, 20); // Limit to the first 10 results
+  const fuseOptions = {
+    keys: ["name", "tasks.task"],
+    includeScore: true,
+    threshold: 0.3, // Adjust the threshold for fuzzy matching
+    distance: 100, // Maximum distance for fuzzy search
+    limit: 20, // Limit the number of results
+  };
+
+  const fuse = new Fuse(specialists, fuseOptions);
+
+  const searchResults = () => {
+    const searchTerm = value.trim().toLowerCase();
+    if (!searchTerm) {
+      // Return all specialists if no search term is provided
+      return specialists.flatMap((specialist) =>
+        specialist.tasks.map((task) => ({
+          specialistName: capitalizeFirstLetter(specialist.name),
+          task: capitalizeFirstLetter(task.task),
+          link: task.link,
+        }))
+      );
+    }
+  
+   // Perform a search using the configured Fuse instance
+   const result = fuse.search(searchTerm);
+
+   const taskResults = result.flatMap((res) => {
+     return res.item.tasks
+       .filter(
+         (task) =>
+           task.task.toLowerCase().includes(searchTerm) ||
+           res.item.name.toLowerCase().includes(searchTerm)
+       )
+       .map((task) => ({
+         specialistName: capitalizeFirstLetter(res.item.name),
+         task: capitalizeFirstLetter(task.task),
+         link: task.link,
+       }));
+   });
+ 
+   return taskResults;
+ };
+  const slicedResults = searchResults().slice(0, 20);
+
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName}?${result.link.replace(/\//g, "")}`}
+      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${
+        result.link?.replace(/\//g, "") ?? ""
+      }`}
       key={index}
-      className={`search_dropdown_item ${index === selectedIndex ? "active" : ""}`}
-      onMouseDown={() => handleResultClick(`#${result.specialistName}?${result.link.replace(/\//g, "")}`)}
+      className={`search_dropdown_item ${
+        index === selectedIndex ? "active" : ""
+      }`}
+      onMouseDown={() =>
+        handleResultClick(
+          `#${result.specialistName.toLowerCase()}?${result.link?.replace(
+            /\//g,
+            ""
+          )}`
+        )
+      }
     >
-      <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
-        {/* Add the specialist name with the - separator */}
+      <div className={index === selectedIndex ? "selected" : ""}>
+        {result.specialistName ? `${result.specialistName} - ` : ""}
         {result.task}
-      </span>
+      </div>
     </Link>
-
-
-
   ));
+
   return (
     <div id="SearchBar-wrapper">
       <div className="SearchBarHome">
@@ -182,7 +218,7 @@ function Searchbar() {
           id="SearchBarInputHome"
           type="text"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleInputChange}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}
           onBlur={handleInputBlur}
@@ -195,7 +231,15 @@ function Searchbar() {
         ></article>
       </div>
       <div className="search_results-con">
-        {showList && <div className="search_results">{resultsRender}</div>}
+        {showList && (
+          <div className="search_results">
+            {slicedResults.length > 0
+              ? resultsRender
+              : searchPerformed && (
+                  <div className="no_results">No results found</div>
+                )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -397,37 +441,40 @@ function HomePageTwo() {
         </article>
       </section>
       <article className="InfoBarHome">
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/pro-overview`}
-            >
-              100+ Vakspecialisten
-            </Link>{" "}
-          </h4>
+        <div className="scrollContainer">
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/pro-overview`}
+              >
+                100+ Vakspecialisten
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/jobs-overview`}
+              >
+                1000+ Klussen
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+          </div>
         </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/jobs-overview`}
-            >
-              1000+ Klussen
-            </Link>
-          </h4>
-        </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
-        </div>
-        <article className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">All-in-1 App</h4>
-        </article>
       </article>
+
       <section className="howItWorksSectionHome">
         <article className="howItWorksTitleContainerHome">
           <h2 className="howItWorksTitleHome">Hoe Mostpros Werkt</h2>
@@ -605,8 +652,9 @@ function HomePageTwo() {
             .map((review, index) => (
               <React.Fragment key={index}>
                 <article
-                  className={`ReviewCardHomeProfHome ${reviewAnimation ? "animate-out" : ""
-                    }`}
+                  className={`ReviewCardHomeProfHome ${
+                    reviewAnimation ? "animate-out" : ""
+                  }`}
                 >
                   <img
                     src={review.image}

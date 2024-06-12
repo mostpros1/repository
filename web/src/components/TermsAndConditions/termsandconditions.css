@@ -7,6 +7,31 @@
   margin-bottom: 5rem;
   padding: 2rem;
 }
+#btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+#switchText {
+  display: block;
+  margin-top: 2rem;
+  background-color: white;
+  width: fit-content;
+  border-radius: 10px;
+  height: 100%;
+  border: 2px solid #308ae4;
+  white-space: nowrap;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#switchText:hover {
+  background-color: #308ae4;
+  color: white;
+}
 
 /* Styling for titles */
 #terms-title {
@@ -62,14 +87,6 @@
 
 #terms-description {
   padding-bottom: 2rem;
-}
-
-.terms-listStyle {
-  list-style-type: decimal;
-}
-
-.terms-listStyle li {
-  padding-bottom: 3rem;
 }
 
 @media screen and (max-width: 1400px) {
