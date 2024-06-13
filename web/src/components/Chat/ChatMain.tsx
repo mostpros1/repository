@@ -27,14 +27,14 @@ import {
 import { CiSearch } from "react-icons/ci";
 import { MdDriveFileMove } from "react-icons/md";
 import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
-import { MdOutlineCancel } from "react-icons/md";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineCancel, MdDeleteOutline } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
 import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
 import { MdOutlineEdit } from "react-icons/md";
-import { getInfo } from "../../../../backend_functions/coordsToKm.ts"
+import { getInfo } from "../../../../backend_functions/coordsToKm.ts";
+
 interface Chat {
   id: string;
   text: string;
@@ -57,8 +57,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     handleReceivedMessage,
     handleJoinChat,
     handleStartNewChatWithEmail,
-    visibleName,
-    setVisibleName,
     textSize,
     setTextSize,
   } = useChatBackend(user, signOut);
@@ -97,6 +95,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [messageSearchTerm, setMessageSearchTerm] = useState<string>("");
   const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
   const settingsModalRef = useRef<HTMLDivElement>(null);
+
+  // New states for additional functionalities
+  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
+  const [typingStatus, setTypingStatus] = useState<{[contact: string]: boolean;}>({});
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
@@ -545,7 +547,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     if (parts[1]) {
       parts[1] = parts[1].slice(0, 2);
     }
-
     return parts.join(",");
   };
 
@@ -689,12 +690,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setTextSize(Number(event.target.value));
   };
 
-  const handleVisibleNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setVisibleName(event.target.value);
-  };
-
   const handleThemeChange = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
@@ -704,14 +699,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const handleSaveSettings = () => {
-    localStorage.setItem("visibleName", visibleName);
+    localStorage.setItem("textSize", textSize.toString());
     setShowSettingsModal(false);
   };
 
   useEffect(() => {
-    const storedVisibleName = localStorage.getItem("visibleName");
-    if (storedVisibleName) {
-      setVisibleName(storedVisibleName);
+    const storedTextSize = localStorage.getItem("textSize");
+    if (storedTextSize) {
+      setTextSize(Number(storedTextSize));
     }
   }, []);
 
@@ -736,6 +731,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const handleCancelClick = () => {
     setShowSearch(false);
     setMessageSearchTerm("");
+  };
+
+  const handleBlockUser = (contact: string) => {
+    setBlockedUsers((prev) => {
+      const newBlockedUsers = new Set(prev);
+      if (newBlockedUsers.has(contact)) {
+        newBlockedUsers.delete(contact);
+      } else {
+        newBlockedUsers.add(contact);
+      }
+      return newBlockedUsers;
+    });
   };
 
   const MessageStatusIcon = ({
@@ -784,12 +791,22 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 Instellingen
               </div>
               {selectedContact && (
-                <div
-                  className="dropdownn-item"
-                  onClick={() => handleDeleteChat(selectedContact)}
-                >
-                  Verwijder chat
-                </div>
+                <>
+                  <div
+                    className="dropdownn-item"
+                    onClick={() => handleDeleteChat(selectedContact)}
+                  >
+                    Verwijder chat
+                  </div>
+                  <div
+                    className="dropdownn-item"
+                    onClick={() => handleBlockUser(selectedContact)}
+                  >
+                    {blockedUsers.has(selectedContact)
+                      ? "Deblokkeer gebruiker"
+                      : "Blokkeer gebruiker"}
+                  </div>
+                </>
               )}
             </div>
           )}
@@ -907,6 +924,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                       ? "self-message"
                       : "other-message"
                       }`}
+                    style={{ fontSize: `${textSize}px` }} // Apply text size
                   >
                     <div
                       className="text"
@@ -963,6 +981,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                             ? "self-message"
                             : "other-message"
                             }`}
+                          style={{ fontSize: `${textSize}px` }}
                         >
                           <div
                             className="text"
@@ -1071,7 +1090,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               </kbd>
             </div>
           </div>
-
         </div>
       </div>
       {showNewChatModal && (
@@ -1111,15 +1129,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 onChange={handleTextSizeChange}
               />
               <span>{textSize}px</span>
-            </div>
-            <div className="settings-item">
-              <label htmlFor="visible-name">Zichtbare naam:</label>
-              <input
-                type="text"
-                id="visible-name"
-                value={visibleName}
-                onChange={handleVisibleNameChange}
-              />
             </div>
             <div className="settings-item">
               <label>Theme:</label>
@@ -1278,4 +1287,3 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 }
 
 export default withAuthenticator(ChatMain);
-

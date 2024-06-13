@@ -1,7 +1,7 @@
 // components/ErrorPage.js
 
 import React from 'react';
-import errorComponents from '../../components/!ErrorComps/errorComponents';
+import errorComponents from '../../components/!ErrorComps/100';
 
 const ErrorPage = ({ errorCode }) => {
   const ErrorComponent = errorComponents[errorCode];

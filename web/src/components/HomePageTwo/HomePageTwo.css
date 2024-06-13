@@ -50,13 +50,20 @@
   align-items: center;
   padding-left: 2rem;
   padding-right: 2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.SearchBarHome:focus-within {
+  border: none;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 #SearchBarInputHome {
   display: flex;
   background: none;
   border: none;
-  width: 70rem;
+  width: 100%;
   height: 6rem;
   background: #ffffff;
   border-radius: 28px;
@@ -64,11 +71,13 @@
   padding-right: 2rem;
   font-family: "Poppins", sans-serif;
   font-size: 1.6rem;
+  transition: all 0.3s ease;
 }
 
 #SearchBarInputHome:focus {
   outline: none;
   border: none;
+  border-radius: 0;
 }
 
 .search_results {
@@ -76,23 +85,37 @@
   display: flex;
   flex-direction: column;
   max-height: 30rem;
-  max-width: 65rem;
+  max-width: 70rem;
   width: 100%;
   height: auto;
   padding: 1.5rem;
-  margin-left: 2rem;
+  margin: 0;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   background-color: white;
   color: black;
   overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #308ae4 #fff;
   transition: all 0.3s ease;
+}
+
+.search_results-con {
+  display: flex;
+  flex-direction: column;
 }
 
 .search_results a {
   padding: 1rem;
   text-decoration: none;
   color: black;
+  transition: all 0.3s ease;
+}
+
+.search_results a .selected {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  padding-left: 0;
 }
 
 .search_results a:hover {
@@ -173,6 +196,17 @@
   margin-top: 3rem;
   flex-wrap: wrap;
   gap: 2rem;
+  overflow: hidden;
+  position: relative;
+  height: 3rem; /* Set to height of a single item */
+}
+
+.scrollContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
 }
 
 .infoContainerHome {
@@ -180,6 +214,7 @@
   gap: 0.6rem;
   align-items: center;
   justify-content: center;
+  height: 3rem;
 }
 
 .infoContainerHomeH4 {
@@ -764,25 +799,25 @@
 @media screen and (max-width: 1080px) {
   .whyMostProsSectionHome {
     flex-wrap: wrap;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     gap: 7rem;
   }
 
   .whyMostProsTextContainerHome {
     width: 100%;
-    text-align: center; 
+    text-align: center;
   }
 
   .whyMostProsSectionHomeImg {
-    width: 100%; 
-    max-width: 66rem; 
+    width: 100%;
+    max-width: 66rem;
   }
 
   .whyMostProsSectionHomeTwo {
     align-items: center;
     gap: 7rem;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     flex-direction: column;
   }
 }
@@ -832,17 +867,16 @@
     border-style: solid;
     border-width: 1rem;
   }
-  
+
   .lefthome-arrow {
     left: 30%;
     border-color: transparent black transparent transparent;
   }
-  
+
   .righthome-arrow {
     right: 30%;
     border-color: transparent transparent transparent black;
   }
-  
 }
 
 @media screen and (max-width: 480px) {
@@ -881,6 +915,23 @@
     font-size: 2rem;
     text-align: center;
   }
+
+  .InfoBarHome {
+    height: 3rem; /* Adjust if needed */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .infoContainerHome {
+    flex-direction: row;
+  }
+
+  .scrollContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    animation: scroll 10s linear infinite;
+  }
 }
 
 @media screen and (max-width: 335px) {
@@ -911,5 +962,32 @@
   #SearchBarInputHome {
     width: 35rem;
   }
-  
+}
+
+@keyframes scroll {
+  0%,
+  20% {
+    transform: translateY(0);
+  }
+  25%,
+  45% {
+    transform: translateY(
+      -3rem
+    ); /* Adjust 3rem to the height of a single item */
+  }
+  50%,
+  70% {
+    transform: translateY(
+      -6rem
+    ); /* Adjust 6rem to the combined height of two items */
+  }
+  75%,
+  95% {
+    transform: translateY(
+      -9rem
+    ); /* Adjust 9rem to the combined height of three items */
+  }
+  100% {
+    transform: translateY(0); /* Reset to initial position */
+  }
 }
