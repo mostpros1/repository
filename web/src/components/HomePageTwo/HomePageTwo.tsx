@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
-import Fuse, { FuseSearchOptions } from "fuse.js";
+// import Fuse, { FuseSearchOptions } from "fuse.js";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 interface Specialist {
@@ -150,7 +150,7 @@ function Searchbar() {
     limit: 20, // Limit the number of results
   };
 
-  const fuse = new Fuse(specialists, fuseOptions);
+  // const fuse = new Fuse(specialists, fuseOptions);
 
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
