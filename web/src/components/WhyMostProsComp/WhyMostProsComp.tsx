@@ -15,8 +15,8 @@ function WhyMostProsComp() {
             met bekwame vakspecialisten, waardoor de drempel voor het vinden van de juiste vakmensen voor elke klus aanzienlijk wordt verlaagd.
           </p>
         </section>
-        <article className="whymostprosBlueSquare">
-          <p className="whymostprosPBlue">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
+        <article className="">
+          <p className="whymostprosP">Begin binnen enkele minuten. Bespaar kosten met onze lage systeemkosten. Er zijn geen verborgen kosten of procentuele bezuinigingen. Bespaar administratieve tijd. Maak gebruik van onze wereldwijde betaalmethoden. Geniet van onze hartelijke, klantgerichte aanpak. Probeer het gratis uit.
           </p>
         </article>
       </article>
