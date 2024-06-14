@@ -203,7 +203,7 @@ function BevestigEmailPage() {
 
     async function confirmSignUp(code: string) {
         const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit"; // Use an environment variable for the API URL
-
+    
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -216,17 +216,26 @@ function BevestigEmailPage() {
                     postConfigId: postConfigId,
                 }),
             });
-
+    
+            // Log response headers
+            const headers = {};
+            response.headers.forEach((value, key) => {
+                headers[key] = value;
+            });
+            console.log('Response headers:', headers);
+    
+            console.log('Response data:', response);
+    
             if (!response.ok) {
                 throw new Error(`Network response was not ok, status code: ${response.status}`);
             }
-
+    
             const data = await response.json();
-
+    
             if (data.statusCode !== 200) {
                 throw new Error(data.message || 'Failed to confirm sign-up');
             }
-
+    
             setIsConfirmed(true);
             const postConfig = postConfigMap[postConfigId] || null;
             postConfig.onSuccess && postConfig.onSuccess();
@@ -256,6 +265,7 @@ function BevestigEmailPage() {
             }
         }
     }
+    
 
 
 
