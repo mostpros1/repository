@@ -38,6 +38,7 @@
     "fuse.js": "^7.0.0",
     "hunspell-spellchecker": "^1.0.2",
     "nodemailer": "^6.9.10",
+    "nspell": "^2.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
@@ -45,7 +46,8 @@
     "react-redux": "^9.0.4",
     "redux": "^5.0.0",
     "stripe": "^14.23.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "use-debounce": "^10.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
