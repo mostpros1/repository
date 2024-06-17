@@ -3,10 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { taal } from "../../ui/NavBar/Navigation.tsx";
 import specialists from "../../../data/specialists.ts";
 import Fuse from "fuse.js";
-import { useDebounce } from "use-debounce";
 
-
-//capitalze the first letter of a string
+// Capitalize the first letter of a string
 function capitalizeFirstLetter(str) {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 }
@@ -99,12 +97,14 @@ const SearchResults = ({
 
 function Searchbar() {
   const [value, setValue] = useState("");
-  const [debouncedValue] = useDebounce(value, 300);
   const [showList, setShowList] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [closestResults, setClosestResults] = useState<SearchResultItem[]>([]);
   const navigate = useNavigate();
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  ); // State for debounce
 
   const handleInputBlur = (e) => {
     if (
@@ -160,19 +160,41 @@ function Searchbar() {
   };
 
   const handleInputChange = (e) => {
-    setValue(e.target.value);
+    const searchTerm = e.target.value;
+    setValue(searchTerm);
+
+    // Clear previous timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
+    // Set new timeout
+    setSearchTimeout(
+      setTimeout(() => {
+        performSearch(searchTerm);
+      }, 300)
+    );
   };
 
   const performSearch = (searchTerm) => {
     try {
       setSearchPerformed(true);
 
+      const fuseOptions = {
+        keys: ["name", "tasks.task", "tasks.link"],
+        includeScore: true,
+        threshold: 0.3,
+        distance: 100,
+        limit: 20,
+      };
+
+      const fuse = new Fuse(specialists, fuseOptions);
       const result = fuse.search(searchTerm);
 
       // Map and sort the results to get closest matches by score
       const closestResults = result
         .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
-        .slice(0, 10) // Limiting to 5 closest results
+        .slice(0, 10) // Limiting to 10 closest results
         .map((res) => res.item);
 
       setClosestResults(closestResults);
@@ -180,28 +202,6 @@ function Searchbar() {
       console.error("Error performing search:", error);
     }
   };
-
-  useEffect(() => {
-    if (debouncedValue) {
-      performSearch(debouncedValue);
-    }
-  }, [debouncedValue]);
-
-  const fuseOptions = useMemo(
-    () => ({
-      keys: ["name", "tasks.task", "tasks.link", "closestResults"],
-      includeScore: true,
-      threshold: 0.3,
-      distance: 100,
-      limit: 20,
-    }),
-    []
-  );
-
-  const fuse = useMemo(
-    () => new Fuse(specialists, fuseOptions),
-    [specialists, fuseOptions]
-  );
 
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
@@ -215,6 +215,15 @@ function Searchbar() {
       );
     }
 
+    const fuseOptions = {
+      keys: ["name", "tasks.task", "tasks.link"],
+      includeScore: true,
+      threshold: 0.3,
+      distance: 100,
+      limit: 20,
+    };
+
+    const fuse = new Fuse(specialists, fuseOptions);
     const result = fuse.search(searchTerm);
 
     const taskResults = result.flatMap((res) => {
@@ -235,6 +244,14 @@ function Searchbar() {
   };
 
   const slicedResults = searchResults().slice(0, 20);
+
+  useEffect(() => {
+    if (value.trim()) {
+      performSearch(value.trim());
+    } else {
+      setClosestResults([]);
+    }
+  }, [value]);
 
   return (
     <div id="SearchBar-wrapper">
