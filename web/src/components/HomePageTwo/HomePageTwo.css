@@ -50,7 +50,6 @@
   align-items: center;
   padding-left: 2rem;
   padding-right: 2rem;
-  transition: all 0.3s ease-in-out;
 }
 
 .SearchBarHome:focus-within {
@@ -125,9 +124,6 @@
   color: black;
 }
 
-.search_results:active {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
 
 .searchBarBlueIcon {
   width: 3.2rem;
