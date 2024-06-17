@@ -40,8 +40,8 @@
 .nav-container {
   position: relative;
   width: 100%;
-  max-width: 138rem;
   display: flex;
+  gap: 2rem;
   justify-content: space-between;
 }
 

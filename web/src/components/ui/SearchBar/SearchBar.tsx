@@ -4,9 +4,13 @@ import { taal } from "../../ui/NavBar/Navigation.tsx";
 import specialists from "../../../data/specialists.ts";
 import Fuse from "fuse.js";
 import { useDebounce } from "use-debounce";
+
+
+//capitalze the first letter of a string
 function capitalizeFirstLetter(str) {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
 interface SearchResultItem {
   id: number;
   name: string;
@@ -106,12 +110,15 @@ function Searchbar() {
       setShowList(false);
     }
   };
+
   const handleInputFocus = () => {
     setShowList(true);
   };
+
   const handleResultClick = (link) => {
     navigate(`/nl/jobs${link}`);
   };
+
   const handleInputKeyDown = (e) => {
     switch (e.key) {
       case "ArrowUp":
@@ -147,13 +154,17 @@ function Searchbar() {
         break;
     }
   };
+
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
+
   const performSearch = (searchTerm) => {
     try {
       setSearchPerformed(true);
+
       const result = fuse.search(searchTerm);
+
       // Map and sort the results to get closest matches by score
       const closestResults = result
         .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
@@ -194,7 +205,9 @@ function Searchbar() {
         }))
       );
     }
+
     const result = fuse.search(searchTerm);
+
     const taskResults = result.flatMap((res) => {
       return res.item.tasks
         .filter(
@@ -208,9 +221,12 @@ function Searchbar() {
           link: task.link,
         }));
     });
+
     return taskResults;
   };
+
   const slicedResults = searchResults().slice(0, 20);
+
   return (
     <div id="SearchBar-wrapper">
       <div className="SearchBarHome">
@@ -255,4 +271,5 @@ function Searchbar() {
     </div>
   );
 }
+
 export default Searchbar;
