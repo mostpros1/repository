@@ -1,4 +1,5 @@
-/* whole hero */
+/*
+whole hero
 .hero{
     height: 100vh;
     width: 100%;
@@ -12,7 +13,7 @@
     padding-top: 50px;
 }
 
-/* container for all the components */
+
 .hero-container{
     width: 100%;
     max-width: 1000px;
@@ -27,7 +28,7 @@
     align-items: center;
     justify-content: center;
     gap: 2.3rem;
-    padding: 1rem; /* Add padding for spacing */
+    padding: 1rem;
     flex-wrap: wrap;
   }
   
@@ -92,3 +93,4 @@
         font-size: 20px;
     }
 }
+*/
