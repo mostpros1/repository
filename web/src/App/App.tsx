@@ -244,7 +244,7 @@ const LanguageAwareRoutes = () => {
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/privacybeleid" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
       <Route path="/pro-dashboard/setup" element={<Setup />} />
