@@ -187,7 +187,7 @@ function BevestigEmailPage() {
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
-            nextPage: `${taal}/` + everythingAfterFirstHash,
+            nextPage: `/${taal}/` + everythingAfterFirstHash,
             onSuccess: () => {
                 setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
             },
@@ -202,7 +202,7 @@ function BevestigEmailPage() {
     }
 
     async function confirmSignUp(code: string) {
-        const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit"; // Use an environment variable for the API URL
+        const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit";
     
         try {
             const response = await fetch(apiUrl, {
@@ -217,54 +217,38 @@ function BevestigEmailPage() {
                 }),
             });
     
-            // Log response headers
-            const headers = {};
-            response.headers.forEach((value, key) => {
-                headers[key] = value;
-            });
-            console.log('Response headers:', headers);
-    
-            console.log('Response data:', response);
-    
             if (!response.ok) {
                 throw new Error(`Network response was not ok, status code: ${response.status}`);
             }
     
-            const data = await response.json();
+            const contentType = response.headers.get('content-type');
+            let data;
     
-            if (data.statusCode !== 200) {
-                throw new Error(data.message || 'Failed to confirm sign-up');
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                // Handle non-JSON response (if any)
+                data = await response.text(); // Read the response as text
+                // Assume success if a plain text response is received
+                if (data === "Sign-up confirmed and user added to group.") {
+                    data = { message: data, statusCode: 200 };
+                }
             }
+    
+            console.log('Response data:', data);
     
             setIsConfirmed(true);
             const postConfig = postConfigMap[postConfigId] || null;
             postConfig.onSuccess && postConfig.onSuccess();
-            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>");
-            navigate(postConfig.nextPage);
+            window.location.href = window.location.origin + postConfig.nextPage;
+            //navigate(postConfig.nextPage);
         } catch (error) {
-            console.error(error);
-            const errorActionMap: Record<number, () => void> = {
-                200: () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
-                400: () => { console.log('Bad Request'); }, // Handle 400 status code specifically
-                // Add more mappings as needed based on your API's error codes
-            };
-            // Check if the error thrown contains a status code
-            if (error instanceof Error && error.message.includes('status code')) {
-                const statusCode = parseInt(error.message.split(': ')[1], 10);
-                // Attempt to execute the action associated with the status code
-                if (Object.prototype.hasOwnProperty.call(errorActionMap, statusCode)) {
-                    errorActionMap[statusCode]();
-                } else {
-                    // Explicitly handle the case where there's no specific action for the status code
-                    console.log('No specific action defined for status code:', statusCode);
-                    // Optionally, you can define a generic error handling function here
-                }
-            } else {
-                // Handle other cases or call a generic error handler
-                console.log('Error handling logic for non-status-code errors');
-            }
+            console.error('Error in confirmSignUp:', error);
+            // Handle or propagate the error as needed
         }
     }
+    
+    
     
 
 
