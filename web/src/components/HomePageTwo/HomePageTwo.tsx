@@ -161,8 +161,8 @@ function HomePageTwo() {
         image: JanyPFP,
         proffesion: "Schoonmaakster",
         textone: "Schoonmaak €29/uur incl. btw",
-        texttwo: "Opruimen €29/uur incl. btw",
-        textthree: "Wassen €29/uur incl. btw",
+        texttwo: "Opruimen €39/uur incl. btw",
+        textthree: "Wassen €39/uur incl. btw",
       },
       {
         rating: 4,
