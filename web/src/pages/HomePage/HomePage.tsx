@@ -1,7 +1,7 @@
 import NavBar from "../../components/ui/NavBar/NavBar";
 import HighlightBanner from "../../components/HighlightBanner/HighlightBanner";
 import PopularCardsSection from "../../components/PopularCards/PopularCardsSection";
-import Hero from "../../components/Hero/Hero";
+// import Hero from "../../components/Hero/Hero";
 import MostprosDesc from "../../components/MostprosDesc/MostprosDesc";
 import ChoresDescription from "../../components/ChoresDescription/ChoresDescription";
 import Characteristics from "../../components/Characteristics/Characteristics";
@@ -16,7 +16,7 @@ function HomePage() {
       {/* Navbar */}
       <NavBar />
       {/* --Hero-- */}
-      <Hero />
+      {/* <Hero /> */}
       {/* --Content-- */}
       <HighlightBanner />
       {/* How does Mostpros work? */}
