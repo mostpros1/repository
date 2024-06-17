@@ -5,7 +5,6 @@ import specialists from "../../../data/specialists.ts";
 import Fuse from "fuse.js";
 import { useDebounce } from "use-debounce";
 
-
 //capitalze the first letter of a string
 function capitalizeFirstLetter(str) {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
