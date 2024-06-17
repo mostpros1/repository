@@ -49,6 +49,7 @@
     "redux": "^5.0.0",
     "stripe": "^14.21.0",
     "styled-components": "^6.1.9",
+    "use-debounce": "^10.0.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

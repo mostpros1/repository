@@ -81,6 +81,7 @@
     min-height: 4rem;
 }
 
+
 label {
     display: block;
     font-size: 1.4rem;
@@ -111,8 +112,13 @@ label {
 .submitButtonStyling.disabled {
     background-color: gray; 
     cursor: not-allowed;
-} */
+}
 
- .submitButtonStyling:hover {
+.submitButtonStyling:hover {
     background-color: #0e70b8;
 }
+
+
+button[type="submit"]:hover {
+    background-color: #0e70b8;
+} 
