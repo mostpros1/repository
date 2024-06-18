@@ -50,8 +50,8 @@
 
 .progress-step {
   height: 100%;
-  transition: 0.3s;
-  /* Voeg een overgang toe voor kleurverandering */
+  transition: 0.3s; /* Voeg een overgang toe voor kleurverandering */
+  background-color: gray; /* Kleur per stap */
 }
 
 .progress-step.active {

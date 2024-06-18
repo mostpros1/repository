@@ -14,8 +14,8 @@ import { taal } from "../ui/NavBar/Navigation.js";
 interface Specialist {
   id: number;
   name: string;
-  tasks: { task: string; link: string }[];
-  link?: string;
+  link?: string; // Move the 'link' property here
+  tasks: { task: string; link?: string }[]; // Make the 'link' property optional for tasks
 }
 
 const Jobs = () => {
@@ -222,7 +222,7 @@ const Jobs = () => {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/nl/jobs${link}`);
+    navigate(`/nl/jobs${link ?? ""}`);
   };
 
   const handleInputKeyDown = (e) => {
@@ -238,7 +238,7 @@ const Jobs = () => {
       case "Enter":
         if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
           const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
+          handleResultClick(selectedResult.link ?? "");
         }
         break;
       case "Tab": // Implementing autocomplete on Tab key
@@ -258,21 +258,21 @@ const Jobs = () => {
 
     // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
-      const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
-        .map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
+        const tasks = specialist.tasks
+            .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
+            .map((task) => ({
+                specialistName: specialist.name.toLowerCase(),
+                task: task.task,
+                link: task.link || "", // Handling missing link field
+            }));
 
-      return tasks.length > 0 ? tasks : [];
+        return tasks.length > 0 ? tasks : [];
     });
 
     const specialistResults = specialists
-      .filter((specialist) =>
-        specialist.name.toLowerCase().includes(searchTerm)
-      )
+        .filter((specialist) =>
+            specialist.name.toLowerCase().includes(searchTerm)
+        )
       .map((specialist: Specialist) => ({
         specialistName: specialist.name.toLowerCase(),
         task: "", // Assuming a task field is required, you might want to adjust this
@@ -280,18 +280,19 @@ const Jobs = () => {
       }));
 
     return [...taskResults, ...specialistResults];
-  };
+};
+
 
   const slicedResults = searchResults().slice(0, 20); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName}?${result.link.replace(/\//g, "")}`}
+      to={`/${taal}/jobs#${result.specialistName}?${result.link ?? ""}`}
       key={index}
       className={`Jobssearch_dropdown_item ${
         index === selectedIndex ? "selected" : ""
       }`}
-      onClick={() => handleResultClick(result.link)}
+      onClick={() => handleResultClick(result.link ?? "")}
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>

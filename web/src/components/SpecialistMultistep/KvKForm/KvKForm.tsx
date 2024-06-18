@@ -54,7 +54,7 @@ function KvKForm({ setShowNoKvK, updateFields }: KvkChoreFormProps) {
       <div className="KvK_inputs">
         <div className={`KvK_input ${isValidCompany ? '' : 'invalid'}`}>
           <label htmlFor="">Bedrijf naam</label>
-          <input type="text" placeholder="Bedrijfsnaam" pattern="[A-Za-z\s]+" onChange={handleCompanyChange} required />
+          <input className="KvK_input__input" type="text" placeholder="Bedrijfsnaam" pattern="[A-Za-z\s]+" onChange={handleCompanyChange} required />
         </div>
         {!isValidCompany && (
           <p className="error-message">Voer alstublieft een geldige bedrijfsnaam in</p>
@@ -62,7 +62,7 @@ function KvKForm({ setShowNoKvK, updateFields }: KvkChoreFormProps) {
 
         <div className={`KvK_input ${isValidKvK ? '' : 'invalid'}`}>
           <label htmlFor="">KvK nummer:</label>
-          <input type="text" placeholder="Uw KvK nummer" onChange={handleKvKChange} pattern="[0-9]{8}" required />
+          <input className="KvK_input__input" type="text" placeholder="Uw KvK nummer" onChange={handleKvKChange} pattern="[0-9]{8}" required />
         </div>
         {!isValidKvK && (
           <p className="error-message">Voer alstublieft een geldig KvK nummer in (max 8 karakters)</p>

@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
 import specialists from "../../data/specialists.ts";
-import Fuse from "fuse.js";
+// import Fuse, { FuseSearchOptions } from "fuse.js";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 interface Specialist {
@@ -110,8 +110,7 @@ function Searchbar() {
   };
 
   const handleInputKeyDown = (e) => {
-    switch (e.key)
-     {
+    switch (e.key) {
       case "ArrowUp":
         setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
         break;
@@ -143,19 +142,20 @@ function Searchbar() {
     setSearchPerformed(true); // Indicate that a search has been performed
   };
 
-  const fuse = new Fuse(specialists, {
+  const fuseOptions = {
     keys: ["name", "tasks.task"],
     includeScore: true,
-    includeMatches: true,
-    threshold: 0.2,
-    distance: 100,
-    ignoreLocation: true,
-    findAllMatches: true,
-  });
+    threshold: 0.3, // Adjust the threshold for fuzzy matching
+    distance: 100, // Maximum distance for fuzzy search
+    limit: 20, // Limit the number of results
+  };
+
+  // const fuse = new Fuse(specialists, fuseOptions);
 
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
     if (!searchTerm) {
+      // Return all specialists if no search term is provided
       return specialists.flatMap((specialist) =>
         specialist.tasks.map((task) => ({
           specialistName: capitalizeFirstLetter(specialist.name),
@@ -164,34 +164,33 @@ function Searchbar() {
         }))
       );
     }
-
-    const result = fuse.search(searchTerm);
-
-    const taskResults = result.flatMap((res) => {
-      return res.item.tasks
-        .filter(
-          (task) =>
-            task.task.toLowerCase().includes(searchTerm) ||
-            res.item.name.toLowerCase().includes(searchTerm)
-        )
-        .map((task) => ({
-          specialistName: capitalizeFirstLetter(res.item.name),
-          task: capitalizeFirstLetter(task.task),
-          link: task.link,
-        }));
-    });
-
-    return taskResults;
-  };
-
-  const slicedResults = searchResults().slice(0, 20);
   
+   // Perform a search using the configured Fuse instance
+   const result = fuse.search(searchTerm);
+
+   const taskResults = result.flatMap((res) => {
+     return res.item.tasks
+       .filter(
+         (task) =>
+           task.task.toLowerCase().includes(searchTerm) ||
+           res.item.name.toLowerCase().includes(searchTerm)
+       )
+       .map((task) => ({
+         specialistName: capitalizeFirstLetter(res.item.name),
+         task: capitalizeFirstLetter(task.task),
+         link: task.link,
+       }));
+   });
+ 
+   return taskResults;
+ };
+  const slicedResults = searchResults().slice(0, 20);
+
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${result.link?.replace(
-        /\//g,
-        ""
-      ) ?? ""}`}
+      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${
+        result.link?.replace(/\//g, "") ?? ""
+      }`}
       key={index}
       className={`search_dropdown_item ${
         index === selectedIndex ? "active" : ""
@@ -211,8 +210,6 @@ function Searchbar() {
       </div>
     </Link>
   ));
-
-  
 
   return (
     <div id="SearchBar-wrapper">
@@ -444,37 +441,40 @@ function HomePageTwo() {
         </article>
       </section>
       <article className="InfoBarHome">
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/pro-overview`}
-            >
-              100+ Vakspecialisten
-            </Link>{" "}
-          </h4>
+        <div className="scrollContainer">
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/pro-overview`}
+              >
+                100+ Vakspecialisten
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/jobs-overview`}
+              >
+                1000+ Klussen
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+          </div>
         </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">
-            <Link
-              className="infoContainerHomeLink"
-              to={`/${taal}/jobs-overview`}
-            >
-              1000+ Klussen
-            </Link>
-          </h4>
-        </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
-        </div>
-        <article className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">All-in-1 App</h4>
-        </article>
       </article>
+
       <section className="howItWorksSectionHome">
         <article className="howItWorksTitleContainerHome">
           <h2 className="howItWorksTitleHome">Hoe Mostpros Werkt</h2>
