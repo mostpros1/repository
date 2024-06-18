@@ -585,7 +585,6 @@ const Cal = () => {
 
         // Merge existing and new availability dates
         const updatedAvailability = [...availabilityArray, ...newDates];
-        console.log(updatedAvailability);
 
         dynamo.update({
             TableName: "Professionals",
@@ -616,9 +615,6 @@ const Cal = () => {
                 const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
                 return stopXSS(utcDate.toISOString().split('T')[0]);
             });
-    
-            console.log("Selected Dates (Original):", selectedDates);
-            console.log("Dates to Delete (UTC):", datesToDelete);
 
             // Filter out dates that need to be deleted from the availability array
             const updatedAvailability = availabilityArray.filter(item =>
