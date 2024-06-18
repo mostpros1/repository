@@ -258,7 +258,7 @@ function HomePageTwo() {
             </h2>
           </section>
           <section className="SearchSectionHome">
-          <SearchBar />
+            <SearchBar />
           </section>
           <section className="JobsSectionHome">
             <article className="populairjobsHero">
@@ -306,7 +306,11 @@ function HomePageTwo() {
           </div>
           <div className="infoContainerHome">
             <StarIcon />
-            <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+            <h4 className="infoContainerHomeH4">
+              <Link className="infoContainerHomeLink" to={`/${taal}/quality`}>
+                Kwaliteitsgarantie
+              </Link>
+            </h4>
           </div>
         </div>
       </article>

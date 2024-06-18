@@ -354,6 +354,50 @@ function SpecialistMultistepForm() {
     signUpProf();
   }
 
+  /*
+async function signUp(registerData: RegisterData): Promise<void> {
+    const { firstName, lastName, email, phoneNumber, password, region, postcode, profession, rating, availibility, kvk, bedrijf } = registerData;
+
+    try {
+        const response = await fetch(process.env.API_GATEWAY_URL + '/signup', { // Use an environment variable
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                password,
+                region,
+                postcode,
+                profession,
+                rating,
+                availibility,
+                kvk,
+                bedrijf
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        if (data && typeof data === 'object' && 'message' in data) {
+            console.log(data.message); // Safely access `message` after checking it exists
+        } else {
+            console.log("Unexpected response format");
+        }
+    } catch (error) {
+        console.error('Error signing up:', error);
+        // Optionally, rethrow or handle the error more gracefully
+        throw error; // Rethrow or handle according to your error handling strategy
+    }
+}
+*/
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {

@@ -80,7 +80,7 @@ const ReviewComponent: React.FC = () => {
             )}.jpg`, // item.authorImageUrl,
             rating: item.rating,
           }));
-        
+
           const mappedReviews: Review[] = await Promise.all(mappedPromises);
           setReviews(mappedReviews);
           setSortedReviews(mappedReviews);
@@ -125,124 +125,151 @@ const ReviewComponent: React.FC = () => {
     const [rating, setRating] = useState(0);
 
 
-    
 
-      const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const currentDate = new Date().toLocaleDateString();
-        const newReview: Review = {
-          id: sortedReviews.length + 1,
-          author: name,
-          date: currentDate,
-          content: content,
-          //totalReviews: 1,
-          authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
-            Math.random() * 100
-          )}.jpg`,
-          rating: rating,
-          homeownerName: "",
-        };
 
-        setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
-        setName("");
-        setContent("");
-        setRating(0);
-
-        const user = await Auth.currentAuthenticatedUser();
-        const email = user.attributes.email;
-        // Perform DynamoDB update or post request to add the new review
-        try {
-          //const uuid = await UUID(); // Wait for the UUID to be resolved
-          await dynamo.put({
-            TableName: "Reviews",
-            Item: {
-              id: Number(stopXSS(String(Math.floor(Math.random() * 1000)))),
-              professional_name: stopXSS(name),
-              homeownerName: stopXSS(email), // Use the resolved UUID her)e
-              date: stopXSS(newReview.date),
-              description: stopXSS(newReview.content),
-              //totalReviews: newReview.totalReviews,
-              rating: stopXSS(String(newReview.rating)),
-            },
-          }).promise();
-          console.log("Review submitted:", newReview);
-          fetchReviews();
-        } catch (error) {
-          console.error("Error submitting review:", error);
-        }
+    /*const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const currentDate = new Date().toLocaleDateString();
+      const newReview: Review = {
+        id: sortedReviews.length + 1,
+        author: name,
+        date: currentDate,
+        content: content,
+        //totalReviews: 1,
+        authorImageUrl: `https://randomuser.me/api/portraits/men/${Math.floor(
+          Math.random() * 100
+        )}.jpg`,
+        rating: rating,
+        homeownerName: "",
       };
 
-      return (
-        <form id="review-form" onSubmit={handleSubmit}>
-          <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Naam Specialist"
-        required
-          />
-          <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Jouw Beoordeling"
-        required
-          />
-          <StarRating rating={rating} onRatingChange={setRating} />
-          <button type="submit">Beoordeling indienen</button>
-        </form>
-      );
+      setSortedReviews([...sortedReviews, newReview]); // Add new review to sortedReviews
+      setName("");
+      setContent("");
+      setRating(0);
+
+      const user = await Auth.currentAuthenticatedUser();
+      const email = user.attributes.email;
+      // Perform DynamoDB update or post request to add the new review
+      try {
+        //const uuid = await UUID(); // Wait for the UUID to be resolved
+        await dynamo.put({
+          TableName: "Reviews",
+          Item: {
+            id: Number(stopXSS(String(Math.floor(Math.random() * 1000)))),
+            professional_name: stopXSS(name),
+            homeownerName: stopXSS(email), // Use the resolved UUID her)e
+            date: stopXSS(newReview.date),
+            description: stopXSS(newReview.content),
+            //totalReviews: newReview.totalReviews,
+            rating: stopXSS(String(newReview.rating)),
+          },
+        }).promise();
+        console.log("Review submitted:", newReview);
+        fetchReviews();
+      } catch (error) {
+        console.error("Error submitting review:", error);
+      }
+    };*/
+
+    //REST API VERSIE
+    
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const response = await fetch('https://o4q0gf6gzb.execute-api.eu-north-1.amazonaws.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          content,
+          rating,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data);
+      // Handle success (e.g., clear form)
+      fetchReviews();
     };
+    
 
     return (
-      <section>
+      <form id="review-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Naam Specialist"
+          required
+        />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Jouw Beoordeling"
+          required
+        />
+        <StarRating rating={rating} onRatingChange={setRating} />
+        <button type="submit">Beoordeling indienen</button>
+      </form>
+    );
+  };
+
+  return (
+    <section>
       <div className="upper-review-con">
         <h1>Beoordelingen</h1>
         <div>
-        Sorteren op:
-        <select onChange={(e) => handleSort(e.target.value)}>
-          <option value="">Relevantie</option>
-          <option value="date">Datum</option>
-          <option value="totalReviews">Totaal aantal beoordelingen</option>
-        </select>
+          Sorteren op:
+          <select onChange={(e) => handleSort(e.target.value)}>
+            <option value="">Relevantie</option>
+            <option value="date">Datum</option>
+            <option value="totalReviews">Totaal aantal beoordelingen</option>
+          </select>
         </div>
         <p>Beoordelingen zijn afkomstig van klanten zoals jij.</p>
         <div className="grid-sect">
-        <ReviewForm />
-        <img src={SittingCustomer} alt="zittende-klant" />
+          <ReviewForm />
+          <img src={SittingCustomer} alt="zittende-klant" />
         </div>
       </div>
       <article className="reviews-container">
         {sortedReviews.map((review) => (
-        <section key={review.id} className="review">
-          <section className="review-header">
-          <img src={review.authorImageUrl} alt={review.author} />
-          <section>
-            <div className="author-name">{review.homeownerName}</div>
-            <article className="review-info">
-            <span className="total-reviews">
-              Specialist: {review.author}
-              <span className="review-date">{review.date}</span>
-            </span>
-            <article className="star-rating">
-              <StarRating rating={review.rating} />
+          <section key={review.id} className="review">
+            <section className="review-header">
+              <img src={review.authorImageUrl} alt={review.author} />
+              <section>
+                <div className="author-name">{review.homeownerName}</div>
+                <article className="review-info">
+                  <span className="total-reviews">
+                    Specialist: {review.author}
+                    <span className="review-date">{review.date}</span>
+                  </span>
+                  <article className="star-rating">
+                    <StarRating rating={review.rating} />
+                  </article>
+                </article>
+              </section>
+            </section>
+            <article className="review-body">
+              <p>{review.content}</p>
             </article>
+            <article className="review-footer">
+              <article className="review-actions">
+                <button>Openbare reactie.</button>
+                <button>Direct bericht.</button>
+              </article>
             </article>
           </section>
-          </section>
-          <article className="review-body">
-          <p>{review.content}</p>
-          </article>
-          <article className="review-footer">
-          <article className="review-actions">
-            <button>Openbare reactie.</button>
-            <button>Direct bericht.</button>
-          </article>
-          </article>
-        </section>
         ))}
       </article>
-      </section>
-    );
-  };
+    </section>
+  );
+};
 
-  export default ReviewComponent;
+export default ReviewComponent;

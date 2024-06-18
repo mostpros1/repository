@@ -197,6 +197,7 @@
   overflow: hidden;
   height: 3rem; /* Set to height of a single item */
   width: 100%;
+  justify-content: space-around;
 }
 
 .scrollContainer {

@@ -46,7 +46,7 @@ function BevestigEmailPage() {
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
-    const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+    /*const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
         apiVersion: '2023-10-16',
     });
 
@@ -180,6 +180,77 @@ function BevestigEmailPage() {
             sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
         }
     }
+
+    */
+    //RESTAPI VERSION
+
+    const postConfigMap: Record<string, PostConfig> = {
+        'HOMEOWNER': {
+            roleName: "Homeowner",
+            nextPage: `/${taal}/` + everythingAfterFirstHash,
+            onSuccess: () => {
+                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+            },
+        },
+        'PROFESSIONAL': {
+            roleName: "Professional",
+            nextPage: `/${taal}/pro-dashboard`,
+            onSuccess: () => {
+                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+            },
+        },
+    }
+
+    async function confirmSignUp(code: string) {
+        const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit";
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: userEmail,
+                    code: code,
+                    postConfigId: postConfigId,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Network response was not ok, status code: ${response.status}`);
+            }
+    
+            const contentType = response.headers.get('content-type');
+            let data;
+    
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                // Handle non-JSON response (if any)
+                data = await response.text(); // Read the response as text
+                // Assume success if a plain text response is received
+                if (data === "Sign-up confirmed and user added to group.") {
+                    data = { message: data, statusCode: 200 };
+                }
+            }
+    
+            console.log('Response data:', data);
+    
+            setIsConfirmed(true);
+            const postConfig = postConfigMap[postConfigId] || null;
+            postConfig.onSuccess && postConfig.onSuccess();
+            window.location.href = window.location.origin + postConfig.nextPage;
+            //navigate(postConfig.nextPage);
+        } catch (error) {
+            console.error('Error in confirmSignUp:', error);
+            // Handle or propagate the error as needed
+        }
+    }
+    
+    
+    
+
 
 
     function onSubmit(e: FormEvent) {
