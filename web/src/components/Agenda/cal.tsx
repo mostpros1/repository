@@ -166,6 +166,9 @@ const Cal = () => {
         setSelectedDates([]);
     };
 
+
+
+
     const renderCalendarDays = () => {
         const monthStart = startOfMonth(currentMonth);
         const monthEnd = endOfMonth(monthStart);
@@ -173,6 +176,42 @@ const Cal = () => {
         const endDate = endOfWeek(monthEnd, { weekStartsOn: 1 });
 
         const days = eachDayOfInterval({ start: startDate, end: endDate });
+
+        function normalizeDate(date) {
+            return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        }
+
+        // Extracted logic to determine the new state
+        const updateSelectedDates = async (clickedDay: Date) => {
+            const normalizedClickedDay = normalizeDate(clickedDay);
+            const prevSelectedDates = [...selectedDates]; // Make sure to work with a copy of the state to avoid direct mutation
+            const dateExists = prevSelectedDates.some(date => normalizeDate(date).getTime() === normalizedClickedDay.getTime());
+
+            if (dateExists) {
+                // Date is selected, remove it
+                const updatedDates = prevSelectedDates.filter(date => normalizeDate(date).getTime() !== normalizedClickedDay.getTime());
+                // Attempt to delete the availability
+                const dateString = stopXSS(normalizedClickedDay.toISOString().split('T')[0]);
+                const dateToDeleteIndex = availability.findIndex(item => item.date === dateString);
+                if (dateToDeleteIndex !== -1) {
+                    const [dateToDelete] = availability.splice(dateToDeleteIndex, 1);
+                    await deleteAvailability(dateToDelete);
+                }
+                return updatedDates;
+            } else {
+                // Date isn't selected, add it
+                addAvailability([normalizedClickedDay]);
+                return [...prevSelectedDates, normalizedClickedDay];
+            }
+        };
+
+        // Usage within handleDateClick
+        const handleDateClick = async (clickedDay) => {
+            const updatedDates = await updateSelectedDates(clickedDay);
+            setSelectedDates(updatedDates);
+        };
+
+
 
         return (
             <CalendarContainer>
@@ -189,35 +228,28 @@ const Cal = () => {
                             hasAvailability={hasAvailability}
                             hasEntries={hasEntries}
                             className={selectedDates.some(selectedDate => selectedDate.getDate() === day.getDate() && selectedDate.getMonth() === day.getMonth() && selectedDate.getFullYear() === day.getFullYear()) ? 'selected' : ''}
-                            onClick={() => {
-                                if (selectedDates.some(selectedDate => selectedDate.getTime() === day.getTime())) {
-                                    setSelectedDates(selectedDates.filter(selectedDate => selectedDate.getTime() !== day.getTime()));
-                                } else {
-                                    setSelectedDates([...selectedDates, day]);
-                                }
-                            }}
+                            onClick={() => handleDateClick(day)}
                         >
                             {format(day, 'd')}
-                            {hasEntries && (
+                            {/*hasEntries && (
                                 <div className="dropdown">
                                     {entries[formattedDate].map((entry, index) => (
                                         <div
                                             key={index}
-                                            style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px', cursor: 'pointer' }} // Add cursor:pointer to indicate it's clickable
+                                            style={{ backgroundColor: entry.color, padding: '5px', margin: '2px 0', borderRadius: '5px', cursor: 'pointer' }}
                                             onClick={() => {
                                                 console.log(entry.id);
                                                 if (typeof entry.id !== 'undefined') {
                                                     deleteEntrys(entry.id);
                                                 }
-                                            }} // Log the id when the div is clicked
+                                            }}
                                         >
                                             {entry.text} {entry.time && `- ${entry.time}`}
                                         </div>
                                     ))}
                                 </div>
-                            )}
+                            )*/}
                         </Day>
-
                     );
                 })}
             </CalendarContainer>
@@ -227,7 +259,6 @@ const Cal = () => {
     useEffect(() => {
         console.log(entries);
     }, [entries]);
-
 
     const navigateToPreviousMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
@@ -278,7 +309,7 @@ const Cal = () => {
         fetchProfessionalData();
     }, []);
 
-    async function getEntriesFromDB() {
+    /*async function getEntriesFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
         dynamo.query({
@@ -371,39 +402,45 @@ const Cal = () => {
         }).promise();
         console.log(data);
         await getEntriesFromDB(); // Correctly await the completion of getEntriesFromDB
-    }
+    }*/
 
     async function getAvailabilityFromDB() {
-        const authenticatedUser = await Auth.currentAuthenticatedUser();
-        const email = authenticatedUser.attributes.email;
-        dynamo.query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
-            ExpressionAttributeValues: {
-                ":email": email
-            }
-        }).promise().then((data) => {
-            if (data.Items && data.Items.length > 0) {
-                console.log(data.Items[0]);
-                const output = data.Items[0];
-                console.log(output);
-                const beschikbaarheid: Availability[] = []
-                for (let i = 0; i < output.availability.length; i++) {
-                    console.log(output.availability[i].date);
-                    beschikbaarheid.push({ date: output.availability[i].date, time: output.availability[i].time });
-                    console.log(beschikbaarheid);
+        try {
+            const authenticatedUser = await Auth.currentAuthenticatedUser();
+            const email = authenticatedUser.attributes.email;
+            const data = await dynamo.query({
+                TableName: "Professionals",
+                IndexName: "emailIndex",
+                KeyConditionExpression: "email = :email",
+                ExpressionAttributeValues: {
+                    ":email": email
                 }
-                console.log(beschikbaarheid);
+            }).promise();
+
+            if (data.Items && data.Items.length > 0) {
+                const output = data.Items[0];
+                const beschikbaarheid = output.availability.map(item => ({
+                    date: item.date,
+                    time: item.time
+                }));
+
+                console.log("Beschikbaarheid:", beschikbaarheid);
+
                 setAvailability(beschikbaarheid);
+
+                // Convert dates to Date objects and set selectedDates
+                const dates = beschikbaarheid.map(item => new Date(item.date));
+                setSelectedDates(dates);
+
                 setProfessionalId(data.Items[0].id);
             } else {
                 console.error("No items found in the query result.");
             }
-        }).catch((err) => {
-            console.error(err);
-        });
+        } catch (err) {
+            console.error("An error occurred while fetching availability:", err);
+        }
     }
+
 
     useEffect(() => {
         getAvailabilityFromDB();
@@ -570,39 +607,79 @@ const Cal = () => {
             });
     };
 
-    const addAvailibility = async () => {
+    const addAvailability = async (dates) => {
+        const availabilityArray = Array.isArray(availability) ? availability : [availability];
 
-        const availibilityArray = Array.isArray(availability) ? availability : [availability];
-       
-
-        const newDates: Availability[] = [];
-
-        for (let i = 0; i < selectedDates.length; i++) {
-            newDates.push({
-                date: stopXSS(selectedDates[i].toISOString().split('T')[0]),
+        const newDates = dates.map(date => {
+            const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            return {
+                date: stopXSS(utcDate.toISOString().split('T')[0]),
                 time: stopXSS("hele dag")
-            })
-        }
-        const updatedAvailability = [...availibilityArray, ...newDates];
+            };
+        });
 
-        dynamo.update({
-            TableName: "Professionals",
-            Key: {
-                id: professionalId,
-            },
-            UpdateExpression: `set availability = :availability`,
-            ExpressionAttributeValues: {
-                ":availability": updatedAvailability,
-            },
-        }).promise()
-            .then(output => {
-                getAvailabilityFromDB();
-                getEntriesFromDB();
-                console.log(output.Attributes)
-            })
-           .catch(console.error);
-        window.alert("Datum toegevoegt.");
+        // Merge existing and new availability dates
+        const updatedAvailability = [...availabilityArray, ...newDates];
+
+        try {
+            await dynamo.update({
+                TableName: "Professionals",
+                Key: { id: professionalId },
+                UpdateExpression: `set availability = :availability`,
+                ExpressionAttributeValues: { ":availability": updatedAvailability },
+            }).promise();
+
+            await getAvailabilityFromDB();
+            await getEntriesFromDB();
+            window.alert("Datum toegevoegt.");
+        } catch (error) {
+            console.error("An error occurred while adding availability: ", error);
+        }
     };
+
+
+    const deleteAvailability = async (date) => {
+        try {
+            // Ensure availability is an array
+            const availabilityArray = Array.isArray(availability) ? availability : [availability];
+
+            // Prepare dates to delete
+            /*const datesToDelete = selectedDates.map(date => {
+                const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+                return stopXSS(utcDate.toISOString().split('T')[0]);
+            });
+*/
+            // Filter out dates that need to be deleted from the availability array
+            const updatedAvailability = availabilityArray.filter(item =>
+                !date.includes(item.date)
+            );
+
+            // Update the DynamoDB table with the filtered availability
+            const result = await dynamo.update({
+                TableName: "Professionals",
+                Key: {
+                    id: professionalId,
+                },
+                UpdateExpression: `set availability = :availability`,
+                ExpressionAttributeValues: {
+                    ":availability": updatedAvailability,
+                },
+            }).promise();
+
+            // Fetch updated data and log the output
+            await getAvailabilityFromDB();
+            await getEntriesFromDB();
+            console.log(result.Attributes);
+
+            window.alert("Datum verwijderd.");
+        } catch (error) {
+            console.error("An error occurred while deleting availability: ", error);
+        }
+    };
+
+    useEffect(() => {
+        console.log(selectedDates)
+    }, [selectedDates]);
 
     return (
         <div className="calendar-container">
@@ -614,7 +691,7 @@ const Cal = () => {
             {renderDaysOfWeek()}
             {renderCalendarDays()}
 
-            <form className="entry-form" onSubmit={(e) => {
+            {/*<form className="entry-form" onSubmit={(e) => {
                 e.preventDefault();
                 const text = (e.target as any).elements.entryText.value;
                 const time = (e.target as any).elements.entryTime.value;
@@ -641,6 +718,12 @@ const Cal = () => {
             }}>
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
             </form>
+            <form className="availability-form" onSubmit={(e) => {
+                e.preventDefault();
+                deleteAvailability();
+            }}>
+                <button className='submitButtonStyling' type="submit">Verwijder Beschikbaarheid</button>
+            </form>*/}
 
             <form onSubmit={(e) => {
                 e.preventDefault();

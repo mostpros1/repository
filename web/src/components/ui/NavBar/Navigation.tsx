@@ -8,6 +8,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
+import { useUserType } from '../../../useUserTypeContext';
+
+interface UserState {
+  isProfessional: boolean;
+  setIsProfessional: (value: boolean) => void;
+  isHomeowner: boolean;
+  setIsHomeowner: (value: boolean) => void;
+}
 
 export let taal = "nl";
 
@@ -19,13 +27,16 @@ if (
 }
 console.log("test ", taal);
 
+
+
 function Navigation() {
+  const { isProfessional, setIsProfessional, isHomeowner, setIsHomeowner } = useUserType() as UserState;
+
   const { t } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
-  const [isProfessional, setIsProfessional] = useState(false);
-  const [isHomeowner, setIsHomeowner] = useState(false);
+  
 
   const handleIconClick = () => {
     navigate(`/${taal}/home-innovation`);
@@ -58,7 +69,7 @@ function Navigation() {
         navigate(`/${taal}/login`);
       }
     }
-  }, [user, navigate]);
+  }, [user]);
 
   const checkAuthStatus = async () => {
     try {
