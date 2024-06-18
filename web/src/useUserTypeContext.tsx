@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState } from 'react';
 
 // Create a context
 const UserTypeContext = createContext();
-
 // Create a provider component
 const UserTypeProvider = ({ children }) => {
   const [isProfessional, setIsProfessional] = useState(false);

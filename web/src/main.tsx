@@ -14,7 +14,7 @@ import "./index.css";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { AvailabilityProvider } from './AvailabilityContext';
-import { UserTypeProvider } from './useUserTypeContext';
+import { UserTypeProvider } from './useUserTypeContext.tsx';
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
