@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   Dashboard as DashboardIcon,
@@ -25,7 +25,7 @@ interface UserState {
 }
 
 const SideNav = () => {
-  const { isProfessional, setIsProfessional, isHomeowner, setIsHomeowner } = useUserType() as UserState;
+  const { isProfessional, setIsProfessional, setIsHomeowner } = useUserType() as UserState;
 
   const { user } = useUser();
   const navigate = useNavigate();
