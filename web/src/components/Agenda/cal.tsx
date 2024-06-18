@@ -231,7 +231,7 @@ const Cal = () => {
                             onClick={() => handleDateClick(day)}
                         >
                             {format(day, 'd')}
-                            {hasEntries && (
+                            {/*hasEntries && (
                                 <div className="dropdown">
                                     {entries[formattedDate].map((entry, index) => (
                                         <div
@@ -248,7 +248,7 @@ const Cal = () => {
                                         </div>
                                     ))}
                                 </div>
-                            )}
+                            )*/}
                         </Day>
                     );
                 })}
@@ -309,7 +309,7 @@ const Cal = () => {
         fetchProfessionalData();
     }, []);
 
-    async function getEntriesFromDB() {
+    /*async function getEntriesFromDB() {
         const authenticatedUser = await Auth.currentAuthenticatedUser();
         const email = authenticatedUser.attributes.email;
         dynamo.query({
@@ -402,7 +402,7 @@ const Cal = () => {
         }).promise();
         console.log(data);
         await getEntriesFromDB(); // Correctly await the completion of getEntriesFromDB
-    }
+    }*/
 
     async function getAvailabilityFromDB() {
         try {
@@ -691,7 +691,7 @@ const Cal = () => {
             {renderDaysOfWeek()}
             {renderCalendarDays()}
 
-            <form className="entry-form" onSubmit={(e) => {
+            {/*<form className="entry-form" onSubmit={(e) => {
                 e.preventDefault();
                 const text = (e.target as any).elements.entryText.value;
                 const time = (e.target as any).elements.entryTime.value;
@@ -723,7 +723,7 @@ const Cal = () => {
                 deleteAvailability();
             }}>
                 <button className='submitButtonStyling' type="submit">Verwijder Beschikbaarheid</button>
-            </form>
+            </form>*/}
 
             <form onSubmit={(e) => {
                 e.preventDefault();
