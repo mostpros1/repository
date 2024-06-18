@@ -228,7 +228,6 @@ const Cal = () => {
         console.log(entries);
     }, [entries]);
 
-
     const navigateToPreviousMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
     };
@@ -572,18 +571,21 @@ const Cal = () => {
 
     const addAvailibility = async () => {
 
-        const availibilityArray = Array.isArray(availability) ? availability : [availability];
-       
+        const availabilityArray = Array.isArray(availability) ? availability : [availability];
 
-        const newDates: Availability[] = [];
 
-        for (let i = 0; i < selectedDates.length; i++) {
-            newDates.push({
-                date: stopXSS(selectedDates[i].toISOString().split('T')[0]),
+        const newDates = selectedDates.map(date => {
+            const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            console.log(utcDate.toISOString().split('T')[0]);
+            return {
+                date: stopXSS(utcDate.toISOString().split('T')[0]),
                 time: stopXSS("hele dag")
-            })
-        }
-        const updatedAvailability = [...availibilityArray, ...newDates];
+            };
+        });
+
+        // Merge existing and new availability dates
+        const updatedAvailability = [...availabilityArray, ...newDates];
+        console.log(updatedAvailability);
 
         dynamo.update({
             TableName: "Professionals",
@@ -600,9 +602,55 @@ const Cal = () => {
                 getEntriesFromDB();
                 console.log(output.Attributes)
             })
-           .catch(console.error);
+            .catch(console.error);
         window.alert("Datum toegevoegt.");
     };
+
+    const deleteAvailability = async () => {
+        try {
+            // Ensure availability is an array
+            const availabilityArray = Array.isArray(availability) ? availability : [availability];
+
+            // Prepare dates to delete
+            const datesToDelete = selectedDates.map(date => {
+                const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+                return stopXSS(utcDate.toISOString().split('T')[0]);
+            });
+    
+            console.log("Selected Dates (Original):", selectedDates);
+            console.log("Dates to Delete (UTC):", datesToDelete);
+
+            // Filter out dates that need to be deleted from the availability array
+            const updatedAvailability = availabilityArray.filter(item =>
+                !datesToDelete.includes(item.date)
+            );
+
+            // Update the DynamoDB table with the filtered availability
+            const result = await dynamo.update({
+                TableName: "Professionals",
+                Key: {
+                    id: professionalId,
+                },
+                UpdateExpression: `set availability = :availability`,
+                ExpressionAttributeValues: {
+                    ":availability": updatedAvailability,
+                },
+            }).promise();
+
+            // Fetch updated data and log the output
+            await getAvailabilityFromDB();
+            await getEntriesFromDB();
+            console.log(result.Attributes);
+
+            window.alert("Datum verwijderd.");
+        } catch (error) {
+            console.error("An error occurred while deleting availability: ", error);
+        }
+    };
+
+    useEffect(() => {
+        console.log(selectedDates)
+    }, [selectedDates]);
 
     return (
         <div className="calendar-container">
@@ -640,6 +688,12 @@ const Cal = () => {
                 addAvailibility();
             }}>
                 <button className='submitButtonStyling' type="submit">Voeg Beschikbaarheid Toe</button>
+            </form>
+            <form className="availability-form" onSubmit={(e) => {
+                e.preventDefault();
+                deleteAvailability();
+            }}>
+                <button className='submitButtonStyling' type="submit">Verwijder Beschikbaarheid</button>
             </form>
 
             <form onSubmit={(e) => {
