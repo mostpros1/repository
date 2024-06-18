@@ -3,6 +3,7 @@
   padding: 0px 30px;
   border-radius: 10px;
   height: 100px;
+  display: none;
 }
 
 .filter-con {
