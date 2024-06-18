@@ -46,140 +46,75 @@ function BevestigEmailPage() {
     const userEmail = location.state === null ? "" : location.state.email
     const postConfigId = location.state === null ? "" : location.state.postConfig
 
-    const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
-        apiVersion: '2023-10-16',
-    });
+    //RESTAPI VERSION
 
     const postConfigMap: Record<string, PostConfig> = {
         'HOMEOWNER': {
             roleName: "Homeowner",
             nextPage: `/${taal}/` + everythingAfterFirstHash,
             onSuccess: () => {
-                cognitoClient.adminAddUserToGroup({
-                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                    Username: userEmail,
-                    GroupName: 'Homeowner',
-                }).promise()
-
-                    .then(async () => {
-                        const stripeCustomer = await stripe.customers.create({
-                            email: userEmail,
-                          });
-                          await cognitoClient.adminUpdateUserAttributes({
-                            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                            Username: userEmail,
-                            UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
-                          }).promise();
-                        dynamo.query({
-                            TableName: "Users",
-                            IndexName: "username",
-                            KeyConditionExpression: "email = :email",
-                            ExpressionAttributeValues: {
-                                ":email": userEmail,
-                            },
-                        }).promise() // Use.promise() here to get a Promise
-                            .then(data => {
-                                if (data.Items) {
-                                    dynamo.update({
-                                        TableName: "Users",
-                                        Key: {
-                                            id: data.Items[0].Id,
-                                        },
-                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
-                                        ExpressionAttributeValues: {
-                                            ":stripeCustomerId": Number(stopXSS(String(stripeCustomer.id))),
-                                        },
-                                    }).promise() // And here as well
-                                        .then(output => console.log(output.Attributes))
-                                        .catch(console.error);
-                                }
-                                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
-                            })
-                            .catch(error => console.error(error));
-
-                    })
-                    .catch(error => console.error(error));
-            }
+                setTimeout(() => navigate(postConfigMap['HOMEOWNER'].nextPage), 3000);
+            },
         },
         'PROFESSIONAL': {
             roleName: "Professional",
             nextPage: `/${taal}/pro-dashboard`,
-
             onSuccess: () => {
-                cognitoClient.adminAddUserToGroup({
-                    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                    Username: userEmail,
-                    GroupName: 'Professional',
-                }).promise()
-                    .then(async () => {
-                
-                          const stripeCustomer = await stripe.customers.create({
-                            email: userEmail,
-                          });
-                          await cognitoClient.adminUpdateUserAttributes({
-                            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-                            Username: userEmail,
-                            UserAttributes: [{ Name: 'custom:stripeCustomerId', Value: stripeCustomer.id }]
-                          }).promise();
-
-                        dynamo.query({
-                            TableName: "Users",
-                            IndexName: "username",
-                            KeyConditionExpression: "email = :email",
-                            ExpressionAttributeValues: {
-                                ":email": userEmail,
-                            },
-                        }).promise() // Use.promise() here to get a Promise
-                            .then(data => {
-                                if (data.Items) {
-                                    dynamo.update({
-                                        TableName: "Users",
-                                        Key: {
-                                            id: data.Items[0].Id,
-                                        },
-                                        UpdateExpression: `set stripeCustomerId = :stripeCustomerId`,
-                                        ExpressionAttributeValues: {
-                                            ":stripeCustomerId": Number(stopXSS(String(stripeCustomer.id))),
-                                        },
-                                    }).promise() // And here as well
-                                        .then(output => console.log(output.Attributes))
-                                        .catch(console.error);
-                                }
-                                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
-                            })
-                            .catch(error => console.error(error));
-                    }).catch(error => console.error(error));
-            }
+                setTimeout(() => navigate(postConfigMap['PROFESSIONAL'].nextPage), 3000);
+            },
         },
     }
-    const postConfig = postConfigMap[postConfigId] || null
 
     async function confirmSignUp(code: string) {
-
-        const confirmationResult = await Auth.confirmSignUp(userEmail, code)
-            .catch(error => {
-                console.error(error)
-                const errorActionMap: Record<string, () => void> = {
-                    "NotAuthorizedException": () => { setUserExists(true); setTimeout(() => navigate(postConfigMap[postConfigId].nextPage), 3000) },
-                    "CodeMismatchException": () => { },
-                    "default": () => { }
-                };
-                (errorActionMap[error.code] || errorActionMap['default'])()
-            })
-        const addToGroupResult = await cognitoClient.adminAddUserToGroup({
-            UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-            Username: userEmail,
-            GroupName: postConfig.roleName,
-        }).promise()
-            .catch(error => console.error(error))
-        console.log(addToGroupResult)
-        if (!addToGroupResult) return
-        if (confirmationResult == 'SUCCESS') {
-            setIsConfirmed(true)
-            postConfig.onSuccess && postConfig.onSuccess()
-            sendMail(userEmail, "Uw account is geverifieerd", "Uw account is geverifieerd. U kunt nu inloggen op de website.", "<html><p>Uw account is geverifieerd. U kunt nu inloggen op de website.</p></html>")
+        const apiUrl = "https://sppgt6xgr8.execute-api.eu-north-1.amazonaws.com/submit";
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: userEmail,
+                    code: code,
+                    postConfigId: postConfigId,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Network response was not ok, status code: ${response.status}`);
+            }
+    
+            const contentType = response.headers.get('content-type');
+            let data;
+    
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                // Handle non-JSON response (if any)
+                data = await response.text(); // Read the response as text
+                // Assume success if a plain text response is received
+                if (data === "Sign-up confirmed and user added to group.") {
+                    data = { message: data, statusCode: 200 };
+                }
+            }
+    
+            console.log('Response data:', data);
+    
+            setIsConfirmed(true);
+            const postConfig = postConfigMap[postConfigId] || null;
+            postConfig.onSuccess && postConfig.onSuccess();
+            window.location.href = window.location.origin + postConfig.nextPage;
+            //navigate(postConfig.nextPage);
+        } catch (error) {
+            console.error('Error in confirmSignUp:', error);
+            // Handle or propagate the error as needed
         }
     }
+    
+    
+    
+
 
 
     function onSubmit(e: FormEvent) {
