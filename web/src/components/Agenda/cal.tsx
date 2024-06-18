@@ -630,7 +630,7 @@ const Cal = () => {
             }).promise();
 
             await getAvailabilityFromDB();
-            await getEntriesFromDB();
+            //await getEntriesFromDB();
             window.alert("Datum toegevoegt.");
         } catch (error) {
             console.error("An error occurred while adding availability: ", error);
@@ -668,7 +668,7 @@ const Cal = () => {
 
             // Fetch updated data and log the output
             await getAvailabilityFromDB();
-            await getEntriesFromDB();
+            //await getEntriesFromDB();
             console.log(result.Attributes);
 
             window.alert("Datum verwijderd.");
