@@ -893,7 +893,7 @@
   }
 
   .SearchBarHome {
-    width: 37rem;
+    width: 33rem;
     padding: 0;
   }
 
@@ -902,7 +902,7 @@
   }
 
   .search_results {
-    max-width: 35rem;
+    max-width: 33rem;
     width: auto;
   }
 

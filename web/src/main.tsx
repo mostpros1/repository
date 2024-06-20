@@ -14,7 +14,7 @@ import "./index.css";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { AvailabilityProvider } from './AvailabilityContext';
-
+import { UserTypeProvider } from './useUserTypeContext.tsx';
 
 aws.config.update({
   accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -33,13 +33,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
-          <I18nextProvider i18n={i18n}>
-            <AvailabilityProvider>
-              <App />
-            </AvailabilityProvider>
-          </I18nextProvider>
-        </LocalizationProvider>
+        <UserTypeProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="nl">
+            <I18nextProvider i18n={i18n}>
+              <AvailabilityProvider>
+                <App />
+              </AvailabilityProvider>
+            </I18nextProvider>
+          </LocalizationProvider>
+        </UserTypeProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode >
