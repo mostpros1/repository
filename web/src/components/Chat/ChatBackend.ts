@@ -12,7 +12,12 @@ export function useChatBackend(user: any, signOut) {
   const [showConfirmedConnection, setShowConfirmedConnection] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
-  const [visibleName, setVisibleName] = React.useState<string>(user.attributes.email.split("@")[0]);
+  const [visibleName, setVisibleName] = React.useState<string>(() => {
+    if (user?.attributes?.email) {
+      return user.attributes.email.split("@")[0];
+    }
+    return ""; // Default value if attributes or email is undefined
+  });
   const [textSize, setTextSize] = React.useState<number>(14);
   const uuidEmailMap = React.useRef<{ [uuid: string]: string }>({});
 
@@ -52,7 +57,7 @@ export function useChatBackend(user: any, signOut) {
       console.error("Error sending message:", error);
     }
   };
-  
+
 
   const handleReceivedMessage = (receivedChat) => {
     if (receivedChat.members.includes(user.attributes.email)) {
@@ -62,12 +67,16 @@ export function useChatBackend(user: any, signOut) {
         setShowJoinButton(true);
       }
     }
-  };  
+  };
 
   const handleStartNewChatWithEmail = async (recipientEmail) => {
+    if (!user || !user.attributes) {
+      console.error("User object is not fully initialized.");
+      return;
+    }
     try {
       const uuid = getUUIDFromEmail(recipientEmail);
-      const members = [user.attributes.email, recipientEmail];
+      const members = [user.attributes?.email, recipientEmail];
       await API.graphql({
         query: mutations.createChat,
         variables: {
@@ -83,6 +92,43 @@ export function useChatBackend(user: any, signOut) {
       window.history.pushState({}, "", url);
       setRecipientEmail(recipientEmail);
       localStorage.setItem("selectedContact", recipientEmail);
+
+    } catch (error) {
+      console.error("Error starting new chat:", error);
+    }
+  };
+
+  const handleStartNewChatWithEmailDashboard = async (recipientEmail) => {
+    if (!user || !user.attributes) {
+      console.error("User object is not fully initialized.");
+      return;
+    }
+    try {
+      const uuid = getUUIDFromEmail(recipientEmail);
+      const members = [user.attributes?.email, recipientEmail];
+      await API.graphql({
+        query: mutations.createChat,
+        variables: {
+          input: {
+            text: "",
+            email: user.attributes.email,
+            members,
+            sortKey: members.sort().join("#"),
+          },
+        },
+      });
+      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+      if (groups?.includes("Homeowner")) {
+        const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+        setRecipientEmail(recipientEmail);
+        localStorage.setItem("selectedContact", recipientEmail);
+        window.location.href = url;
+      } else if (groups?.includes("Professional")) {
+        const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
+        localStorage.setItem("selectedContact", recipientEmail);
+        window.location.href = url;
+      }
+
     } catch (error) {
       console.error("Error starting new chat:", error);
     }
@@ -92,7 +138,7 @@ export function useChatBackend(user: any, signOut) {
     if (recipientEmail) {
       setShowAlert(false);
       setShowJoinButton(false);
-      setShowConfirmedConnection(true); 
+      setShowConfirmedConnection(true);
     }
   };
 
@@ -105,8 +151,8 @@ export function useChatBackend(user: any, signOut) {
     const members = [user.attributes.email, recentMessageEmail];
     setRecipientEmail(recentMessageEmail);
     setRecentMessageEmail("");
-    setShowJoinButton(false); 
-    setShowConfirmedConnection(true); 
+    setShowJoinButton(false);
+    setShowConfirmedConnection(true);
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
     localStorage.setItem("selectedContact", recentMessageEmail);
   };
@@ -114,12 +160,13 @@ export function useChatBackend(user: any, signOut) {
   return {
     chats,
     setChats,
-    recipientEmail, 
+    recipientEmail,
     showJoinButton, setShowJoinButton,
     showConfirmedConnection,
     showAlert,
     notificationMessage,
     handleStartNewChatWithEmail,
+    handleStartNewChatWithEmailDashboard,
     handleSendMessage,
     handleAlertConfirm,
     handleAlertCancel,

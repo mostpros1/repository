@@ -51,24 +51,31 @@ function Navigation() {
   }, []);
 
   useEffect(() => {
-    const currentURL = window.location.href;
+    const delay = 2000; // Delay in milliseconds (e.g., 2000ms = 2 seconds)
 
-    if (currentURL.includes("dashboard")) {
-      if (user?.signInUserSession?.accessToken?.payload) {
-        const groups =
-          user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups?.includes("Homeowner")) {
-          setIsHomeowner(true);
-          setIsProfessional(false);
-        } else if (groups?.includes("Professional")) {
-          setIsProfessional(true);
-          setIsHomeowner(false);
+    const checkUserType = () => {
+      const currentURL = window.location.href;
+      if (currentURL.includes("dashboard")) {
+        if (user?.signInUserSession?.accessToken?.payload) {
+          const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+          if (groups?.includes("Homeowner")) {
+            setIsHomeowner(true);
+            setIsProfessional(false);
+          } else if (groups?.includes("Professional")) {
+            setIsProfessional(true);
+            setIsHomeowner(false);
+          }
+        } else {
+          console.log("User data is not fully available.");
+          navigate(`/${taal}/login`);
         }
-      } else {
-        console.log("User data is not fully available.");
-        navigate(`/${taal}/login`);
       }
-    }
+    };
+
+    const timer = setTimeout(checkUserType, delay);
+
+    // Cleanup the timer if the component unmounts or user changes
+    return () => clearTimeout(timer);
   }, [user]);
 
   const checkAuthStatus = async () => {
