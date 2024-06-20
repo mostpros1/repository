@@ -14,7 +14,6 @@ interface SearchResultItem {
   name: string;
   tasks: { task: string; link?: string }[];
 }
-
 function highlightMatch(text, highlight) {
   const parts = text.split(new RegExp(`(${highlight})`, "gi"));
   return (
@@ -31,7 +30,6 @@ function highlightMatch(text, highlight) {
     </span>
   );
 }
-
 const SearchResults = ({
   results,
   selectedIndex,
@@ -94,7 +92,6 @@ const SearchResults = ({
     ))}
   </>
 );
-
 function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
@@ -196,13 +193,11 @@ function Searchbar() {
         .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
         .slice(0, 10) // Limiting to 10 closest results
         .map((res) => res.item);
-
       setClosestResults(closestResults);
     } catch (error) {
       console.error("Error performing search:", error);
     }
   };
-
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
     if (!searchTerm) {
