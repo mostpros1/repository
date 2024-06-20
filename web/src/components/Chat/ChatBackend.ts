@@ -41,17 +41,21 @@ export function useChatBackend(user: any, signOut) {
   };
 
   const handleSendMessage = async (text) => {
+    const sortedMembers = [user.attributes.email, recipientEmail].sort();
     const members = [user.attributes.email, recipientEmail];
+    
     console.log("Sending message:", text, "to members:", members);
+    
     try {
       await API.graphql(graphqlOperation(mutations.createChat, {
         input: {
           text,
           email: user.attributes.email,
           members,
-          sortKey: members.sort().join("#"),
+          sortKey: sortedMembers.join("#"),
         }
       }));
+      
       console.log("Message sent successfully");
     } catch (error) {
       console.error("Error sending message:", error);
