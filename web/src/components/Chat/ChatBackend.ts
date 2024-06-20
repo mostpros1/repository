@@ -105,43 +105,60 @@ export function useChatBackend(user: any, signOut) {
 
 
   const handleStartNewChatWithEmailDashboard = async (recipientEmail) => {
-    if (!user || !user.attributes) {
-      console.error("User object is not fully initialized.");
-      return;
-    }
-    try {
-      const uuid = getUUIDFromEmail(recipientEmail);
-      const members = [user.attributes?.email, recipientEmail];
-      console.log('Creating chat with recipients:', members.join(', '));
-      await API.graphql({
-        query: mutations.createChat,
-        variables: {
-          input: {
-            text: "",
-            email: user.attributes.email,
-            members,
-            sortKey: members.sort().join("#"),
-          },
-        },
-      });
-      console.log('Chat creation succeeded');
-      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups?.includes("Homeowner")) {
-        const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
-        setRecipientEmail(recipientEmail);
-        await handleSendMessage("Hallo");
-        window.location.href = url;
-      } else if (groups?.includes("Professional")) {
-        const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
-        setRecipientEmail(recipientEmail);
-        await handleSendMessage("Hallo");
-        window.location.href = url;
-      }
+  console.log("Starting new chat with email dashboard...", recipientEmail); // Initial log
 
-    } catch (error) {
-      console.error("Error starting new chat:", error);
+  if (!user ||!user.attributes) {
+    console.error("User object is not fully initialized.");
+    return;
+  }
+
+  console.log("User attributes available:", user.attributes); // Log user attributes
+
+  try {
+    const uuid = getUUIDFromEmail(recipientEmail);
+    console.log("Generated UUID for recipient:", uuid); // Log generated UUID
+
+    const members = [user.attributes?.email, recipientEmail];
+    console.log('Creating chat with recipients:', members.join(', '));
+
+    console.log("Calling API to create chat..."); // Before API call
+    await API.graphql({
+      query: mutations.createChat,
+      variables: {
+        input: {
+          text: "",
+          email: user.attributes.email,
+          members,
+          sortKey: members.sort().join("#"),
+        },
+      },
+    });
+
+    console.log('Chat creation succeeded'); // After successful API call
+
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    console.log("User groups:", groups); // Log user groups
+
+    if (groups?.includes("Homeowner")) {
+      console.log("User is Homeowner, redirecting..."); // Before redirect for Homeowners
+      const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+      setRecipientEmail(recipientEmail);
+      await handleSendMessage("Hallo");
+      window.location.href = url;
+    } else if (groups?.includes("Professional")) {
+      console.log("User is Professional, redirecting..."); // Before redirect for Professionals
+      const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
+      setRecipientEmail(recipientEmail);
+      await handleSendMessage("Hallo");
+      window.location.href = url;
+    } else {
+      console.warn("User does not belong to Homeowner or Professional group."); // Log if no matching group found
     }
-  };
+
+  } catch (error) {
+    console.error("Error starting new chat:", error); // Existing error log
+  }
+};
 
   const handleAlertConfirm = () => {
     if (recipientEmail) {
