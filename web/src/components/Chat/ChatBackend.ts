@@ -98,6 +98,8 @@ export function useChatBackend(user: any, signOut) {
     }
   };
 
+
+
   const handleStartNewChatWithEmailDashboard = async (recipientEmail) => {
     if (!user || !user.attributes) {
       console.error("User object is not fully initialized.");
@@ -106,6 +108,7 @@ export function useChatBackend(user: any, signOut) {
     try {
       const uuid = getUUIDFromEmail(recipientEmail);
       const members = [user.attributes?.email, recipientEmail];
+      console.log('Creating chat with recipients:', members.join(', '));
       await API.graphql({
         query: mutations.createChat,
         variables: {
@@ -117,15 +120,17 @@ export function useChatBackend(user: any, signOut) {
           },
         },
       });
+      console.log('Chat creation succeeded');
       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
       if (groups?.includes("Homeowner")) {
         const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
         setRecipientEmail(recipientEmail);
-        localStorage.setItem("selectedContact", recipientEmail);
+        await handleSendMessage("Hallo");
         window.location.href = url;
       } else if (groups?.includes("Professional")) {
         const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
-        localStorage.setItem("selectedContact", recipientEmail);
+        setRecipientEmail(recipientEmail);
+        await handleSendMessage("Hallo");
         window.location.href = url;
       }
 
