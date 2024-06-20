@@ -76,7 +76,7 @@
 #SearchBarInputHome:focus {
   outline: none;
   border: none;
-  border-radius: 0;
+  border-radius: 1;
 }
 
 .search_results {
@@ -123,10 +123,7 @@
 
 
 .searchBarBlueIcon {
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 50%;
-  background: #207cd7;
+  font-size: 3rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -890,21 +887,17 @@
   }
 
   .SearchBarHome {
-    width: 37rem;
+    width: 34rem;
     padding: 0;
   }
 
-  .searchBarBlueIcon {
-    margin-right: 1rem;
-  }
-
   .search_results {
-    max-width: 35rem;
+    max-width: 34rem;
     width: auto;
   }
 
   #SearchBarInputHome {
-    width: 35rem;
+    width: 34rem;
   }
 
   .howItWorksTitleContainerHome {
@@ -927,6 +920,12 @@
     flex-direction: column;
     width: 100%;
     animation: scroll 10s linear infinite;
+  }
+
+  .searchBarBlueIcon {
+    min-width: 3rem;
+    min-height: 3rem;
+    margin-right: 1rem;
   }
 }
 

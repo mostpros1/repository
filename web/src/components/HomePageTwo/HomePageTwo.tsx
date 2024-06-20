@@ -23,6 +23,7 @@ import AanemerPFP from "../../assets/AanemerPFP.png";
 import GijsPFP from "../../assets/GijsPFPpng.png";
 import CarpenterIcon from "@mui/icons-material/Carpenter";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
@@ -225,10 +226,12 @@ function Searchbar() {
           placeholder="Zoek een klus of specialist"
           className="search_input"
         />
-        <article
+        <SearchIcon fontSize="" className="searchBarBlueIcon"
+          onKeyDown={handleInputKeyDown}></SearchIcon>
+        {/* <article
           className="searchBarBlueIcon"
           onKeyDown={handleInputKeyDown}
-        ></article>
+        ></article> */}
       </div>
       <div className="search_results-con">
         {showList && (
