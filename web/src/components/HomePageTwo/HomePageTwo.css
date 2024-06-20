@@ -114,16 +114,14 @@
 .search_results a:hover {
   background-color: #f1f1f1;
 }
-/* input Highlights */
-/* 
+
 .highlight {
-  background-color: red;
-} */
+  font-weight: 600;
+}
 
 .search_results a .selected {
   color: black;
 }
-
 
 .searchBarBlueIcon {
   width: 3.2rem;
