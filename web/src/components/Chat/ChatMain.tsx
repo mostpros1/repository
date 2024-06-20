@@ -223,6 +223,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             },
           },
         });
+        console.log("CHATS: ", allChats.data.listChats.items);
         setChats(allChats.data.listChats.items);
       } catch (error) {
         console.error("Error fetching chats:", error);
