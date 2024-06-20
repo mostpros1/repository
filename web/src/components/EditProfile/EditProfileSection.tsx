@@ -112,12 +112,15 @@ const EditProfileSection = () => {
                   <div className="job-title">
                     <p>{jobTitle}</p>
                   </div>
-                  <LocationOnIcon />
                   <p>
                     <span className="profile-info-con-side">
-                      {name}
-                      <LinkedInIcon />
-                      {profileData.location}
+                      <p>
+                        <LinkedInIcon /> {name}
+                      </p>
+                      <p>
+                        <LocationOnIcon />
+                        {profileData.location}
+                      </p>
                     </span>
                   </p>
                 </div>
@@ -160,9 +163,9 @@ const EditProfileSection = () => {
       <div className="profile-btn-con">
         <button className="change-btn">Wijzigen</button>
       </div>
-      <div className="profile-under-sec"></div>
+      <div className="profile-middleline"></div>
       <div className="img-slideshow-con">
-        <p>Foto's en Video's</p>
+        <h3>Foto's en Video's</h3>
         <div className="img-upload">
           <div className="upload-dot-layout">
             <button>

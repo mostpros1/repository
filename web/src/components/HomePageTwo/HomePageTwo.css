@@ -114,11 +114,10 @@
 .search_results a:hover {
   background-color: #f1f1f1;
 }
-/* input Highlights */
-/* 
+
 .highlight {
-  background-color: red;
-} */
+  font-weight: 600;
+}
 
 .search_results a .selected {
   color: black;
@@ -892,7 +891,7 @@
   }
 
   .SearchBarHome {
-    width: 37rem;
+    width: 33rem;
     padding: 0;
   }
 
@@ -901,7 +900,7 @@
   }
 
   .search_results {
-    max-width: 35rem;
+    max-width: 33rem;
     width: auto;
   }
 

@@ -80,6 +80,7 @@ const PopularCardsData = [
   },
 ];
 
+
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
