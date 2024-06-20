@@ -12,7 +12,7 @@ function JobList() {
         </article>
       </section>
       <section id="jobcardSection">
-        <FilterBar />
+        {/* <FilterBar /> */}
         <div className="jobCardsDisplay">
           <JobCards />
         </div>
