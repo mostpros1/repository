@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Auth } from "aws-amplify";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
+import NineDots from "../../../assets/nine-dots.svg";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUser } from "../../../context/UserContext";
-import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
-import { useUserType } from '../../../useUserTypeContext';
+import { useUserType } from "../../../useUserTypeContext";
 
 interface UserState {
   isProfessional: boolean;
@@ -27,16 +27,14 @@ if (
 }
 console.log("test ", taal);
 
-
-
 function Navigation() {
-  const { isProfessional, setIsProfessional, isHomeowner, setIsHomeowner } = useUserType() as UserState;
+  const { isProfessional, setIsProfessional, isHomeowner, setIsHomeowner } =
+    useUserType() as UserState;
 
   const { t } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
-  
 
   const handleIconClick = () => {
     navigate(`/${taal}/home-innovation`);
@@ -459,8 +457,8 @@ function Navigation() {
             )}
           </li>
         </ul>
-        <div className="apps-icon" onClick={handleIconClick}>
-          <AppsRoundedIcon />
+        <div id="nine-dots">
+          <img src={NineDots} onClick={handleIconClick} />
         </div>
         <div className="dropdown-container">
           <button className="loginButton" onClick={handleDropdownToggle}>
