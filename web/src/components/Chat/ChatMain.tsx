@@ -296,14 +296,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   // Function to grab the email from the search bar and run switch chat
   const switchChatUsingEmailFromSearchBar = () => {
     const id = getidFromSearchBar();
-    console.log(id);
+    console.log("id: ", id);
     if (id) {
 
       dynamo.query({
         TableName: "Users",
         KeyConditionExpression: "id = :id",
         ExpressionAttributeValues: {
-          ":id" : id
+          ":id": Number(id)
         }
       }).promise().then((data) => {
         if (data.Items && data.Items.length > 0) {
@@ -326,9 +326,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-  useEffect(() => {
-    switchChatUsingEmailFromSearchBar();
-  }, []);
+
+  switchChatUsingEmailFromSearchBar();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
