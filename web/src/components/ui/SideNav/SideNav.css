@@ -27,10 +27,11 @@
   font-size: 1.7rem;
   padding: 0;
   transition: all 0.3s ease-in-out;
+  width: 100%;
 }
 
 .sidebar-item {
-  padding-top: 1rem;
+  padding: 1rem;
   margin-bottom: 0.5rem;
   font-weight: 100;
   font-family: "Poppins", sans-serif;
