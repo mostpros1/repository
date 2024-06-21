@@ -40,9 +40,8 @@
 .nav-container {
   position: relative;
   width: 100%;
-  max-width: 138rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .nav-container a {
@@ -120,6 +119,19 @@
 
 .nav-list li a svg {
   font-size: 20px;
+}
+.nav-blue-btn > button {
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 3px solid #308ae4;
+  background-color: white;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.nav-blue-btn > button:hover {
+  background-color: #308ae4;
+  color: white !important;
 }
 
 .nav-blue-btn > a {

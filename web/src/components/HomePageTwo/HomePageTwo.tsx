@@ -27,8 +27,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../ui/SearchBar/SearchBar";
 import specialists from "../../data/specialists.ts";
-// import Fuse, { FuseSearchOptions } from "fuse.js";
 import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
 interface Specialist {
@@ -81,172 +81,6 @@ const PopularCardsData = [
   },
 ];
 
-function capitalizeFirstLetter(str) {
-  return str.replace(/\b\w/g, (char) => char.toUpperCase());
-}
-
-function Searchbar() {
-  const [value, setValue] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [searchPerformed, setSearchPerformed] = useState(false);
-
-  const navigate = useNavigate();
-
-  const handleInputBlur = (e) => {
-    if (
-      !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("search_dropdown_item")
-    ) {
-      setShowList(false);
-    }
-  };
-
-  const handleInputFocus = () => {
-    setShowList(true);
-  };
-
-  const handleResultClick = (link) => {
-    navigate(`/nl/jobs${link}`);
-  };
-
-  const handleInputKeyDown = (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-        break;
-      case "ArrowDown":
-        setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, slicedResults.length - 1)
-        );
-        break;
-      case "Enter":
-        if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
-          const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
-        }
-        break;
-      case "Tab":
-        if (slicedResults.length > 0) {
-          const selectedResult = slicedResults[0];
-          setValue(selectedResult.task);
-          setSelectedIndex(0);
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-    setSearchPerformed(true); // Indicate that a search has been performed
-  };
-
-  const fuseOptions = {
-    keys: ["name", "tasks.task"],
-    includeScore: true,
-    threshold: 0.3, // Adjust the threshold for fuzzy matching
-    distance: 100, // Maximum distance for fuzzy search
-    limit: 20, // Limit the number of results
-  };
-
-  // const fuse = new Fuse(specialists, fuseOptions);
-
-  const searchResults = () => {
-    const searchTerm = value.trim().toLowerCase();
-    if (!searchTerm) {
-      // Return all specialists if no search term is provided
-      return specialists.flatMap((specialist) =>
-        specialist.tasks.map((task) => ({
-          specialistName: capitalizeFirstLetter(specialist.name),
-          task: capitalizeFirstLetter(task.task),
-          link: task.link,
-        }))
-      );
-    }
-  
-   // Perform a search using the configured Fuse instance
-   const result = fuse.search(searchTerm);
-
-   const taskResults = result.flatMap((res) => {
-     return res.item.tasks
-       .filter(
-         (task) =>
-           task.task.toLowerCase().includes(searchTerm) ||
-           res.item.name.toLowerCase().includes(searchTerm)
-       )
-       .map((task) => ({
-         specialistName: capitalizeFirstLetter(res.item.name),
-         task: capitalizeFirstLetter(task.task),
-         link: task.link,
-       }));
-   });
- 
-   return taskResults;
- };
-  const slicedResults = searchResults().slice(0, 20);
-
-  const resultsRender = slicedResults.map((result, index) => (
-    <Link
-      to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${
-        result.link?.replace(/\//g, "") ?? ""
-      }`}
-      key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "active" : ""
-      }`}
-      onMouseDown={() =>
-        handleResultClick(
-          `#${result.specialistName.toLowerCase()}?${result.link?.replace(
-            /\//g,
-            ""
-          )}`
-        )
-      }
-    >
-      <div className={index === selectedIndex ? "selected" : ""}>
-        {result.specialistName ? `${result.specialistName} - ` : ""}
-        {result.task}
-      </div>
-    </Link>
-  ));
-
-  return (
-    <div id="SearchBar-wrapper">
-      <div className="SearchBarHome">
-        <input
-          id="SearchBarInputHome"
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          onKeyDown={handleInputKeyDown}
-          onBlur={handleInputBlur}
-          placeholder="Zoek een klus of specialist"
-          className="search_input"
-        />
-        <SearchIcon fontSize="" className="searchBarBlueIcon"
-          onKeyDown={handleInputKeyDown}></SearchIcon>
-        {/* <article
-          className="searchBarBlueIcon"
-          onKeyDown={handleInputKeyDown}
-        ></article> */}
-      </div>
-      <div className="search_results-con">
-        {showList && (
-          <div className="search_results">
-            {slicedResults.length > 0
-              ? resultsRender
-              : searchPerformed && (
-                  <div className="no_results">No results found</div>
-                )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
@@ -425,7 +259,7 @@ function HomePageTwo() {
             </h2>
           </section>
           <section className="SearchSectionHome">
-            <Searchbar />
+            <SearchBar />
           </section>
           <section className="JobsSectionHome">
             <article className="populairjobsHero">
@@ -473,7 +307,11 @@ function HomePageTwo() {
           </div>
           <div className="infoContainerHome">
             <StarIcon />
-            <h4 className="infoContainerHomeH4">All-in-1 App</h4>
+            <h4 className="infoContainerHomeH4">
+              <Link className="infoContainerHomeLink" to={`/${taal}/quality`}>
+                Kwaliteitsgarantie
+              </Link>
+            </h4>
           </div>
         </div>
       </article>

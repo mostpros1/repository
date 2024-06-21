@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   Dashboard as DashboardIcon,
   HandymanOutlined as HandymanOutlinedIcon,
@@ -15,31 +15,62 @@ import { MdOutlinePhonelinkSetup } from "react-icons/md";
 import { MdOutlinePointOfSale } from "react-icons/md";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
+import { useUserType } from '../../../useUserTypeContext';
+
+interface UserState {
+  isProfessional: boolean;
+  setIsProfessional: (value: boolean) => void;
+  isHomeowner: boolean;
+  setIsHomeowner: (value: boolean) => void;
+}
 
 const SideNav = () => {
+  const { isProfessional, setIsProfessional, setIsHomeowner } = useUserType() as UserState;
+
   const { user } = useUser();
   const navigate = useNavigate();
   const { lang } = useParams();  // Extract the lang parameter
-  const [isProfessional, setIsProfessional] = useState(false);
-  const [isHomeowner, setIsHomeowner] = useState(false);
+  //const [isProfessional, setIsProfessional] = useState(false);
+  //const [isHomeowner, setIsHomeowner] = useState(false);
+
+  const location = useLocation();
 
   useEffect(() => {
     const checkUserRole = async () => {
-      if (user?.signInUserSession?.accessToken?.payload) {
-        const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups?.includes("Homeowner")) {
-          setIsHomeowner(true);
-        } else if (groups?.includes("Professional")) {
-          setIsProfessional(true);
+      const dashboardPaths = [`/${lang}/pro-dashboard/`, `/${lang}/homeowner-dashboard/`];
+      const isFromDashboard = dashboardPaths.some(path => location.pathname.includes(path));
+
+
+      if (!isFromDashboard) {
+        if (user?.signInUserSession?.accessToken?.payload) {
+          const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+          if (groups?.includes("Homeowner")) {
+            setIsHomeowner(true);
+          } else if (groups?.includes("Professional")) {
+            setIsProfessional(true);
+          }
+        } else {
+          console.log("User data is not fully available.");
+          navigate(`/${lang}/login`);
         }
       } else {
-        console.log("User data is not fully available.");
-        navigate(`/${lang}/login`);
+        const isHomeownerDashboard = location.pathname.includes(`/${lang}/homeowner-dashboard/`);
+        const isProDashboard = location.pathname.includes(`/${lang}/pro-dashboard/`);
+
+        if (isHomeownerDashboard) {
+          setIsHomeowner(true);
+          setIsProfessional(false);
+        } else if (isProDashboard) {
+          setIsProfessional(true);
+          setIsHomeowner(false);
+        }
+
       }
+
     };
 
     checkUserRole();
-  }, [user, navigate, lang]);
+  }, [user, location.pathname, lang, navigate, setIsHomeowner, setIsProfessional]);
 
   const comingSoonTabs = [
     { path: "revenues", label: "Inkomsten" },
@@ -102,7 +133,7 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-                >
+              >
                 <PaymentIcon />
                 Reporting
               </NavLink>
@@ -113,7 +144,7 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-                >
+              >
                 <MdOutlinePhonelinkSetup />
                 Setup
               </NavLink>
@@ -124,7 +155,7 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-                >
+              >
                 <AccountCircleIcon />
                 Profiel
               </NavLink>
@@ -135,18 +166,18 @@ const SideNav = () => {
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-                >
+              >
                 <SettingsIcon />
                 Instellingen
               </NavLink>
             </li>
             <li className="sidebar-item">
               <NavLink
-                to={`/${lang}/help`}
+                to={`/${lang}/FAQPage`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
-                >
+              >
                 <HelpOutlineIcon />
                 Help
               </NavLink>
