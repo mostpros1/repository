@@ -80,7 +80,6 @@ const PopularCardsData = [
   },
 ];
 
-
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
@@ -214,6 +213,13 @@ function HomePageTwo() {
     });
   };
 
+  const handleScrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleProOnboardingClick = () => {
     navigate(`/${taal}/pro-onboarding`);
   };
@@ -302,7 +308,13 @@ function HomePageTwo() {
           </div>
           <div className="infoContainerHome">
             <StarIcon />
-            <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+            <h4
+              id="homeTextHyper"
+              className="infoContainerHomeH4"
+              onClick={() => handleScrollToSection("HomeProfReviewSectionHome")}
+            >
+              4.7 uit 5 reviews
+            </h4>
           </div>
           <div className="infoContainerHome">
             <StarIcon />
@@ -456,7 +468,10 @@ function HomePageTwo() {
           </div>
         </section>
       </section>
-      <section className="HomeProfReviewSectionHome">
+      <section
+        id="HomeProfReviewSectionHome"
+        className="HomeProfReviewSectionHome"
+      >
         <article className="HomeProfReviewTitlesContainer">
           <h2 className="howItWorksTitleHome">Reviews</h2>
           <section className="HomeProfReviewWrapper">
