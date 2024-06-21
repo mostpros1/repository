@@ -163,13 +163,16 @@ li > .black-items {
 .loginButton {
   padding: 5px 10px;
   color: black;
-  background-color: none;
-  border: none;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
 
 .loginButton:hover {
   cursor: pointer;
-  color: #308ae4;
+  transform: scale(1.03);
+  background-color: #f2f2f2;
 }
 
 .loginButton svg {
