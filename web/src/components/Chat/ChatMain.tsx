@@ -34,6 +34,7 @@ import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
 import { MdOutlineEdit } from "react-icons/md";
 import { getInfo } from "../../../../backend_functions/coordsToKm.ts";
+import { dynamo } from "../../../declarations.ts";
 
 interface Chat {
   id: string;
@@ -287,23 +288,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
 
-  const getEmailFromSearchBar = () => {
+  const getidFromSearchBar = () => {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('email');
+    return urlParams.get('id');
   };
 
   // Function to grab the email from the search bar and run switch chat
   const switchChatUsingEmailFromSearchBar = () => {
-    const email = getEmailFromSearchBar();
-    if (email) {
-      const uuid = getUUIDFromEmail(email); // Directly use the return value
-      if (uuid) {
-        handleStartNewChatWithEmail(email)
-        switchChat(email);
-      } else {
-        console.error('No UUID found for the provided email');
-        // Handle case where no UUID is found for the provided email
-      }
+    const id = getidFromSearchBar();
+    if (id) {
+
+      dynamo.query({
+        TableName: "Users",
+        KeyConditionExpression: "id = :id",
+        ExpressionAttributeValues: {
+          ":id" : id
+        }
+      }).promise().then((data) => {
+        if (data.Items && data.Items.length > 0) {
+          const uuid = getUUIDFromEmail(data.Items[0].email);
+          if (uuid) {
+            handleStartNewChatWithEmail(data.Items[0].email)
+            switchChat(data.Items[0].email);
+          } else {
+            console.error('No UUID found for the provided user_id');
+            // Handle case where no UUID is found for the provided email
+          }
+        }
+      }).catch(console.error);
+      // Directly use the return value
+
     } else {
       console.error('No email found in search bar');
       // Handle case where email is not present in the search bar

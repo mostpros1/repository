@@ -103,8 +103,19 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   }
 
   const handleChatButtonClick = (recipientEmail: string) => {
-    console.log("Recipient email:", recipientEmail);
-    window.location.href = `/nl/pro-dashboard/chat?email=${recipientEmail}`;
+    dynamo.query({
+      TableName: "Users",
+      IndexName: "username",
+      KeyConditionExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": recipientEmail,
+      }
+    }).promise().then((data) => {
+      if (data.Items && data.Items.length > 0) {
+        console.log(data.Items[0].id);
+        window.location.href = `/nl/pro-dashboard/chat?id=${data.Items[0].id}`;
+      }
+    }).catch(console.error);
   };
 
   const jobCardsRender = jobs.map((job) => (
