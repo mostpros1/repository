@@ -14,6 +14,7 @@ interface SearchResultItem {
   name: string;
   tasks: { task: string; link?: string }[];
 }
+
 function highlightMatch(text, highlight) {
   const parts = text.split(new RegExp(`(${highlight})`, "gi"));
   return (
@@ -30,42 +31,18 @@ function highlightMatch(text, highlight) {
     </span>
   );
 }
+
 const SearchResults = ({
   results,
   selectedIndex,
   handleResultClick,
   value,
-  closestResults,
 }) => (
   <>
-    {closestResults.map((closestResult, index) => (
-      <Link
-        key={index}
-        to={`/${taal}/jobs#${closestResult.name.toLowerCase()}?${
-          closestResult.tasks[0].link?.replace(/\//g, "") ?? ""
-        }`}
-        className={`search_dropdown_item ${
-          selectedIndex === -1 ? "active" : ""
-        }`}
-        onMouseDown={() =>
-          handleResultClick(
-            `#${closestResult.name.toLowerCase()}?${closestResult.tasks[0].link?.replace(
-              /\//g,
-              ""
-            )}`
-          )
-        }
-      >
-        <div className={selectedIndex === -1 ? "selected" : ""}>
-          {highlightMatch(closestResult.name, value)} -{" "}
-          {highlightMatch(closestResult.tasks[0].task, value)}
-        </div>
-      </Link>
-    ))}
     {results.map((result, index) => (
       <Link
-        to={`/${taal}/jobs#${result.specialistName.toLowerCase()}?${
-          result.link?.replace(/\//g, "") ?? ""
+        to={`/${taal}/jobs#${result.name.toLowerCase()}?${
+          result.tasks[0]?.link?.replace(/\//g, "") ?? ""
         }`}
         key={index}
         className={`search_dropdown_item ${
@@ -73,7 +50,7 @@ const SearchResults = ({
         }`}
         onMouseDown={() =>
           handleResultClick(
-            `#${result.specialistName.toLowerCase()}?${result.link?.replace(
+            `#${result.name.toLowerCase()}?${result.tasks[0]?.link?.replace(
               /\//g,
               ""
             )}`
@@ -81,17 +58,14 @@ const SearchResults = ({
         }
       >
         <div className={index === selectedIndex ? "selected" : ""}>
-          {result.specialistName ? (
-            <>{highlightMatch(result.specialistName, value)} - </>
-          ) : (
-            ""
-          )}
-          {highlightMatch(result.task, value)}
+          {highlightMatch(result.name, value)} -{" "}
+          {highlightMatch(result.tasks[0]?.task ?? "", value)}
         </div>
       </Link>
     ))}
   </>
 );
+
 function Searchbar() {
   const [value, setValue] = useState("");
   const [showList, setShowList] = useState(false);
@@ -101,7 +75,7 @@ function Searchbar() {
   const navigate = useNavigate();
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
-  ); // State for debounce
+  );
 
   const handleInputBlur = (e) => {
     if (
@@ -127,17 +101,15 @@ function Searchbar() {
         break;
       case "ArrowDown":
         setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, slicedResults.length - 1)
+          Math.min(prevIndex + 1, resultsToDisplay.length - 1)
         );
         break;
       case "Enter":
-        if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
-          const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
-        } else if (selectedIndex === -1 && closestResults.length > 0) {
-          const closestResult = closestResults[0];
+        if (selectedIndex >= 0) {
+          const selectedResult = resultsToDisplay[selectedIndex];
+          const selectedLink = selectedResult.tasks[0]?.link ?? "";
           handleResultClick(
-            `#${closestResult.name.toLowerCase()}?${closestResult.tasks[0].link?.replace(
+            `#${selectedResult.name.toLowerCase()}?${selectedLink.replace(
               /\//g,
               ""
             )}`
@@ -145,9 +117,9 @@ function Searchbar() {
         }
         break;
       case "Tab":
-        if (slicedResults.length > 0) {
-          const selectedResult = slicedResults[0];
-          setValue(selectedResult.task);
+        if (resultsToDisplay.length > 0) {
+          const selectedResult = resultsToDisplay[0];
+          setValue(selectedResult.tasks[0]?.task ?? "");
           setSelectedIndex(0);
         }
         break;
@@ -160,12 +132,10 @@ function Searchbar() {
     const searchTerm = e.target.value;
     setValue(searchTerm);
 
-    // Clear previous timeout
     if (searchTimeout) {
       clearTimeout(searchTimeout);
     }
 
-    // Set new timeout
     setSearchTimeout(
       setTimeout(() => {
         performSearch(searchTerm);
@@ -188,24 +158,29 @@ function Searchbar() {
       const fuse = new Fuse(specialists, fuseOptions);
       const result = fuse.search(searchTerm);
 
-      // Map and sort the results to get closest matches by score
       const closestResults = result
         .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
-        .slice(0, 10) // Limiting to 10 closest results
+        .slice(0, 10)
         .map((res) => res.item);
+
       setClosestResults(closestResults);
     } catch (error) {
       console.error("Error performing search:", error);
     }
   };
+
   const searchResults = () => {
     const searchTerm = value.trim().toLowerCase();
     if (!searchTerm) {
       return specialists.flatMap((specialist) =>
         specialist.tasks.map((task) => ({
-          specialistName: capitalizeFirstLetter(specialist.name),
-          task: capitalizeFirstLetter(task.task),
-          link: task.link,
+          name: capitalizeFirstLetter(specialist.name),
+          tasks: [
+            {
+              task: capitalizeFirstLetter(task.task),
+              link: task.link,
+            },
+          ],
         }))
       );
     }
@@ -229,9 +204,13 @@ function Searchbar() {
             res.item.name.toLowerCase().includes(searchTerm)
         )
         .map((task) => ({
-          specialistName: capitalizeFirstLetter(res.item.name),
-          task: capitalizeFirstLetter(task.task),
-          link: task.link,
+          name: capitalizeFirstLetter(res.item.name),
+          tasks: [
+            {
+              task: capitalizeFirstLetter(task.task),
+              link: task.link,
+            },
+          ],
         }));
     });
 
@@ -247,6 +226,9 @@ function Searchbar() {
       setClosestResults([]);
     }
   }, [value]);
+
+  const resultsToDisplay =
+    slicedResults.length > 0 ? slicedResults : closestResults;
 
   return (
     <div id="SearchBar-wrapper">
@@ -273,13 +255,12 @@ function Searchbar() {
       <div className="search_results-con">
         {showList && (
           <div id="search-results" role="listbox" className="search_results">
-            {slicedResults.length > 0 || closestResults.length > 0 ? (
+            {resultsToDisplay.length > 0 ? (
               <SearchResults
-                results={slicedResults}
+                results={resultsToDisplay}
                 selectedIndex={selectedIndex}
                 handleResultClick={handleResultClick}
                 value={value}
-                closestResults={closestResults}
               />
             ) : (
               searchPerformed && (
