@@ -354,7 +354,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("finished")}
           >
-            Voltooid Klussen
+            Voltooide Klussen
           </button>
         </div>
         <div className="job-list-con">
