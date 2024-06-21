@@ -80,7 +80,7 @@ function DateForm({ updateDate, updateFields }) {
                                 {index === 0 ? 'Vandaag' : index === 1 ? 'Morgen' : date.toLocaleDateString('nl-NL', { weekday: 'long' })}
                             </p>
                             <p className="dateCards_info number" data-testid={`date-number-${index}`}>{date.getDate()}</p>
-                            {index === 0 && <p className="dateCards_info" data-testid="fastest-option">snelste optie</p>}
+                            {/* {index === 0 && <p className="dateCards_info" data-testid="fastest-option">snelste optie</p>} */}
                         </div>
                     ))}
                     <div className="dateCards" onClick={handleMoreDatesClick} data-testid="more-dates">

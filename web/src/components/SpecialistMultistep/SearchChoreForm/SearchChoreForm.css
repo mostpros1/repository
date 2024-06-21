@@ -65,3 +65,14 @@
 .search_chore_address input:nth-child(2) {
   border-radius: 0px 10px 10px 0px;
 }
+
+@media (max-width: 425px) {
+
+  .search_chore_text_con {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

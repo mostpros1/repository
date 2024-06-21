@@ -26,7 +26,6 @@ function Footer() {
         <article className="footerSection">
           <h4>Vakspecialist</h4>
           <Link to="/nl/pro-onboarding">Inschrijven als vakspecialist</Link>
-          <p>Pro bedrijven centrum</p>
           <Link to="/nl/help">Help voor professionals</Link>
         </article>
         <article className="footerSection">

@@ -29,3 +29,15 @@
 .specialist_q label{
     justify-self: center;
 }
+
+
+@media (max-width: 425px) {
+    .specialist_q{
+        font-size: 14px;
+        padding: 15px 40px;
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 15px;
+        background-color: #E9F4FF;
+    }}
