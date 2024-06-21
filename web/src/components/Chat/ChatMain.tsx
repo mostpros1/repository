@@ -296,6 +296,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   // Function to grab the email from the search bar and run switch chat
   const switchChatUsingEmailFromSearchBar = () => {
     const id = getidFromSearchBar();
+    console.log(id);
     if (id) {
 
       dynamo.query({
@@ -306,6 +307,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         }
       }).promise().then((data) => {
         if (data.Items && data.Items.length > 0) {
+          console.log(data.Items[0].email);
           const uuid = getUUIDFromEmail(data.Items[0].email);
           if (uuid) {
             handleStartNewChatWithEmail(data.Items[0].email)
