@@ -73,7 +73,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-  const [lastMessages, setLastMessages] = useState<{[contact: string]: { text: string; createdAt: string };}>({});
+  const [lastMessages, setLastMessages] = useState<{ [contact: string]: { text: string; createdAt: string }; }>({});
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
@@ -88,7 +88,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
-  const [newMessagesCount, setNewMessagesCount] = useState<{[contact: string]: number;}>({});
+  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number; }>({});
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -98,7 +98,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   // New states for additional functionalities
   const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
-  const [typingStatus, setTypingStatus] = useState<{[contact: string]: boolean;}>({});
+  const [typingStatus, setTypingStatus] = useState<{ [contact: string]: boolean; }>({});
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
@@ -285,6 +285,34 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       [contact]: 0,
     }));
   };
+
+
+  const getEmailFromSearchBar = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('email');
+  };
+
+  // Function to grab the email from the search bar and run switch chat
+  const switchChatUsingEmailFromSearchBar = () => {
+    const email = getEmailFromSearchBar();
+    if (email) {
+      const uuid = getUUIDFromEmail(email); // Directly use the return value
+      if (uuid) {
+        handleStartNewChatWithEmail(email)
+        switchChat(email);
+      } else {
+        console.error('No UUID found for the provided email');
+        // Handle case where no UUID is found for the provided email
+      }
+    } else {
+      console.error('No email found in search bar');
+      // Handle case where email is not present in the search bar
+    }
+  };
+
+  useEffect(() => {
+    switchChatUsingEmailFromSearchBar();
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -762,6 +790,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
+
+  console.log("searchTerm: ", searchTerm);
   return (
     <div
       className={`chat-container ${theme}`}
@@ -892,7 +922,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             <div className="search-container" style={{ position: "relative" }}>
               {!showSearch && (
                 <button onClick={handleSearchClick} className="search-icon">
-                  <CiSearch className="search-header" size={25} color="blue"/>
+                  <CiSearch className="search-header" size={25} color="blue" />
                 </button>
               )}
               <input
@@ -904,7 +934,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               />
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
-                  <MdOutlineCancel className="search-header" size={25} color="blue"/>
+                  <MdOutlineCancel className="search-header" size={25} color="blue" />
                 </button>
               )}
             </div>
@@ -1048,7 +1078,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 }
               }}
               className="inputchat"
-              onChange={() => {}}
+              onChange={() => { }}
             />
             <div className="dropup" ref={dropUpRef}>
               <BsPaperclip

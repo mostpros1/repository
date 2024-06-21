@@ -5,7 +5,7 @@ import gasleiding from "../../assets/Gasleiding.svg";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { dynamo } from "../../../declarations";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigation } from "react-router-dom";
 import taal from "../ui/NavBar/Navigation.tsx";
 import { Auth } from "aws-amplify";
 import { useChatBackend } from "../../components/Chat/ChatBackend.ts";
@@ -88,11 +88,11 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
     fetchData();
   }, []); // Include dependencies if needed
 
-  const dummySignOut = () => {
-    console.log("Signed out");
-  };
+  // const dummySignOut = () => {
+  //   console.log("Signed out");
+  // };
 
-  const { handleStartNewChatWithEmailDashboard } = useChatBackend(user, dummySignOut);
+  //const { handleStartNewChatWithEmailDashboard } = useChatBackend(user, dummySignOut);
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading indicator while waiting for user data
@@ -103,11 +103,8 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   }
 
   const handleChatButtonClick = (recipientEmail: string) => {
-    handleStartNewChatWithEmailDashboard(recipientEmail);
-    /*const currentPath = `/${taal}/chat`;
-    const recipientQuery = `recipient=${recipientEmail}`;
-    const newUrl = `${currentPath}?${recipientQuery}`;
-    window.location.href = newUrl;*/
+    console.log("Recipient email:", recipientEmail);
+    window.location.href = `/nl/pro-dashboard/chat?email=${recipientEmail}`;
   };
 
   const jobCardsRender = jobs.map((job) => (
