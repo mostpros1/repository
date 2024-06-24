@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./profile.css";
 import { dynamo } from "../../../declarations";
 import Pfp from "../../assets/ElectrozPFP.png";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; /* CalendarMonthIcon */
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Auth } from "aws-amplify";
-import Modal from "./profileModal.tsx"; // Import the Modal component
+import Modal from "./profileModal.tsx";
 import { stopXSS } from "../../../../backend_functions/stopXSS.ts";
+
 interface EditableDataType {
   name?: string;
   phone?: string;
@@ -16,6 +17,7 @@ interface EditableDataType {
   workregion?: string;
   profession?: string;
 }
+
 const Profile = () => {
   const [profileData, setProfileData] = useState({
     name: "Loading...",
@@ -28,13 +30,18 @@ const Profile = () => {
     userId: "",
     professionalID: "",
   });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editableData, setEditableData] = useState<EditableDataType>();
+  const [editableData, setEditableData] = useState<EditableDataType>({});
+
+  const navigate = useNavigate(); // useNavigate hook for redirection
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const AUTHemail = user.attributes.email;
+
         const params = {
           TableName: "Users",
           IndexName: "username",
@@ -43,14 +50,17 @@ const Profile = () => {
             ":email": AUTHemail,
           },
         };
+
         const data = await dynamo.query(params).promise();
         console.log("User data:", data);
+
         if (data.Items && data.Items.length > 0) {
           const userData = data.Items[0];
           const name = `${userData.first_name} ${userData.last_name}`;
           const phone = userData.phone_number || "Unknown";
           const email = userData.email;
           const userId = userData.id;
+
           const Profparams = {
             TableName: "Professionals",
             IndexName: "emailIndex",
@@ -59,8 +69,10 @@ const Profile = () => {
               ":email": AUTHemail,
             },
           };
+
           const output = await dynamo.query(Profparams).promise();
           console.log("Professional data:", output);
+
           const profession =
             output.Items && output.Items.length > 0
               ? output.Items[0].profession
@@ -77,6 +89,7 @@ const Profile = () => {
             output.Items && output.Items.length > 0
               ? output.Items[0].bio
               : "No bio available";
+
           setProfileData({
             userId,
             professionalID,
@@ -104,24 +117,32 @@ const Profile = () => {
         console.error("Error fetching profile data:", error);
       }
     };
+
     fetchProfileData();
   }, []);
+
   const handleEditButtonClick = () => {
     setIsModalOpen(true);
   };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const handleInputChange = (e) => {
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setEditableData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
   const handleSaveChanges = async () => {
     try {
       console.log(profileData.userId);
+
       const params = {
         TableName: "Users",
         Key: { id: profileData.userId },
@@ -133,7 +154,9 @@ const Profile = () => {
           ":phone": stopXSS(String(editableData?.phone)),
         },
       };
+
       await dynamo.update(params).promise();
+
       const profParams = {
         TableName: "Professionals",
         Key: { id: profileData.professionalID },
@@ -143,9 +166,12 @@ const Profile = () => {
           ":bio": editableData?.bio,
         },
       };
+
       await dynamo.update(profParams).promise();
+
       const { name, phone, email, bio, avatar, workregion, profession } =
         editableData || {};
+
       const newProfileData = {
         name: name || "Default Name",
         phone: phone || "Default Phone",
@@ -157,12 +183,18 @@ const Profile = () => {
         userId: profileData.userId,
         professionalID: profileData.professionalID,
       };
+
       setProfileData(newProfileData);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error saving profile data:", error);
     }
   };
+
+  const handleAvailabilityClick = () => {
+    navigate("/pro-dashboard/calender"); // Redirect to the desired route
+  };
+
   return (
     <div id="mainProfile">
       <section id="ProfileSection">
@@ -182,7 +214,10 @@ const Profile = () => {
               <p>Email: {profileData.email}</p>
             </div>
             <div className="profileAvailabilityDiv">
-              <button className="profileAvailability">
+              <button
+                className="profileAvailability"
+                onClick={handleAvailabilityClick}
+              >
                 <CalendarMonthIcon />
                 Beschikbaarheid doorgeven
               </button>
@@ -262,4 +297,5 @@ const Profile = () => {
     </div>
   );
 };
+
 export default Profile;

@@ -57,7 +57,7 @@ const SideNav = () => {
           }
         } else {
           console.log("Je bent ingelogd stomme aap!");
-          // navigate(`/${lang}/login`);
+          navigate(`/${lang}/login`);
         }
       } else {
         const isHomeownerDashboard = location.pathname.includes(
