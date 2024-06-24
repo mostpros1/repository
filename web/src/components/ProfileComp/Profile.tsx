@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./profile.css";
 import { dynamo } from "../../../declarations";
 import Pfp from "../../assets/ElectrozPFP.png";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; /* CalendarMonthIcon */
 import { Auth } from "aws-amplify";
 import Modal from "./profileModal.tsx"; // Import the Modal component
 import { stopXSS } from "../../../../backend_functions/stopXSS.ts";
@@ -69,8 +71,14 @@ const Profile = () => {
           const output = await dynamo.query(Profparams).promise();
           console.log("Professional data:", output);
 
-          const profession = output.Items && output.Items.length > 0 ? output.Items[0].profession : "Unknown";
-          const workregion = output.Items && output.Items.length > 0 ? output.Items[0].region : "Unknown";
+          const profession =
+            output.Items && output.Items.length > 0
+              ? output.Items[0].profession
+              : "Unknown";
+          const workregion =
+            output.Items && output.Items.length > 0
+              ? output.Items[0].region
+              : "Unknown";
           const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
 
           const bio =
@@ -163,6 +171,7 @@ const Profile = () => {
     }
   };
 
+
   return (
     <div id="mainProfile">
       <section id="ProfileSection">
@@ -180,6 +189,12 @@ const Profile = () => {
               <h1>Contact Information</h1>
               <p>Telefoonnummer: {profileData.phone}</p>
               <p>Email: {profileData.email}</p>
+            </div>
+            <div className="profileAvailabilityDiv">
+              <button className="profileAvailability">
+                <CalendarMonthIcon />
+                Beschikbaarheid doorgeven
+              </button>
             </div>
           </div>
         </div>
