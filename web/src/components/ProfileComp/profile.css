@@ -40,6 +40,7 @@
   width: 25rem;
   height: 25rem;
   margin-right: 2rem;
+  border-radius: 25rem;
 }
 
 #profileRightContainer {
@@ -131,6 +132,8 @@
   padding: 20px;
   border-radius: 4px;
   position: relative;
+  width: 50rem;
+  height: fit-content;
 }
 
 .modal-close-btn {
@@ -157,6 +160,12 @@
   width: 100%;
   padding: 8px;
   margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.editProfileForm input:focus {
+  outline: none;
+  border: 2px solid #007bff;
 }
 
 .editProfileForm button {
