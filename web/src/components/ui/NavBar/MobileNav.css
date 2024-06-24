@@ -159,6 +159,16 @@
   border: 0;
 }
 
+.nav-item-dashboardswitch {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #308ae4;
+}
+
 #nav-item-logout {
   display: flex;
   background-color: #308ae4;
@@ -222,7 +232,8 @@
     white-space: nowrap;
   }
 
-  .coming-soon {  /* This class hides the unreleased pages */
+  .coming-soon {
+    /* This class hides the unreleased pages */
     display: none;
   }
 }
