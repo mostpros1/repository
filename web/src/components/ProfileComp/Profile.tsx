@@ -28,11 +28,13 @@ const Profile = () => {
     workregion: "Loading...",
     profession: "Loading...",
     userId: "",
-    professionalID: ""
+    professionalID: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editableData, setEditableData] = useState<EditableDataType>();
+
+  const navigate = useNavigate(); // useNavigate hook for redirection
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -57,8 +59,7 @@ const Profile = () => {
           const name = `${userData.first_name} ${userData.last_name}`;
           const phone = userData.phone_number || "Unknown";
           const email = userData.email;
-          const userId = userData.id
-
+          const userId = userData.id;
 
           const Profparams = {
             TableName: "Professionals",
@@ -79,7 +80,10 @@ const Profile = () => {
             output.Items && output.Items.length > 0
               ? output.Items[0].region
               : "Unknown";
-          const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
+          const professionalID =
+            output.Items && output.Items.length > 0
+              ? output.Items[0].id
+              : "Unknown";
 
           const bio =
             output.Items && output.Items.length > 0
@@ -145,14 +149,15 @@ const Profile = () => {
           ":fname": stopXSS(String(editableData?.name?.split(" ")[0])),
           ":lname": stopXSS(String(editableData?.name?.split(" ")[1])),
           ":phone": stopXSS(String(editableData?.phone)),
-        }
+        },
       };
 
       console.log("DynamoDB update params:", params);
       const test = await dynamo.update(params).promise();
       console.log(test);
 
-      const { name, phone, email, bio, avatar, workregion, profession } = editableData || {};
+      const { name, phone, email, bio, avatar, workregion, profession } =
+        editableData || {};
       const newProfileData = {
         name: name || "Default Name",
         phone: phone || "Default Phone",
@@ -171,6 +176,9 @@ const Profile = () => {
     }
   };
 
+  const handleAvailabilityClick = () => {
+    navigate("/pro-dashboard/calendar"); // Correct the use of navigate
+  };
 
   return (
     <div id="mainProfile">
@@ -191,7 +199,10 @@ const Profile = () => {
               <p>Email: {profileData.email}</p>
             </div>
             <div className="profileAvailabilityDiv">
-              <button className="profileAvailability">
+              <button
+                className="profileAvailability"
+                onClick={handleAvailabilityClick}
+              >
                 <CalendarMonthIcon />
                 Beschikbaarheid doorgeven
               </button>

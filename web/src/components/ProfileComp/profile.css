@@ -1,11 +1,10 @@
 #mainProfile {
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   background-color: #e8f3fe;
-  padding: 2rem;
   height: 100%;
   width: 100%;
+  padding: 2rem;
 }
 
 #ProfileSection {
@@ -73,7 +72,7 @@
 }
 
 #profileBioArticle {
-  height: 100%;
+  width: 100%;
 }
 
 #profileBio {

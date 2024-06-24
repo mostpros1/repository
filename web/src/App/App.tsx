@@ -233,10 +233,9 @@ const LanguageAwareRoutes = () => {
         path="/homeowner-dashboard/profile"
         element={<HomeOwnerProfielPage />}
       />
-      <Route path="/profile" element={<ProfilePage />} />
       /* Pro dashboard links */
       <Route path="/pro-dashboard" element={<ResultsPage />} />
-      <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
+      <Route path="/pro-dashboard/profile" element={<ProfilePage />} />
       <Route path="/pro-dashboard/help" element={<FAQPage />} />
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
