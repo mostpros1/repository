@@ -7,7 +7,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; /* CalendarMo
 import { Auth } from "aws-amplify";
 import Modal from "./profileModal.tsx"; // Import the Modal component
 import { stopXSS } from "../../../../backend_functions/stopXSS.ts";
-
 interface EditableDataType {
   name?: string;
   phone?: string;
@@ -17,7 +16,6 @@ interface EditableDataType {
   workregion?: string;
   profession?: string;
 }
-
 const Profile = () => {
   const [profileData, setProfileData] = useState({
     name: "Loading...",
@@ -30,18 +28,13 @@ const Profile = () => {
     userId: "",
     professionalID: "",
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editableData, setEditableData] = useState<EditableDataType>();
-
-  const navigate = useNavigate(); // useNavigate hook for redirection
-
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const AUTHemail = user.attributes.email;
-
         const params = {
           TableName: "Users",
           IndexName: "username",
@@ -50,17 +43,14 @@ const Profile = () => {
             ":email": AUTHemail,
           },
         };
-
         const data = await dynamo.query(params).promise();
         console.log("User data:", data);
-
         if (data.Items && data.Items.length > 0) {
           const userData = data.Items[0];
           const name = `${userData.first_name} ${userData.last_name}`;
           const phone = userData.phone_number || "Unknown";
           const email = userData.email;
           const userId = userData.id;
-
           const Profparams = {
             TableName: "Professionals",
             IndexName: "emailIndex",
@@ -71,7 +61,6 @@ const Profile = () => {
           };
           const output = await dynamo.query(Profparams).promise();
           console.log("Professional data:", output);
-
           const profession =
             output.Items && output.Items.length > 0
               ? output.Items[0].profession
@@ -84,12 +73,10 @@ const Profile = () => {
             output.Items && output.Items.length > 0
               ? output.Items[0].id
               : "Unknown";
-
           const bio =
             output.Items && output.Items.length > 0
               ? output.Items[0].bio
               : "No bio available";
-
           setProfileData({
             userId,
             professionalID,
@@ -117,18 +104,14 @@ const Profile = () => {
         console.error("Error fetching profile data:", error);
       }
     };
-
     fetchProfileData();
   }, []);
-
   const handleEditButtonClick = () => {
     setIsModalOpen(true);
   };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditableData((prevData) => ({
@@ -136,7 +119,6 @@ const Profile = () => {
       [name]: value,
     }));
   };
-
   const handleSaveChanges = async () => {
     try {
       console.log(profileData.userId);
@@ -151,11 +133,17 @@ const Profile = () => {
           ":phone": stopXSS(String(editableData?.phone)),
         },
       };
-
-      console.log("DynamoDB update params:", params);
-      const test = await dynamo.update(params).promise();
-      console.log(test);
-
+      await dynamo.update(params).promise();
+      const profParams = {
+        TableName: "Professionals",
+        Key: { id: profileData.professionalID },
+        UpdateExpression: "set profession = :profession, bio = :bio",
+        ExpressionAttributeValues: {
+          ":profession": editableData?.profession,
+          ":bio": editableData?.bio,
+        },
+      };
+      await dynamo.update(profParams).promise();
       const { name, phone, email, bio, avatar, workregion, profession } =
         editableData || {};
       const newProfileData = {
@@ -175,11 +163,6 @@ const Profile = () => {
       console.error("Error saving profile data:", error);
     }
   };
-
-  const handleAvailabilityClick = () => {
-    navigate("/pro-dashboard/calendar"); // Correct the use of navigate
-  };
-
   return (
     <div id="mainProfile">
       <section id="ProfileSection">
@@ -199,10 +182,7 @@ const Profile = () => {
               <p>Email: {profileData.email}</p>
             </div>
             <div className="profileAvailabilityDiv">
-              <button
-                className="profileAvailability"
-                onClick={handleAvailabilityClick}
-              >
+              <button className="profileAvailability">
                 <CalendarMonthIcon />
                 Beschikbaarheid doorgeven
               </button>
@@ -254,7 +234,7 @@ const Profile = () => {
             Profession:
             <input
               type="text"
-              name="professions"
+              name="profession"
               value={editableData?.profession}
               onChange={handleInputChange}
             />
@@ -282,5 +262,4 @@ const Profile = () => {
     </div>
   );
 };
-
 export default Profile;
