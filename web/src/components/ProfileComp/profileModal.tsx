@@ -1,5 +1,5 @@
 import React from "react";
-import "./Profile.css";
+import "./profile.css";
 
 const Modal = ({ show, onClose, children }) => {
   if (!show) {

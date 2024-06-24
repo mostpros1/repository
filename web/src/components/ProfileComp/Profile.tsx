@@ -4,6 +4,17 @@ import { dynamo } from "../../../declarations";
 import Pfp from "../../assets/ElectrozPFP.png";
 import { Auth } from "aws-amplify";
 import Modal from "./profileModal.tsx"; // Import the Modal component
+import { stopXSS } from "../../../../backend_functions/stopXSS.ts";
+
+interface EditableDataType {
+  name?: string;
+  phone?: string;
+  email?: string;
+  bio?: string;
+  avatar?: string;
+  workregion?: string;
+  profession?: string;
+}
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -14,10 +25,12 @@ const Profile = () => {
     avatar: Pfp,
     workregion: "Loading...",
     profession: "Loading...",
+    userId: "",
+    professionalID: ""
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editableData, setEditableData] = useState(profileData);
+  const [editableData, setEditableData] = useState<EditableDataType>();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -42,6 +55,7 @@ const Profile = () => {
           const name = `${userData.first_name} ${userData.last_name}`;
           const phone = userData.phone_number || "Unknown";
           const email = userData.email;
+          const userId = userData.id
 
 
           const Profparams = {
@@ -57,6 +71,7 @@ const Profile = () => {
 
           const profession = output.Items && output.Items.length > 0 ? output.Items[0].profession : "Unknown";
           const workregion = output.Items && output.Items.length > 0 ? output.Items[0].region : "Unknown";
+          const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
 
           const bio =
             output.Items && output.Items.length > 0
@@ -64,6 +79,8 @@ const Profile = () => {
               : "No bio available";
 
           setProfileData({
+            userId,
+            professionalID,
             name,
             phone,
             email,
@@ -110,24 +127,36 @@ const Profile = () => {
 
   const handleSaveChanges = async () => {
     try {
+      console.log(profileData.userId);
       const params = {
         TableName: "Users",
-        Key: { email: profileData.email },
+        Key: { id: profileData.userId },
         UpdateExpression:
-          "set first_name = :fname, last_name = :lname, phone_number = :phone, profession = :prof, region = :reg",
+          "set first_name = :fname, last_name = :lname, phone_number = :phone",
         ExpressionAttributeValues: {
-          ":fname": editableData.name.split(" ")[0],
-          ":lname": editableData.name.split(" ")[1],
-          ":phone": editableData.phone,
-          ":prof": editableData.profession,
-          ":reg": editableData.workregion,
-        },
-        ReturnValues: "UPDATED_NEW",
+          ":fname": stopXSS(String(editableData?.name?.split(" ")[0])),
+          ":lname": stopXSS(String(editableData?.name?.split(" ")[1])),
+          ":phone": stopXSS(String(editableData?.phone)),
+        }
       };
 
-      await dynamo.update(params).promise();
+      console.log("DynamoDB update params:", params);
+      const test = await dynamo.update(params).promise();
+      console.log(test);
 
-      setProfileData(editableData);
+      const { name, phone, email, bio, avatar, workregion, profession } = editableData || {};
+      const newProfileData = {
+        name: name || "Default Name",
+        phone: phone || "Default Phone",
+        email: email || "default@email.com",
+        bio: bio || "Default Bio",
+        avatar: avatar || Pfp,
+        workregion: workregion || "Default Region",
+        profession: profession || "Default Profession",
+        userId: profileData.userId,
+        professionalID: profileData.professionalID,
+      };
+      setProfileData(newProfileData);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error saving profile data:", error);
@@ -173,7 +202,7 @@ const Profile = () => {
             <input
               type="text"
               name="name"
-              value={editableData.name}
+              value={editableData?.name}
               onChange={handleInputChange}
             />
           </label>
@@ -182,7 +211,7 @@ const Profile = () => {
             <input
               type="text"
               name="phone"
-              value={editableData.phone}
+              value={editableData?.phone}
               onChange={handleInputChange}
             />
           </label>
@@ -191,7 +220,7 @@ const Profile = () => {
             <input
               type="email"
               name="email"
-              value={editableData.email}
+              value={editableData?.email}
               onChange={handleInputChange}
             />
           </label>
@@ -200,7 +229,7 @@ const Profile = () => {
             <input
               type="text"
               name="profession"
-              value={editableData.profession}
+              value={editableData?.profession}
               onChange={handleInputChange}
             />
           </label>
@@ -209,7 +238,7 @@ const Profile = () => {
             <input
               type="text"
               name="workregion"
-              value={editableData.workregion}
+              value={editableData?.workregion}
               onChange={handleInputChange}
             />
           </label>
@@ -217,7 +246,7 @@ const Profile = () => {
             Bio:
             <textarea
               name="bio"
-              value={editableData.bio}
+              value={editableData?.bio}
               onChange={handleInputChange}
             ></textarea>
           </label>
