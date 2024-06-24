@@ -73,7 +73,7 @@ const Profile = () => {
 
           const profession = output.Items && output.Items.length > 0 ? output.Items[0].profession : "Unknown";
           const workregion = output.Items && output.Items.length > 0 ? output.Items[0].region : "Unknown";
-const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
+          const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
 
 
           const bio =
@@ -150,8 +150,8 @@ const professionalID = output.Items && output.Items.length > 0 ? output.Items[0]
         Key: { id: profileData.professionalID },
         UpdateExpression: "set profession = :profession, bio = :bio",
         ExpressionAttributeValues: {
-          ":profession" : editableData?.profession,
-          ":bio" : editableData?.bio
+          ":profession": editableData?.profession,
+          ":bio": editableData?.bio
         }
       }
 
