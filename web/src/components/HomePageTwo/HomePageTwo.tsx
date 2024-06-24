@@ -23,6 +23,7 @@ import AanemerPFP from "../../assets/AanemerPFP.png";
 import GijsPFP from "../../assets/GijsPFPpng.png";
 import CarpenterIcon from "@mui/icons-material/Carpenter";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
 import { useNavigate } from "react-router-dom";
@@ -79,7 +80,6 @@ const PopularCardsData = [
     icon: <HomeRepairServiceIcon />,
   },
 ];
-
 
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
@@ -214,6 +214,13 @@ function HomePageTwo() {
     });
   };
 
+  const handleScrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleProOnboardingClick = () => {
     navigate(`/${taal}/pro-onboarding`);
   };
@@ -302,7 +309,13 @@ function HomePageTwo() {
           </div>
           <div className="infoContainerHome">
             <StarIcon />
-            <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
+            <h4
+              id="homeTextHyper"
+              className="infoContainerHomeH4"
+              onClick={() => handleScrollToSection("HomeProfReviewSectionHome")}
+            >
+              4.7 uit 5 reviews
+            </h4>
           </div>
           <div className="infoContainerHome">
             <StarIcon />
@@ -456,7 +469,10 @@ function HomePageTwo() {
           </div>
         </section>
       </section>
-      <section className="HomeProfReviewSectionHome">
+      <section
+        id="HomeProfReviewSectionHome"
+        className="HomeProfReviewSectionHome"
+      >
         <article className="HomeProfReviewTitlesContainer">
           <h2 className="howItWorksTitleHome">Reviews</h2>
           <section className="HomeProfReviewWrapper">

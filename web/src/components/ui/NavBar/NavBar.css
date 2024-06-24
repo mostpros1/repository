@@ -78,26 +78,26 @@
   font-size: 15px;
 }
 
-.apps-icon {
-  border-radius: 10px;
-  color: #000;
+#nine-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
   cursor: pointer;
-  display: inline-flex;
-  font-size: 18px;
-  margin-top: 0;
-  padding: 12px;
-  text-align: center;
-  width: auto;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
-.apps-icon:hover {
-  padding: 12px;
-  background-color: #8eb7e1;
+#nine-dots img {
+  width: 25px;
+  height: 25px;
 }
 
-.apps-icon svg {
-  font-size: 30px;
+#nine-dots:hover {
+  transform: scale(1.1);
+  background-color: #308ae4;
 }
 
 .nav-list {
@@ -163,13 +163,15 @@ li > .black-items {
 .loginButton {
   padding: 5px 10px;
   color: black;
-  background-color: none;
-  border: none;
+  border: 2px solid black;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
-
 .loginButton:hover {
   cursor: pointer;
-  color: #308ae4;
+  background-color: #f6f6f6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .loginButton svg {

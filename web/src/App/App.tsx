@@ -247,7 +247,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/pro-dashboard/setup" element={<Setup />} />
+      <Route path="/pro-dashboard/setup" element={<Setup />} /> 
       <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />

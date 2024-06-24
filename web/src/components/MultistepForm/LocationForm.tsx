@@ -52,7 +52,6 @@ export function LocationForm({ postCode, stad, updateFields }: LocationFormProps
   return (
     <>
       <div className="content-con">
-        <img src={TwoWorkers} alt="" />
         <h2>
           {location.pathname === "/klussen" ? "Voer je postcode in om vakspecialisten in jouw omgeving te vinden" : "Voer je postcode in om klussen in jouw omgeving te vinden"}
         </h2>

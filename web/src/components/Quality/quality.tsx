@@ -16,11 +16,11 @@ const QualityRequirements = () => {
           <div id="quality-reqboxbottom">
             <h3>De kwaliteitseisen van Mostpros</h3>
             <p>
-              Om de kwaliteitseisen te waarborgen dient elke vakspecialist die van Mostpros gebruik maakt verplicht een KvK-nummer door te geven.Klanten verwachten een professioneel bericht bij een grote investering. Schrijf dus duidelijk en in begrijpelijk Nederlands. Doe geen extreem lage biedingen en waarschuw niet voor kosten aan jouw kant. Zorg dat je offertes helder zijn en geef duidelijkheid over BTW en hoe er betaald kan worden.
+              Om de kwaliteitseisen te waarborgen dient elke vakspecialist die van Mostpros gebruik maakt verplicht een KvK-nummer door te geven. Klanten verwachten een professioneel bericht bij een grote investering. Schrijf dus duidelijk en in begrijpelijk Nederlands. Doe geen extreem lage biedingen en waarschuw niet voor kosten aan jouw kant. Zorg dat je offertes helder zijn en geef duidelijkheid over BTW en hoe er betaald kan worden.
             </p>
           </div>
         </section>
-        <img id="quality-img" src={qualitypic} alt="Quality Control" />
+        <img id="quality-img" src={qualitypic} alt="Quality Control"/>
       </section>
       <section id="quality-bottomSection">
         <h3 id="quality-bottomTitle">Stappenplan Huisregels</h3>
@@ -66,7 +66,7 @@ const QualityRequirements = () => {
                   Verdere informatie en klachten
                 </h3>
                 <p>
-                Door ons platform te gebruiken, stem je in met onze huisregels. Bij klachten onderzoeken we de situatie. Afhankelijk van de geschiedenis van het bedrijf kunnen we een waarschuwing geven of het bedrijf van het platform verwijderen. Mochten er nog verdere onduidelijkheden zijn of wil je een klacht indienen? Mail dan naar info@mostpros.com</p>
+                Door ons platform te gebruiken, stem je in met onze huisregels. Bij klachten onderzoeken we de situatie. Afhankelijk van de geschiedenis van het bedrijf kunnen we een waarschuwing geven of het bedrijf van het platform verwijderen. Mochten er nog verdere onduidelijkheden zijn of wil je een klacht indienen? Mail dan naar teammostpros@gmail.com</p>
               </div>
             </li>
           </ul>

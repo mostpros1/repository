@@ -15,8 +15,18 @@ import {
 } from "@mui/icons-material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Auth } from "aws-amplify";
+import { t } from "i18next";
 
 function NavLinks({ toggleSidebar }) {
+  let taal = "nl";
+
+  if (
+    window.location.pathname.split("/")[1] === "nl" ||
+    window.location.pathname.split("/")[1] === "en"
+  ) {
+    taal = window.location.pathname.split("/")[1];
+  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
@@ -63,6 +73,18 @@ function NavLinks({ toggleSidebar }) {
       console.log("Logout successful");
     } catch (error) {
       console.error("Logout failed:", error);
+    }
+  };
+
+  const handleDashboardSwitch = () => {
+    if (isProfessional) {
+      setIsProfessional(false);
+      setIsHomeowner(true);
+      navigate(`/${taal}/homeowner-dashboard/jobs`);
+    } else if (isHomeowner) {
+      setIsProfessional(true);
+      setIsHomeowner(false);
+      navigate(`/${taal}/pro-dashboard`);
     }
   };
 
@@ -265,6 +287,14 @@ function NavLinks({ toggleSidebar }) {
                 <AccountCircleIcon />
                 Uitloggen
               </button>
+              {user &&
+              user.signInUserSession.accessToken.payload[
+                "cognito:groups"
+              ]?.includes("Professional") ? (
+                <button onClick={handleDashboardSwitch} className="nav-item-dashboardswitch">
+                  {t("Switch Dashboard")}
+                </button>
+              ) : null}
             </li>
           </>
         ) : (
