@@ -6,6 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../assets/cropped-23107-9-tools-transparent-image 1.svg";
 import CloseIcon from "@mui/icons-material/Close";
 
+
 export const taal = window.location.pathname.split("/")[1];
 
 function MobileNav() {

@@ -71,7 +71,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
                       title: item.task,
                       description: item.description,
                       location: item.region,
-                      availability: item.availability,
+                      availability: item.date,
                     }))
                   : [];
                 setJobs(jobsFromData);
@@ -103,6 +103,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
   }
 
   const handleChatButtonClick = (recipientEmail: string) => {
+    console.log(recipientEmail);
     dynamo.query({
       TableName: "Users",
       IndexName: "username",
@@ -137,7 +138,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
         </div>
         <div className="jobInfo-extra">
           <CalendarMonthIcon />
-          <p>Binnen {job.availability}</p>
+          <p> {job.availability}</p>
         </div>
       </div>
       <button className="main_btn" onClick={() => handleChatButtonClick(job.userEmail)}>
