@@ -254,7 +254,7 @@ const Profile = () => {
             Profession:
             <input
               type="text"
-              name="profession"
+              name="professions"
               value={editableData?.profession}
               onChange={handleInputChange}
             />
