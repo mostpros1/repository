@@ -91,3 +91,57 @@
   width: 10rem;
   cursor: pointer;
 }
+
+@media (max-width: 1024px) {
+  #account-setting-content {
+    display: flex;
+    flex-direction: column;
+  }
+  #account-setting-content-header {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #account-setting-content-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .account-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-settings {
+    max-width: 100%;
+  }
+
+  #account-settings-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .account-settings-tab {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  #account-setting-content {
+    padding: 1rem;
+  }
+
+  .account-setting input {
+    width: 100%;
+  }
+
+  #save-password-settings,
+  #accept-btn {
+    width: 100%;
+  }
+}

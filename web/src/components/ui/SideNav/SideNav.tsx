@@ -15,7 +15,7 @@ import { MdOutlinePhonelinkSetup } from "react-icons/md";
 import { MdOutlinePointOfSale } from "react-icons/md";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
-import { useUserType } from '../../../useUserTypeContext';
+import { useUserType } from "../../../useUserTypeContext";
 
 interface UserState {
   isProfessional: boolean;
@@ -25,11 +25,12 @@ interface UserState {
 }
 
 const SideNav = () => {
-  const { isProfessional, setIsProfessional, setIsHomeowner } = useUserType() as UserState;
+  const { isProfessional, setIsProfessional, setIsHomeowner } =
+    useUserType() as UserState;
 
   const { user } = useUser();
   const navigate = useNavigate();
-  const { lang } = useParams();  // Extract the lang parameter
+  const { lang } = useParams(); // Extract the lang parameter
   //const [isProfessional, setIsProfessional] = useState(false);
   //const [isHomeowner, setIsHomeowner] = useState(false);
 
@@ -37,13 +38,18 @@ const SideNav = () => {
 
   useEffect(() => {
     const checkUserRole = async () => {
-      const dashboardPaths = [`/${lang}/pro-dashboard/`, `/${lang}/homeowner-dashboard/`];
-      const isFromDashboard = dashboardPaths.some(path => location.pathname.includes(path));
-
+      const dashboardPaths = [
+        `/${lang}/pro-dashboard/`,
+        `/${lang}/homeowner-dashboard/`,
+      ];
+      const isFromDashboard = dashboardPaths.some((path) =>
+        location.pathname.includes(path)
+      );
 
       if (!isFromDashboard) {
         if (user?.signInUserSession?.accessToken?.payload) {
-          const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+          const groups =
+            user.signInUserSession.accessToken.payload["cognito:groups"];
           if (groups?.includes("Homeowner")) {
             setIsHomeowner(true);
           } else if (groups?.includes("Professional")) {
@@ -54,8 +60,12 @@ const SideNav = () => {
           navigate(`/${lang}/login`);
         }
       } else {
-        const isHomeownerDashboard = location.pathname.includes(`/${lang}/homeowner-dashboard/`);
-        const isProDashboard = location.pathname.includes(`/${lang}/pro-dashboard/`);
+        const isHomeownerDashboard = location.pathname.includes(
+          `/${lang}/homeowner-dashboard/`
+        );
+        const isProDashboard = location.pathname.includes(
+          `/${lang}/pro-dashboard/`
+        );
 
         if (isHomeownerDashboard) {
           setIsHomeowner(true);
@@ -64,13 +74,18 @@ const SideNav = () => {
           setIsProfessional(true);
           setIsHomeowner(false);
         }
-
       }
-
     };
 
     checkUserRole();
-  }, [user, location.pathname, lang, navigate, setIsHomeowner, setIsProfessional]);
+  }, [
+    user,
+    location.pathname,
+    lang,
+    navigate,
+    setIsHomeowner,
+    setIsProfessional,
+  ]);
 
   const comingSoonTabs = [
     { path: "revenues", label: "Inkomsten" },
@@ -173,7 +188,7 @@ const SideNav = () => {
             </li>
             <li className="sidebar-item">
               <NavLink
-                to={`/${lang}/FAQPage`}
+                to={`/${lang}/help`}
                 className={({ isActive }) =>
                   isActive ? "sidebar-link active" : "sidebar-link"
                 }
@@ -274,7 +289,7 @@ const SideNav = () => {
               </li>
               <li className="sidebar-item">
                 <NavLink
-                  to={`/${lang}/FAQPage`}
+                  to={`/${lang}/help`}
                   className={({ isActive }) =>
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }

@@ -55,7 +55,8 @@
 }
 
 .progress-step.active {
-  background-color: #007bff; /* Kleur per stap */
+  background-color: #007bff;
+  /* Kleur per stap */
 }
 
 .form-inputs {
@@ -207,9 +208,9 @@
 }
 
 .dateCards_wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(100px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 20px;
 }
 
 .dateCards {
@@ -236,13 +237,11 @@
 }
 
 .dateCards_info {
-  height: 91.33%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-style: italic;
-  font-weight: bold;
 }
 
 .dateCards_info.number {
@@ -273,6 +272,7 @@
 .email-field-con label {
   font-size: 18px;
 }
+
 .email-input {
   width: 100%;
   outline: none;
@@ -373,30 +373,30 @@
 }
 
 @media (max-width: 400px) {
-    .register-container{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: 15px;
-        padding: 3rem;
-    }
-
-    .login-form-con{   
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        padding: 1.1rem;   
-        gap: 25px;
-    }
-  }
-
-.register-form-container{
+  .register-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     gap: 15px;
+    padding: 3rem;
+  }
+
+  .login-form-con {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.1rem;
+    gap: 25px;
+  }
+}
+
+.register-form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
 }
 
 .register-form-input {
@@ -431,6 +431,7 @@
   background-color: #f8d7da;
   border: 2px solid #f1aeb5;
 }
+
 .error-message {
   color: red;
   font-size: 14px;
@@ -449,6 +450,7 @@
   align-items: center;
   border: none;
 }
+
 .Button-login:hover {
   border: 2px solid #308ae4;
   background-color: white;
@@ -479,18 +481,26 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: #333; /* Pas dit aan volgens uw kleurenschema */
-  position: absolute; /* Absoluut positioneren om het naar rechtsboven te verplaatsen */
-  top: 0; /* Aan de bovenkant van de parent container */
-  right: 0; /* Aan de rechterkant van de parent container */
-  padding: 55px; /* Voeg wat padding toe voor touch targets en spacing */
+  color: #333;
+  /* Pas dit aan volgens uw kleurenschema */
+  position: absolute;
+  /* Absoluut positioneren om het naar rechtsboven te verplaatsen */
+  top: 0;
+  /* Aan de bovenkant van de parent container */
+  right: 0;
+  /* Aan de rechterkant van de parent container */
+  padding: 55px;
+  /* Voeg wat padding toe voor touch targets en spacing */
 }
 
 .close-calendar-button:hover {
-  color: red; /* Lichtere kleur bij hover */
+  color: red;
+  /* Lichtere kleur bij hover */
 }
 
 @media (max-width: 1025px) {
+
+
   .loginForm_wrapper {
     display: flex;
     flex-direction: column;
@@ -565,6 +575,7 @@
 }
 
 @media (max-width: 425px) {
+
   /*register*/
   .registerForm_con {
     width: 100%;
@@ -579,6 +590,204 @@
   .register-container {
     padding: 2rem;
   }
+
+  .content-con {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 90%;
+  }
+  
+  .content-con img {
+    height: 2550px;
+    width: 100%;
+    object-fit: contain;
+  }
+  
+  .form-con {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+  }
+  
+  .form-con a {
+    align-self: start;
+  }
+  
+  .progress-con {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .progress-con h3 {
+    font-size: 18px;
+  }
+  
+  .progress-bar {
+    background-color: white;
+    height: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    margin-top: -30px;
+    display: flex;
+    width: 100%;
+    gap: 5px;
+  }
+  
+  .progress-step {
+    height: 100%;
+    transition: 0.3s; /* Voeg een overgang toe voor kleurverandering */
+    background-color: gray; /* Kleur per stap */
+  }
+  
+  .progress-step.active {
+    background-color: #007bff;
+    /* Kleur per stap */
+  }
+  
+  .form-inputs {
+    width: 90%;
+  }
+  
+  .form-input {
+    border: none;
+    width: 50%;
+    padding: 20px;
+    font-size: 18px;
+    outline: none;
+  }
+
+  .first-input {
+    border: 2px solid #c0c0c8;
+    border-radius: 5px 0px 0px 5px;
+  }
+  
+  .second-input {
+    border-right: 2px solid #c0c0c8;
+    border-top: 2px solid #c0c0c8;
+    border-bottom: 2px solid #c0c0c8;
+    border-radius: 0px 5px 5px 0px;
+  }
+
+  .dateForm_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .dateCards_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(70px, 1fr));
+    gap: 10px;
+  }
+  
+  .dateCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    border: 2px solid #308ae4;
+    border-radius: 15px;
+    transition: all 0.2s;
+    padding: 10px;
+    
+  }
+  
+  .dateCards:last-child {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dateCards:hover,
+  .dateCards.selected {
+    /* Voeg .selected toe voor geselecteerde kaart */
+    background-color: #308ae4;
+    color: white;
+  }
+  
+  .dateCards_info {
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 14.4px;
+  }
+  
+  .dateCards_info.number {
+    font-size: 18px;
+  }
+  
+  .btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 14.4px;
+  }
+  
+  .form-btn {
+    width: 45%;
+    padding: 15px 0px;
+    background-color: #308ae4;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 5px;
+    border: none;
+    color: white;
+  }
+  
+  .form-btn:hover {
+    cursor: pointer;
+  }
+
+  .info-con {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .text-field-con {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .text-field-con h4 {
+    font-weight: 400;
+    font-size: 16px;
+    color: #8b8d96;
+  }
+  
+  .text-field {
+    width: 100%;
+    min-height: 250px;
+    font-family: inherit;
+    padding: 20px 15px;
+    border: 2px solid #c0c0c8;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+  }
+  
+  ::placeholder {
+    color: #c0c0c8;
+  }
+  
 }
 
 @media (max-width: 375px) {
