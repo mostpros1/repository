@@ -79,7 +79,7 @@ const Profile = () => {
               : "Unknown";
           const workregion =
             output.Items && output.Items.length > 0
-              ? output.Items[0].region
+              ? output.Items[0].work_region
               : "Unknown";
           const professionalID =
             output.Items && output.Items.length > 0
@@ -160,10 +160,12 @@ const Profile = () => {
       const profParams = {
         TableName: "Professionals",
         Key: { id: profileData.professionalID },
-        UpdateExpression: "set profession = :profession, bio = :bio",
+        UpdateExpression: "set profession = :profession, bio = :bio, work_region = :region",
         ExpressionAttributeValues: {
           ":profession": editableData?.profession,
           ":bio": editableData?.bio,
+          ":region": editableData?.workregion
+
         },
       };
 
