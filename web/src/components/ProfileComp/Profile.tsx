@@ -71,15 +71,10 @@ const Profile = () => {
           const output = await dynamo.query(Profparams).promise();
           console.log("Professional data:", output);
 
-          const profession =
-            output.Items && output.Items.length > 0
-              ? output.Items[0].profession
-              : "Unknown";
-          const workregion =
-            output.Items && output.Items.length > 0
-              ? output.Items[0].region
-              : "Unknown";
-          const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
+          const profession = output.Items && output.Items.length > 0 ? output.Items[0].profession : "Unknown";
+          const workregion = output.Items && output.Items.length > 0 ? output.Items[0].region : "Unknown";
+const professionalID = output.Items && output.Items.length > 0 ? output.Items[0].id : "Unknown";
+
 
           const bio =
             output.Items && output.Items.length > 0
@@ -148,9 +143,19 @@ const Profile = () => {
         }
       };
 
-      console.log("DynamoDB update params:", params);
-      const test = await dynamo.update(params).promise();
-      console.log(test);
+      await dynamo.update(params).promise();
+
+      const profParams = {
+        TableName: "Professionals",
+        Key: { id: profileData.professionalID },
+        UpdateExpression: "set profession = :profession, bio = :bio",
+        ExpressionAttributeValues: {
+          ":profession" : editableData?.profession,
+          ":bio" : editableData?.bio
+        }
+      }
+
+      await dynamo.update(profParams).promise();
 
       const { name, phone, email, bio, avatar, workregion, profession } = editableData || {};
       const newProfileData = {
