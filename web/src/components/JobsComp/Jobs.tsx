@@ -31,7 +31,7 @@ const Jobs = () => {
       chats: 3,
       currentStatus: "pending",
     } /*,
-    {
+    { 
       id: 2,
       name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
