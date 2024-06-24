@@ -202,7 +202,7 @@ const Profile = () => {
           <div id="profileLeftContainer">
             <img src={profileData.avatar} alt="profile" />
             <div className="profileInfo">
-              <h1>HoofdBeroep: {profileData.profession}</h1>
+              <h1>Hoofdberoep: {profileData.profession}</h1>
               <p>Naam: {profileData.name}</p>
               <p>Werk Regio: {profileData.workregion} </p>
             </div>
