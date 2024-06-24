@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./Profile.css";
+import "./profile.css";
 import { dynamo } from "../../../declarations";
 import Pfp from "../../assets/ElectrozPFP.png";
 import { Auth } from "aws-amplify";
-import Modal from "./profileModal"; // Import the Modal component
+import Modal from "./profileModal.tsx"; // Import the Modal component
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
     name: "Loading...",
-    location: "Loading...",
     phone: "Loading...",
     email: "Loading...",
     bio: "Loading...",
@@ -41,11 +40,9 @@ const Profile = () => {
         if (data.Items && data.Items.length > 0) {
           const userData = data.Items[0];
           const name = `${userData.first_name} ${userData.last_name}`;
-          const location = userData.location || "Unknown";
           const phone = userData.phone_number || "Unknown";
           const email = userData.email;
-          const profession = userData.profession || "Unknown";
-          const workregion = userData.region || "Unknown";
+
 
           const Profparams = {
             TableName: "Professionals",
@@ -58,6 +55,9 @@ const Profile = () => {
           const output = await dynamo.query(Profparams).promise();
           console.log("Professional data:", output);
 
+          const profession = output.Items && output.Items.length > 0 ? output.Items[0].profession : "Unknown";
+          const workregion = output.Items && output.Items.length > 0 ? output.Items[0].region : "Unknown";
+
           const bio =
             output.Items && output.Items.length > 0
               ? output.Items[0].bio
@@ -65,7 +65,6 @@ const Profile = () => {
 
           setProfileData({
             name,
-            location,
             phone,
             email,
             bio,
@@ -75,7 +74,6 @@ const Profile = () => {
           });
           setEditableData({
             name,
-            location,
             phone,
             email,
             bio,
@@ -116,11 +114,10 @@ const Profile = () => {
         TableName: "Users",
         Key: { email: profileData.email },
         UpdateExpression:
-          "set first_name = :fname, last_name = :lname, location = :loc, phone_number = :phone, profession = :prof, region = :reg",
+          "set first_name = :fname, last_name = :lname, phone_number = :phone, profession = :prof, region = :reg",
         ExpressionAttributeValues: {
           ":fname": editableData.name.split(" ")[0],
           ":lname": editableData.name.split(" ")[1],
-          ":loc": editableData.location,
           ":phone": editableData.phone,
           ":prof": editableData.profession,
           ":reg": editableData.workregion,
@@ -146,7 +143,6 @@ const Profile = () => {
             <div className="profileInfo">
               <h1>HoofdBeroep: {profileData.profession}</h1>
               <p>Naam: {profileData.name}</p>
-              <p>Locatie: {profileData.location}</p>
               <p>Werk Regio: {profileData.workregion} </p>
             </div>
           </div>
@@ -178,15 +174,6 @@ const Profile = () => {
               type="text"
               name="name"
               value={editableData.name}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Location:
-            <input
-              type="text"
-              name="location"
-              value={editableData.location}
               onChange={handleInputChange}
             />
           </label>
