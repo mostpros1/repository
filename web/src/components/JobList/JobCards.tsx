@@ -18,7 +18,7 @@ interface Job {
   description: string;
   location: string;
   availability: string;
-  userEmail: string;
+  userId: number;
   // img: string;
 }
 
@@ -64,15 +64,15 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
               .then((output) => {
                 const jobsFromData = output.Items
                   ? output.Items.map((item) => ({
-                      id: item.id,
-                      name: item.profession,
-                      distance: item.distance,
-                      userEmail: item.user_email,
-                      title: item.task,
-                      description: item.description,
-                      location: item.work_region,
-                      availability: item.date,
-                    }))
+                    id: item.id,
+                    name: item.profession,
+                    distance: item.distance,
+                    userId: item.user_id,
+                    title: item.task,
+                    description: item.description,
+                    location: item.work_region,
+                    availability: item.date,
+                  }))
                   : [];
                 setJobs(jobsFromData);
               })
@@ -102,21 +102,11 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
     return <div className="no-jobs">No jobs available.</div>;
   }
 
-  const handleChatButtonClick = (recipientEmail: string) => {
-    console.log(recipientEmail);
-    dynamo.query({
-      TableName: "Users",
-      IndexName: "username",
-      KeyConditionExpression: "email = :email",
-      ExpressionAttributeValues: {
-        ":email": recipientEmail,
-      }
-    }).promise().then((data) => {
-      if (data.Items && data.Items.length > 0) {
-        console.log(data.Items[0].id);
-        window.location.href = `/nl/pro-dashboard/chat?id=${data.Items[0].id}`;
-      }
-    }).catch(console.error);
+  const handleChatButtonClick = (userId: number) => {
+    console.log(userId);
+
+    window.location.href = `/nl/pro-dashboard/chat?id=${userId}`;
+
   };
 
   const jobCardsRender = jobs.map((job) => (
@@ -141,7 +131,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p> {job.availability}</p>
         </div>
       </div>
-      <button className="main_btn" onClick={() => handleChatButtonClick(job.userEmail)}>
+      <button className="main_btn" onClick={() => handleChatButtonClick(job.userId)}>
         Contact opnemen
       </button>
     </div>
