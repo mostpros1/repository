@@ -102,7 +102,7 @@ const SideNav = () => {
               <NavLink
                 to={`/${lang}/pro-dashboard`}
                 className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
+                  isActive ? "sidebar-link" : "sidebar-link"
                 }
               >
                 <DashboardIcon />

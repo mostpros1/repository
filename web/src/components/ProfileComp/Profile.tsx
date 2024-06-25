@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
 import { dynamo } from "../../../declarations";
-import Pfp from "../../assets/ElectrozPFP.png";
+import Pfp from "../../assets/placeholder_avatar.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Auth } from "aws-amplify";
 import Modal from "./profileModal.tsx";
@@ -160,12 +160,12 @@ const Profile = () => {
       const profParams = {
         TableName: "Professionals",
         Key: { id: profileData.professionalID },
-        UpdateExpression: "set profession = :profession, bio = :bio, work_region = :region",
+        UpdateExpression:
+          "set profession = :profession, bio = :bio, work_region = :region",
         ExpressionAttributeValues: {
           ":profession": editableData?.profession,
           ":bio": editableData?.bio,
-          ":region": editableData?.workregion
-
+          ":region": editableData?.workregion,
         },
       };
 
