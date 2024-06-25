@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OverzichtJobs.css";
 import { dynamo } from "../../../declarations";
 import HandymanIcon from "@mui/icons-material/Handyman";
+import { Auth } from "aws-amplify";
 
 interface Klus {
   currentStatus: string;
@@ -9,7 +10,7 @@ interface Klus {
   profession: string;
   region: string;
   task: string;
-  user_email: string;
+  user_id: number;
 }
 
 const OverzichtKlussen: React.FC = () => {
@@ -35,7 +36,7 @@ const OverzichtKlussen: React.FC = () => {
             profession: item.profession,
             region: item.region,
             task: item.task,
-            user_email: item.user_email,
+            user_id: item.user_id,
           }));
 
           console.log("klussenData: ", klussenData);
@@ -49,9 +50,27 @@ const OverzichtKlussen: React.FC = () => {
       });
   }, []);
 
-  const handleContactClick = (email: string) => {
-    // Replace this with your actual routing logic
-    window.location.href = `/chat?email=${email}`;
+  const handleContactClick = async (user_id) => {
+    try {
+      // Attempt to get the current authenticated user
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+  
+      const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+  
+      if (groups?.includes("Professional")) {
+        window.location.href = `/nl/pro-dashboard/chat?email=${user_id}`;
+      } else if (groups?.includes("Homeowner")) {
+        window.location.href = `/nl/homewowner-dashboard/chat?id=${user_id}`;
+      } else {
+        alert("Je moet ingelogt zijn");
+        window.location.href = "/nl/login";
+      }
+    } catch (error) {
+      // Handle the error case where the user is not authenticated
+      console.error("Authentication error:", error);
+      alert("Je moet ingelogt zijn");
+      window.location.href = "/nl/login";
+    }
   };
 
   if (loading) {
@@ -70,7 +89,7 @@ const OverzichtKlussen: React.FC = () => {
               <p>Regio: {klus.region}</p>
               <div className="bottomrightLogo">
                 <button
-                  onClick={() => handleContactClick(klus.user_email)}
+                  onClick={() => handleContactClick(klus.user_id)}
                   className="buttoncontact"
                 >
                   Contact opnemen
