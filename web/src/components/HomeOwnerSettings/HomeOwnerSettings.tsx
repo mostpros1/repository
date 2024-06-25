@@ -9,17 +9,17 @@ import { dynamo } from "../../../declarations";
 
 const HomeOwnerSecurity = () => {
   const [activeTab, setActiveTab] = useState("Security");
-  const [password, setPassword] = useState("**********");
-  const [passwordRepeat, setPasswordRepeat] = useState("**********");
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
   const [email, setEmail] = useState();
   const [emailRepeat, setEmailRepeat] = useState();
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    setOldPassword(e.target.value);
   };
 
   const handlePasswordRepeatChange = (e) => {
-    setPasswordRepeat(e.target.value);
+    setNewPassword(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -161,47 +161,20 @@ const HomeOwnerSecurity = () => {
     }
   };
 
-  const login = async (username, password) => {
-    try {
-      const user = await Auth.signIn(username, password);
-      const accessToken = user.signInUserSession.accessToken.jwtToken;
-      return accessToken;
-    } catch (error) {
-      console.error("Error signing in", error);
-      throw error;
-    }
-  };
-
-  const client = new CognitoIdentityProviderClient({
-    region: import.meta.env.VITE_AWS_REGION,
-    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
-  });
-
   // Change password function
-  const changePassword = async (oldPassword, newPassword) => {
-    const authenticatedUser = await Auth.currentAuthenticatedUser();
-    const username = authenticatedUser.attributes.username;
-
+  async function changePassword(oldPassword: string, newPassword: string) {
     try {
-      const accessToken = await login(username, oldPassword);
-
-      const input = {
-        PreviousPassword: oldPassword, // required
-        ProposedPassword: newPassword, // required
-        AccessToken: accessToken, // required
-      };
-      const command = new ChangePasswordCommand(input);
-      const response = await client.send(command);
-      console.log("Password change response: ", response);
-    } catch (error) {
-      console.error("Error changing password", error);
+      const user = await Auth.currentAuthenticatedUser();
+      const data = await Auth.changePassword(user, oldPassword, newPassword);
+      alert(data + " Wachtwoord Veranderd!!!");
+    } catch (err) {
+      alert("Probleem tijdens wachtwoord veranderen: " + err);
     }
-  };
+  }
 
 
   const submitPassword = () => {
-    changePassword(password, passwordRepeat);
+    changePassword(oldPassword || "", newPassword || "");
   }
 
   function changeEmail(){
@@ -217,13 +190,13 @@ const HomeOwnerSecurity = () => {
             <label>huidig Wachtwoord</label>
             <input
               type="password"
-              value={password}
+              value={oldPassword}
               onChange={handlePasswordChange}
             />
             <label>Nieuw wachtwoord</label>
             <input
               type="password"
-              value={passwordRepeat}
+              value={newPassword}
               onChange={handlePasswordRepeatChange}
             />
           </div>
