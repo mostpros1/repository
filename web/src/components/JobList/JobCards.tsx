@@ -56,12 +56,13 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
                 KeyConditionExpression: "profession = :profession",
                 FilterExpression: "currentStatus = :currentStatus",
                 ExpressionAttributeValues: {
-                  ":profession": data.Items[0].profession,
+                  ":profession": data.Items[0].profession.toLowerCase(),
                   ":currentStatus": "pending",
                 },
               })
               .promise()
               .then((output) => {
+                console.log(output.Items)
                 const jobsFromData = output.Items
                   ? output.Items.map((item) => ({
                       id: item.id,
