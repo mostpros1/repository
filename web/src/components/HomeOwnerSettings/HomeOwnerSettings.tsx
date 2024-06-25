@@ -47,7 +47,7 @@ const HomeOwnerSecurity = () => {
             <input type="email" placeholder="johndoe@gmail.com" />
           </div>
           <div className="account-setting">
-            <label>Re-enter Email</label>
+            <label>Herhaal Email</label>
             <input type="email" placeholder="johndoe@gmail.com" />
           </div>
           <button id="accept-btn"> Bevestigen </button>
