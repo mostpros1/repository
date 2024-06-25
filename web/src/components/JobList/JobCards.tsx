@@ -104,19 +104,23 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
 
   const handleChatButtonClick = (recipientEmail: string) => {
     console.log(recipientEmail);
-    dynamo.query({
-      TableName: "Users",
-      IndexName: "username",
-      KeyConditionExpression: "email = :email",
-      ExpressionAttributeValues: {
-        ":email": recipientEmail,
-      }
-    }).promise().then((data) => {
-      if (data.Items && data.Items.length > 0) {
-        console.log(data.Items[0].id);
-        window.location.href = `/nl/pro-dashboard/chat?id=${data.Items[0].id}`;
-      }
-    }).catch(console.error);
+    dynamo
+      .query({
+        TableName: "Users",
+        IndexName: "username",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": recipientEmail,
+        },
+      })
+      .promise()
+      .then((data) => {
+        if (data.Items && data.Items.length > 0) {
+          console.log(data.Items[0].id);
+          window.location.href = `/nl/pro-dashboard/chat?id=${data.Items[0].id}`;
+        }
+      })
+      .catch(console.error);
   };
 
   const jobCardsRender = jobs.map((job) => (
@@ -141,7 +145,10 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p> {job.availability}</p>
         </div>
       </div>
-      <button className="main_btn" onClick={() => handleChatButtonClick(job.userEmail)}>
+      <button
+        className="main_btn"
+        onClick={() => handleChatButtonClick(job.userEmail)}
+      >
         Contact opnemen
       </button>
     </div>
