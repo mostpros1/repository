@@ -18,7 +18,7 @@ interface Job {
   description: string;
   location: string;
   availability: string;
-  userEmail: string;
+  userId: number;
   // img: string;
 }
 
@@ -64,15 +64,15 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
               .then((output) => {
                 const jobsFromData = output.Items
                   ? output.Items.map((item) => ({
-                      id: item.id,
-                      name: item.profession,
-                      distance: item.distance,
-                      userEmail: item.user_email,
-                      title: item.task,
-                      description: item.description,
-                      location: item.work_region,
-                      availability: item.date,
-                    }))
+                    id: item.id,
+                    name: item.profession,
+                    distance: item.distance,
+                    userId: item.user_id,
+                    title: item.task,
+                    description: item.description,
+                    location: item.work_region,
+                    availability: item.date,
+                  }))
                   : [];
                 setJobs(jobsFromData);
               })

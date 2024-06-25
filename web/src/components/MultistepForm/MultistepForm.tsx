@@ -173,23 +173,36 @@ function MultistepForm() {
     if (user) {
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
-      dynamo
-        .put({
-          Item: {
-            id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
-            user_email: stopXSS(currentAuthenticatedUser.attributes.email),
-            profession: stopXSS(data.profession),
-            task: stopXSS(data.task),
-            region: stopXSS(data.stad),
-            currentStatus: stopXSS("pending"),
-            date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
-            chats: Number(stopXSS(String(0))),
-            isCurrent: stopXSS(String(true))
-          },
-          TableName: "Klussen"
-        })
-        .promise()
-        .catch(console.error);
+      const UserData = await dynamo.query({
+        TableName: "Users",
+        IndexName: "username",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": currentAuthenticatedUser.atributes.email,
+        },
+      }).promise()
+
+      if (UserData && UserData.Items && UserData.Items.length > 0) {
+        dynamo
+           .put({
+                Item: {
+                    id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+                    user_id: UserData.Items[0].id,
+                    profession: stopXSS(data.profession),
+                    task: stopXSS(data.task),
+                    region: stopXSS(data.stad),
+                    currentStatus: stopXSS("pending"),
+                    date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+                    chats: Number(stopXSS(String(0))),
+                    isCurrent: stopXSS(String(true))
+                },
+                TableName: "Klussen"
+            })
+           .promise()
+           .catch(console.error);
+    } else {
+        console.error("UserData or UserData.Items is undefined");
+    }
       const profession = window.location.hash.replace("#", "").split("?")[0];
       const task = window.location.hash.replace("#", "").split("?")[1];
 
