@@ -1103,31 +1103,31 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               />
               {isDropUpOpen && (
                 <div className="dropup-content show">
-                  <button
-                    className="dropup-option"
-                    onClick={() => inputRef.current?.click()}
-                  >
-                    <MdDriveFileMove size={25} color="blue" />
-                  </button>
-                  <input
-                    type="file"
-                    ref={inputRef}
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
-                  <button
-                    className="dropup-option"
-                    onClick={() => setShowPaymentModal(true)}
-                  >
-                    <BsCreditCard size={25} color="blue" />
-                  </button>
-                  <button
-                    className="dropup-option"
-                    onClick={handleSendLocation}
-                  >
-                    <FaLocationCrosshairs size={25} color="blue" />
-                  </button>
-                </div>
+                <button
+                  className="dropup-option"
+                  onClick={handleSendLocation}
+                >
+                  Locatie
+                </button>
+                <input
+                  type="file"
+                  ref={inputRef}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                <button
+                  className="dropup-option"
+                  onClick={() => setShowPaymentModal(true)}
+                >
+                  Betalen
+                </button>
+                <button
+                  className="dropup-option"
+                  onClick={() => inputRef.current?.click()}
+                >
+                  Deel Bestand
+                </button>
+              </div>
               )}
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
