@@ -30,7 +30,7 @@ const HomeOwnerSecurity = () => {
     setEmailRepeat(e.target.value);
   };
 
-  async function changeEmailUsers(oldEmail: string, newEmail: string) {
+  async function changeEmailUsers(oldEmail: string, newEmail) {
     const UserData = await dynamo.query({
       TableName: "Users",
       IndexName: "username",
@@ -47,10 +47,9 @@ const HomeOwnerSecurity = () => {
         Key: {
           id: UserData.Items[0].id,
         },
-        UpdateExpression: `set email = :email, updated_at, :updatedAt`,
+        UpdateExpression: `set email = :email`,
         ExpressionAttributeValues: {
           ":email": newEmail,
-          ":updatedAt": new Date()
         },
       })
       .promise()
@@ -60,7 +59,7 @@ const HomeOwnerSecurity = () => {
 
   }
 
-  async function changeEmailPros(oldEmail: string, newEmail: string) {
+  async function changeEmailPros(oldEmail: string, newEmail) {
     const ProData = await dynamo.query({
       TableName: "Professionals",
       IndexName: "emailIndex",
@@ -76,10 +75,9 @@ const HomeOwnerSecurity = () => {
         Key: {
           id: ProData.Items[0].id,
         },
-        UpdateExpression: `set email = :email, updated_at, :updatedAt`,
+        UpdateExpression: `set email = :email`,
         ExpressionAttributeValues: {
           ":email": newEmail,
-          ":updatedAt": new Date()
         },
       })
       .promise()
@@ -91,7 +89,7 @@ const HomeOwnerSecurity = () => {
 
   
 
-  const submitEmail = async () => {
+  const submitEmail = async (email, emailRepeat) => {
     try {
       if (email !== emailRepeat) {
         console.log("Emails do not match");
@@ -108,10 +106,10 @@ const HomeOwnerSecurity = () => {
       const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
 
       if (groups?.includes("Professional")) {
-        changeEmailUsers(currentAuthenticatedUser.email, String(email));
-        changeEmailPros(currentAuthenticatedUser.email, String(email));
+        await changeEmailUsers(currentAuthenticatedUser.attributes.email, email);
+        await changeEmailPros(currentAuthenticatedUser.attributes.email, email);
       } else if (groups?.includes("Homeowner")){
-        changeEmailUsers(currentAuthenticatedUser.email, String(email));
+        await changeEmailUsers(currentAuthenticatedUser.attributes.email, email);
       }
 
       const params = {
@@ -206,6 +204,9 @@ const HomeOwnerSecurity = () => {
     changePassword(password, passwordRepeat);
   }
 
+  function changeEmail(){
+    submitEmail(email, emailRepeat);
+  }
 
   return (
     <div className="account-settings">
@@ -248,7 +249,7 @@ const HomeOwnerSecurity = () => {
             <label>Re-enter Email</label>
             <input type="email" placeholder="johndoe@gmail.com" onChange={handleEmailRepeatChange} />
           </div>
-          <button id="accept-btn" onClick={submitEmail}> Bevestigen </button>
+          <button id="accept-btn" onClick={changeEmail}> Bevestigen </button>
         </div>
       </div>
     </div>
