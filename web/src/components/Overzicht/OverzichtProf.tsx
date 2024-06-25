@@ -73,7 +73,7 @@ const OverzichtProf: React.FC = () => {
       const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
   
       if (groups?.includes("Professional")) {
-        window.location.href = `/nl/pro-dashboard/chat?email=${user_id}`;
+        window.location.href = `/nl/pro-dashboard/chat?id=${user_id}`;
       } else if (groups?.includes("Homeowner")) {
         window.location.href = `/nl/homewowner-dashboard/chat?id=${user_id}`;
       } else {
