@@ -139,7 +139,7 @@ const HomeOwnerSecurity = () => {
 
       console.log("Cognito instance created");
 
-      const data = await new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         cognito.adminUpdateUserAttributes(params, (err, data) => {
           if (err) {
             console.error("Error updating user attributes: ", err);
