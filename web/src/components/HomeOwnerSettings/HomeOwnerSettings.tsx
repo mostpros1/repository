@@ -141,9 +141,11 @@ const HomeOwnerSecurity = () => {
         cognito.adminUpdateUserAttributes(params, (err, data) => {
           if (err) {
             console.error("Error updating user attributes: ", err);
+            alert("Error updating user attributes: " + err);
             reject(err);
           } else {
             console.log("Update response data: ", data);
+            alert("Email adress veranderd");
             resolve(data);
           }
         });
