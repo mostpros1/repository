@@ -12,7 +12,12 @@ export function useChatBackend(user: any, signOut) {
   const [showConfirmedConnection, setShowConfirmedConnection] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [notificationMessage, setNotificationMessage] = React.useState("");
-  const [visibleName, setVisibleName] = React.useState<string>(user.attributes.email.split("@")[0]);
+  const [visibleName, setVisibleName] = React.useState<string>(() => {
+    if (user?.attributes?.email) {
+      return user.attributes.email.split("@")[0];
+    }
+    return ""; // Default value if attributes or email is undefined
+  });
   const [textSize, setTextSize] = React.useState<number>(14);
   const uuidEmailMap = React.useRef<{ [uuid: string]: string }>({});
 
@@ -36,19 +41,27 @@ export function useChatBackend(user: any, signOut) {
   };
 
   const handleSendMessage = async (text) => {
+    const sortedMembers = [user.attributes.email, recipientEmail].sort();
     const members = [user.attributes.email, recipientEmail];
-    await API.graphql({
-      query: mutations.createChat,
-      variables: {
+
+    console.log("Sending message:", text, "to members:", members);
+
+    try {
+      await API.graphql(graphqlOperation(mutations.createChat, {
         input: {
-          text: text,
+          text,
           email: user.attributes.email,
           members,
-          sortKey: members.sort().join("#"),
-        },
-      },
-    });
+          sortKey: sortedMembers.join("#"),
+        }
+      }));
+
+      console.log("Message sent successfully");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
+
 
   const handleReceivedMessage = (receivedChat) => {
     if (receivedChat.members.includes(user.attributes.email)) {
@@ -61,33 +74,99 @@ export function useChatBackend(user: any, signOut) {
   };
 
   const handleStartNewChatWithEmail = async (recipientEmail) => {
+    if (!user || !user.attributes) {
+      console.error("User object is not fully initialized.");
+      return;
+    }
+
     try {
       const uuid = getUUIDFromEmail(recipientEmail);
       const members = [user.attributes.email, recipientEmail];
-      await API.graphql({
-        query: mutations.createChat,
-        variables: {
-          input: {
-            text: "",
-            email: user.attributes.email,
-            members,
-            sortKey: members.sort().join("#"),
-          },
+      const sortedMembers = members.sort().join("#");
+
+      console.log("Creating chat with recipients:", members.join(', '));
+
+      const result = await API.graphql(graphqlOperation(mutations.createChat, {
+        input: {
+          text: "",
+          email: user.attributes.email,
+          members,
+          sortKey: sortedMembers,
         },
-      });
+      }));
+
+      console.log("Chat creation result:", result);
+
       const url = `/chat?recipient=${uuid}`;
       window.history.pushState({}, "", url);
       setRecipientEmail(recipientEmail);
+      localStorage.setItem("selectedContact", recipientEmail);
+
     } catch (error) {
       console.error("Error starting new chat:", error);
     }
   };
 
+
+
+
+  const handleStartNewChatWithEmailDashboard = async (recipientEmail) => {
+    console.log("Starting new chat with email dashboard...", recipientEmail);
+
+    if (!user || !user.attributes) {
+      console.error("User object is not fully initialized.");
+      return;
+    }
+
+    try {
+      const uuid = getUUIDFromEmail(recipientEmail);
+      const members = [user.attributes.email, recipientEmail];
+      const sortedMembers = members.sort().join("#");
+
+      console.log('Creating chat with recipients:', members.join(', '));
+
+      const result = await API.graphql(graphqlOperation(mutations.createChat, {
+        input: {
+          text: "",
+          email: user.attributes.email,
+          members,
+          sortKey: sortedMembers,
+        },
+      }));
+
+      console.log("Chat creation result:", result);
+
+      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+      console.log("User groups:", groups);
+
+      if (groups?.includes("Homeowner")) {
+        console.log("User is Homeowner, redirecting...");
+        const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+        setRecipientEmail(recipientEmail);
+        await handleSendMessage("Hallo");
+        window.location.href = url;
+      } else if (groups?.includes("Professional")) {
+        console.log("User is Professional, redirecting...");
+        const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
+        setRecipientEmail(recipientEmail);
+        await handleSendMessage("Hallo");
+        window.location.href = url;
+      } else {
+        console.warn("User does not belong to Homeowner or Professional group.");
+      }
+
+    } catch (error) {
+      console.error("Error starting new chat:", error);
+    }
+  };
+
+
+
   const handleAlertConfirm = () => {
     if (recipientEmail) {
       setShowAlert(false);
       setShowJoinButton(false);
-      setShowConfirmedConnection(true); 
+      setShowConfirmedConnection(true);
     }
   };
 
@@ -100,20 +179,22 @@ export function useChatBackend(user: any, signOut) {
     const members = [user.attributes.email, recentMessageEmail];
     setRecipientEmail(recentMessageEmail);
     setRecentMessageEmail("");
-    setShowJoinButton(false); 
-    setShowConfirmedConnection(true); 
+    setShowJoinButton(false);
+    setShowConfirmedConnection(true);
     setNotificationMessage(`${recentMessageEmail} joined the chat`);
+    localStorage.setItem("selectedContact", recentMessageEmail);
   };
 
   return {
     chats,
     setChats,
-    recipientEmail, 
+    recipientEmail,
     showJoinButton, setShowJoinButton,
     showConfirmedConnection,
     showAlert,
     notificationMessage,
     handleStartNewChatWithEmail,
+    handleStartNewChatWithEmailDashboard,
     handleSendMessage,
     handleAlertConfirm,
     handleAlertCancel,

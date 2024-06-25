@@ -12,14 +12,16 @@ function ChatPage() {
   return (
     <div id="root">
       <NavBar />
-      <div className="chat-panel">
-        <div className="side-panel-left-chat">
-          <SideNav />
-        </div>
-        <div className="side-panel-right-chat">
+      <main className="chatdisplayMain">
+        <section className="sidenavChatSection">
+          <article className="sideNavChat">
+            <SideNav />
+          </article>
+        </section>
+        <section className="rightsideChatSection">
           <ChatMain user={undefined} signOut={dummySignOut} />
-        </div>
-      </div>
+        </section>
+      </main>
       <Footer />
     </div>
   );

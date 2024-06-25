@@ -1,48 +1,78 @@
-.search_chore_text_con{
+.search_chore_text_con {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.search_chore_text_con h1 {
+  text-align: center;
+}
+
+.search_chore_form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 80%;
+  gap: 15px;
+}
+
+.search_chore_form input {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 3px solid #d9d9d9;
+  border-radius: 10px;
+  outline: none;
+  font-size: 18px;
+}
+
+.search_chore_form select {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 3px solid #d9d9d9;
+  border-radius: 10px;
+  outline: none;
+  font-size: 18px;
+}
+
+.search_chore_form select:hover {
+  cursor: pointer;
+  border-color: #b3b3b3;
+  background-color: #f0f0f0;
+}
+
+.search_chore_form select option {
+  font-size: 2rem;
+  gap: 2rem;
+  scrollbar-width: thin;
+}
+
+.search_chore_address {
+  display: flex;
+  width: 100%;
+}
+
+.search_chore_address input {
+  width: 50%;
+  outline: none;
+  font-size: 18px;
+}
+
+.search_chore_address input:nth-child(1) {
+  border-radius: 10px 0px 0px 10px;
+  border-right: 0px;
+}
+
+.search_chore_address input:nth-child(2) {
+  border-radius: 0px 10px 10px 0px;
+}
+
+@media (max-width: 425px) {
+
+  .search_chore_text_con {
     display: flex;
     flex-direction: column;
     gap: 50px;
-}
-
-.search_chore_text_con h1{
-    text-align: center;
-}
-
-.search_chore_form{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 80%;
-    gap: 15px;
-}
-
-.search_chore_form input{
-    background-color: #F8F8F8;
-    padding: 20px;
-    border: 3px solid #D9D9D9;
-    border-radius: 10px;
-    outline: none;
-    font-size: 18px;
-    
-}
-
-.search_chore_address{
-    display: flex;
-    width: 100%;
-}
-
-.search_chore_address input{
-    width: 50%;
-    outline: none;
-    font-size: 18px;
-
-}
-
-.search_chore_address input:nth-child(1){
-    border-radius: 10px 0px 0px 10px;
-    border-right: 0px;
-}
-
-.search_chore_address input:nth-child(2){
-    border-radius: 0px 10px 10px 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }

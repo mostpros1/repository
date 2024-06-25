@@ -1,0 +1,117 @@
+.overzicht-klussen-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.overzicht-klussen-container h1 {
+  color: #333;
+}
+
+.klussen-lijst {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+
+.klus-card {
+  background-color: #ffffff;
+  border-top: 4px solid #308ae4;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  width: 30rem;
+  height: 30rem;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.klus-card:hover {
+  transform: scale(1.05);
+}
+
+.klus-card-content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  height: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.klus-card h2 {
+  margin-top: 0;
+  width: fit-content;
+  height: fit-content;
+  color: #333;
+  font-size: 2.5rem;
+  padding-bottom: 2rem;
+  border-radius: 10px 10px 0 0;
+  white-space: nowrap;
+}
+
+.klus-card p {
+  margin: 10px 0;
+  color: #666;
+}
+
+.loading {
+  font-size: 1.5em;
+  color: #4caf50;
+}
+
+.buttoncontact {
+  background-color: #308ae4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.buttoncontact:hover {
+  background-color: #1c436a;
+}
+
+.bottomrightLogo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7rem;
+  justify-content: space-evenly;
+}
+
+.bottomrightLogo svg {
+  width: 8rem;
+  height: 8rem;
+  color: #636469;
+}
+
+@media (max-width: 768px) {
+  .klussen-lijst {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .klus-card {
+    width: 90%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .klussen-lijst {
+    justify-content: space-around;
+  }
+
+  .klus-card {
+    width: 45%;
+  }
+}

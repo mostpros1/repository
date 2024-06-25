@@ -8,13 +8,12 @@ import "./FAQPage-rt.css";
 function FAQPageLayout() {
     return (
         <main className="FAQmain">
-            <section className="RightsideFAQsection">
+            <section className="LeftsideFAQsection">
                 <article className="sideNavFAQ">
-                    {/* inhoud sidenav */}
                     <SideNav />
                 </article>
             </section>
-            <section className='rightsideFAQSection'>
+            <section className='RightsideFAQSection'>
                 <FAQ />
             </section>
         </main>

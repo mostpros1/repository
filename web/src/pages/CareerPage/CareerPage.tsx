@@ -6,24 +6,23 @@ import Vacatures from "../../components/Vacatures/Vacatures";
 import careertemp from "../../assets/careerpagegirl.svg";
 import "./CareerPage.css";
 
-
-
 const CareerPage = () => {
-    return (
-        <div>
-            <NavBar />
-            <div className="career-con">
-                <p>Op zoek naar een nieuwe uitdaging of stage?
-                    Bouw, creëer en ontwikkel samen met ons aan
-                    de All-in 1 Home Service App.</p>
-                <img src={careertemp} alt="career" />
-            </div>
-            <div className="vacature-con">
-                <Vacatures />
-            </div>
-            <Footer />
-        </div>
-    );
+  return (
+    <>
+      <NavBar />
+      <section className="CareerInfoSection">
+        <p className="CareerInfoP">
+          Op zoek naar een nieuwe uitdaging of stage? Bouw, creëer en ontwikkel
+          samen met ons aan de All-in 1 Home Service App.
+        </p>
+        <img className="CareerInfoIMG" src={careertemp} alt="career" />
+      </section>
+      <div className="vacature-con">
+        <Vacatures />
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default CareerPage;

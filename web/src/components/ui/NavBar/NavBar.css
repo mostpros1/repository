@@ -40,9 +40,8 @@
 .nav-container {
   position: relative;
   width: 100%;
-  max-width: 1200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .nav-container a {
@@ -56,16 +55,16 @@
   gap: 10px;
 }
 
-.nav-leftside>img {
+.nav-leftside > img {
   height: 30px;
   aspect-ratio: 1/1;
 }
 
-.nav-leftside>.white-h1 {
+.nav-leftside > .white-h1 {
   color: white;
 }
 
-.nav-leftside>.black-h1 {
+.nav-leftside > .black-h1 {
   color: black;
 }
 
@@ -79,22 +78,26 @@
   font-size: 15px;
 }
 
-/* .apps-icon {
+#nine-dots {
   display: flex;
-  box-shadow: 0 0 5px #c7c7c7;
-  border: 2px solid #c7c7c7;
-  border-radius: 15px;
-  padding: 5px 10px 5px 10px;
-  transition: all 0.2s;
-} */
-
-.apps-icon:hover {
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
   cursor: pointer;
-  background-color: #6e6c70;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
-.apps-icon svg {
-  font-size: 30px;
+#nine-dots img {
+  width: 25px;
+  height: 25px;
+}
+
+#nine-dots:hover {
+  transform: scale(1.1);
+  background-color: #308ae4;
 }
 
 .nav-list {
@@ -117,27 +120,40 @@
 .nav-list li a svg {
   font-size: 20px;
 }
+.nav-blue-btn > button {
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 3px solid #308ae4;
+  background-color: white;
+  transition: all 0.2s;
+  cursor: pointer;
+}
 
-.nav-blue-btn>a {
+.nav-blue-btn > button:hover {
+  background-color: #308ae4;
+  color: white !important;
+}
+
+.nav-blue-btn > a {
   padding: 10px 20px;
   border-radius: 15px;
   border: 3px solid #308ae4;
   transition: all 0.2s;
 }
 
-.nav-blue-btn>a:hover {
+.nav-blue-btn > a:hover {
   background-color: #308ae4;
   color: white !important;
 }
 
-li>.white-items {
+li > .white-items {
   color: white;
   text-decoration: none;
   font-size: 18px;
   font-weight: 600;
 }
 
-li>.black-items {
+li > .black-items {
   color: black;
   text-decoration: none;
   font-size: 15px;
@@ -147,13 +163,15 @@ li>.black-items {
 .loginButton {
   padding: 5px 10px;
   color: black;
-  background-color: none;
-  border: none;
+  border: 2px solid black;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
-
 .loginButton:hover {
   cursor: pointer;
-  color: #308ae4;
+  background-color: #f6f6f6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .loginButton svg {
@@ -166,10 +184,10 @@ li>.black-items {
 
 .dropdown-content {
   position: absolute;
-  top: 140%;
-  left: 0;
-  right: 0%;
-  width: 20rem;
+  top: 141%;
+  left: auto;
+  right: 0;
+  width: 30rem;
   height: 20rem;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -180,6 +198,11 @@ li>.black-items {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dropdown-content p {
+  text-align: center;
+  width: 100%;
 }
 
 .dropdown-content button {
@@ -231,12 +254,20 @@ li>.black-items {
 
 .mega-content {
   background-color: white;
-  padding: 25px 40px;
+  padding: 2.5rem 4rem;
   display: flex;
-  gap: 50px;
-  width: fit-content;
+  gap: 5rem;
+  width: max-content;
+  height: auto;
   justify-content: space-evenly;
+  width: 80rem;
   margin: 0 auto;
+}
+.mega-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  white-space: nowrap;
 }
 
 .mega-row header {
@@ -252,12 +283,16 @@ li>.black-items {
   display: flex;
   flex-direction: column;
   gap: 11px;
+  width: 10rem;
 }
 
 .mega-links li a {
   display: block;
   color: black;
+  font-weight: 100;
   font-size: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .mobile-nav {
@@ -289,7 +324,7 @@ li>.black-items {
     font-size: 26px;
   }
 
-  .mobile-nav>svg {
+  .mobile-nav > svg {
     font-size: 30px;
   }
 
@@ -305,7 +340,7 @@ li>.black-items {
     padding: 20px;
   }
 
-  .nav-list>li>a {
+  .nav-list > li > a {
     font-size: 20px;
   }
 

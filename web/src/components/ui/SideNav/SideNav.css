@@ -10,16 +10,11 @@
 .sidebar {
   height: 45%;
   width: 18.5rem;
-  background: #222;
+  background: #308ae4;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.sidebar-link.active {
-  color: #207cd8;
-  border-radius: 1rem;
 }
 
 .sidebar-list {
@@ -27,12 +22,20 @@
   font-size: 1.7rem;
   padding: 0;
   transition: all 0.3s ease-in-out;
+  width: 100%;
 }
 
 .sidebar-item {
-  padding-top: 0.4rem;
+  padding: 1rem;
   margin-bottom: 0.5rem;
-  font-weight: 0;
+  font-weight: 100;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar-item-space {
+  padding-top: 1rem;
+  margin-bottom: 2.5rem;
+  font-weight: 100;
   font-family: "Poppins", sans-serif;
 }
 
@@ -48,12 +51,22 @@
 .sidebar-link {
   text-decoration: none;
   color: white;
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-link.active {
+  background-color: #5aa5f2 !important; /* Ensure it overrides */
+  color: #222 !important;
+  border-radius: 1rem !important;
 }
 
 .sidebar-link:hover {
-  color: #207cd8;
+  color: #222;
+  background-color: #5aa5f2;
+  border-radius: 1rem;
 }
 
 .coming-soon {
@@ -80,10 +93,10 @@
   border-radius: 0.2rem;
   position: absolute;
   left: 120%;
-  top: 50%;
+  top: 52%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-top: -0.5rem;
   margin-left: 3.5rem;
 }
@@ -96,7 +109,7 @@
   .sidebar {
     height: 50%;
     width: 18.5rem;
-    background: #222;
+    background: #308ae4;
     border-radius: 8px;
     display: flex;
     align-items: center;

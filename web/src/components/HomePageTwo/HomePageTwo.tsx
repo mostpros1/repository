@@ -1,6 +1,6 @@
 import "./HomePageTwo.css";
 import YardIcon from "@mui/icons-material/Yard";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlumbingIcon from "@mui/icons-material/Plumbing";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import SolarPowerIcon from "@mui/icons-material/SolarPower";
@@ -23,13 +23,14 @@ import AanemerPFP from "../../assets/AanemerPFP.png";
 import GijsPFP from "../../assets/GijsPFPpng.png";
 import CarpenterIcon from "@mui/icons-material/Carpenter";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { taal } from "../ui/NavBar/Navigation.tsx";
-//Data imports for the searchbar
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../ui/SearchBar/SearchBar";
 import specialists from "../../data/specialists.ts";
+import OverzichtProf from "../Overzicht/OverzichtProf.tsx";
 
-//Define specialist interface
 interface Specialist {
   id: number;
   name: string;
@@ -37,7 +38,6 @@ interface Specialist {
   link?: string;
 }
 
-//PopularCards data
 const PopularCardsData = [
   {
     id: 1,
@@ -81,131 +81,6 @@ const PopularCardsData = [
   },
 ];
 
-//Function Searchbar component
-function Searchbar() {
-  const [value, setValue] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (
-      !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("search_dropdown_item")
-    ) {
-      setShowList(false);
-    }
-  };
-
-  const navigate = useNavigate();
-  const handleInputFocus = () => {
-    setShowList(true);
-  };
-
-  const handleResultClick = (link: string) => {
-    navigate(`/nl/jobs${link}`);
-  };
-  const handleInputKeyDown = (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-        break;
-      case "ArrowDown":
-        setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, slicedResults.length - 1)
-        );
-        break;
-      case "Enter":
-        if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
-          const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
-        }
-        break;
-      case "Tab": // Implementing autocomplete on Tab key
-        if (slicedResults.length > 0) {
-          const selectedResult = slicedResults[0];
-          setValue(selectedResult.task); // Autocomplete with the first suggestion
-          setSelectedIndex(0);
-        }
-        break;
-      default:
-        break;
-    }
-  };
-  const searchResults = () => {
-    const searchTerm = value.toLowerCase().trim();
-
-    // Search for matches in individual tasks and specialist names
-    const taskResults = specialists.flatMap((specialist) => {
-      const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
-        .map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
-
-      return tasks.length > 0 ? tasks : [];
-    });
-
-    const specialistResults = specialists
-      .filter((specialist) =>
-        specialist.name.toLowerCase().includes(searchTerm)
-      )
-      .map((specialist: Specialist) => ({
-        specialistName: specialist.name.toLowerCase(),
-        task: "", // Assuming a task field is required, you might want to adjust this
-        link: specialist.link || "", // Assuming a link field is required, you might want to adjust this
-      }));
-
-    return [...taskResults, ...specialistResults];
-  };
-
-  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 6 resultaten
-  const resultsRender = slicedResults.map((result, index) => (
-    <Link
-      to={`/nl/jobs#${result.specialistName.replace(
-        "/",
-        ""
-      )}?${result.link.replace("/", "")}`}
-      key={index}
-      className={`search_dropdown_item ${
-        index === selectedIndex ? "active" : ""
-      }`}
-      onMouseDown={() => handleResultClick(result.link)}
-    >
-      <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""}
-        {result.task}
-      </span>
-    </Link>
-  ));
-
-  return (
-    <div>
-      <div className="SearchBarHome">
-        <input
-          id="SearchBarInputHome"
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onFocus={handleInputFocus}
-          onKeyDown={handleInputKeyDown}
-          onBlur={handleInputBlur}
-          placeholder="Zoek een klus of specialist"
-          className="search_input"
-        />
-        <article
-          className="searchBarBlueIcon"
-          onKeyDown={handleInputKeyDown}
-        ></article>
-      </div>
-      <div className="search_results-con">
-        {showList && <div className="search_results">{resultsRender}</div>}
-      </div>
-    </div>
-  );
-}
-
 function HomePageTwo() {
   const [activeTab, setActiveTab] = useState("homeOwner");
   const [startIndex, setStartIndex] = useState(0);
@@ -215,13 +90,13 @@ function HomePageTwo() {
   const reviews = {
     homeOwner: [
       {
-        rating: 2,
+        rating: 4,
         name: "Lisa S",
         image: TuinPFP,
         text: "“Fijn om weer gebruik te mogen maken van je diensten als loodgieter. Ik zou je zeker aanbevelen aan mijn buren in de straat.",
       },
       {
-        rating: 3,
+        rating: 5,
         name: "Stijn B",
         image: StijnPFP,
         text: "“Geweldige service en expertise zorgden ervoor dat mijn renovatie klus snel en kundig is gerealiseerd. Ik beveel deze professionele service ten zeerste aan voor een goede renovatie.",
@@ -267,11 +142,83 @@ function HomePageTwo() {
     ],
   };
 
+  const highligtedpros = {
+    professionals: [
+      {
+        rating: 5,
+        name: "Bas Fixo B.V.",
+        stats: "5.0/5 (17 reviews)",
+        image: HomePFP,
+        proffesion: "Loodgieter",
+        textone: "Sanitair/ lekkages €65/uur incl. btw",
+        texttwo: "Radiator vervangen €69/uur incl. btw",
+        textthree: "Cv-montage €78/uur incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Jany Cleanur B.V.",
+        stats: "4.0/5 (7 reviews)",
+        image: JanyPFP,
+        proffesion: "Schoonmaakster",
+        textone: "Schoonmaak €29/uur incl. btw",
+        texttwo: "Opruimen €29/uur incl. btw",
+        textthree: "Wassen €29/uur incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Green horizons B.V.",
+        stats: "4.0/5 (19 reviews)",
+        image: TuinPFP,
+        proffesion: "Tuinontwerpster",
+        textone: "Tuinontwerp €75/uur incl. btw",
+        texttwo: "Tuinaanleg €64/uur incl. btw",
+        textthree: "Tuinonderhoud €55/uur incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Electroz B.V.",
+        stats: "4.0/5 (9 reviews)",
+        image: ElectrozPFP,
+        proffesion: "Electriciën",
+        textone: "Groepenkast plaatsen €225+ incl. btw",
+        texttwo: "Stopcontact plaatsen €59+ incl. btw",
+        textthree: "Verlichting installeren €78+ incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Houtlab Gijs",
+        stats: "4.0/5 (16 reviews)",
+        image: GijsPFP,
+        proffesion: "Timmerman",
+        textone: "Tuinhuis/blokschuur €53/uur incl. btw",
+        texttwo: "Overkapping/pergola €53/uur incl. btw",
+        textthree: "Poolhouse/veranda €53/uur incl. btw",
+      },
+      {
+        rating: 4,
+        name: "Huizenbouw B.V.",
+        stats: "4.0/5 (4 reviews)",
+        image: AanemerPFP,
+        proffesion: "Aannemer",
+        textone: "Dakrenovatie/vervangen op aanvraag",
+        texttwo: "Aanbouw plaatsen op aanvraag",
+        textthree: "Renovatie huis op aanvraag",
+      },
+    ],
+  };
+
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const handleScrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleProOnboardingClick = () => {
@@ -318,7 +265,7 @@ function HomePageTwo() {
             </h2>
           </section>
           <section className="SearchSectionHome">
-            <Searchbar />
+            <SearchBar />
           </section>
           <section className="JobsSectionHome">
             <article className="populairjobsHero">
@@ -337,23 +284,50 @@ function HomePageTwo() {
         </article>
       </section>
       <article className="InfoBarHome">
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">100+ Vakspecialisten </h4>
+        <div className="scrollContainer">
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/pro-overview`}
+              >
+                100+ Vakspecialisten
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link
+                className="infoContainerHomeLink"
+                to={`/${taal}/jobs-overview`}
+              >
+                1000+ Klussen
+              </Link>
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4
+              id="homeTextHyper"
+              className="infoContainerHomeH4"
+              onClick={() => handleScrollToSection("HomeProfReviewSectionHome")}
+            >
+              4.7 uit 5 reviews
+            </h4>
+          </div>
+          <div className="infoContainerHome">
+            <StarIcon />
+            <h4 className="infoContainerHomeH4">
+              <Link className="infoContainerHomeLink" to={`/${taal}/quality`}>
+                Kwaliteitsgarantie
+              </Link>
+            </h4>
+          </div>
         </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">1000+ klussen</h4>
-        </div>
-        <div className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">4.7 uit 5 reviews</h4>
-        </div>
-        <article className="infoContainerHome">
-          <StarIcon />
-          <h4 className="infoContainerHomeH4">All-in-1 App</h4>
-        </article>
       </article>
+
       <section className="howItWorksSectionHome">
         <article className="howItWorksTitleContainerHome">
           <h2 className="howItWorksTitleHome">Hoe Mostpros Werkt</h2>
@@ -455,230 +429,50 @@ function HomePageTwo() {
       </section>
       <section className="HomeProfCardsContainer">
         <section className="HomeProfCardsSectionHome">
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={HomePFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Bas Fixo B.V. <br />
-                Loodgieter
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
+          <div className="HomeProCardContainer">
+            {highligtedpros.professionals.map((pro, index) => (
+              <article className="HomeProCardHome" key={index}>
+                <section className="HomeProCardPFPSection">
+                  <img
+                    src={pro.image}
+                    alt="Profiel Foto vakspecialist"
+                    className="HomeProfCardPFP"
+                  />
+                  <article className="HomeProCardhomeH5">
+                    <h5 className="HomeProCardhomeH5">{pro.name}</h5>
+                    <h5 className="HomeProCardhomeH5">{pro.proffesion}</h5>
+                  </article>
+                </section>
+                <section className="HomeProCardReviewSection">
+                  <article className="HomeProCardStarContainer">
+                    {[...Array(pro.rating)].map((_, i) => (
+                      <StarIcon key={i} style={{ fontSize: "2rem" }} />
+                    ))}
+                    {[...Array(5 - pro.rating)].map((_, i) => (
+                      <StarBorderIcon key={i} style={{ fontSize: "2rem" }} />
+                    ))}
+                  </article>
+                  <p className="HomeProCardhomeReviewP">{pro.stats}</p>
+                </section>
+                <article className="HomeProCardhomeReviewText">
+                  <p>{pro.textone}</p>
+                  <p>{pro.texttwo}</p>
+                  <p>{pro.textthree}</p>
+                </article>
+                <section className="HomeProCardhomeButtonContainer">
+                  <button className="HomeProCardhomeViewProfileButton">
+                    Bekijk Profiel
+                  </button>
+                </section>
               </article>
-              <p className="HomeProCardhomeReviewP">5.0/5 (17 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Sanitair/ lekkages €65/uur incl. btw
-              <br /> <br />
-              Radiator vervangen €69/uur incl. btw
-              <br />
-              <br />
-              Cv-montage €78/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={JanyPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Jany Cleanur B.V.
-                <br />
-                Schoonmaakster
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (7 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Schoonmaak €29/uur incl. btw
-              <br />
-              <br />
-              Opruimen €29/uur incl. btw
-              <br />
-              <br />
-              Wassen €29/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={TuinPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Green horizons B.V.
-                <br />
-                Tuinontwerpster
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (19 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Tuinontwerp €75/uur incl. btw
-              <br />
-              <br />
-              Tuinaanleg €64/uur incl. btw
-              <br />
-              <br />
-              Tuinonderhoud €55/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={ElectrozPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Electroz B.V. <br />
-                Electriciën
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (9 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Groepenkast plaatsen €225+ incl. btw <br />
-              <br />
-              Stopcontact plaatsen €59+ incl. btw <br />
-              <br />
-              Verlichting installeren €78+ incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={GijsPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Houtlab Gijs
-                <br />
-                Timmerman
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (16 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Tuinhuis/blokschuur €53/uur incl. btw <br />
-              <br />
-              Overkapping/pergola €53/uur incl. btw
-              <br />
-              <br />
-              Poolhouse/veranda €53/uur incl. btw
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
-          <article className="HomeProCardHome">
-            <section className="HomeProCardPFPSection">
-              <img
-                src={AanemerPFP}
-                alt="Profiel Foto vakspecialist"
-                className="HomeProfCardPFP "
-              />
-              <h5 className="HomeProCardhomeH5">
-                Huizenbouw B.V. <br />
-                Aannemer
-              </h5>
-            </section>
-            <section className="HomeProCardReviewSection">
-              <article className="HomeProCardStarContainer">
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarIcon style={{ fontSize: "2rem" }} />
-                <StarBorderIcon style={{ fontSize: "2rem" }} />
-              </article>
-              <p className="HomeProCardhomeReviewP">4.0/5 (4 reviews)</p>
-            </section>
-            <p className="HomeProCardhomeReviewText">
-              Dakrenovatie/vervangen op aanvraag
-              <br />
-              <br />
-              Aanbouw plaatsen op aanvraag
-              <br />
-              <br />
-              Renovatie huis op aanvraag
-            </p>
-            <section className="HomeProCardhomeButtonContainer">
-              <button className="HomeProCardhomeViewProfileButton">
-                Bekijk Profiel
-              </button>
-            </section>
-          </article>
+            ))}
+          </div>
         </section>
       </section>
-      <section className="HomeProfReviewSectionHome">
+      <section
+        id="HomeProfReviewSectionHome"
+        className="HomeProfReviewSectionHome"
+      >
         <article className="HomeProfReviewTitlesContainer">
           <h2 className="howItWorksTitleHome">Reviews</h2>
           <section className="HomeProfReviewWrapper">
@@ -704,7 +498,10 @@ function HomePageTwo() {
             </h5>
           </section>
         </article>
-        <div className="arrowHome lefthome-arrow" onClick={handleLeftClick}></div>
+        <div
+          className="arrowHome lefthome-arrow"
+          onClick={handleLeftClick}
+        ></div>
         <article className="HomeProfReviewHomeContainer">
           {reviews[activeTab]
             .slice(startIndex, startIndex + 2)
@@ -751,7 +548,10 @@ function HomePageTwo() {
             ))}
         </article>
 
-        <div className="arrowHome righthome-arrow" onClick={handleRightClick}></div>
+        <div
+          className="arrowHome righthome-arrow"
+          onClick={handleRightClick}
+        ></div>
       </section>
       <section className="JoinTheCommunityHomeSection">
         <article className="JointhecomminityContainer">
@@ -767,7 +567,12 @@ function HomePageTwo() {
             >
               Plaats je klus
             </button>
-            <button className="CommunityTwoHome">Inschrijven als vakman</button>
+            <button
+              className="CommunityTwoHome"
+              onClick={handleProOnboardingClick}
+            >
+              Inschrijven als vakman
+            </button>
           </article>
           <div className="CommunityCircleUp" onClick={handleScrollToTop}>
             <ArrowUpwardIcon style={{ fontSize: "3rem" }} />

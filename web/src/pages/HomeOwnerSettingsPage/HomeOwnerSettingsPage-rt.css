@@ -1,42 +1,57 @@
 .HomeOwnerSettingsMain {
-    width: 100%;
-    height: 100%;
-    padding-right: 12rem;
-    padding-top: 5rem;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem;
+  padding-top: 5rem;
+  display: flex;
 }
 
 .RightsideHomeOwnerSettingsSection {
-    width: 20%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 2rem;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
 }
 
 .sideNavHomeOwnerSettingsPage {
-    height: 45%;
-    width: 18rem;
-    background: #222;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .rightsideHomeOwnerSettingsPage {
-    width: 80%;
-    height: 100vh;
+  width: 80%;
+  height: 100%;
 }
 
 @media (max-width: 1044px) {
-    .RightsideHomeOwnerSettingsSection {
-        display: none;
-    }
+  .RightsideHomeOwnerSettingsSection {
+    display: none;
+  }
 
-    .HomeOwnerSettingsMain {
-        align-items: center;
-        justify-content: center;
-        padding-right: 0rem;
-    }
+  .HomeOwnerSettingsMain {
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .HomeOwnerSettingsMain {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
+
+  .rightsideHomeOwnerSettingsPage {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
 }

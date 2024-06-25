@@ -17,6 +17,7 @@ import { AccountForm } from './AccountForm'
 import PageSpecialisten from './PageSpecialisten'
 import { userInfo } from 'os'
 import { dynamo } from '../../../declarations'
+import { stopXSS } from '../../../../backend_functions/stopXSS'
 
 type FormData = {
   postCode: string
@@ -172,32 +173,101 @@ function MultistepForm() {
     if (user) {
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
-      dynamo
-        .put({
-          Item: {
-            id: Math.floor(Math.random() * 1000000000),
-            user_email: currentAuthenticatedUser.attributes.email,
-            profession: data.profession,
-            task: data.task,
-            region: data.stad,
-            currentStatus: "pending",
-            date: `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`,
-            chats: 0,
-            isCurrent: true
-          },
-          TableName: "Klussen"
-        })
-        .promise()
+      const UserData = await dynamo.query({
+        TableName: "Users",
+        IndexName: "username",
+        KeyConditionExpression: "email = :email",
+        ExpressionAttributeValues: {
+          ":email": currentAuthenticatedUser.atributes.email,
+        },
+      }).promise()
+
+      if (UserData && UserData.Items && UserData.Items.length > 0) {
+        dynamo
+           .put({
+                Item: {
+                    id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+                    user_id: UserData.Items[0].id,
+                    profession: stopXSS(data.profession),
+                    task: stopXSS(data.task),
+                    region: stopXSS(data.stad),
+                    currentStatus: stopXSS("pending"),
+                    date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+                    chats: Number(stopXSS(String(0))),
+                    isCurrent: stopXSS(String(true))
+                },
+                TableName: "Klussen"
+            })
+           .promise()
+           .catch(console.error);
+    } else {
+        console.error("UserData or UserData.Items is undefined");
+    }
+      const profession = window.location.hash.replace("#", "").split("?")[0];
+      const task = window.location.hash.replace("#", "").split("?")[1];
+
+      dynamo.put({
+        Item: {
+          id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
+          chats: Number(stopXSS(String(0))),
+          client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+          date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
+          description: stopXSS(task),
+          name: stopXSS(profession),
+          professional_email: stopXSS("something"),
+          currentStatus: stopXSS("pending")
+        },
+        TableName: "Projects"
+      }).promise()
         .catch(console.error)
 
-        const profession = window.location.hash.replace("#", "").split("?")[0];
-        const task = window.location.hash.replace("#", "").split("?")[1];
 
-        const datum = new Date(data.date);
-        const date = datum.toISOString().split('T')[0];
-        navigate(`/home-owner-result#${profession}?${task}!${date}`);
-    
-      } else {
+      const datum = new Date(data.date);
+      const date = datum.toISOString().split('T')[0];
+      navigate(`/home-owner-result#${profession}?${task}!${date}`);
+
+      //REST API VERSIE
+/*
+const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+      const profession = window.location.hash.replace("#", "").split("?")[0];
+      const task = window.location.hash.replace("#", "").split("?")[1];
+
+      const combinedData = {
+        user_email: stopXSS(currentAuthenticatedUser.attributes.email),
+        profession: stopXSS(data.profession),
+        task: stopXSS(data.task),
+        region: stopXSS(data.stad),
+        client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+        description: stopXSS(data.task),
+        name: stopXSS(data.profession),
+        professional_email: stopXSS("something") // Placeholder value, adjust as needed
+      };
+
+      // Sending the combined data to the API using fetch
+      fetch('https://your-api-id.execute-api.your-region.amazonaws.com/prod/endpoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(combinedData),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const datum = new Date(data.date);
+          const date = datum.toISOString().split('T')[0];
+          navigate(`/home-owner-result#${profession}?${task}!${date}`);
+        })
+        .then(data => {
+          console.log('Data submitted successfully:', data);
+        })
+        .catch((error) => {
+          console.error('There was a problem with your fetch operation:', error);
+        });
+*/
+
+    } else {
       if (userData.password != userData.repeatPassword) return console.log("Passwords do not match! (insert function that deals with it here)")
       await Auth.signUp({
         username: userData.email,
@@ -230,6 +300,62 @@ function MultistepForm() {
             console.error("foutmelding:", error)
           }
         })
+
+      /*
+      // Assuming the signUpUser function is defined as shown in your provided code snippet
+async function signUpUser(userData) {
+const url = 'YOUR_API_GATEWAY_URL'; // Make sure to replace this with your actual API Gateway URL
+const response = await fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(userData),
+});
+
+if (!response.ok) {
+  throw new Error('Network response was not ok');
+}
+
+const data = await response.json();
+console.log(data); // Process the response data
+
+// Assuming you want to navigate after successful registration
+// You might need to adjust the navigation logic based on your application's routing needs
+const profession = window.location.hash.replace("#", "").split("?")[0];
+const task = window.location.hash.replace("#", "").split("?")[1];
+
+const datum = new Date(data.date);
+const date = datum.toISOString().split('T')[0];
+navigate(`/nl/confirm-mail#home-owner-result#${profession}?${task}!${date}`, { 
+state: { email: userData.email, postConfig: "HOMEOWNER" },
+ })
+
+}
+
+// Your existing code for preparing userData
+const userData = {
+firstName: stopXSS(data.firstName),
+lastName: stopXSS(data.lastName),
+email: stopXSS(data.email),
+phoneNumber: stopXSS(data.phoneNumber),
+password: stopXSS(data.password),
+};
+
+// Check if passwords match before proceeding
+if (data.password!== data.repeatPassword) {
+console.log("Passwords do not match!");
+return; // Optionally, you could show an error message to the user instead of just logging it
+}
+
+try {
+// Attempt to sign up the user via the API
+await signUpUser(userData);
+} catch (error) {
+console.error("Registration failed:", error);
+// Handle errors, such as showing an error message to the user
+}
+      */
     }
   }
 
@@ -238,7 +364,6 @@ function MultistepForm() {
   return (
     <form onSubmit={onSubmit} className='form-con'>
       <div className='progress-con'>
-        <h3>Stap {currentStepIndex + 1} van {steps.length}</h3>
         <div className="progress-bar">
           {steps.map((_, index) => (
             <div

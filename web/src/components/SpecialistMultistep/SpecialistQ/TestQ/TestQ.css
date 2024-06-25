@@ -20,8 +20,8 @@
     gap: 25px;
 }
 
-.specialist_q{
-    font-size: 14px;
+.specialist_qTestQ{
+    font-size: 1.4rem;
     padding: 15px 40px;
     display: grid;
     grid-auto-flow: column;
@@ -36,3 +36,15 @@
 .specialist_q label{
     justify-self: center;
 }
+
+@media (max-width: 431px) {
+    .specialist_qTestQ{
+        font-size: 1.4rem;
+        padding: 1.5rem 1rem;
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        gap: 15px;
+        background-color: #E9F4FF;
+    }
+  }

@@ -300,7 +300,7 @@ function SpecialistMultistepForm() {
               email: email !== undefined ? stopXSS(email) : "", // Check if email is not undefined
               first_name: firstName !== undefined ? stopXSS(firstName) : "", // Check if firstName is not undefined
               last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
-              region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
+              work_region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
               postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
               profession: profession !== undefined ? stopXSS(profession).toLowerCase() : "", // Check if profession is not undefined
               //task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
@@ -338,9 +338,9 @@ function SpecialistMultistepForm() {
           dynamo.put({
             TableName: "Uuids",
             Item: {
-              id: Math.random().toString(36).substring(2),
+              id: Number(stopXSS(String(Math.random().toString(36).substring(2)))),
               email: stopXSS(email),
-              identifyingName: Math.random().toString(36).substring(2, 15)
+              identifyingName: Number(stopXSS(String(Math.random().toString(36).substring(2, 15))))
             },
           }).promise();
 
@@ -353,6 +353,50 @@ function SpecialistMultistepForm() {
 
     signUpProf();
   }
+
+  /*
+async function signUp(registerData: RegisterData): Promise<void> {
+    const { firstName, lastName, email, phoneNumber, password, region, postcode, profession, rating, availibility, kvk, bedrijf } = registerData;
+
+    try {
+        const response = await fetch(process.env.API_GATEWAY_URL + '/signup', { // Use an environment variable
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                password,
+                region,
+                postcode,
+                profession,
+                rating,
+                availibility,
+                kvk,
+                bedrijf
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        if (data && typeof data === 'object' && 'message' in data) {
+            console.log(data.message); // Safely access `message` after checking it exists
+        } else {
+            console.log("Unexpected response format");
+        }
+    } catch (error) {
+        console.error('Error signing up:', error);
+        // Optionally, rethrow or handle the error more gracefully
+        throw error; // Rethrow or handle according to your error handling strategy
+    }
+}
+*/
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -494,10 +538,6 @@ function SpecialistMultistepForm() {
 
   return (
     <form onSubmit={onSubmit} className="form-con">
-      <div className="progress-con">
-        <h3>
-          Stap {currentStepIndex + 1} van {steps.length}
-        </h3>
         <div className="progress-bar">
           {steps.map((_, index) => (
             <div
@@ -508,7 +548,6 @@ function SpecialistMultistepForm() {
             ></div>
           ))}
         </div>
-      </div>
       {showNoKvK ? <NoKvK /> : <>{step}</>}
       <>
         <div className="btn-wrapper">

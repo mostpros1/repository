@@ -1,42 +1,66 @@
-.jobsMain{ /*<- Het grote vlak wat de hele pagina covered. */
-    width: 100%; 
-    height: 100%;
-    padding-right: 12rem; /* <- elementen hebben BINNEN in het oranje vlak 120px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
-    padding-top: 5rem;
-    display: flex;
+.jobsMain {
+  /*<- Het grote vlak wat de hele pagina covered. */
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem; /* <- elementen hebben BINNEN in het oranje vlak 120px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
+  padding-top: 5rem;
+  display: flex;
+}
+
+.sidenavJobsSection {
+  /*<- Het groene vlak aan de linker kant die tot 1044px de sidenav op zijn plek houd */
+  width: 20%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
+  height: 100%;
+  display: flex;
+  justify-content: flex-end; /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
+  padding-right: 2rem; /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
+}
+
+.sideNavJobs {
+  /*<- De sidenav. */
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsideJobsSection {
+  width: 68%;
+  height: 100%;
+}
+
+@media (max-width: 1025px) {
+  .sidenavJobsSection {
+    display: none; /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
   }
-  
-  .sidenavJobsSection{  /*<- Het groene vlak aan de linker kant die tot 1044px de sidenav op zijn plek houd */
-    width: 20%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de rightsideTemplateSection ook aanpast waardoor het samen 100% is  */
-    height: 100%;
-    display: flex;
-    justify-content: flex-end; /* dit zorgt ervoor dat de sidenav rechts van het groene vlak komt te staan */
-    padding-right: 2rem; /* <- elementen hebben BINNEN in het groee vlak 20px afstand van rechts. Dit wordt uiteindelijk weg gehaald door een Mediaqueery */
-  }
-  
-  .sideNavJobs{ /*<- De sidenav. */
-    height: 45%;
-    width: 18rem; /* <- aanpassen naar % wanneer er content inzit */
-    background: #222;
-    border-radius: 8px; /* bij borderradius mag pixels wel gebruikt worden!*/
-    display: flex;
+  .jobsMain {
+    /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
     align-items: center;
     justify-content: center;
+    padding-right: 0rem;
   }
-  
-  .rightsideJobsSection{ /*<- Het roze vlak is het vlak waarin je zelf de content moet gaan maken deze kan je dus aanpassen naar wat uitkomt voor jou pagina. */
-    width: 80%; /*<- Als je de width hier aanpast zorg er dan voor dat je de width van de sidenavTemplateSection ook aanpast waardoor het samen 100% is  */
-    height: 100vh; /*<- vh veranderen in 100% wanneer het vlak/de pagina te klein wordt voor je elementen */
+  .rightsideJobsSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
-  @media (max-width: 1044px) {
-    .sidenavJobsSection { 
-      display: none; /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
-    }
-    .jobsMain{ /*<- Dit zorgt ervoor dat het roze vlak in het midden komt nadat de sivenav weg is gegaan*/
-      align-items: center;
-      justify-content: center;
-      padding-right: 0rem;
-    }
+}
+
+@media (max-width: 427px) {
+  .rightsideJobsSection {
+    margin: auto;
+    width: 100%;
+    height: 100%;
   }
-  
+
+  .JobsMain {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
+  }
+}

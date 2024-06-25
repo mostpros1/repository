@@ -7,7 +7,6 @@ const ReviewPage = () => {
     <div id="root">
       <NavBar />
       <ReviewLayout />
-      <Footer />
     </div>
   );
 };

@@ -35,3 +35,30 @@
 .KvKForm_con h2 {
     align-self: center;
 }
+
+.KvK_input__input {
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Space inside the input */
+    font-size: 16px; /* Larger text */
+    font-family: Arial, sans-serif; /* Change font family */
+    background-color: #f9f9f9; /* Light grey background */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.KvK_input__input:focus {
+    border-color: #308AE4; /* Blue border on focus */
+    box-shadow: 0 0 5px rgba(48, 138, 228, 0.5); /* Light blue shadow */
+    background-color: #fff; /* White background on focus */
+    outline: none; /* Remove default outline */
+}
+
+.KvK_input.invalid .KvK_input__input {
+    border-color: #e74c3c; /* Red border for invalid state */
+    background-color: #fce4e4; /* Light red background for invalid state */
+}
+
+.KvK_input.invalid .KvK_input__input:focus {
+    border-color: #e74c3c; /* Red border on focus in invalid state */
+    box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); /* Light red shadow */
+}

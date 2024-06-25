@@ -9,12 +9,13 @@ import { dynamo } from "../../../declarations";
 import { Link, useNavigate } from "react-router-dom";
 //import ViewProfessionals from "../ViewProfessionals/ViewProfessionals";
 import specialists from "../../data/specialists.js";
+import { taal } from "../ui/NavBar/Navigation.js";
 
 interface Specialist {
   id: number;
   name: string;
-  tasks: { task: string; link: string }[];
-  link?: string;
+  link?: string; // Move the 'link' property here
+  tasks: { task: string; link?: string }[]; // Make the 'link' property optional for tasks
 }
 
 const Jobs = () => {
@@ -23,14 +24,14 @@ const Jobs = () => {
 
   const jobEnt = [
     {
-      id: 1,
+      id: 0,
       name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
       date: "25-3-2024",
       chats: 3,
-      isCurrent: true,
-    },
-    {
+      currentStatus: "pending",
+    } /*,
+    { 
       id: 2,
       name: "test",
       description: "Bestrating: 50 m²; Tuin of Patio; Tegels",
@@ -53,76 +54,76 @@ const Jobs = () => {
       date: "25-3-2024",
       chats: 1,
       isCurrent: true,
-    },
+    },*/,
     // Add more job entries...
   ];
 
   interface JobEntry {
+    currentStatus: string;
     id: number;
     name: string;
     description: string;
     date: string;
     chats: number;
-    isCurrent: boolean;
+    isCurrent?: boolean;
   }
 
   const [jobEntries, setJobEntries] = useState<JobEntry[]>([]);
+
+  const filterJobEntriesByTab = (
+    jobEntries: JobEntry[],
+    currentTab: string
+  ) => {
+    switch (currentTab) {
+      case "pending":
+        return jobEntries.filter((job) => job.currentStatus === "pending");
+      case "current":
+        return jobEntries.filter((job) => job.currentStatus === "current");
+      case "finished":
+        // Assuming you have a way to identify finished jobs, e.g., a 'status' property
+        return jobEntries.filter((job) => job.currentStatus === "finished");
+      default:
+        return jobEntries;
+    }
+  };
+
   useEffect(() => {
     const fetchProfEmailAndQueryDynamo = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userEmail = user.attributes.email;
-        console.log("User email: ", userEmail);
         dynamo
           .query({
-            TableName: "Professionals",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "professional_emailIndex",
+            KeyConditionExpression: "professional_email = :professional_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":professional_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "professional_idIndex",
-                  KeyConditionExpression: "professional_id = :professional_id",
-                  ExpressionAttributeValues: {
-                    ":professional_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        isCurrent: true,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  currentStatus: output.Items[i].currentStatus,
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries(newJobEntries.filter(entry =>!jobEntries.some(existingEntry => existingEntry.id === entry.id)));
+              }
             } else {
-              console.error("No items found in the first query");
+              console.log("No items found in the query");
             }
           })
           .catch(console.error);
@@ -137,54 +138,36 @@ const Jobs = () => {
 
         dynamo
           .query({
-            TableName: "Clients",
-            IndexName: "emailIndex",
-            KeyConditionExpression: "email = :email",
+            TableName: "Projects",
+            IndexName: "client_emailIndex",
+            KeyConditionExpression: "client_email = :client_email",
             ExpressionAttributeValues: {
-              ":email": userEmail,
+              ":client_email": userEmail,
             },
           })
           .promise()
-          .then((data) => {
-            if (data.Items && data.Items.length > 0) {
-              dynamo
-                .query({
-                  TableName: "Projects",
-                  IndexName: "client_idIndex",
-                  KeyConditionExpression: "client_id = :client_id",
-                  ExpressionAttributeValues: {
-                    ":client_id": data.Items[0].id,
-                  },
-                })
-                .promise()
-                .then((output) => {
-                  if (output.Items) {
-                    // Create a temporary array to accumulate new job entries
-                    const newJobEntries: JobEntry[] = [];
-                    for (let i = 0; i < output.Items.length; i++) {
-                      console.log(output.Items[i]);
-                      newJobEntries.push({
-                        id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
-                        name: output.Items[i].name,
-                        description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
-                        date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
-                        chats: output.Items[i].chats,
-                        isCurrent: true,
-                      });
-                    }
-                    // Update the state once with the accumulated array
-                    if (output.Items.length === 0) {
-                      setJobEntries(jobEnt);
-                    } else {
-                      setJobEntries([...jobEntries, ...newJobEntries]);
-                    }
-                  } else {
-                    console.log("No items found in the query");
-                  }
-                })
-                .catch(console.error);
+          .then((output) => {
+            if (output.Items) {
+              // Create a temporary array to accumulate new job entries
+              const newJobEntries: JobEntry[] = [];
+              for (let i = 0; i < output.Items.length; i++) {
+                newJobEntries.push({
+                  id: output.Items[i].id, // Assuming 'id' exists in AttributeMap
+                  name: output.Items[i].name,
+                  description: output.Items[i].description, // Assuming 'description' exists in AttributeMap
+                  date: output.Items[i].date, // Assuming 'date' exists in AttributeMap
+                  chats: output.Items[i].chats,
+                  currentStatus: output.Items[i].currentStatus,
+                });
+              }
+              // Update the state once with the accumulated array
+              if (output.Items.length === 0) {
+                setJobEntries(jobEnt);
+              } else {
+                setJobEntries([...jobEntries, ...newJobEntries]);
+              }
             } else {
-              console.error("No items found in Clients the first query");
+              console.log("No items found in the query");
             }
           })
           .catch(console.error);
@@ -228,7 +211,7 @@ const Jobs = () => {
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("search_dropdown_item")
+      !e.relatedTarget.classList.contains("Jobssearch_dropdown_item")
     ) {
       setShowList(false);
     }
@@ -239,7 +222,7 @@ const Jobs = () => {
     setShowList(true);
   };
   const handleResultClick = (link: string) => {
-    navigate(`/nl/jobs${link}`);
+    navigate(`/nl/jobs${link ?? ""}`);
   };
 
   const handleInputKeyDown = (e) => {
@@ -255,7 +238,7 @@ const Jobs = () => {
       case "Enter":
         if (selectedIndex >= 0 && selectedIndex < slicedResults.length) {
           const selectedResult = slicedResults[selectedIndex];
-          handleResultClick(selectedResult.link);
+          handleResultClick(selectedResult.link ?? "");
         }
         break;
       case "Tab": // Implementing autocomplete on Tab key
@@ -275,21 +258,21 @@ const Jobs = () => {
 
     // Search for matches in individual tasks and specialist names
     const taskResults = specialists.flatMap((specialist) => {
-      const tasks = specialist.tasks
-        .filter((task) => task.task.toLowerCase().includes(searchTerm))
-        .map((task) => ({
-          specialistName: specialist.name.toLowerCase(),
-          task: task.task,
-          link: task.link,
-        }));
+        const tasks = specialist.tasks
+            .filter((task) => task.task.toLowerCase().includes(searchTerm) || specialist.name.toLowerCase().includes(searchTerm))
+            .map((task) => ({
+                specialistName: specialist.name.toLowerCase(),
+                task: task.task,
+                link: task.link || "", // Handling missing link field
+            }));
 
-      return tasks.length > 0 ? tasks : [];
+        return tasks.length > 0 ? tasks : [];
     });
 
     const specialistResults = specialists
-      .filter((specialist) =>
-        specialist.name.toLowerCase().includes(searchTerm)
-      )
+        .filter((specialist) =>
+            specialist.name.toLowerCase().includes(searchTerm)
+        )
       .map((specialist: Specialist) => ({
         specialistName: specialist.name.toLowerCase(),
         task: "", // Assuming a task field is required, you might want to adjust this
@@ -297,25 +280,24 @@ const Jobs = () => {
       }));
 
     return [...taskResults, ...specialistResults];
-  };
+};
 
-  const slicedResults = searchResults().slice(0, 10); // Beperk tot de eerste 5 resultaten
+
+  const slicedResults = searchResults().slice(0, 20); // Beperk tot de eerste 5 resultaten
 
   const resultsRender = slicedResults.map((result, index) => (
     <Link
-      to={`/nl/jobs#${result.specialistName.replace(
-        "/",
-        ""
-      )}?${result.link.replace("/", "")}`}
+      to={`/${taal}/jobs#${result.specialistName}?${result.link ?? ""}`}
       key={index}
-      className={`search_dropdown_item ${
+      className={`Jobssearch_dropdown_item ${
         index === selectedIndex ? "selected" : ""
       }`}
-      onClick={() => handleResultClick(result.link)}
+      onClick={() => handleResultClick(result.link ?? "")}
       onMouseOver={() => setSelectedIndex(index)}
     >
       <span>
-        {result.specialistName ? `${result.specialistName} - ` : ""} {/* Add the specialist name with the - separator */}
+        {result.specialistName ? `${result.specialistName} - ` : ""}{" "}
+        {/* Add the specialist name with the - separator */}
         {result.task}
       </span>
     </Link>
@@ -323,27 +305,28 @@ const Jobs = () => {
 
   return (
     <div id="job-main">
-      <p>Place a new job</p>
+      <p>Plaats een nieuwe klus</p>
       <div id="search-wrapper">
         <img src={searchicon} alt="search" id="search-icon" />
+        <button type="submit" id="submit-button">
+          <img src={rightarrow} alt="submit" />
+        </button>
         <form onSubmit={handleSubmit} id="search-form">
           <input
             id="job-input-field"
             type="text"
-            placeholder="describe the job (example, plumbing.)"
+            placeholder="Beschrijf de baan (bijvoorbeeld, loodgieter)."
             value={value}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onKeyDown={handleInputKeyDown}
             onChange={handleInputChange}
           />
-          <div className="search_results-con">
-            {showList && <div className="search_dropdown">{resultsRender}</div>}
+          <div className="JobsSearch_results-con">
+            {showList && (
+              <div className="Jobssearch_dropdown">{resultsRender}</div>
+            )}
           </div>
-
-          <button type="submit" id="submit-button">
-            <img src={rightarrow} alt="submit" />
-          </button>
         </form>
       </div>
 
@@ -355,7 +338,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("pending")}
           >
-            Pending Jobs
+            In behandeling
           </button>
           <button
             className={`status-button ${
@@ -363,7 +346,7 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("current")}
           >
-            Current Jobs
+            Lopende klussen
           </button>
           <button
             className={`status-button ${
@@ -371,35 +354,37 @@ const Jobs = () => {
             }`}
             onClick={() => setCurrentTab("finished")}
           >
-            Finished Jobs
+            Voltooide Klussen
           </button>
         </div>
         <div className="job-list-con">
           <div className="job-list-vw">
-            {jobEntries
-              .filter((job) =>
-                currentTab === "current" ? job.isCurrent : !job.isCurrent
-              )
-              .map((job) => (
-                <div className="job-entry" key={job.id}>
-                  <p className="job-description">{job.description}</p>
-                  <p className="job-date">{job.date}</p>
-                  <div className="job-actions">
-                    <div id="job-view-prof-con">
-                      <img
-                        src={viewProfessionalsIcon}
-                        alt="View Professionals"
-                      />
-                      <span>View professionals</span>
-                    </div>
-                    <div className="chat-indicator">
-                      <img src={chatIcon} alt="Chat" />
-                      <span>Ongoing chats {`(${job.chats})`}</span>
-                    </div>
+            {filterJobEntriesByTab(jobEntries, currentTab).map((job) => (
+              <div className="job-entry" key={job.id}>
+                {" "}
+                {/* Ensure job.id is unique */}
+                <p className="job-description">{job.description}</p>
+                <p className="job-date">{job.date}</p>
+                <div className="job-actions">
+                  <div
+                    id="job-view-prof-con"
+                    onClick={() =>
+                      navigate(
+                        `/home-owner-result#${job.name}?${job.description}!${job.date}`
+                      )
+                    }
+                  >
+                    <img src={viewProfessionalsIcon} alt="View Professionals" />
+                    <span>Bekijk Vakspecialisten</span>
                   </div>
-                  <p className="job-view">View job</p>
+                  <div className="chat-indicator">
+                    <img src={chatIcon} alt="Chat" />
+                    <span>Lopende chats {`(${job.chats})`}</span>
+                  </div>
                 </div>
-              ))}
+                <p className="job-view">View job</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -2,20 +2,39 @@ import React, { useEffect, useRef, useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
+import * as mutations from "../../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import axios from "axios";
 import { useChatBackend } from "./ChatBackend";
 import "./chatbox.css";
-import PaymentLink from '../PaymentLink/PaymentLink';
+import PaymentLink from "../PaymentLink/PaymentLink";
 import { IoSend } from "react-icons/io5";
-import { BsPaperclip, BsPersonCircle, BsThreeDotsVertical, BsSun, BsMoon, BsBell, BsBellSlash } from "react-icons/bs";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+import {
+  BsPaperclip,
+  BsPersonCircle,
+  BsThreeDotsVertical,
+  BsSun,
+  BsMoon,
+  BsBell,
+  BsBellSlash,
+  BsCreditCard,
+  BsPin,
+  BsPinFill,
+  BsStar,
+  BsStarFill,
+} from "react-icons/bs";
+import { CiSearch } from "react-icons/ci";
 import { MdDriveFileMove } from "react-icons/md";
+import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
+import { MdOutlineCancel, MdDeleteOutline } from "react-icons/md";
 import { stopXSS } from "../../../../backend_functions/stopXSS";
 import ReactDOMServer from "react-dom/server";
-import { FaReply } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FaBookmark } from "react-icons/fa";
+import { FaReply, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import PaymentOffer from "../PaymentLink/PaymentOffer";
+import { MdOutlineEdit } from "react-icons/md";
+import { getInfo } from "../../../../backend_functions/coordsToKm.ts";
+import { dynamo } from "../../../declarations.ts";
 
 interface Chat {
   id: string;
@@ -23,6 +42,8 @@ interface Chat {
   createdAt: string;
   email: string;
   members: string[];
+  read: boolean;
+  delivered: boolean;
 }
 
 interface GroupedMessages {
@@ -37,10 +58,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     handleReceivedMessage,
     handleJoinChat,
     handleStartNewChatWithEmail,
-    visibleName,
-    setVisibleName,
     textSize,
-    setTextSize
+    setTextSize,
   } = useChatBackend(user, signOut);
 
   const [contactList, setContactList] = useState<string[]>([]);
@@ -55,48 +74,45 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-
-  const [lastMessages, setLastMessages] = useState<{
-    [contact: string]: { text: string; createdAt: string };
-  }>({});
+  const [lastMessages, setLastMessages] = useState<{ [contact: string]: { text: string; createdAt: string }; }>({});
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
   const [showNewChatModal, setShowNewChatModal] = useState(false);
   const [newChatEmail, setNewChatEmail] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
-  // New states for extra functionalities
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
-
-  // New states for settings modal
+  const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
+  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(new Set());
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  // New state for showing saved messages modal
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number; }>({});
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [messageSearchTerm, setMessageSearchTerm] = useState<string>("");
+  const [filteredMessages, setFilteredMessages] = useState<Chat[]>([]);
+  const settingsModalRef = useRef<HTMLDivElement>(null);
 
-  // New state for tracking new messages
-  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number }>({});
-
-  const handleTypingIndicator = (isTyping: boolean) => {
-    setIsTyping(isTyping);
-    // Emit typing indicator event to backend (e.g., WebSocket, API)
-  };
+  // New states for additional functionalities
+  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
+  const [typingStatus, setTypingStatus] = useState<{ [contact: string]: boolean; }>({});
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
-      if (message.email !== user.attributes.email) {
+      if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
-            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]}`,
+            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]
+              }`,
           });
         }
-        // Increment the new message count for the contact
-        const contact = message.members.find((member) => member !== user.attributes.email);
+        const contact = message.members.find(
+          (member) => member !== user.attributes.email
+        );
         if (contact) {
           setNewMessagesCount((prevCount) => ({
             ...prevCount,
@@ -170,7 +186,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
     sortedDates.forEach((date) => {
       groupedMessages[date].sort(
-        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
       sortedGroupedMessages[date] = groupedMessages[date];
     });
@@ -186,8 +203,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           chat.members.includes(user.attributes.email)
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
+      console.log("Filtered chats for selected contact:", filteredChats);
       setGroupedMessages(groupedMessages);
-      // Reset the new message count for the selected contact
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
         [selectedContact]: 0,
@@ -197,15 +214,22 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   useEffect(() => {
     async function fetchChats() {
-      const allChats: any = await API.graphql({
-        query: queries.listChats,
-        variables: {
-          filter: {
-            members: { contains: user.attributes.email },
+      setIsLoading(true);
+      try {
+        const allChats: any = await API.graphql({
+          query: queries.listChats,
+          variables: {
+            filter: {
+              members: { contains: user.attributes.email },
+            },
           },
-        },
-      });
-      setChats(allChats.data.listChats.items);
+        });
+        console.log("CHATS: ", allChats.data.listChats.items);
+        setChats(allChats.data.listChats.items);
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+      setIsLoading(false);
     }
     fetchChats();
   }, [user.attributes.email]);
@@ -257,12 +281,53 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     window.history.pushState({}, "", url);
     setRecipientEmail(contact);
     handleJoinChat(contact);
-    // Reset the new message count for the selected contact
     setNewMessagesCount((prevCount) => ({
       ...prevCount,
       [contact]: 0,
     }));
   };
+
+
+  const getidFromSearchBar = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+  };
+
+  // Function to grab the email from the search bar and run switch chat
+  const switchChatUsingEmailFromSearchBar = () => {
+    const id = getidFromSearchBar();
+    console.log("id: ", id);
+    if (id) {
+
+      dynamo.query({
+        TableName: "Users",
+        KeyConditionExpression: "id = :id",
+        ExpressionAttributeValues: {
+          ":id": Number(id)
+        }
+      }).promise().then((data) => {
+        if (data.Items && data.Items.length > 0) {
+          console.log(data.Items[0].email);
+          const uuid = getUUIDFromEmail(data.Items[0].email);
+          if (uuid) {
+            handleStartNewChatWithEmail(data.Items[0].email)
+            switchChat(data.Items[0].email);
+          } else {
+            console.error('No UUID found for the provided user_id');
+            // Handle case where no UUID is found for the provided email
+          }
+        }
+      }).catch(console.error);
+      // Directly use the return value
+
+    } else {
+      console.error('No email found in search bar');
+      // Handle case where email is not present in the search bar
+    }
+  };
+
+
+  switchChatUsingEmailFromSearchBar();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -289,74 +354,58 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-  // Improved handleUpload function
-  const handleUpload = async () => {
-    // Check if a file is selected before proceeding
-    if (!selectedFile) {
-      console.error("No file selected");
-      return;
-    }
+  const handleFileUpload = async (file: File) => {
+    const reader = new FileReader();
 
-    function getBase64(file: File): Promise<string> {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-      });
-    }
+    reader.onload = async () => {
+      if (reader.result) {
+        const base64Data = (reader.result as string).split(",")[1];
+        console.log(base64Data);
+        //   try {
+        //     setIsUploading(true);
+        //     const response = await axios.post(
+        //       "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
+        //       { photo: base64Data },
+        //       {
+        //         headers: {
+        //           "Content-Type": "application/json",
+        //         },
+        //       }
+        //     );
+        //     console.log(response.data);
+        //     await handleSendMessage(
+        //       `<img src="${response.data}" alt="Uploaded Image" style="max-width: 100%;" />`
+        //     );
+        //     setIsUploading(false);
+        //   } catch (error) {
+        //     console.error("Error uploading photo:", error);
+        //     alert(
+        //       "Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw."
+        //     );
+        //     setIsUploading(false);
+        //   }
+      } else {
+        console.error("FileReader result is null");
+      }
+    };
 
-    // Convert the selected file to Base64
-    const base64Data = await getBase64(selectedFile);
+    reader.onerror = (error) => {
+      console.error("Error reading file:", error);
+    };
 
-    // Extract the file name from the selectedFile object
-    const fileName = selectedFile.name;
-
-    // Prepare the fileData string according to your backend's expectations
-    const fileData = "S3" + fileName + "!" + base64Data.split(',')[1];
-
-    try {
-        // Send the fileData to your backend
-        const Data = encodeURIComponent(fileData);
-        console.log("Data ", Data)
-        const response = await fetch(`https://rfzmb9ibkk.execute-api.eu-north-1.amazonaws.com/chatuploads/${Data}`);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error status: ${response.status}`);
-        }
-
-        const responseData = await response.json(); // Assuming the response is JSON
-        console.log(responseData); // Handle the response data as needed
-
-    } catch (err) {
-        console.error(err);
-    }
-};
- /*
-    try {
-      // Utility function to convert a file to Base64
-      
-      // Make sure to remove the manual Content-Type header setting when using FormData
-      const response = await axios.post(
-        "https://7smo3vt5aisw4kvtr5dw3yyttq0bezsf.lambda-url.eu-north-1.on.aws/",
-        formData
-      );
-
-      console.log(response.data);
-      setUploadedPhotoUrl(response.data.url); // Assuming the response contains a URL property
-
-      await handleSendMessage(`<img src="${response.data.url}" alt="Uploaded Image" style="max-width: 100%;" />`);
-    } catch (error) {
-      console.error("Error uploading photo:", error);
-      alert("Er is een fout opgetreden bij het uploaden van de foto. Probeer het opnieuw.");
-    }*/
+    reader.readAsDataURL(file);
+  };
 
   const handleDropUpClick = () => {
     setIsDropUpOpen(!isDropUpOpen);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropUpRef.current && !dropUpRef.current.contains(event.target as Node)) {
+    if (
+      dropUpRef.current &&
+      !dropUpRef.current.contains(event.target as Node) &&
+      !settingsModalRef.current?.contains(event.target as Node)
+    ) {
       setIsDropUpOpen(false);
     }
   };
@@ -367,6 +416,131 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowNewChatModal(false);
+        setShowSettingsModal(false);
+        setShowSavedMessagesModal(false);
+        setShowPaymentModal(false);
+        setShowFavoritesModal(false);
+      }
+    };
+
+    const handleClickOutsideModal = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        (showNewChatModal ||
+          showSettingsModal ||
+          showSavedMessagesModal ||
+          showPaymentModal ||
+          showFavoritesModal) &&
+        target &&
+        !settingsModalRef.current?.contains(target)
+      ) {
+        setShowNewChatModal(false);
+        setShowSettingsModal(false);
+        setShowSavedMessagesModal(false);
+        setShowPaymentModal(false);
+        setShowFavoritesModal(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("mousedown", handleClickOutsideModal);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleClickOutsideModal);
+    };
+  }, [
+    showNewChatModal,
+    showSettingsModal,
+    showSavedMessagesModal,
+    showPaymentModal,
+    showFavoritesModal,
+  ]);
+
+  const handleEditMessage = async (messageId: string, newText: string) => {
+    try {
+      await API.graphql({
+        query: mutations.updateChat,
+        variables: {
+          input: {
+            id: messageId,
+            text: newText,
+          },
+        },
+      });
+      // Update local state
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === messageId ? { ...chat, text: newText } : chat
+        )
+      );
+    } catch (error) {
+      console.error("Error editing message:", error);
+    }
+  };
+
+  const handleDeleteMessage = async (messageId: string) => {
+    try {
+      await API.graphql({
+        query: mutations.deleteChat,
+        variables: {
+          input: {
+            id: messageId,
+          },
+        },
+      });
+      // Update local state
+      setChats((prevChats) =>
+        prevChats.filter((chat) => chat.id !== messageId)
+      );
+    } catch (error) {
+      console.error("Error deleting message:", error);
+    }
+  };
+
+  const handleDeleteChat = async (contact: string) => {
+    try {
+      const chatToDelete = chats.find(
+        (chat) =>
+          chat.members.includes(contact) &&
+          chat.members.includes(user.attributes.email)
+      );
+      if (chatToDelete) {
+        await API.graphql({
+          query: mutations.deleteChat,
+          variables: {
+            input: { id: chatToDelete.id },
+          },
+        });
+        setChats((prevChats) =>
+          prevChats.filter((chat) => chat.id !== chatToDelete.id)
+        );
+        setSelectedContact(null);
+      }
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+    }
+  };
+
+  const handleSendLocation = async () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const locationUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
+        getInfo(latitude, longitude);
+        await handleSendMessage(
+          `<a href="${locationUrl}" target="_blank">Mijn locatie</a>`
+        );
+      });
+    } else {
+      alert("Geolocatie wordt niet ondersteund door deze browser.");
+    }
+  };
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -417,7 +591,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     if (parts[1]) {
       parts[1] = parts[1].slice(0, 2);
     }
-
     return parts.join(",");
   };
 
@@ -446,37 +619,53 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       }
     });
 
-    const htmlString = ReactDOMServer.renderToStaticMarkup(
-      <>{jsxElements}</>
-    );
+    const htmlString = ReactDOMServer.renderToStaticMarkup(<>{jsxElements}</>);
     return htmlString;
   };
 
+  const validateMessageContent = (message: string) => {
+    const phoneNumberRegex =
+      /(\+?\d{1,3}[-.\s]?|(\(?\d{2,4}\)?))\d{3}[-.\s]?\d{4,6}/g;
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/;
+    const forbiddenWords = ["password", "secret", "confidential"];
+
+    if (phoneNumberRegex.test(message) || emailRegex.test(message)) {
+      return false;
+    }
+
+    for (const word of forbiddenWords) {
+      if (message.toLowerCase().includes(word)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
 
   const handleSendMessageClick = async () => {
-    const messageInput = document.getElementById("message-input") as HTMLInputElement;
+    const messageInput = document.getElementById(
+      "message-input"
+    ) as HTMLInputElement;
     if (messageInput) {
       const messageText = messageInput.value;
       if (messageText && recipientEmail) {
+        if (!validateMessageContent(messageText)) {
+          alert(
+            "Het bericht bevat verboden informatie en kan niet worden verzonden."
+          );
+          return;
+        }
         if (replyingTo) {
           await handleSendMessage(
-            stopXSS(
-              `Re: ${replyingTo.text} | U: ${messageText}`
-            )
+            stopXSS(`Re: ${replyingTo.text} | U: ${messageText}`)
           );
           setReplyingTo(null);
         } else {
           await handleSendMessage(stopXSS(messageText));
         }
         messageInput.value = "";
-        handleTypingIndicator(false);
       }
     }
-  };
-
-  const handleInputChange = () => {
-    handleTypingIndicator(true);
-    setTimeout(() => handleTypingIndicator(false), 1000);
   };
 
   const [open, setOpen] = useState(false);
@@ -485,7 +674,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setOpen(!open);
   };
 
-  const handleStartNewChatClick = () => {
+  const handleStartNewChatClick = (email: string = "") => {
+    setNewChatEmail(email);
     setShowNewChatModal(true);
   };
 
@@ -493,6 +683,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     console.log("Starting new chat with email:", newChatEmail);
     await handleStartNewChatWithEmail(newChatEmail);
     setShowNewChatModal(false);
+    const uuid = getUUIDFromEmail(newChatEmail);
+    const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
+    window.history.pushState({}, "", url);
+    setRecipientEmail(newChatEmail);
+    setSelectedContact(newChatEmail);
   };
 
   const handleMarkMessage = (messageId: string) => {
@@ -507,16 +702,36 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     });
   };
 
+  const handlePinMessage = (messageId: string) => {
+    setPinnedMessages((prev) => {
+      const newPinnedMessages = new Set(prev);
+      if (newPinnedMessages.has(messageId)) {
+        newPinnedMessages.delete(messageId);
+      } else {
+        newPinnedMessages.add(messageId);
+      }
+      return newPinnedMessages;
+    });
+  };
+
+  const handleFavoriteMessage = (messageId: string) => {
+    setFavoriteMessages((prev) => {
+      const newFavoriteMessages = new Set(prev);
+      if (newFavoriteMessages.has(messageId)) {
+        newFavoriteMessages.delete(messageId);
+      } else {
+        newFavoriteMessages.add(messageId);
+      }
+      return newFavoriteMessages;
+    });
+  };
+
   const handleReplyMessage = (message: Chat) => {
     setReplyingTo(message);
   };
 
   const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextSize(Number(event.target.value));
-  };
-
-  const handleVisibleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setVisibleName(event.target.value);
   };
 
   const handleThemeChange = () => {
@@ -527,50 +742,118 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     setNotificationsEnabled((prevState) => !prevState);
   };
 
-  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("photo", file);
-
-      try {
-        const response = await axios.post(
-          "https://your-upload-url.com",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response.data);
-        // Update the user's profile picture URL in your backend
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
-      }
-    }
-  };
-
   const handleSaveSettings = () => {
+    localStorage.setItem("textSize", textSize.toString());
     setShowSettingsModal(false);
   };
 
+  useEffect(() => {
+    const storedTextSize = localStorage.getItem("textSize");
+    if (storedTextSize) {
+      setTextSize(Number(storedTextSize));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (messageSearchTerm) {
+      const filtered = chats.filter((chat) =>
+        chat.text.toLowerCase().includes(messageSearchTerm.toLowerCase())
+      );
+      setFilteredMessages(filtered);
+    } else {
+      setFilteredMessages([]);
+    }
+  }, [messageSearchTerm, chats]);
+
+  const [messageSearchTermm, setMessageSearchTermm] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleSearchClick = () => {
+    setShowSearch(true);
+  };
+
+  const handleCancelClick = () => {
+    setShowSearch(false);
+    setMessageSearchTerm("");
+  };
+
+  const handleBlockUser = (contact: string) => {
+    setBlockedUsers((prev) => {
+      const newBlockedUsers = new Set(prev);
+      if (newBlockedUsers.has(contact)) {
+        newBlockedUsers.delete(contact);
+      } else {
+        newBlockedUsers.add(contact);
+      }
+      return newBlockedUsers;
+    });
+  };
+
+  const MessageStatusIcon = ({
+    delivered,
+    read,
+  }: {
+    delivered: boolean;
+    read: boolean;
+  }) => {
+    if (read) {
+      return <IoCheckmarkDone className="message-status-icon read" />;
+    } else if (delivered) {
+      return <IoCheckmark className="message-status-icon delivered" />;
+    } else {
+      return null;
+    }
+  };
+
+
+  console.log("searchTerm: ", searchTerm);
   return (
-    <div className={`chat-container ${theme}`} style={{ fontSize: `${textSize}px` }}>
+    <div
+      className={`chat-container ${theme}`}
+      style={{ fontSize: `${textSize}px` }}
+    >
       <div className="sidebarr" id="sidebarr">
         <div className="dropdownn-container">
-          <BsThreeDotsVertical size={30} className="menu-iconn" onClick={toggleMenu} />
+          <BsThreeDotsVertical
+            size={30}
+            className="menu-iconn"
+            onClick={toggleMenu}
+          />
           {open && (
             <div className="dropdownn-menu">
-              <div className="dropdownn-item" onClick={handleStartNewChatClick}>
+              <div className="dropdownn-item" onClick={() => handleStartNewChatClick()}>
                 Nieuwe chat starten
               </div>
-              <div className="dropdownn-item" onClick={() => setShowSavedMessagesModal(true)}>
+              <div
+                className="dropdownn-item"
+                onClick={() => setShowSavedMessagesModal(true)}
+              >
                 Opgeslagen berichten
               </div>
-              <div className="dropdownn-item" onClick={() => setShowSettingsModal(true)}>
+              <div
+                className="dropdownn-item"
+                onClick={() => setShowSettingsModal(true)}
+              >
                 Instellingen
               </div>
+              {selectedContact && (
+                <>
+                  <div
+                    className="dropdownn-item"
+                    onClick={() => handleDeleteChat(selectedContact)}
+                  >
+                    Verwijder chat
+                  </div>
+                  <div
+                    className="dropdownn-item"
+                    onClick={() => handleBlockUser(selectedContact)}
+                  >
+                    {blockedUsers.has(selectedContact)
+                      ? "Deblokkeer gebruiker"
+                      : "Blokkeer gebruiker"}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -580,17 +863,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
               >
                 <BsPersonCircle size={50} className="avatar-chat-side" />
                 <div className="contact-details">
                   <div className="contact-name">
                     <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
+                      </span>
+                    )}
                   </div>
                   {lastMessages[contact] && (
                     <span className="last-message">
@@ -609,17 +894,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <li
                 key={contact}
                 onClick={() => switchChat(contact)}
-                className={selectedContact === contact ? "selected-contact" : ""}
+                className={
+                  selectedContact === contact ? "selected-contact" : ""
+                }
               >
                 <BsPersonCircle size={50} className="avatar-chat-side" />
                 <div className="contact-details">
                   <div className="contact-name">
                     <span>{contact.split("@")[0]}</span>
-                      {newMessagesCount[contact] > 0 && (
-                        <span className="new-message-badge">
-                          {newMessagesCount[contact]}
-                        </span>
-                      )}
+                    {newMessagesCount[contact] > 0 && (
+                      <span className="new-message-badge">
+                        {newMessagesCount[contact]}
+                      </span>
+                    )}
                   </div>
                   {lastMessages[contact] && (
                     <span className="last-message">
@@ -645,63 +932,156 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <h2 className="recipient-name">
                   {selectedContact ? selectedContact.split("@")[0] : ""}
                 </h2>
-                {isTyping && <div className="typing-indicator">Typing...</div>}
               </div>
+            </div>
+            <div className="search-container" style={{ position: "relative" }}>
+              {!showSearch && (
+                <button onClick={handleSearchClick} className="search-icon">
+                  <CiSearch className="search-header" size={25} color="blue" />
+                </button>
+              )}
+              <input
+                type="text"
+                placeholder="Zoek berichten..."
+                value={messageSearchTerm}
+                onChange={(e) => setMessageSearchTerm(e.target.value)}
+                className={`search-input-header ${showSearch ? "show" : ""}`}
+              />
+              {showSearch && (
+                <button onClick={handleCancelClick} className="cancel-icon">
+                  <MdOutlineCancel className="search-header" size={25} color="blue" />
+                </button>
+              )}
             </div>
           </div>
           <div className="chat-box" ref={chatBoxRef}>
-            {Object.keys(groupedMessages).map((date) => {
-              const { text, className } = formatDate(date);
-              return (
-                <React.Fragment key={date}>
-                  <div className={`date-separator ${className}`}>{text}</div>
-
-                  {groupedMessages[date].map((chat) => (
+            {isLoading && <div className="loading-spinner">Loading...</div>}
+            {filteredMessages.length > 0
+              ? filteredMessages.map((chat) => (
+                <div
+                  key={chat.id}
+                  className={`message-container ${chat.email === user.attributes.email
+                    ? "self-message-container"
+                    : "other-message-container"
+                    } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
+                >
+                  <div
+                    className={`message-bubble ${chat.email === user.attributes.email
+                      ? "self-message"
+                      : "other-message"
+                      }`}
+                    style={{ fontSize: `${textSize}px` }} // Apply text size
+                  >
                     <div
-                      key={chat.id}
-                      className={`message-container ${chat.email === user.attributes.email
-                        ? "self-message-container"
-                        : "other-message-container"
-                        } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
-                    >
+                      className="text"
+                      dangerouslySetInnerHTML={{ __html: chat.text }}
+                    />
+                    <div className="message-actions">
+                      <button onClick={() => handleReplyMessage(chat)}>
+                        <FaReply />
+                      </button>
+                      <button onClick={() => handleMarkMessage(chat.id)}>
+                        {markedMessages.has(chat.id) ? (
+                          <FaBookmark />
+                        ) : (
+                          <FaRegBookmark />
+                        )}
+                      </button>
+                      <button onClick={() => handleDeleteMessage(chat.id)}>
+                        <MdDeleteOutline />
+                      </button>
+                    </div>
+                    <div className="message-status">
+                      <MessageStatusIcon
+                        delivered={chat.delivered}
+                        read={chat.read}
+                      />
+                    </div>
+                    <time dateTime={chat.createdAt} className="message-time">
+                      {new Intl.DateTimeFormat("nl-NL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(chat.createdAt))}
+                    </time>
+                  </div>
+                </div>
+              ))
+              : Object.keys(groupedMessages).map((date) => {
+                const { text, className } = formatDate(date);
+                return (
+                  <React.Fragment key={date}>
+                    <div className={`date-separator ${className}`}>
+                      {text}
+                    </div>
+                    {groupedMessages[date].map((chat) => (
                       <div
-                        className={`message-bubble ${chat.email === user.attributes.email
-                          ? "self-message"
-                          : "other-message"
+                        key={chat.id}
+                        className={`message-container ${chat.email === user.attributes.email
+                          ? "self-message-container"
+                          : "other-message-container"
+                          } ${markedMessages.has(chat.id) ? "marked-message" : ""
                           }`}
                       >
-                          <div className="message-actions">
-                            <button onClick={() => handleReplyMessage(chat)}><FaReply /></button>
-                            <button onClick={() => handleMarkMessage(chat.id)}>
-                              {markedMessages.has(chat.id) ? <FaBookmark /> : <FaRegBookmark />}
-                            </button>
-                            {/* <button onClick={() => handleDeleteMessage(chat.id)}>Delete</button> */}
-                          </div>
                         <div
-                          className="text"
-                          dangerouslySetInnerHTML={{ __html: chat.text }}
-                        />
-                        <time dateTime={chat.createdAt} className="message-time">
-                          {new Intl.DateTimeFormat("nl-NL", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }).format(new Date(chat.createdAt))}
-                        </time>
+                          className={`message-bubble ${chat.email === user.attributes.email
+                            ? "self-message"
+                            : "other-message"
+                            }`}
+                          style={{ fontSize: `${textSize}px` }}
+                        >
+                          <div
+                            className="text"
+                            dangerouslySetInnerHTML={{ __html: chat.text }}
+                          />
+                          <div className="message-actions">
+                            <button onClick={() => handleReplyMessage(chat)}>
+                              <FaReply />
+                            </button>
+                            <button
+                              onClick={() => handleMarkMessage(chat.id)}
+                            >
+                              {markedMessages.has(chat.id) ? (
+                                <FaBookmark />
+                              ) : (
+                                <FaRegBookmark />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMessage(chat.id)}
+                            >
+                              <MdDeleteOutline />
+                            </button>
+                          </div>
+                          <div className="message-status">
+                            <MessageStatusIcon
+                              delivered={chat.delivered}
+                              read={chat.read}
+                            />
+                          </div>
+                          <time
+                            dateTime={chat.createdAt}
+                            className="message-time"
+                          >
+                            {new Intl.DateTimeFormat("nl-NL", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }).format(new Date(chat.createdAt))}
+                          </time>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </React.Fragment>
-              );
-            })}
+                    ))}
+                  </React.Fragment>
+                );
+              })}
           </div>
-
           {replyingTo && (
             <div className="replying-to">
               Replying to: <blockquote>{replyingTo.text}</blockquote>
-              <button onClick={() => setReplyingTo(null)}>Cancel</button>
+              <button onClick={() => setReplyingTo(null)}>Annuleren</button>
             </div>
           )}
           <div className="input-form">
+            {isUploading && <div className="loading-spinner">Uploading...</div>}
             <input
               type="text"
               id="message-input"
@@ -713,19 +1093,21 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 }
               }}
               className="inputchat"
-              onChange={handleInputChange}
+              onChange={() => { }}
             />
-            <div className="dropup" onClick={handleDropUpClick} ref={dropUpRef}>
-              <BsPaperclip className="paperclip" size={25} />
-              <div
-                className={`dropup-content ${isDropUpOpen ? "show" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              >
+            <div className="dropup" ref={dropUpRef}>
+              <BsPaperclip
+                className="paperclip"
+                size={25}
+                onClick={handleDropUpClick}
+              />
+              {isDropUpOpen && (
+                <div className="dropup-content show">
                 <button
                   className="dropup-option"
-                  onClick={() => inputRef.current?.click()}
+                  onClick={handleSendLocation}
                 >
-                  <MdDriveFileMove size={25} color="blue" />
+                  Locatie
                 </button>
                 <input
                   type="file"
@@ -735,41 +1117,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 />
                 <button
                   className="dropup-option"
-                  onClick={handleUpload}
-                  disabled={!selectedFile}
+                  onClick={() => setShowPaymentModal(true)}
                 >
-                  Upload
+                  Betalen
                 </button>
-                {uploadedPhotoUrl && (
-                  <div>
-                    <img
-                      src={uploadedPhotoUrl}
-                      alt="Uploaded"
-                      style={{ maxWidth: "100%" }}
-                    />
-                  </div>
-                )}
-                <div className="amount-input-wrapper">
-                  <input
-                    type="text"
-                    placeholder="Voer bedrag in"
-                    value={customAmount}
-                    onChange={(e) =>
-                      setCustomAmount(formatCurrencyInput(e.target.value))
-                    }
-                    className="amount-input"
-                  />
-                </div>
-                <PaymentLink
-                  handleSendMessage={handleSendMessage}
-                  subtotal={parseFloat(customAmount.replace(",", "."))}
-                />
-                <PaymentOffer
-                  subtotal={parseFloat(customAmount.replace(',', '.'))}
-                  handleSendMessage={handleSendMessage}
-                  recipientEmail={recipientEmail}
-                />
+                <button
+                  className="dropup-option"
+                  onClick={() => inputRef.current?.click()}
+                >
+                  Deel Bestand
+                </button>
               </div>
+              )}
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
               <kbd>
@@ -781,7 +1140,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       </div>
       {showNewChatModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Start Nieuwe Chat</h2>
             <input
               type="email"
@@ -789,14 +1148,21 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               value={newChatEmail}
               onChange={(e) => setNewChatEmail(e.target.value)}
             />
-            <button onClick={handleNewChatConfirm} className="button-modal">Bevestigen</button>
-            <button onClick={() => setShowNewChatModal(false)} className="button-modal">Annuleren</button>
+            <button onClick={handleNewChatConfirm} className="button-modal">
+              Bevestigen
+            </button>
+            <button
+              onClick={() => setShowNewChatModal(false)}
+              className="button-modal"
+            >
+              Annuleren
+            </button>
           </div>
         </div>
       )}
       {showSettingsModal && (
         <div className="settings-modal-overlay">
-          <div className="settings-modal-content">
+          <div className="settings-modal-content" ref={settingsModalRef}>
             <h2>Instellingen</h2>
             <div className="settings-item">
               <label htmlFor="text-size">Tekstgrootte:</label>
@@ -811,43 +1177,42 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               <span>{textSize}px</span>
             </div>
             <div className="settings-item">
-              <label htmlFor="visible-name">Zichtbare naam:</label>
-              <input
-                type="text"
-                id="visible-name"
-                value={visibleName}
-                onChange={handleVisibleNameChange}
-              />
-            </div>
-            <div className="settings-item">
               <label>Theme:</label>
-              <button onClick={handleThemeChange} className="theme-toggle-button">
+              <button
+                onClick={handleThemeChange}
+                className="theme-toggle-button"
+              >
                 {theme === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
               </button>
             </div>
             <div className="settings-item">
               <label>Notifications:</label>
-              <button onClick={handleNotificationsToggle} className="notifications-toggle-button">
-                {notificationsEnabled ? <BsBellSlash size={20} /> : <BsBell size={20} />}
+              <button
+                onClick={handleNotificationsToggle}
+                className="notifications-toggle-button"
+              >
+                {notificationsEnabled ? (
+                  <BsBellSlash size={20} />
+                ) : (
+                  <BsBell size={20} />
+                )}
               </button>
             </div>
-            <div className="settings-item">
-              <label htmlFor="profile-picture">Profile Picture:</label>
-              <input
-                type="file"
-                id="profile-picture"
-                accept="image/*"
-                onChange={handleProfilePictureUpload}
-              />
-            </div>
-            <button onClick={handleSaveSettings} className="button-modal">Opslaan</button>
-            <button onClick={() => setShowSettingsModal(false)} className="button-modal">Annuleren</button>
+            <button onClick={handleSaveSettings} className="button-modal">
+              Opslaan
+            </button>
+            <button
+              onClick={() => setShowSettingsModal(false)}
+              className="button-modal"
+            >
+              Annuleren
+            </button>
           </div>
         </div>
       )}
       {showSavedMessagesModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={settingsModalRef}>
             <h2>Opgeslagen Berichten</h2>
             <div className="saved-messages-list">
               {Array.from(markedMessages).map((messageId) => {
@@ -855,8 +1220,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 if (message) {
                   return (
                     <div key={message.id} className="saved-message-item">
-                      <div className="saved-message-text" dangerouslySetInnerHTML={{ __html: message.text }} />
-                      <time dateTime={message.createdAt} className="saved-message-time">
+                      <div className="saved-message-sender">
+                        Van: {message.email.split("@")[0]}
+                      </div>
+                      <div
+                        className="saved-message-text"
+                        dangerouslySetInnerHTML={{ __html: message.text }}
+                      />
+                      <time
+                        dateTime={message.createdAt}
+                        className="saved-message-time"
+                      >
                         {new Intl.DateTimeFormat("nl-NL", {
                           day: "numeric",
                           month: "short",
@@ -871,7 +1245,86 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 return null;
               })}
             </div>
-            <button onClick={() => setShowSavedMessagesModal(false)} className="button-modal">Sluiten</button>
+            <button
+              onClick={() => setShowSavedMessagesModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
+          </div>
+        </div>
+      )}
+      {showFavoritesModal && (
+        <div className="modal-overlay">
+          <div className="modal-content" ref={settingsModalRef}>
+            <h2>Favoriete Berichten</h2>
+            <div className="favorite-messages-list">
+              {Array.from(favoriteMessages).map((messageId) => {
+                const message = chats.find((chat) => chat.id === messageId);
+                if (message) {
+                  return (
+                    <div key={message.id} className="favorite-message-item">
+                      <div
+                        className="favorite-message-text"
+                        dangerouslySetInnerHTML={{ __html: message.text }}
+                      />
+                      <time
+                        dateTime={message.createdAt}
+                        className="favorite-message-time"
+                      >
+                        {new Intl.DateTimeFormat("nl-NL", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(message.createdAt))}
+                      </time>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+            <button
+              onClick={() => setShowFavoritesModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
+          </div>
+        </div>
+      )}
+      {showPaymentModal && (
+        <div className="modal-overlay">
+          <div className="modal-content" ref={settingsModalRef}>
+            <h2>Payment Options</h2>
+            <div className="amount-input-wrapper">
+              <input
+                type="text"
+                placeholder="Voer bedrag in"
+                value={customAmount}
+                onChange={(e) =>
+                  setCustomAmount(formatCurrencyInput(e.target.value))
+                }
+                className="amount-input-modal"
+              />
+            </div>
+            <PaymentLink
+              handleSendMessage={handleSendMessage}
+              subtotal={parseFloat(customAmount.replace(",", "."))}
+            />
+            <PaymentOffer
+              subtotal={parseFloat(customAmount.replace(",", "."))}
+              handleSendMessage={handleSendMessage}
+              recipientEmail={recipientEmail}
+            />
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="button-modal"
+            >
+              Sluiten
+            </button>
           </div>
         </div>
       )}

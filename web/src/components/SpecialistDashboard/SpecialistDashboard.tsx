@@ -9,12 +9,11 @@ import Donald from "../../assets/Donald.png";
 import TaskCard from "../ui/TaskCard/TaskCard";
 import { Task } from "@mui/icons-material";
 
-
 const SpecialistDashboard = () => {
   return (
     <div className="dashboard-container">
       {/* <!-- Profile Sidebar --> */}
-      <aside className="sp-sidebar">
+      <aside className="sidebar">
         <div className="profile-card">
           <img src={Donald} alt="Jan Schilder" className="profile-picture" />
           <h2>Jan Schilder</h2>
@@ -31,12 +30,12 @@ const SpecialistDashboard = () => {
             janschilder@hotmail.com
           </p>
         </div>
-        <nav className="sp-sidebar-nav">
+        <nav className="sidebar-nav">
           <a href="#" className="nav-item">
             <PaymentOutlined />
             Betaalmethode
           </a>
-          <a href="/HomeOwnerSettingsPage" className="nav-item">
+          <a href="#" className="nav-item">
             <SettingsIcon />
             Account settings
           </a>
@@ -46,7 +45,7 @@ const SpecialistDashboard = () => {
           </a>
         </nav>
       </aside>
-
+      
       {/* <!-- Task Cards --> */}
       <TaskCard />
 
