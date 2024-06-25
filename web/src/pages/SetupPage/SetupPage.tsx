@@ -8,13 +8,13 @@ function ReviewLayout() {
   return (
     <div>
       <NavBar />
-    <main className="reviewMain">
-      <section className="sidenavReviewSection">
-        <article className="sideNavReview">
+    <main className="setupMain">
+      <section className="sidenavSetupSection">
+        <article className="sideNavSetup">
           <SideNav />
         </article>
       </section>
-      <section className="rightsideReviewSection">
+      <section className="rightsideSetupSection">
         <Setup />
         <Footer />
       </section>
