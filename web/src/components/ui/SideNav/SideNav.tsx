@@ -56,7 +56,7 @@ const SideNav = () => {
             setIsProfessional(true);
           }
         } else {
-          console.log("User data is not fully available.");
+          console.log("Je bent ingelogd stomme aap!");
           navigate(`/${lang}/login`);
         }
       } else {
@@ -87,11 +87,11 @@ const SideNav = () => {
     setIsProfessional,
   ]);
 
-  const comingSoonTabs = [
-    { path: "revenues", label: "Inkomsten" },
-    { path: "occupancy-ahr", label: "Bezettingsgraad" },
-    { path: "screening", label: "Screening" },
-  ];
+  // const comingSoonTabs = [
+  //   { path: "revenues", label: "Inkomsten" },
+  //   { path: "occupancy-ahr", label: "Bezettingsgraad" },
+  //   { path: "screening", label: "Screening" },
+  // ];
 
   return (
     <div className="sidebar">
@@ -142,7 +142,7 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/reporting`}
                 className={({ isActive }) =>
@@ -152,7 +152,7 @@ const SideNav = () => {
                 <PaymentIcon />
                 Reporting
               </NavLink>
-            </li>
+            </li> */}
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/setup`}
@@ -197,7 +197,7 @@ const SideNav = () => {
                 Help
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/promocode`}
                 className={({ isActive }) =>
@@ -207,8 +207,8 @@ const SideNav = () => {
                 <MdOutlinePointOfSale />
                 Promo codes
               </NavLink>
-            </li>
-            {comingSoonTabs.map((tab) => (
+            </li> */}
+            {/* {comingSoonTabs.map((tab) => (
               <li className="sidebar-item coming-soon" key={tab.path}>
                 <div className="sidebar-link">
                   <StarOutlineIcon />
@@ -216,7 +216,7 @@ const SideNav = () => {
                   <div className="coming-soon-tooltip">Binnenkort online</div>
                 </div>
               </li>
-            ))}
+            ))} */}
           </>
         ) : (
           <>

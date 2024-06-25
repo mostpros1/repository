@@ -70,7 +70,7 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
                       userEmail: item.user_email,
                       title: item.task,
                       description: item.description,
-                      location: item.region,
+                      location: item.work_region,
                       availability: item.date,
                     }))
                   : [];

@@ -300,7 +300,7 @@ function SpecialistMultistepForm() {
               email: email !== undefined ? stopXSS(email) : "", // Check if email is not undefined
               first_name: firstName !== undefined ? stopXSS(firstName) : "", // Check if firstName is not undefined
               last_name: lastName !== undefined ? stopXSS(lastName) : "", // Check if lastName is not undefined
-              region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
+              work_region: region !== undefined ? stopXSS(region) : "", // Check if region is not undefined
               postcode: postcode !== undefined ? stopXSS(postcode) : "", // Check if postcode is not undefined
               profession: profession !== undefined ? stopXSS(profession).toLowerCase() : "", // Check if profession is not undefined
               //task: task !== undefined ? stopXSS(task) : "", // Check if task is not undefined
