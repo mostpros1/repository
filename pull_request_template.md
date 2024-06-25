@@ -16,7 +16,7 @@ Changes:
 ## Mentions
 Mention the person or team responsible for reviewing the proposed changes. This notifies them that their review is needed.
 
-Reviewer(s): @Bekoo023
+Reviewer(s): 
 
 ## Additional Information
 Include any additional information or context that might be necessary for understanding the pull request.
