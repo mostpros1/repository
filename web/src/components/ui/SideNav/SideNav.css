@@ -58,10 +58,9 @@
 }
 
 .sidebar-link.active {
-  background-color: #5aa5f2;
-  color: #222;
-  border-radius: 1rem;
-  transform: scale3d(1.05, 1.05, 1);
+  background-color: #5aa5f2 !important; /* Ensure it overrides */
+  color: #222 !important;
+  border-radius: 1rem !important;
 }
 
 .sidebar-link:hover {

@@ -55,7 +55,8 @@ function Navigation() {
       const currentURL = window.location.href;
       if (currentURL.includes("dashboard")) {
         if (user?.signInUserSession?.accessToken?.payload) {
-          const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+          const groups =
+            user.signInUserSession.accessToken.payload["cognito:groups"];
           if (groups?.includes("Homeowner")) {
             setIsHomeowner(true);
             setIsProfessional(false);
@@ -99,11 +100,19 @@ function Navigation() {
     if (isProfessional) {
       setIsProfessional(false);
       setIsHomeowner(true);
-      navigate(`/${taal}/homeowner-dashboard/jobs`);
+      setTimeout(() => {
+        navigate(`/${taal}/homeowner-dashboard/jobs`);
+        alert("Switched to Homeowner Dashboard");
+        console.log("Switched to Homeowner Dashboard");
+      }, 100); // Adjust delay as needed
     } else if (isHomeowner) {
       setIsProfessional(true);
       setIsHomeowner(false);
-      navigate(`/${taal}/pro-dashboard`);
+      setTimeout(() => {
+        navigate(`/${taal}/pro-dashboard`);
+        alert("Switched to Professional Dashboard");
+        console.log("Switched to Professional Dashboard");
+      }, 100);
     }
   };
 

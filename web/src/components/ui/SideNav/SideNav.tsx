@@ -47,19 +47,24 @@ const SideNav = () => {
       );
 
       if (!isFromDashboard) {
+        // Check if user is authenticated
         if (user?.signInUserSession?.accessToken?.payload) {
           const groups =
             user.signInUserSession.accessToken.payload["cognito:groups"];
           if (groups?.includes("Homeowner")) {
             setIsHomeowner(true);
+            setIsProfessional(false);
           } else if (groups?.includes("Professional")) {
             setIsProfessional(true);
+            setIsHomeowner(false);
           }
         } else {
-          console.log("Je bent ingelogd stomme aap!");
+          // User is not logged in, redirect to login page
+          console.log("User is not logged in!");
           navigate(`/${lang}/login`);
         }
       } else {
+        // User is on a dashboard path
         const isHomeownerDashboard = location.pathname.includes(
           `/${lang}/homeowner-dashboard/`
         );
@@ -76,15 +81,16 @@ const SideNav = () => {
         }
       }
     };
-
+'?'
+    // Call the function when dependencies change
     checkUserRole();
   }, [
     user,
     location.pathname,
     lang,
-    navigate,
     setIsHomeowner,
     setIsProfessional,
+    navigate,
   ]);
 
   // const comingSoonTabs = [
