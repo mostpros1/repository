@@ -69,7 +69,7 @@ const OverzichtProf: React.FC = () => {
               {specialist.fotoUrl ? (
                 <img src={specialist.fotoUrl} alt={specialist.naam} />
               ) : (
-                <div className="placeholder-foto">No Image</div>
+                <div className="placeholder-foto"> Geen Foto</div>
               )}
             </div>
             <div className="profiel-info">

@@ -121,7 +121,7 @@
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  background-color: #f9f9fb;
+  background-color: #EDEDEC;
   padding: 20px;
   border-radius: 7px;
 }
@@ -184,7 +184,10 @@
 .message-bubble .message-time {
   margin-left: 10px;
   font-size: 12px;
-  color: #666;
+}
+
+.black {
+  color: #222222;
 }
 
 .self-message {
@@ -261,6 +264,7 @@
 
 .text {
   margin-right: 20px;
+  color: black;
 }
 
 .username-name {
@@ -270,7 +274,7 @@
 .message-time {
   font-size: 10px;
   margin-left: 2px;
-  color: #666;
+  color: black;
   margin-top: 2px;
 }
 
@@ -765,13 +769,15 @@
 }
 
 .self-message-container .message-bubble {
-  background-color: #8ac3ff84;
+  background-color: #207CD8;
   border: 1px solid #ccc;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 }
 
 .other-message-container .message-bubble {
   background-color: #ffffff;
   border: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .message-actions {

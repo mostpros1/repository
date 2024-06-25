@@ -221,8 +221,8 @@ const HomeOwnerSecurity = () => {
             <input type="email" placeholder="johndoe@gmail.com" onChange={handleEmailChange} />
           </div>
           <div className="account-setting">
-            <label>Re-enter Email</label>
-            <input type="email" placeholder="johndoe@gmail.com" onChange={handleEmailRepeatChange} />
+            <label>Herhaal Email</label>
+            <input type="email" placeholder="johndoe@gmail.com" />
           </div>
           <button id="accept-btn" onClick={changeEmail}> Bevestigen </button>
         </div>
