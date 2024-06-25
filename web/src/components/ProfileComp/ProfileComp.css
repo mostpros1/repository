@@ -1,0 +1,75 @@
+.ProfileMain {
+  width: 100%;
+  height: 100%;
+  padding-right: 12rem;
+  padding-top: 5rem;
+  display: flex;
+}
+
+.sidenavProfileSection {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.sideNavProfile {
+  height: 45%;
+  width: 18rem;
+  background: #222;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsideProfileSection {
+  width: 80%;
+  height: 100%;
+}
+
+@media (max-width: 1044px) {
+  .ProfileMain {
+    padding-right: 0rem;
+    padding-top: 5rem;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidenavProfileSection {
+    display: none;
+  }
+
+  .rightsideProfileSection {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .SettingsMain {
+    align-items: center;
+    justify-content: center;
+    padding-right: 0rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .ProfileMain {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+  }
+
+  .rightsideProfileSection {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+}
