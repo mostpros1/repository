@@ -27,7 +27,7 @@
 
 .rightsideChatSection {
   width: 80%;
-  height: 100vh;
+  height: 100%;
 }
 
 @media (max-width: 1044px) {

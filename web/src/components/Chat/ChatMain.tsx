@@ -934,19 +934,19 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 </h2>
               </div>
             </div>
-            <div className="search-container" style={{ position: "relative" }}>
-              {!showSearch && (
-                <button onClick={handleSearchClick} className="search-icon">
-                  <CiSearch className="search-header" size={25} color="blue" />
-                </button>
-              )}
-              <input
+            <div className="search-container">
+            <input
                 type="text"
                 placeholder="Zoek berichten..."
                 value={messageSearchTerm}
                 onChange={(e) => setMessageSearchTerm(e.target.value)}
                 className={`search-input-header ${showSearch ? "show" : ""}`}
               />
+              {!showSearch && (
+                <button onClick={handleSearchClick} className="search-icon">
+                  <CiSearch className="search-header" size={25} color="blue" />
+                </button>
+              )}
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
                   <MdOutlineCancel className="search-header" size={25} color="blue" />
