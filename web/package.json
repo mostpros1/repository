@@ -18,6 +18,7 @@
     "@aws-amplify/core": "^6.0.8",
     "@aws-amplify/pubsub": "^6.0.8",
     "@aws-amplify/ui-react": "^5.3.3",
+    "@aws-sdk/client-cognito-identity-provider": "^3.600.0",
     "@aws-sdk/client-s3": "^3.472.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",

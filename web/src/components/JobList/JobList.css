@@ -1,6 +1,8 @@
 .jobListMain {
   width: 100%;
+  width: 100%;
   height: 100%;
+  padding-right: 12rem;
   padding-top: 5rem;
   display: flex;
 }
@@ -13,7 +15,7 @@
   padding-right: 2rem;
 }
 
-.sideNav {
+.sideNavJobList {
   height: 45%;
   width: 18rem;
   background: #222;
@@ -23,48 +25,38 @@
   justify-content: center;
 }
 
-#jobcardSection {
-  width: 87%;
+.rightsideJobListSection {
+  width: 80%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
-.jobCardsDisplay {
-  margin-top: 5rem;
-  width: 100%;
-  height: 100%;
+.displayCardsContainer {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
   gap: 2rem;
   justify-content: center;
 }
 
-@media (max-width: 1025px) {
+@media (max-width: 1044px) {
+  .jobListMain {
+    padding-right: 0rem;
+    padding-top: 5rem;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .sideNavSection {
     display: none;
   }
 
-  #jobcardSection {
-    width: auto;
-    height: auto;
-  }
-
-  .jobCardsDisplay {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  .rightsideJobListSection {
+    padding: 0;
     width: 100%;
     height: 100%;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-
-  .jobListMain {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: auto;
   }
 }

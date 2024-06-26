@@ -5,6 +5,7 @@
   height: 100%;
   width: 100%;
   padding: 2rem;
+  border-radius: 10px;
 }
 
 #ProfileSection {
@@ -69,6 +70,30 @@
   border-radius: 10px;
   border: 1px solid lightgrey;
   justify-content: space-around;
+}
+
+#profileContactinfo p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  font-size: 1.8rem;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.profilePhoneicon {
+  color: #5ce45a;
+}
+
+.profileMailicon {
+  color: #308ae4;
+}
+
+#profileContactinfo svg {
+  font-size: 2.5rem;
 }
 
 #profileBioArticle {

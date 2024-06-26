@@ -17,11 +17,6 @@
   justify-content: center;
 }
 
-.sidebar-link.active {
-  color: #222;
-  border-radius: 1rem;
-}
-
 .sidebar-list {
   list-style: none;
   font-size: 1.7rem;
@@ -56,12 +51,22 @@
 .sidebar-link {
   text-decoration: none;
   color: white;
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-link.active {
+  background-color: #5aa5f2 !important; /* Ensure it overrides */
+  color: #222 !important;
+  border-radius: 1rem !important;
 }
 
 .sidebar-link:hover {
   color: #222;
+  background-color: #5aa5f2;
+  border-radius: 1rem;
 }
 
 .coming-soon {
