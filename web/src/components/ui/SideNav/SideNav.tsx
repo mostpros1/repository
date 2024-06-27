@@ -47,19 +47,24 @@ const SideNav = () => {
       );
 
       if (!isFromDashboard) {
+        // Check if user is authenticated
         if (user?.signInUserSession?.accessToken?.payload) {
           const groups =
             user.signInUserSession.accessToken.payload["cognito:groups"];
           if (groups?.includes("Homeowner")) {
             setIsHomeowner(true);
+            setIsProfessional(false);
           } else if (groups?.includes("Professional")) {
             setIsProfessional(true);
+            setIsHomeowner(false);
           }
         } else {
-          console.log("User data is not fully available.");
+          // User is not logged in, redirect to login page
+          console.log("User is not logged in!");
           navigate(`/${lang}/login`);
         }
       } else {
+        // User is on a dashboard path
         const isHomeownerDashboard = location.pathname.includes(
           `/${lang}/homeowner-dashboard/`
         );
@@ -76,22 +81,23 @@ const SideNav = () => {
         }
       }
     };
-
+'?'
+    // Call the function when dependencies change
     checkUserRole();
   }, [
     user,
     location.pathname,
     lang,
-    navigate,
     setIsHomeowner,
     setIsProfessional,
+    navigate,
   ]);
 
-  const comingSoonTabs = [
-    { path: "revenues", label: "Inkomsten" },
-    { path: "occupancy-ahr", label: "Bezettingsgraad" },
-    { path: "screening", label: "Screening" },
-  ];
+  // const comingSoonTabs = [
+  //   { path: "revenues", label: "Inkomsten" },
+  //   { path: "occupancy-ahr", label: "Bezettingsgraad" },
+  //   { path: "screening", label: "Screening" },
+  // ];
 
   return (
     <div className="sidebar">
@@ -102,7 +108,7 @@ const SideNav = () => {
               <NavLink
                 to={`/${lang}/pro-dashboard`}
                 className={({ isActive }) =>
-                  isActive ? "sidebar-link active" : "sidebar-link"
+                  isActive ? "sidebar-link" : "sidebar-link"
                 }
               >
                 <DashboardIcon />
@@ -142,7 +148,7 @@ const SideNav = () => {
                 Berichten
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/reporting`}
                 className={({ isActive }) =>
@@ -152,7 +158,7 @@ const SideNav = () => {
                 <PaymentIcon />
                 Reporting
               </NavLink>
-            </li>
+            </li> */}
             <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/setup`}
@@ -197,7 +203,7 @@ const SideNav = () => {
                 Help
               </NavLink>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <NavLink
                 to={`/${lang}/pro-dashboard/promocode`}
                 className={({ isActive }) =>
@@ -207,8 +213,8 @@ const SideNav = () => {
                 <MdOutlinePointOfSale />
                 Promo codes
               </NavLink>
-            </li>
-            {comingSoonTabs.map((tab) => (
+            </li> */}
+            {/* {comingSoonTabs.map((tab) => (
               <li className="sidebar-item coming-soon" key={tab.path}>
                 <div className="sidebar-link">
                   <StarOutlineIcon />
@@ -216,7 +222,7 @@ const SideNav = () => {
                   <div className="coming-soon-tooltip">Binnenkort online</div>
                 </div>
               </li>
-            ))}
+            ))} */}
           </>
         ) : (
           <>

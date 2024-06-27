@@ -3,6 +3,7 @@ import './OverzichtProf.css';
 import { dynamo } from '../../../declarations';
 import { useNavigate } from 'react-router-dom';
 import { v5 as uuidv5 } from 'uuid'; // Import the v5 function from uuid library
+import { Auth } from 'aws-amplify';
 
 interface Vaksspecialist {
   id: number;
@@ -49,14 +50,42 @@ const OverzichtProf: React.FC = () => {
     return <div className="loading">Bezig met laden...</div>;
   }
 
-  const generateUUIDFromEmail = (email: string) => {
-    return uuidv5(email, NAMESPACE); // Generate consistent UUID from email
-  };
+  const handleStartChat = async (email: string) => {
+    const userInfo = await dynamo.query({
+      TableName: "Users",
+      IndexName: "username",
+      KeyConditionExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": email
+      }
+    }).promise();
 
-  const handleStartChat = (email: string) => {
-    const uuid = generateUUIDFromEmail(email);
-    const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
-    navigate(url);
+    if (userInfo.Items && userInfo.Items.length > 0) {
+      handleContactClick(userInfo.Items[0].id);
+    }
+
+  };
+  const handleContactClick = async (user_id) => {
+    try {
+      // Attempt to get the current authenticated user
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
+  
+      const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+  
+      if (groups?.includes("Professional")) {
+        window.location.href = `/nl/pro-dashboard/chat?id=${user_id}`;
+      } else if (groups?.includes("Homeowner")) {
+        window.location.href = `/nl/homewowner-dashboard/chat?id=${user_id}`;
+      } else {
+        alert("Je moet ingelogt zijn");
+        window.location.href = "/nl/login";
+      }
+    } catch (error) {
+      // Handle the error case where the user is not authenticated
+      console.error("Authentication error:", error);
+      alert("Je moet ingelogt zijn");
+      window.location.href = "/nl/login";
+    }
   };
 
   return (
@@ -69,7 +98,7 @@ const OverzichtProf: React.FC = () => {
               {specialist.fotoUrl ? (
                 <img src={specialist.fotoUrl} alt={specialist.naam} />
               ) : (
-                <div className="placeholder-foto">No Image</div>
+                <div className="placeholder-foto"> Geen Foto</div>
               )}
             </div>
             <div className="profiel-info">

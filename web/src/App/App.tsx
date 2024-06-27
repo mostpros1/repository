@@ -44,6 +44,7 @@ import ViewProfessionals from "../components/ViewProfessionals/ViewProfessionals
 import HomePageTwo from "../pages/HomePageTwo/HomePageTwo.tsx";
 import Setup from "../pages/SetupPage/SetupPage.tsx";
 import PromoCodePage from "../components/PromoCode/PromoCode.tsx";
+import ProfilePage from "../pages/ProfilePage/profilepage.tsx";
 
 /* Extra Pages */
 import FAQPage from "../pages/FAQPage/FAQPage.tsx";
@@ -122,9 +123,6 @@ import ErrorPage507 from "../pages/!ErrorPages/ErrorPage507.tsx";
 import ErrorPage508 from "../pages/!ErrorPages/ErrorPage508.tsx";
 import ErrorPage510 from "../pages/!ErrorPages/ErrorPage510.tsx";
 import ErrorPage511 from "../pages/!ErrorPages/ErrorPage511.tsx";
-
-
-
 
 import { useTranslation } from "react-i18next";
 import HomeOwnerProfielPage from "../pages/HomeOwnerDashboardPage/HomeOwnerProfielPage.tsx";
@@ -206,8 +204,6 @@ const LanguageAwareRoutes = () => {
       <Route path="/508" element={<ErrorPage508 />} />
       <Route path="/510" element={<ErrorPage510 />} />
       <Route path="/511" element={<ErrorPage511 />} />
-
-
       <Route path="/test" element={<DateAndTimePicker />} />
       <Route path="/" element={<HomePageTwo />} />
       <Route path="/offers" element={<OfferTemplate />} />
@@ -239,23 +235,28 @@ const LanguageAwareRoutes = () => {
       />
       /* Pro dashboard links */
       <Route path="/pro-dashboard" element={<ResultsPage />} />
-      <Route path="/pro-dashboard/profile" element={<HomeOwnerProfielPage />} />
-      <Route path="/pro-dashboard/help" element={<FAQPage  />} />
+      <Route path="/pro-dashboard/profile" element={<ProfilePage />} />
+      <Route path="/pro-dashboard/help" element={<FAQPage />} />
       {/* <Route path="/pro-dashboard/profile" element={<SpecialistProfile />} /> */}
       <Route path="/algemene-voorwaarden" element={<TermsAndConditions />} />
       <Route path="/quality" element={<QualityPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/DetailJob" element={<DetailJobPage />} />
-      <Route path="/pro-dashboard/setup" element={<Setup />} /> 
+      <Route path="/pro-dashboard/setup" element={<Setup />} />
       <Route path="/pro-dashboard/promocode" element={<PromoCodePage />} />
       <Route path="/pro-dashboard/calender" element={<Calender />} />
       <Route path="/pro-dashboard/jobs" element={<Jobspage />} />
-      <Route path="/pro-dashboard/reporting" element={<HomeProPaymentsPage />}/>
+      <Route
+        path="/pro-dashboard/reporting"
+        element={<HomeProPaymentsPage />}
+      />
       <Route path="/pro-dashboard/chat" element={<ChatMain />} />
-      <Route path="/pro-dashboard/settings" element={<HomeOwnerSettingsPage />}/>
+      <Route
+        path="/pro-dashboard/settings"
+        element={<HomeOwnerSettingsPage />}
+      />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
-
       {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />

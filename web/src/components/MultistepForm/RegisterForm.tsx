@@ -20,8 +20,6 @@ type RegisterFormProps = RegisterData & {
   error: string;
 };
 
-
-
 export function RegisterForm({
   email,
   firstName,
@@ -44,7 +42,7 @@ export function RegisterForm({
 
     setValidFirstName(isValidFirstName);
 
-    if (isValidFirstName || inputValueFirstName === '') {
+    if (isValidFirstName || inputValueFirstName === "") {
       updateFields({ firstName: inputValueFirstName });
     }
   };
@@ -58,11 +56,11 @@ export function RegisterForm({
 
     setValidLastName(isValidLastName);
 
-    if (isValidLastName || inputValueLastName === '') {
+    if (isValidLastName || inputValueLastName === "") {
       updateFields({ lastName: inputValueLastName });
     }
   };
-  
+
   return (
     <>
       <div className="register-container">
@@ -116,6 +114,8 @@ export function RegisterForm({
               maxlength="14"
               defaultCountry="NL"
               placeholder="+31658349021"
+              international
+              countryCallingCodeEditable={false}
               value={phoneNumber}
               onChange={(value) => {
                 console.log("Telefoonnummer gewijzigd:", value);
@@ -157,5 +157,4 @@ export function RegisterForm({
       </div>
     </>
   );
-
 }

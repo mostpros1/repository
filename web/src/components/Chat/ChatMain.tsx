@@ -213,24 +213,49 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   }, [chats, selectedContact, user.attributes.email]);
 
   useEffect(() => {
-    async function fetchChats() {
+    async function fetchChats(nextToken?: string) {
       setIsLoading(true);
       try {
-        const allChats: any = await API.graphql({
-          query: queries.listChats,
-          variables: {
-            filter: {
-              members: { contains: user.attributes.email },
-            },
+        const variables = {
+          filter: {
+            members: { contains: user.attributes.email },
           },
-        });
-        console.log("CHATS: ", allChats.data.listChats.items);
-        setChats(allChats.data.listChats.items);
+          limit: 100, // Adjust the limit as needed, but be mindful of the 1MB limit
+        };
+
+        if (nextToken) {
+          (variables as any).nextToken = nextToken;
+        }
+
+        try {
+          // Assuming API.graphql returns a Promise that resolves to an object with a `data` property
+          const result = await API.graphql({
+            query: queries.listChats,
+            variables,
+          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } }}>;
+
+          // Now you can access `data` from the resolved `result`
+          const resolvedResult = await result;
+          console.log("CHATS: ", resolvedResult.data.listChats.items);
+          setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
+
+          // And check for `nextToken` in the resolved `result`
+          if (resolvedResult.data.listChats.nextToken) {
+            // If there's a nextToken, there are more items to fetch
+            await fetchChats(resolvedResult.data.listChats.nextToken);
+          }
+        } catch (error) {
+          console.error("Error fetching chats:", error);
+        } finally {
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching chats:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
+
     fetchChats();
   }, [user.attributes.email]);
 
@@ -321,7 +346,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       // Directly use the return value
 
     } else {
-      console.error('No email found in search bar');
+      console.error('No id found in search bar');
       // Handle case where email is not present in the search bar
     }
   };
@@ -934,12 +959,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 </h2>
               </div>
             </div>
-            <div className="search-container" style={{ position: "relative" }}>
-              {!showSearch && (
-                <button onClick={handleSearchClick} className="search-icon">
-                  <CiSearch className="search-header" size={25} color="blue" />
-                </button>
-              )}
+            <div className="search-container">
               <input
                 type="text"
                 placeholder="Zoek berichten..."
@@ -947,6 +967,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 onChange={(e) => setMessageSearchTerm(e.target.value)}
                 className={`search-input-header ${showSearch ? "show" : ""}`}
               />
+              {!showSearch && (
+                <button onClick={handleSearchClick} className="search-icon">
+                  <CiSearch className="search-header" size={25} color="blue" />
+                </button>
+              )}
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
                   <MdOutlineCancel className="search-header" size={25} color="blue" />
@@ -1105,9 +1130,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 <div className="dropup-content show">
                   <button
                     className="dropup-option"
-                    onClick={() => inputRef.current?.click()}
+                    onClick={handleSendLocation}
                   >
-                    <MdDriveFileMove size={25} color="blue" />
+                    Locatie
                   </button>
                   <input
                     type="file"
@@ -1119,13 +1144,13 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                     className="dropup-option"
                     onClick={() => setShowPaymentModal(true)}
                   >
-                    <BsCreditCard size={25} color="blue" />
+                    Betalen
                   </button>
                   <button
                     className="dropup-option"
-                    onClick={handleSendLocation}
+                    onClick={() => inputRef.current?.click()}
                   >
-                    <FaLocationCrosshairs size={25} color="blue" />
+                    Deel Bestand
                   </button>
                 </div>
               )}

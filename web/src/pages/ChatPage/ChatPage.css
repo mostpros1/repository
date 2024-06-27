@@ -27,10 +27,10 @@
 
 .rightsideChatSection {
   width: 80%;
-  height: 100vh;
+  height: 100%;
 }
 
-@media (max-width: 1044px) {
+@media (max-width: 1025px) {
   .sidenavChatSection {
     display: none;
     /*<- Dit zorgt ervoor dat de sidenav verdwijnt zodra het beeldscherm onder de 1044px komt*/
