@@ -222,22 +222,32 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           },
           limit: 100, // Adjust the limit as needed, but be mindful of the 1MB limit
         };
-  
+
         if (nextToken) {
-          variables.nextToken = nextToken;
+          (variables as any).nextToken = nextToken;
         }
-  
-        const { data } = await API.graphql({
-          query: queries.listChats,
-          variables,
-        });
-  
-        console.log("CHATS: ", data.listChats.items);
-        setChats((prevChats) => [...prevChats,...data.listChats.items]);
-  
-        if (data.listChats.nextToken) {
-          // If there's a nextToken, there are more items to fetch
-          await fetchChats(data.listChats.nextToken);
+
+        try {
+          // Assuming API.graphql returns a Promise that resolves to an object with a `data` property
+          const result = await API.graphql({
+            query: queries.listChats,
+            variables,
+          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } }}>;
+
+          // Now you can access `data` from the resolved `result`
+          const resolvedResult = await result;
+          console.log("CHATS: ", resolvedResult.data.listChats.items);
+          setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
+
+          // And check for `nextToken` in the resolved `result`
+          if (resolvedResult.data.listChats.nextToken) {
+            // If there's a nextToken, there are more items to fetch
+            await fetchChats(resolvedResult.data.listChats.nextToken);
+          }
+        } catch (error) {
+          console.error("Error fetching chats:", error);
+        } finally {
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching chats:", error);
@@ -245,7 +255,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         setIsLoading(false);
       }
     }
-  
+
     fetchChats();
   }, [user.attributes.email]);
 
@@ -950,7 +960,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               </div>
             </div>
             <div className="search-container">
-            <input
+              <input
                 type="text"
                 placeholder="Zoek berichten..."
                 value={messageSearchTerm}
@@ -1118,31 +1128,31 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               />
               {isDropUpOpen && (
                 <div className="dropup-content show">
-                <button
-                  className="dropup-option"
-                  onClick={handleSendLocation}
-                >
-                  Locatie
-                </button>
-                <input
-                  type="file"
-                  ref={inputRef}
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-                <button
-                  className="dropup-option"
-                  onClick={() => setShowPaymentModal(true)}
-                >
-                  Betalen
-                </button>
-                <button
-                  className="dropup-option"
-                  onClick={() => inputRef.current?.click()}
-                >
-                  Deel Bestand
-                </button>
-              </div>
+                  <button
+                    className="dropup-option"
+                    onClick={handleSendLocation}
+                  >
+                    Locatie
+                  </button>
+                  <input
+                    type="file"
+                    ref={inputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <button
+                    className="dropup-option"
+                    onClick={() => setShowPaymentModal(true)}
+                  >
+                    Betalen
+                  </button>
+                  <button
+                    className="dropup-option"
+                    onClick={() => inputRef.current?.click()}
+                  >
+                    Deel Bestand
+                  </button>
+                </div>
               )}
             </div>
             <div className="chat-enter" onClick={handleSendMessageClick}>
