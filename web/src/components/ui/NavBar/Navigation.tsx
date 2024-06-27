@@ -68,7 +68,7 @@ function Navigation() {
           navigate(`/${taal}/login`);
         }
       }
-    }, 5000); // Delay of 5 seconds
+    }, 10000); // Delay of 5 seconds
   }, [user]);
 
   const checkAuthStatus = async () => {

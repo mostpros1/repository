@@ -3,6 +3,8 @@ import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../../graphql/mutations";
 import * as queries from "../../graphql/queries";
 import * as subscriptions from "../../graphql/subscriptions";
+import { dynamo } from "../../../declarations";
+import { v4 as uuidv4 } from 'uuid';
 
 export function useChatBackend(user: any, signOut) {
   const [chats, setChats] = React.useState<any[]>([]);
@@ -46,6 +48,7 @@ export function useChatBackend(user: any, signOut) {
 
     console.log("Sending message:", text, "to members:", members);
 
+    
     try {
       await API.graphql(graphqlOperation(mutations.createChat, {
         input: {
@@ -60,6 +63,30 @@ export function useChatBackend(user: any, signOut) {
     } catch (error) {
       console.error("Error sending message:", error);
     }
+    
+/*
+    try {
+      const params = {
+        TableName: 'Chat-ntkujizqujhnhewe6rjvu7n4om-acceptance', // Replace with your actual table name
+        Item: {
+          id: uuidv4(),
+          text,
+          email: user.attributes.email,
+          members,
+          sortKey: sortedMembers.join("#"),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          __typename: "Chat"
+          // Include any other attributes you need to store
+        },
+      };
+    
+      await dynamo.put(params).promise();
+      console.log("Message sent successfully");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+      */
   };
 
 
