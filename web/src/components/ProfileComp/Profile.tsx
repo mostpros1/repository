@@ -37,6 +37,9 @@ const Profile = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editableData, setEditableData] = useState<EditableDataType>({});
+  const [isProfessional, setIsProfessional] = useState(false);
+  const [isHomeowner, setIsHomeowner] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -105,6 +108,7 @@ const Profile = () => {
             workregion,
             profession,
           });
+
           setEditableData({
             name,
             phone,
@@ -114,6 +118,10 @@ const Profile = () => {
             workregion,
             profession,
           });
+
+          // Ensure the state update functions always receive a boolean
+          setIsProfessional(output.Items && output.Items.length > 0 ? true : false);
+          setIsHomeowner(output.Items && output.Items.length > 0 ? false : true);
         } else {
           console.log("No matching items found");
         }
@@ -215,9 +223,18 @@ const Profile = () => {
           <div id="profileLeftContainer">
             <img src={profileData.avatar} alt="profile" />
             <div className="profileInfo">
-              <h1>Hoofdberoep: {profileData.profession}</h1>
-              <p>Naam: {profileData.name}</p>
-              <p>Werk Regio: {profileData.workregion} </p>
+              {isProfessional && (
+                <>
+                  <h1>Hoofdberoep: {profileData.profession}</h1>
+                  <p>Naam: {profileData.name}</p>
+                  <p>Werk Regio: {profileData.workregion} </p>
+                </>
+              )}
+              {isHomeowner && (
+                <>
+                  <p>Naam: {profileData.name}</p>
+                </>
+              )}
             </div>
           </div>
           <div id="profileRightContainer">
@@ -232,15 +249,17 @@ const Profile = () => {
                 {profileData.email}
               </p>
             </div>
-            <div className="profileAvailabilityDiv">
-              <button
-                className="profileAvailability"
-                onClick={handleAvailabilityClick}
-              >
-                <CalendarMonthIcon />
-                Beschikbaarheid doorgeven
-              </button>
-            </div>
+            {isProfessional && (
+              <div className="profileAvailabilityDiv">
+                <button
+                  className="profileAvailability"
+                  onClick={handleAvailabilityClick}
+                >
+                  <CalendarMonthIcon />
+                  Beschikbaarheid doorgeven
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div id="profileBioArticle">
@@ -286,32 +305,36 @@ const Profile = () => {
               onChange={handleInputChange}
             />
           </label>
-          <label>
-            Profession:
-            <input
-              type="text"
-              name="profession"
-              value={editableData?.profession}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Work Region:
-            <input
-              type="text"
-              name="workregion"
-              value={editableData?.workregion}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Bio:
-            <textarea
-              name="bio"
-              value={editableData?.bio}
-              onChange={handleInputChange}
-            ></textarea>
-          </label>
+          {isProfessional && (
+            <>
+              <label>
+                Profession:
+                <input
+                  type="text"
+                  name="profession"
+                  value={editableData?.profession}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Work Region:
+                <input
+                  type="text"
+                  name="workregion"
+                  value={editableData?.workregion}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Bio:
+                <textarea
+                  name="bio"
+                  value={editableData?.bio}
+                  onChange={handleInputChange}
+                ></textarea>
+              </label>
+            </>
+          )}
           <button onClick={handleSaveChanges}>Save Changes</button>
         </div>
       </Modal>
