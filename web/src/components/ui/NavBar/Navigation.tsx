@@ -63,10 +63,11 @@ function Navigation() {
             setIsProfessional(true);
             setIsHomeowner(false);
           }
-        } else {
-          console.log("User data is not fully available.");
-          navigate(`/${taal}/login`);
-        }
+        } 
+        // else {
+        //   console.log("User data is not fully available.");
+        //   navigate(`/${taal}/login`);
+        // }
       }
     }, 10000); // Delay of 5 seconds
   }, [user]);

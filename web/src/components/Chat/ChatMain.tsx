@@ -213,24 +213,39 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   }, [chats, selectedContact, user.attributes.email]);
 
   useEffect(() => {
-    async function fetchChats() {
+    async function fetchChats(nextToken?: string) {
       setIsLoading(true);
       try {
-        const allChats: any = await API.graphql({
-          query: queries.listChats,
-          variables: {
-            filter: {
-              members: { contains: user.attributes.email },
-            },
+        const variables = {
+          filter: {
+            members: { contains: user.attributes.email },
           },
+          limit: 100, // Adjust the limit as needed, but be mindful of the 1MB limit
+        };
+  
+        if (nextToken) {
+          variables.nextToken = nextToken;
+        }
+  
+        const { data } = await API.graphql({
+          query: queries.listChats,
+          variables,
         });
-        console.log("CHATS: ", allChats.data.listChats.items);
-        setChats(allChats.data.listChats.items);
+  
+        console.log("CHATS: ", data.listChats.items);
+        setChats((prevChats) => [...prevChats,...data.listChats.items]);
+  
+        if (data.listChats.nextToken) {
+          // If there's a nextToken, there are more items to fetch
+          await fetchChats(data.listChats.nextToken);
+        }
       } catch (error) {
         console.error("Error fetching chats:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
+  
     fetchChats();
   }, [user.attributes.email]);
 
@@ -321,7 +336,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       // Directly use the return value
 
     } else {
-      console.error('No email found in search bar');
+      console.error('No id found in search bar');
       // Handle case where email is not present in the search bar
     }
   };
