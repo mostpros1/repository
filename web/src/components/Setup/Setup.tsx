@@ -40,6 +40,9 @@ const SetupPage = () => { // Removed async here
   useEffect(() => {
     async function fetchProfilePhoto() {
       try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userData = user.attributes;
+        
         const output = await dynamo.query({
           TableName: 'Users',
           IndexName: 'username',
@@ -58,7 +61,7 @@ const SetupPage = () => { // Removed async here
         }
 
       } catch (error) {
-        console.error("Error fetching bio:", error);
+        console.error("Error fetching user info:", error);
       }
     }
 
@@ -78,7 +81,7 @@ const SetupPage = () => { // Removed async here
             IndexName: 'emailIndex',
             KeyConditionExpression: 'email = :email',
             ExpressionAttributeValues: {
-              ':email': userData.email,
+              ':email': authenticatedUser.attributes.email,
             },
           }).promise();
   
