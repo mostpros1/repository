@@ -110,7 +110,7 @@ const SetupPage = () => { // Removed async here
 
   const tasks = [
     { id: 1, description: 'Maak een Stripe-account aan', completed: !!userData['custom:stripeAccountId'] },
-    { id: 2, description: 'Voeg een profielfoto toe', completed: profilePhoto },
+    //{ id: 2, description: 'Voeg een profielfoto toe', completed: profilePhoto },
     { id: 3, description: 'Verifieer je e-mailadres', completed: userData.email_verified },
     { id: 4, description: 'Voltooi je profielinformatie', completed: bio },
   ];
