@@ -35,14 +35,14 @@ const SetupPage = () => { // Removed async here
     fetchUserData();
   }, []);
 
-  console.log(userData);
+ 
 
   useEffect(() => {
     async function fetchProfilePhoto() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userData = user.attributes;
-        
+
         const output = await dynamo.query({
           TableName: 'Users',
           IndexName: 'username',
