@@ -518,6 +518,9 @@ const Cal = () => {
         window.alert("Datums zijn toegevoegt.");
     }
 
+
+    //meerdere dagen verwijderen
+    /*
     const DeleteMultipleDays = async (startDate: Date, pattern: 'weekday' | 'weekend' | 'daily') => {
         // Convert startDate.value to a Date object
 
@@ -606,6 +609,7 @@ const Cal = () => {
                 console.error("Failed to delete days:", error);
             });
     };
+    */
 
     const addAvailability = async (dates) => {
         const availabilityArray = Array.isArray(availability) ? availability : [availability];
@@ -748,7 +752,7 @@ const Cal = () => {
                 <button className='submitButtonStyling' type="submit">Voeg Dagen Toe</button>
             </form>
 
-            <form className="availability-form" onSubmit={(e) => {
+            {/* <form className="availability-form" onSubmit={(e) => {
                 e.preventDefault();
                 const date = new Date((e.target as any).elements.startdate.value);
                 const pattern = (e.target as any).elements.pattern.value;
@@ -771,7 +775,7 @@ const Cal = () => {
                     <br />
                     <button className='submitButtonStyling' type="submit">Verwijder Dagen</button>
                 </div>
-            </form>
+            </form> */}
         </div>
     );
 

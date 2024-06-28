@@ -1,11 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Setup.css';
+import { Auth } from 'aws-amplify';
 
-const SetupPage = () => {
+const SetupPage = () => { // Removed async here
+
+  // Step 1: Define a type for user data attributes
+  type UserDataAttributes = {
+    email_verified?: boolean; // Marking as optional if not all users will have this attribute
+    // Add other attributes as needed
+  };
+
+  // Step 2: Use the defined type when initializing useState
+  const [userData, setUserData] = useState<UserDataAttributes>({});
+  const [stripeAccount, setStripeAccount] = useState(false);
+
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userData = user.attributes;
+        setUserData(userData);
+
+        // Check if email is verified
+
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
+  console.log(userData);
+
+
   const tasks = [
-    { id: 1, description: 'Maak een Stripe-account aan', completed: false },
+    { id: 1, description: 'Maak een Stripe-account aan', completed: !!userData['custom:stripeAccountId'] },
     { id: 2, description: 'Voeg een profielfoto toe', completed: false },
-    { id: 3, description: 'Verifieer je e-mailadres', completed: true },
+    { id: 3, description: 'Verifieer je e-mailadres', completed: userData.email_verified },
     { id: 4, description: 'Voltooi je profielinformatie', completed: false },
   ];
 
@@ -19,6 +52,7 @@ const SetupPage = () => {
           </li>
         ))}
       </ul>
+      {/* Render user data here */}
     </div>
   );
 };

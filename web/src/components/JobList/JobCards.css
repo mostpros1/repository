@@ -1,166 +1,167 @@
 /* Overall container styling */
 .job-item {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-    padding: 20px;
-    background-color: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .job-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* User detail styling */
 .user-detail {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .user-detail h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-    color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
 }
 
 .user-detail p {
-    font-size: 16px;
-    margin: 0;
-    color: #666;
-    display: flex;
-    align-items: center;
+  font-size: 16px;
+  margin: 0;
+  color: #666;
+  display: flex;
+  align-items: center;
 }
 
 .user-detail p svg {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 /* Job information styling */
 .job-info {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .job-info h2 {
-    font-size: 22px;
-    font-weight: 500;
-    margin: 10px 0;
-    color: black;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 10px 0;
+  color: black;
 }
 
 .job-info p {
-    font-size: 16px;
-    margin: 0;
-    color: #555;
+  font-size: 16px;
+  margin: 0;
+  color: #555;
 }
 
 /* Additional job info styling */
 .jobInfo-extra-con {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .jobInfo-extra {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 16px;
-    color: #777;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #777;
 }
 
 .jobInfo-extra svg {
-    color: #308AE4;
+  color: #308ae4;
 }
 
 /* Button styling */
 .main_btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #308AE4;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #308ae4;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .main_btn:hover {
-    background-color: #2671c3;
-    transform: translateY(-2px);
+  background-color: #2671c3;
+  transform: translateY(-2px);
 }
 
 /* No jobs message styling */
 .no-jobs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    font-size: 18px;
-    color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #555;
+  margin-top: 20rem;
 }
 
 /* Dropdown styling */
 select {
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #333;
-    cursor: pointer;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
 }
 
 /* Media query for responsiveness */
 @media screen and (max-width: 768px) {
-    .user-detail {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .user-detail {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .user-detail h2 {
-        font-size: 20px;
-    }
+  .user-detail h2 {
+    font-size: 20px;
+  }
 
-    .user-detail p {
-        font-size: 14px;
-    }
+  .user-detail p {
+    font-size: 14px;
+  }
 
-    .job-info {
-        align-items: flex-start;
-    }
+  .job-info {
+    align-items: flex-start;
+  }
 
-    .job-info h2 {
-        font-size: 20px;
-    }
+  .job-info h2 {
+    font-size: 20px;
+  }
 
-    .job-info p {
-        font-size: 14px;
-    }
+  .job-info p {
+    font-size: 14px;
+  }
 
-    .jobInfo-extra-con {
-        flex-direction: column;
-        gap: 10px;
-        font-size: 14px;
-    }
+  .jobInfo-extra-con {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+  }
 
-    .main_btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
+  .main_btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 
-    select {
-        padding: 6px 10px;
-        font-size: 14px;
-    }
+  select {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
 }

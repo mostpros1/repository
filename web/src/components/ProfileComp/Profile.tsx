@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./profile.css";
 import { dynamo } from "../../../declarations";
-import Pfp from "../../assets/placeholder_avatar.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Auth } from "aws-amplify";
 import Modal from "./profileModal.tsx";
 import { stopXSS } from "../../../../backend_functions/stopXSS.ts";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import Pfp from "../../assets/placeholder_avatar.png";
+import "./profile.css";
 
 interface EditableDataType {
   name?: string;
@@ -34,7 +38,7 @@ const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editableData, setEditableData] = useState<EditableDataType>({});
 
-  const navigate = useNavigate(); // useNavigate hook for redirection
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -139,10 +143,17 @@ const Profile = () => {
     }));
   };
 
+  const handlePhoneChange = (value: string) => {
+    setEditableData((prevData) => ({
+      ...prevData,
+      phone: value,
+    }));
+  };
+
   const handleSaveChanges = async () => {
     try {
       console.log(profileData.userId);
-
+      alert("Profile data saved successfully!");
       const params = {
         TableName: "Users",
         Key: { id: profileData.userId },
@@ -160,12 +171,12 @@ const Profile = () => {
       const profParams = {
         TableName: "Professionals",
         Key: { id: profileData.professionalID },
-        UpdateExpression: "set profession = :profession, bio = :bio, work_region = :region",
+        UpdateExpression:
+          "set profession = :profession, bio = :bio, work_region = :region",
         ExpressionAttributeValues: {
           ":profession": editableData?.profession,
           ":bio": editableData?.bio,
-          ":region": editableData?.workregion
-
+          ":region": editableData?.workregion,
         },
       };
 
@@ -194,7 +205,7 @@ const Profile = () => {
   };
 
   const handleAvailabilityClick = () => {
-    navigate("/pro-dashboard/calender"); // Redirect to the desired route
+    navigate("/pro-dashboard/calender");
   };
 
   return (
@@ -212,8 +223,14 @@ const Profile = () => {
           <div id="profileRightContainer">
             <div id="profileContactinfo">
               <h1>Contact Information</h1>
-              <p>Telefoonnummer: {profileData.phone}</p>
-              <p>Email: {profileData.email}</p>
+              <p>
+                <PhoneIcon className="profilePhoneicon" />
+                {profileData.phone}
+              </p>
+              <p>
+                <EmailIcon className="profileMailicon" />
+                {profileData.email}
+              </p>
             </div>
             <div className="profileAvailabilityDiv">
               <button
@@ -251,11 +268,13 @@ const Profile = () => {
           </label>
           <label>
             Phone:
-            <input
-              type="text"
-              name="phone"
+            <PhoneInput
               value={editableData?.phone}
-              onChange={handleInputChange}
+              onChange={handlePhoneChange}
+              defaultCountry="NL"
+              placeholder="+31658349021"
+              international
+              countryCallingCodeEditable={false}
             />
           </label>
           <label>
