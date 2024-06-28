@@ -203,7 +203,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           chat.members.includes(user.attributes.email)
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
-      console.log("Filtered chats for selected contact:", filteredChats);
       setGroupedMessages(groupedMessages);
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
@@ -236,7 +235,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
           // Now you can access `data` from the resolved `result`
           const resolvedResult = await result;
-          console.log("CHATS: ", resolvedResult.data.listChats.items);
+          
           setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
 
           // And check for `nextToken` in the resolved `result`
@@ -321,7 +320,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   // Function to grab the email from the search bar and run switch chat
   const switchChatUsingEmailFromSearchBar = () => {
     const id = getidFromSearchBar();
-    console.log("id: ", id);
     if (id) {
 
       dynamo.query({
@@ -332,7 +330,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         }
       }).promise().then((data) => {
         if (data.Items && data.Items.length > 0) {
-          console.log(data.Items[0].email);
           const uuid = getUUIDFromEmail(data.Items[0].email);
           if (uuid) {
             handleStartNewChatWithEmail(data.Items[0].email)
@@ -705,7 +702,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const handleNewChatConfirm = async () => {
-    console.log("Starting new chat with email:", newChatEmail);
     await handleStartNewChatWithEmail(newChatEmail);
     setShowNewChatModal(false);
     const uuid = getUUIDFromEmail(newChatEmail);
@@ -831,7 +827,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
 
-  console.log("searchTerm: ", searchTerm);
+  
   return (
     <div
       className={`chat-container ${theme}`}
