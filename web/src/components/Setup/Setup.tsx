@@ -15,6 +15,7 @@ const SetupPage = () => { // Removed async here
   // Step 2: Use the defined type when initializing useState
   const [userData, setUserData] = useState<UserDataAttributes>({});
   const [profilePhoto, setProfilePhoto] = useState(false);
+  const [bio, setBio] = useState(false);
 
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const SetupPage = () => { // Removed async here
           if (user.profielfoto !== undefined && user.profielfoto !== null) {
             setProfilePhoto(!!user.profilePhoto);
           }
+          
         }
 
       } catch (error) {
@@ -60,7 +62,46 @@ const SetupPage = () => { // Removed async here
       }
     }
 
+    async function grabBio() {
+      try {
+
+        const authenticatedUser = await Auth.currentAuthenticatedUser();
+        const groups = authenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+
+        if (groups && groups.includes("Homeowner")) {
+          
+          setBio(true); // change when homeowner bio is implemented
+        
+        } else if (groups && groups.includes("Professional")) {
+          const output = await dynamo.query({
+            TableName: 'Professionals',
+            IndexName: 'emailIndex',
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+              ':email': userData.email,
+            },
+          }).promise();
+  
+          
+          if (output && output.Items && output.Items.length > 0) {
+            const user = output.Items[0];
+            if (user.bio !== undefined && user.bio !== null) {
+              
+              setBio(!!user.bio);
+            }
+            
+          }
+        }
+        
+
+      } catch (error) {
+        console.error("Error fetching bio:", error);
+      }
+    }
+
+
     fetchProfilePhoto();
+    grabBio();
   }, []);
 
 
@@ -68,7 +109,7 @@ const SetupPage = () => { // Removed async here
     { id: 1, description: 'Maak een Stripe-account aan', completed: !!userData['custom:stripeAccountId'] },
     { id: 2, description: 'Voeg een profielfoto toe', completed: profilePhoto },
     { id: 3, description: 'Verifieer je e-mailadres', completed: userData.email_verified },
-    { id: 4, description: 'Voltooi je profielinformatie', completed: false },
+    { id: 4, description: 'Voltooi je profielinformatie', completed: bio },
   ];
 
   return (
