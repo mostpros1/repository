@@ -231,11 +231,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           const result = await API.graphql({
             query: queries.listChats,
             variables,
-          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } }}>;
+          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } } }>;
 
           // Now you can access `data` from the resolved `result`
           const resolvedResult = await result;
-          
+
           setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
 
           // And check for `nextToken` in the resolved `result`
@@ -317,8 +317,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return urlParams.get('id');
   };
 
-  // Function to grab the email from the search bar and run switch chat
-  const switchChatUsingEmailFromSearchBar = () => {
+
+
+  useEffect(() => {
+    // Function to grab the email from the search bar and run switch chat
+
     const id = getidFromSearchBar();
     if (id) {
 
@@ -346,12 +349,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       console.error('No id found in search bar');
       // Handle case where email is not present in the search bar
     }
-  };
+  }, []);
 
-useEffect(() => {
-  switchChatUsingEmailFromSearchBar();
-}, []);
-  
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -829,7 +828,7 @@ useEffect(() => {
   };
 
 
-  
+
   return (
     <div
       className={`chat-container ${theme}`}
