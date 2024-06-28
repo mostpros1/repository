@@ -348,8 +348,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-
+useEffect(() => {
   switchChatUsingEmailFromSearchBar();
+}, []);
+  
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
