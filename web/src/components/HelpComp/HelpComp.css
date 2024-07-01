@@ -6,9 +6,14 @@
   justify-content: center;
   gap: 2.1rem;
   flex-wrap: wrap-reverse;
-  margin-bottom: 7rem;
+  margin-bottom: 10rem;
 }
 
 .FAQTopSectionP{
   font-size: 2rem;
+}
+
+.faq_answers--main{
+  padding-left: 20px;
+  padding-right: 20px;
 }

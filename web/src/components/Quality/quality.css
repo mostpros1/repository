@@ -1,45 +1,65 @@
 #quality-topSection {
   display: flex;
-  flex-direction: row;
-  max-width: 100rem;
+  max-width: 120rem;
+  align-items: center;
+  gap: 38rem;
   margin: auto;
+  color: black;
 }
 
 #quality-img {
-  width: 60%;
-  height: 60%;
+  max-height: 40rem;
 }
 
 #quality-leftSection {
   font-size: 1.8rem;
-  width: 100%;
+  max-width: 120rem;
   max-width: 70rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 }
 
 #quality-reqboxtop h3 {
-  padding-bottom: 3rem;
+  font-size: 2rem;
+
+}
+
+
+#quality-reqboxtop p {
+  font-size: 1.2rem;
+  max-width: 41rem;
 }
 
 #quality-reqboxtop {
   display: flex;
   flex-direction: column;
-  margin-top: 4rem;
+  gap: 0.7rem;
   color: black;
 }
 
 #quality-reqboxbottom {
   display: flex;
   flex-direction: column;
-  margin-top: 4rem;
-  padding: 5rem;
   border-radius: 10px;
   color: black;
   background-color: #b5dcff;
+  max-width: 47.9rem;
+  height: 15.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 #quality-reqboxbottom h3 {
   text-align: center;
-  padding-bottom: 3rem;
+  font-size: 1.5rem;
+}
+
+#quality-reqboxbottom p {
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 #quality-bottomSection {
@@ -147,6 +167,7 @@
   #quality-topSection {
     flex-direction: column;
     height: auto;
+    gap: 2rem;
   }
 
   #quality-img {
