@@ -49,24 +49,27 @@ function Navigation() {
   }, []);
 
   useEffect(() => {
-    const currentURL = window.location.href;
-
-    if (currentURL.includes("dashboard")) {
-      if (user?.signInUserSession?.accessToken?.payload) {
-        const groups =
-          user.signInUserSession.accessToken.payload["cognito:groups"];
-        if (groups?.includes("Homeowner")) {
-          setIsHomeowner(true);
-          setIsProfessional(false);
-        } else if (groups?.includes("Professional")) {
-          setIsProfessional(true);
-          setIsHomeowner(false);
-        }
-      } else {
-        console.log("User data is not fully available.");
-        navigate(`/${taal}/login`);
+    setTimeout(() => {
+      const currentURL = window.location.href;
+  
+      if (currentURL.includes("dashboard")) {
+        if (user?.signInUserSession?.accessToken?.payload) {
+          const groups =
+            user.signInUserSession.accessToken.payload["cognito:groups"];
+          if (groups?.includes("Homeowner")) {
+            setIsHomeowner(true);
+            setIsProfessional(false);
+          } else if (groups?.includes("Professional")) {
+            setIsProfessional(true);
+            setIsHomeowner(false);
+          }
+        } 
+        // else {
+        //   console.log("User data is not fully available.");
+        //   navigate(`/${taal}/login`);
+        // }
       }
-    }
+    }, 10000); // Delay of 5 seconds
   }, [user]);
 
   const checkAuthStatus = async () => {
