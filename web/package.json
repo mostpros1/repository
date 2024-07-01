@@ -47,6 +47,7 @@
     "react-native": "^0.73.6",
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
+    "react-social-media-embed": "^2.5.13",
     "redux": "^5.0.0",
     "stripe": "^14.21.0",
     "styled-components": "^6.1.9",
