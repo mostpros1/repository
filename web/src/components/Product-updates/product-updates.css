@@ -8,16 +8,46 @@
   margin-top: 2rem;
 }
 
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+  gap: 1rem;
+}
+
+#slideBtn {
+  padding: 0.5rem;
+  font-size: 2rem;
+  background-color: white;
+  border: 2px solid #308ae4;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#slideBtn:hover {
+  background-color: #308ae4;
+  color: white;
+}
+
 .embed-container {
   display: flex;
-  width: 100vw;
-  height: 100%; /* Adjusted for better fit */
+  width: 100%;
+  height: 80%; /* Adjusted for better fit */
   gap: 2rem;
   justify-content: center; /* Center the slides */
   align-items: stretch;
+  overflow: hidden; /* Ensure slides are contained within the container */
+  position: relative;
 }
 
-/* Hide all slides except the current one */
-.embed-container > div:not(:first-child) {
-  display: none;
+.slide {
+  opacity: 0;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.slide.visible {
+  opacity: 1;
+  position: static;
 }

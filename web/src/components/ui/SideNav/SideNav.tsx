@@ -16,6 +16,9 @@ import { MdOutlinePointOfSale } from "react-icons/md";
 import { useUser } from "../../../context/UserContext";
 import "./SideNav.css";
 import { useUserType } from "../../../useUserTypeContext";
+import { Auth } from "aws-amplify";
+import Stripe from "stripe";
+import AWS from "aws-sdk";
 
 interface UserState {
   isProfessional: boolean;
@@ -81,7 +84,7 @@ const SideNav = () => {
         }
       }
     };
-'?'
+    ("?");
     // Call the function when dependencies change
     checkUserRole();
   }, [
@@ -98,6 +101,45 @@ const SideNav = () => {
   //   { path: "occupancy-ahr", label: "Bezettingsgraad" },
   //   { path: "screening", label: "Screening" },
   // ];
+
+  const stripeSignUp = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const userEmail = user.attributes.email;
+      const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
+        apiVersion: "2023-10-16",
+      });
+
+      const stripeAccount = await stripe.accounts.create({
+        type: "standard",
+        email: userEmail,
+        country: "NL",
+      });
+
+      const cognitoClient = new AWS.CognitoIdentityServiceProvider();
+      await cognitoClient
+        .adminUpdateUserAttributes({
+          UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+          Username: userEmail,
+          UserAttributes: [
+            { Name: "custom:stripeAccountId", Value: stripeAccount.id },
+          ],
+        })
+        .promise();
+
+      const result = await stripe.accountLinks.create({
+        account: stripeAccount.id,
+        type: "account_onboarding",
+        refresh_url: `${window.location.origin}/nl/payments/onboarding-failed`,
+        return_url: `${window.location.origin}/nl/homeowner-dashboard/payments`,
+      });
+
+      window.location.href = result.url;
+    } catch (err) {
+      console.error(err);
+      console.log("Kon geen verbinding maken met Stripe");
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -223,6 +265,10 @@ const SideNav = () => {
                 </div>
               </li>
             ))} */}
+            
+            <button className="ProPaymentsButtonSideNav" onClick={stripeSignUp}>
+              Verbind met Stripe
+            </button>
           </>
         ) : (
           <>
