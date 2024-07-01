@@ -846,6 +846,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
+  // useEffect(() => {
+  //   console.log("groupedMessages: ", groupedMessages);
+  // }, [groupedMessages]);
+
   return (
     <div
       className={`chat-container ${theme}`}
