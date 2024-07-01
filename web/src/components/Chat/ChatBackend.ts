@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../../graphql/mutations";
 import * as queries from "../../graphql/queries";
@@ -42,13 +42,49 @@ export function useChatBackend(user: any, signOut) {
     return newUUID;
   };
 
+  const [isMessageSending, setIsMessageSending] = useState(false);
+
   const handleSendMessage = async (text) => {
+    if (isMessageSending) {
+      console.log("Message sending already in progress.");
+      return;
+    }
+    setIsMessageSending(true);
+    try {
+      const sortedMembers = [user.attributes.email, recipientEmail].sort();
+      const members = [user.attributes.email, recipientEmail];
+
+      console.log("Sending message:", text, "to members:", members);
+
+
+      try {
+        await API.graphql(graphqlOperation(mutations.createChat, {
+          input: {
+            text,
+            email: user.attributes.email,
+            members,
+            sortKey: sortedMembers.join("#"),
+          }
+        }));
+
+        console.log("Message sent successfully");
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setIsMessageSending(false);
+    }
+  };
+
+  /*const handleSendMessage = async (text) => {
     const sortedMembers = [user.attributes.email, recipientEmail].sort();
     const members = [user.attributes.email, recipientEmail];
 
     console.log("Sending message:", text, "to members:", members);
 
-    
+
     try {
       await API.graphql(graphqlOperation(mutations.createChat, {
         input: {
@@ -63,31 +99,32 @@ export function useChatBackend(user: any, signOut) {
     } catch (error) {
       console.error("Error sending message:", error);
     }
-    
-/*
-    try {
-      const params = {
-        TableName: 'Chat-ntkujizqujhnhewe6rjvu7n4om-acceptance', // Replace with your actual table name
-        Item: {
-          id: uuidv4(),
-          text,
-          email: user.attributes.email,
-          members,
-          sortKey: sortedMembers.join("#"),
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          __typename: "Chat"
-          // Include any other attributes you need to store
-        },
-      };
-    
-      await dynamo.put(params).promise();
-      console.log("Message sent successfully");
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-      */
+
+    /*
+        try {
+          const params = {
+            TableName: 'Chat-ntkujizqujhnhewe6rjvu7n4om-acceptance', // Replace with your actual table name
+            Item: {
+              id: uuidv4(),
+              text,
+              email: user.attributes.email,
+              members,
+              sortKey: sortedMembers.join("#"),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              __typename: "Chat"
+              // Include any other attributes you need to store
+            },
+          };
+        
+          await dynamo.put(params).promise();
+          console.log("Message sent successfully");
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+          
   };
+  */
 
 
   const handleReceivedMessage = (receivedChat) => {
@@ -100,42 +137,56 @@ export function useChatBackend(user: any, signOut) {
     }
   };
 
+
   const handleStartNewChatWithEmail = async (recipientEmail) => {
-    if (!user || !user.attributes) {
-      console.error("User object is not fully initialized.");
+    if (isChatCreationInProgress) {
+      console.log("Chat creation already in progress.");
       return;
     }
-
+    setIsChatCreationInProgress(true);
     try {
-      const uuid = getUUIDFromEmail(recipientEmail);
-      const members = [user.attributes.email, recipientEmail];
-      const sortedMembers = members.sort().join("#");
+      if (!user || !user.attributes) {
+        console.error("User object is not fully initialized.");
+        return;
+      }
 
-      console.log("Creating chat with recipients:", members.join(', '));
+      try {
+        const uuid = getUUIDFromEmail(recipientEmail);
+        const members = [user.attributes.email, recipientEmail];
+        const sortedMembers = members.sort().join("#");
 
-      const result = await API.graphql(graphqlOperation(mutations.createChat, {
-        input: {
-          text: "",
-          email: user.attributes.email,
-          members,
-          sortKey: sortedMembers,
-        },
-      }));
+        console.log("Creating chat with recipients:", members.join(', '));
 
-      console.log("Chat creation result:", result);
+        const result = await API.graphql(graphqlOperation(mutations.createChat, {
+          input: {
+            text: "",
+            email: user.attributes.email,
+            members,
+            sortKey: sortedMembers,
+          },
+        }));
 
-      const url = `/chat?recipient=${uuid}`;
-      window.history.pushState({}, "", url);
-      setRecipientEmail(recipientEmail);
-      localStorage.setItem("selectedContact", recipientEmail);
+        console.log("Chat creation result:", result);
 
+        const url = `/chat?recipient=${uuid}`;
+        window.history.pushState({}, "", url);
+        setRecipientEmail(recipientEmail);
+        localStorage.setItem("selectedContact", recipientEmail);
+
+      } catch (error) {
+        console.error("Error starting new chat:", error);
+      }
     } catch (error) {
       console.error("Error starting new chat:", error);
+    } finally {
+      setIsChatCreationInProgress(false);
     }
   };
 
 
 
+
+  const [isChatCreationInProgress, setIsChatCreationInProgress] = React.useState(false);
 
   const handleStartNewChatWithEmailDashboard = async (recipientEmail) => {
     console.log("Starting new chat with email dashboard...", recipientEmail);
@@ -145,7 +196,15 @@ export function useChatBackend(user: any, signOut) {
       return;
     }
 
+    // Check if a chat creation process is already in progress
+    if (isChatCreationInProgress) {
+      console.log("A chat creation process is already in progress.");
+      return;
+    }
+
     try {
+      setIsChatCreationInProgress(true); // Set the flag to true when starting the process
+
       const uuid = getUUIDFromEmail(recipientEmail);
       const members = [user.attributes.email, recipientEmail];
       const sortedMembers = members.sort().join("#");
@@ -170,13 +229,11 @@ export function useChatBackend(user: any, signOut) {
         console.log("User is Homeowner, redirecting...");
         const url = `/nl/homeowner-dashboard/chat?recipient=${uuid}`;
         setRecipientEmail(recipientEmail);
-        await handleSendMessage("Hallo");
         window.location.href = url;
       } else if (groups?.includes("Professional")) {
         console.log("User is Professional, redirecting...");
         const url = `/nl/pro-dashboard/chat?recipient=${uuid}`;
         setRecipientEmail(recipientEmail);
-        await handleSendMessage("Hallo");
         window.location.href = url;
       } else {
         console.warn("User does not belong to Homeowner or Professional group.");
@@ -184,6 +241,8 @@ export function useChatBackend(user: any, signOut) {
 
     } catch (error) {
       console.error("Error starting new chat:", error);
+    } finally {
+      setIsChatCreationInProgress(false); // Reset the flag after the process completes or fails
     }
   };
 
