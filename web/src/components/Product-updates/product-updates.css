@@ -10,11 +10,14 @@
 
 .embed-container {
   display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 5rem;
+  width: 100vw;
+  height: 100%; /* Adjusted for better fit */
   gap: 2rem;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: center; /* Center the slides */
   align-items: stretch;
+}
+
+/* Hide all slides except the current one */
+.embed-container > div:not(:first-child) {
+  display: none;
 }

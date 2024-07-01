@@ -3,6 +3,7 @@ import "./product-updates.css";
 import { XEmbed } from "react-social-media-embed";
 
 function ProductUpdates() {
+  const [currentSlide, setCurrentSlide] = useState(0); // State to manage current slide
   const [embedError, setEmbedError] = useState(false);
 
   const handleError = () => {
@@ -19,18 +20,32 @@ function ProductUpdates() {
     "https://x.com/mostpros/status/1786331156125831439",
     "https://x.com/mostpros/status/1786319613128585256",
     "https://x.com/mostpros/status/1784946455641235540",
-
     // Add more Twitter URLs here
   ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % twitterUrls.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prevSlide) => (prevSlide - 1 + twitterUrls.length) % twitterUrls.length
+    );
+  };
 
   return (
     <div className="updates-container">
       <h2>Product Updates</h2>
+      <button onClick={prevSlide}>Previous</button>
+      <button onClick={nextSlide}>Next</button>
       <div className="embed-container">
         {twitterUrls.map((url, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            style={{ display: index <= currentSlide ? "block" : "none" }}
+          >
             <XEmbed
-              id="twitterCards"
+              id={`twitterCard-${index}`}
               url={url}
               width={325}
               onError={handleError} // Optional: handle errors if needed
