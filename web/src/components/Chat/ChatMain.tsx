@@ -109,7 +109,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]
               }`,
           });
-        }
+        }groupedMessages
         const contact = message.members.find(
           (member) => member !== user.attributes.email
         );
@@ -781,6 +781,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       const filtered = chats.filter((chat) =>
         chat.text.toLowerCase().includes(messageSearchTerm.toLowerCase())
       );
+      
       setFilteredMessages(filtered);
     } else {
       setFilteredMessages([]);
@@ -826,6 +827,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       return null;
     }
   };
+
+  useEffect(() => {
+    console.log("groupedMessages: ", groupedMessages);
+  }, [groupedMessages])
 
 
 
