@@ -14,9 +14,9 @@
 }
 
 .faq-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: warp;
   margin-bottom: 20px;
 }
 
@@ -27,15 +27,15 @@
   justify-content: center;
 }
 
-.answer{
+.answer {
   max-width: 30rem;
 }
 
-.answers{
+.answers {
   max-width: 30rem;
 }
 
-#answer-var p{
+#answer-var p {
   max-width: 30rem;
   text-align: center;
 }
@@ -97,7 +97,7 @@
   flex-wrap: wrap;
 }
 
-.faq-headerIMG{
+.faq-headerIMG {
   margin: 0;
 }
 

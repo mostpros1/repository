@@ -1,68 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./product-updates.css";
-import update from "../../assets/Update.jpeg";
+import { XEmbed } from "react-social-media-embed";
 
 function ProductUpdates() {
-  const updates = [
-    {
-      id: 1,
-      title: "Product Update 1",
-      details: "Product update 1 details",
-      img: update,
-    },
-    {
-      id: 2,
-      title: "Product Update 2",
-      details: "Product update 2 details",
-      img: update,
-    },
-    {
-      id: 3,
-      title: "Product Update 3",
-      details: "Product update 3 details",
-      img: update,
-    },
-    {
-      id: 4,
-      title: "Product Update 4",
-      details: "Product update 4 details",
-      img: update,
-    },
-    {
-      id: 5,
-      title: "Product Update 5",
-      details: "Product update 5 details",
-      img: update,
-    },
-    {
-      id: 6,
-      title: "Product Update 6",
-      details: "Product update 6 details",
-      img: update,
-    },
+  const [embedError, setEmbedError] = useState(false);
+
+  const handleError = () => {
+    setEmbedError(true);
+  };
+
+  // Array of Twitter URLs
+  const twitterUrls = [
+    "https://twitter.com/mostpros/status/1805260568095318198",
+    "https://twitter.com/mostpros/status/1796464177814581526",
+    "https://x.com/mostpros/status/1795114389135052882",
+    "https://x.com/mostpros/status/1793950134574981274",
+    "https://x.com/mostpros/status/1788901572140740991",
+    "https://x.com/mostpros/status/1786331156125831439",
+    "https://x.com/mostpros/status/1786319613128585256",
+    "https://x.com/mostpros/status/1784946455641235540",
+
+    // Add more Twitter URLs here
   ];
 
   return (
-    <main id="productMain">
-      <section id="product-updatesSection">
-        <div className="productUpdateUpper">
-          <h1>Product Updates</h1>
-          <p>Stay up-to-date with the latest product updates and releases.</p>
-        </div>
-        <div id="product-updates">
-          {updates.map((update) => (
-            <div key={update.id} className="productBody">
-              <h2>{update.title}</h2>
-              <img src={update.img} alt="Product Update" />
-              <p>{update.details}</p>
-              <a href="https://www.linkedin.com/company/mostpros/posts/?feedView=all">
-                Learn more
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
+    <div className="updates-container">
+      <h2>Product Updates</h2>
+      <div className="embed-container">
+        {twitterUrls.map((url, index) => (
+          <div key={index}>
+            <XEmbed
+              id="twitterCards"
+              url={url}
+              width={325}
+              onError={handleError} // Optional: handle errors if needed
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

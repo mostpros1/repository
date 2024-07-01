@@ -19,6 +19,7 @@ interface Job {
   location: string;
   availability: string;
   userEmail: string;
+  userID?: number;
   // img: string;
 }
 
@@ -62,18 +63,19 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
               })
               .promise()
               .then((output) => {
-                console.log(output.Items)
+                console.log(output.Items);
                 const jobsFromData = output.Items
                   ? output.Items.map((item) => ({
-                      id: item.id,
-                      name: item.profession,
-                      distance: item.distance,
-                      userEmail: item.user_email,
-                      title: item.task,
-                      description: item.description,
-                      location: item.work_region,
-                      availability: item.date,
-                    }))
+                    id: item.id,
+                    name: item.profession,
+                    distance: item.distance,
+                    userEmail: item.user_email,
+                    title: item.task,
+                    description: item.description,
+                    location: item.work_region,
+                    availability: item.date,
+                    userID: item.user_id !== undefined ? item.user_id : undefined,
+                  }))
                   : [];
                 setJobs(jobsFromData);
               })
@@ -103,6 +105,10 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
     return <div className="no-jobs">No jobs available.</div>;
   }
 
+  const handleChatButtonClickID = (recipientID: number) => {
+    window.location.href = `/nl/pro-dashboard/chat?id=${recipientID}`;
+  }
+  
   const handleChatButtonClick = (recipientEmail: string) => {
     console.log(recipientEmail);
     dynamo.query({
@@ -142,7 +148,13 @@ const JobCards: React.FC<JobCardsProps> = ({ jobs: initialJobs = [] }) => {
           <p> {job.availability}</p>
         </div>
       </div>
-      <button className="main_btn" onClick={() => handleChatButtonClick(job.userEmail)}>
+      <button className="main_btn" onClick={() => {
+        if (job.userID === undefined) {
+          handleChatButtonClick(job.userEmail);
+        } else {
+          handleChatButtonClickID(job.userID);
+        }
+      }}>
         Contact opnemen
       </button>
     </div>

@@ -75,7 +75,7 @@ function Footer() {
         </section>
       </section>
       <article className="cpad_wrapper">
-        <p>©{currentYear}</p>
+        <p> ©{currentYear}</p>
         <Link to="/privacy-policy">Privacybeleid.</Link>
         <Link to="/algemene-voorwaarden">Algemene voorwaarden.</Link>
         <Link to="/disclaimer">Disclaimer</Link>
