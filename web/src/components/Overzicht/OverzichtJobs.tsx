@@ -10,7 +10,8 @@ interface Klus {
   profession: string;
   region: string;
   task: string;
-  user_id: number;
+  user_id?: number;
+  userEmail?: string
 }
 
 const OverzichtKlussen: React.FC = () => {
@@ -37,6 +38,7 @@ const OverzichtKlussen: React.FC = () => {
             region: item.region,
             task: item.task,
             user_id: item.user_id,
+            userEmail: item.user_email,
           }));
 
           console.log("klussenData: ", klussenData);
@@ -50,17 +52,36 @@ const OverzichtKlussen: React.FC = () => {
       });
   }, []);
 
-  const handleContactClick = async (user_id) => {
+  const handleContactClick = async (user_id, userEmail) => {
     try {
       // Attempt to get the current authenticated user
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
   
       const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
   
+      let userId;
+
+      if (user_id == undefined){
+        const output = await dynamo.query({
+          TableName: "Users",
+          IndexName: "username",
+          KeyConditionExpression: "email = :email",
+          ExpressionAttributeValues: {
+            ":email": userEmail,
+          }, 
+        }).promise();
+
+        if (output && output.Items && output.Items.length > 0) {
+          userId = output.Items[0].id;
+        }
+      } else {
+        userId = user_id;
+      }
+
       if (groups?.includes("Professional")) {
-        window.location.href = `/nl/pro-dashboard/chat?id=${user_id}`;
+        window.location.href = `/nl/pro-dashboard/chat?id=${userId}`;
       } else if (groups?.includes("Homeowner")) {
-        window.location.href = `/nl/homewowner-dashboard/chat?id=${user_id}`;
+        window.location.href = `/nl/homewowner-dashboard/chat?id=${userId}`;
       } else {
         alert("Je moet ingelogt zijn");
         window.location.href = "/nl/login";
@@ -89,7 +110,7 @@ const OverzichtKlussen: React.FC = () => {
               <p>Regio: {klus.region}</p>
               <div className="bottomrightLogo">
                 <button
-                  onClick={() => handleContactClick(klus.user_id)}
+                  onClick={() => handleContactClick(klus.user_id, klus.userEmail)}
                   className="buttoncontact"
                 >
                   Contact opnemen

@@ -203,7 +203,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           chat.members.includes(user.attributes.email)
       );
       const groupedMessages = groupMessagesByDate(filteredChats);
-      console.log("Filtered chats for selected contact:", filteredChats);
       setGroupedMessages(groupedMessages);
       setNewMessagesCount((prevCount) => ({
         ...prevCount,
@@ -232,11 +231,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           const result = await API.graphql({
             query: queries.listChats,
             variables,
-          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } }}>;
+          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } } }>;
 
           // Now you can access `data` from the resolved `result`
           const resolvedResult = await result;
-          console.log("CHATS: ", resolvedResult.data.listChats.items);
+
           setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
 
           // And check for `nextToken` in the resolved `result`
@@ -318,10 +317,12 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     return urlParams.get('id');
   };
 
-  // Function to grab the email from the search bar and run switch chat
-  const switchChatUsingEmailFromSearchBar = () => {
+
+
+  useEffect(() => {
+    // Function to grab the email from the search bar and run switch chat
+
     const id = getidFromSearchBar();
-    console.log("id: ", id);
     if (id) {
 
       dynamo.query({
@@ -332,7 +333,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         }
       }).promise().then((data) => {
         if (data.Items && data.Items.length > 0) {
-          console.log(data.Items[0].email);
           const uuid = getUUIDFromEmail(data.Items[0].email);
           if (uuid) {
             handleStartNewChatWithEmail(data.Items[0].email)
@@ -349,10 +349,8 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       console.error('No id found in search bar');
       // Handle case where email is not present in the search bar
     }
-  };
+  }, []);
 
-
-  switchChatUsingEmailFromSearchBar();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -705,7 +703,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
   const handleNewChatConfirm = async () => {
-    console.log("Starting new chat with email:", newChatEmail);
     await handleStartNewChatWithEmail(newChatEmail);
     setShowNewChatModal(false);
     const uuid = getUUIDFromEmail(newChatEmail);
@@ -831,7 +828,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   };
 
 
-  console.log("searchTerm: ", searchTerm);
+
   return (
     <div
       className={`chat-container ${theme}`}
