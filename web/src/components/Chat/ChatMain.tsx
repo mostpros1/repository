@@ -74,7 +74,9 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropUpRef = useRef<HTMLDivElement>(null);
   const uuidEmailMap = useRef<{ [uuid: string]: string }>({});
-  const [lastMessages, setLastMessages] = useState<{ [contact: string]: { text: string; createdAt: string }; }>({});
+  const [lastMessages, setLastMessages] = useState<{
+    [contact: string]: { text: string; createdAt: string };
+  }>({});
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
@@ -83,13 +85,17 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   const [replyingTo, setReplyingTo] = useState<Chat | null>(null);
   const [markedMessages, setMarkedMessages] = useState<Set<string>>(new Set());
   const [pinnedMessages, setPinnedMessages] = useState<Set<string>>(new Set());
-  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(new Set());
+  const [favoriteMessages, setFavoriteMessages] = useState<Set<string>>(
+    new Set()
+  );
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [theme, setTheme] = useState("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showSavedMessagesModal, setShowSavedMessagesModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
-  const [newMessagesCount, setNewMessagesCount] = useState<{ [contact: string]: number; }>({});
+  const [newMessagesCount, setNewMessagesCount] = useState<{
+    [contact: string]: number;
+  }>({});
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -99,15 +105,18 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
 
   // New states for additional functionalities
   const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
-  const [typingStatus, setTypingStatus] = useState<{ [contact: string]: boolean; }>({});
+  const [typingStatus, setTypingStatus] = useState<{
+    [contact: string]: boolean;
+  }>({});
 
   useEffect(() => {
     const handleNewMessageNotification = (message: Chat) => {
       if (message.members.includes(user.attributes.email)) {
         if (Notification.permission === "granted" && notificationsEnabled) {
           new Notification("Nieuw bericht ontvangen", {
-            body: `Je hebt een nieuw bericht ontvangen van ${message.email.split("@")[0]
-              }`,
+            body: `Je hebt een nieuw bericht ontvangen van ${
+              message.email.split("@")[0]
+            }`,
           });
         }
         const contact = message.members.find(
@@ -152,7 +161,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         if (
           !updatedLastMessages[contact] ||
           new Date(updatedLastMessages[contact].createdAt) <
-          new Date(chat.createdAt)
+            new Date(chat.createdAt)
         ) {
           updatedLastMessages[contact] = {
             text: chat.text,
@@ -212,7 +221,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
   }, [chats, selectedContact, user.attributes.email]);
 
   useEffect(() => {
+    let isMounted = true; // To track if the component is still mounted
+
     async function fetchChats(nextToken?: string) {
+      if (!isMounted) return;
+
       setIsLoading(true);
       try {
         const variables = {
@@ -227,21 +240,27 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         }
 
         try {
-          // Assuming API.graphql returns a Promise that resolves to an object with a `data` property
-          const result = await API.graphql({
+          const result = (await API.graphql({
             query: queries.listChats,
             variables,
-          }) as Promise<{ data: { listChats: { items: any[], nextToken?: string } } }>;
+          })) as { data: { listChats: { items: any[]; nextToken?: string } } };
 
-          // Now you can access `data` from the resolved `result`
-          const resolvedResult = await result;
+          if (!isMounted) return; // Check again if component is still mounted
 
-          setChats((prevChats) => [...prevChats, ...resolvedResult.data.listChats.items]);
+          const newChats = result.data.listChats.items;
 
-          // And check for `nextToken` in the resolved `result`
-          if (resolvedResult.data.listChats.nextToken) {
-            // If there's a nextToken, there are more items to fetch
-            await fetchChats(resolvedResult.data.listChats.nextToken);
+          setChats((prevChats) => {
+            // Create a new set of chat IDs to check for duplicates
+            const chatIds = new Set(prevChats.map((chat) => chat.id));
+            // Filter out any duplicates
+            const uniqueNewChats = newChats.filter(
+              (chat) => !chatIds.has(chat.id)
+            );
+            return [...prevChats, ...uniqueNewChats];
+          });
+
+          if (result.data.listChats.nextToken) {
+            await fetchChats(result.data.listChats.nextToken);
           }
         } catch (error) {
           console.error("Error fetching chats:", error);
@@ -250,12 +269,14 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         }
       } catch (error) {
         console.error("Error fetching chats:", error);
-      } finally {
-        setIsLoading(false);
       }
     }
 
     fetchChats();
+
+    return () => {
+      isMounted = false; // Cleanup function to set the isMounted flag to false
+    };
   }, [user.attributes.email]);
 
   useEffect(() => {
@@ -311,46 +332,44 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }));
   };
 
-
   const getidFromSearchBar = () => {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id');
+    return urlParams.get("id");
   };
-
-
 
   useEffect(() => {
     // Function to grab the email from the search bar and run switch chat
 
     const id = getidFromSearchBar();
     if (id) {
-
-      dynamo.query({
-        TableName: "Users",
-        KeyConditionExpression: "id = :id",
-        ExpressionAttributeValues: {
-          ":id": Number(id)
-        }
-      }).promise().then((data) => {
-        if (data.Items && data.Items.length > 0) {
-          const uuid = getUUIDFromEmail(data.Items[0].email);
-          if (uuid) {
-            handleStartNewChatWithEmail(data.Items[0].email)
-            switchChat(data.Items[0].email);
-          } else {
-            console.error('No UUID found for the provided user_id');
-            // Handle case where no UUID is found for the provided email
+      dynamo
+        .query({
+          TableName: "Users",
+          KeyConditionExpression: "id = :id",
+          ExpressionAttributeValues: {
+            ":id": Number(id),
+          },
+        })
+        .promise()
+        .then((data) => {
+          if (data.Items && data.Items.length > 0) {
+            const uuid = getUUIDFromEmail(data.Items[0].email);
+            if (uuid) {
+              handleStartNewChatWithEmail(data.Items[0].email);
+              switchChat(data.Items[0].email);
+            } else {
+              console.error("No UUID found for the provided user_id");
+              // Handle case where no UUID is found for the provided email
+            }
           }
-        }
-      }).catch(console.error);
+        })
+        .catch(console.error);
       // Directly use the return value
-
     } else {
-      console.error('No id found in search bar');
+      console.error("No id found in search bar");
       // Handle case where email is not present in the search bar
     }
   }, []);
-
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -827,8 +846,6 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
     }
   };
 
-
-
   return (
     <div
       className={`chat-container ${theme}`}
@@ -843,7 +860,10 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
           />
           {open && (
             <div className="dropdownn-menu">
-              <div className="dropdownn-item" onClick={() => handleStartNewChatClick()}>
+              <div
+                className="dropdownn-item"
+                onClick={() => handleStartNewChatClick()}
+              >
                 Nieuwe chat starten
               </div>
               <div
@@ -882,67 +902,67 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
         <ul>
           {searchTerm === ""
             ? sortedContacts.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={
-                  selectedContact === contact ? "selected-contact" : ""
-                }
-              >
-                <BsPersonCircle size={50} className="avatar-chat-side" />
-                <div className="contact-details">
-                  <div className="contact-name">
-                    <span>{contact.split("@")[0]}</span>
-                    {newMessagesCount[contact] > 0 && (
-                      <span className="new-message-badge">
-                        {newMessagesCount[contact]}
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={
+                    selectedContact === contact ? "selected-contact" : ""
+                  }
+                >
+                  <BsPersonCircle size={50} className="avatar-chat-side" />
+                  <div className="contact-details">
+                    <div className="contact-name">
+                      <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
+                    </div>
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                    {lastMessages[contact] && (
+                      <span className="last-message-time">
+                        {formatDate(lastMessages[contact].createdAt).text}
                       </span>
                     )}
                   </div>
-                  {lastMessages[contact] && (
-                    <span className="last-message">
-                      {lastMessages[contact].text}
-                    </span>
-                  )}
-                  {lastMessages[contact] && (
-                    <span className="last-message-time">
-                      {formatDate(lastMessages[contact].createdAt).text}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))
+                </li>
+              ))
             : filteredContactList.map((contact) => (
-              <li
-                key={contact}
-                onClick={() => switchChat(contact)}
-                className={
-                  selectedContact === contact ? "selected-contact" : ""
-                }
-              >
-                <BsPersonCircle size={50} className="avatar-chat-side" />
-                <div className="contact-details">
-                  <div className="contact-name">
-                    <span>{contact.split("@")[0]}</span>
-                    {newMessagesCount[contact] > 0 && (
-                      <span className="new-message-badge">
-                        {newMessagesCount[contact]}
+                <li
+                  key={contact}
+                  onClick={() => switchChat(contact)}
+                  className={
+                    selectedContact === contact ? "selected-contact" : ""
+                  }
+                >
+                  <BsPersonCircle size={50} className="avatar-chat-side" />
+                  <div className="contact-details">
+                    <div className="contact-name">
+                      <span>{contact.split("@")[0]}</span>
+                      {newMessagesCount[contact] > 0 && (
+                        <span className="new-message-badge">
+                          {newMessagesCount[contact]}
+                        </span>
+                      )}
+                    </div>
+                    {lastMessages[contact] && (
+                      <span className="last-message">
+                        {lastMessages[contact].text}
+                      </span>
+                    )}
+                    {lastMessages[contact] && (
+                      <span className="last-message-time">
+                        {formatDate(lastMessages[contact].createdAt).text}
                       </span>
                     )}
                   </div>
-                  {lastMessages[contact] && (
-                    <span className="last-message">
-                      {lastMessages[contact].text}
-                    </span>
-                  )}
-                  {lastMessages[contact] && (
-                    <span className="last-message-time">
-                      {formatDate(lastMessages[contact].createdAt).text}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
+                </li>
+              ))}
         </ul>
       </div>
       <div className="main-container">
@@ -971,7 +991,11 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               )}
               {showSearch && (
                 <button onClick={handleCancelClick} className="cancel-icon">
-                  <MdOutlineCancel className="search-header" size={25} color="blue" />
+                  <MdOutlineCancel
+                    className="search-header"
+                    size={25}
+                    color="blue"
+                  />
                 </button>
               )}
             </div>
@@ -980,121 +1004,126 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
             {isLoading && <div className="loading-spinner">Loading...</div>}
             {filteredMessages.length > 0
               ? filteredMessages.map((chat) => (
-                <div
-                  key={chat.id}
-                  className={`message-container ${chat.email === user.attributes.email
-                    ? "self-message-container"
-                    : "other-message-container"
-                    } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
-                >
                   <div
-                    className={`message-bubble ${chat.email === user.attributes.email
-                      ? "self-message"
-                      : "other-message"
-                      }`}
-                    style={{ fontSize: `${textSize}px` }} // Apply text size
+                    key={chat.id}
+                    className={`message-container ${
+                      chat.email === user.attributes.email
+                        ? "self-message-container"
+                        : "other-message-container"
+                    } ${markedMessages.has(chat.id) ? "marked-message" : ""}`}
                   >
                     <div
-                      className="text"
-                      dangerouslySetInnerHTML={{ __html: chat.text }}
-                    />
-                    <div className="message-actions">
-                      <button onClick={() => handleReplyMessage(chat)}>
-                        <FaReply />
-                      </button>
-                      <button onClick={() => handleMarkMessage(chat.id)}>
-                        {markedMessages.has(chat.id) ? (
-                          <FaBookmark />
-                        ) : (
-                          <FaRegBookmark />
-                        )}
-                      </button>
-                      <button onClick={() => handleDeleteMessage(chat.id)}>
-                        <MdDeleteOutline />
-                      </button>
-                    </div>
-                    <div className="message-status">
-                      <MessageStatusIcon
-                        delivered={chat.delivered}
-                        read={chat.read}
-                      />
-                    </div>
-                    <time dateTime={chat.createdAt} className="message-time">
-                      {new Intl.DateTimeFormat("nl-NL", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }).format(new Date(chat.createdAt))}
-                    </time>
-                  </div>
-                </div>
-              ))
-              : Object.keys(groupedMessages).map((date) => {
-                const { text, className } = formatDate(date);
-                return (
-                  <React.Fragment key={date}>
-                    <div className={`date-separator ${className}`}>
-                      {text}
-                    </div>
-                    {groupedMessages[date].map((chat) => (
+                      className={`message-bubble ${
+                        chat.email === user.attributes.email
+                          ? "self-message"
+                          : "other-message"
+                      }`}
+                      style={{ fontSize: `${textSize}px` }} // Apply text size
+                    >
                       <div
-                        key={chat.id}
-                        className={`message-container ${chat.email === user.attributes.email
-                          ? "self-message-container"
-                          : "other-message-container"
-                          } ${markedMessages.has(chat.id) ? "marked-message" : ""
-                          }`}
-                      >
+                        className="text"
+                        dangerouslySetInnerHTML={{ __html: chat.text }}
+                      />
+                      <div className="message-actions">
+                        <button onClick={() => handleReplyMessage(chat)}>
+                          <FaReply />
+                        </button>
+                        <button onClick={() => handleMarkMessage(chat.id)}>
+                          {markedMessages.has(chat.id) ? (
+                            <FaBookmark />
+                          ) : (
+                            <FaRegBookmark />
+                          )}
+                        </button>
+                        <button onClick={() => handleDeleteMessage(chat.id)}>
+                          <MdDeleteOutline />
+                        </button>
+                      </div>
+                      <div className="message-status">
+                        <MessageStatusIcon
+                          delivered={chat.delivered}
+                          read={chat.read}
+                        />
+                      </div>
+                      <time dateTime={chat.createdAt} className="message-time">
+                        {new Intl.DateTimeFormat("nl-NL", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(chat.createdAt))}
+                      </time>
+                    </div>
+                  </div>
+                ))
+              : Object.keys(groupedMessages).map((date) => {
+                  const { text, className } = formatDate(date);
+                  return (
+                    <React.Fragment key={date}>
+                      <div className={`date-separator ${className}`}>
+                        {text}
+                      </div>
+                      {groupedMessages[date].map((chat) => (
                         <div
-                          className={`message-bubble ${chat.email === user.attributes.email
-                            ? "self-message"
-                            : "other-message"
-                            }`}
-                          style={{ fontSize: `${textSize}px` }}
+                          key={chat.id}
+                          className={`message-container ${
+                            chat.email === user.attributes.email
+                              ? "self-message-container"
+                              : "other-message-container"
+                          } ${
+                            markedMessages.has(chat.id) ? "marked-message" : ""
+                          }`}
                         >
                           <div
-                            className="text"
-                            dangerouslySetInnerHTML={{ __html: chat.text }}
-                          />
-                          <div className="message-actions">
-                            <button onClick={() => handleReplyMessage(chat)}>
-                              <FaReply />
-                            </button>
-                            <button
-                              onClick={() => handleMarkMessage(chat.id)}
-                            >
-                              {markedMessages.has(chat.id) ? (
-                                <FaBookmark />
-                              ) : (
-                                <FaRegBookmark />
-                              )}
-                            </button>
-                            <button
-                              onClick={() => handleDeleteMessage(chat.id)}
-                            >
-                              <MdDeleteOutline />
-                            </button>
-                          </div>
-                          <div className="message-status">
-                            <MessageStatusIcon
-                              delivered={chat.delivered}
-                              read={chat.read}
-                            />
-                          </div>
-                          <time
-                            dateTime={chat.createdAt}
-                            className="message-time"
+                            className={`message-bubble ${
+                              chat.email === user.attributes.email
+                                ? "self-message"
+                                : "other-message"
+                            }`}
+                            style={{ fontSize: `${textSize}px` }}
                           >
-                            {new Intl.DateTimeFormat("nl-NL", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            }).format(new Date(chat.createdAt))}
-                          </time>
+                            <div
+                              className="text"
+                              dangerouslySetInnerHTML={{ __html: chat.text }}
+                            />
+                            <div className="message-actions">
+                              <button onClick={() => handleReplyMessage(chat)}>
+                                <FaReply />
+                              </button>
+                              <button
+                                onClick={() => handleMarkMessage(chat.id)}
+                              >
+                                {markedMessages.has(chat.id) ? (
+                                  <FaBookmark />
+                                ) : (
+                                  <FaRegBookmark />
+                                )}
+                              </button>
+                              <button
+                                onClick={() => handleDeleteMessage(chat.id)}
+                              >
+                                <MdDeleteOutline />
+                              </button>
+                            </div>
+                            <div className="message-status">
+                              <MessageStatusIcon
+                                delivered={chat.delivered}
+                                read={chat.read}
+                              />
+                            </div>
+                            <time
+                              dateTime={chat.createdAt}
+                              className="message-time"
+                            >
+                              {new Intl.DateTimeFormat("nl-NL", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }).format(new Date(chat.createdAt))}
+                            </time>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </React.Fragment>
-                );
-              })}
+                      ))}
+                    </React.Fragment>
+                  );
+                })}
           </div>
           {replyingTo && (
             <div className="replying-to">
@@ -1115,7 +1144,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
                 }
               }}
               className="inputchat"
-              onChange={() => { }}
+              onChange={() => {}}
             />
             <div className="dropup" ref={dropUpRef}>
               <BsPaperclip
