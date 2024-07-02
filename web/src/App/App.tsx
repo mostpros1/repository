@@ -53,7 +53,7 @@ import DisclaimerPage from "../pages/DisclaimerPage/disclaimerpage";
 import QualityPage from "../pages/QualityPage/QualityPage.tsx";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage/privacy-policy";
 import TermsAndConditions from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-// import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";
+import ProductUpdatePage from "../pages/ProductUpdatePage/ProductUpdatePage.tsx";
 /* Template */
 import OfferTemplate from "../components/PaymentLink/offers/offerTemplate.tsx";
 import TemplatePage from "../pages/TemplatePage/TemplatePage.tsx";
@@ -229,10 +229,7 @@ const LanguageAwareRoutes = () => {
       <Route path="/MijnKlussen" element={<MijnKlussen />} />
       <Route path="/home-innovation" element={<HomeInovation />} />
       <Route path="/VSDashboard" element={<VSDashboard />} />
-      <Route
-        path="/homeowner-dashboard/profile"
-        element={<HomeOwnerProfielPage />}
-      />
+      <Route path="/homeowner-dashboard/profile" element={<ProfilePage />} />
       /* Pro dashboard links */
       <Route path="/pro-dashboard" element={<ResultsPage />} />
       <Route path="/pro-dashboard/profile" element={<ProfilePage />} />
@@ -257,7 +254,7 @@ const LanguageAwareRoutes = () => {
         element={<HomeOwnerSettingsPage />}
       />
       <Route path="/pro-dashboard/reviews" element={<ReviewPage />} />
-      {/* <Route path="/product-updates" element={<ProductUpdatePage />} /> */}
+      <Route path="/product-updates" element={<ProductUpdatePage />} />
       <Route path="/PaymentOptions" element={<PaymentOptionsPage />} />
       <Route path="/DashboardPage" element={<DashboardPage />} />
       <Route path="/HomeOwnerResultPage" element={<HomeOwnerResultPage />} />

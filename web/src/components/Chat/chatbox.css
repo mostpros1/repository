@@ -1,13 +1,13 @@
 .chat-container {
   display: flex;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
   transition: all 1s ease;
 }
 
-.search-container{
+.search-container {
   width: 100%;
   align-items: center;
   justify-content: flex-end;
@@ -16,12 +16,12 @@
   gap: 4rem;
 }
 
-.cancel-icon{
+.cancel-icon {
   background: transparent;
   border: 0rem solid transparent;
 }
 
-.search-icon{
+.search-icon {
   width: 100%;
   background-color: transparent;
   border: 0rem solid transparent;
@@ -155,7 +155,7 @@
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  background-color: #EDEDEC;
+  background-color: #ededec;
   padding: 20px;
   border-radius: 7px;
 }
@@ -209,6 +209,7 @@
   font-size: 15px;
   word-break: break-word;
   white-space: pre-wrap;
+  position: relative;
 }
 
 .message-bubble .text {
@@ -253,7 +254,6 @@
   max-width: 100%;
   overflow: auto;
 }
-
 .other-message-container {
   align-items: flex-start;
 }
@@ -537,7 +537,7 @@
 }
 
 .amount-input-wrapper::before {
-  content: '€';
+  content: "€";
   position: absolute;
   left: 10px;
   top: 50%;
@@ -805,7 +805,7 @@
 }
 
 .self-message-container .message-bubble {
-  background-color: #207CD8;
+  background-color: #207cd8;
   border: 1px solid #ccc;
   box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 }
@@ -824,6 +824,7 @@
   margin-top: 25px;
   height: 25px;
   margin-right: 10px;
+  transition: all 0.3s ease;
 }
 
 .message-container:hover .message-actions {
@@ -942,16 +943,16 @@
     flex-direction: column;
   }
 
-  .main-container{
+  .main-container {
     width: 100%;
     margin-top: 5rem;
   }
 
-  .input-form{
+  .input-form {
     width: 100%;
   }
 
-  .inputchat{
+  .inputchat {
     width: 100%;
   }
 
