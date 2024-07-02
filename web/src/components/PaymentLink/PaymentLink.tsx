@@ -63,7 +63,7 @@ const PaymentLink = ({ subtotal, handleSendMessage }: PaymentLinkProps) => {
                 }],
                 payment_method_types: ['card', 'ideal'],
                 payment_intent_data: {
-                    application_fee_amount: Math.ceil(subtotal * 0.02),
+                    application_fee_amount: Math.round(subtotal * 0.02),
                     transfer_data: {
                         destination: userStripeAccountId
                     }
