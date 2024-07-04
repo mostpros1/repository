@@ -1,21 +1,17 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "current"
-        },
-        "useBuiltIns": "entry",
-        "corejs": 3
-      }
-    ],
-    [
-      "@babel/preset-react",
-      {
-        "runtime": "automatic"
-      }
-    ],
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "current"
+      },
+      "useBuiltIns": "entry",
+      "corejs": 3
+    }],
+    "@babel/preset-react",
     "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs",
+    "@babel/plugin-transform-runtime"
   ]
 }

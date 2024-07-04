@@ -27,14 +27,12 @@ const config: Config.InitialOptions = {
   //testEnvironment: 'node',
   testEnvironment: 'jsdom',
 
-  transformIgnorePatterns: [
-    "/node_modules/",
-  ],
-
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.tsx?$': 'babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
+  transformIgnorePatterns: [
+    "node_modules/(?!(aws-sdk|@aws-sdk)/)", // Corrected regular expression pattern
+],
   
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
   moduleNameMapper: {
