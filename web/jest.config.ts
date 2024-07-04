@@ -36,12 +36,13 @@ const config: Config.InitialOptions = {
     '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
-  transform: {}, // Disable babel transform for .ts files
-  testEnvironment: 'node', // Use the node test environment
-
-  // transform: {
-  //   '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
-  // },
+  //transform: {}, // Disable babel transform for .ts files
+  //testEnvironment: 'node', // Use the node test environment
+  testEnvironment: 'jest-environment-jsdom',
+  
+  transform: {
+    '^.+\\.(jsx|tsx)$': 'babel-jest',
+  },
   transformIgnorePatterns: [
     "node_modules/(?!(aws-sdk|@aws-sdk)/)", // Corrected regular expression pattern
 ],
