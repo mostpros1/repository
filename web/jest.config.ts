@@ -3,9 +3,9 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from '@jest/types';
 
-const config: Config = {
+const config: Config.InitialOptions = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -23,7 +23,25 @@ const config: Config = {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
+  preset: 'ts-jest',
+  //testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 
+  transformIgnorePatterns: [
+    "/node_modules/",
+  ],
+
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'babel-jest',
+  },
+  
+  extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
+  moduleNameMapper: {
+    // Mock CSS files
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
+  },
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
 
