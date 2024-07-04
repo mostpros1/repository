@@ -14,6 +14,46 @@
 }
 
 .faq_answers--main{
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.IMGTextContainerHelp {
+  margin: 20px auto;
+  max-width: 800px;
+} */
+
+/* Style for the FAQ answers main container */
+.faq_answers--main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+/* Style for the FAQ headings */
+.faq_answers--main h2 {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Style for the FAQ questions */
+.faq_answers--main h3 {
+  font-size: 18px;
+  color: #308ae4;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for the FAQ questions */
+.faq_answers--main h3:hover {
+  color: #308ae4;
+}
+
+/* Style for the FAQ answers */
+.faq_answers--main p {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0 15px 20px
 }
