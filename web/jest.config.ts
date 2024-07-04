@@ -23,23 +23,28 @@ const config: Config.InitialOptions = {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
-  preset: 'ts-jest',
-  //testEnvironment: 'node',
-  testEnvironment: 'jsdom',
-
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  preset: 'ts-jest/presets/default-esm', // Use the ESM preset
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
   },
-  transformIgnorePatterns: [
-    "node_modules/(?!(aws-sdk|@aws-sdk)/)", // Corrected regular expression pattern
-],
-  
-  extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
   moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1', // Redirect .js imports to .ts files
     // Mock CSS files
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
+  extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
+  transform: {}, // Disable babel transform for .ts files
+  testEnvironment: 'node', // Use the node test environment
+
+  // transform: {
+  //   '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  // },
+  transformIgnorePatterns: [
+    "node_modules/(?!(aws-sdk|@aws-sdk)/)", // Corrected regular expression pattern
+],
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
 
