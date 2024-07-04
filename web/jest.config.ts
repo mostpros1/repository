@@ -1,8 +1,3 @@
-/**
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/configuration
- */
-
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
@@ -24,7 +19,10 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(jsx|tsx|ts|js)$': 'babel-jest',
   },
-  transformIgnorePatterns: [],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@aws-sdk|react-icons|uuid)/)', // Include specific packages in node_modules
+  ],
   coverageDirectory: "coverage",
 };
+
 export default config;

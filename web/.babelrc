@@ -5,14 +5,16 @@
         "node": "current"
       },
       "useBuiltIns": "entry",
-      "modules": "auto",
+      "modules": false, // Set to false to enable ESM
       "corejs": 3
     }],
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
   "plugins": [
-    //"@babel/plugin-transform-modules-commonjs",
     "@babel/plugin-transform-runtime"
+  ],
+  "ignore": [
+    "node_modules/(?!(react-icons|@aws-sdk|uuid)/)" // Allow transformation of specific dependencies
   ]
 }

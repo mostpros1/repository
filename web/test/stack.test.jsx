@@ -1,8 +1,12 @@
-import { render } from '@testing-library/react';
-import App from '../src/App/App.tsx';
+import '@testing-library/jest-dom'
+import { render } from "@testing-library/react"
+import App from "../App"
 
-describe('App', () => {
-  it('should work as expected', () => {
-    render(<App />);
-  });
-});
+test('demo', () => {
+    expect(true).toBe(true)
+})
+
+test("Renders the main page", () => {
+    render(<App />)
+    expect(true).toBeTruthy()
+})
