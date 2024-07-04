@@ -5,6 +5,7 @@
         "node": "current"
       },
       "useBuiltIns": "entry",
+      "modules": "auto",
       "corejs": 3
     }],
     "@babel/preset-react",
