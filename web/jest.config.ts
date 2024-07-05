@@ -12,15 +12,16 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
+    '\\.(svg|png|jpeg|jpg)$': '<rootDir>/__mocks__/fileMock.js',
   },
   transform: {
     "\\.[jt]sx?$": "babel-jest",
+    "/node_modules/react-icons/.*\\.js$": "babel-jest",
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [
-    '/node_modules/(?!(@babel/runtime|@aws-sdk|react-icons|uuid)).*'
+    '/node_modules/',
   ],
   coverageDirectory: "coverage",
   coverageThreshold: {
