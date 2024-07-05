@@ -210,6 +210,8 @@
   word-break: break-word;
   white-space: pre-wrap;
   position: relative;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .message-bubble .text {
@@ -219,6 +221,7 @@
 .message-bubble .message-time {
   margin-left: 10px;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .black {
@@ -230,14 +233,17 @@
   border: 1px solid #ccc;
   margin-left: auto;
   border-top-right-radius: 1px;
+  max-width: 55rem;
+  height: auto;
   width: auto;
-  transition: all 0.5s ease;
 }
 
 .other-message {
   background-color: #ffffff;
   margin-right: auto;
   border-top-left-radius: 1px;
+  max-width: 55rem;
+  height: auto;
   width: auto;
   transition: all 0.5s ease;
 }
@@ -247,6 +253,7 @@
   flex-direction: column;
   align-items: flex-end;
   margin-bottom: 10px;
+  transition: all 0.5s ease;
 }
 
 .self-message-container {
@@ -565,7 +572,6 @@
   position: relative;
   padding: 10px 20px;
   margin-left: 230px;
-  z-index: 10;
 }
 
 .dropdownn-menu {
@@ -818,17 +824,27 @@
 
 .message-actions {
   display: none;
-  transform: translateY(-50%);
   background-color: white;
-  border-radius: 4px;
-  margin-top: 25px;
-  height: 25px;
-  margin-right: 10px;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .message-container:hover .message-actions {
   display: flex;
+  animation: slideUp 0.3s ease;
+  border-radius: 10px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .message-actions button {
@@ -836,12 +852,13 @@
   background: none;
   padding: 5px;
   cursor: pointer;
-  color: #007bff;
+  color: black;
   transition: background-color 0.3s ease;
 }
 
 .message-actions button:hover {
   background-color: #f0f0f0;
+  border-radius: 10px;
 }
 
 .menu-iconn {

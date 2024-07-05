@@ -4,8 +4,6 @@ import Category from "../FAQ/Category";
 import React, { useState } from "react";
 
 
-
-
 function HelpComp() {
   const [openQuestion, setOpenQuestion] = useState(null);
 
