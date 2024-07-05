@@ -811,18 +811,19 @@ const Cal = () => {
           e.preventDefault();
           const date = new Date((e.target as any).elements.startdate.value);
           const patroon = (e.target as any).elements.availPattern.value;
-          addMultipleDays(date, "hele dag", patroon);
-        }}
-      >
-        <b>Voeg Meerdere Dagen Toe</b>
-        <br />
-        <div className="form-group">
-          <label>
+            addMultipleDays(date, "hele dag", patroon);
+          }}
+          >
+          <b>Voeg Meerdere Dagen Toe</b>
+          <br />
+          <div className="form-group">
+            <label>
             Start Dag: <input name="startdate" type="date" required />
-          </label>
-        </div>
-        <div className="form-group">
-          <div className="repeat-pattern-buttons">
+            </label>
+          </div>
+          <div className="form-group">
+            <div className="repeat-pattern-buttons">
+            <p className="repeat-pattern-text">Herhaal patronen: </p>
             <button
               type="button"
               value="weekday"

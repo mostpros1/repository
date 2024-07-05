@@ -9,13 +9,6 @@ Cypress.Commands.add('login', (username, password) => {
   });
 });
 
-Cypress.Commands.add('logout', () => {
-  // Implement logout logic here if needed
-  // Example:
-  // cy.get('.logout-button').click();
-  // cy.url().should('include', '/login');
-});
-
 describe('Login Page Tests', () => {
   beforeEach(() => {
     // Clear any existing login session
@@ -66,14 +59,25 @@ describe('Chat Tests', () => {
     cy.get('.input-form').should('be.visible');
   });
 
-  it('should send a message in the chat', () => {
-    // Type a message in the input
-    cy.get('#message-input').type('Hello, this is a test message{enter}');
+  it('should select a contact and display messages', () => {
+    // Click on a contact from the sidebar
+    cy.get('.sidebarr').contains('timon.heidenreich').click(); 
+
+    // Assert that the selected contact's messages are displayed in the chat box
+    cy.get('.chatheader').should('contain', 'Contact Name'); // Verify selected contact name in chat header
+    cy.get('.message-container').should('have.length.gt', 0); // Ensure messages are loaded
+  });
+
+  it('should send a message to a selected contact', () => {
+    // Select a contact (if not already selected)
+    cy.get('.sidebarr').contains('timon.heidenreich').click();
+
+    // Type a message in the input and send
+    const message = 'Hello, this is a test message from Cypress';
+    cy.get('#message-input').type(`${message}{enter}`);
 
     // Verify if the message is visible in the chat box
-    cy.get('.message-container').last().contains('Hello, this is a test message');
-
-    // Optionally, add more assertions to validate message sending
+    cy.get('.message-container').last().should('contain', message);
   });
 
   // Add more chat-related tests as needed
