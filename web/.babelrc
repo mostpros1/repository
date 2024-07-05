@@ -2,10 +2,11 @@
   "presets": [
     ["@babel/preset-env", {
       "targets": {
-        "node": "current"
+        "node": "current",
+        "esmodules": true
       },
       "useBuiltIns": "entry",
-      "modules": false, // Set to false to enable ESM
+      "modules": false,
       "corejs": 3
     }],
     "@babel/preset-react",
@@ -13,8 +14,5 @@
   ],
   "plugins": [
     "@babel/plugin-transform-runtime"
-  ],
-  "ignore": [
-    "node_modules/(?!(react-icons|@aws-sdk|uuid)/)" // Allow transformation of specific dependencies
   ]
 }

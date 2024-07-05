@@ -14,15 +14,23 @@ const config: Config.InitialOptions = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '\\.(svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
+  transform: {
+    "\\.[jt]sx?$": "babel-jest",
+  },
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
   testEnvironment: 'jest-environment-jsdom',
-  transform: {
-    '^.+\\.(jsx|tsx|ts|js)$': 'babel-jest',
-  },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@aws-sdk|react-icons|uuid)/)', // Include specific packages in node_modules
+    '/node_modules/(?!(@babel/runtime|@aws-sdk|react-icons|uuid)).*'
   ],
   coverageDirectory: "coverage",
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: -10,
+    },
+  },
 };
 
 export default config;
