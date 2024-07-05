@@ -4,8 +4,6 @@ import Category from "../FAQ/Category";
 import React from "react";
 
 
-
-
 function HelpComp() {
   return (
     <div>
