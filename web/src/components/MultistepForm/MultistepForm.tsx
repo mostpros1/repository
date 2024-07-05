@@ -171,14 +171,12 @@ function MultistepForm() {
     }
 
     if (user) {
-      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
-
       const UserData = await dynamo.query({
         TableName: "Users",
         IndexName: "username",
         KeyConditionExpression: "email = :email",
         ExpressionAttributeValues: {
-          ":email": currentAuthenticatedUser.atributes.email,
+          ":email": user.attributes.email,
         },
       }).promise()
 
@@ -210,7 +208,7 @@ function MultistepForm() {
         Item: {
           id: Number(stopXSS(String(Math.floor(Math.random() * 1000000000)))),
           chats: Number(stopXSS(String(0))),
-          client_email: stopXSS(currentAuthenticatedUser.attributes.email),
+          client_email: stopXSS(user.attributes.email),
           date: stopXSS(`${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`),
           description: stopXSS(task),
           name: stopXSS(profession),
