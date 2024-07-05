@@ -38,7 +38,7 @@ export function CategoryForm({ question, questions, updateQuestionAnswers, optio
 			</div>
 		</div>
 	);
-};
+}
   
 export default CategoryForm;
   

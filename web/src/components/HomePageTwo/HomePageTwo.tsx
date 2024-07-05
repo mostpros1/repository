@@ -259,7 +259,7 @@ function HomePageTwo() {
       <section className="landingSectionHome">
         <article className="landingContentHome">
           <section className="titleSectionHome">
-            <h2 className="titleSectionHomeH2">
+            <h2 data-testid="cypress-title" className="titleSectionHomeH2">
               Vind lokale vakspecialisten <br></br> voor klussen in je huis en
               tuin
             </h2>

@@ -118,7 +118,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
               message.email.split("@")[0]
             }`,
           });
-        }
+        }groupedMessages
         const contact = message.members.find(
           (member) => member !== user.attributes.email
         );
@@ -800,6 +800,7 @@ function ChatMain({ user, signOut }: { user: any; signOut: () => void }) {
       const filtered = chats.filter((chat) =>
         chat.text.toLowerCase().includes(messageSearchTerm.toLowerCase())
       );
+      
       setFilteredMessages(filtered);
     } else {
       setFilteredMessages([]);

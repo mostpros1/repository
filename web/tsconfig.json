@@ -29,6 +29,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
   },
-  "include": ["src", "../backend_functions/CreateOffer.ts", "src/aws-exports.js"],
+  "include": ["cypress", "src", "../backend_functions/CreateOffer.ts", "src/aws-exports.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
