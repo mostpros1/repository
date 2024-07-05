@@ -370,7 +370,8 @@ const Jobs = () => {
                     id="job-view-prof-con"
                     onClick={() =>
                       navigate(
-                        `/home-owner-result#${job.name}?${job.description}!${job.date}`
+                        // `/home-owner-result#${job.name}?${job.description}!${job.date}`
+                        `/pro-dashboard`
                       )
                     }
                   >
@@ -382,7 +383,7 @@ const Jobs = () => {
                     <span>Lopende chats {`(${job.chats})`}</span>
                   </div>
                 </div>
-                <p className="job-view">View job</p>
+                {/* <p className="job-view">View job</p> */}
               </div>
             ))}
           </div>

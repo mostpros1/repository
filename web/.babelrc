@@ -1,0 +1,18 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "current",
+        "esmodules": true
+      },
+      "useBuiltIns": "entry",
+      "modules": false,
+      "corejs": 3
+    }],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
+}
