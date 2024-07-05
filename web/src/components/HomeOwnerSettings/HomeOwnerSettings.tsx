@@ -3,9 +3,11 @@ import "./HomeOwnerSettings.css";
 import AWS from "aws-sdk";
 import { Auth } from "aws-amplify";
 import { Email } from "@mui/icons-material";
-import { CognitoIdentityProviderClient, ChangePasswordCommand } from "@aws-sdk/client-cognito-identity-provider"; // ES Modules import
+import {
+  CognitoIdentityProviderClient,
+  ChangePasswordCommand,
+} from "@aws-sdk/client-cognito-identity-provider"; // ES Modules import
 import { dynamo } from "../../../declarations";
-
 
 const HomeOwnerSecurity = () => {
   const [activeTab, setActiveTab] = useState("Security");
@@ -31,63 +33,64 @@ const HomeOwnerSecurity = () => {
   };
 
   async function changeEmailUsers(oldEmail: string, newEmail) {
-    const UserData = await dynamo.query({
-      TableName: "Users",
-      IndexName: "username",
-      KeyConditionExpression: "email = :email",
-      ExpressionAttributeValues: {
-        ":email": oldEmail
-      },
-    }).promise()
-
-
-    if (UserData.Items && UserData.Items.length > 0){
-      dynamo.update({
+    const UserData = await dynamo
+      .query({
         TableName: "Users",
-        Key: {
-          id: UserData.Items[0].id,
-        },
-        UpdateExpression: `set email = :email`,
+        IndexName: "username",
+        KeyConditionExpression: "email = :email",
         ExpressionAttributeValues: {
-          ":email": newEmail,
+          ":email": oldEmail,
         },
       })
-      .promise()
-      .then(data => console.log(data.Attributes))
-      .catch(console.error)
-    }
+      .promise();
 
+    if (UserData.Items && UserData.Items.length > 0) {
+      dynamo
+        .update({
+          TableName: "Users",
+          Key: {
+            id: UserData.Items[0].id,
+          },
+          UpdateExpression: `set email = :email`,
+          ExpressionAttributeValues: {
+            ":email": newEmail,
+          },
+        })
+        .promise()
+        .then((data) => console.log(data.Attributes))
+        .catch(console.error);
+    }
   }
 
   async function changeEmailPros(oldEmail: string, newEmail) {
-    const ProData = await dynamo.query({
-      TableName: "Professionals",
-      IndexName: "emailIndex",
-      KeyConditionExpression: "email = :email",
-      ExpressionAttributeValues: {
-        ":email": oldEmail
-      },
-    }).promise()
-
-    if (ProData.Items && ProData.Items.length > 0){
-      dynamo.update({
+    const ProData = await dynamo
+      .query({
         TableName: "Professionals",
-        Key: {
-          id: ProData.Items[0].id,
-        },
-        UpdateExpression: `set email = :email`,
+        IndexName: "emailIndex",
+        KeyConditionExpression: "email = :email",
         ExpressionAttributeValues: {
-          ":email": newEmail,
+          ":email": oldEmail,
         },
       })
-      .promise()
-      .then(data => console.log(data.Attributes))
-      .catch(console.error)
+      .promise();
+
+    if (ProData.Items && ProData.Items.length > 0) {
+      dynamo
+        .update({
+          TableName: "Professionals",
+          Key: {
+            id: ProData.Items[0].id,
+          },
+          UpdateExpression: `set email = :email`,
+          ExpressionAttributeValues: {
+            ":email": newEmail,
+          },
+        })
+        .promise()
+        .then((data) => console.log(data.Attributes))
+        .catch(console.error);
     }
-
   }
-
-  
 
   const submitEmail = async (email, emailRepeat) => {
     try {
@@ -98,18 +101,26 @@ const HomeOwnerSecurity = () => {
 
       console.log("Emails match");
 
-
       const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
       const username = currentAuthenticatedUser.username;
       console.log("Username: ", username);
 
-      const groups = currentAuthenticatedUser.signInUserSession.accessToken.payload["cognito:groups"];
+      const groups =
+        currentAuthenticatedUser.signInUserSession.accessToken.payload[
+          "cognito:groups"
+        ];
 
       if (groups?.includes("Professional")) {
-        await changeEmailUsers(currentAuthenticatedUser.attributes.email, email);
+        await changeEmailUsers(
+          currentAuthenticatedUser.attributes.email,
+          email
+        );
         await changeEmailPros(currentAuthenticatedUser.attributes.email, email);
-      } else if (groups?.includes("Homeowner")){
-        await changeEmailUsers(currentAuthenticatedUser.attributes.email, email);
+      } else if (groups?.includes("Homeowner")) {
+        await changeEmailUsers(
+          currentAuthenticatedUser.attributes.email,
+          email
+        );
       }
 
       const params = {
@@ -117,14 +128,14 @@ const HomeOwnerSecurity = () => {
         Username: username,
         UserAttributes: [
           {
-            Name: 'email',
-            Value: email
+            Name: "email",
+            Value: email,
           },
           {
-            Name: 'email_verified',
-            Value: 'true' // Marking the new email as verified
-          }
-        ]
+            Name: "email_verified",
+            Value: "true", // Marking the new email as verified
+          },
+        ],
       };
 
       console.log("Params for updating user attributes: ", params);
@@ -132,7 +143,7 @@ const HomeOwnerSecurity = () => {
       const cognito = new AWS.CognitoIdentityServiceProvider({
         region: import.meta.env.VITE_AWS_REGION,
         accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-        secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY
+        secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
       });
 
       console.log("Cognito instance created");
@@ -152,10 +163,12 @@ const HomeOwnerSecurity = () => {
       });
 
       // Optionally, confirm the attribute was updated
-      const userData = await cognito.adminGetUser({
-        UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-        Username: username
-      }).promise();
+      const userData = await cognito
+        .adminGetUser({
+          UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+          Username: username,
+        })
+        .promise();
 
       console.log("Updated user data: ", userData);
     } catch (error) {
@@ -174,12 +187,11 @@ const HomeOwnerSecurity = () => {
     }
   }
 
-
   const submitPassword = () => {
     changePassword(oldPassword || "", newPassword || "");
-  }
+  };
 
-  function changeEmail(){
+  function changeEmail() {
     submitEmail(email, emailRepeat);
   }
 
@@ -189,23 +201,22 @@ const HomeOwnerSecurity = () => {
         <div id="account-setting-content-header">Security</div>
         <div id="account-setting-content-body">
           <div className="account-setting">
-            <label>huidig Wachtwoord</label>
+            <label>Huidig Wachtwoord</label>
             <input
+              placeholder="huidig wachtwoord"
               type="password"
               value={oldPassword}
               onChange={handlePasswordChange}
             />
-            <label>Nieuw wachtwoord</label>
+            <label>Nieuw Wachtwoord</label>
             <input
+              placeholder="nieuw wachtwoord"
               type="password"
               value={newPassword}
               onChange={handlePasswordRepeatChange}
             />
           </div>
-          <button
-            id="save-password-settings"
-            onClick={submitPassword}
-          >
+          <button id="save-password-settings" onClick={submitPassword}>
             Opslaan
           </button>
         </div>
@@ -217,14 +228,21 @@ const HomeOwnerSecurity = () => {
         <div id="account-setting-content-header">Account Details</div>
         <div id="account-setting-content-body">
           <div className="account-setting">
-            <label>Email</label>
-            <input type="email" placeholder="johndoe@gmail.com" onChange={handleEmailChange} />
+            <label>E-mail</label>
+            <input
+              type="email"
+              placeholder="johndoe@gmail.com"
+              onChange={handleEmailChange}
+            />
           </div>
           <div className="account-setting">
-            <label>Herhaal Email</label>
+            <label>Herhaal E-mail</label>
             <input type="email" placeholder="johndoe@gmail.com" />
           </div>
-          <button id="accept-btn" onClick={changeEmail}> Bevestigen </button>
+          <button id="accept-btn" onClick={changeEmail}>
+            {" "}
+            Bevestigen{" "}
+          </button>
         </div>
       </div>
     </div>

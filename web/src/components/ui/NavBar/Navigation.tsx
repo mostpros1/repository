@@ -391,24 +391,24 @@ function Navigation() {
                   <header>{t("Waarom MP kiezen")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("Klantenervaring")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Klantenervaring")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Groeiend netwerk")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Groeiend netwerk")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Toegang talentenpools")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Toegang talentenpools")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>
+                      <Link to={`/${taal}/why-mostpros`}>
                         {t("Automatiseer workflows")}
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Open infrastructuur")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Open infrastructuur")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("500+ diensten")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("500+ diensten")}</Link>
                     </li>
                   </ul>
                 </div>
@@ -416,22 +416,22 @@ function Navigation() {
                   <header>{t("Per gebruiker")}</header>
                   <ul className="mega-links">
                     <li>
-                      <Link to={`/${taal}/`}>{t("Huiseigenaar")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Huiseigenaar")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Vakspecialist")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Vakspecialist")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("VvE / Stichting")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("VvE / Stichting")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Startup / Bedrijf")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Startup / Bedrijf")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Developer")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Developer")}</Link>
                     </li>
                     <li>
-                      <Link to={`/${taal}/`}>{t("Marketeer / Verkoper")}</Link>
+                      <Link to={`/${taal}/why-mostpros`}>{t("Marketeer / Verkoper")}</Link>
                     </li>
                   </ul>
                 </div>
